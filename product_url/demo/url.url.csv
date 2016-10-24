@@ -1,0 +1,7 @@
+id,model_id,url_key,redirect
+1,"product.template,2",monitoring,True
+2,"product.template,2",manutoring,True
+3,"product.template,2",monitoring so good,True
+4,"product.template,2",monitoring betteur,True
+5,"product.template,2",monitoring bourré,False
+
