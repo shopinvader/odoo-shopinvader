@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, api, fields, _
-
+from slugify import slugify
 import logging
 
 
@@ -40,13 +40,11 @@ class AbstractUrl(models.AbstractModel):
     url_key = fields.Char(compute="_compute_url", inverse="_set_url", string="Url key")
     redirect_url_key_ids = fields.One2many(compute="_compute_redirect_url",comodel_name="url.url")
 
-    @api.multi
+
     def _prepare_url(self):
         url_to_normalize = self.url_key
-
-        #self.url_key = url_normalize(url_to_normalize)
-
-        return self.url_key
+        url_key = slugify(url_to_normalize)
+        return url_key
 
     @api.multi
     def _set_url(self):
@@ -57,15 +55,15 @@ class AbstractUrl(models.AbstractModel):
         2 si elle existe passer à false
         3 ecrire nouvelle url modelid et true
         """
-        #1
+
         model_ref = "%s,%s" % (self._name, self.id)
         search_txt = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
         if search_txt :
              search_txt.redirect = True;
 
-        self.url_key = _prepare_url(self)
+        url_key = self._prepare_url()
 
-        Data= {'url_key' : self.url_key,
+        Data= {'url_key' : url_key,
                'model_id' : model_ref,
                'redirect' : False}
         self.env['url.url'].create(Data)
