@@ -6,11 +6,20 @@
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
 
-                <xpath expr="//field[@name='list_price']" position="after">
+                <!--<xpath expr="//field[@name='list_price']" position="after">  </xpath>-->
                     <!-- Add your fields or attributes here -->
-                    <field name="url_key"/>
-                    <field name="redirect_url_key_ids"/>
-                </xpath>
+                    <notebook>
+                        <page string="Rewrite url">
+                            <group>
+                                 <field name="url_key"/>
+                                    <field name="redirect_url_key_ids"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+
+
+
 
             </field>
         </record>
