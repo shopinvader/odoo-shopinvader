@@ -69,7 +69,7 @@ class AbstractUrl(models.AbstractModel):
         else:
             url_key = self._prepare_url()
 
-        _logger.info("Quelclé : %s ", url_key)
+        _logger.info("Quelle cle : %s ", url_key)
 
         Data= {'url_key' : url_key,
                'model_id' : model_ref,
@@ -80,7 +80,7 @@ class AbstractUrl(models.AbstractModel):
     def _compute_url(self):
 
         model_ref = "%s,%s" % (self._name, self.id)
-        _logger.info ("model utilisé : %s ",model_ref)
+        _logger.info ("model utilisee : %s ",model_ref)
         #import pdb; pdb.set_trace()
         url = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
         if url:
@@ -103,10 +103,10 @@ class AbstractUrl(models.AbstractModel):
     def on_name_change(self):
 
         for record in self:
-            type = record.type
+            #type = record.type
             name = record.name
 
-            url_key = record.type + " " + record.name
+            url_key = record.name
             _logger.info("sortie change..: %s ", url_key )
             record.url_key = url_key
 
