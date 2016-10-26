@@ -19,6 +19,8 @@ class UrlUrl(models.Model):
                             )
     redirect = fields.Boolean('Redirect')
 
+    
+    
     @api.model
     def _reference_models(self):
         return []
@@ -28,7 +30,7 @@ class UrlUrl(models.Model):
         """
         :return: retourne l'objet liés à l'url
         """
-        object = self.search([("url","=",urls)]).model_id
+        object = self.search([("url_key","=",urls)]).model_id
         return object
 
     # TODO faire une vue du model dans settings database structure URL ....
