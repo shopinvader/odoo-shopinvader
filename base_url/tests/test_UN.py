@@ -6,16 +6,13 @@ from openerp.exceptions import Warning as UserError
 
 
 class TestalaCon(unittest.TestCase):
-    def setUp(self):
-        self.test_somme()
-        self.test_upper()
 
     def test_somme(self):
         a=2
         b=3
         c= a+b
-        print "COUCOUCOCUOCUCOUCOCU "+str(c)
-        self.assertEquals(c,6)
+        print "Test somme "+str(c)
+        self.assertEquals(c,5)
 
     def test_upper(self):
         # import pdb; pdb.set_trace()
