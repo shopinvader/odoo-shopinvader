@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openerp import models, api, fields, _
+from openerp import models, api
 
 
 class ProductTemplate(models.Model):
@@ -11,7 +11,6 @@ class ProductTemplate(models.Model):
     ]
 
 
-
 class UrlUrl(models.Model):
     _inherit = "url.url"
 
@@ -19,7 +18,8 @@ class UrlUrl(models.Model):
     def _reference_models(self):
         res = super(UrlUrl, self)._reference_models()
 
-        res += [("product.template","Product"), ('product.category', "Category")]
+        res += [("product.template", "Product"),
+                ('product.category', "Category")]
         return res
 
 
@@ -29,5 +29,3 @@ class ProductCategory(models.Model):
         "abstract.url",
         "product.category",
     ]
-
-
