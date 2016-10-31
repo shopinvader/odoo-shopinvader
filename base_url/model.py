@@ -71,7 +71,7 @@ class AbstractUrl(models.AbstractModel):
 
             #existe elle .?
 
-        _logger.info("la valeur to set: %s ", url_key)
+        _logger.info("Value to set: %s ", url_key)
 
         search_key = self.env['url.url'].search([('url_key', '=', url_key)])
         #Si url_key = self.url_key pas de changement..
@@ -84,7 +84,7 @@ class AbstractUrl(models.AbstractModel):
         else:
             search_model = self.env['url.url'].browse(search_key.id).model_id
             url_key_list =self.env['url.url'].search([('model_id','=',model_ref)]).url_key
-            _logger.info("listes url : %s",url_key_list)
+            _logger.info("list of url : %s",url_key_list)
             x = 0
             if len(search_key) < 2:
                 model_key = "%s,%s" % (search_key.model_id._name, search_key.model_id.id)
@@ -135,7 +135,7 @@ class AbstractUrl(models.AbstractModel):
     def _compute_url(self):
 
         model_ref = "%s,%s" % (self._name, self.id)
-        _logger.info ("model utilisee : %s ",model_ref)
+        _logger.info ("used model  : %s ",model_ref)
         #import pdb; pdb.set_trace()
         url = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
         if url:
@@ -150,7 +150,7 @@ class AbstractUrl(models.AbstractModel):
         """
         model_ref = "%s,%s" % (self._name, self.id)
 
-        _logger.info("model referencé : %s ", model_ref)
+        _logger.info("reference model : %s ", model_ref)
 
         self.redirect_url_key_ids = self.env["url.url"].search([('model_id', '=', model_ref), ('redirect', '=', True)])
 
@@ -161,13 +161,6 @@ class AbstractUrl(models.AbstractModel):
             name = record.name
             url_key = record._prepare_url(name)
             record.url_key = url_key
-            # _logger.info("sortie change..: %s ", url_key )
+            # _logger.info("Output..: %s ", url_key )
 
 
-
-"""
-tester changement de nom produit : > nouvell url
-tester regler une url manuellement (devient la bonne valeur)
-verifier url redirection mise en oeuvre et ancienne url de produit fonctionnent encore
-
-"""

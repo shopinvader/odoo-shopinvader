@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    Account Cutoff Accrual Base module for OpenERP
+#    Rewrite url Base module for OpenERP
 #    Copyright (C) 2013 Akretion (http://www.akretion.com)
-#    @author EBII MonsieurB <contact@ebii.fr>
+#    @author EBII MonsieurB <monsieurb@saaslys.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
