@@ -69,66 +69,37 @@ class AbstractUrl(models.AbstractModel):
         else:
             url_key = self._prepare_url()
 
-            #existe elle .?
-
-        _logger.info("Value to set: %s ", url_key)
-
-        search_key = self.env['url.url'].search([('url_key', '=', url_key)])
-        #If url_key = self.url_key pas de changement..
+        other_models_url = self.env['url.url'].search([('url_key','=', url_key)]).model_id
        # import pdb; pdb.set_trace()
-        if not search_key :
-            Data = {'url_key': url_key,
-                    'model_id': model_ref,
-                    'redirect': False}
-            self.env['url.url'].create(Data)
+        if other_models_url :
+            for model in other_models_url:
+                model_txt = "%s,%s" % (model._name, model.id)
+                if model_txt != model_ref:
+                    raise UserError(_("Url_key, already exist in other model %s" %(other_models_url)))
+
+            #existe elle .?
+        search_url = self.env['url.url'].search([('model_id', '=', model_ref),('redirect','=',False)])
+        _logger.info("url in place: %s ", search_url)
+        #If url_key = self.url_key pas de changement..
+        #import pdb; pdb.set_trace()
+        url_id=0
+        if search_url.url_key == url_key:
+            url_id = search_url.id
+
         else:
-            search_model = self.env['url.url'].browse(search_key.id).model_id
-            url_key_list =self.env['url.url'].search([('model_id','=',model_ref)]).url_key
-            _logger.info("list of url : %s",url_key_list)
-            x = 0
-            if len(search_key) < 2:
-                model_key = "%s,%s" % (search_key.model_id._name, search_key.model_id.id)
-                for key in url_key_list :
-                    if key == self.url_key :
-                        print "COUCOU ON EST L0"
-                    #existe pour ce model search_key.redirect == False
-                        search_key.redirect == True
-                        x+1
-                else :
-                    #existe pour un autre modele_id
-                    raise UserError(_(
-                        "The generate url_key already exists for an other model %s" %(model_ref)
-                    ))
-            else:
+            for url in self.redirect_url_key_ids :
+                if url.url_key == url_key :
+                    #update
+                    search_url.redirect = True
+                    url.redirect = False
+                    url_id = url.id
 
-                for key in search_key:
-                    model_key = "%s,%s" % (key.model_id_name, key.model_id.id)
-                    if model_key != model_ref and key.redirect == False :
-                        # existe pour un autre modele_id et est active
-                        raise UserError(_(
-                            "The generate url_key already exists for an other model %s and is active" % (model_ref)
-                        ))
-                    elif model_key == model_ref :
-                        key.redirect = False
-                        x+1
-
-            if x > 1 :
-                raise UserError(_(
-                    "The generate url_key already exists in too much state " % (model_ref)) )
-            elif x < 1 :
-                Data= {'url_key' : url_key,
-                       'model_id' : model_ref,
-                       'redirect' : False}
-                self.env['url.url'].create(Data)
-
-            # search_txt = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
-            # if search_txt :
-            #     search_txt.redirect = True;
-
-
-
-
-
+        if url_id == 0 :
+            search_url.redirect = True
+            Data = {'url_key': url_key,
+                        'model_id': model_ref,
+                        'redirect': False}
+            self.env['url.url'].create(Data)
 
     @api.multi
     def _compute_url(self):
@@ -155,7 +126,7 @@ class AbstractUrl(models.AbstractModel):
 
     @api.onchange('name')
     def on_name_change(self):
-        import pdb ; pdb.set_trace()
+
         for record in self:
             name = record.name
             url_key = record._prepare_url(name)

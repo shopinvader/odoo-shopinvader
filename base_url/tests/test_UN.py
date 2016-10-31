@@ -5,7 +5,7 @@ from openerp.exceptions import Warning as UserError
 
 
 
-class TestalaCon(unittest.TestCase):
+class TestUN(unittest.TestCase):
 
     def test_somme(self):
         a=2
@@ -17,14 +17,6 @@ class TestalaCon(unittest.TestCase):
     def test_upper(self):
         # import pdb; pdb.set_trace()
         self.assertEqual('foo'.upper(), 'FOO')
-
-class TestConnector(unittest.TestCase):
-        def create_attachment(self):
-            print "zzzzzzzzzzzzzzzzzooooooooooooooooooooobbbbbbbbbbbbbb"
-
-
-
-
 
 
 
