@@ -47,7 +47,8 @@ class TestBaseUrl(SingleTransactionCase):
         product.url_key = u"De Jolie éperviere"  # (de-jolie-eperviere)
         product._set_url()
         url2 = self.env['url.url'].search([('model_id', '=',
-                "product.template,9"), ('redirect', '=', False)]).url_key
+                "product.template,9"), ('redirect', '=', False)]
+        ).url_key
 
         print "les url: %s %s " % (url1, url2)
         urlurl1 = self.env['url.url']._get_object(url1)

@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, api, fields, _
-from slugify import slugify
+try:
+    from slugify import slugify
+except ImportError:
+  _logger.debug('Cannot `import slugify`.')
+
 from openerp.exceptions import Warning as UserError
 import logging
 

@@ -33,7 +33,10 @@
     'website': 'https://www.akretion.fr',
     # any module necessary for this one to work correctly
     'depends': [],
-
+    'external_dependencies': {
+        'bin': [],
+        'python': ['slugify'],
+    },
     'data': ['views/url_view.xml'],
 
     'demo': [],
