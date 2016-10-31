@@ -13,13 +13,13 @@ class UrlUrl(models.Model):
 
     _name = "url.url"
 
-    url_key =fields.Char(string="Url Id", store = True)
-    model_id =fields.Reference(selection='_reference_models',
+    url_key = fields.Char(string="Url Id", store=True)
+    model_id = fields.Reference(selection='_reference_models',
                                 help="The id of product or category.",
                                 readonly=True,
-                            )
-    redirect =fields.Boolean('Redirect')
-    
+                                )
+    redirect = fields.Boolean('Redirect')
+
     @api.model
     def _reference_models(self):
         return []
@@ -29,25 +29,24 @@ class UrlUrl(models.Model):
         """
         :return: return object attach to the url
         """
-        object = self.search([("url_key","=",urls)]).model_id
+        object = self.search([("url_key", "=", urls)]).model_id
         return object
 
-  
+
 class AbstractUrl(models.AbstractModel):
-    _name="abstract.url"
+    _name = "abstract.url"
 
     url_key = fields.Char(compute="_compute_url",
                           inverse="_set_url", string="Url key")
     redirect_url_key_ids = fields.One2many(compute="_compute_redirect_url",
                                            comodel_name="url.url")
 
-
-    def _prepare_url(self, name = None):
+    def _prepare_url(self, name=None):
         url_key = "prepare"
-        if name == None :
-            url_to_normalize= self.url_key
+        if name is None:
+            url_to_normalize = self.url_key
             url_key = slugify(url_to_normalize)
-        else :
+        else:
             url_to_normalize = name
             url_key = slugify(url_to_normalize)
         return url_key
@@ -66,40 +65,42 @@ class AbstractUrl(models.AbstractModel):
 
         model_ref = "%s,%s" % (self._name, self.id)
         url_key = ""
-        if not name :
+        if not name:
             url_key = self._prepare_url(name)
         else:
             url_key = self._prepare_url()
 
-        other_models_url = self.env['url.url'].search([('url_key','=', url_key)]).model_id
-       # import pdb; pdb.set_trace()
-        if other_models_url :
+        other_models_url = self.env['url.url'].search([('url_key',
+                                        '=', url_key)]).model_id
+        if other_models_url:
             for model in other_models_url:
                 model_txt = "%s,%s" % (model._name, model.id)
                 if model_txt != model_ref:
-                    raise UserError(_("Url_key, already exist in other model %s" %(other_models_url)))
+                    raise UserError(_(
+         "Url_key already exist in other model %s" % (other_models_url))
+                                    )
 
-            #existe elle .?
-        search_url = self.env['url.url'].search([('model_id', '=', model_ref),('redirect','=',False)])
+        # existe elle .?
+        search_url = self.env['url.url'].search([('model_id', '=', model_ref),
+                                                 ('redirect', '=', False)])
         for res in search_url:
             _logger.info("url in place: %s ", res)
 
         search_url.ensure_one()
-        #If url_key = self.url_key pas de changement..
-        #import pdb; pdb.set_trace()
-        url_id=0
+
+        url_id = 0
         if search_url.url_key == url_key:
             url_id = search_url.id
 
         else:
-            for url in self.redirect_url_key_ids :
-                if url.url_key == url_key :
-                    #update
+            for url in self.redirect_url_key_ids:
+                if url.url_key == url_key:
+                    # update
                     search_url.redirect = True
                     url.redirect = False
                     url_id = url.id
 
-        if url_id == 0 :
+        if url_id == 0:
             search_url.redirect = True
             Data = {'url_key': url_key,
                         'model_id': model_ref,
@@ -110,12 +111,12 @@ class AbstractUrl(models.AbstractModel):
     def _compute_url(self):
 
         model_ref = "%s,%s" % (self._name, self.id)
-        _logger.info ("used model  : %s ",model_ref)
-        #import pdb; pdb.set_trace()
-        url = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
+        _logger.info("used model  : %s ", model_ref)
+        # import pdb; pdb.set_trace()
+        url = self.env["url.url"].search([('model_id', '=', model_ref),
+                                          ('redirect', '=', False)])
         if url:
             self.url_key = url[0].url_key
-
 
     @api.multi
     def _compute_redirect_url(self):
@@ -127,7 +128,8 @@ class AbstractUrl(models.AbstractModel):
 
         _logger.info("reference model : %s ", model_ref)
 
-        self.redirect_url_key_ids = self.env["url.url"].search([('model_id', '=', model_ref), ('redirect', '=', True)])
+        self.redirect_url_key_ids = self.env["url.url"]\
+            .search([('model_id', '=', model_ref), ('redirect', '=', True)])
 
     @api.onchange('name')
     def on_name_change(self):
@@ -139,9 +141,8 @@ class AbstractUrl(models.AbstractModel):
             record.url_key = url_key
             # _logger.info("Output..: %s ", url_key )
 
-
     @api.onchange('url_key')
     def on_url_key_change(self):
         url = self._prepare_url(self.url_key)
-        if url != self.url_key :
+        if url != self.url_key:
             raise UserError(_("it will will be adapted to %s" % (url)))
