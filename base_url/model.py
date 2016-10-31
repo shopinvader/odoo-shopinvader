@@ -74,8 +74,8 @@ class AbstractUrl(models.AbstractModel):
         _logger.info("Value to set: %s ", url_key)
 
         search_key = self.env['url.url'].search([('url_key', '=', url_key)])
-        #Si url_key = self.url_key pas de changement..
-        import pdb; pdb.set_trace()
+        #If url_key = self.url_key pas de changement..
+       # import pdb; pdb.set_trace()
         if not search_key :
             Data = {'url_key': url_key,
                     'model_id': model_ref,
@@ -121,7 +121,6 @@ class AbstractUrl(models.AbstractModel):
                        'redirect' : False}
                 self.env['url.url'].create(Data)
 
-
             # search_txt = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
             # if search_txt :
             #     search_txt.redirect = True;
@@ -160,6 +159,7 @@ class AbstractUrl(models.AbstractModel):
         for record in self:
             name = record.name
             url_key = record._prepare_url(name)
+
             record.url_key = url_key
             # _logger.info("Output..: %s ", url_key )
 
