@@ -25,7 +25,7 @@
     'version': '8.0.0.1.0',
     'category': 'tools',
     'license': 'AGPL-3',
-    'summary': 'keep history of url for product & categorie  ',  # v7: size=64, v8: no size limit
+    'summary': 'keep history of url for product & categorie  ',
     'description': """
         keep history of url for product & categorie
     """,
@@ -37,13 +37,8 @@
     'data': ['views/url_view.xml'],
 
     'demo': [],
-    #les screenshots en v8: mettre dans static/description/, sans déclaration
-    # dans ce fichier
-    # pour l'icone du module (PNG 64x64 ou 128x128): rien à mettre dans __openerp__.py
-    # v7: ./static/src/img/icon.png
-    # v8: ./static/description/icon.png
-    # v9: ./static/description/icon.png
-    'url': '',  # ??
+
+    'url': '',
     'installable': True,
     'auto_install': False,
     'application': False,

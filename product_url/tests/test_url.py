@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from openerp import  api
-from openerp.tests.common import TransactionCase
+from openerp.tests.common import SingleTransactionCase
 from openerp.exceptions import Warning as UserError
 
-class TestBaseUrl(TransactionCase):
+class TestBaseUrl(SingleTransactionCase):
 
     
     def setup(self):
         super (TestBaseUrl,self).setup()
 
-    def test_product_name(self):
-        self.product = self.env['product.template'].browse(9)
-        toto = self.product
-        self.assertEqual('apple-in-ear-headphones', toto.name)
 
     def test_change_name(self):
         product = self.env['product.template'].browse(9)
@@ -61,8 +57,6 @@ class TestBaseUrl(TransactionCase):
         urlurl1 = self.env['url.url']._get_object(url1)
         
         urlurl2 = self.env['url.url']._get_object(url2)
-        import pdb;
-        pdb.set_trace()
 
         self.assertEqual(urlurl1 , urlurl2)
 

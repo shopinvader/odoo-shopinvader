@@ -81,6 +81,7 @@ class AbstractUrl(models.AbstractModel):
 
             #existe elle .?
         search_url = self.env['url.url'].search([('model_id', '=', model_ref),('redirect','=',False)])
+        search_url.ensure_one()
         _logger.info("url in place: %s ", search_url)
         #If url_key = self.url_key pas de changement..
         #import pdb; pdb.set_trace()
