@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from openerp import  api
-from openerp.tests.common import TransactionCase, SingleTransactionCase
+from openerp.tests.common import TransactionCase
 from openerp.exceptions import Warning as UserError
 
 class TestBaseUrl(TransactionCase):

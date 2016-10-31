@@ -8,17 +8,17 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class UrlUrl(models.Model):
 
-    _name= "url.url"
+    _name = "url.url"
 
-    url_key = fields.Char(string = "Url Id",store = True)
-    model_id = fields.Reference(
-                                selection='_reference_models',
+    url_key =fields.Char(string="Url Id", store = True)
+    model_id =fields.Reference(selection='_reference_models',
                                 help="The id of product or category.",
                                 readonly=True,
                             )
-    redirect = fields.Boolean('Redirect')
+    redirect =fields.Boolean('Redirect')
     
     @api.model
     def _reference_models(self):
@@ -36,8 +36,10 @@ class UrlUrl(models.Model):
 class AbstractUrl(models.AbstractModel):
     _name="abstract.url"
 
-    url_key = fields.Char(compute="_compute_url", inverse="_set_url", string="Url key")
-    redirect_url_key_ids = fields.One2many(compute="_compute_redirect_url",comodel_name="url.url")
+    url_key = fields.Char(compute="_compute_url",
+                          inverse="_set_url", string="Url key")
+    redirect_url_key_ids = fields.One2many(compute="_compute_redirect_url",
+                                           comodel_name="url.url")
 
 
     def _prepare_url(self, name = None):
@@ -64,7 +66,7 @@ class AbstractUrl(models.AbstractModel):
 
         model_ref = "%s,%s" % (self._name, self.id)
         url_key = ""
-        if name != None :
+        if not name :
             url_key = self._prepare_url(name)
         else:
             url_key = self._prepare_url()
@@ -135,3 +137,8 @@ class AbstractUrl(models.AbstractModel):
             # _logger.info("Output..: %s ", url_key )
 
 
+    @api.onchange('url_key')
+    def on_url_key_change(self):
+        url = self._prepare_url(self.url_key)
+        if url != self.url_key :
+            raise UserError(_("it will will be adapted to %s" % (url)))
