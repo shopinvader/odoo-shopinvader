@@ -27,7 +27,7 @@ class UrlUrl(models.Model):
     @api.multi
     def _get_object(self, urls):
         """
-        :return: retourne l'objet liés à l'url
+        :return: return object attach to the url
         """
         object = self.search([("url_key","=",urls)]).model_id
         return object
@@ -53,11 +53,13 @@ class AbstractUrl(models.AbstractModel):
     @api.multi
     def _set_url(self, name=None):
         """
-        sauvegarder ancienne url si exist et
-        :return:
-        1 rechercher une url avec redirect à true
-        2 si elle existe passer à false
-        3 ecrire nouvelle url modelid et true
+        backup old url
+
+        1 find url redirect true and same model_id
+        if other model id refuse
+        2 if exists set to False
+
+        3 write the new one
         """
 
         model_ref = "%s,%s" % (self._name, self.id)
@@ -79,8 +81,7 @@ class AbstractUrl(models.AbstractModel):
                     'model_id': model_ref,
                     'redirect': False}
             self.env['url.url'].create(Data)
-
-        if search_key:
+        else:
             search_model = self.env['url.url'].browse(search_key.id).model_id
             url_key_list =self.env['url.url'].search([('model_id','=',model_ref)]).url_key
             _logger.info("listes url : %s",url_key_list)
@@ -120,13 +121,6 @@ class AbstractUrl(models.AbstractModel):
                        'redirect' : False}
                 self.env['url.url'].create(Data)
 
-        # else :
-        #     Data = {'url_key': url_key,
-        #             'model_id': model_ref,
-        #             'redirect': False}
-        #     self.env['url.url'].create(Data)
-
-
 
             # search_txt = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
             # if search_txt :
@@ -145,7 +139,7 @@ class AbstractUrl(models.AbstractModel):
         #import pdb; pdb.set_trace()
         url = self.env["url.url"].search([('model_id' ,'=', model_ref),('redirect', '=', False)])
         if url:
-            self.url_key = url.url_key
+            self.url_key = url[0].url_key
 
 
     @api.multi
