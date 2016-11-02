@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from openerp.tests.common import SingleTransactionCase
-
+_logger = logging.getLogger(__name__)
 
 class TestBaseUrl(SingleTransactionCase):
 
@@ -19,7 +19,7 @@ class TestBaseUrl(SingleTransactionCase):
         url_key = self.env['url.url'].search([('model_id', '=',
                 "product.template,9"), ('redirect', '=', False)]).url_key
 
-        print (u"url_key : %s ", url_key)
+        _logger.info(u"url_key : %s ", url_key)
 
         self.assertEqual('un-joli-epervier', url_key)
 
@@ -31,7 +31,7 @@ class TestBaseUrl(SingleTransactionCase):
 
         url_key = self.env['url.url'].search([('model_id', '=',
                 "product.template,9"), ('redirect', '=', False)]).url_key
-        print (u"url_key : %s ", url_key)
+        _logger.info(u"url_key : %s ", url_key)
 
         self.assertEqual('un-joli-epervier', url_key)
 
@@ -50,7 +50,7 @@ class TestBaseUrl(SingleTransactionCase):
                 "product.template,9"), ('redirect', '=', False)]
         ).url_key
 
-        print "les url: %s %s " % (url1, url2)
+        _logger.info("les url: %s %s " % (url1, url2))
         urlurl1 = self.env['url.url']._get_object(url1)
 
         urlurl2 = self.env['url.url']._get_object(url2)

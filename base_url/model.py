@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from openerp import models, api, fields, _
+import logging
+_logger = logging.getLogger(__name__)
 try:
     from slugify import slugify
 except ImportError:
-  _logger.debug('Cannot `import slugify`.')
+    _logger.debug('Cannot `import slugify`.')
 
 from openerp.exceptions import Warning as UserError
-import logging
-
-
-_logger = logging.getLogger(__name__)
 
 
 class UrlUrl(models.Model):
@@ -41,7 +39,7 @@ class AbstractUrl(models.AbstractModel):
     _name = "abstract.url"
 
     url_key = fields.Char(compute="_compute_url",
-                          inverse="_set_url", string="Url key")
+                          inverse="_inverse_set_url", string="Url key")
     redirect_url_key_ids = fields.One2many(compute="_compute_redirect_url",
                                            comodel_name="url.url")
 
@@ -56,7 +54,7 @@ class AbstractUrl(models.AbstractModel):
         return url_key
 
     @api.multi
-    def _set_url(self, name=None):
+    def _inverse_set_url(self, name=None):
         """
         backup old url
 

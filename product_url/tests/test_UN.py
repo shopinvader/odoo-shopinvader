@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+_logger = logging.getLogger(__name__)
+
 
 class Test_un(unittest.TestCase):
 
@@ -8,7 +10,7 @@ class Test_un(unittest.TestCase):
         a = 2
         b = 3
         c = a + b
-        print "Test somme "+str(c)
+        _logger.info("Test somme "+str(c))
         self.assertEquals(c, 5)
 
     def test_upper(self):

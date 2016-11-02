@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-import model
+import base_url.model
