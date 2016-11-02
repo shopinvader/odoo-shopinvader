@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-
 from openerp import models, api, fields, _
 import logging
+from openerp.exceptions import Warning as UserError
 _logger = logging.getLogger(__name__)
 try:
     from slugify import slugify
 except ImportError:
     _logger.debug('Cannot `import slugify`.')
-
-from openerp.exceptions import Warning as UserError
 
 
 class UrlUrl(models.Model):
@@ -72,19 +70,21 @@ class AbstractUrl(models.AbstractModel):
         else:
             url_key = self._prepare_url()
 
-        other_models_url = self.env['url.url'].search([('url_key',
-                                        '=', url_key)]).model_id
+        other_models_url = self.env['url.url'].search(
+            [('url_key', '=', url_key)]).model_id
+
         if other_models_url:
             for model in other_models_url:
                 model_txt = "%s,%s" % (model._name, model.id)
                 if model_txt != model_ref:
-                    raise UserError(_(
-         "Url_key already exist in other model %s" % (other_models_url))
-                                    )
+                    raise UserError(
+                        _("Url_key already exist in other model"
+                          " %s" % (other_models_url)))
 
         # existe elle .?
-        search_url = self.env['url.url'].search([('model_id', '=', model_ref),
-                                                 ('redirect', '=', False)])
+        search_url = self.env['url.url'].search([
+            ('model_id', '=', model_ref),
+            ('redirect', '=', False)])
         for res in search_url:
             _logger.info("url in place: %s ", res)
 
@@ -105,8 +105,8 @@ class AbstractUrl(models.AbstractModel):
         if url_id == 0:
             search_url.redirect = True
             Data = {'url_key': url_key,
-                        'model_id': model_ref,
-                        'redirect': False}
+                    'model_id': model_ref,
+                    'redirect': False}
             self.env['url.url'].create(Data)
 
     @api.multi

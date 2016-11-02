@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-import unittest
+from openerp.tests.common import SingleTransactionCase
 import logging
 _logger = logging.getLogger(__name__)
 
-class Test_un(unittest.TestCase):
+
+class Testun(SingleTransactionCase):
 
     def test_somme(self):
         a = 2
