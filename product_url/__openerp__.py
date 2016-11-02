@@ -1,4 +1,5 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
 ##############################################################################
 #
 #    Account Cutoff Accrual Base module for OpenERP
