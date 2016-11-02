@@ -4,7 +4,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class Test_un(unittest.TestCase):
+class Testun(unittest.TestCase):
 
     def test_somme(self):
         a = 2
