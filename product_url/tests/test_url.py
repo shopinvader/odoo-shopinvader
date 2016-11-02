@@ -7,7 +7,7 @@ _logger = logging.getLogger(__name__)
 class Testbaseurl(SingleTransactionCase):
 
     def setup(self):
-        super(TestBaseUrl, self).setup()
+        super(Testbaseurl, self).setup()
 
     def test_change_name(self):
         product = self.env['product.template'].browse(9)
