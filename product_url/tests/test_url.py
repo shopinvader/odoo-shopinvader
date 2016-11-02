@@ -16,14 +16,16 @@ class Testbaseurl(SingleTransactionCase):
 
         product.on_name_change()
 
-        #product._inverse_set_url()
+        # product._inverse_set_url()
 
-        url_key = self.env['url.url'].search(
+        np = self.env['url.url'].search(
             [('model_id', '=', "product.template,9"),
-             ('redirect', '=', False)]).url_key
+             ('redirect', '=', False)])
+        _logger.info(u"url_key len  : %s ", len(np))
 
+        url_key = np.url_key
         _logger.info(u"url_key : %s ", url_key)
-
+        self.assertTrue(len(np) == 1)
         self.assertEqual('un-joli-epervier', url_key)
 
     def test_change_url_key(self):

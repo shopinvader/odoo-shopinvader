@@ -20,6 +20,9 @@ class UrlUrl(models.Model):
                                 )
     redirect = fields.Boolean('Redirect')
 
+    _sql_constraints = [("urlurl unique key", 'unique(url_key)', 'Already exists in database')]
+
+
     @api.model
     def _reference_models(self):
         return []
