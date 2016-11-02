@@ -88,8 +88,6 @@ class AbstractUrl(models.AbstractModel):
         for res in search_url:
             _logger.info("url in place: %s ", res)
 
-        search_url.ensure_one()
-
         url_id = 0
         if search_url.url_key == url_key:
             url_id = search_url.id

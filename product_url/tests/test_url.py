@@ -16,7 +16,7 @@ class Testbaseurl(SingleTransactionCase):
 
         product.on_name_change()
 
-        product._inverse_set_url()
+        #product._inverse_set_url()
 
         url_key = self.env['url.url'].search(
             [('model_id', '=', "product.template,9"),
