@@ -20,8 +20,9 @@ class UrlUrl(models.Model):
                                 )
     redirect = fields.Boolean('Redirect')
 
-    _sql_constraints = [("urlurl unique key", 'unique(url_key)', 'Already exists in database')]
-
+    _sql_constraints = [("urlurl unique key",
+                         'unique(url_key)',
+                         'Already exists in database')]
 
     @api.model
     def _reference_models(self):
@@ -88,6 +89,8 @@ class AbstractUrl(models.AbstractModel):
         search_url = self.env['url.url'].search([
             ('model_id', '=', model_ref),
             ('redirect', '=', False)])
+        if search_url is False:
+            _logger.info("NO url in place ", )
         for res in search_url:
             _logger.info("url in place: %s ", res)
 
