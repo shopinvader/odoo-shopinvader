@@ -45,7 +45,7 @@ To use this module, you need to:
 Known issues / Roadmap
 ======================
 
-* ...
+* there is unknown issues or see report in github
 
 Bug Tracker
 ===========

@@ -27,9 +27,7 @@
     'category': 'tools',
     'license': 'AGPL-3',
     'summary': 'keep history of url for product & categorie  ',
-    'description': """
-        keep history of url for product & categorie
-    """,
+
     'author': 'Akretion',
     'website': 'https://www.akretion.fr',
     # any module necessary for this one to work correctly
