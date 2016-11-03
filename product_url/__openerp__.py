@@ -30,23 +30,14 @@
 
     'author': 'Akretion',
     'website': 'https://www.akretion.fr',
-    # any module necessary for this one to work correctly
     'depends': ['product', 'base_url'],
 
-    'data': ['views/product_view.xml', ],
+    'data': ['views/product_view.xml',
+             'views/category_view.xml', ],
 
     'demo': ['demo/url.url.csv'],
 
-    # les screenshots en v8: mettre dans static/
-    # description/, sans déclaration
-    # dans ce fichier
-    # pour l'icone du module (PNG 64x64 ou 128x128):
-    # rien à mettre dans __openerp__.py
-    # v7: ./static/src/img/icon.png
-    # v8: ./static/description/icon.png
-    # v9: ./static/description/icon.png
-
-    'url': '',  # ??
+    'url': '',
     'installable': True,
     'auto_install': False,
     'application': False,

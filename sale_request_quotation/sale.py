@@ -1,5 +1,5 @@
-# -*- encoding: utf-8 -*-
-from openerp import models, api, fields, _
+# -*- coding: utf-8 -*-
+from openerp import models
 
 ##############################################################################
 #
@@ -30,4 +30,3 @@ class SaleOrder(models.Model):
 
         res += [('request_quotation',  'Request Quotation')]
         return res
-

@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Chafique Delli
@@ -21,7 +21,7 @@
 
 {
     'name': 'Sale_cart',
-    'version': '0.1',
+    'version': '8.0.0.1.0',
     'category': 'Sales Management',
     'license': 'AGPL-3',
     'summary': """
@@ -31,8 +31,7 @@
     'website': 'http://wwww.akretion.com/',
     'depends': ['sale', 'sale_substate'],
     'data': [],
-    'demo': ['cart_demo.xml'],
-    'test': [],
+    'demo': ['demo/cart_demo.xml'],
+    'test': ['tests/test_cart.py'],
     'installable': True,
-    'active': False,
 }

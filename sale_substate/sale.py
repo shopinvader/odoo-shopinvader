@@ -1,5 +1,5 @@
-# -*- encoding: utf-8 -*-
-from openerp import models, api, fields, _
+# -*- coding: utf-8 -*-
+from openerp import models, fields
 
 ##############################################################################
 #
@@ -25,10 +25,10 @@ from openerp import models, api, fields, _
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    sub_state = fields.Selection(selection = '_get_sub_state_selection',
-            help="Gives additionnal status to sales order "
-                 "for example for the production or the shipment.")
+    sub_state = fields.Selection(selection='_get_sub_state_selection',
+                                 help="Gives additionnal status to sales\
+                                  order for example for the production\
+                                   or the shipment.")
 
     def _get_sub_state_selection(self):
         return []
-
