@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+     <!--with substate = wishlist sale_order 3 5 6-->
+        <record id="sale.sale_order_3" model="sale.order">
+            <field name="sub_state" >wishlist</field>
+        </record>
+
+        <record id="sale.sale_order_5" model="sale.order">
+           <field name="sub_state" >wishlist</field>
+        </record>
+
+        <record id="sale.sale_order_6" model="sale.order">
+            <field name="sub_state" >wishlist</field>
+        </record>
+
+
+        <!-- Confirm some Sale Orders-->
+        <!--<workflow action="order_confirm" model="sale.order" ref="sale_order_4"/>-->
+
+        <!--<workflow action="order_confirm" model="sale.order" ref="sale_order_7"/>-->
+
+        <!-- sale advance demo.. -->
+        <!-- Demo Data for Product -->
+
+    </data>
+</openerp>

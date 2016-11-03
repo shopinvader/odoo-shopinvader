@@ -32,7 +32,7 @@
     'website': 'http://wwww.akretion.com/',
     'depends': ['sale', 'sale_substate'],
     'data': [],
-    'demo': [],
+    'demo': ['quotation_demo.xml'],
     'test': [],
     'installable': True,
     'active': False,
