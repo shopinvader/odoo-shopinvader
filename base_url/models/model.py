@@ -78,12 +78,11 @@ class AbstractUrl(models.AbstractModel):
             for model in already_exist_url.model_id:
                 model_txt = "%s,%s" % (model._name, model.id)
                 if model_txt != model_ref:
-                 # existing key for other model
+                # existing key for other model
                     raise UserError(
                         _("Url_key already exist in other model"
                           " %s" % (model.name)))
-                else:
-                # existing key for same object toggle redirect  from True to False
+                else:  # existing key for same object toggle redirect to False
                     already_exist_url.redirect = False
         else:
             # no existing key creating one

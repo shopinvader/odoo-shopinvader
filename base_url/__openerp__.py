@@ -36,7 +36,8 @@
         'bin': [],
         'python': ['slugify'],
     },
-    'data': ['views/url_view.xml'],
+    'data': ['views/url_view.xml',
+             'security/ir.model.access.csv'],
 
     'demo': [],
 
