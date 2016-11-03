@@ -69,31 +69,29 @@ class AbstractUrl(models.AbstractModel):
 
         model_ref = "%s,%s" % (self._name, self.id)
 
-        # la clé existe  ?
+        # key exist ?
         already_exist_url = self.env['url.url'].search(
             [('url_key', '=', self.url_key)])
 
         if already_exist_url:
-        # la clé existe mais quel model ?
+        # existing key in wich object ?
             for model in already_exist_url.model_id:
                 model_txt = "%s,%s" % (model._name, model.id)
                 if model_txt != model_ref:
-        # la clé existe pour un autre model
+        # existing key for other model
                     raise UserError(
                         _("Url_key already exist in other model"
                           " %s" % (model.name)))
                 else :
-        # la clé existe pour le meme model on change le redirect de True à False
+        # existing key for same object toggle redirect  from True to False
                     already_exist_url.redirect = False
         else:
-        # la clé n'existe pas
+        # no existing key creating one
             vals = {'url_key': self.url_key,
                     'model_id': model_ref,
                     'redirect': False}
             self.env['url.url'].create(vals)
-
-        #import pdb; pdb.set_trace()
-
+        # other url of object set redirect to True
         this_model_urls = self.env['url.url'].search([
             ('model_id', '=', model_ref),
             ('url_key', '!=', self.url_key)])
@@ -131,7 +129,6 @@ class AbstractUrl(models.AbstractModel):
         for record in self:
             name = record.name
             url_key = record._prepare_url(name)
-
             record.url_key = url_key
             # _logger.info("Output..: %s ", url_key )
 
@@ -141,5 +138,6 @@ class AbstractUrl(models.AbstractModel):
         if url != self.url_key:
             self.url_key = url
             return {'value': {},
-                    'warning': {'title': 'Adapt text rules', 'message': 'it will will be adapted to %s' % (url)}}
+                    'warning': {'title': 'Adapt text rules',
+                    'message': 'it will will be adapted to %s' % (url)}}
         self.url_key = url

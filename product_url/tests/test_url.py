@@ -31,7 +31,9 @@ class Testbaseurl(SingleTransactionCase):
     def test_change_url_key(self):
         product = self.env['product.template'].browse(9)
 
-        product.url_key = u"Un Joli épervier"
+        product.url_key = product._prepare_url(u"Un Joli épervier")
+        _logger.info("prepared url %s" % product.url_key )
+
         product._inverse_set_url()
 
         url_key = self.env['url.url'].search([
