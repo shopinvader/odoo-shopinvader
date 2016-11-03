@@ -74,24 +74,24 @@ class AbstractUrl(models.AbstractModel):
             [('url_key', '=', self.url_key)])
 
         if already_exist_url:
-        # existing key in wich object ?
+            # existing key in wich object ?
             for model in already_exist_url.model_id:
                 model_txt = "%s,%s" % (model._name, model.id)
                 if model_txt != model_ref:
-        # existing key for other model
+                 # existing key for other model
                     raise UserError(
                         _("Url_key already exist in other model"
                           " %s" % (model.name)))
-                else :
-        # existing key for same object toggle redirect  from True to False
+                else:
+                # existing key for same object toggle redirect  from True to False
                     already_exist_url.redirect = False
         else:
-        # no existing key creating one
+            # no existing key creating one
             vals = {'url_key': self.url_key,
                     'model_id': model_ref,
                     'redirect': False}
             self.env['url.url'].create(vals)
-        # other url of object set redirect to True
+            # other url of object set redirect to True
         this_model_urls = self.env['url.url'].search([
             ('model_id', '=', model_ref),
             ('url_key', '!=', self.url_key)])
@@ -138,6 +138,7 @@ class AbstractUrl(models.AbstractModel):
         if url != self.url_key:
             self.url_key = url
             return {'value': {},
-                    'warning': {'title': 'Adapt text rules',
-                    'message': 'it will will be adapted to %s' % (url)}}
+                    'warning': {
+                        'title': 'Adapt text rules',
+                        'message': 'it will will be adapted to %s' % (url)}}
         self.url_key = url
