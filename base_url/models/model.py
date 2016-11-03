@@ -56,7 +56,7 @@ class AbstractUrl(models.AbstractModel):
         return url_key
 
     @api.multi
-    def _inverse_set_url(self, name=None):
+    def _inverse_set_url(self):
         """
         backup old url
 
@@ -68,50 +68,38 @@ class AbstractUrl(models.AbstractModel):
         """
 
         model_ref = "%s,%s" % (self._name, self.id)
-        url_key = ""
-        if not name:
-            url_key = self._prepare_url(name)
-        else:
-            url_key = self._prepare_url()
 
-        other_models_url = self.env['url.url'].search(
-            [('url_key', '=', url_key)]).model_id
+        # la clé existe  ?
+        already_exist_url = self.env['url.url'].search(
+            [('url_key', '=', self.url_key)])
 
-        if other_models_url:
-            for model in other_models_url:
+        if already_exist_url:
+        # la clé existe mais quel model ?
+            for model in already_exist_url.model_id:
                 model_txt = "%s,%s" % (model._name, model.id)
                 if model_txt != model_ref:
+        # la clé existe pour un autre model
                     raise UserError(
                         _("Url_key already exist in other model"
-                          " %s" % (other_models_url)))
-
-        # existe elle .?
-        search_url = self.env['url.url'].search([
-            ('model_id', '=', model_ref),
-            ('redirect', '=', False)])
-        if search_url is False:
-            _logger.info("NO url in place ", )
-        for res in search_url:
-            _logger.info("url in place: %s ", res)
-
-        url_id = 0
-        if search_url.url_key == url_key:
-            url_id = search_url.id
-
+                          " %s" % (model.name)))
+                else :
+        # la clé existe pour le meme model on change le redirect de True à False
+                    already_exist_url.redirect = False
         else:
-            for url in self.redirect_url_key_ids:
-                if url.url_key == url_key:
-                    # update
-                    search_url.redirect = True
-                    url.redirect = False
-                    url_id = url.id
-
-        if url_id == 0:
-            search_url.redirect = True
-            Data = {'url_key': url_key,
+        # la clé n'existe pas
+            vals = {'url_key': self.url_key,
                     'model_id': model_ref,
                     'redirect': False}
-            self.env['url.url'].create(Data)
+            self.env['url.url'].create(vals)
+
+        #import pdb; pdb.set_trace()
+
+        this_model_urls = self.env['url.url'].search([
+            ('model_id', '=', model_ref),
+            ('url_key', '!=', self.url_key)])
+
+        for exist_url in this_model_urls:
+                exist_url.redirect = True
 
     @api.multi
     def _compute_url(self):
@@ -151,4 +139,7 @@ class AbstractUrl(models.AbstractModel):
     def on_url_key_change(self):
         url = self._prepare_url(self.url_key)
         if url != self.url_key:
-            raise UserError(_("it will will be adapted to %s" % (url)))
+            self.url_key = url
+            return {'value': {},
+                    'warning': {'title': 'Adapt text rules', 'message': 'it will will be adapted to %s' % (url)}}
+        self.url_key = url
