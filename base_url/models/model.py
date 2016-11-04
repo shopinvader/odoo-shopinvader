@@ -17,9 +17,8 @@ class UrlUrl(models.Model):
     model_id = fields.Reference(selection='_reference_models',
                                 help="The id of product or category.",
                                 readonly=True, string="Model")
-    redirect = fields.Boolean('Redirect',
-                                help="this url is active or has to"
-                                "redirect to an other")
+    redirect = fields.Boolean('Redirect', help="this url is active or has"
+                                               " to redirect to an other")
 
     _sql_constraints = [('urlurl unique key',
                          'unique(url_key)',
@@ -41,9 +40,8 @@ class UrlUrl(models.Model):
 class AbstractUrl(models.AbstractModel):
     _name = 'abstract.url'
 
-    url_key = fields.Char(compute='_compute_url',
-							inverse='_inverse_set_url', string='Url Key',
-							help='partie d url pour accès')
+    url_key = fields.Char(compute='_compute_url', inverse='_inverse_set_url',
+                          string='Url Key', help='partie d url pour accès')
     redirect_url_key_ids = fields.One2many(compute='_compute_redirect_url',
                                            comodel_name='url.url')
 
@@ -129,11 +127,13 @@ class AbstractUrl(models.AbstractModel):
 
     @api.onchange('url_key')
     def on_url_key_change(self):
-        url = self._prepare_url(self.url_key)
-        if url != self.url_key:
-            self.url_key = url
-            return {'value': {},
-                    'warning': {
-                        'title': 'Adapt text rules',
-                        'message': 'it will will be adapted to %s' % (url)}}
-        self.url_key = url
+        for record in self:
+            url = record._prepare_url(record.url_key)
+            if url != record.url_key:
+                record.url_key = url
+                return {'value': {},
+                        'warning': {
+                            'title': 'Adapt text rules',
+                            'message': 'it will will be adapted to %s' %
+                                       (url)}}
+            record.url_key = url
