@@ -1,9 +1,10 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
+
 ##############################################################################
 #
-#    Account Cutoff Accrual Base module for OpenERP
+#    Rewrite url Base module for OpenERP
 #    Copyright (C) 2013 Akretion (http://www.akretion.com)
-#    @author EBII MonsieurB <contact@ebii.fr>
+#    @author EBII MonsieurB <monsieurb@saaslys.com>
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -21,31 +22,25 @@
 ##############################################################################
 
 {
-    'name': 'base_url',
+    'name': 'Base Url',
     'version': '8.0.0.1.0',
     'category': 'tools',
     'license': 'AGPL-3',
-    'summary': 'keep history of url for product & categorie  ',  # v7: size=64, v8: no size limit
-    'description': """
-        keep history of url for product & categorie
-    """,
+    'summary': 'keep history of url for product & categorie  ',
+
     'author': 'Akretion',
     'website': 'https://www.akretion.fr',
     # any module necessary for this one to work correctly
     'depends': [],
-
-    'data': ['views/url_view.xml'],
+    'external_dependencies': {
+        'bin': [],
+        'python': ['slugify'],
+    },
+    'data': ['views/url_view.xml',
+             'security/ir.model.access.csv'],
 
     'demo': [],
-    #les screenshots en v8: mettre dans static/description/, sans déclaration
-    # dans ce fichier
-    # pour l'icone du module (PNG 64x64 ou 128x128): rien à mettre dans __openerp__.py
-    # v7: ./static/src/img/icon.png
-    # v8: ./static/description/icon.png
-    # v9: ./static/description/icon.png
-    'url': '',  # ??
-    'installable': True,
-    'auto_install': False,
-    'application': False,
-}
 
+    'url': '',
+    'installable': True,
+}
