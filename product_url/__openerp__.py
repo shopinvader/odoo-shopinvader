@@ -36,7 +36,7 @@
 
     'demo': ['demo/url.url.csv'],
 
-    'url': '',  
+    'url': '',
     'installable': True,
     'auto_install': False,
     'application': False,

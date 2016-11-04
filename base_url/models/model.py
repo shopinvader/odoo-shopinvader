@@ -16,8 +16,7 @@ class UrlUrl(models.Model):
     url_key = fields.Char(string="Url Id")
     model_id = fields.Reference(selection='_reference_models',
                                 help="The id of product or category.",
-                                readonly=True,"Model",
-                                )
+                                readonly=True,string="Model",)
     redirect = fields.Boolean('Redirect',
 			       help="this url is active or has to"
 			       "redirect to an other",)
@@ -114,13 +113,7 @@ class AbstractUrl(models.AbstractModel):
 
     @api.multi
     def _compute_redirect_url(self):
-        """
-        :return:
-
-        """
         model_ref = "%s,%s" % (self._name, self.id)
-
-        _logger.info("reference model : %s ", model_ref)
 
         self.redirect_url_key_ids = self.env["url.url"]\
             .search([('model_id', '=', model_ref), ('redirect', '=', True)])
