@@ -3,18 +3,18 @@
    :alt: License: AGPL-3
 
 ==============
-{module_title}
+{Base URL}
 ==============
 
-This module extends the functionality of ... to support ...
-and to allow you to ...
+This module helps to set url and history of it
+
 
 Installation
 ============
 
 To install this module, you need to:
 
-#. Do this ...
+#. (root) pip install slugify
 
 Configuration
 =============

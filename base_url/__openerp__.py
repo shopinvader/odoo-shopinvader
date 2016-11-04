@@ -22,7 +22,7 @@
 ##############################################################################
 
 {
-    'name': 'base_url',
+    'name': 'Base Url',
     'version': '8.0.0.1.0',
     'category': 'tools',
     'license': 'AGPL-3',
@@ -43,6 +43,4 @@
 
     'url': '',
     'installable': True,
-    'auto_install': False,
-    'application': False,
 }

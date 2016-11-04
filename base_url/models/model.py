@@ -13,14 +13,16 @@ class UrlUrl(models.Model):
 
     _name = "url.url"
 
-    url_key = fields.Char(string="Url Id", store=True)
+    url_key = fields.Char(string="Url Id")
     model_id = fields.Reference(selection='_reference_models',
                                 help="The id of product or category.",
-                                readonly=True,
+                                readonly=True,"Model",
                                 )
-    redirect = fields.Boolean('Redirect')
+    redirect = fields.Boolean('Redirect',
+			       help="this url is active or has to"
+			       "redirect to an other",)
 
-    _sql_constraints = [("urlurl unique key",
+    _sql_constraints = [('urlurl unique key',
                          'unique(url_key)',
                          'Already exists in database')]
 
@@ -33,20 +35,21 @@ class UrlUrl(models.Model):
         """
         :return: return object attach to the url
         """
-        object = self.search([("url_key", "=", urls)]).model_id
+        object = self.search([('url_key', "=", urls)]).model_id
         return object
 
 
 class AbstractUrl(models.AbstractModel):
-    _name = "abstract.url"
+    _name = 'abstract.url'
 
-    url_key = fields.Char(compute="_compute_url",
-                          inverse="_inverse_set_url", string="Url key")
-    redirect_url_key_ids = fields.One2many(compute="_compute_redirect_url",
-                                           comodel_name="url.url")
+    url_key = fields.Char(compute='_compute_url',
+                          inverse='_inverse_set_url', string='Url Key',
+			   help='partie d url pour accès')
+    redirect_url_key_ids = fields.One2many(compute='_compute_redirect_url',
+                                           comodel_name='url.url')
 
     def _prepare_url(self, name=None):
-        url_key = "prepare"
+        url_key = 'prepare'
         if name is None:
             url_to_normalize = self.url_key
             url_key = slugify(url_to_normalize)

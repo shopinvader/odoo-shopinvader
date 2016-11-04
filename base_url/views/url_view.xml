@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
-
     <record id="url_view_form" model="ir.ui.view">
-
         <field name="model">url.url</field>
         <field name="arch" type="xml">
             <form string="Url rewriting edit form">
@@ -16,19 +14,18 @@
                 </sheet>
             </form>
         </field>
-    </record>
+    </record>	
 
-        <record id="url_view_tree" model="ir.ui.view">
-
-            <field name="model">url.url</field>
-            <field name="arch" type="xml">
-                <tree string="">
-                    <field name="url_key"/>
-                    <field name="model_id"/>
-                    <field name="redirect"/>
-                </tree>
-            </field>
-        </record>
+	<record id="url_view_tree" model="ir.ui.view">
+	    <field name="model">url.url</field>
+	    <field name="arch" type="xml">
+		<tree string="">
+		    <field name="url_key"/>
+		    <field name="model_id"/>
+		    <field name="redirect"/>
+		</tree>
+	    </field>
+	</record>
 
         <record id="base_url_action_view" model="ir.actions.act_window">
         <field name="name">url list Viewer</field>
