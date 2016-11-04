@@ -42,8 +42,8 @@ class AbstractUrl(models.AbstractModel):
     _name = 'abstract.url'
 
     url_key = fields.Char(compute='_compute_url',
-                          inverse='_inverse_set_url', string='Url Key',
-			   help='partie d url pour accès')
+							inverse='_inverse_set_url', string='Url Key',
+							help='partie d url pour accès')
     redirect_url_key_ids = fields.One2many(compute='_compute_redirect_url',
                                            comodel_name='url.url')
 
