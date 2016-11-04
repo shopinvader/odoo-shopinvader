@@ -16,10 +16,10 @@ class UrlUrl(models.Model):
     url_key = fields.Char(string="Url Id")
     model_id = fields.Reference(selection='_reference_models',
                                 help="The id of product or category.",
-                                readonly=True,string="Model",)
+                                readonly=True, string="Model")
     redirect = fields.Boolean('Redirect',
-			       help="this url is active or has to"
-			       "redirect to an other",)
+                                help="this url is active or has to"
+                                "redirect to an other")
 
     _sql_constraints = [('urlurl unique key',
                          'unique(url_key)',
