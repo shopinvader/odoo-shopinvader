@@ -32,7 +32,8 @@
     'website': 'https://www.akretion.fr',
     'depends': ['product', 'base_url'],
 
-    'data': ['views/product_view.xml', ],
+    'data': ['views/product_view.xml',
+             'views/category_view.xml', ],
 
     'demo': ['demo/url.url.csv'],
 

@@ -100,30 +100,32 @@ class AbstractUrl(models.AbstractModel):
 
     @api.multi
     def _compute_url(self):
-
-        model_ref = "%s,%s" % (self._name, self.id)
-        _logger.info("used model  : %s ", model_ref)
-        # import pdb; pdb.set_trace()
-        url = self.env["url.url"].search([('model_id', '=', model_ref),
-                                          ('redirect', '=', False)])
-        if url:
-            self.url_key = url[0].url_key
+        for record in self:
+            model_ref = "%s,%s" % (record._name, record.id)
+            _logger.info("used model  : %s ", model_ref)
+            # import pdb; pdb.set_trace()
+            url = record.env["url.url"].search([('model_id', '=', model_ref),
+                                              ('redirect', '=', False)])
+            if url:
+                record.url_key = url[0].url_key
 
     @api.multi
     def _compute_redirect_url(self):
-        model_ref = "%s,%s" % (self._name, self.id)
+        for record in self:
+            model_ref = "%s,%s" % (record._name, record.id)
 
-        self.redirect_url_key_ids = self.env["url.url"]\
-            .search([('model_id', '=', model_ref), ('redirect', '=', True)])
+            record.redirect_url_key_ids = record.env["url.url"]\
+                .search([('model_id', '=', model_ref), ('redirect', '=', True)])
 
     @api.onchange('name')
     def on_name_change(self):
-
+        #import pdb; pdb.set_trace()
         for record in self:
-            name = record.name
-            url_key = record._prepare_url(name)
-            record.url_key = url_key
-            # _logger.info("Output..: %s ", url_key )
+            if record.name:
+                name = record.name
+                url_key = record._prepare_url(name)
+                record.url_key = url_key
+                # _logger.info("Output..: %s ", url_key )
 
     @api.onchange('url_key')
     def on_url_key_change(self):
