@@ -11,13 +11,5 @@
              <field name="sub_state" >request_quotation</field>
         </record>
 
-        <!-- Confirm some Sale Orders-->
-        <!--<workflow action="order_confirm" model="sale.order" ref="sale_order_4"/>-->
-
-        <!--<workflow action="order_confirm" model="sale.order" ref="sale_order_7"/>-->
-
-        <!-- sale advance demo.. -->
-        <!-- Demo Data for Product -->
-
     </data>
 </openerp>

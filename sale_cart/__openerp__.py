@@ -31,7 +31,7 @@
     'website': 'http://wwww.akretion.com/',
     'depends': ['sale', 'sale_substate'],
     'data': [],
-    'demo': ['cart_demo.xml'],
+    'demo': ['demo/cart_demo.xml'],
     'test': [],
     'installable': True,
     'active': False,
