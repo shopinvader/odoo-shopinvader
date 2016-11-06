@@ -119,7 +119,6 @@ class AbstractUrl(models.AbstractModel):
 
     @api.onchange('name')
     def on_name_change(self):
-        #import pdb; pdb.set_trace()
         for record in self:
             if record.name:
                 name = record.name
@@ -129,13 +128,15 @@ class AbstractUrl(models.AbstractModel):
 
     @api.onchange('url_key')
     def on_url_key_change(self):
+        
         for record in self:
-            url = record._prepare_url(record.url_key)
-            if url != record.url_key:
+            if record.url_key:
+                url = record._prepare_url(record.url_key)
+                if url != record.url_key:
+                    record.url_key = url
+                    return {'value': {},
+                            'warning': {
+                                'title': 'Adapt text rules',
+                                'message': 'it will will be adapted to %s' %
+                                           (url)}}
                 record.url_key = url
-                return {'value': {},
-                        'warning': {
-                            'title': 'Adapt text rules',
-                            'message': 'it will will be adapted to %s' %
-                                       (url)}}
-            record.url_key = url
