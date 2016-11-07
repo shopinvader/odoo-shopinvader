@@ -115,7 +115,7 @@ class AbstractUrl(models.AbstractModel):
             model_ref = "%s,%s" % (record._name, record.id)
 
             record.redirect_url_key_ids = record.env["url.url"].search(
-            [('model_id', '=', model_ref), ('redirect', '=', True)])
+                [('model_id', '=', model_ref), ('redirect', '=', True)])
 
     @api.onchange('name')
     def on_name_change(self):
