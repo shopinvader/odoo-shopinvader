@@ -4,10 +4,8 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-
 class Testwishlist(SingleTransactionCase):
 
-    
     def setup(self):
         super(Testwishlist, self).setup()
 
@@ -25,5 +23,3 @@ class Testwishlist(SingleTransactionCase):
         sale = self.env['sale.order'].browse(6)
 
         self.assertEqual('wishlist', sale.sub_state)
-
-
