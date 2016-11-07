@@ -105,7 +105,7 @@ class AbstractUrl(models.AbstractModel):
             _logger.info("used model  : %s ", model_ref)
             # import pdb; pdb.set_trace()
             url = record.env["url.url"].search([('model_id', '=', model_ref),
-                                              ('redirect', '=', False)])
+                                                ('redirect', '=', False)])
             if url:
                 record.url_key = url[0].url_key
 
@@ -114,8 +114,8 @@ class AbstractUrl(models.AbstractModel):
         for record in self:
             model_ref = "%s,%s" % (record._name, record.id)
 
-            record.redirect_url_key_ids = record.env["url.url"]\
-                .search([('model_id', '=', model_ref), ('redirect', '=', True)])
+            record.redirect_url_key_ids = record.env["url.url"].search(
+            [('model_id', '=', model_ref), ('redirect', '=', True)])
 
     @api.onchange('name')
     def on_name_change(self):
@@ -128,7 +128,7 @@ class AbstractUrl(models.AbstractModel):
 
     @api.onchange('url_key')
     def on_url_key_change(self):
-        
+
         for record in self:
             if record.url_key:
                 url = record._prepare_url(record.url_key)
