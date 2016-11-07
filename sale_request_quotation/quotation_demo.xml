@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+         <!--with substate = request_quotation sale_order 7 8 -->
+
+        <record id="sale.sale_order_7" model="sale.order">
+             <field name="sub_state" >request_quotation</field>
+        </record>
+
+        <record id="sale.sale_order_8" model="sale.order">
+             <field name="sub_state" >request_quotation</field>
+        </record>
+
+    </data>
+</openerp>

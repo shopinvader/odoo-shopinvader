@@ -9,7 +9,7 @@
                 <!--<xpath expr="//field[@name='list_price']" position="after">  </xpath>-->
                     <!-- Add your fields or attributes here -->
                     <notebook>
-                        <page string="Rewrite url">
+                        <page string="Url">
                             <group>
                                  <field name="url_key"/>
                                     <field name="redirect_url_key_ids"/>
