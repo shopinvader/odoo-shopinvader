@@ -33,6 +33,6 @@
     'depends': ['sale', 'sale_substate'],
     'data': [],
     'demo': ['quotation_demo.xml'],
-    'test': ['tests/test_request_quotations'],
+    'test': ['tests/test_request_quotation.py'],
     'installable': True,
 }

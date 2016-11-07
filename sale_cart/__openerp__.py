@@ -32,6 +32,6 @@
     'depends': ['sale', 'sale_substate'],
     'data': [],
     'demo': ['demo/cart_demo.xml'],
-    'test': ['tests/test_cart'],
+    'test': ['tests/test_cart.py'],
     'installable': True,
 }
