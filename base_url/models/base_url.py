@@ -52,11 +52,11 @@ class AbstractUrl(models.AbstractModel):
     def _prepare_url(self, name=None):
         url_key = 'prepare'
         if name is None:
-            url_to_normalize = self.url_key
-            url_key = slugify(url_to_normalize)
+            url_to_slug = self.url_key
+            url_key = slugify(url_to_slug)
         else:
-            url_to_normalize = name
-            url_key = slugify(url_to_normalize)
+            url_to_slug = name
+            url_key = slugify(url_to_slug)
         return url_key
 
     @api.multi
