@@ -33,11 +33,11 @@ class UrlUrl(models.Model):
         return []
 
     @api.multi
-    def _get_object(self, urls):
+    def _get_object(self, url):
         """
         :return: return object attach to the url
         """
-        object = self.search([('url_key', "=", urls)]).model_id
+        object = self.search([('url_key', "=", url)]).model_id
         return object
 
 
