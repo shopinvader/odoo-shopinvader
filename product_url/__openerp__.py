@@ -17,7 +17,7 @@
     'summary': 'keep history of url for product & categorie  ',
 
     'author': 'Akretion',
-    'website': 'https://www.akretion.fr',
+    'website': 'http://www.akretion.com/fr',
     'depends': ['product', 'base_url'],
 
     'data': ['views/product_view.xml',
