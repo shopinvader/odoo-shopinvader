@@ -1,7 +1,7 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
-#    Author: Chafique Delli
+#    Author: MonsieurB
 #    Copyright 2015 Akretion SA
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
 
 {
     'name': 'Sale_wishlist',
-    'version': '0.1',
+    'version': '8.0.0.1',
     'category': 'Sales Management',
     'license': 'AGPL-3',
     'summary': """
@@ -32,7 +32,6 @@
     'depends': ['sale', 'sale_substate'],
     'data': [],
     'demo': ['wishlist_demo.xml'],
-    'test': [],
+    'test': ['tests/test_wishlist'],
     'installable': True,
-    'active': False,
 }

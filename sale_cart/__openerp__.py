@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Chafique Delli
@@ -21,7 +21,7 @@
 
 {
     'name': 'Sale_cart',
-    'version': '0.1',
+    'version': '8.0.0.1',
     'category': 'Sales Management',
     'license': 'AGPL-3',
     'summary': """
@@ -32,7 +32,6 @@
     'depends': ['sale', 'sale_substate'],
     'data': [],
     'demo': ['demo/cart_demo.xml'],
-    'test': [],
+    'test': ['tests/test_cart'],
     'installable': True,
-    'active': False,
 }

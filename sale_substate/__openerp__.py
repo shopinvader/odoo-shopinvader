@@ -1,4 +1,4 @@
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #    Author: Chafique Delli
@@ -21,7 +21,7 @@
 
 {
     'name': 'Sale_Sub_State',
-    'version': '0.1',
+    'version': '8.0.0.1',
     'category': 'Sales Management',
     'license': 'AGPL-3',
     'summary': """
@@ -35,5 +35,4 @@
     'demo': [],
     'test': [],
     'installable': True,
-    'active': False,
 }
