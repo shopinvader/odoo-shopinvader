@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+#    Copyright (C) 2013 Akretion (http://www.akretion.com)
+#    @author EBII MonsieurB <monsieurb@saaslys.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from openerp import models, api, fields, _
 import logging
 from openerp.exceptions import Warning as UserError
@@ -29,11 +33,11 @@ class UrlUrl(models.Model):
         return []
 
     @api.multi
-    def _get_object(self, urls):
+    def _get_object(self, url):
         """
         :return: return object attach to the url
         """
-        object = self.search([('url_key', "=", urls)]).model_id
+        object = self.search([('url_key', "=", url)]).model_id
         return object
 
 
