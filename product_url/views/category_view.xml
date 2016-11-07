@@ -8,14 +8,11 @@
 
              <xpath expr="//field[@name='type']" position="after">  
              
-
                     <!-- Add your fields or attributes here -->
-                    
                             <group string="Rewrite url">
                                  <field name="url_key"/>
                                     <field name="redirect_url_key_ids"/>
                             </group>
-                    
              </xpath>                  
             </field>
         </record>
