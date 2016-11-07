@@ -3,7 +3,7 @@
    :alt: License: AGPL-3
 
 ==============
-{module_title}
+sale_substate
 ==============
 
 This module extends the sale module tu get a sub_state fields for sale order
@@ -13,7 +13,7 @@ Installation
 
 To install this module, you need to:
 
-#. Do this ...
+
 
 Configuration
 =============

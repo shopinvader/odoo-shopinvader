@@ -4,10 +4,8 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-
 class Testcart(SingleTransactionCase):
 
-    
     def setup(self):
         super(Testcart, self).setup()
 
@@ -25,5 +23,3 @@ class Testcart(SingleTransactionCase):
         sale = self.env['sale.order'].browse(4)
 
         self.assertEqual('cart', sale.sub_state)
-
-
