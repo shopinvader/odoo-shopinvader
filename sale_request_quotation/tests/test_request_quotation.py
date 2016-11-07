@@ -4,10 +4,10 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class Testrequest_quotation(SingleTransactionCase):
+class TestRequestQuotation(SingleTransactionCase):
 
     def setup(self):
-        super(Testrequest_quotation, self).setup()
+        super(TestRequestQuotation, self).setup()
 
     def test_init1(self):
         sale = self.env['sale.order'].browse(7)

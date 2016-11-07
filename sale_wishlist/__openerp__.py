@@ -21,7 +21,7 @@
 
 {
     'name': 'Sale_wishlist',
-    'version': '8.0.0.1',
+    'version': '8.0.0.1.0',
     'category': 'Sales Management',
     'license': 'AGPL-3',
     'summary': """
