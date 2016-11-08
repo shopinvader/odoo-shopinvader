@@ -44,6 +44,16 @@ class Testbaseurlcategory(SingleTransactionCase):
 
         self.assertEqual('un-joli-epervier', url_key)
 
+    def test_onchange_category_url_key(self):
+        category = self.env['product.category'].browse(2)
+
+        category.url_key = u"Un Joli épervier"
+        res = category.on_url_key_change()
+        _logger.debug(res['warning'],)
+
+        self.assertEqual('it will will be adapted to un-joli-epervier',
+                         res['warning']['message'])
+
     def test_get_object(self):
         category = self.env['product.category'].browse(2)
         category.name = u"Un Joli épervier"
