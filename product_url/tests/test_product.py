@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from openerp.tests.common import SingleTransactionCase
 import logging
+import warnings
 _logger = logging.getLogger(__name__)
 
+class WarningTestMixin(object):
+    'A test which checks if the specified warning was raised'
 
-class Testbaseurl(SingleTransactionCase):
+class Testbaseurl(WarningTestMixin, SingleTransactionCase):
 
     def setup(self):
         super(Testbaseurl, self).setup()
@@ -43,6 +46,17 @@ class Testbaseurl(SingleTransactionCase):
         _logger.info(u"url_key : %s ", url_key)
 
         self.assertEqual('un-joli-epervier', url_key)
+
+
+    def test_onchange_url_key(self):
+        product = self.env['product.template'].browse(9)
+
+        product.url_key = u"Un Joli épervier"
+        res = product.on_url_key_change()
+
+        _logger.info(res['warning'],)
+
+        self.assertEqual('it will will be adapted to un-joli-epervier',res['warning']['message'])
 
     def test_get_object(self):
         product = self.env['product.template'].browse(9)
