@@ -14,7 +14,7 @@
     'version': '8.0.0.1.0',
     'category': 'tools',
     'license': 'AGPL-3',
-    'summary': 'keep history of url for product & categorie  ',
+    'summary': 'keep history of url for products & categories  ',
 
     'author': 'Akretion',
     'website': 'http://www.akretion.com/fr',
