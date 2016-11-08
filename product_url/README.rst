@@ -3,11 +3,12 @@
    :alt: License: AGPL-3
 
 ==============
-{module_title}
+product_url
 ==============
 
-This module extends the functionality of ... to support ...
-and to allow you to ...
+This module extends the functionality of base_url to add url history for product.template
+and product_category
+
 
 Installation
 ============
