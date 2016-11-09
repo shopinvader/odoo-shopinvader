@@ -1,1 +1,2 @@
-from . import test_product, test_category
+from . import test_product
+from . import test_category
