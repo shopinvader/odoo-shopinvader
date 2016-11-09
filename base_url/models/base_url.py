@@ -52,14 +52,10 @@ class AbstractUrl(models.AbstractModel):
     def _get_model_id_reference(self):
         return "%s,%s" % (self._name, self.id)
 
-    def _prepare_url(self, name=None):
-        url_key = ''
-        if name is None:
-            url_to_normalize = self.url_key
-            url_key = slugify(url_to_normalize)
-        else:
-            url_to_normalize = name
-            url_key = slugify(url_to_normalize)
+    def _prepare_url(self):
+
+        url_key = slugify(self.name)
+
         return url_key
 
     @api.multi
@@ -131,7 +127,7 @@ class AbstractUrl(models.AbstractModel):
         for record in self:
             if record.name:
                 name = record.name
-                url_key = record._prepare_url(name)
+                url_key = record._prepare_url()
                 record.url_key = url_key
                 # _logger.info("Output..: %s ", url_key )
 
