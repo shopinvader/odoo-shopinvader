@@ -65,8 +65,8 @@ Images
 Contributors
 ------------
 
-* Firstname Lastname <email.address@example.org>
-* Second Person <second.person@example.org>
+* Monsieur B <monsieurb@saaslys.com>
+* Sebastien Beau <sebastien.beau@akretion.com>
 
 Maintainer
 ----------

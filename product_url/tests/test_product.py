@@ -10,6 +10,13 @@ class Testbaseurl(SingleTransactionCase):
     def setup(self):
         super(Testbaseurl, self).setup()
 
+    def test__get_reference(self):
+        product = self.env['product.template'].browse(9)
+        model_ref = product._get_model_id_reference()
+        model = "%s,%s" % (product._name, product.id)
+        self.assertEqual(model, model_ref)
+        self.assertEqual("product.template,9", model_ref)
+
     def test_change_name(self):
         product = self.env['product.template'].browse(9)
 
