@@ -21,7 +21,6 @@ class UrlUrl(models.Model):
     @api.model
     def _reference_models(self):
         res = super(UrlUrl, self)._reference_models()
-
         res += [('product.template', 'Product'),
                 ('product.category', 'Category')]
         return res
