@@ -17,6 +17,14 @@ class Testbaseurl(SingleTransactionCase):
         self.assertEqual(model, model_ref)
         self.assertEqual("product.template,9", model_ref)
 
+    def test_get_url(self):
+        product = self.env['product.template'].browse(2)
+        self.assertEqual("good-monitoring", product.url_key)
+
+    def test_get_redirect_url(self):
+        product = self.env['product.template'].browse(2)
+        self.assertEqual(4, len(product.redirect_url_key_ids))
+
     def test_change_name(self):
         product = self.env['product.template'].browse(9)
 
