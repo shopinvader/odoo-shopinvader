@@ -126,10 +126,8 @@ class AbstractUrl(models.AbstractModel):
     def on_name_change(self):
         for record in self:
             if record.name:
-                name = record.name
                 url_key = record._prepare_url()
                 record.url_key = url_key
-                # _logger.info("Output..: %s ", url_key )
 
     @api.onchange('url_key')
     def on_url_key_change(self):
