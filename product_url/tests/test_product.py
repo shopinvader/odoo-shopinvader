@@ -17,6 +17,12 @@ class Testbaseurl(SingleTransactionCase):
         self.assertEqual(model, model_ref)
         self.assertEqual("product.template,9", model_ref)
 
+    def test__get_reference_model(self):
+        url1 = self.env['url.url'].browse(1)
+        model_ref= "%s,%s" % (url1.model_id._name, url1.model_id.id)
+        self.assertEqual(model_ref, "product.template,2")
+
+
     def test_get_url(self):
         product = self.env['product.template'].browse(2)
         self.assertEqual("good-monitoring", product.url_key)
