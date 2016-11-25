@@ -37,15 +37,14 @@ class UrlUrl(models.Model):
         """
         :return: return object attach to the url
         """
-        object = self.search([('url_key', "=", url)]).model_id
-        return object
+        return self.search([('url_key', "=", url)]).model_id
 
 
 class AbstractUrl(models.AbstractModel):
     _name = 'abstract.url'
 
     url_key = fields.Char(compute='_compute_url', inverse='_inverse_set_url',
-                          string='Url Key', help='partie d url pour accès')
+                          string='Url Key', help='parts of url to get it')
     redirect_url_key_ids = fields.One2many(compute='_compute_redirect_url',
                                            comodel_name='url.url')
 
@@ -53,10 +52,7 @@ class AbstractUrl(models.AbstractModel):
         return "%s,%s" % (self._name, self.id)
 
     def _prepare_url(self):
-
-        url_key = slugify(self.name)
-
-        return url_key
+        return slugify(self.name)
 
     @api.multi
     def _inverse_set_url(self):
@@ -73,27 +69,26 @@ class AbstractUrl(models.AbstractModel):
         model_ref = self._get_model_id_reference()
 
         # key exist ?
-        already_exist_url = self.env['url.url'].search(
+        exist_url = self.env['url.url'].search(
             [('url_key', '=', self.url_key)])
 
-        if already_exist_url:
+        if exist_url:
             # existing key in wich object ?
-            for url in already_exist_url:
-                model = url.model_id
-                model_txt = "%s,%s" % (model._name, model.id)
-                if model_txt != model_ref:
-                    # existing key for other model
-                    raise UserError(
-                        _("Url_key already exist in other model"
-                          " %s" % (model.name)))
-                else:  # existing key for same object toggle redirect to False
-                    already_exist_url.redirect = False
+            exist_url.ensure_one()
+            if model_ref != exist_url.model_id._get_model_id_reference():
+                # existing key for other model
+                raise UserError(
+                    _("Url_key already exist in other model"
+                      " %s" % (exist_url.model_id.name)))
+            else:  # existing key for same object toggle redirect to False
+                exist_url.redirect = False
         else:
-            # no existing key creating one
-            vals = {'url_key': self.url_key,
-                    'model_id': model_ref,
-                    'redirect': False}
-            self.env['url.url'].create(vals)
+            # no existing key creating one if not empty
+            if self.url_key:
+                vals = {'url_key': self.url_key,
+                        'model_id': model_ref,
+                        'redirect': False}
+                self.env['url.url'].create(vals)
             # other url of object set redirect to True
         redirect_urls = self.env['url.url'].search([
             ('model_id', '=', model_ref),
@@ -101,24 +96,21 @@ class AbstractUrl(models.AbstractModel):
             ('redirect', '=', False)])
 
         for exist_url in redirect_urls:
-                exist_url.redirect = True
+            exist_url.redirect = True
 
     @api.multi
     def _compute_url(self):
         for record in self:
             model_ref = record._get_model_id_reference()
             _logger.info("used model  : %s ", model_ref)
-            # import pdb; pdb.set_trace()
             url = record.env["url.url"].search([('model_id', '=', model_ref),
                                                 ('redirect', '=', False)])
-            if url:
-                record.url_key = url.url_key
+            record.url_key = url.url_key
 
     @api.multi
     def _compute_redirect_url(self):
         for record in self:
             model_ref = record._get_model_id_reference()
-
             record.redirect_url_key_ids = record.env["url.url"].search(
                 [('model_id', '=', model_ref), ('redirect', '=', True)])
 
@@ -126,8 +118,7 @@ class AbstractUrl(models.AbstractModel):
     def on_name_change(self):
         for record in self:
             if record.name:
-                url_key = record._prepare_url()
-                record.url_key = url_key
+                record.url_key = record._prepare_url()
 
     @api.onchange('url_key')
     def on_url_key_change(self):
@@ -140,5 +131,5 @@ class AbstractUrl(models.AbstractModel):
                     return {'value': {},
                             'warning': {
                                 'title': 'Adapt text rules',
-                                'message': 'it will will be adapted to %s' %
+                                'message': 'it will be adapted to %s' %
                                            (url)}}
