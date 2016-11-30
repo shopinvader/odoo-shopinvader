@@ -1,0 +1,25 @@
+"id","carrier_id/id","country_ids/id","name"
+
+"delivery_data.delivery_grid_poste","delivery_data.delivery_carrier_colisposte","base.fr","Pricing Coliposte FRANCE"
+
+"delivery_data.delivery_grid_om1","delivery_data.delivery_carrier_om1","base.gp,base.mq,base.gf,base.re,base.yt,base.pm,base.mf,base.bl","Pricing Colissimo International OM1"
+
+"delivery_data.delivery_grid_om2","delivery_data.delivery_carrier_om2","base.nc,base.pf,base.wf,base.tf","Pricing Colissimo International OM2"
+
+"delivery_data.delivery_grid_inter_zone1","delivery_carrier_inter_zone1","base.mc,base.be,base.de,base.lu,base.nl","Pricing Colissimo International Zone 1"
+
+"delivery_data.delivery_grid_inter_zone2","delivery_carrier_inter_zone2","base.uk,base.it,base.es,base.ch","Pricing Colissimo International Zone 2"
+
+"delivery_data.delivery_grid_inter_zone3","delivery_carrier_inter_zone3","base.at,base.dk,base.ie,base.pt","Pricing Colissimo International Zone 3"
+
+"delivery_data.delivery_grid_inter_zone4","delivery_carrier_inter_zone4","base.fi,base.no,base.se","Pricing Colissimo International Zone 4"
+
+"delivery_data.delivery_grid_inter_zone5","delivery_carrier_inter_zone5","base.gr,base.hu,base.is,base.pl,base.cz,base.sk,base.si","Pricing Colissimo International Zone 5"
+
+"delivery_data.delivery_grid_inter_zone6","delivery_carrier_inter_zone6","base.bg,base.cy,base.lt,base.lv,base.ee,base.gi,base.mt,base.sm,base.va,base.az,base.by,base.dz,base.hr,base.ma,base.me,base.ro,base.rs,base.tr,base.al,base.am,base.ba,base.ge,base.md,base.mk,base.ru,base.ua,base.tn","Pricing Colissimo International Zone6"
+
+"delivery_data.delivery_grid_inter_zone7","delivery_carrier_inter_zone7","base.ae,base.bf,base.bi,base.bj,base.bw,base.ca,base.cd,base.ci,base.cm,base.cv,base.eg,base.et,base.gh,base.gn,base.ir,base.jo,base.ke,base.kw,base.lb,base.mg,base.mu,base.ne,base.ng,base.om,base.qa,base.rw,base.sa,base.sc,base.sy,base.ug,base.us,base.ye,base.za,base.zm,base.ao,base.bh,base.cf,base.cg,base.dj,base.er,base.ga,base.gw,base.il,base.km,base.lr,base.ls,base.ly,base.ml,base.mr,base.mw,base.mz,base.na,base.pr,base.sd,base.sh,base.sl,base.sn,base.st,base.sz,base.td,base.tg,base.tz,base.zw,base.gm,base.gq","Pricing Colissimo International Zone7"
+
+"delivery_data.delivery_grid_inter_zone8","delivery_carrier_inter_zone8","base.au,base.bd,base.bo,base.br,base.ck,base.cn,base.cr,base.ec,base.hk,base.jp,base.kh,base.lk,base.mv,base.ni,base.nz,base.pa,base.pe,base.pk,base.py,base.sg,base.uy,base.ht,base.tv,base.af,base.an,base.ar,base.bb,base.bm,base.bn,base.bs,base.bz,base.cl,base.co,base.cu,base.dm,base.do,base.fj,base.fk,base.gs,base.gt,base.gy,base.hn,base.id,base.in,base.kg,base.ki,base.kp,base.kr,base.ky,base.kz,base.la,base.lc,base.mm,base.mo,base.ms,base.mx,base.my,base.np,base.nr,base.pg,base.ph,base.sb,base.sr,base.sv,base.th,base.tj,base.tp,base.to,base.tt,base.tw,base.uz,base.ve,base.vg,base.vn,base.vu,base.ag,base.ai,base.gd,base.gu,base.jm,base.mn,base.pn,base.tm,base.vc,base.ws,base.tc","Pricing Colissimo International Zone8"
+
+"delivery_data.delivery_grid_direct_from_factory","delivery_carrier_from_factory","base.be,base.lu,base.fr,base.mc","Pricing direct from factory"

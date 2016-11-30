@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!-- ######################################################################################################  -->
+
+         <!-- Create a service product  adaptoo Coliposte -->
+
+        <record id="product_product_delivery_om1" model="product.product">
+            <field name="name">Colissimo International OM1</field>
+            <field name="default_code">colissimo_om1</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_6"/>
+            <field name="standard_price"></field>
+            <field name="list_price"></field>
+            <field name="image" type="base64" file="delivery/static/img/product_product_delivery-image.jpg"/>
+        </record>
+
+         <!-- Carrier -->
+        <record id="delivery_carrier_om1" model="delivery.carrier">
+            <field name="name">Colissimo International OM1</field>
+            <field name="normal_price"></field>
+            <field name="partner_id" ref="res_partner_74"/>
+            <field name="product_id" ref="product_product_delivery_om1"/>
+            <field name="use_detailed_pricelist" eval="True"/>
+        </record>
+
+        <!-- Carrier Grids -->
+        <record id="delivery_grid_om1" model="delivery.grid">
+            <field name="name">Pricing Colissimo International OM1</field>
+            <field name="carrier_id" ref="delivery_carrier_om1"/>
+            <!--<field model="res.country" name="country_ids" search="['|',('code','ilike','gp'),('code','ilike','mq')]"/>-->
+        </record>
+
+        <!-- Carrier Grids lines -->
+        <!--  delivery charge of product if weight less than and equal 3.5kg-->
+        <record id="delivery_grid_om1_line1" model="delivery.grid.line">
+            <field name="name">Weight >= 0.50kg</field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="0.5" name="max_value"/>
+            <field eval="14.47" name="list_price"/>
+            <field eval="14.47" name="standard_price"/>
+        </record>
+        <!--  delivery charge of product if weight more than 3.5kg-->
+        <record id="delivery_grid_om1_line2" model="delivery.grid.line">
+            <field name="name"> 1 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="1" name="max_value"/>
+            <field eval="17.88" name="list_price"/>
+            <field eval="17.88" name="standard_price"/>
+        </record>
+        <!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line3" model="delivery.grid.line">
+            <field name="name"> 2 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="2" name="max_value"/>
+            <field eval="24.10" name="list_price"/>
+            <field eval="24.10" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line4" model="delivery.grid.line">
+            <field name="name"> 3 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="3" name="max_value"/>
+            <field eval="30.32" name="list_price"/>
+            <field eval="30.32" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line5" model="delivery.grid.line">
+            <field name="name"> 4 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="4" name="max_value"/>
+            <field eval="36.54" name="list_price"/>
+            <field eval="36.54" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line6" model="delivery.grid.line">
+            <field name="name"> 5 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="5" name="max_value"/>
+            <field eval="42.76" name="list_price"/>
+            <field eval="42.76" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line7" model="delivery.grid.line">
+            <field name="name"> 6 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="6" name="max_value"/>
+            <field eval="48.98" name="list_price"/>
+            <field eval="48.98" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line8" model="delivery.grid.line">
+            <field name="name"> 7 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="7" name="max_value"/>
+            <field eval="55.20" name="list_price"/>
+            <field eval="55.20" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line9" model="delivery.grid.line">
+            <field name="name"> 8 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="8" name="max_value"/>
+            <field eval="61.41" name="list_price"/>
+            <field eval="61.41" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line10" model="delivery.grid.line">
+            <field name="name"> 9 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="9" name="max_value"/>
+            <field eval="67.63" name="list_price"/>
+            <field eval="67.63" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line11" model="delivery.grid.line">
+            <field name="name"> 10 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="10" name="max_value"/>
+            <field eval="73.85" name="list_price"/>
+            <field eval="73.85" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line12" model="delivery.grid.line">
+            <field name="name"> 15 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="15" name="max_value"/>
+            <field eval="102.56" name="list_price"/>
+            <field eval="102.56" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line13" model="delivery.grid.line">
+            <field name="name"> 20 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="20" name="max_value"/>
+            <field eval="133.65" name="list_price"/>
+            <field eval="133.65" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line14" model="delivery.grid.line">
+            <field name="name"> 25 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="25" name="max_value"/>
+            <field eval="164.75" name="list_price"/>
+            <field eval="164.75" name="standard_price"/>
+        </record>
+<!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_om1_line15" model="delivery.grid.line">
+            <field name="name"> 30 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_om1"/>
+            <field eval="30" name="max_value"/>
+            <field eval="195.85" name="list_price"/>
+            <field eval="195.85" name="standard_price"/>
+        </record>
+
+    </data>
+</openerp>

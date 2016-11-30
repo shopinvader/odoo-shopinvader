@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+    <!-- ######################################################################################################  -->
+             <!-- Create a partner to be transporter -->
+        <record id="res_partner_76" model="res.partner">
+            <field name="name">Transporteur Usine</field>
+            <field eval="[(6,0,[ref('base.res_partner_category_11')])]" name="category_id"/>
+            <field name="supplier">1</field>
+            <field eval="0" name="customer"/>
+            <field name="is_company">1</field>
+            <field name="city">CHATEAUNEUF DE GADAGNE</field>
+            <field name="zip">84470</field>
+            <field name="country_id" ref="base.fr"/>
+            <field name="street"></field>
+            <field name="email"></field>
+            <field name="phone"></field>
+            <field name="website"></field>
+            <!--<field name="image" type="base64" file="delivery/static/img/tnt-fr.png"/>-->
+        </record>
+
+         <!-- Create a service product  adaptoo flatrate direct from factory -->
+
+
+        <record id="product_product_direct_delivery_factory" model="product.product">
+            <field name="name">Carrier Inclusion With Original Price</field>
+            <field name="default_code">carrier_flatrate</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_6"/>
+            <field name="standard_price"></field>
+            <field name="list_price"></field>
+            <field name="image" type="base64" file="delivery/static/img/product_product_delivery-image.jpg"/>
+        </record>
+
+         <!-- Carrier -->
+        <record id="delivery_carrier_from_factory" model="delivery.carrier">
+            <field name="name">Carrier Inclusion With Original Price</field>
+            <field name="normal_price">0</field>
+            <field name="partner_id" ref="res_partner_76"/>
+            <field name="free_if_more_than">True</field>
+            <field name="amount">7000</field>
+            <field name="product_id" ref="product_product_direct_delivery_factory"/>
+            <field name="use_detailed_pricelist" eval="True"/>
+        </record>
+
+        <!-- Carrier Grids -->
+        <record id="delivery_grid_direct_from_factory" model="delivery.grid">
+            <field name="name">Pricing direct from factory</field>
+            <field name="carrier_id" ref="delivery_carrier_from_factory"/>
+            <field model="res.country" name="country_ids" search="[('code','ilike','BE'),]"/>
+        </record>
+
+    </data>
+</openerp>

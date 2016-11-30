@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+    <!-- ######################################################################################################  -->
+
+         <!-- Create a service product  adaptoo Colissimo International  Zone 6 -->
+            <!-- max 30 kg,-->
+
+        <record id="product_product_delivery_inter_zone6" model="product.product">
+            <field name="name">Colissimo International Zone 6</field>
+            <field name="default_code">colissimo_6_30</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_6"/>
+            <field name="standard_price"></field>
+            <field name="list_price"></field>
+            <field name="image" type="base64" file="delivery/static/img/product_product_delivery-image.jpg"/>
+        </record>
+
+         <!-- Carrier -->
+        <record id="delivery_carrier_inter_zone6" model="delivery.carrier">
+            <field name="name">Colissimo International Zone 6</field>
+            <field name="normal_price"></field>
+            <field name="partner_id" ref="res_partner_74"/>
+            <field name="product_id" ref="product_product_delivery_inter_zone6"/>
+            <field name="use_detailed_pricelist" eval="True"/>
+        </record>
+
+        <!-- Carrier Grids -->
+        <record id="delivery_grid_inter_zone6" model="delivery.grid">
+            <field name="name">Pricing Colissimo International Zone 6</field>
+            <field name="carrier_id" ref="delivery_carrier_inter_zone6"/>
+            <field model="res.country" name="country_ids" search="[('code','ilike','AT')]"/>
+        </record>
+
+        <!-- Carrier Grids lines -->
+
+        <record id="delivery_grid_inter_zone6_line2" model="delivery.grid.line">
+            <field name="name"> 1 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="1" name="max_value"/>
+            <field eval="17.00" name="list_price"/>
+            <field eval="17.00" name="standard_price"/>
+        </record>
+          
+        <record id="delivery_grid_inter_zone6_line3" model="delivery.grid.line">
+            <field name="name"> 2 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="2" name="max_value"/>
+            <field eval="20.32" name="list_price"/>
+            <field eval="20.32" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line4" model="delivery.grid.line">
+            <field name="name"> 3 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="3" name="max_value"/>
+            <field eval="23.64" name="list_price"/>
+            <field eval="23.64" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line5" model="delivery.grid.line">
+            <field name="name"> 4 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="4" name="max_value"/>
+            <field eval="26.95" name="list_price"/>
+            <field eval="26.95" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line6" model="delivery.grid.line">
+            <field name="name"> 5 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="5" name="max_value"/>
+            <field eval="30.27" name="list_price"/>
+            <field eval="30.27" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line7" model="delivery.grid.line">
+            <field name="name"> 6 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="6" name="max_value"/>
+            <field eval="33.59" name="list_price"/>
+            <field eval="33.59" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line8" model="delivery.grid.line">
+            <field name="name"> 7 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="7" name="max_value"/>
+            <field eval="36.91" name="list_price"/>
+            <field eval="36.91" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line9" model="delivery.grid.line">
+            <field name="name"> 8 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="8" name="max_value"/>
+            <field eval="40.23" name="list_price"/>
+            <field eval="40.23" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line10" model="delivery.grid.line">
+            <field name="name"> 9 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="9" name="max_value"/>
+            <field eval="43.55" name="list_price"/>
+            <field eval="43.55" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line11" model="delivery.grid.line">
+            <field name="name"> 10 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="10" name="max_value"/>
+            <field eval="46.87" name="list_price"/>
+            <field eval="46.87" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line12" model="delivery.grid.line">
+            <field name="name"> 15 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="15" name="max_value"/>
+            <field eval="62.66" name="list_price"/>
+            <field eval="62.66" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line13" model="delivery.grid.line">
+            <field name="name"> 20 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="20" name="max_value"/>
+            <field eval="78.44" name="list_price"/>
+            <field eval="78.44" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line14" model="delivery.grid.line">
+            <field name="name"> 25 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="25" name="max_value"/>
+            <field eval="94.23" name="list_price"/>
+            <field eval="94.23" name="standard_price"/>
+        </record>
+  
+        <record id="delivery_grid_inter_zone6_line15" model="delivery.grid.line">
+            <field name="name"> 30 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_inter_zone6"/>
+            <field eval="30" name="max_value"/>
+            <field eval="110.02" name="list_price"/>
+            <field eval="110.02" name="standard_price"/>
+        </record>
+    </data>
+</openerp>

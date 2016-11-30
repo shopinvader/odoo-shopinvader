@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+         <!-- Create a partner to be transporter -->
+        <record id="res_partner_74" model="res.partner">
+            <field name="name">Coliposte FRANCE</field>
+            <field eval="[(6,0,[ref('base.res_partner_category_11')])]" name="category_id"/>
+            <field name="supplier">1</field>
+            <field eval="0" name="customer"/>
+            <field name="is_company">1</field>
+            <field name="city">CHATEAUNEUF DE GADAGNE</field>
+            <field name="zip">84470</field>
+            <field name="country_id" ref="base.fr"/>
+            <field name="street">18 r Baron Leroy</field>
+            <field name="email"></field>
+            <field name="phone">36 31</field>
+            <field name="website">http://www.laposte.fr</field>
+            <!--<field name="image" type="base64" file="delivery/static/img/tnt-fr.png"/>-->
+        </record>
+
+         <!-- Create a service product  adaptoo Coliposte -->
+
+        <record id="product_product_delivery_poste" model="product.product">
+            <field name="name">Delivery with Coliposte FRANCE</field>
+            <field name="default_code">coliposte</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_6"/>
+            <field name="standard_price"></field>
+            <field name="list_price"></field>
+            <field name="image" type="base64" file="delivery/static/img/product_product_delivery-image.jpg"/>
+        </record>
+
+
+        <record id="product_product_free_delivery_poste" model="product.product">
+            <field name="name">Delivery with Coliposte FRANCE</field>
+            <field name="default_code">free_shipping</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_6"/>
+            <field name="standard_price"></field>
+            <field name="list_price"></field>
+            <field name="image" type="base64" file="delivery/static/img/product_product_delivery-image.jpg"/>
+        </record>
+
+         <!-- Carrier -->
+        <record id="delivery_carrier_colisposte" model="delivery.carrier">
+            <field name="name">Coliposte FRANCE</field>
+            <field name="normal_price"></field>
+            <field name="partner_id" ref="res_partner_74"/>
+            <field name="product_id" ref="product_product_delivery_poste"/>
+            <field name="use_detailed_pricelist" eval="True"/>
+        </record>
+
+                <!--Frais de port gratuit Livraison 2-->
+        <record id="free_delivery_carrier_less30" model="delivery.carrier">
+            <field name="name">Free delivery charges up to 30kg</field>
+            <field name="normal_price">0</field>
+            <field name="partner_id" ref="res_partner_74"/>
+            <field name="product_id" ref="product_product_free_delivery_poste"/>
+        </record>
+
+        <!-- Carrier Grids -->
+        <record id="delivery_grid_poste" model="delivery.grid">
+            <field name="name">Pricing Coliposte FRANCE</field>
+            <field name="carrier_id" ref="delivery_carrier_colisposte"/>
+            <field model="res.country" name="country_ids" search="[('code','ilike','fr')]"/>
+        </record>
+
+                <!-- Carrier Grids -->
+        <record id="delivery_grid_poste_free" model="delivery.grid">
+            <field name="name">Frais de port gratuit</field>
+            <field name="carrier_id" ref="free_delivery_carrier_less30"/>
+            <field model="res.country" name="country_ids" search="[('code','ilike','fr')]"/>
+        </record>
+
+        <!-- Carrier Grids lines -->
+        <!--  delivery charge of product if weight less than and equal 3.5kg-->
+        <record id="delivery_grid_poste_line1" model="delivery.grid.line">
+            <field name="name">Weight &lt;= 0.50kg</field>
+            <field name="grid_id" ref="delivery_grid_poste"/>
+            <field eval="0.5" name="max_value"/>
+            <field eval="2.9" name="list_price"/>
+            <field eval="2.9" name="standard_price"/>
+        </record>
+        <!--  delivery charge of product if weight more than 3.5kg-->
+        <record id="delivery_grid_poste_line2" model="delivery.grid.line">
+            <field name="name"> 4.5 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_poste"/>
+            <field eval="4.5" name="max_value"/>
+            <field eval="6.90" name="list_price"/>
+            <field eval="6.90" name="standard_price"/>
+        </record>
+        <!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_poste_line3" model="delivery.grid.line">
+            <field name="name"> 30 kg> Weight </field>
+            <field name="grid_id" ref="delivery_grid_poste"/>
+            <field eval="30" name="max_value"/>
+            <field eval="19.90" name="list_price"/>
+            <field eval="19.90" name="standard_price"/>
+        </record>
+
+
+
+    </data>
+</openerp>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+<!--- ############################################################################################################  -->
+
+        <!-- Create a partner to be transporter -->
+        <record id="res_partner_75" model="res.partner">
+            <field name="name">TNT</field>
+            <field eval="[(6,0,[ref('base.res_partner_category_11')])]" name="category_id"/>
+            <field name="supplier">2</field>
+            <field eval="0" name="customer"/>
+            <field name="is_company">1</field>
+            <field name="city">AVIGNON CEDEX 1</field>
+            <field name="zip">84007</field>
+            <field name="country_id" ref="base.fr"/>
+            <field name="street">Parc D'activités Du Pont De La Traille 220 rte Vedène</field>
+            <field name="email">contact@tnt.com</field>
+            <field name="phone">0 825 033 033</field>
+            <field name="website">http://www.tnt.com</field>
+            <!--<field name="image" type="base64" file="delivery/static/img/tnt-fr.png"/>-->
+        </record>
+
+         <!-- Create a service product  adaptoo TNT -->
+
+        <record id="product_product_delivery_tnt" model="product.product">
+            <field name="name">Delivery by TNT</field>
+            <field name="default_code">TNT</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="product.product_category_6"/>
+            <field name="standard_price">10.0</field>
+            <field name="list_price">10.0</field>
+            <field name="image" type="base64" file="delivery/static/img/product_product_delivery-image.jpg"/>
+        </record>
+
+         <!-- Carrier -->
+        <record id="delivery_carrier_tnt" model="delivery.carrier">
+            <field name="name">The TNT Carrier</field>
+            <field name="normal_price"></field>
+            <field name="partner_id" ref="res_partner_75"/>
+            <field name="product_id" ref="product_product_delivery_tnt"/>
+            <field name="use_detailed_pricelist" eval="True"/>
+        </record>
+
+        <!-- Carrier Grids -->
+        <record id="delivery_grid_tnt" model="delivery.grid">
+            <field name="name">The TNT - 24H France</field>
+            <field name="carrier_id" ref="delivery_carrier_tnt"/>
+            <field model="res.country" name="country_ids" search="[('code','ilike','fr')]"/>
+        </record>
+
+        <!-- Carrier Grids lines -->
+        <!--  delivery charge of product if weight less than and equal 3.5kg-->
+        <record id="delivery_grid_tnt_line1" model="delivery.grid.line">
+            <field name="name">Weight &lt;= 3.50kg</field>
+            <field name="grid_id" ref="delivery_grid_tnt"/>
+            <field eval="3.5" name="max_value"/>
+            <field eval="9.9" name="list_price"/>
+            <field eval="9.9" name="standard_price"/>
+        </record>
+        <!--  delivery charge of product if weight more than 3.5kg-->
+        <record id="delivery_grid_tnt_line2" model="delivery.grid.line">
+            <field name="name"> Weight > 3.5 kg </field>
+            <field name="grid_id" ref="delivery_grid_tnt"/>
+            <field eval="10" name="max_value"/>
+            <field eval="14.90" name="list_price"/>
+            <field eval="14.90" name="standard_price"/>
+        </record>
+        <!--  delivery charge of product if weight more than 10kg-->
+        <record id="delivery_grid_tnt_line3" model="delivery.grid.line">
+            <field name="name"> Weight > 10 kg </field>
+            <field name="grid_id" ref="delivery_grid_tnt"/>
+            <field eval="10" name="max_value"/>
+            <field eval="19.90" name="list_price"/>
+            <field eval="19.90" name="standard_price"/>
+        </record>
+                <!--  delivery charge of product if weight more than 20kg-->
+        <record id="delivery_grid_tnt_line4" model="delivery.grid.line">
+            <field name="name"> Weight > 20 kg </field>
+            <field name="grid_id" ref="delivery_grid_tnt"/>
+            <field eval="20" name="max_value"/>
+            <field eval="24.90" name="list_price"/>
+            <field eval="24.90" name="standard_price"/>
+        </record>
+
+                <!--  delivery charge of product if weight more than 20kg-->
+        <record id="delivery_grid_tnt_line5" model="delivery.grid.line">
+            <field name="name"> Weight  30 kg </field>
+            <field name="grid_id" ref="delivery_grid_tnt"/>
+            <field eval="30" name="max_value"/>
+            <field eval="24.90" name="list_price"/>
+            <field eval="24.90" name="standard_price"/>
+        </record>
+
+    </data>
+</openerp>
+
