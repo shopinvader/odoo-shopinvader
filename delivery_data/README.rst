@@ -6,7 +6,7 @@
  Delivery_data
 ==============
 
-This module helps to set url list and history of it
+This module adds somme carriers & send price with it
 gb was replace by uk  grand britain
 tl was replace by tp  eastern timor
 

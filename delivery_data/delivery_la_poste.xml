@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data noupdate="1">
 
@@ -98,8 +98,5 @@
             <field eval="19.90" name="list_price"/>
             <field eval="19.90" name="standard_price"/>
         </record>
-
-
-
     </data>
 </openerp>

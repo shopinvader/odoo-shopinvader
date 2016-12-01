@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data noupdate="1">
     <!-- ######################################################################################################  -->
@@ -106,41 +106,41 @@
             <field eval="21.69" name="standard_price"/>
         </record>
 <!--  delivery charge of product if weight more than 10kg-->
-        <record id="delivery_grid_inter_zone2_line11" model="delivery.grid.line">
+        <record id="delivery_grid_inter_zone3_line11" model="delivery.grid.line">
             <field name="name"> 10 kg> Weight </field>
-            <field name="grid_id" ref="delivery_grid_inter_zone2"/>
+            <field name="grid_id" ref="delivery_grid_inter_zone3"/>
             <field eval="10" name="max_value"/>
             <field eval="22.77" name="list_price"/>
             <field eval="22.77" name="standard_price"/>
         </record>
 <!--  delivery charge of product if weight more than 10kg-->
-        <record id="delivery_grid_inter_zone2_line12" model="delivery.grid.line">
+        <record id="delivery_grid_inter_zone3_line12" model="delivery.grid.line">
             <field name="name"> 15 kg> Weight </field>
-            <field name="grid_id" ref="delivery_grid_inter_zone2"/>
+            <field name="grid_id" ref="delivery_grid_inter_zone3"/>
             <field eval="15" name="max_value"/>
             <field eval="28.71" name="list_price"/>
             <field eval="28.71" name="standard_price"/>
         </record>
 <!--  delivery charge of product if weight more than 10kg-->
-        <record id="delivery_grid_inter_zone2_line13" model="delivery.grid.line">
+        <record id="delivery_grid_inter_zone3_line13" model="delivery.grid.line">
             <field name="name"> 20 kg> Weight </field>
-            <field name="grid_id" ref="delivery_grid_inter_zone2"/>
+            <field name="grid_id" ref="delivery_grid_inter_zone3"/>
             <field eval="20" name="max_value"/>
             <field eval="34.65" name="list_price"/>
             <field eval="34.65" name="standard_price"/>
         </record>
 <!--  delivery charge of product if weight more than 10kg-->
-        <record id="delivery_grid_inter_zone2_line14" model="delivery.grid.line">
+        <record id="delivery_grid_inter_zone3_line14" model="delivery.grid.line">
             <field name="name"> 25 kg> Weight </field>
-            <field name="grid_id" ref="delivery_grid_inter_zone2"/>
+            <field name="grid_id" ref="delivery_grid_inter_zone3"/>
             <field eval="25" name="max_value"/>
             <field eval="40.59" name="list_price"/>
             <field eval="40.59" name="standard_price"/>
         </record>
 <!--  delivery charge of product if weight more than 10kg-->
-        <record id="delivery_grid_inter_zone2_line15" model="delivery.grid.line">
+        <record id="delivery_grid_inter_zone3_line15" model="delivery.grid.line">
             <field name="name"> 30 kg> Weight </field>
-            <field name="grid_id" ref="delivery_grid_inter_zone2"/>
+            <field name="grid_id" ref="delivery_grid_inter_zone3"/>
             <field eval="30" name="max_value"/>
             <field eval="46.53" name="list_price"/>
             <field eval="46.53" name="standard_price"/>

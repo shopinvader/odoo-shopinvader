@@ -30,7 +30,7 @@
              'delivery_from_factory.xml',
              'delivery_tnt_24h.xml',
              'delivery.grid.csv',
-              ],
+             ],
 
     'demo': [],
 
