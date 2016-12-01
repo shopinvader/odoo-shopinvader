@@ -32,7 +32,8 @@
              'delivery_inter_z8.xml',
              'delivery_from_factory.xml',
              'delivery_tnt_24h.xml',
-             'delivery.grid.csv',],
+             'delivery.grid.csv',
+             ],
 
     'url': '',
     'installable': True,
