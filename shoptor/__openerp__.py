@@ -21,6 +21,7 @@
         "sale",
         "connector_nosql_product",
         "connector_nosql_locomotivecms",
+        "product_url",
     ],
     "data": [
     ],

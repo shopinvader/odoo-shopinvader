@@ -3,12 +3,46 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, models
+from openerp import api, fields, models
+from openerp.exceptions import Warning as UserError
 
 
 class ResPartner(models.Model):
     _inherit='res.partner'
 
+    # TODO it will be great to have a generic module that
+    # - filter correctly the address on sale order, invoice, po
+    # - define a default address per type
+    is_default_delivery = fields.Boolean(readonly=True)
+    is_default_invoice = fields.Boolean(readonly=True)
+
+    def set_as_main_delivery_address(self):
+        self._set_as_main_address('delivery')
+
+    def set_as_main_invoice_address(self):
+        self._set_as_main_address('invoice')
+
+    def _set_as_main_address(self, address_type):
+        for record in self:
+            address_to_remove = self.search([
+                '|',
+                ('parent_id', '=', record.parent_id),
+                ('id', '=', record.parent_id),
+                ('is_default_%s' % address_type, '=', True),
+                ])
+            address_to_remove.write({'is_default_%s' % address_type: False})
+            record.write({'is_default_%s' % address_type: True})
+
+    def _get_main_address(self, address_type):
+        self.ensure_one()
+        delivery = self.search([
+            ('parent_id', '=', record.id),
+            ('is_default_%s' % address_type, '=', True),
+            ])
+        if not delivery:
+            return self
+        else:
+            return delivery
 
     def _json_parser_contact(self):
         return [

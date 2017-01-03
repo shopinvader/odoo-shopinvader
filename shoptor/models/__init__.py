@@ -5,3 +5,5 @@
 
 from . import sale
 from . import partner
+from . import nosql_backend
+from . import product
