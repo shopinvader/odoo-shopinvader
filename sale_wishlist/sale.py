@@ -5,6 +5,7 @@
 
 from openerp import models
 
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 

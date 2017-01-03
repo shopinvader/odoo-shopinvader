@@ -13,7 +13,7 @@
     """,
     'author': 'Akretion',
     'website': 'http://wwww.akretion.com/',
-    'depends': [ 'sale_substate'],
+    'depends': ['sale_substate'],
     'data': [],
     'demo': ['demo/cart_demo.xml'],
     'test': ['tests/test_cart.py'],
