@@ -10,16 +10,16 @@ class Testcart(SingleTransactionCase):
         super(Testcart, self).setup()
 
     def test_init1(self):
-        sale = self.env['sale.order'].browse(1)
+        sale = self.env.ref('sale.sale_order_1')
 
         self.assertEqual('cart', sale.sub_state)
 
     def test_init2(self):
-        sale = self.env['sale.order'].browse(2)
+        sale = self.env.ref('sale.sale_order_2')
 
         self.assertEqual('cart', sale.sub_state)
 
     def test_init4(self):
-        sale = self.env['sale.order'].browse(4)
+        sale = self.env.ref('sale.sale_order_4')
 
         self.assertEqual('cart', sale.sub_state)

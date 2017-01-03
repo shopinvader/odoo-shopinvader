@@ -10,16 +10,16 @@ class Testwishlist(SingleTransactionCase):
         super(Testwishlist, self).setup()
 
     def test_init3(self):
-        sale = self.env['sale.order'].browse(3)
+        sale = self.env.ref('sale.sale_order_3')
 
         self.assertEqual('wishlist', sale.sub_state)
 
     def test_init5(self):
-        sale = self.env['sale.order'].browse(5)
+        sale = self.env.ref('sale.sale_order_5')
 
         self.assertEqual('wishlist', sale.sub_state)
 
     def test_init6(self):
-        sale = self.env['sale.order'].browse(6)
+        sale = self.env.ref('sale.sale_order_6')
 
         self.assertEqual('wishlist', sale.sub_state)
