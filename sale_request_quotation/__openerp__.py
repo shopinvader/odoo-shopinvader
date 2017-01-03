@@ -14,7 +14,7 @@
     """,
     'author': 'Akretion',
     'website': 'http://wwww.akretion.com/',
-    'depends': ['sale', 'sale_substate'],
+    'depends': ['sale_substate'],
     'data': [],
     'demo': ['quotation_demo.xml'],
     'test': ['tests/test_request_quotation.py'],
