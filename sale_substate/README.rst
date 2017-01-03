@@ -8,43 +8,6 @@ sale_substate
 
 This module extends the sale module tu get a sub_state fields for sale order
 
-Installation
-============
-
-To install this module, you need to:
-
-
-
-Configuration
-=============
-
-To configure this module, you need to:
-
-#. Go to ...
-
-.. figure:: path/to/local/image.png
-   :alt: alternative description
-   :width: 600 px
-
-Usage
-=====
-
-To use this module, you need to:
-
-#. Go to ...
-
-.. image:: https://odoo-community.org/website/image/ir.attachment/5784_f2813bd/datas
-   :alt: Try me on Runbot
-   :target: https://runbot.odoo-community.org/runbot/{repo_id}/{branch}
-
-.. repo_id is available in https://github.com/OCA/maintainer-tools/blob/master/tools/repos_with_ids.txt
-.. branch is "8.0" for example
-
-Known issues / Roadmap
-======================
-
-* there is unknown issues or see report in github
-
 Bug Tracker
 ===========
 
@@ -64,8 +27,7 @@ Images
 Contributors
 ------------
 
-* Firstname Lastname <email.address@example.org>
-* Second Person <second.person@example.org>
+* Chafique Delli <chafique.delli@akretion.com>
 
 Maintainer
 ----------
