@@ -2,9 +2,9 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============
+======================
 Sale Request Quotation
-==============
+======================
 
 This module extends the sale module and sale_substate to get request_qotations value in a sub_state fields for sale order
 

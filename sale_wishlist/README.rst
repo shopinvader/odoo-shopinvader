@@ -3,7 +3,7 @@
    :alt: License: AGPL-3
 
 ==============
-sale_whishlist
+Sale Wishlist
 ==============
 
 This module extends the sale module and sale_substate to get wishlist value in a sub_state fields for sale order
