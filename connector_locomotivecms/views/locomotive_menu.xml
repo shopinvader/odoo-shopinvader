@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+
+<menuitem id="menu_locomotivecms_root"
+    parent="connector.menu_connector_root"
+    name="LcomotiveCMS"
+    sequence="10"
+    groups="connector.group_connector_manager"/>
+
+<menuitem id="menu_locomotivecms_backend"
+    name="Backends"
+    parent="menu_locomotivecms_root"
+    action="action_locomotivecms_backend"/>
+
+  </data>
+</openerp>
