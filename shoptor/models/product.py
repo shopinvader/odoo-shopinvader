@@ -6,6 +6,26 @@
 from openerp import api, fields, models
 
 
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    locomotivecms_bind_ids = fields.One2many(
+        'locomotivecms.product',
+        'record_id',
+        string='Locomotive Binding')
+
+
+class LocomotivecmsProduct(models.Model):
+    _name = 'locomotivecms.product'
+    _inherit = 'locomotivecms.binding'
+    _inherits = {'product.template': 'record_id'}
+
+    record_id = fields.Many2one(
+        'product.template',
+        required=True,
+        ondelete='cascade')
+
+
 class ProductPricelist(models.Model):
     _inherit = 'product.pricelist'
 

@@ -7,8 +7,23 @@ from openerp import api, fields, models
 from openerp.exceptions import Warning as UserError
 
 
+class LocomotivecmsPartner(models.Model):
+    _name = 'locomotivecms.partner'
+    _inherit = 'locomotivecms.binding'
+
+    record_id = fields.Many2one(
+        'res.partner',
+        required=True,
+        ondelete='cascade')
+
+
 class ResPartner(models.Model):
     _inherit='res.partner'
+
+    locomotivecms_bind_ids = fields.One2many(
+        'locomotivecms.partner',
+        'record_id',
+        string='Locomotive Binding')
 
     # TODO it will be great to have a generic module that
     # - filter correctly the address on sale order, invoice, po

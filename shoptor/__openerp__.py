@@ -19,11 +19,13 @@
     },
     "depends": [
         "sale",
-        "connector_nosql_product",
-        "connector_nosql_locomotivecms",
+        "connector_locomotivecms",
+        "connector_base_product",
         "product_url",
     ],
     "data": [
+        'views/product_view.xml',
+        'views/image_view.xml',
     ],
     "demo": [
     ],

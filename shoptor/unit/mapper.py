@@ -4,17 +4,24 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from openerp.addons.connector_nosql_locomotivecms.unit.mapper import (
-    JsonExportMapper)
-from ..backend import shoptor
+from openerp.addons.connector_locomotivecms.backend import locomotivecms
 from openerp.addons.connector.unit.mapper import mapping
+from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
 
 
-@shoptor
-class JsonExportMapper(JsonExportMapper):
+@locomotivecms
+class ProductExportMapper(GenericExportMapper):
+    _model_name = 'locomotivecms.product'
+
+    direct = [
+        ('name', 'name'),
+        ('prefix_code', 'prefix_code'),
+        ('url_key', 'url_key'),
+        ('id', 'id'),
+        ]
 
     def _apply(self, map_record, options=None):
-        res = super(JsonExportMapper, self)._apply(map_record, options=options)
+        res = super(ProductExportMapper, self)._apply(map_record, options=options)
         res.update({
             'stock_state': 'En stock',
             'from_price': 10, # en tenant compte des qty
