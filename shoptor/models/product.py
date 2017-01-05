@@ -34,7 +34,9 @@ class LocomotivecmsProduct(models.Model):
     @api.model
     def create(self, vals):
         binding = super(LocomotivecmsProduct, self).create(vals)
-        binding_image_obj = self.env['locomotivecms.image']
+        binding_image_obj = \
+            self.env['locomotivecms.image'].with_context(
+                connector_no_export=True)
         for image in binding.image_ids:
             for size in binding_image_obj._image_size:
                 binding_image_obj.create({

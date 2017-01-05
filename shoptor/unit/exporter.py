@@ -12,6 +12,14 @@ from openerp.addons.connector_locomotivecms.unit.exporter import (
 class ProductExporter(LocomotivecmsExporter):
     _model_name = 'locomotivecms.product'
 
+    def _export_dependencies(self):
+        exporter = self.unit_for(ImageExporter, model='locomotivecms.image')
+        for image in self.binding_record.image_ids:
+            for binding in image.locomotivecms_bind_ids:
+                if not binding.external_id\
+                        and binding.backend_id == self.backend_record:
+                    exporter.run(binding.id)
+
 
 @locomotivecms
 class ImageExporter(LocomotivecmsExporter):
