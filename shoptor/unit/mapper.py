@@ -23,7 +23,7 @@ class ProductExportMapper(GenericExportMapper):
         ]
 
     children = [
-        ('product_variant_ids', 'product_variant_ids', 'product.product'),
+        ('product_variant_ids', 'variants', 'product.product'),
         ]
 
     def _apply(self, map_record, options=None):
@@ -37,6 +37,8 @@ class ProductExportMapper(GenericExportMapper):
             'cross_sell_ids': [],
             'related_ids': [],
             'up_selling_ids': [],
+            'technical_details': [],
+            'technical_files': [],
             })
         return {
             'is_discounted': True,
@@ -75,9 +77,16 @@ class ProductProductMapper(GenericExportMapper):
                 if binding.backend_id == self.backend_record:
                     image_data[binding.size] = binding.url
             res.append(image_data)
-        return {'image_ids': res}
+        return {'images': res}
 
-    # TODO pricelist
+    @mapping
+    def name(self, record):
+        return {'name': record.color}
+
+    @mapping
+    def pricelist(self, record):
+        return {'pricelist': record.pricelist}
+
 
 @locomotivecms
 class ImageExportMapper(GenericExportMapper):
