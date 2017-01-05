@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
+import psycopg2
 from openerp.addons.connector.unit.synchronizer import Exporter
 from contextlib import contextmanager
 from openerp.tools.translate import _
@@ -243,7 +244,7 @@ class GenericExporter(Exporter):
         assert self.external_id
         # special check on data before export
         self._validate_update_data(data)
-        self.backend_adapter.write(self.external_id, data)
+        return self.backend_adapter.write(self.external_id, data)
 
     def _has_to_skip(self):
         """ Return True if the export can be skipped """
