@@ -25,15 +25,23 @@ class LocomotivecmsProduct(models.Model):
         required=True,
         ondelete='cascade')
 
+    _sql_constraints = [
+        ('record_uniq', 'unique(backend_id, record_id)',
+        'A product can only have one binding by backend.'),
+    ]
+
     #Automatically create the locomotive binding for the image
     @api.model
     def create(self, vals):
         binding = super(LocomotivecmsProduct, self).create(vals)
+        binding_image_obj = self.env['locomotivecms.image']
         for image in binding.image_ids:
-            self.env['locomotivecms.image'].create({
-                'record_id': image.id,
-                'backend_id': binding.backend_id.id,
-                })
+            for size in binding_image_obj._image_size:
+                binding_image_obj.create({
+                    'size': size,
+                    'record_id': image.id,
+                    'backend_id': binding.backend_id.id,
+                    })
         return image
 
 

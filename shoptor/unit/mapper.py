@@ -7,6 +7,8 @@
 from openerp.addons.connector_locomotivecms.backend import locomotivecms
 from openerp.addons.connector.unit.mapper import mapping, ExportMapChild
 from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
+from slugify import slugify
+from openerp.tools.image import image_resize_image
 
 
 @locomotivecms
@@ -63,6 +65,18 @@ class ProductProductMapper(GenericExportMapper):
         ('default_code', 'default_code'),
     ]
 
+    @mapping
+    def image(self, record):
+        binder = self.binder_for('locomotivecms.image')
+        res = []
+        for image in record.image_ids:
+            image_data = {'name': image.name}
+            for binding in image.locomotivecms_bind_ids:
+                if binding.backend_id == self.backend_record:
+                    image_data[binding.size] = binding.url
+            res.append(image_data)
+        return {'image_ids': res}
+
     # TODO pricelist
 
 @locomotivecms
@@ -72,8 +86,15 @@ class ImageExportMapper(GenericExportMapper):
     @mapping
     def image(self, record):
         # get a slugify filename
-        from slugify import slugify
+        new_size = record._image_size[record.size]['resize']
+        name = slugify(record.filename[:-4])
+        if new_size:
+            image = image_resize_image(record.image_main, new_size)
+            name += '-%sx%s' % new_size
+        else:
+            image = record.image_main
+        name += record.filename[-4:]
         return {
-            'base64': record.image_main,
-            'filename': slugify(record.filename[:-4]) + record.filename[-4:],
+            'base64': image,
+            'filename': name,
             }
