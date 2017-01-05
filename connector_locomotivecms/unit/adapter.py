@@ -13,8 +13,6 @@ _logger = logging.getLogger(__name__)
 #### TODO create a python lib for that code
 import requests
 import json
-import StringIO
-import base64
 
 
 class LocomotiveApiError(Exception):
@@ -66,21 +64,13 @@ class LocomotiveAsset(LocomotiveResource):
         super(LocomotiveAsset, self).__init__(client)
         self.path = '/content_assets'
 
-    # TODO FIXME miss the key 'content_asset'
     def write(self, id_or_slug, data):
-        f = StringIO.StringIO()
-        f.write(base64.b64decode(data['base64']))
-        f.seek(0)
         return self.call('put', self._path_with_slug(id_or_slug),
-            files={'source': (data['filename'], f)})
+            files={'source': (data['filename'], data['file'])})
 
-    # TODO FIXME miss the key 'content_asset'
     def create(self, data):
-        f = StringIO.StringIO()
-        f.write(base64.b64decode(data['base64']))
-        f.seek(0)
-        return self.call('post', self.path,
-            files={'source': (data['filename'], f)})
+       return self.call('post', self.path,
+            files={'content_asset[source]': (data['filename'], data['file'])})
 
 
 class LocomotiveClient(object):
