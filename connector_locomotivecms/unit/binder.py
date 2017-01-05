@@ -10,3 +10,4 @@ from ..backend import locomotivecms
 
 class LocomotivecmsBinder(Binder):
     "Base Binder for locomotive"
+    _openerp_field = 'record_id'
