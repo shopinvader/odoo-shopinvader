@@ -6,8 +6,16 @@
 
 from openerp.addons.connector_locomotivecms.backend import locomotivecms
 from openerp.addons.connector_locomotivecms.unit.adapter import (
-    LocomotivecmsAdapter)
+    LocomotiveContentAdapter,
+    LocomotiveAssetAdapter)
+
 
 @locomotivecms
-class ProductAdapter(LocomotivecmsAdapter):
+class ProductAdapter(LocomotiveContentAdapter):
     _model_name = 'locomotivecms.product'
+    _content_type = 'products'
+
+
+@locomotivecms
+class ImageAdapter(LocomotiveAssetAdapter):
+    _model_name = 'locomotivecms.image'

@@ -11,3 +11,13 @@ from openerp.addons.connector_locomotivecms.unit.exporter import (
 @locomotivecms
 class ProductExporter(LocomotivecmsExporter):
     _model_name = 'locomotivecms.product'
+
+
+@locomotivecms
+class ImageExporter(LocomotivecmsExporter):
+    _model_name = 'locomotivecms.image'
+
+    def _run(self, fields=None):
+        res = super(ImageExporter, self)._run(fields=fields)
+        self.binding_record.url = self.result['url']
+        return res

@@ -9,11 +9,13 @@
         <group string="Comments" position="after">
             <group name="Connector">
                 <field name="locomotivecms_bind_ids" nolabel="1">
-                    <field name="backend_id"/>
-                    <field name="sync_state"/>
-                    <field name="date_modified"/>
-                    <field name="date_synchronized"/>
-                    <field name="external_id"/>
+                    <tree editable="bottom">
+                        <field name="backend_id"/>
+                        <field name="size"/>
+                        <field name="sync_date"/>
+                        <field name="external_id"/>
+                        <field name="url"/>
+                    </tree>
                 </field>
             </group>
         </group>

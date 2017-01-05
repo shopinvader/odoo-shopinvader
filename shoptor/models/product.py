@@ -25,6 +25,17 @@ class LocomotivecmsProduct(models.Model):
         required=True,
         ondelete='cascade')
 
+    #Automatically create the locomotive binding for the image
+    @api.model
+    def create(self, vals):
+        binding = super(LocomotivecmsProduct, self).create(vals)
+        for image in binding.image_ids:
+            self.env['locomotivecms.image'].create({
+                'record_id': image.id,
+                'backend_id': binding.backend_id.id,
+                })
+        return image
+
 
 class ProductPricelist(models.Model):
     _inherit = 'product.pricelist'

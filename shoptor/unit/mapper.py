@@ -5,7 +5,7 @@
 
 
 from openerp.addons.connector_locomotivecms.backend import locomotivecms
-from openerp.addons.connector.unit.mapper import mapping
+from openerp.addons.connector.unit.mapper import mapping, ExportMapChild
 from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
 
 
@@ -18,6 +18,10 @@ class ProductExportMapper(GenericExportMapper):
         ('prefix_code', 'prefix_code'),
         ('url_key', 'url_key'),
         ('id', 'id'),
+        ]
+
+    children = [
+        ('product_variant_ids', 'product_variant_ids', 'product.product'),
         ]
 
     def _apply(self, map_record, options=None):
@@ -40,4 +44,36 @@ class ProductExportMapper(GenericExportMapper):
             'name': res['prefix_code'],
             '_slug': res['url_key'],
             'odoo_id': str(res.pop('id')),
+            }
+
+
+@locomotivecms
+class LocomotiveExportMapChild(ExportMapChild):
+    _model_name = 'product.product'
+
+
+@locomotivecms
+class ProductProductMapper(GenericExportMapper):
+    _model_name = 'product.product'
+
+    direct = [
+        ('face', 'face'),
+        ('fuse', 'fuse'),
+        ('color', 'color'),
+        ('default_code', 'default_code'),
+    ]
+
+    # TODO pricelist
+
+@locomotivecms
+class ImageExportMapper(GenericExportMapper):
+    _model_name = 'locomotivecms.image'
+
+    @mapping
+    def image(self, record):
+        # get a slugify filename
+        from slugify import slugify
+        return {
+            'base64': record.image_main,
+            'filename': slugify(record.filename[:-4]) + record.filename[-4:],
             }
