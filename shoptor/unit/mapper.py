@@ -31,7 +31,9 @@ class ProductExportMapper(GenericExportMapper):
     def _apply(self, map_record, options=None):
         res = super(ProductExportMapper, self)._apply(map_record, options=options)
         res.update({
-            'stock_state': 'En stock',
+            # 'out_of_stock', 'resupplying', 'in_limited_stock',
+            'stock_state': 'in_stock',
+            'stock_qty': 42,
             'from_price': 10, # en tenant compte des qty
             'discount_old_price': 15,
             'discount_value': 25,
@@ -39,7 +41,14 @@ class ProductExportMapper(GenericExportMapper):
             'brand': [],
             'relateds': [],
             'up_sellings': [],
-            'technical_details': [],
+            'technical_details': [
+                {"name": "Poids net", "value": "0.0450"},
+                {"name": "Marque", "value": "Adaptoo"},
+                {"name": "Eco-part.", "value": "0.01"},
+                {"name": "Info", "value": "Type G"},
+                {"name": "Dimensions", "value": "L.6,0 x l.5,0 x h.5,0 cm"},
+                {"name": "Etat", "value": "Direct Usine"},
+            ],
             'technical_files': [],
             })
         return {
