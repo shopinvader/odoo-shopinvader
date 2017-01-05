@@ -77,15 +77,15 @@ class ProductProduct(models.Model):
         # we add an extra key here "values" to give the posibility to add
         # some extra information easily (with new keys) without changing
         # the data format and so simplifying the template compatibility
-        res = {'values': {}}
+        res = {'values': []}
         items = self.env['product.pricelist.item'].search([
             ('price_version_id.pricelist_id', '=', pricelist.id)
             ])
-        res['values'][1] = self._get_rounded_price(pricelist, 1)
-        for item in items:
-            qty = item.min_quantity or 1
-            if qty != 1:
-                res[qty] = self._get_rounded_price(pricelist, qty)
+        item_qty = set([item.min_quantity
+                        for item in items if item.min_quantity > 1] + [1])
+        for qty in item_qty:
+            res['values'].append(
+                {'qty': qty, 'price': self._get_rounded_price(pricelist, qty)})
         return {pricelist._pricelist_key(): res}
 
     def _compute_price(self):
