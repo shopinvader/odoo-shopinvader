@@ -44,6 +44,10 @@ class ProductExportMapper(GenericExportMapper):
             'technical_files': [],
             })
         return {
+            'category': [
+            '586bfd1f7aa7460007061945',
+            '586bfd1f7aa7460007061948',
+            ],
             'is_discounted': True,
             'is_bestseller': True,
             'is_bestdiscount': True,
@@ -70,6 +74,23 @@ class ProductExportMapper(GenericExportMapper):
     def lang_to_fix(self, record):
         rec = record.with_context(lang='fr_FR')
         return {'description': rec.description, 'name': rec.name}
+
+    @mapping
+    def comment(self, record):
+        return {
+            'rating_value': 5,
+            'rating_nbr': 42,
+            "comments": [
+                {"partner": "dupond",
+                 "name": "Top Top",
+                 "description": "Trop fort chez adaptoo, produit qui déchire",
+                 'rating': 5},
+                {"partner": "durant",
+                 "name": "Parfait",
+                 "description": "produit de très bonne qualité",
+                 'rating': 5},
+            ]}
+
 
 @locomotivecms
 class LocomotiveExportMapChild(ExportMapChild):
@@ -119,7 +140,12 @@ class ProductProductMapper(GenericExportMapper):
                 {"name": "Etat", "value": "Direct Usine"},
         ]}
 
-
+    @mapping
+    def stock(self, record):
+        return {
+            'stock_state': 'in_stock',
+            'stock_qty': 42,
+        }
 
 
 @locomotivecms
