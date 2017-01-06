@@ -44,7 +44,7 @@ class LocomotivecmsProduct(models.Model):
                     'record_id': image.id,
                     'backend_id': binding.backend_id.id,
                     })
-        return image
+        return binding
 
 
 class ProductPricelist(models.Model):
