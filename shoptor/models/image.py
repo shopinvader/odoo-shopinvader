@@ -17,7 +17,7 @@ class Image(models.Model):
     #Automatically create the locomotive binding for the image created
     @api.model
     def create(self, vals):
-        image = super(ProductImage, self).create(vals)
+        image = super(Image, self).create(vals)
 	if image.owner_model == 'product.template':
             product = self.env['product.template'].browse(image.owner_id)
             binding_obj = self.env['locomotivecms.image']
