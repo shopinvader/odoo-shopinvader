@@ -41,14 +41,6 @@ class ProductExportMapper(GenericExportMapper):
             'brand': [],
             'relateds': [],
             'up_sellings': [],
-            'technical_details': [
-                {"name": "Poids net", "value": "0.0450"},
-                {"name": "Marque", "value": "Adaptoo"},
-                {"name": "Eco-part.", "value": "0.01"},
-                {"name": "Info", "value": "Type G"},
-                {"name": "Dimensions", "value": "L.6,0 x l.5,0 x h.5,0 cm"},
-                {"name": "Etat", "value": "Direct Usine"},
-            ],
             'technical_files': [],
             })
         return {
@@ -73,6 +65,11 @@ class ProductExportMapper(GenericExportMapper):
             res.append(image_data)
         return {'images': res}
 
+    # TODO FIXME
+    @mapping
+    def lang_to_fix(self, record):
+        rec = record.with_context(lang='fr_FR')
+        return {'description': rec.description, 'name': rec.name}
 
 @locomotivecms
 class LocomotiveExportMapChild(ExportMapChild):
@@ -109,6 +106,21 @@ class ProductProductMapper(GenericExportMapper):
     @mapping
     def pricelist(self, record):
         return {'pricelist': record.pricelist}
+
+    @mapping
+    def technical(self, record):
+        return {
+            'technical_details': [
+                {"name": "Poids net", "value": "0.0450"},
+                {"name": "Marque", "value": "Adaptoo"},
+                {"name": "Eco-part.", "value": "0.01"},
+                {"name": "Info", "value": "Type G"},
+                {"name": "Dimensions", "value": "L.6,0 x l.5,0 x h.5,0 cm"},
+                {"name": "Etat", "value": "Direct Usine"},
+        ]}
+
+
+
 
 @locomotivecms
 class ImageExportMapper(GenericExportMapper):
