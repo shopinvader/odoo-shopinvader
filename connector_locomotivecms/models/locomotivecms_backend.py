@@ -12,16 +12,9 @@ class LocomotivecmsBackend(models.Model):
     _inherit = 'connector.backend'
     _backend_type = 'locomotivecms'
 
-    def _select_versions(self):
-        """ Available versions
-
-        Can be inherited to add custom versions.
-        """
-        return [('locomotivecms_v3', 'Locomotive CMS v3')]
-
-    version = fields.Selection(
-        '_select_versions',
-        required=True)
+    version = fields.Selection([
+        ('locomotivecms_v3', 'Locomotive CMS v3'),
+        ], required=True)
     location = fields.Char(required=True)
     username = fields.Char(required=True)
     password = fields.Char(required=True)
