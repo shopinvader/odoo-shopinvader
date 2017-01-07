@@ -5,14 +5,13 @@
 
 
 from openerp.addons.connector.unit.backend_adapter import CRUDAdapter
-from ..backend import locomotivecms
 import logging
+import requests
+
 _logger = logging.getLogger(__name__)
 
 
-#### TODO create a python lib for that code
-import requests
-import json
+# TODO create a python lib for that code
 
 
 class LocomotiveApiError(Exception):
@@ -65,11 +64,13 @@ class LocomotiveAsset(LocomotiveResource):
         self.path = '/content_assets'
 
     def write(self, id_or_slug, data):
-        return self.call('put', self._path_with_slug(id_or_slug),
+        return self.call(
+            'put', self._path_with_slug(id_or_slug),
             files={'source': (data['filename'], data['file'])})
 
     def create(self, data):
-       return self.call('post', self.path,
+        return self.call(
+            'post', self.path,
             files={'content_asset[source]': (data['filename'], data['file'])})
 
 
@@ -95,8 +96,6 @@ class LocomotiveClient(object):
             'X-Locomotive-Account-Email': self.email,
             'X-Locomotive-Account-Token': self.token,
             'X-Locomotive-Site-Handle': self.handle,
-            #'Content-Disposition': 'form-data',
-            #'name': "content_asset[source]",
             }
 
     def call(self, method, url, data=None, files=None):
@@ -117,8 +116,7 @@ class LocomotiveClient(object):
     def asset(self):
         return LocomotiveAsset(self)
 
-
-#####
+# end of lib code
 
 
 class LocomotiveAdapter(CRUDAdapter):
@@ -126,11 +124,10 @@ class LocomotiveAdapter(CRUDAdapter):
     def __init__(self, connector_env):
         backend = connector_env.backend_record
         client = LocomotiveClient(
-             backend.username,
-             backend.password,
-            'adaptoo',
-             #backend.handle,
-             backend.location)
+            backend.username,
+            backend.password,
+            'adaptoo',  # TODO backend.handle
+            backend.location)
         client.auth()
         self.client = client
 
