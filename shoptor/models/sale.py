@@ -7,8 +7,7 @@ from openerp import api, models
 
 
 class SaleOrder(models.Model):
-    _inherit='sale.order'
-
+    _inherit = 'sale.order'
 
     def _json_parser_cart_order(self):
         return [
@@ -67,7 +66,7 @@ class SaleOrder(models.Model):
         status_list = {
             'draft': 'quotation',
             'confirm': 'pending',
-            #'confirm': 'processing',
+            # 'confirm': 'processing',
             'done': 'done',
             'cancel': 'cancel',
             }
@@ -77,13 +76,16 @@ class SaleOrder(models.Model):
                 'shipping_amount_tax_excluded': 10,
                 'shipping_amount_tax_included': 12,
                 'shipping_tax_amount': 2,
-                'tracking': [{'url': 'https://montracking', 'value': '69DJSEO494394'}],
+                'tracking': [{
+                    'url': 'https://montracking',  # TODO
+                    'value': '69DJSEO494394',
+                    }],
                 'payment_method_id': {'name': 'stripe'},
                 'status': status_list.get(order['state'], 'processing'),
             })
             order.pop('state')
             for line in order['order_line']:
-                line['product_image_url'] = 'http://www.adaptoo.com/media/catalog/product/cache/1/small_image/280x/9df78eab33525d08d6e5fb8d27136e95/t/t/ttr-40-rev-a_1.jpg'
+                line['product_image_url'] = 'http://todo.jpg'  # TODO
         return result
 
     @api.model
@@ -96,4 +98,3 @@ class SaleOrder(models.Model):
             'nbr_page': total_count/per_page + 1,
             'orders': orders.to_json_history(),
             }
-

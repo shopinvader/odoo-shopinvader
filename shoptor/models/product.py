@@ -28,10 +28,10 @@ class LocomotivecmsProduct(models.Model):
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id)',
-        'A product can only have one binding by backend.'),
+         'A product can only have one binding by backend.'),
     ]
 
-    #Automatically create the locomotive binding for the image
+    # Automatically create the locomotive binding for the image
     @api.model
     def create(self, vals):
         binding = super(LocomotivecmsProduct, self).create(vals)
@@ -48,23 +48,13 @@ class LocomotivecmsProduct(models.Model):
         return binding
 
 
-class ProductPricelist(models.Model):
-    _inherit = 'product.pricelist'
-
-    def _pricelist_key(self):
-        "You can customise this method if you want a "
-        "more explicit key in the pricelist json"
-        self.ensure_one()
-        return str(self.id)
-
-
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     def _get_untaxed_price(self, price):
         if self._uid == SUPERUSER_ID and self._context.get('company_id'):
             taxes = self.taxes_id.filtered(
-                lambda r: r.company_id.id == context['company_id'])
+                lambda r: r.company_id.id == self._context['company_id'])
         else:
             taxes = self.taxes_id
         return self.env['account.tax']._fix_tax_included_price(
@@ -85,7 +75,7 @@ class ProductProduct(models.Model):
         item_qty = set([item.min_quantity
                         for item in items if item.min_quantity > 1] + [1])
         for qty in item_qty:
-           res.append({
+            res.append({
                 'qty': qty,
                 'price': self._get_rounded_price(pricelist, qty, tax_included),
                 })

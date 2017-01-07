@@ -22,9 +22,7 @@ class LocomotivecmspPricelist(models.Model):
 
     _sql_constraints = [
         ('pricelist_uniq', 'unique(backend_id, record_id, tax_included)',
-        'Pricelist with the option tax included must be uniq per backend.'),
+         'Pricelist with the option tax included must be uniq per backend.'),
         ('code_uniq', 'unique(backend_id, code)',
-        'Code must be uniq per backend.'),
+         'Code must be uniq per backend.'),
     ]
-
-

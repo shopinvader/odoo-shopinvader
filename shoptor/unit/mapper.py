@@ -31,19 +31,19 @@ class ProductExportMapper(GenericExportMapper):
         ]
 
     def _apply(self, map_record, options=None):
-        res = super(ProductExportMapper, self)._apply(map_record, options=options)
+        res = super(ProductExportMapper, self)._apply(
+            map_record, options=options)
         res.update({
-            'from_price': 10, # en tenant compte des qty
+            'from_price': 10,  # en tenant compte des qty
             'discount_old_price': 15,
             'discount_value': 25,
-            'brand': [],
             'technical_files': [],
             'brand': 'UStronic',
             })
         return {
             'categories': [
-            '586bfd1f7aa7460007061945',
-            '586bfd1f7aa7460007061948',
+                '586bfd1f7aa7460007061945',
+                '586bfd1f7aa7460007061948',
             ],
             'data': res,
             'name': res['prefix_code'],
@@ -53,7 +53,6 @@ class ProductExportMapper(GenericExportMapper):
 
     @mapping
     def image(self, record):
-        binder = self.binder_for('locomotivecms.image')
         res = []
         for image in record.image_ids:
             image_data = {'name': image.name}
@@ -87,7 +86,7 @@ class ProductExportMapper(GenericExportMapper):
 
     @mapping
     def product_relation(self, record):
-        if not 'product_links' in self.env.registry._init_modules:
+        if 'product_links' not in self.env.registry._init_modules:
             return {}
         binder = self.binder_for('locomotivecms.product')
 
@@ -106,6 +105,7 @@ class ProductExportMapper(GenericExportMapper):
             'relateds': get_binding(record, 'related'),
             'up_sellings': get_binding(record, 'up_sell')
         }
+
 
 @locomotivecms
 class LocomotiveExportMapChild(ExportMapChild):
@@ -127,7 +127,6 @@ class ProductProductMapper(GenericExportMapper):
 
     @mapping
     def image(self, record):
-        binder = self.binder_for('locomotivecms.image')
         res = []
         for image in record.image_ids:
             image_data = {'name': image.name}
@@ -163,7 +162,7 @@ class ProductProductMapper(GenericExportMapper):
                 {"name": "Info", "value": "Type G"},
                 {"name": "Dimensions", "value": "L.6,0 x l.5,0 x h.5,0 cm"},
                 {"name": "Etat", "value": "Direct Usine"},
-        ]}
+            ]}
 
     @mapping
     def stock(self, record):

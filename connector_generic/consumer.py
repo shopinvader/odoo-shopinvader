@@ -42,8 +42,8 @@ class Consumer(object):
         if fields:
             if not exported_fields & set(fields):
                 _logger.debug(
-                    "Skip export of %s because modified fields: %s are not part "
-                    "of exported fields %s",
+                    "Skip export of %s because modified fields: %s are not "
+                    "part of exported fields %s",
                     self.record._name, fields, list(exported_fields))
                 return False
         return True

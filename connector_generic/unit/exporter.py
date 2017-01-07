@@ -3,11 +3,14 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-
+import logging
 import psycopg2
 from openerp.addons.connector.unit.synchronizer import Exporter
 from contextlib import contextmanager
 from openerp.tools.translate import _
+from openerp.addons.connector.exception import RetryableJobError
+
+_logger = logging.getLogger(__name__)
 
 
 class GenericExporter(Exporter):
@@ -26,7 +29,7 @@ class GenericExporter(Exporter):
         raise NotImplementedError
 
     def _after_export(self):
-        """ Can do several actions after exporting a record on external system """
+        """ Can do several actions after exporting a record on the backend """
         pass
 
     def _lock(self):
@@ -281,7 +284,7 @@ class GenericExporter(Exporter):
                 return _('Nothing to export.')
             self.external_id = self._create(record)
         return _('Record exported with ID %s on %s.') % (
-	    self.external_id, self.backend_record.name)
+            self.external_id, self.backend_record.name)
 
     def run(self, binding_id, *args, **kwargs):
         """ Run the synchronization

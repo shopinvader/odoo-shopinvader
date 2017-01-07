@@ -51,7 +51,7 @@ class LocomotivecmsExporter(GenericExporter):
             self.result = self._create(record)
             self.external_id = self.result['_id']
         return _('Record exported with ID %s on %s.') % (
-	    self.external_id, self.backend_record.name)
+            self.external_id, self.backend_record.name)
 
 
 @job(default_channel='root.locomotive')

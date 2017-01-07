@@ -5,7 +5,6 @@
 
 
 from openerp.addons.connector.connector import Binder
-from ..backend import locomotivecms
 
 
 class LocomotivecmsBinder(Binder):

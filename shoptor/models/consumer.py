@@ -23,6 +23,7 @@ def delay_export(session, model_name, record_id, vals=None):
         consumer = Consumer(session, get_environment, model_name, record_id)
         consumer.delay_export(export_record, vals=vals)
 
+
 @on_record_write(model_names=[
     'locomotivecms.product',
     'locomotivecms.image',
@@ -58,4 +59,4 @@ def delay_unlink(session, model_name, record_id):
 def delay_unlink_all_option_binding(session, model_name, record_id):
     consumer = Consumer(session, get_environment, model_name, record_id)
     consumer.delay_unlink_all_binding(
-         export_delete_record, 'locomotivecms_bind_ids')
+        export_delete_record, 'locomotivecms_bind_ids')

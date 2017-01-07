@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import api, fields, models
-from openerp.exceptions import Warning as UserError
 
 
 class LocomotivecmsPartner(models.Model):
@@ -18,7 +17,7 @@ class LocomotivecmsPartner(models.Model):
 
 
 class ResPartner(models.Model):
-    _inherit='res.partner'
+    _inherit = 'res.partner'
 
     locomotivecms_bind_ids = fields.One2many(
         'locomotivecms.partner',
@@ -51,7 +50,7 @@ class ResPartner(models.Model):
     def _get_main_address(self, address_type):
         self.ensure_one()
         delivery = self.search([
-            ('parent_id', '=', record.id),
+            ('parent_id', '=', self.id),
             ('is_default_%s' % address_type, '=', True),
             ])
         if not delivery:
@@ -77,5 +76,3 @@ class ResPartner(models.Model):
     @api.multi
     def to_json_contact(self):
         return self.jsonify(self._json_parser_contact())
-
-

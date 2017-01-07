@@ -14,11 +14,11 @@ class Image(models.Model):
         'record_id',
         string='Locomotive Binding')
 
-    #Automatically create the locomotive binding for the image created
+    # Automatically create the locomotive binding for the image created
     @api.model
     def create(self, vals):
         image = super(Image, self).create(vals)
-	if image.owner_model == 'product.template':
+        if image.owner_model == 'product.template':
             product = self.env['product.template'].browse(image.owner_id)
             binding_obj = self.env['locomotivecms.image']
             for binding in product.locomotivecms_bind_ids:
@@ -51,7 +51,7 @@ class LocomotivecmsImage(models.Model):
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, size, record_id)',
-        'A product can only have one binding by backend.'),
+         'A product can only have one binding by backend.'),
     ]
 
     def _select_size(self):

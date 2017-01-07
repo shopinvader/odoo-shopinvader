@@ -8,6 +8,7 @@ from openerp.addons.connector_locomotivecms.backend import locomotivecms
 from openerp.addons.connector_locomotivecms.unit.exporter import (
     LocomotivecmsExporter)
 
+
 @locomotivecms
 class ProductExporter(LocomotivecmsExporter):
     _model_name = 'locomotivecms.product'
