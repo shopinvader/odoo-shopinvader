@@ -27,6 +27,7 @@
     "data": [
         'views/product_view.xml',
         'views/image_view.xml',
+        'views/backend_view.xml',
     ],
     "demo": [
     ],

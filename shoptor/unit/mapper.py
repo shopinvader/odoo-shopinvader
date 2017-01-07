@@ -45,9 +45,6 @@ class ProductExportMapper(GenericExportMapper):
             '586bfd1f7aa7460007061945',
             '586bfd1f7aa7460007061948',
             ],
-            'is_discounted': True,
-            'is_bestseller': True,
-            'is_bestdiscount': True,
             'data': res,
             'name': res['prefix_code'],
             '_slug': res['url_key'],
@@ -144,9 +141,17 @@ class ProductProductMapper(GenericExportMapper):
     def name(self, record):
         return {'name': record.color}
 
+    def _get_pricelist_info(self, record, pricelist):
+        res = record._get_pricelist_dict(
+            pricelist.record_id, pricelist.tax_included)
+        return {'values': res, 'tax_included': pricelist.tax_included}
+
     @mapping
     def pricelist(self, record):
-        return {'pricelist': record.pricelist}
+        res = {}
+        for pricelist in self.backend_record.pricelist_ids:
+            res[pricelist.code] = self._get_pricelist_info(record, pricelist)
+        return {'pricelist': res}
 
     @mapping
     def technical(self, record):

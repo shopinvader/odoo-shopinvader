@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="locomotivecms_backend_view_form" model="ir.ui.view">
+    <field name="model">locomotivecms.backend</field>
+    <field name="inherit_id"
+           ref="connector_locomotivecms.view_locomotivecms_backend_form" />
+    <field name="arch" type="xml">
+        <group name="config" position="after">
+            <group name="price" colspan="4">
+                <field name="pricelist_ids"
+                       string="Pricelist"
+                       colspan="4"
+                       nolabel="True">
+                    <tree editable="bottom">
+                        <field name="record_id"/> 
+                        <field name="tax_included"/> 
+                        <field name="code"/>
+                    </tree>
+                </field>
+            </group>
+        </group>
+    </field>
+</record>
+
+    </data>
+</openerp>

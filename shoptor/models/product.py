@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import api, fields, models
+from openerp import SUPERUSER_ID
 
 
 class ProductTemplate(models.Model):
@@ -60,38 +61,32 @@ class ProductPricelist(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    # TODO adding a field is maybe not the best solution
-    # indeed if we need to customise the export per backend
-    # it's not possible. We need to refcator the base module
-    # to have more compatibility between json export and mapping
-    # the big question to solve is does the mapping system using exporter
-    # is the good solution
-    pricelist = fields.Serialized(compute='_compute_price')
+    def _get_untaxed_price(self, price):
+        if self._uid == SUPERUSER_ID and self._context.get('company_id'):
+            taxes = self.taxes_id.filtered(
+                lambda r: r.company_id.id == context['company_id'])
+        else:
+            taxes = self.taxes_id
+        return self.env['account.tax']._fix_tax_included_price(
+            price, taxes, [])
 
-    def _get_rounded_price(self, pricelist, qty):
-        self.ensure_one()
+    def _get_rounded_price(self, pricelist, qty, tax_included):
         price = pricelist.price_get(self.id, qty, None)[pricelist.id]
+        if not tax_included:
+            price = self._get_untaxed_price(price)
         return pricelist.currency_id.round(price)
 
-    def _get_dict_price(self, pricelist):
-        # we add an extra key here "values" to give the posibility to add
-        # some extra information easily (with new keys) without changing
-        # the data format and so simplifying the template compatibility
-        res = {'values': []}
+    def _get_pricelist_dict(self, pricelist, tax_included):
+        self.ensure_one()
+        res = []
         items = self.env['product.pricelist.item'].search([
             ('price_version_id.pricelist_id', '=', pricelist.id)
             ])
         item_qty = set([item.min_quantity
                         for item in items if item.min_quantity > 1] + [1])
         for qty in item_qty:
-            res['values'].append(
-                {'qty': qty, 'price': self._get_rounded_price(pricelist, qty)})
-        return {pricelist._pricelist_key(): res}
-
-    def _compute_price(self):
-        for record in self:
-            pls = self.env['product.pricelist'].search([('type', '=', 'sale')])
-            res = {}
-            for pl in pls:
-                res.update(record._get_dict_price(pl))
-            record.pricelist = res
+           res.append({
+                'qty': qty,
+                'price': self._get_rounded_price(pricelist, qty, tax_included),
+                })
+        return res
