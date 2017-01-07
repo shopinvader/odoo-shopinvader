@@ -22,6 +22,7 @@
         "connector_locomotivecms",
         "connector_base_product",
         "product_url",
+        "product_stock_state",
     ],
     "data": [
         'views/product_view.xml',

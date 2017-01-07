@@ -22,6 +22,8 @@ class ProductExportMapper(GenericExportMapper):
         ('url_key', 'url_key'),
         ('id', 'id'),
         ('description', 'description'),
+        ('stock_state', 'stock_state'),
+        ('qty_available', 'stock_qty'),
         ]
 
     children = [
@@ -31,9 +33,6 @@ class ProductExportMapper(GenericExportMapper):
     def _apply(self, map_record, options=None):
         res = super(ProductExportMapper, self)._apply(map_record, options=options)
         res.update({
-            # 'out_of_stock', 'resupplying', 'in_limited_stock',
-            'stock_state': 'in_stock',
-            'stock_qty': 42,
             'from_price': 10, # en tenant compte des qty
             'discount_old_price': 15,
             'discount_value': 25,
@@ -42,9 +41,10 @@ class ProductExportMapper(GenericExportMapper):
             'relateds': [],
             'up_sellings': [],
             'technical_files': [],
+            'brand': 'UStronic',
             })
         return {
-            'category': [
+            'categories': [
             '586bfd1f7aa7460007061945',
             '586bfd1f7aa7460007061948',
             ],
@@ -106,6 +106,8 @@ class ProductProductMapper(GenericExportMapper):
         ('fuse', 'fuse'),
         ('color', 'color'),
         ('default_code', 'default_code'),
+        ('stock_state', 'stock_state'),
+        ('qty_available', 'stock_qty'),
     ]
 
     @mapping
