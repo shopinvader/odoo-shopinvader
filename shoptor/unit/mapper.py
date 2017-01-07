@@ -36,10 +36,7 @@ class ProductExportMapper(GenericExportMapper):
             'from_price': 10, # en tenant compte des qty
             'discount_old_price': 15,
             'discount_value': 25,
-            'cross_sellings': [],
             'brand': [],
-            'relateds': [],
-            'up_sellings': [],
             'technical_files': [],
             'brand': 'UStronic',
             })
@@ -91,6 +88,27 @@ class ProductExportMapper(GenericExportMapper):
                  'rating': 5},
             ]}
 
+    @mapping
+    def product_relation(self, record):
+        if not 'product_links' in self.env.registry._init_modules:
+            return {}
+        binder = self.binder_for('locomotivecms.product')
+
+        def get_binding(record, link_type):
+            res = []
+            for link in record.product_link_ids:
+                if link.type == link_type and link.is_active:
+                    external_id = binder.to_backend(
+                        link.linked_product_tmpl_id,
+                        wrap=True)
+                    res.append(external_id)
+            return res
+
+        return {
+            'cross_sellings': get_binding(record, 'cross_sell'),
+            'relateds': get_binding(record, 'related'),
+            'up_sellings': get_binding(record, 'up_sell')
+        }
 
 @locomotivecms
 class LocomotiveExportMapChild(ExportMapChild):
