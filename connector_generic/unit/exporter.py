@@ -73,7 +73,7 @@ class GenericExporter(Exporter):
 
             IntegrityError: duplicate key value violates unique
             constraint "mybackend_product_product_openerp_uniq"
-            DETAIL:  Key (backend_id, openerp_id)=(1, 4851) already exists.
+            DETAIL:  Key (backend_id, record_id)=(1, 4851) already exists.
 
         In that case, we'll retry the import just later.
 
@@ -147,7 +147,7 @@ class GenericExporter(Exporter):
         wrap = relation._model._name != binding_model
 
         if wrap and hasattr(relation, binding_field):
-            domain = [('openerp_id', '=', relation.id),
+            domain = [('record_id', '=', relation.id),
                       ('backend_id', '=', self.backend_record.id)]
             binding = self.env[binding_model].search(domain)
             if binding:
@@ -162,12 +162,12 @@ class GenericExporter(Exporter):
             # depends.
             else:
                 bind_values = {'backend_id': self.backend_record.id,
-                               'openerp_id': relation.id}
+                               'record_id': relation.id}
                 if binding_extra_vals:
                     bind_values.update(binding_extra_vals)
                 # If 2 jobs create it at the same time, retry
                 # one later. A unique constraint (backend_id,
-                # openerp_id) should exist on the binding model
+                # record_id) should exist on the binding model
                 with self._retry_unique_violation():
                     binding = (self.env[binding_model]
                                .with_context(connector_no_export=True)
