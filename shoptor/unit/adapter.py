@@ -17,5 +17,8 @@ class ProductAdapter(LocomotiveContentAdapter):
 
 
 @locomotivecms
-class ImageAdapter(LocomotiveAssetAdapter):
-    _model_name = 'locomotivecms.image'
+class AssetAdapter(LocomotiveAssetAdapter):
+    _model_name = [
+        'locomotivecms.image',
+        'locomotivecms.media',
+        ]

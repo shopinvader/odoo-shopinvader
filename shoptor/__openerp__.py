@@ -23,11 +23,13 @@
         "connector_base_product",
         "product_url",
         "product_multi_image",
+        "product_media",
         "product_stock_state",
     ],
     "data": [
         'views/product_view.xml',
         'views/image_view.xml',
+        'views/media_view.xml',
         'views/backend_view.xml',
     ],
     "demo": [

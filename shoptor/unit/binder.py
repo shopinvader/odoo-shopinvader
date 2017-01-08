@@ -13,4 +13,5 @@ class LocomotiveEcommerce(LocomotivecmsBinder):
     _model_name = [
         'locomotivecms.product',
         'locomotivecms.image',
+        'locomotivecms.media',
     ]

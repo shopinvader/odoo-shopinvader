@@ -8,5 +8,6 @@ from . import partner
 from . import product
 from . import product_pricelist
 from . import image
+from . import media
 from . import consumer
 from . import backend

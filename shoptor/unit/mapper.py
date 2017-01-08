@@ -5,6 +5,7 @@
 
 import StringIO
 import base64
+from collections import defaultdict
 from openerp.addons.connector_locomotivecms.backend import locomotivecms
 from openerp.addons.connector.unit.mapper import mapping, ExportMapChild
 from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
@@ -37,7 +38,6 @@ class ProductExportMapper(GenericExportMapper):
             'from_price': 10,  # en tenant compte des qty
             'discount_old_price': 15,
             'discount_value': 25,
-            'technical_files': [],
             'brand': 'UStronic',
             })
         return {
@@ -105,6 +105,17 @@ class ProductExportMapper(GenericExportMapper):
             'relateds': get_binding(record, 'related'),
             'up_sellings': get_binding(record, 'up_sell')
         }
+
+    @mapping
+    def media(self, record):
+        res = defaultdict(list)
+        for media in record.media_ids:
+            media_data = {'name': media.name}
+            for binding in media.locomotivecms_bind_ids:
+                if binding.backend_id == self.backend_record:
+                    media_data['url'] = binding.url
+            res['media_%s' % media.media_type].append(media_data)
+        return res
 
 
 @locomotivecms
@@ -193,4 +204,19 @@ class ImageExportMapper(GenericExportMapper):
         return {
             'file': f,
             'filename': name,
+            }
+
+@locomotivecms
+class MediaExportMapper(GenericExportMapper):
+    _model_name = 'locomotivecms.media'
+
+    @mapping
+    def media(self, record):
+        # get a slugify filename
+        f = StringIO.StringIO()
+        f.write(base64.b64decode(record.datas))
+        f.seek(0)
+        return {
+            'file': f,
+            'filename': record.datas_fname,
             }
