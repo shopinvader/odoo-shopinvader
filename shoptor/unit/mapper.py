@@ -43,18 +43,12 @@ class ProductExportMapper(GenericExportMapper):
     def _apply(self, map_record, options=None):
         res = super(ProductExportMapper, self)._apply(
             map_record, options=options)
-        res.update({
-            'from_price': 10,  # en tenant compte des qty
-            'discount_old_price': 15,
-            'discount_value': 25,
-            'brand': 'UStronic',
-            })
         return {
             'categories': res.pop('categories'),
-            'data': res,
-            'name': res['prefix_code'],
-            '_slug': res['url_key'],
+            '_slug': res.pop('url_key'),
             'odoo_id': str(res.pop('id')),
+            'name': res['prefix_code'],
+            'data': res,
             }
 
     @mapping
@@ -144,13 +138,10 @@ class LocomotiveExportMapChild(ExportMapChild):
 
 
 @locomotivecms
-class ProductProductMapper(GenericExportMapper):
+class VariantExportMapper(GenericExportMapper):
     _model_name = 'product.product'
 
     direct = [
-        ('face', 'face'),
-        ('fuse', 'fuse'),
-        ('color', 'color'),
         ('default_code', 'default_code'),
         ('stock_state', 'stock_state'),
         ('qty_available', 'stock_qty'),
@@ -167,10 +158,6 @@ class ProductProductMapper(GenericExportMapper):
             res.append(image_data)
         return {'images': res}
 
-    @mapping
-    def name(self, record):
-        return {'name': record.color}
-
     def _get_pricelist_info(self, record, pricelist):
         res = record._get_pricelist_dict(
             pricelist.record_id, pricelist.tax_included)
@@ -182,25 +169,6 @@ class ProductProductMapper(GenericExportMapper):
         for pricelist in self.backend_record.pricelist_ids:
             res[pricelist.code] = self._get_pricelist_info(record, pricelist)
         return {'pricelist': res}
-
-    @mapping
-    def technical(self, record):
-        return {
-            'technical_details': [
-                {"name": "Poids net", "value": "0.0450"},
-                {"name": "Marque", "value": "Adaptoo"},
-                {"name": "Eco-part.", "value": "0.01"},
-                {"name": "Info", "value": "Type G"},
-                {"name": "Dimensions", "value": "L.6,0 x l.5,0 x h.5,0 cm"},
-                {"name": "Etat", "value": "Direct Usine"},
-            ]}
-
-    @mapping
-    def stock(self, record):
-        return {
-            'stock_state': 'in_stock',
-            'stock_qty': 42,
-        }
 
 
 @locomotivecms
