@@ -17,6 +17,12 @@ class ProductAdapter(LocomotiveContentAdapter):
 
 
 @locomotivecms
+class CategAdapter(LocomotiveContentAdapter):
+    _model_name = 'locomotivecms.category'
+    _content_type = 'categories'
+
+
+@locomotivecms
 class AssetAdapter(LocomotiveAssetAdapter):
     _model_name = [
         'locomotivecms.image',

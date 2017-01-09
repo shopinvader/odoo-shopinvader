@@ -14,6 +14,15 @@ from openerp.tools.image import image_resize_image
 
 
 @locomotivecms
+class CategExportMapper(GenericExportMapper):
+    _model_name = 'locomotivecms.category'
+
+    direct = [
+        ('name', 'name'),
+        ]
+
+
+@locomotivecms
 class ProductExportMapper(GenericExportMapper):
     _model_name = 'locomotivecms.product'
 
@@ -41,15 +50,26 @@ class ProductExportMapper(GenericExportMapper):
             'brand': 'UStronic',
             })
         return {
-            'categories': [
-                '586bfd1f7aa7460007061945',
-                '586bfd1f7aa7460007061948',
-            ],
+            'categories': res.pop('categories'),
             'data': res,
             'name': res['prefix_code'],
             '_slug': res['url_key'],
             'odoo_id': str(res.pop('id')),
             }
+
+    @mapping
+    def categories(self, record):
+        binder = self.binder_for('locomotivecms.category')
+        res = []
+        if 'product_m2mcategories' not in self.env.registry._init_modules:
+            categs = record.categ_ids + record.categ_id
+        else:
+            categs = record.categ_id
+        for categ in categs:
+            external_id = binder.to_backend(categ, wrap=True)
+            if external_id:
+                res.append(external_id)
+        return {'categories': res}
 
     @mapping
     def image(self, record):

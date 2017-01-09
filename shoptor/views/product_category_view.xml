@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="product_category_view_form" model="ir.ui.view">
+    <field name="model">product.category</field>
+    <field name="inherit_id" ref="product.product_category_form_view"/>
+    <field name="arch" type="xml">
+        <group name="parent" position="after">
+            <group name="Connector" colspan="4">
+                <field name="locomotivecms_bind_ids" nolabel="1">
+                    <tree editable="bottom">
+                        <field name="backend_id"/>
+                        <field name="sync_date"/>
+                        <field name="external_id"/>
+                    </tree>
+                </field>
+            </group>
+        </group>
+    </field>
+</record>
+
+    </data>
+</openerp>

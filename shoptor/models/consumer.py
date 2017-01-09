@@ -15,6 +15,7 @@ from openerp.addons.connector_locomotivecms.unit.deleter import (
 
 
 @on_record_create(model_names=[
+    'locomotivecms.category',
     'locomotivecms.product',
     'locomotivecms.image',
     ])
@@ -25,6 +26,7 @@ def delay_export(session, model_name, record_id, vals=None):
 
 
 @on_record_write(model_names=[
+    'locomotivecms.category',
     'locomotivecms.product',
     'locomotivecms.image',
     ])
@@ -35,6 +37,7 @@ def delay_export(session, model_name, record_id, vals=None):
 
 @on_record_write(model_names=[
     'product.template',
+    'product.category',
     'base_multi_image.image',
     ])
 def delay_export_all_binding(session, model_name, record_id, vals=None):
@@ -45,6 +48,7 @@ def delay_export_all_binding(session, model_name, record_id, vals=None):
 
 @on_record_unlink(model_names=[
     'locomotivecms.product',
+    'locomotivecms.category',
     'locomotivecms.image',
     ])
 def delay_unlink(session, model_name, record_id):
@@ -54,6 +58,7 @@ def delay_unlink(session, model_name, record_id):
 
 @on_record_unlink(model_names=[
     'product.template',
+    'product.category',
     'base_multi_image.image',
 ])
 def delay_unlink_all_option_binding(session, model_name, record_id):

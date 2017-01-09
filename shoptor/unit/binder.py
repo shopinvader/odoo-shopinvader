@@ -12,6 +12,7 @@ from openerp.addons.connector_locomotivecms.backend import locomotivecms
 class LocomotiveEcommerce(LocomotivecmsBinder):
     _model_name = [
         'locomotivecms.product',
+        'locomotivecms.category',
         'locomotivecms.image',
         'locomotivecms.media',
     ]

@@ -25,6 +25,11 @@ class ProductExporter(LocomotivecmsExporter):
 
 
 @locomotivecms
+class CategExporter(LocomotivecmsExporter):
+    _model_name = 'locomotivecms.category'
+
+
+@locomotivecms
 class AssetExporter(LocomotivecmsExporter):
     _model_name = [
         'locomotivecms.image',

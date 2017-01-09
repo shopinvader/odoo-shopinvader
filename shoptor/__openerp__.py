@@ -31,6 +31,7 @@
         'views/image_view.xml',
         'views/media_view.xml',
         'views/backend_view.xml',
+        'views/product_category_view.xml',
     ],
     "demo": [
     ],
