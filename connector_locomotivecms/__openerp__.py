@@ -18,6 +18,7 @@
     'data': [
         'views/locomotive_view.xml',
         'views/locomotive_menu.xml',
+        'security/ir.model.access.csv',
     ],
     'demo': [
         'demo/backend_demo.xml',

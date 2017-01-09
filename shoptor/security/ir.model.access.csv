@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_locomotivecms_category,locomotivecms_category connector manager,model_locomotivecms_category,connector.group_connector_manager,1,1,1,1
+access_locomotivecms_product,locomotivecms_product connector manager,model_locomotivecms_product,connector.group_connector_manager,1,1,1,1
+access_locomotivecms_image,locomotivecms_image connector manager,model_locomotivecms_image,connector.group_connector_manager,1,1,1,1
+access_locomotivecms_media,locomotivecms_mediat connector manager,model_locomotivecms_media,connector.group_connector_manager,1,1,1,1

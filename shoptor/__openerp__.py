@@ -32,6 +32,7 @@
         'views/media_view.xml',
         'views/backend_view.xml',
         'views/product_category_view.xml',
+        'security/ir.model.access.csv',
     ],
     "demo": [
     ],
