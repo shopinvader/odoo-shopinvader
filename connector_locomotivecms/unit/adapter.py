@@ -140,6 +140,9 @@ class LocomotiveAdapter(CRUDAdapter):
     def delete(self, binding_id):
         self.resource.delete(binding_id)
 
+    def read(self, external_id):
+        return self.resource.read(external_id)
+
 
 class LocomotiveContentAdapter(LocomotiveAdapter):
     _content_type = None
