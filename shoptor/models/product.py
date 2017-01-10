@@ -25,6 +25,9 @@ class LocomotivecmsProduct(models.Model):
         'product.template',
         required=True,
         ondelete='cascade')
+    seo_title = fields.Char()
+    meta_description = fields.Char()
+    meta_keyword = fields.Char()
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id)',

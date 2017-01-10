@@ -34,6 +34,9 @@ class ProductExportMapper(GenericExportMapper):
         ('description', 'description'),
         ('stock_state', 'stock_state'),
         ('qty_available', 'stock_qty'),
+        ('seo_title', 'seo_title'),
+        ('meta_keyword', 'meta_keywords'),
+        ('meta_description', 'meta_description'),
         ]
 
     children = [
@@ -44,6 +47,9 @@ class ProductExportMapper(GenericExportMapper):
         res = super(ProductExportMapper, self)._apply(
             map_record, options=options)
         return {
+            'seo_title':  res.pop('seo_title'),
+            'meta_keywords': res.pop('meta_keywords'),
+            'meta_description': res.pop('meta_description'),
             'categories': res.pop('categories'),
             '_slug': res.pop('url_key'),
             'odoo_id': str(res.pop('id')),

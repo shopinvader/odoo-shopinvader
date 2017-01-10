@@ -11,10 +11,18 @@
         </page>
         <page name="connector" position="inside">
             <field name="locomotivecms_bind_ids">
-                <tree editable="bottom">
+                <tree>
                     <field name="backend_id"/>
                     <field name="sync_date"/>
                 </tree>
+                <form>
+                    <group>
+                        <field name="backend_id"/>
+                        <field name="seo_title"/>
+                        <field name="meta_keyword"/>
+                        <field name="meta_description"/>
+                    </group>
+                </form>
             </field>
         </page>
     </field>
