@@ -102,23 +102,23 @@ class ProductExportMapper(GenericExportMapper):
     def product_relation(self, record):
         if 'product_links' not in self.env.registry._init_modules:
             return {}
-        binder = self.binder_for('locomotivecms.product')
 
-        def get_binding(record, link_type):
+        def get_related_product(record, link_type):
             res = []
+            # We export the odoo id of the linked product that
+            # should be exported to the backend
             for link in record.product_link_ids:
                 if link.type == link_type and link.is_active:
-                    external_id = binder.to_backend(
-                        link.linked_product_tmpl_id,
-                        wrap=True)
-                    res.append(external_id)
+                    for binding in link.linked_product_tmpl_id.\
+                            locomotivecms_bind_ids:
+                        if binding.backend_id == record.backend_id:
+                            res.append(link.linked_product_tmpl_id.id)
             return res
-
         return {
-            'cross_sellings': get_binding(record, 'cross_sell'),
-            'relateds': get_binding(record, 'related'),
-            'up_sellings': get_binding(record, 'up_sell')
-        }
+            'cross_sellings': get_related_product(record, 'cross_sell'),
+            'relateds': get_related_product(record, 'related'),
+            'up_sellings': get_related_product(record, 'up_sell'),
+            }
 
     @mapping
     def media(self, record):
