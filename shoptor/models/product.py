@@ -70,16 +70,29 @@ class ProductProduct(models.Model):
         return pricelist.currency_id.round(price)
 
     def _get_pricelist_dict(self, pricelist, tax_included):
+        def get_all_parent(categ):
+            if categ:
+                return [categ.id] + get_all_parent(categ.parent_id)
+            else:
+                return []
         self.ensure_one()
         res = []
+        categ_ids = get_all_parent(self.categ_id)
         items = self.env['product.pricelist.item'].search([
-            ('price_version_id.pricelist_id', '=', pricelist.id)
+            '|', '|',
+            ('product_id', '=', self.id),
+            ('product_tmpl_id', '=', self.product_tmpl_id.id),
+            ('categ_id', 'in', categ_ids),
             ])
         item_qty = set([item.min_quantity
                         for item in items if item.min_quantity > 1] + [1])
+        last_price = None
         for qty in item_qty:
-            res.append({
-                'qty': qty,
-                'price': self._get_rounded_price(pricelist, qty, tax_included),
-                })
+            price = self._get_rounded_price(pricelist, qty, tax_included)
+            if price != last_price:
+                res.append({
+                    'qty': qty,
+                    'price': price,
+                    })
+                last_price = price
         return res
