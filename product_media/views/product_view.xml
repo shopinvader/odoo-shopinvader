@@ -2,13 +2,20 @@
 <openerp>
     <data>
 
-<record id="product_template_view_form" model="ir.ui.view">
+<record id="product_template_only_view_form" model="ir.ui.view">
     <field name="model">product.template</field>
-    <field name="inherit_id" ref="product.product_template_form_view"/>
+    <field name="inherit_id" ref="product.product_template_only_form_view"/>
     <field name="arch" type="xml">
         <notebook position="inside">
             <page string="Media">
-                <field name="media_ids"/>
+                <field name="media_link_ids">
+                    <tree editable="bottom">
+                       <field name="media_ids"
+                              widget="many2many_tags"/>
+                       <field name="restrict_variant_ids"
+                              widget="many2many_tags"/>
+                    </tree>
+                </field>
             </page>
         </notebook>
     </field>

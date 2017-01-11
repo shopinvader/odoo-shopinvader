@@ -20,8 +20,9 @@ class ProductExporter(LocomotivecmsExporter):
                 if not binding.external_id\
                         and binding.backend_id == self.backend_record:
                     exporter.run(binding.id)
-        for media in self.binding_record.media_ids:
-            self._export_dependency(media, 'locomotivecms.media')
+        for link in self.binding_record.media_link_ids:
+            for media in link.media_ids:
+                self._export_dependency(media, 'locomotivecms.media')
 
 
 @locomotivecms

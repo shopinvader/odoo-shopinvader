@@ -30,7 +30,6 @@ class ProductExportMapper(GenericExportMapper):
         ('name', 'name'),
         ('prefix_code', 'prefix_code'),
         ('url_key', 'url_key'),
-        ('id', 'id'),
         ('description', 'description'),
         ('stock_state', 'stock_state'),
         ('qty_available', 'stock_qty'),
@@ -52,7 +51,7 @@ class ProductExportMapper(GenericExportMapper):
             'meta_description': res.pop('meta_description'),
             'categories': res.pop('categories'),
             '_slug': res.pop('url_key'),
-            'odoo_id': str(res.pop('id')),
+            'odoo_id': map_record._source.record_id.id,
             'name': res['prefix_code'],
             'data': res,
             }
@@ -126,17 +125,6 @@ class ProductExportMapper(GenericExportMapper):
             'up_sellings': get_related_product(record, 'up_sell'),
             }
 
-    @mapping
-    def media(self, record):
-        res = defaultdict(list)
-        for media in record.media_ids:
-            media_data = {'name': media.name}
-            for binding in media.locomotivecms_bind_ids:
-                if binding.backend_id == self.backend_record:
-                    media_data['url'] = binding.url
-            res['media_%s' % media.media_type].append(media_data)
-        return res
-
 
 @locomotivecms
 class LocomotiveExportMapChild(ExportMapChild):
@@ -151,6 +139,7 @@ class VariantExportMapper(GenericExportMapper):
         ('default_code', 'default_code'),
         ('stock_state', 'stock_state'),
         ('qty_available', 'stock_qty'),
+        ('id', 'odoo_id'),
     ]
 
     @mapping
@@ -175,6 +164,18 @@ class VariantExportMapper(GenericExportMapper):
         for pricelist in self.backend_record.pricelist_ids:
             res[pricelist.code] = self._get_pricelist_info(record, pricelist)
         return {'pricelist': res}
+
+    @mapping
+    def media(self, record):
+        res = []
+        for media in record.media_ids:
+            for binding in media.locomotivecms_bind_ids:
+                if binding.backend_id == self.backend_record:
+                    res.append({
+                        'name': media.name,
+                        'url': binding.url,
+                        'type': binding.media_type})
+        return {'media': res}
 
 
 @locomotivecms
