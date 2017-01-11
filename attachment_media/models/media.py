@@ -19,8 +19,9 @@ class MediaMedia(models.Model):
 
     # If you want to add new type base default please do a PR
     media_type = fields.Selection([
+        ('certification', 'Certification'),
         ('instruction', 'Instruction'),
         ('warranty', 'Warranty'),
-        ('contract', 'Contract'),
-        ('video', 'Video'),
+        ('security', 'Security'),
+        ('faq', 'FAQ'),
         ])
