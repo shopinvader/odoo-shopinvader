@@ -18,7 +18,8 @@
         "bin": [],
     },
     "depends": [
-        "sale",
+        "sale_cart",
+        "base_jsonify",
         "connector_locomotivecms",
         "connector_base_product",
         "product_url",

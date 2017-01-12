@@ -12,3 +12,4 @@ from . import image
 from . import media
 from . import consumer
 from . import backend
+from . import ir_http

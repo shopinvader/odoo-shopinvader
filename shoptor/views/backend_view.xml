@@ -7,6 +7,9 @@
     <field name="inherit_id"
            ref="connector_locomotivecms.view_locomotivecms_backend_form" />
     <field name="arch" type="xml">
+        <field name="lang_ids" position="after">
+            <field name="odoo_api"/>
+        </field>
         <group name="config" position="after">
             <group name="price" colspan="4">
                 <field name="pricelist_ids"

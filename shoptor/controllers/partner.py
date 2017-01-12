@@ -7,14 +7,10 @@ import json
 
 from openerp import http
 from openerp.http import request
+from .main import rjson
 
 
 class PartnerController(http.Controller):
-
-    def _response_json(self, result):
-        return request.make_response(
-            json.dumps(result),
-            headers={'Content-Type': 'application/json'})
 
     @http.route('/shoptor/contacts', methods=['GET'], auth="none")
     def list(self, session=None, email=None, contact_type=None):
@@ -28,22 +24,28 @@ class PartnerController(http.Controller):
             result += partner.to_json_contact()
         if not contact_type or contact_type == 'address':
             result += partner.child_ids.to_json_contact()
-        return self._response_json(result)
+        return rjson(result)
 
     @http.route('/shoptor/contacts', methods=['POST'], auth="none")
     def create(self, **params):
         # TODO check params and getting the partner
-        return request.env['res.partner'].sudo().create(params)
+        params['name'] = params.get('firstname', '') + params.get('lastname', '')
+        params['parent_id'] = 13470
+        partner = request.env['res.partner'].sudo().create(params)
+        return rjson(partner.to_json_contact())
 
     @http.route('/shoptor/contacts/<partner_id>', methods=['PUT'], auth="none")
     def edit(self, partner_id, **params):
         # TODO check params
-        return request.env['res.partner'].sudo()\
-            .browse(partner_id).write(params)
+        params['parent_id'] = 13470
+        params['name'] = params.get('firstname', '') + params.get('lastname', '')
+        partner = request.env['res.partner'].sudo().browse(int(partner_id))
+        partner.write(params)
+        return rjson(partner.to_json_contact())
 
     @http.route('/shoptor/contacts/<partner_id>',
                 methods=['DELETE'], auth="none")
     def delete(self, partner_id):
         # TODO check params
         return request.env['res.partner'].sudo()\
-            .browse(partner_id).unlink()
+            .browse(int(partner_id)).unlink()

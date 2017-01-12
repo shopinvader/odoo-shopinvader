@@ -3,10 +3,4 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import json
-from openerp.http import request
-
-def rjson(result):
-    return request.make_response(
-        json.dumps(result),
-        headers={'Content-Type': 'application/json'})
+from . import sale

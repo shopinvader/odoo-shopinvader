@@ -5,3 +5,4 @@
 
 from . import main
 from . import partner
+from . import sale
