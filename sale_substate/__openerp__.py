@@ -15,8 +15,9 @@
     'author': 'Akretion',
     'website': 'http://wwww.akretion.com/',
     'depends': ['sale'],
-    'data': ['sale_view.xml'],
+    'data': [
+        'views/sale_view.xml',
+        ],
     'demo': [],
-    'test': [],
     'installable': True,
 }

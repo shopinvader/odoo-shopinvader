@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-               <!--with substate = cart sale_order 1 2 4 -->
-        <record id="sale.sale_order_1" model="sale.order">
-            <field name="sub_state" >cart</field>
-        </record>
 
-        <record id="sale.sale_order_2" model="sale.order">
-           <field name="sub_state" >cart</field>
-        </record>
-
-        <record id="sale.sale_order_4" model="sale.order">
-            <field name="sub_state" >cart</field>
-        </record>
-
-
+<record id="sale.sale_order_1" model="sale.order">
+    <field name="sub_state" >cart</field>
+</record>
 
     </data>
 </openerp>

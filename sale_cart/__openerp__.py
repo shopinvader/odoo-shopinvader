@@ -13,9 +13,14 @@
     """,
     'author': 'Akretion',
     'website': 'http://wwww.akretion.com/',
-    'depends': ['sale_substate'],
-    'data': [],
-    'demo': ['demo/cart_demo.xml'],
-    'test': ['tests/test_cart.py'],
+    'depends': [
+        'sale_substate',
+        ],
+    'data': [
+        'views/sale_menu.xml',
+        ],
+    'demo': [
+        'demo/cart_demo.xml',
+        ],
     'installable': True,
 }
