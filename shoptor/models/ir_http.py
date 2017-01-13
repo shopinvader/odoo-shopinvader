@@ -14,16 +14,12 @@ class IrHttp(models.Model):
     _inherit = 'ir.http'
 
     def _auth_method_shoptor(self):
-        if request.httprequest.method == 'GET':
-            api_key = request.httprequest.args.get('api_key')
-        else:
-            api_key = request.httprequest.form.get('api_key')
-        if api_key:
+        if request.params.get('api_key'):
             backend_id = self.pool['locomotivecms.backend'].search(
                 request.cr, 1,
-                [('odoo_api', '=', api_key)])
+                [('odoo_api', '=', request.params['api_key'])])
             if len(backend_id) == 1:
-                request.backend_id = backend_id
+                request.backend_id = backend_id[0]
                 request.uid = 1
                 request.email = None
                 request.partner_id = None

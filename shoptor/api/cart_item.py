@@ -5,25 +5,67 @@
 
 from openerp import api, models
 from openerp.http import request
+from .helper import to_int, secure_params
 
 
 class ShoptorCartItem(models.AbstractModel):
     _name = 'shoptor.cart.item'
+    _inherit = 'shoptor.api'
 
-    @api.model
-    def create(self, product_id, item_qty, cart_id=None, **kwargs):
+    # The following method are 'public' and can be called from the controller.
+    # All params are untrusted so please check it by using the decorator
+    # secure params and the linked validator !
+
+    @secure_params
+    def create(self, params):
         cart_obj = self.env['shoptor.cart']
-        cart = cart_obj._get_card(cart_id)
+        cart = cart_obj._get_card(params['cart_id'])
         if not cart:
             vals = cart_obj._prepare_card()
             cart = self.env['sale.order'].create(vals)
         self.env['sale.order.line'].create({
-            'name': 'TODO',
-            'product_id': int(product_id),
-            'product_uom_qty': item_qty,
+            'product_id': params['product_id'],
+            'product_uom_qty': params['item_qty'],
             'order_id': cart.id,
             })
         return cart_obj._to_json(cart)[0]
+
+    @secure_params
+    def update(self, params):
+        item = self._get_cart_item(params['cart_id'], params['item_id'])
+        item.product_uom_qty = params['item_qty']
+        return self.env['shoptor.cart'].get(params)
+
+    @secure_params
+    def delete(self, params):
+        item = self._get_cart_item(params['cart_id'], params['item_id'])
+        item.unlink()
+        return self.env['shoptor.cart'].get(params)
+
+    # Validator
+    def _validator_create(self):
+        return {
+            'cart_id': {'coerce': to_int, 'nullable': True},
+            'product_id': {'coerce': to_int, 'required': True},
+            'item_qty': {'coerce': float, 'required': True},
+            }
+
+    def _validator_update(self):
+        return {
+            'cart_id': {'coerce': to_int, 'required': True},
+            'item_id': {'coerce': to_int, 'required': True},
+            'item_qty': {'coerce': float, 'required': True},
+            }
+
+    def _validator_delete(self):
+        return {
+            'cart_id': {'coerce': to_int, 'required': True},
+            'item_id': {'coerce': to_int, 'required': True},
+            }
+
+    # The following method are 'private' and should be never never NEVER call
+    # from the controller.
+    # All params are trusted as they have been checked before
 
     @api.model
     def _get_cart_item(self, cart_id, item_id):
@@ -39,13 +81,3 @@ class ShoptorCartItem(models.AbstractModel):
             raise # TODO raise access error
         return item
 
-    @api.model
-    def update(self, cart_id, item_id, item_qty, **kwargs):
-        item = self._get_cart_item(cart_id, item_id)
-        item.product_uom_qty = float(item_qty)
-        return self.env['shoptor.cart'].get(cart_id)
-
-    def delete(self, cart_id, item_id, **kwargs):
-        item = self._get_cart_item(cart_id, item_id)
-        item.unlink()
-        return self.env['shoptor.cart'].get(cart_id)

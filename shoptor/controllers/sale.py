@@ -9,50 +9,26 @@ from openerp import http
 from openerp.http import request
 from .main import rjson
 
-# TODO we need to define a good way to process params
-# maybe we should implement something like in rails
-def to_int(params):
-    if params:
-        return int(float(params))
-    else:
-        return None
-
-def to_float(params):
-    if params:
-        return float(params)
-    else:
-        return None
-
 
 class SaleController(http.Controller):
 
     @http.route('/shoptor/cart/cart', methods=['GET'], auth="shoptor")
-    def cart(self, cart_id=None, **kwargs):
-        if cart_id:
-            cart_id = int(float(cart_id))
-        return rjson(request.env['shoptor.cart'].get(
-            cart_id=cart_id, **kwargs))
+    def cart(self, **params):
+        return rjson(request.env['shoptor.cart'].get(params))
 
     @http.route('/shoptor/cart/item',
                 methods=['POST', 'PUT', 'DELETE'],
                 auth="shoptor")
-    def item(self, cart_id=None, product_id=None, item_id=None, item_qty=None,
-             **kwargs):
-        cart_id = to_int(cart_id)
-        product_id = to_int(product_id)
-        item_id = to_int(item_id)
-        item_qty = to_float(item_qty)
-
+    def item(self, **params):
         method = request.httprequest.method
         item_obj = request.env['shoptor.cart.item']
         if method == 'POST':
-            return rjson(item_obj.create(
-                product_id, item_qty, cart_id=cart_id, **kwargs))
+            res = item_obj.create(params)
         elif method == 'PUT':
-            return rjson(item_obj.update(cart_id, item_id, item_qty, **kwargs))
+            res = item_obj.update(params)
         elif method == 'DELETE':
-            return rjson(tem_obj.delete(cart_id, item_id, **kwargs))
-        return
+            res = item_obj.delete(params)
+        return rjson(res)
 
     @http.route('/shoptor/orders', methods=['GET'], auth="none")
     def orders(self, per_page=5, page=1):

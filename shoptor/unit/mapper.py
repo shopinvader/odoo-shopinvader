@@ -60,7 +60,7 @@ class ProductExportMapper(GenericExportMapper):
     def categories(self, record):
         binder = self.binder_for('locomotivecms.category')
         res = []
-        if 'product_m2mcategories' not in self.env.registry._init_modules:
+        if 'product_m2mcategories' in self.env.registry._init_modules:
             categs = record.categ_ids + record.categ_id
         else:
             categs = record.categ_id
