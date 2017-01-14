@@ -73,11 +73,10 @@ class ShoptorCartItem(models.AbstractModel):
         # indeed the item_id information is given by the
         # end user (untrusted data) and the cart id by the
         # locomotive server (trusted data)
-        item = self.env['sale.order'].search([
+        item = self.env['sale.order.line'].search([
             ('id', '=', item_id),
             ('order_id', '=', cart_id),
             ])
         if not item:
             raise # TODO raise access error
         return item
-

@@ -3,6 +3,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from werkzeug.exceptions import Unauthorized
+
 from openerp import models, exceptions
 from openerp.http import request
 import logging
@@ -25,4 +27,4 @@ class IrHttp(models.Model):
                 request.partner_id = None
                 return True
         _logger.warning("Wrong Api key, access denied")
-        raise exceptions.AccessDenied()
+        raise Unauthorized("Wrong Api key, access denied")

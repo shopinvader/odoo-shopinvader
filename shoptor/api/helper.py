@@ -5,6 +5,7 @@
 
 
 from openerp import models, exceptions
+from werkzeug.exceptions import BadRequest
 from cerberus import Validator
 import logging
 import functools
@@ -45,5 +46,5 @@ class ShoptorApi(models.Model):
         secure_params = v.normalized(params)
         if secure_params and v.validate(secure_params):
             return secure_params
-        _logger.error("Wrong params %s", v.errors)
-        raise NotImplemented
+        _logger.error("BadRequest %s", v.errors)
+        raise BadRequest(v.errors)

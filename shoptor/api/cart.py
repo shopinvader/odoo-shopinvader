@@ -35,7 +35,7 @@ class ShoptorCart(models.Model):
     # All params are trusted as they have been checked before
 
     def _parser_product(self):
-        return ['name', 'id']
+        return ['name', 'id', 'prefix_code']
 
     def _parser_order_line(self):
         parser = [
