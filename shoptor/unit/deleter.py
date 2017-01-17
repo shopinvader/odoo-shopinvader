@@ -4,11 +4,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.connector_locomotivecms.backend import locomotivecms
+from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.connector_locomotivecms.unit.deleter import (
-    LocomotivecmsDeleter)
+    LocomotiveDeleter)
 
 
-@locomotivecms
-class ProductDeleter(LocomotivecmsDeleter):
-    _model_name = 'locomotivecms.product'
+@locomotive
+class ProductDeleter(LocomotiveDeleter):
+    _model_name = 'locomotive.product'

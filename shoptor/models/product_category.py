@@ -9,15 +9,15 @@ from openerp import fields, models
 class ProductCategory(models.Model):
     _inherit = 'product.category'
 
-    locomotivecms_bind_ids = fields.One2many(
-        'locomotivecms.category',
+    locomotive_bind_ids = fields.One2many(
+        'locomotive.category',
         'record_id',
         string='Locomotive Binding')
 
 
-class LocomotivecmsCategory(models.Model):
-    _name = 'locomotivecms.category'
-    _inherit = 'locomotivecms.binding'
+class LocomotiveCategory(models.Model):
+    _name = 'locomotive.category'
+    _inherit = 'locomotive.binding'
     _inherits = {'product.category': 'record_id'}
 
     record_id = fields.Many2one(

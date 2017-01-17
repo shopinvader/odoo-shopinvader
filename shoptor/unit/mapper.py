@@ -6,25 +6,25 @@
 import StringIO
 import base64
 from collections import defaultdict
-from openerp.addons.connector_locomotivecms.backend import locomotivecms
+from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.connector.unit.mapper import mapping, ExportMapChild
 from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
 from slugify import slugify
 from openerp.tools.image import image_resize_image
 
 
-@locomotivecms
+@locomotive
 class CategExportMapper(GenericExportMapper):
-    _model_name = 'locomotivecms.category'
+    _model_name = 'locomotive.category'
 
     direct = [
         ('name', 'name'),
         ]
 
 
-@locomotivecms
+@locomotive
 class ProductExportMapper(GenericExportMapper):
-    _model_name = 'locomotivecms.product'
+    _model_name = 'locomotive.product'
 
     direct = [
         ('name', 'name'),
@@ -58,7 +58,7 @@ class ProductExportMapper(GenericExportMapper):
 
     @mapping
     def categories(self, record):
-        binder = self.binder_for('locomotivecms.category')
+        binder = self.binder_for('locomotive.category')
         res = []
         if 'product_m2mcategories' in self.env.registry._init_modules:
             categs = record.categ_ids + record.categ_id
@@ -75,7 +75,7 @@ class ProductExportMapper(GenericExportMapper):
         res = []
         for image in record.image_ids:
             image_data = {'name': image.name}
-            for binding in image.locomotivecms_bind_ids:
+            for binding in image.locomotive_bind_ids:
                 if binding.backend_id == self.backend_record:
                     image_data[binding.size] = binding.url
             res.append(image_data)
@@ -115,7 +115,7 @@ class ProductExportMapper(GenericExportMapper):
             for link in record.product_link_ids:
                 if link.type == link_type and link.is_active:
                     for binding in link.linked_product_tmpl_id.\
-                            locomotivecms_bind_ids:
+                            locomotive_bind_ids:
                         if binding.backend_id == record.backend_id:
                             res.append(link.linked_product_tmpl_id.id)
             return res
@@ -126,12 +126,12 @@ class ProductExportMapper(GenericExportMapper):
             }
 
 
-@locomotivecms
+@locomotive
 class LocomotiveExportMapChild(ExportMapChild):
     _model_name = 'product.product'
 
 
-@locomotivecms
+@locomotive
 class VariantExportMapper(GenericExportMapper):
     _model_name = 'product.product'
 
@@ -147,7 +147,7 @@ class VariantExportMapper(GenericExportMapper):
         res = []
         for image in record.image_ids:
             image_data = {'name': image.name}
-            for binding in image.locomotivecms_bind_ids:
+            for binding in image.locomotive_bind_ids:
                 if binding.backend_id == self.backend_record:
                     image_data[binding.size] = binding.url
             res.append(image_data)
@@ -169,7 +169,7 @@ class VariantExportMapper(GenericExportMapper):
     def media(self, record):
         res = []
         for media in record.media_ids:
-            for binding in media.locomotivecms_bind_ids:
+            for binding in media.locomotive_bind_ids:
                 if binding.backend_id == self.backend_record:
                     res.append({
                         'name': media.name,
@@ -178,9 +178,9 @@ class VariantExportMapper(GenericExportMapper):
         return {'media': res}
 
 
-@locomotivecms
+@locomotive
 class ImageExportMapper(GenericExportMapper):
-    _model_name = 'locomotivecms.image'
+    _model_name = 'locomotive.image'
 
     @mapping
     def image(self, record):
@@ -201,9 +201,9 @@ class ImageExportMapper(GenericExportMapper):
             'filename': name,
             }
 
-@locomotivecms
+@locomotive
 class MediaExportMapper(GenericExportMapper):
-    _model_name = 'locomotivecms.media'
+    _model_name = 'locomotive.media'
 
     @mapping
     def media(self, record):

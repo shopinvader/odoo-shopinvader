@@ -6,14 +6,14 @@
 from openerp import fields, models
 
 
-class LocomotivecmsBackend(models.Model):
-    _name = 'locomotivecms.backend'
+class LocomotiveBackend(models.Model):
+    _name = 'locomotive.backend'
     _description = 'Locomotive CMS Backend'
     _inherit = 'connector.backend'
-    _backend_type = 'locomotivecms'
+    _backend_type = 'locomotive'
 
     version = fields.Selection([
-        ('locomotivecms_v3', 'Locomotive CMS v3'),
+        ('locomotive_v3', 'Locomotive CMS v3'),
         ], required=True)
     location = fields.Char(required=True)
     username = fields.Char(required=True)
@@ -24,17 +24,17 @@ class LocomotivecmsBackend(models.Model):
         required=True)
 
 
-class LocomotivecmsBinding(models.AbstractModel):
-    _name = 'locomotivecms.binding'
+class LocomotiveBinding(models.AbstractModel):
+    _name = 'locomotive.binding'
     _inherit = 'external.binding'
 
     backend_id = fields.Many2one(
-        'locomotivecms.backend',
+        'locomotive.backend',
         string='Backend',
         required=True)
     external_id = fields.Char(string='ID on LocomotiveCMS')
 
     _sql_constraints = [
-        ('locomotivecms_uniq', 'unique(backend_id, external_id)',
+        ('locomotive_uniq', 'unique(backend_id, external_id)',
          'A binding already exists with the same Locomotive ID.'),
     ]

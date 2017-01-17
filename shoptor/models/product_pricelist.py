@@ -6,12 +6,12 @@
 from openerp import fields, models
 
 
-class LocomotivecmspPricelist(models.Model):
-    _name = 'locomotivecms.pricelist'
-    _description = 'Locomotivecms Pricelist'
+class LocomotivepPricelist(models.Model):
+    _name = 'locomotive.pricelist'
+    _description = 'Locomotive Pricelist'
 
     backend_id = fields.Many2one(
-        'locomotivecms.backend',
+        'locomotive.backend',
         'Backend')
     record_id = fields.Many2one(
         'product.pricelist',

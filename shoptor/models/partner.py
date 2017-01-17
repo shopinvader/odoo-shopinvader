@@ -6,9 +6,9 @@
 from openerp import api, fields, models
 
 
-class LocomotivecmsPartner(models.Model):
-    _name = 'locomotivecms.partner'
-    _inherit = 'locomotivecms.binding'
+class LocomotivePartner(models.Model):
+    _name = 'locomotive.partner'
+    _inherit = 'locomotive.binding'
 
     record_id = fields.Many2one(
         'res.partner',
@@ -19,8 +19,8 @@ class LocomotivecmsPartner(models.Model):
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    locomotivecms_bind_ids = fields.One2many(
-        'locomotivecms.partner',
+    locomotive_bind_ids = fields.One2many(
+        'locomotive.partner',
         'record_id',
         string='Locomotive Binding')
 

@@ -10,7 +10,7 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     locomotive_backend_id = fields.Many2one(
-        'locomotivecms.backend',
+        'locomotive.backend',
         'Backend')
 
 
@@ -21,7 +21,7 @@ class SaleOrderLine(models.Model):
 
     def _get_product_url(self, backend, size='medium'):
         for image in self.product_id.image_ids:
-            for binding in image.locomotivecms_bind_ids:
+            for binding in image.locomotive_bind_ids:
                 if binding.backend_id == backend and binding.size == size:
                     return binding.url
 

@@ -3,16 +3,15 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.addons.connector_locomotivecms.unit.binder import (
-    LocomotivecmsBinder)
-from openerp.addons.connector_locomotivecms.backend import locomotivecms
+from openerp.addons.connector_locomotivecms.unit.binder import LocomotiveBinder
+from openerp.addons.connector_locomotivecms.backend import locomotive
 
 
-@locomotivecms
-class LocomotiveEcommerce(LocomotivecmsBinder):
+@locomotive
+class LocomotiveEcommerce(LocomotiveBinder):
     _model_name = [
-        'locomotivecms.product',
-        'locomotivecms.category',
-        'locomotivecms.image',
-        'locomotivecms.media',
+        'locomotive.product',
+        'locomotive.category',
+        'locomotive.image',
+        'locomotive.media',
     ]

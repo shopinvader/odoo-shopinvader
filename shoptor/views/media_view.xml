@@ -8,7 +8,7 @@
     <field name="arch" type="xml">
         <group name="data" position="after">
             <group name="Connector">
-                <field name="locomotivecms_bind_ids" nolabel="1">
+                <field name="locomotive_bind_ids" nolabel="1">
                     <tree create="0" edit="0">
                         <field name="backend_id"/>
                         <field name="sync_date"/>

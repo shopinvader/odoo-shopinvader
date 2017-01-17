@@ -10,15 +10,15 @@ from openerp import SUPERUSER_ID
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    locomotivecms_bind_ids = fields.One2many(
-        'locomotivecms.product',
+    locomotive_bind_ids = fields.One2many(
+        'locomotive.product',
         'record_id',
         string='Locomotive Binding')
 
 
-class LocomotivecmsProduct(models.Model):
-    _name = 'locomotivecms.product'
-    _inherit = 'locomotivecms.binding'
+class LocomotiveProduct(models.Model):
+    _name = 'locomotive.product'
+    _inherit = 'locomotive.binding'
     _inherits = {'product.template': 'record_id'}
 
     record_id = fields.Many2one(
@@ -37,9 +37,9 @@ class LocomotivecmsProduct(models.Model):
     # Automatically create the locomotive binding for the image
     @api.model
     def create(self, vals):
-        binding = super(LocomotivecmsProduct, self).create(vals)
+        binding = super(LocomotiveProduct, self).create(vals)
         binding_image_obj = \
-            self.env['locomotivecms.image'].with_context(
+            self.env['locomotive.image'].with_context(
                 connector_no_export=True)
         for image in binding.image_ids:
             for size in binding_image_obj._image_size:

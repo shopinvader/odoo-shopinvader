@@ -31,11 +31,11 @@ def clear_dead_content(session, model_name, backend_id):
                     session, model_name, backend_id, content['_id'])
 
 
-class LocomotivecmsBackend(models.Model):
-    _inherit = 'locomotivecms.backend'
+class LocomotiveBackend(models.Model):
+    _inherit = 'locomotive.backend'
 
     pricelist_ids = fields.One2many(
-        'locomotivecms.pricelist',
+        'locomotive.pricelist',
         'backend_id',
         'Pricelist')
     odoo_api = fields.Char(
@@ -45,7 +45,7 @@ class LocomotivecmsBackend(models.Model):
 
     def _compute_nbr_product(self):
         for record in self:
-            record.nbr_product = self.env['locomotivecms.product']\
+            record.nbr_product = self.env['locomotive.product']\
                 .search_count([('backend_id', '=', record.id)])
 
     @api.multi
@@ -57,15 +57,15 @@ class LocomotivecmsBackend(models.Model):
         session = ConnectorSession.from_env(self.env)
         for record in self:
             return clear_dead_content.delay(
-                session, 'locomotivecms.product', record.id)
+                session, 'locomotive.product', record.id)
         return True
 
     @api.multi
     def export_all_product(self):
         session = ConnectorSession.from_env(self.env)
         for record in self:
-            bindings = self.env['locomotivecms.product']\
+            bindings = self.env['locomotive.product']\
                 .search([('backend_id', '=', record.id)])
             for binding in bindings:
-                delay_export(session, 'locomotivecms.product', binding.id, {})
+                delay_export(session, 'locomotive.product', binding.id, {})
         return True

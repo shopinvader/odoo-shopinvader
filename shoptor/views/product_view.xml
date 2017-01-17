@@ -10,7 +10,7 @@
             <attribute name="invisible">0</attribute>
         </page>
         <page name="connector" position="inside">
-            <field name="locomotivecms_bind_ids">
+            <field name="locomotive_bind_ids">
                 <tree>
                     <field name="backend_id"/>
                     <field name="sync_date"/>

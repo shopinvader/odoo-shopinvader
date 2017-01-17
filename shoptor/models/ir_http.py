@@ -17,7 +17,7 @@ class IrHttp(models.Model):
 
     def _auth_method_shoptor(self):
         if request.params.get('api_key'):
-            backend_id = self.pool['locomotivecms.backend'].search(
+            backend_id = self.pool['locomotive.backend'].search(
                 request.cr, 1,
                 [('odoo_api', '=', request.params['api_key'])])
             if len(backend_id) == 1:

@@ -9,8 +9,8 @@ from openerp import api, fields, models
 class Image(models.Model):
     _inherit = 'base_multi_image.image'
 
-    locomotivecms_bind_ids = fields.One2many(
-        'locomotivecms.image',
+    locomotive_bind_ids = fields.One2many(
+        'locomotive.image',
         'record_id',
         string='Locomotive Binding')
 
@@ -20,8 +20,8 @@ class Image(models.Model):
         image = super(Image, self).create(vals)
         if image.owner_model == 'product.template':
             product = self.env['product.template'].browse(image.owner_id)
-            binding_obj = self.env['locomotivecms.image']
-            for binding in product.locomotivecms_bind_ids:
+            binding_obj = self.env['locomotive.image']
+            for binding in product.locomotive_bind_ids:
                 for size in binding_obj._image_size:
                     binding_obj.create({
                         'size': size,
@@ -31,9 +31,9 @@ class Image(models.Model):
         return image
 
 
-class LocomotivecmsImage(models.Model):
-    _name = 'locomotivecms.image'
-    _inherit = 'locomotivecms.binding'
+class LocomotiveImage(models.Model):
+    _name = 'locomotive.image'
+    _inherit = 'locomotive.binding'
     _inherits = {'base_multi_image.image': 'record_id'}
     _image_size = {
         'extra_large': {'label': 'Extra Large', 'resize': None},

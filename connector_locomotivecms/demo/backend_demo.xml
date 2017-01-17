@@ -2,9 +2,9 @@
 <openerp>
     <data>
 
-<record id="backend_1" model="locomotivecms.backend">
+<record id="backend_1" model="locomotive.backend">
     <field name="name">Demo LocomotiveCMS Backend</field>
-    <field name="version">locomotivecms_v3</field>
+    <field name="version">locomotive_v3</field>
     <field name="location">http://locomotive.akretion</field>
     <field name="username">user</field>
     <field name="password">apikey</field>

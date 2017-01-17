@@ -2,10 +2,10 @@
 <openerp>
     <data>
 
-<record id="locomotivecms_backend_view_form" model="ir.ui.view">
-    <field name="model">locomotivecms.backend</field>
+<record id="locomotive_backend_view_form" model="ir.ui.view">
+    <field name="model">locomotive.backend</field>
     <field name="inherit_id"
-           ref="connector_locomotivecms.view_locomotivecms_backend_form" />
+           ref="connector_locomotivecms.view_locomotive_backend_form" />
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>

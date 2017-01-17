@@ -7,6 +7,6 @@
 from openerp.addons.connector.connector import Binder
 
 
-class LocomotivecmsBinder(Binder):
+class LocomotiveBinder(Binder):
     "Base Binder for locomotive"
     _openerp_field = 'record_id'

@@ -4,27 +4,27 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.connector_locomotivecms.backend import locomotivecms
+from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.connector_locomotivecms.unit.adapter import (
     LocomotiveContentAdapter,
     LocomotiveAssetAdapter)
 
 
-@locomotivecms
+@locomotive
 class ProductAdapter(LocomotiveContentAdapter):
-    _model_name = 'locomotivecms.product'
+    _model_name = 'locomotive.product'
     _content_type = 'products'
 
 
-@locomotivecms
+@locomotive
 class CategAdapter(LocomotiveContentAdapter):
-    _model_name = 'locomotivecms.category'
+    _model_name = 'locomotive.category'
     _content_type = 'categories'
 
 
-@locomotivecms
+@locomotive
 class AssetAdapter(LocomotiveAssetAdapter):
     _model_name = [
-        'locomotivecms.image',
-        'locomotivecms.media',
+        'locomotive.image',
+        'locomotive.media',
         ]

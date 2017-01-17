@@ -9,15 +9,15 @@ from openerp import api, fields, models
 class AttachmentMedia(models.Model):
     _inherit = 'ir.attachment.media'
 
-    locomotivecms_bind_ids = fields.One2many(
-        'locomotivecms.media',
+    locomotive_bind_ids = fields.One2many(
+        'locomotive.media',
         'record_id',
         string='Locomotive Binding')
 
 
-class LocomotivecmsMedia(models.Model):
-    _name = 'locomotivecms.media'
-    _inherit = 'locomotivecms.binding'
+class LocomotiveMedia(models.Model):
+    _name = 'locomotive.media'
+    _inherit = 'locomotive.binding'
     _inherits = {'ir.attachment.media': 'record_id'}
 
     record_id = fields.Many2one(
