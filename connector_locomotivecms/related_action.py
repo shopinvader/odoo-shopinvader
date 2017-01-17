@@ -6,7 +6,7 @@
 
 import functools
 from openerp.addons.connector import related_action
-from .unit.binder import LocomotivecmsBinder
+from .unit.binder import LocomotiveBinder
 
 unwrap_binding = functools.partial(related_action.unwrap_binding,
-                                   binder_class=LocomotivecmsBinder)
+                                   binder_class=LocomotiveBinder)

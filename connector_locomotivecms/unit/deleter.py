@@ -8,13 +8,13 @@ from openerp.addons.connector_generic.unit.deleter import GenericDeleter
 from ..connector import get_environment
 
 
-class LocomotivecmsDeleter(GenericDeleter):
+class LocomotiveDeleter(GenericDeleter):
     """Locomotive Deleter"""
 
 
-@job(default_channel='root.locomotivecms')
+@job(default_channel='root.locomotive')
 def export_delete_record(session, model_name, backend_id, external_id):
     """ Delete a record on LocomotiveCMS """
     env = get_environment(session, model_name, backend_id)
-    deleter = env.get_connector_unit(LocomotivecmsDeleter)
+    deleter = env.get_connector_unit(LocomotiveDeleter)
     return deleter.run(external_id)

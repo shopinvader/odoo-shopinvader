@@ -2,8 +2,8 @@
 <openerp>
     <data>
 
-<record id="view_locomotivecms_backend_form" model="ir.ui.view">
-    <field name="model">locomotivecms.backend</field>
+<record id="view_locomotive_backend_form" model="ir.ui.view">
+    <field name="model">locomotive.backend</field>
     <field name="arch" type="xml">
         <form string="LocomotiveCMS Backend">
            <sheet>
@@ -26,8 +26,8 @@
     </field>
 </record>
 
-<record id="view_locomotivecms_backend_tree" model="ir.ui.view">
-    <field name="model">locomotivecms.backend</field>
+<record id="view_locomotive_backend_tree" model="ir.ui.view">
+    <field name="model">locomotive.backend</field>
     <field name="arch" type="xml">
         <tree string="LocomotiveCMS Backend" version="7.0">
             <field name="name"/>
@@ -36,12 +36,12 @@
     </field>
 </record>
 
-<record id="action_locomotivecms_backend" model="ir.actions.act_window">
+<record id="action_locomotive_backend" model="ir.actions.act_window">
     <field name="name">LocomotiveCMS Backends</field>
-    <field name="res_model">locomotivecms.backend</field>
+    <field name="res_model">locomotive.backend</field>
     <field name="view_type">form</field>
     <field name="view_mode">tree,form</field>
-    <field name="view_id" ref="view_locomotivecms_backend_tree"/>
+    <field name="view_id" ref="view_locomotive_backend_tree"/>
 </record>
 
     </data>

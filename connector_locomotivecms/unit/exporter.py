@@ -11,8 +11,8 @@ from ..connector import get_environment
 from openerp.tools.translate import _
 
 
-class LocomotivecmsExporter(GenericExporter):
-    _default_binding_fields = 'locomotivecms_bind_ids'
+class LocomotiveExporter(GenericExporter):
+    _default_binding_fields = 'locomotive_bind_ids'
 
     def _update_data(self, map_record, fields=None, **kwargs):
         """ Get the data to pass to :py:meth:`_update` """

@@ -7,8 +7,8 @@
 from openerp.addons.connector.backend import Backend
 
 
-locomotivecms = Backend('locomotivecms')
+locomotive = Backend('locomotive')
 """ LocomotiveCMS Backend"""
 
-locomotivecms_v3 = Backend(parent=locomotivecms, version='locomotivecms_v3')
+locomotive_v3 = Backend(parent=locomotive, version='locomotive_v3')
 """ LocomotiveCMS Backend"""
