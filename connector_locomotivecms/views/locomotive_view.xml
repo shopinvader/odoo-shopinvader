@@ -11,16 +11,18 @@
                 <h1>
                     <field name="name" class="oe_inline" />
                 </h1>
-                <group name="config" string="Configuration">
-                    <group colspan="4" col="4">
-                        <field name="version" colspan="4"/>
-                        <field name="location" placeholder="e.g. http://mylocomotive.akretion.com"
-                            colspan="2"/>
-                        <field name="username" colspan="2"/>
-                        <field name="password" colspan="2"/>
-                        <field name="lang_ids" widget="many2many_tags"/>
-                    </group>
-                </group>
+                <notebook>
+                    <page name="config" string="Configuration">
+                        <group name="config" colspan="4" col="4">
+                            <field name="version" colspan="4"/>
+                            <field name="location" placeholder="e.g. http://mylocomotive.akretion.com"
+                                colspan="2"/>
+                            <field name="username" colspan="2"/>
+                            <field name="password" colspan="2"/>
+                            <field name="lang_ids" widget="many2many_tags"/>
+                        </group>
+                    </page>
+                </notebook>
             </sheet>
         </form>
     </field>
