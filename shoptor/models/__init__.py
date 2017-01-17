@@ -10,6 +10,5 @@ from . import product_pricelist
 from . import image
 from . import sale
 from . import media
-from . import consumer
 from . import backend
 from . import ir_http

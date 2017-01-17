@@ -7,3 +7,5 @@ from . import binder
 from . import mapper
 from . import exporter
 from . import adapter
+from . import deleter
+from . import consumer

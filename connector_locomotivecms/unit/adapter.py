@@ -33,9 +33,9 @@ class LocomotiveResource(object):
     def _path_with_slug(self, id_or_slug):
         return self.path + '/' + id_or_slug
 
-    def index(self):
-        # TODO add filter
-        return self.call('get', self.path)
+    def search(self, page=1, per_page=80):
+        return self.call(
+            'get', self.path, {'page': page, 'per_page': per_page})
 
     def read(self, id_or_slug):
         return self.call('get', self._path_with_slug(id_or_slug))
@@ -48,6 +48,10 @@ class LocomotiveResource(object):
 
     def create(self, data):
         return self.call('post', self.path, data={'content_entry': data})
+
+    def delete(self, id_or_slug):
+        return self.call('delete', self._path_with_slug(id_or_slug))
+
 
 
 class LocomotiveContent(LocomotiveResource):
@@ -142,6 +146,9 @@ class LocomotiveAdapter(CRUDAdapter):
 
     def read(self, external_id):
         return self.resource.read(external_id)
+
+    def search(self, page=1, per_page=80):
+        return self.resource.search(page=page, per_page=per_page)
 
 
 class LocomotiveContentAdapter(LocomotiveAdapter):

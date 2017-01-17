@@ -23,7 +23,19 @@
                     </tree>
                 </field>
             </group>
+            <group name="advanced" colspan="4">
+                <field name="nbr_product"/>
+                <button
+                    name="clear_dead_product"
+                    string="Clear dead product"
+                    type="object"/>
+                <button
+                    name="export_all_product"
+                    string="Export all product"
+                    type="object"/>
+            </group>
         </group>
+
     </field>
 </record>
 
