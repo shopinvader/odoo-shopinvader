@@ -28,9 +28,11 @@ class ProductExporterIndex(ProductExporter):
     def _extract_data(self, variant, pricelist):
         # TODO make it more flexible
         res = {k: self._data['data'][k] for k in self._data['data']
-               if k != 'variants'})
-        res.update({k: variant[k] for k in variant if k != 'pricelist'})
+               if k != 'variants' and self._data['data'][k]}
+        res.update({k: variant[k] for k in variant if k != 'pricelist'
+                    if variant[k]})
         res['pricelist'] = variant['pricelist'][pricelist].copy()
+        res['objectID'] = res['odoo_id']
         return res
 
     def index_to_algolia(self, datas):
