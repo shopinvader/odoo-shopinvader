@@ -139,7 +139,8 @@ class AbstractUrl(models.AbstractModel):
                 new_url = record.manual_url_key
             else:
                 new_url = record._build_url_key()
-            record.set_url(new_url)
+            if new_url:
+                record.set_url(new_url)
             record.url_key = new_url
 
     @api.multi
@@ -153,10 +154,10 @@ class AbstractUrl(models.AbstractModel):
     @api.onchange('manual_url_key')
     def on_url_key_change(self):
         self.ensure_one()
-        if record.manual_url_key:
-            url = slugify(record.url_key)
-            if url != record.manual_url_key:
-                record.manual_url_key = url
+        if self.manual_url_key:
+            url = slugify(self.manual_url_key)
+            if url != self.manual_url_key:
+                self.manual_url_key = url
                 return {
                     'warning': {
                         'title': 'Adapt text rules',
