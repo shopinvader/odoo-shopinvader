@@ -16,11 +16,31 @@
                     <field name="sync_date"/>
                 </tree>
                 <form>
-                    <group>
+                    <group name="backend">
                         <field name="backend_id"/>
+                        <field name="lang_id"/>
                         <field name="seo_title"/>
                         <field name="meta_keyword"/>
                         <field name="meta_description"/>
+                    </group>
+                    <group name="url" string="Url">
+                        <field name="url_builder"/>
+                        <field
+                            name="manual_url_key"
+                            attrs="{
+                                'invisible': [('url_builder', '!=', 'manual')],
+                                'required': [('url_builder', '=', 'manual')]}"/>
+                        <field
+                            name="url_key"
+                            attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
+                        <field
+                            name="redirect_url_key_ids"
+                            nolabel="1"
+                            colspan="4">
+                            <tree>
+                                <field name="url_key" string="Redirect Url"/>
+                            </tree>
+                        </field>
                     </group>
                 </form>
             </field>

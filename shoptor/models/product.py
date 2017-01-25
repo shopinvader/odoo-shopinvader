@@ -18,13 +18,17 @@ class ProductTemplate(models.Model):
 
 class LocomotiveProduct(models.Model):
     _name = 'locomotive.product'
-    _inherit = 'locomotive.binding'
+    _inherit = ['locomotive.binding', 'abstract.url']
     _inherits = {'product.template': 'record_id'}
 
     record_id = fields.Many2one(
         'product.template',
         required=True,
         ondelete='cascade')
+    lang_id = fields.Many2one(
+        'res.lang',
+        'Lang',
+        required=True)
     seo_title = fields.Char()
     meta_description = fields.Char()
     meta_keyword = fields.Char()
@@ -49,6 +53,10 @@ class LocomotiveProduct(models.Model):
                     'backend_id': binding.backend_id.id,
                     })
         return binding
+
+    @api.depends('url_builder', 'record_id.name')
+    def _compute_url(self):
+        return super(LocomotiveProduct, self)._compute_url()
 
 
 class ProductProduct(models.Model):
