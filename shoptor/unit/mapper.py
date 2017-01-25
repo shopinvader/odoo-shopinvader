@@ -59,7 +59,9 @@ class ProductExportMapper(GenericExportMapper):
     @mapping
     def categories(self, record):
         binder = self.binder_for('locomotive.category')
-        res = []
+        categories = []
+        categories_name = []
+        categories_ids = []
         if 'product_m2mcategories' in self.env.registry._init_modules:
             categs = record.categ_ids + record.categ_id
         else:
@@ -67,8 +69,14 @@ class ProductExportMapper(GenericExportMapper):
         for categ in categs:
             external_id = binder.to_backend(categ, wrap=True)
             if external_id:
-                res.append(external_id)
-        return {'categories': res}
+                categories.append(external_id)
+                categories_name.append(categ.name)
+                categories_ids.append(categ.id)
+        return {
+            'categories': categories,
+            'categories_ids': categories_ids,
+            'categories_name': categories_name,
+            }
 
     @mapping
     def image(self, record):
