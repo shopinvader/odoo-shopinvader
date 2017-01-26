@@ -104,3 +104,20 @@ class ProductProduct(models.Model):
                     })
                 last_price = price
         return res
+
+
+class ProductFilter(models.Model):
+    _name = 'product.filter'
+    _description = 'Product Filter'
+
+    field_id = fields.Many2one(
+        'ir.model.fields',
+        'Field',
+        domain=[('model', 'in', (
+            'product.template',
+            'product.product',
+            'locomotive.product',
+            ))],
+        translate=True)
+    help = fields.Html(translate=True)
+    name = fields.Char(related='field_id.field_description')

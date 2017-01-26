@@ -13,6 +13,9 @@ class ProductCategory(models.Model):
         'locomotive.category',
         'record_id',
         string='Locomotive Binding')
+    filter_ids = fields.Many2many(
+        comodel_name='product.filter',
+        string='Filter')
 
 
 class LocomotiveCategory(models.Model):

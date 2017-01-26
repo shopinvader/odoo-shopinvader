@@ -9,6 +9,11 @@
         <xpath expr="//sheet/group" position="before">
             <notebook>
                 <page name="information" string="Information"/>
+                <page name="filter" string="Filter">
+                    <group colspan="4">
+                        <field name="filter_ids" nolabel="1"/>
+                    </group>
+                </page>
                 <page name="connector" string="Connector">
                     <group name="Connector" colspan="4">
                         <field name="locomotive_bind_ids" nolabel="1">
