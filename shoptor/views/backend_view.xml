@@ -36,6 +36,15 @@
                         name="export_all_product"
                         string="Export all product"
                         type="object"/>
+                    <field name="nbr_category"/>
+                    <button
+                        name="clear_dead_category"
+                        string="Clear dead category"
+                        type="object"/>
+                    <button
+                        name="export_all_category"
+                        string="Export all category"
+                        type="object"/>
                 </group>
             </page>
         </notebook>

@@ -39,5 +39,6 @@ class AssetExporter(LocomotiveExporter):
 
     def _run(self, fields=None):
         res = super(AssetExporter, self)._run(fields=fields)
-        self.binding_record.url = self.result['url']
+        self.binding_record.with_context(connector_no_export=True).url\
+            = self.result['url']
         return res

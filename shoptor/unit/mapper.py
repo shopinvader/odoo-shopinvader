@@ -19,7 +19,32 @@ class CategExportMapper(GenericExportMapper):
 
     direct = [
         ('name', 'name'),
-        ]
+        ('seo_title', 'seo_title'),
+        ('meta_description', 'meta_description'),
+        ('meta_keyword', 'meta_keywords'),
+        ('subtitle', 'subtitle'),
+        ('link_label', 'link_label'),
+        ('short_description', 'short_description'),
+        ('description', 'description'),
+        ('url_key', 'url_key'),
+    ]
+
+    def _apply(self, map_record, options=None):
+        res = super(CategExportMapper, self)._apply(
+            map_record, options=options)
+        return {
+            'seo_title':  res.pop('seo_title'),
+            'meta_keywords': res.pop('meta_keywords'),
+            'meta_description': res.pop('meta_description'),
+            '_slug': res.pop('url_key'),
+            'object_id': map_record._source.record_id.id,
+            'name': res['name'],
+            'data': res,
+            }
+
+    @mapping
+    def filter(self, record):
+        return {'filter': record.filter_ids.mapped('field_id.name')}
 
 
 @locomotive
@@ -51,7 +76,7 @@ class ProductExportMapper(GenericExportMapper):
             'meta_description': res.pop('meta_description'),
             'categories': res.pop('categories'),
             '_slug': res.pop('url_key'),
-            'odoo_id': map_record._source.record_id.id,
+            'object_id': map_record._source.record_id.id,
             'name': res['prefix_code'],
             'data': res,
             }
@@ -147,7 +172,7 @@ class VariantExportMapper(GenericExportMapper):
         ('default_code', 'default_code'),
         ('stock_state', 'stock_state'),
         ('qty_available', 'stock_qty'),
-        ('id', 'odoo_id'),
+        ('id', 'object_id'),
     ]
 
     @mapping
