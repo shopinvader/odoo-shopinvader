@@ -80,7 +80,8 @@ class AbstractUrl(models.AbstractModel):
         comodel_name='url.url')
 
     def _build_url_key(self):
-        return slugify(self.with_context(lang=self.lang_id.code).name)
+        return slugify(self.record_id.with_context(
+            lang=self.lang_id.code).name)
 
     def _prepare_url(self, url_key):
         return {
@@ -112,18 +113,17 @@ class AbstractUrl(models.AbstractModel):
                 raise UserError(
                     _("Url_key already exist in other model"
                       "\n- name: %s\n - id: %s\n"
-                      "- url_key: %s\n - url_key_id %s" % (
+                      "- url_key: %s\n - url_key_id %s") % (
                           existing_url.model_id.name,
                           existing_url.model_id.record_id.id,
                           existing_url.url_key,
                           existing_url.id,
-                          )))
+                          ))
             else:
-                existing_url.redirect = False
+                existing_url.write({'redirect': False})
         else:
             # no existing key creating one if not empty
             self.env['url.url'].create(self._prepare_url(url_key))
-
         # other url of object set redirect to True
         redirect_urls = self.env['url.url'].search([
             ('model_id', '=', get_model_ref(self)),
@@ -135,6 +135,10 @@ class AbstractUrl(models.AbstractModel):
     @api.depends('url_builder')
     def _compute_url(self):
         for record in self:
+            if type(record.record_id.id) == models.NewId:
+                # Do not update field value on onchange
+                # as with_context is broken on NewId
+                continue
             if record.url_builder == 'manual':
                 new_url = record.manual_url_key
             else:
@@ -163,3 +167,13 @@ class AbstractUrl(models.AbstractModel):
                         'title': 'Adapt text rules',
                         'message': 'it will be adapted to %s' % url,
                     }}
+
+    @api.multi
+    def unlink(self):
+        for record in self:
+            # TODO we should propose to redirect the old url
+            urls = record.env["url.url"].search([
+                ('model_id', '=', get_model_ref(record)),
+                ])
+            urls.unlink()
+        return super(AbstractUrl, self).unlink()
