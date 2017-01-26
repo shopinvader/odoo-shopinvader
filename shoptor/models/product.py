@@ -15,6 +15,13 @@ class ProductTemplate(models.Model):
         'record_id',
         string='Locomotive Binding')
 
+    @api.multi
+    def unlink(self):
+        for record in self:
+            # TODO we should propose to redirect the old url
+            record.locomotive_bind_ids.unlink()
+        return super(ProductTemplate, self).unlink()
+
 
 class LocomotiveProduct(models.Model):
     _name = 'locomotive.product'
@@ -57,6 +64,14 @@ class LocomotiveProduct(models.Model):
     @api.depends('url_builder', 'record_id.name')
     def _compute_url(self):
         return super(LocomotiveProduct, self)._compute_url()
+
+    @api.onchange('backend_id')
+    def set_default_lang(self):
+        self.ensure_one()
+        langs = self.backend_id.lang_ids
+        if langs:
+            self.lang_id = langs[0]
+            return {'domain': {'lang_id': [('id', 'in', langs.ids)]}}
 
 
 class ProductProduct(models.Model):

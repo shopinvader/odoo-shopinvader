@@ -17,8 +17,8 @@
                 </tree>
                 <form>
                     <group name="backend">
-                        <field name="backend_id"/>
-                        <field name="lang_id"/>
+                        <field name="backend_id" widget="selection"/>
+                        <field name="lang_id" widget="selection"/>
                         <field name="seo_title"/>
                         <field name="meta_keyword"/>
                         <field name="meta_description"/>
