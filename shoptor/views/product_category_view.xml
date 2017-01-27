@@ -14,6 +14,20 @@
                         <field name="filter_ids" nolabel="1"/>
                     </group>
                 </page>
+                <page name="image" string="Image">
+                    <group colspan="4">
+                        <field
+                            name="image_ids"
+                            nolabel="1"
+                            context="{
+                                'default_owner_model': 'product.category',
+                                'default_owner_id': id,
+                                'form_view_ref': 'base_multi_image.image_form_view',
+                                'kanban_view_ref': 'base_multi_image.image_kanban_view',
+                                 }"
+                            mode="kanban"/>
+                    </group>
+                </page>
                 <page name="connector" string="Connector">
                     <group name="Connector" colspan="4">
                         <field name="locomotive_bind_ids" nolabel="1">

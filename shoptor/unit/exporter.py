@@ -31,6 +31,11 @@ class CategExporter(LocomotiveExporter):
 
 
 @locomotive
+class PartnerExporter(LocomotiveExporter):
+    _model_name = 'locomotive.partner'
+
+
+@locomotive
 class AssetExporter(LocomotiveExporter):
     _model_name = [
         'locomotive.image',

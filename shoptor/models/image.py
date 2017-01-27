@@ -18,10 +18,10 @@ class Image(models.Model):
     @api.model
     def create(self, vals):
         image = super(Image, self).create(vals)
-        if image.owner_model == 'product.template':
-            product = self.env['product.template'].browse(image.owner_id)
+        if image.owner_model in ('product.template', 'product.category'):
+            record = self.env[image.owner_model].browse(image.owner_id)
             binding_obj = self.env['locomotive.image']
-            for binding in product.locomotive_bind_ids:
+            for binding in record.locomotive_bind_ids:
                 for size in binding_obj._image_size:
                     binding_obj.create({
                         'size': size,

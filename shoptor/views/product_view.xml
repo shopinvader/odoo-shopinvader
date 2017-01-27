@@ -53,6 +53,7 @@
     <field name="arch" type="xml">
         <form string="Filter">
             <group>
+                <field name="name"/>
                 <field name="field_id"/>
                 <separator string="Help"/>
                 <field name="help" colspan="4" nolabel="1"/>

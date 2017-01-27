@@ -9,11 +9,23 @@ from openerp import api, fields, models
 class LocomotivePartner(models.Model):
     _name = 'locomotive.partner'
     _inherit = 'locomotive.binding'
+    _inherits = {'res.partner': 'record_id'}
 
     record_id = fields.Many2one(
         'res.partner',
         required=True,
         ondelete='cascade')
+    email = fields.Char(
+        related='record_id.email',
+        readonly=True,
+        required=True)
+
+    _sql_constraints = [
+        ('record_uniq', 'unique(backend_id, record_id, email)',
+         'A partner can only have one binding by backend.'),
+        ('email_uniq', 'unique(backend_id, email)',
+         'An email must be uniq per backend.'),
+    ]
 
 
 class ResPartner(models.Model):

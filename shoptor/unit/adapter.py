@@ -23,6 +23,12 @@ class CategAdapter(LocomotiveContentAdapter):
 
 
 @locomotive
+class PartnerAdapter(LocomotiveContentAdapter):
+    _model_name = 'locomotive.partner'
+    _content_type = 'customers'
+
+
+@locomotive
 class AssetAdapter(LocomotiveAssetAdapter):
     _model_name = [
         'locomotive.image',

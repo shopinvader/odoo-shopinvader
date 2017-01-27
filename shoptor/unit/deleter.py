@@ -12,3 +12,8 @@ from openerp.addons.connector_locomotivecms.unit.deleter import (
 @locomotive
 class ProductDeleter(LocomotiveDeleter):
     _model_name = 'locomotive.product'
+
+
+@locomotive
+class PartnerDeleter(LocomotiveDeleter):
+    _model_name = 'locomotive.partner'

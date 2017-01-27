@@ -14,4 +14,5 @@ class LocomotiveEcommerce(LocomotiveBinder):
         'locomotive.category',
         'locomotive.image',
         'locomotive.media',
+        'locomotive.partner',
     ]

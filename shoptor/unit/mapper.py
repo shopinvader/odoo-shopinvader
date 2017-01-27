@@ -44,7 +44,25 @@ class CategExportMapper(GenericExportMapper):
 
     @mapping
     def filter(self, record):
-        return {'filter': record.filter_ids.mapped('field_id.name')}
+        data = []
+        for filter in record.filter_ids:
+            data.append({
+                'name': filter.name,
+                'attribute': filter.field_id.name,
+                'help': filter.help,
+                })
+        return {'filter': data}
+
+    @mapping
+    def image(self, record):
+        res = []
+        for image in record.image_ids:
+            image_data = {'name': image.name}
+            for binding in image.locomotive_bind_ids:
+                if binding.backend_id == self.backend_record:
+                    image_data[binding.size] = binding.url
+            res.append(image_data)
+        return {'images': res}
 
 
 @locomotive
@@ -234,6 +252,7 @@ class ImageExportMapper(GenericExportMapper):
             'filename': name,
             }
 
+
 @locomotive
 class MediaExportMapper(GenericExportMapper):
     _model_name = 'locomotive.media'
@@ -248,3 +267,13 @@ class MediaExportMapper(GenericExportMapper):
             'file': f,
             'filename': record.datas_fname,
             }
+
+
+@locomotive
+class PartnerExportMapper(GenericExportMapper):
+    _model_name = 'locomotive.partner'
+
+    direct = [
+        ('email', 'email'),
+        ('name', 'name'),
+    ]

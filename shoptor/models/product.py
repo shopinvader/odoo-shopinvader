@@ -135,4 +135,4 @@ class ProductFilter(models.Model):
             ))],
         translate=True)
     help = fields.Html(translate=True)
-    name = fields.Char(related='field_id.field_description')
+    name = fields.Char(translate=True, required=True)

@@ -18,6 +18,7 @@ from openerp.addons.connector_locomotivecms.unit.deleter import (
     'locomotive.category',
     'locomotive.product',
     'locomotive.image',
+    'locomotive.partner',
     ])
 def delay_export(session, model_name, record_id, vals=None):
     with session.change_context(connector_force_export=True):
@@ -29,6 +30,7 @@ def delay_export(session, model_name, record_id, vals=None):
     'locomotive.category',
     'locomotive.product',
     'locomotive.image',
+    'locomotive.partner',
     ])
 def delay_export(session, model_name, record_id, vals=None):
     consumer = Consumer(session, get_environment, model_name, record_id)
@@ -39,6 +41,7 @@ def delay_export(session, model_name, record_id, vals=None):
     'product.template',
     'product.category',
     'base_multi_image.image',
+    'res.partner',
     ])
 def delay_export_all_binding(session, model_name, record_id, vals=None):
     consumer = Consumer(session, get_environment, model_name, record_id)
@@ -50,6 +53,7 @@ def delay_export_all_binding(session, model_name, record_id, vals=None):
     'locomotive.product',
     'locomotive.category',
     'locomotive.image',
+    'locomotive.partner',
     ])
 def delay_unlink(session, model_name, record_id):
     consumer = Consumer(session, get_environment, model_name, record_id)
@@ -60,6 +64,7 @@ def delay_unlink(session, model_name, record_id):
     'product.template',
     'product.category',
     'base_multi_image.image',
+    'res.partner',
 ])
 def delay_unlink_all_option_binding(session, model_name, record_id):
     consumer = Consumer(session, get_environment, model_name, record_id)
