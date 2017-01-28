@@ -20,6 +20,7 @@
     "depends": [
         "sale_cart",
         "base_jsonify",
+        "base_url",
         "connector_locomotivecms",
         "base_view_inheritance_extension",
         "connector_base_product",
@@ -35,8 +36,12 @@
         'views/partner_view.xml',
         'views/product_category_view.xml',
         'security/ir.model.access.csv',
+        "data/res_partner.xml",
     ],
     "demo": [
+        "demo/backend_demo.xml",
+        "demo/partner_demo.xml",
+        "demo/sale_demo.xml",
     ],
     "qweb": [
     ]

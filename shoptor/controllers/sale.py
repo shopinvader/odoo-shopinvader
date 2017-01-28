@@ -7,27 +7,28 @@ import json
 
 from openerp import http
 from openerp.http import request
-from .main import rjson
+from .main import rjson, ShoptorController
 
 
-class SaleController(http.Controller):
+class SaleController(ShoptorController):
 
     @http.route('/shoptor/cart/cart', methods=['GET'], auth="shoptor")
     def cart(self, **params):
-        return rjson(request.env['shoptor.cart'].get(params))
+        cart = self._get_service('cart')
+        return rjson(cart.get(params))
 
     @http.route('/shoptor/cart/item',
                 methods=['POST', 'PUT', 'DELETE'],
                 auth="shoptor")
     def item(self, **params):
         method = request.httprequest.method
-        item_obj = request.env['shoptor.cart.item']
+        item = self._get_service('item')
         if method == 'POST':
-            res = item_obj.create(params)
+            res = item.create(params)
         elif method == 'PUT':
-            res = item_obj.update(params)
+            res = item.update(params)
         elif method == 'DELETE':
-            res = item_obj.delete(params)
+            res = item.delete(params)
         return rjson(res)
 
     @http.route('/shoptor/orders', methods=['GET'], auth="none")

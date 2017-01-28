@@ -15,17 +15,27 @@ class LocomotivePartner(models.Model):
         'res.partner',
         required=True,
         ondelete='cascade')
-    email = fields.Char(
+    partner_email = fields.Char(
         related='record_id.email',
         readonly=True,
-        required=True)
+        required=True,
+        store=True)
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, email)',
          'A partner can only have one binding by backend.'),
-        ('email_uniq', 'unique(backend_id, email)',
+        ('email_uniq', 'unique(backend_id, partner_email)',
          'An email must be uniq per backend.'),
     ]
+
+    @api.model
+    def create(self, vals):
+        # As we want to have a SQL contraint on customer email
+        # we have to set it manually to avoid to raise the constraint
+        # at the creation of the element
+        vals['partner_email'] = self.env['res.partner'].browse(
+            vals['record_id']).email
+        return super(LocomotivePartner, self).create(vals)
 
 
 class ResPartner(models.Model):

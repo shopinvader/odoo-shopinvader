@@ -5,12 +5,14 @@
 
 from openerp import api, models
 from openerp.http import request
-from .helper import to_int, secure_params
+from .helper import to_int, secure_params, ShoptorService
+from openerp.addons.connector_locomotivecms.backend import locomotive
+from .cart import CartService
 
 
-class ShoptorCartItem(models.AbstractModel):
-    _name = 'shoptor.cart.item'
-    _inherit = 'shoptor.api'
+@locomotive
+class ItemService(ShoptorService):
+    _model_name = 'sale.order.line'
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator
@@ -18,29 +20,32 @@ class ShoptorCartItem(models.AbstractModel):
 
     @secure_params
     def create(self, params):
-        cart_obj = self.env['shoptor.cart']
-        cart = cart_obj._get_card(params['cart_id'])
+        cart_service = self.service_for(CartService)
+        cart = cart_service._get_cart(
+            params.get('cart_id'),
+            params.get('partner_email'))
         if not cart:
-            vals = cart_obj._prepare_card()
-            cart = self.env['sale.order'].create(vals)
+            cart = cart_service._create_cart(params.get('partner_email'))
         self.env['sale.order.line'].create({
             'product_id': params['product_id'],
             'product_uom_qty': params['item_qty'],
             'order_id': cart.id,
             })
-        return cart_obj._to_json(cart)[0]
+        return cart_service._to_json(cart)[0]
 
     @secure_params
     def update(self, params):
         item = self._get_cart_item(params['cart_id'], params['item_id'])
         item.product_uom_qty = params['item_qty']
-        return self.env['shoptor.cart'].get(params)
+        cart_service = self.service_for(CartService)
+        return cart_service.get(params)
 
     @secure_params
     def delete(self, params):
         item = self._get_cart_item(params['cart_id'], params['item_id'])
         item.unlink()
-        return self.env['shoptor.cart'].get(params)
+        cart_service = self.service_for(CartService)
+        return cart_service.get(params)
 
     # Validator
     def _validator_create(self):
@@ -48,6 +53,7 @@ class ShoptorCartItem(models.AbstractModel):
             'cart_id': {'coerce': to_int, 'nullable': True},
             'product_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
+            'partner_email': {'type': 'string', 'nullable': True},
             }
 
     def _validator_update(self):
@@ -67,7 +73,6 @@ class ShoptorCartItem(models.AbstractModel):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    @api.model
     def _get_cart_item(self, cart_id, item_id):
         # We search the line based on the item id and the cart id
         # indeed the item_id information is given by the

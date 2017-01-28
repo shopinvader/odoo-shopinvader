@@ -5,6 +5,9 @@
 
 
 from openerp import models, exceptions
+from openerp.addons.connector_locomotivecms.backend import locomotive
+from openerp.addons.connector.connector import ConnectorUnit
+from openerp.exceptions import Warning as UserError
 from werkzeug.exceptions import BadRequest
 from cerberus import Validator
 import logging
@@ -31,8 +34,20 @@ def secure_params(func):
     return wrapped
 
 
-class ShoptorApi(models.Model):
-    _name = 'shoptor.api'
+class ShoptorService(ConnectorUnit):
+
+    def service_for(self, service_class):
+        return self.unit_for(service_class, service_class._model_name)
+
+    def _get_partner(self, email):
+        partner = self.env['locomotive.partner'].search([
+            ('backend_id', '=', self.backend_record.id),
+            ('partner_email', '=', email)
+            ])
+        if not partner:
+            raise UserError("The partner email %s do not exist in odoo"
+                            % email)
+        return partner.record_id
 
     def _get_schema_for_method(self, method):
         validator_method = '_validator_%s' % method

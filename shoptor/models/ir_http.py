@@ -23,8 +23,6 @@ class IrHttp(models.Model):
             if len(backend_id) == 1:
                 request.backend_id = backend_id[0]
                 request.uid = 1
-                request.email = None
-                request.partner_id = None
                 return True
         _logger.warning("Wrong Api key, access denied")
         raise Unauthorized("Wrong Api key, access denied")
