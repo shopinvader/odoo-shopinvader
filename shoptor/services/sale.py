@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp import api, models
-from openerp.http import request
 
 
 class ShoptorSale(models.AbstractModel):
@@ -41,7 +40,6 @@ class ShoptorSale(models.AbstractModel):
                 'price_subtotal',
                 ]),
         ]
-
 
     @api.multi
     def to_json_history(self):

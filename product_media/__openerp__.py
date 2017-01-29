@@ -24,6 +24,7 @@
     "data": [
         "views/product_view.xml",
         "views/product_menu.xml",
+        "security/ir.model.access.csv",
     ],
     "demo": [
     ],

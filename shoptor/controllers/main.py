@@ -8,7 +8,6 @@ from openerp import http
 from openerp.http import request
 from openerp.addons.connector.session import ConnectorSession
 from openerp.addons.connector_locomotivecms.connector import get_environment
-from ..services.helper import ShoptorService
 
 
 def rjson(result):

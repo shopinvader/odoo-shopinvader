@@ -4,16 +4,19 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp import models, exceptions
-from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.connector.connector import ConnectorUnit
 from openerp.exceptions import Warning as UserError
+from openerp.tools.translate import _
 from werkzeug.exceptions import BadRequest
-from cerberus import Validator
 import logging
 import functools
 
 _logger = logging.getLogger(__name__)
+
+try:
+    from cerberus import Validator
+except ImportError:
+    _logger.debug('Can not import cerberus')
 
 
 def to_int(val):
@@ -30,7 +33,7 @@ def secure_params(func):
     @functools.wraps(func)
     def wrapped(self, params):
         secure_params = self._secure_params(func.__name__, params)
-     	return func(self, secure_params)
+        return func(self, secure_params)
     return wrapped
 
 
@@ -45,8 +48,8 @@ class ShoptorService(ConnectorUnit):
             ('partner_email', '=', email)
             ])
         if not partner:
-            raise UserError("The partner email %s do not exist in odoo"
-                            % email)
+            raise UserError(
+                _("The partner email %s do not exist in odoo") % email)
         return partner.record_id
 
     def _get_schema_for_method(self, method):

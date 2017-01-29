@@ -18,5 +18,5 @@
     'data': [],
     'demo': ['wishlist_demo.xml'],
     'test': ['tests/test_wishlist.py'],
-    'installable': True,
+    'installable': False,
 }

@@ -6,12 +6,15 @@
 
 from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.shoptor.unit.exporter import ProductExporter, CategExporter
-from openerp.addons.connector.queue.job import job
-from openerp.addons.connector_search_engine.unit.exporter import (
-    export_record_se,
-    SeExporter)
-from openerp.addons.connector_algolia.backend import algolia
-from algoliasearch import algoliasearch
+
+import logging
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from algoliasearch import algoliasearch
+except ImportError:
+    _logger.debug('Can not import algoliasearch')
 
 
 @locomotive(replacing=ProductExporter)

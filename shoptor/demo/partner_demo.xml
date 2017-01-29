@@ -2,9 +2,7 @@
 <openerp>
     <data noupdate="1">
 
-        <record id="partner_1" model="locomotive.partner">
-            <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
-            <field name="external_id">UG9uZXk=</field>
+        <record id="partner_1" model="res.partner">
             <field name="name">Osiris</field>
             <field name="customer" eval="True"/>
             <field name="email">osiris@my.personal.address.example.com</field>
@@ -13,6 +11,12 @@
             <field name="zip">43110</field>
             <field name="country_id" ref="base.fr"/>
         </record>
- 
+
+        <record id="locomotive_partner_1" model="locomotive.partner">
+            <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+            <field name="external_id">UG9uZXk=</field>
+            <field name="record_id" ref="partner_1"/>
+        </record>
+
     </data>
 </openerp>

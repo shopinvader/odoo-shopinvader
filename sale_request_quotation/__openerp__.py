@@ -16,7 +16,7 @@
     'website': 'http://wwww.akretion.com/',
     'depends': ['sale_substate'],
     'data': [],
-    'demo': ['quotation_demo.xml'],
+    'demo': ['demo/quotation_demo.xml'],
     'test': ['tests/test_request_quotation.py'],
     'installable': True,
 }

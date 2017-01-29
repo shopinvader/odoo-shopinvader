@@ -5,12 +5,19 @@
 
 import StringIO
 import base64
-from collections import defaultdict
 from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.connector.unit.mapper import mapping, ExportMapChild
 from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
-from slugify import slugify
 from openerp.tools.image import image_resize_image
+
+import logging
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from slugify import slugify
+except ImportError:
+    _logger.debug('Can not import slugify')
 
 
 @locomotive

@@ -22,6 +22,7 @@
     ],
     "data": [
         "views/media_view.xml",
+        "security/ir.model.access.csv",
     ],
     "demo": [
     ],

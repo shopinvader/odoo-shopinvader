@@ -1,2 +1,3 @@
 slugify
-
+cerberus
+algoliasearch

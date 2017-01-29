@@ -3,8 +3,6 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import json
-
 from openerp import http
 from openerp.http import request
 from .main import rjson
@@ -29,7 +27,8 @@ class PartnerController(http.Controller):
     @http.route('/shoptor/contacts', methods=['POST'], auth="none")
     def create(self, **params):
         # TODO check params and getting the partner
-        params['name'] = params.get('firstname', '') + params.get('lastname', '')
+        params['name'] = params.get('firstname', '')\
+            + params.get('lastname', '')
         params['parent_id'] = 13470
         partner = request.env['res.partner'].sudo().create(params)
         return rjson(partner.to_json_contact())
@@ -38,7 +37,8 @@ class PartnerController(http.Controller):
     def edit(self, partner_id, **params):
         # TODO check params
         params['parent_id'] = 13470
-        params['name'] = params.get('firstname', '') + params.get('lastname', '')
+        params['name'] = params.get('firstname', '')\
+            + params.get('lastname', '')
         partner = request.env['res.partner'].sudo().browse(int(partner_id))
         partner.write(params)
         return rjson(partner.to_json_contact())

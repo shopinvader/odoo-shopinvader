@@ -12,6 +12,7 @@ try:
 except ImportError:
     _logger.debug('Cannot `import slugify`.')
 
+
 def get_model_ref(record):
     return "%s,%s" % (record._name, record.id)
 

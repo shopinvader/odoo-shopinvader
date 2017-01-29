@@ -10,7 +10,7 @@ class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
 
     search_engine = fields.Selection([
-        ('algolia', 'Algolia'),        ],
-        )
+        ('algolia', 'Algolia'),
+        ])
     search_engine_username = fields.Char()
     search_engine_password = fields.Char()

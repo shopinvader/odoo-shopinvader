@@ -3,8 +3,6 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import json
-
 from openerp import http
 from openerp.http import request
 from .main import rjson, ShoptorController

@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import HttpCase, TransactionCase
+from openerp.tests.common import TransactionCase
 from openerp.addons.connector.session import ConnectorSession
 from openerp.addons.connector_locomotivecms.connector import get_environment
 from ..services.helper import ShoptorService
@@ -51,7 +51,8 @@ class AbstractItemCase(object):
         self.assertEqual(cart['partner_invoice_id']['id'], self.partner.id)
 
     def test_add_item_without_cart(self):
-        last_order = self.env['sale.order'].search([], limit=1, order='id desc')
+        last_order = self.env['sale.order'].search(
+            [], limit=1, order='id desc')
         cart = self.add_item(None, self.product_1.id, 2)
         self.assertGreater(cart['id'], last_order.id)
         self.assertEqual(len(cart['order_line']), 1)
@@ -94,7 +95,7 @@ class ConnectedItemCase(AbstractItemCase, TransactionCase):
 
     def setUp(self, *args, **kwargs):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)
-        self.partner = self.env.ref('shoptor.partner_1_res_partner')
+        self.partner = self.env.ref('shoptor.partner_1')
         self.partner_email = 'osiris@my.personal.address.example.com'
         self.cart = self.env.ref('shoptor.sale_order_2')
         self.cart_id = self.cart.id

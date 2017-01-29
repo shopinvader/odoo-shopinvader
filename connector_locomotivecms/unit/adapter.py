@@ -53,7 +53,6 @@ class LocomotiveResource(object):
         return self.call('delete', self._path_with_slug(id_or_slug))
 
 
-
 class LocomotiveContent(LocomotiveResource):
 
     def __init__(self, client, content_type):

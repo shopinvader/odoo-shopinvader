@@ -5,7 +5,7 @@
 
 from werkzeug.exceptions import Unauthorized
 
-from openerp import models, exceptions
+from openerp import models
 from openerp.http import request
 import logging
 

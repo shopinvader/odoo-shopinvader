@@ -24,7 +24,10 @@ class Consumer(object):
             self.session, self.record._name, self.record.backend_id.id)
 
     def _force_export(self):
-        return self.session.context.get('connector_force_export')
+        return True
+        # TODO implement correctly mapping in shoptor
+        # For now we always force to export
+        # return self.session.context.get('connector_force_export')
 
     def _skip_export(self):
         return self.session.context.get('connector_no_export')
