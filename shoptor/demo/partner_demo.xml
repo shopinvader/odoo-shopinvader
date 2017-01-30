@@ -18,5 +18,15 @@
             <field name="record_id" ref="partner_1"/>
         </record>
 
+        <record id="partner_1_contact_1" model="res.partner">
+            <field name="parent_id" ref="partner_1"/>
+            <field name="name">Osiris</field>
+            <field name="customer" eval="True"/>
+            <field name="street">chemin du bois</field>
+            <field name="city">Aurec sur Loire</field>
+            <field name="zip">43110</field>
+            <field name="country_id" ref="base.fr"/>
+        </record>
+
     </data>
 </openerp>

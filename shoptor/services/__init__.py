@@ -6,3 +6,4 @@
 from . import cart
 from . import cart_item
 from . import sale
+from . import contact

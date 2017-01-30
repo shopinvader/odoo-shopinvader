@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from .helper import to_int, secure_params, ShoptorService
+from .contact import ContactService
 from openerp.addons.connector_locomotivecms.backend import locomotive
 
 
@@ -39,18 +40,10 @@ class CartService(ShoptorService):
             }
 
     def _validator_address(self):
-        return {
-            'id': {'coerce': to_int},
-            'firstname': {'type': 'string'},
-            'lastname': {'type': 'string'},
-            'street': {'type': 'string'},
-            'street2': {'type': 'string'},
-            'zip': {'type': 'string'},
-            'city': {'type': 'string'},
-            'phone': {'type': 'string'},
-            'state_id': {'coerce': to_int},
-            'country_id': {'coerce': to_int},
-            }
+        contact_service = self.service_for(ContactService)
+        res = contact_service._validator_create()
+        res['id'] = {'coerce': to_int, 'nullable': True}
+        return res
 
     def _validator_update(self):
         return {

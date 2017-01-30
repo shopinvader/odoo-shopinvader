@@ -79,22 +79,3 @@ class ResPartner(models.Model):
             return self
         else:
             return delivery
-
-    def _json_parser_contact(self):
-        return [
-            'id',
-            'display_name',
-            'name',
-            'ref',
-            'street',
-            'street2',
-            'zip',
-            'city',
-            'phone',
-            ('state_id', ['name']),
-            ('country_id', ['name'])
-        ]
-
-    @api.multi
-    def to_json_contact(self):
-        return self.jsonify(self._json_parser_contact())

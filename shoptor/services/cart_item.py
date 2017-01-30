@@ -6,6 +6,7 @@
 from .helper import to_int, secure_params, ShoptorService
 from openerp.addons.connector_locomotivecms.backend import locomotive
 from .cart import CartService
+from werkzeug.exceptions import NotFound
 
 
 @locomotive
@@ -81,5 +82,5 @@ class ItemService(ShoptorService):
             ('order_id', '=', cart_id),
             ])
         if not item:
-            raise  # TODO raise access error
+            raise NotFound('No cart item found with id %s' % item_id)
         return item
