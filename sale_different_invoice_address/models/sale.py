@@ -9,7 +9,7 @@ from openerp import api, fields, models
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    use_different_invoice_address = fields.Boolean(default=True)
+    use_different_invoice_address = fields.Boolean(default=False)
 
     def _set_invoice_address(self):
         self.ensure_one()

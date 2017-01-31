@@ -9,7 +9,9 @@
     <field name="arch" type="xml">
         <field name="partner_invoice_id" position="replace"/>
         <field name="partner_shipping_id" position="after">
-            <field name="use_different_invoice_address"/>
+            <field
+                name="use_different_invoice_address"
+                groups="sale.group_delivery_invoice_address"/>
             <field
                 name="partner_invoice_id"
                 groups="sale.group_delivery_invoice_address"
