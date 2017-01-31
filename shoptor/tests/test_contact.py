@@ -23,7 +23,7 @@ class ContactCase(TransactionCase):
         self.contact_params = {
             'partner_email': self.partner.email,
             'name': 'Purple',
-            'street': 'rue du jardin',
+            'street': 'Rue du jardin',
             'zip': '43110',
             'city': 'Aurec sur Loire',
             'phone': '0485485454',

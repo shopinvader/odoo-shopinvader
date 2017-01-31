@@ -27,6 +27,7 @@
         "product_multi_image",
         "product_media",
         "product_stock_state",
+        "sale_different_invoice_address",
     ],
     "data": [
         'views/product_view.xml',

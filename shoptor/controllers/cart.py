@@ -6,21 +6,29 @@
 from openerp import http
 from openerp.http import request
 from .main import rjson, ShoptorController
+from ..services.cart import CartService
+from ..services.cart_item import CartItemService
 
 
-class SaleController(ShoptorController):
+class CartController(ShoptorController):
 
-    @http.route('/shoptor/cart/cart', methods=['GET'], auth="shoptor")
+    @http.route('/shoptor/cart', methods=['GET'], auth="shoptor")
+    @http.route('/shoptor/cart/<cart_id>', methods=['PUT'], auth="shoptor")
     def cart(self, **params):
-        cart = self._get_service('cart')
-        return rjson(cart.get(params))
+        method = request.httprequest.method
+        cart = self._get_service(CartService)
+        if method == 'GET':
+            res = cart.get(params)
+        elif method == 'PUT':
+            res = cart.update(params)
+        return rjson(res)
 
     @http.route('/shoptor/cart/item',
                 methods=['POST', 'PUT', 'DELETE'],
                 auth="shoptor")
     def item(self, **params):
         method = request.httprequest.method
-        item = self._get_service('item')
+        item = self._get_service(CartItemService)
         if method == 'POST':
             res = item.create(params)
         elif method == 'PUT':
@@ -28,13 +36,3 @@ class SaleController(ShoptorController):
         elif method == 'DELETE':
             res = item.delete(params)
         return rjson(res)
-
-    @http.route('/shoptor/orders', methods=['GET'], auth="none")
-    def orders(self, per_page=5, page=1):
-        # TODO get the right partner
-        partner_id = 13470
-        per_page = int(per_page)
-        page = int(page)
-        result = request.env['sale.order'].sudo().get_order_history(
-            partner_id, per_page=per_page, page=page)
-        return rjson(result)

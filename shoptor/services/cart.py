@@ -17,7 +17,7 @@ class CartService(ShoptorService):
 
     @secure_params
     def get(self, params):
-        cart = self._get_cart(params.get('cart_id'))
+        cart = self._get_cart(params)
         if cart:
             return self._to_json(cart)[0]
         else:
@@ -25,11 +25,35 @@ class CartService(ShoptorService):
 
     @secure_params
     def update(self, params):
-        cart = self._get_card(params.get('cart_id'))
+        cart = self._get_cart(params)
         if cart:
-            for key in params:
-                if key in ['partner_shipping_id', 'partner_invoice_id']:
-                    pass
+            partner_email = params.get('partner_email')
+            if partner_email:
+                partner = self._get_partner(partner_email)
+                if cart.partner_id != partner:
+                    cart.partner_id = partner
+                    cart.anonymous = False
+            else:
+                partner = None
+            # Process use_different_invoice_address
+            # before processing the invoice and billing address
+            if 'use_different_invoice_address' in params:
+                cart.use_different_invoice_address\
+                    = params.pop('use_different_invoice_address')
+
+            for key in ['partner_shipping_id', 'partner_invoice_id']:
+                if key in params:
+                    address = params.pop(key)
+                    if not partner_email:
+                        self._set_address_for_anonymous_partner(
+                            key, address, cart)
+                    else:
+                        self._set_address_for_logged_partner(
+                            key, address, cart, partner_email)
+            params.pop('cart_id')
+            params.pop('partner_email')
+            if params:
+                cart.write(params)
         else:
             raise NotImplemented
 
@@ -43,21 +67,57 @@ class CartService(ShoptorService):
         contact_service = self.service_for(ContactService)
         res = contact_service._validator_create()
         res['id'] = {'coerce': to_int, 'nullable': True}
-        return res
+        res.pop('partner_email')
+        return {'type': 'dict', 'schema': res}
 
     def _validator_update(self):
         return {
+            'partner_email': {'type': 'string', 'nullable': True},
             'cart_id': {'coerce': to_int, 'nullable': True},
             'partner_shipping_id': self._validator_address(),
             'partner_invoice_id': self._validator_address(),
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'payment_method_id': {'coerce': to_int, 'nullable': True},
-            'cart_state': {'type': 'string'},
+            'cart_state': {'type': 'string', 'nullable': True},
+            'use_different_invoice_address': {'type': 'boolean'},
             }
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
+
+    def _set_address_for_anonymous_partner(self, key, address, cart):
+        # Be carefull partner is not logged so we have to restrict the
+        # edition and creation of address to the current cart
+        if 'id' in address:
+            if not cart[key].id == address['id']:
+                raise
+            else:
+                cart[key].write(address)
+        else:
+            if key == 'partner_invoive_id':
+                # If we are creating an invoice address
+                # We have to link that address to the not logged
+                # customer and the invoice address must be set
+                # after setting a shipping address
+                if cart.partner_id == self.env.ref('shoptor.anonymous'):
+                    raise
+                else:
+                    address['parent_id'] = cart.partner_id
+            contact = self.env['res.partner'].create(address)
+            if key == 'partner_shipping_id':
+                cart.partner_id = contact['id']
+            cart[key] = contact['id']
+
+    def _set_address_for_logged_partner(
+            self, key, address, cart, partner_email):
+        address['partner_email'] = partner_email
+        contact_service = self.service_for(ContactService)
+        if 'id' in address:
+            contact = contact_service.update(address)
+        else:
+            contact = contact_service.create(address)
+        cart[key] = contact['id']
 
     def _parser_product(self):
         fields = ['name', 'id']
@@ -106,7 +166,9 @@ class CartService(ShoptorService):
             ('partner_id', '=', partner.id),
             ], limit=1)
 
-    def _get_cart(self, cart_id=None, partner_email=None):
+    def _get_cart(self, params):
+        cart_id = params.get('cart_id')
+        partner_email = params.get('partner_email')
         if not cart_id and partner_email:
             cart = self._get_existing_cart(partner_email)
         else:

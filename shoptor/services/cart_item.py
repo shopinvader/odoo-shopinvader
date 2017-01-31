@@ -10,7 +10,7 @@ from werkzeug.exceptions import NotFound
 
 
 @locomotive
-class ItemService(ShoptorService):
+class CartItemService(ShoptorService):
     _model_name = 'sale.order.line'
 
     # The following method are 'public' and can be called from the controller.
@@ -20,9 +20,7 @@ class ItemService(ShoptorService):
     @secure_params
     def create(self, params):
         cart_service = self.service_for(CartService)
-        cart = cart_service._get_cart(
-            params.get('cart_id'),
-            params.get('partner_email'))
+        cart = cart_service._get_cart(params)
         if not cart:
             cart = cart_service._create_cart(params.get('partner_email'))
         self.env['sale.order.line'].create({
@@ -34,14 +32,14 @@ class ItemService(ShoptorService):
 
     @secure_params
     def update(self, params):
-        item = self._get_cart_item(params['cart_id'], params['item_id'])
+        item = self._get_cart_item(params)
         item.product_uom_qty = params['item_qty']
         cart_service = self.service_for(CartService)
         return cart_service.get(params)
 
     @secure_params
     def delete(self, params):
-        item = self._get_cart_item(params['cart_id'], params['item_id'])
+        item = self._get_cart_item(params)
         item.unlink()
         cart_service = self.service_for(CartService)
         return cart_service.get(params)
@@ -72,11 +70,13 @@ class ItemService(ShoptorService):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _get_cart_item(self, cart_id, item_id):
+    def _get_cart_item(self, params):
         # We search the line based on the item id and the cart id
         # indeed the item_id information is given by the
         # end user (untrusted data) and the cart id by the
         # locomotive server (trusted data)
+        cart_id = params['cart_id']
+        item_id = params['item_id']
         item = self.env['sale.order.line'].search([
             ('id', '=', item_id),
             ('order_id', '=', cart_id),
