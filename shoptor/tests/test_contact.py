@@ -3,25 +3,19 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector_locomotivecms.connector import get_environment
 from ..services.contact import ContactService
+from .common import CommonCase
 from werkzeug.exceptions import Forbidden
 
 
-class ContactCase(TransactionCase):
+class ContactCase(CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(ContactCase, self).setUp(*args, **kwargs)
-        self.backend = self.env.ref('connector_locomotivecms.backend_1')
-        session = ConnectorSession.from_env(self.env)
-        env = get_environment(session, 'res.partner', self.backend.id)
-        self.service = env.get_connector_unit(ContactService)
         self.partner = self.env.ref('shoptor.partner_1')
+        self.service = self._get_service(ContactService, self.partner)
         self.contact = self.env.ref('shoptor.partner_1_contact_1')
         self.contact_params = {
-            'partner_email': self.partner.email,
             'name': 'Purple',
             'street': 'Rue du jardin',
             'zip': '43110',
@@ -40,62 +34,56 @@ class ContactCase(TransactionCase):
                 self.assertEqual(contact[key], data[key])
 
     def test_add_contact(self):
-        contact = self.service.create(self.contact_params)
-        contact = self.env['res.partner'].browse(contact['id'])
+        contact_ids = [contact['id'] for contact in self.service.list({})]
+        contact_list = self.service.create(self.contact_params)
+        created_contact_id = None
+        for contact in contact_list:
+            if contact['id'] not in contact_ids:
+                created_contact = contact
+        self.assertIsNotNone(created_contact)
+        contact = self.env['res.partner'].browse(created_contact['id'])
         self.assertEqual(contact.parent_id, self.partner)
         self.check_data(contact, self.contact_params)
 
     def test_update_contact(self):
         params = self.contact_params
         params['id'] = self.contact.id
-        res = self.service.update(params)
-        contact = self.env['res.partner'].browse(res['id'])
-        self.assertEqual(contact.parent_id, self.partner)
-        self.check_data(contact, params)
+        self.service.update(params)
+        self.assertEqual(self.contact.parent_id, self.partner)
+        self.check_data(self.contact, params)
 
     def test_update_main_contact(self):
         params = self.contact_params
         params['id'] = self.partner.id
         res = self.service.update(params)
-        contact = self.env['res.partner'].browse(res['id'])
-        self.assertEqual(contact, self.partner)
-        self.check_data(contact, params)
+        self.check_data(self.partner, params)
 
     def test_read_contact_profile(self):
-        res = self.service.list({
-            'partner_email': self.partner.email,
-            'contact_type': 'profile'})
+        res = self.service.list({'contact_type': 'profile'})
         self.assertEqual(len(res), 1)
         self.assertEqual(res[0]['id'], self.partner.id)
 
     def test_read_contact_address(self):
-        res = self.service.list({
-            'partner_email': self.partner.email,
-            'contact_type': 'address'})
+        res = self.service.list({'contact_type': 'address'})
         self.assertEqual(len(res), 1)
         self.assertEqual(res[0]['id'], self.contact.id)
 
     def test_read_contact_all(self):
-        res = self.service.list({'partner_email': self.partner.email})
+        res = self.service.list({})
         self.assertEqual(len(res), 2)
         self.assertEqual(res[0]['id'], self.partner.id)
         self.assertEqual(res[1]['id'], self.contact.id)
 
     def test_delete_contact(self):
         contact_id = self.contact.id
-        self.service.delete({
-            'partner_email': self.partner.email,
-            'id': contact_id,
-            })
+        self.service.delete({'id': contact_id})
         contact = self.env['res.partner'].search([('id', '=', contact_id)])
         self.assertEqual(len(contact), 0)
-        partner = self.env['res.partner'].search([
-            ('id', '=', self.partner.id)])
+        partner = self.env['res.partner'].search([('id', '=', self.partner.id)])
         self.assertEqual(len(partner), 1)
 
     def test_delete_main_contact(self):
         with self.assertRaises(Forbidden):
             self.service.delete({
-                'partner_email': self.partner.email,
                 'id': self.partner.id,
                 })

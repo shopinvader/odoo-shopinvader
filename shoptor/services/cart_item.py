@@ -20,8 +20,9 @@ class CartItemService(ShoptorService):
     @secure_params
     def create(self, params):
         cart_service = self.service_for(CartService)
-        cart = cart_service._get_cart(params)
-        if not cart:
+        if params.get('cart_id'):
+            cart = cart_service._get(params['cart_id'])
+        else:
             cart = cart_service._create_cart(params.get('partner_email'))
         self.env['sale.order.line'].create({
             'product_id': params['product_id'],

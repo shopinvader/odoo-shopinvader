@@ -6,6 +6,7 @@
 from .helper import to_int, secure_params, ShoptorService
 from .contact import ContactService
 from openerp.addons.connector_locomotivecms.backend import locomotive
+from werkzeug.exceptions import NotFound
 
 
 @locomotive
@@ -16,64 +17,75 @@ class CartService(ShoptorService):
     # All params are untrusted so please check it !
 
     @secure_params
-    def get(self, params):
-        cart = self._get_cart(params)
+    def list(self, params):
+        cart = self._search_existing_cart(params['partner_email'])
         if cart:
             return self._to_json(cart)[0]
         else:
             return {}
 
     @secure_params
-    def update(self, params):
-        cart = self._get_cart(params)
-        if cart:
-            partner_email = params.get('partner_email')
-            if partner_email:
-                partner = self._get_partner(partner_email)
-                if cart.partner_id != partner:
-                    cart.partner_id = partner
-                    cart.anonymous = False
-            else:
-                partner = None
-            # Process use_different_invoice_address
-            # before processing the invoice and billing address
-            if 'use_different_invoice_address' in params:
-                cart.use_different_invoice_address\
-                    = params.pop('use_different_invoice_address')
+    def get(self, params):
+        return self._to_json(self._get(params['id']))[0]
 
-            for key in ['partner_shipping_id', 'partner_invoice_id']:
-                if key in params:
-                    address = params.pop(key)
-                    if not partner_email:
-                        self._set_address_for_anonymous_partner(
-                            key, address, cart)
-                    else:
-                        self._set_address_for_logged_partner(
-                            key, address, cart, partner_email)
-            params.pop('cart_id')
-            params.pop('partner_email')
-            if params:
-                cart.write(params)
+    @secure_params
+    def update(self, params):
+        cart = self._get(params['id'])
+        partner_email = params.get('partner_email')
+        if partner_email:
+            partner = self._get_partner(partner_email)
+            if cart.partner_id != partner:
+                cart.partner_id = partner
+                cart.anonymous = False
         else:
-            raise NotImplemented
+            partner = None
+        # Process use_different_invoice_address
+        # before processing the invoice and billing address
+        if 'use_different_invoice_address' in params:
+            cart.use_different_invoice_address\
+                = params.pop('use_different_invoice_address')
+
+        for key in ['partner_shipping_id', 'partner_invoice_id']:
+            if key in params:
+                address = params.pop(key)
+                if not partner_email:
+                    self._set_address_for_anonymous_partner(
+                        key, address, cart)
+                else:
+                    self._set_address_for_logged_partner(
+                        key, address, cart, partner_email)
+        params.pop('cart_id')
+        params.pop('partner_email')
+        if params:
+            cart.write(params)
 
     # Validator
     def _validator_get(self):
         return {
-            'cart_id': {'coerce': to_int, 'nullable': True},
+            'id': {'coerce': to_int},
+            }
+
+    def _validator_list(self):
+        return {
+            'partner_email': {'type': 'string'},
             }
 
     def _validator_address(self):
         contact_service = self.service_for(ContactService)
         res = contact_service._validator_create()
-        res['id'] = {'coerce': to_int, 'nullable': True}
-        res.pop('partner_email')
+        address_fields = res.keys()
+        for key in address_fields:
+            res[key]['excludes'] = 'id'
+        res['id'] = {
+            'coerce': to_int,
+            'nullable': True,
+            'excluded': address_fields,
+            }
         return {'type': 'dict', 'schema': res}
 
     def _validator_update(self):
         return {
-            'partner_email': {'type': 'string', 'nullable': True},
-            'cart_id': {'coerce': to_int, 'nullable': True},
+            'id': {'coerce': to_int, 'nullable': True},
             'partner_shipping_id': self._validator_address(),
             'partner_invoice_id': self._validator_address(),
             'carrier_id': {'coerce': to_int, 'nullable': True},
@@ -159,21 +171,22 @@ class CartService(ShoptorService):
     def _to_json(self, cart):
         return cart.jsonify(self._parser_cart())
 
-    def _get_existing_cart(self, partner_email):
+    def _search_existing_cart(self, partner_email):
         partner = self._get_partner(partner_email)
         return self.env['sale.order'].search([
             ('sub_state', '=', 'cart'),
             ('partner_id', '=', partner.id),
             ], limit=1)
 
-    def _get_cart(self, params):
-        cart_id = params.get('cart_id')
-        partner_email = params.get('partner_email')
-        if not cart_id and partner_email:
-            cart = self._get_existing_cart(partner_email)
+    def _get(self, cart_id):
+        cart = self.env['sale.order'].search([
+            ('id', '=', cart_id),
+            ('locomotive_backend_id', '=', self.backend_record.id),
+            ])
+        if not cart:
+            raise NotFound('The cart %s do not exist' % cart_id)
         else:
-            cart = self.env['sale.order'].search([('id', '=', cart_id)])
-        return cart
+            return card
 
     def _create_cart(self, email=None):
         vals = self._prepare_cart(email)

@@ -39,18 +39,14 @@ def secure_params(func):
 
 class ShoptorService(ConnectorUnit):
 
-    def service_for(self, service_class):
-        return self.unit_for(service_class, service_class._model_name)
+    def __init__(self, env, partner):
+        super(ShoptorService, self).__init__(env)
+        self.partner = partner
 
-    def _get_partner(self, email):
-        partner = self.env['locomotive.partner'].search([
-            ('backend_id', '=', self.backend_record.id),
-            ('partner_email', '=', email)
-            ])
-        if not partner:
-            raise UserError(
-                _("The partner email %s do not exist in odoo") % email)
-        return partner.record_id
+    def service_for(self, service_class):
+        service = self.connector_env.backend.get_class(
+            service_class, self.session, service_class._model_name)
+        return service(self.connector_env, self.partner)
 
     def _get_schema_for_method(self, method):
         validator_method = '_validator_%s' % method
@@ -62,7 +58,7 @@ class ShoptorService(ConnectorUnit):
         schema = self._get_schema_for_method(method)
         v = Validator(schema, purge_unknown=True)
         secure_params = v.normalized(params)
-        if secure_params and v.validate(secure_params):
+        if v.validate(secure_params):
             return secure_params
         _logger.error("BadRequest %s", v.errors)
-        raise BadRequest(v.errors)
+        raise BadRequest("BadRequest %s" % v.errors)

@@ -18,38 +18,30 @@ class ContactService(ShoptorService):
 
     @secure_params
     def list(self, params):
-        contact_type = params.get('contact_type')
-        partner = self._get_partner(params['partner_email'])
-        result = []
-        if contact_type in ('profile', None):
-            result += self.to_json(partner)
-        if contact_type in ('address', None):
-            result += self.to_json(partner.child_ids)
-        return result
+        if not self.partner:
+            return []
+        else:
+            return self._list(contact_type = params.get('contact_type'))
 
     @secure_params
     def create(self, params):
-        partner = self._get_partner(params['partner_email'])
-        params['parent_id'] = partner.id
-        params.pop('partner_email')
+        params['parent_id'] = self.partner.id
         contact = self.env['res.partner'].create(params)
-        return self.to_json(contact)[0]
+        return self._list()
 
     @secure_params
     def update(self, params):
         contact = self._get_contact(params)
-        params.pop('partner_email')
         contact.write(params)
-        return self.to_json(contact)[0]
+        return self._list()
 
     @secure_params
     def delete(self, params):
-        partner = self._get_partner(params['partner_email'])
         contact = self._get_contact(params)
-        if partner == contact:
+        if self.partner == contact:
             raise Forbidden('Can not delete the partner account')
         contact.unlink()
-        return True
+        return self._list()
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -58,7 +50,6 @@ class ContactService(ShoptorService):
     # Validator
     def _validator_list(self):
         return {
-            'partner_email': {'type': 'string', 'required': True},
             'contact_type': {
                 'type': 'string',
                 'nullable': True,
@@ -67,43 +58,67 @@ class ContactService(ShoptorService):
 
     def _validator_create(self):
         res = {
-            'partner_email': {'type': 'string', 'required': True},
-            'name': {'type': 'string'},
-            'street': {'type': 'string'},
-            'street2': {'type': 'string'},
-            'zip': {'type': 'string'},
-            'city': {'type': 'string'},
-            'phone': {'type': 'string'},
-            'state_id': {'coerce': to_int},
-            'country_id': {'coerce': to_int},
+            'street': {'type': 'string', 'required': True},
+            'street2': {'type': 'string', 'nullable': True},
+            'zip': {'type': 'string', 'required': True},
+            'city': {'type': 'string', 'required': True},
+            'phone': {'type': 'string', 'nullable': True},
+            'state_id': {'coerce': to_int, 'nullable': True},
+            'country_id': {'coerce': to_int, 'required': True},
+            'is_company': {'coerce': bool},
             }
         if 'partner_firstname' in self.env.registry._init_modules:
             res.update({
-                'firstname': {'type': 'string'},
-                'lastname': {'type': 'string'},
+                'firstname': {
+                    'type': 'string',
+                    'required': True,
+                    'excludes': 'name',
+                    },
+                'lastname': {
+                    'type': 'string',
+                    'required': True,
+                    'excludes': 'name',
+                    },
+                'name': {
+                    'type': 'string',
+                    'required': True,
+                    'excludes': ['firstname', 'lastname']},
                 })
+        else:
+            res.update({
+                'name': {'type': 'string', 'required': True},
+            })
         return res
 
     def _validator_update(self):
         res = self._validator_create()
+        for key in res:
+            if 'required' in res[key]:
+                del res[key]['required']
         res.update({'id': {'coerce': to_int, 'required': True}})
         return res
 
     def _validator_delete(self):
         return {
-            'partner_email': {'type': 'string', 'required': True},
             'id': {'coerce': to_int, 'required': True},
             }
 
+    def _list(self, contact_type=None):
+        result = []
+        if contact_type in ('profile', None):
+            result += self.to_json(self.partner)
+        if contact_type in ('address', None):
+            result += self.to_json(self.partner.child_ids)
+        return result
+
     def _get_contact(self, params):
-        partner = self._get_partner(params['partner_email'])
         domain = [('id', '=', params['id'])]
-        if partner.id != params['id']:
-            domain.append(('parent_id', '=', partner.id))
-        address = self.env['res.partner'].search(domain)
-        if not address:
+        if self.partner.id != params['id']:
+            domain.append(('parent_id', '=', self.partner.id))
+        contact = self.env['res.partner'].search(domain)
+        if not contact:
             raise NotFound('Not address found')
-        return address
+        return contact
 
     def _json_parser(self):
         res = [
@@ -116,8 +131,8 @@ class ContactService(ShoptorService):
             'zip',
             'city',
             'phone',
-            ('state_id', ['name']),
-            ('country_id', ['name'])
+            ('state_id', ['id', 'name']),
+            ('country_id', ['id', 'name'])
         ]
         if 'partner_firstname' in self.env.registry._init_modules:
             res += ['firstname', 'lastname']
