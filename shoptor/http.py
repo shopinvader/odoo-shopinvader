@@ -25,7 +25,7 @@ def WrapJsonException(exception):
 
     def get_headers(environ=None):
         """Get a list of headers."""
-      	headers = [('Content-Type', 'application/json')]
+        headers = [('Content-Type', 'application/json')]
         for key, value in get_original_headers(environ=environ):
             if key != 'Content-Type':
                 headers.append(key, value)
@@ -61,11 +61,14 @@ class HttpJsonRequest(HttpRequest):
         return super(HttpJsonRequest, self).make_response(
             data, headers=headers, cookies=cookies)
 
+
 ori_get_request = Root.get_request
+
 
 def get_request(self, httprequest):
     if 'shoptor' in httprequest.url:
         return HttpJsonRequest(httprequest)
     return ori_get_request(self, httprequest)
+
 
 Root.get_request = get_request

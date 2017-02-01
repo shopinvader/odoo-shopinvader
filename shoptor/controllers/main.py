@@ -3,7 +3,6 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-import json
 from openerp.http import Controller, request, route
 from openerp.addons.connector.session import ConnectorSession
 from openerp.addons.connector_locomotivecms.connector import get_environment
@@ -50,9 +49,8 @@ class ShoptorController(Controller):
 
     # Cart Item
 
-    @route('/shoptor/cart/item',
-                methods=['POST', 'PUT', 'DELETE'],
-                auth="shoptor")
+    @route('/shoptor/cart/item', methods=['POST', 'PUT', 'DELETE'],
+           auth="shoptor")
     def item(self, **params):
         return self.send_to_service(CartItemService, params)
 

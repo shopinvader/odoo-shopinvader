@@ -31,14 +31,14 @@ class IrHttp(models.Model):
 
     def _auth_method_shoptor(self):
         headers = request.httprequest.environ
-        print headers
         if headers.get('HTTP_API_KEY'):
             request.uid = 1
             backend = request.env['locomotive.backend'].search(
                 [('odoo_api', '=', headers['HTTP_API_KEY'])])
             if len(backend) == 1:
                 request.backend = backend
-                request.partner = self._locomotive_get_partner_from_header(headers)
+                request.partner =\
+                    self._locomotive_get_partner_from_header(headers)
                 return True
         _logger.error("Wrong HTTP_API_KEY, access denied")
         raise Unauthorized("Wrong HTTP_API_KEY, access denied")

@@ -3,20 +3,14 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector_locomotivecms.connector import get_environment
-from ..services.helper import ShoptorService
+from ..services.cart_item import CartItemService
+from .common import CommonCase
 
 
 class AbstractItemCase(object):
 
     def setUp(self, *args, **kwargs):
         super(AbstractItemCase, self).setUp(*args, **kwargs)
-        self.backend = self.env.ref('connector_locomotivecms.backend_1')
-        session = ConnectorSession.from_env(self.env)
-        env = get_environment(session, 'sale.order.line', self.backend.id)
-        self.service = env.get_connector_unit(ShoptorService)
         self.product_1 = self.env.ref('product.product_product_4b')
         self.product_2 = self.env.ref('product.product_product_14')
 
@@ -25,7 +19,6 @@ class AbstractItemCase(object):
             'cart_id': cart_id,
             'product_id': product_id,
             'item_qty': qty,
-            'partner_email': self.partner_email,
             })
 
     def update_item(self, item_id, qty):
@@ -81,30 +74,21 @@ class AbstractItemCase(object):
         self.assertEqual(len(cart['order_line']), nbr_line - 1)
 
 
-class AnonymousItemCase(AbstractItemCase, TransactionCase):
+class AnonymousItemCase(AbstractItemCase, CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(AnonymousItemCase, self).setUp(*args, **kwargs)
         self.partner = self.env.ref('shoptor.anonymous')
-        self.partner_email = None
         self.cart = self.env.ref('shoptor.sale_order_1')
         self.cart_id = self.cart.id
+        self.service = self._get_service(CartItemService, None)
 
 
-class ConnectedItemCase(AbstractItemCase, TransactionCase):
+class ConnectedItemCase(AbstractItemCase, CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)
         self.partner = self.env.ref('shoptor.partner_1')
-        self.partner_email = 'osiris@my.personal.address.example.com'
         self.cart = self.env.ref('shoptor.sale_order_2')
         self.cart_id = self.cart.id
-
-    def test_add_item_without_cart(self):
-        self.cart.unlink()
-        super(ConnectedItemCase, self).test_add_item_without_cart()
-
-    def test_add_item_without_passing_cart_with_an_existing_cart(self):
-        self.cart_id = None
-        cart = self.test_add_item_with_an_existing_cart()
-        self.assertEqual(cart['id'], self.cart.id)
+        self.service = self._get_service(CartItemService, self.partner)

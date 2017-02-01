@@ -21,12 +21,12 @@ class ContactService(ShoptorService):
         if not self.partner:
             return []
         else:
-            return self._list(contact_type = params.get('contact_type'))
+            return self._list(contact_type=params.get('contact_type'))
 
     @secure_params
     def create(self, params):
         params['parent_id'] = self.partner.id
-        contact = self.env['res.partner'].create(params)
+        self.env['res.partner'].create(params)
         return self._list()
 
     @secure_params

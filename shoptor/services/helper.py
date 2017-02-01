@@ -5,8 +5,6 @@
 
 
 from openerp.addons.connector.connector import ConnectorUnit
-from openerp.exceptions import Warning as UserError
-from openerp.tools.translate import _
 from werkzeug.exceptions import BadRequest
 import logging
 import functools
@@ -58,7 +56,7 @@ class ShoptorService(ConnectorUnit):
         schema = self._get_schema_for_method(method)
         v = Validator(schema, purge_unknown=True)
         secure_params = v.normalized(params)
-        if v.validate(secure_params):
+        if not v.errors and v.validate(secure_params):
             return secure_params
         _logger.error("BadRequest %s", v.errors)
         raise BadRequest("BadRequest %s" % v.errors)

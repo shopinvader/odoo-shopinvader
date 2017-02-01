@@ -6,7 +6,7 @@
 from .helper import to_int, secure_params, ShoptorService
 from .contact import ContactService
 from openerp.addons.connector_locomotivecms.backend import locomotive
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 
 
 @locomotive
@@ -18,7 +18,7 @@ class CartService(ShoptorService):
 
     @secure_params
     def list(self, params):
-        cart = self._search_existing_cart(params['partner_email'])
+        cart = self._search_existing_cart()
         if cart:
             return self._to_json(cart)[0]
         else:
@@ -30,32 +30,25 @@ class CartService(ShoptorService):
 
     @secure_params
     def update(self, params):
-        cart = self._get(params['id'])
-        partner_email = params.get('partner_email')
-        if partner_email:
-            partner = self._get_partner(partner_email)
-            if cart.partner_id != partner:
-                cart.partner_id = partner
-                cart.anonymous = False
-        else:
-            partner = None
+        cart = self._get(params.pop('id'))
         # Process use_different_invoice_address
         # before processing the invoice and billing address
         if 'use_different_invoice_address' in params:
             cart.use_different_invoice_address\
                 = params.pop('use_different_invoice_address')
 
-        for key in ['partner_shipping_id', 'partner_invoice_id']:
-            if key in params:
-                address = params.pop(key)
-                if not partner_email:
-                    self._set_address_for_anonymous_partner(
-                        key, address, cart)
-                else:
-                    self._set_address_for_logged_partner(
-                        key, address, cart, partner_email)
-        params.pop('cart_id')
-        params.pop('partner_email')
+        if 'partner_id' in params and params['partner_id'] != self.partner.id:
+            raise Forbidden(
+                "Partner can not be set to %s"
+                % params['partner_id'])
+        else:
+            # TODO
+            pass
+        if not self.partner:
+            for key in ['partner_shipping_id', 'partner_invoice_id']:
+                if key in params:
+                    address = params.pop(key)
+                    self._set_address_for_anonymous_partner(key, address, cart)
         if params:
             cart.write(params)
 
@@ -66,26 +59,20 @@ class CartService(ShoptorService):
             }
 
     def _validator_list(self):
-        return {
-            'partner_email': {'type': 'string'},
-            }
+        return {}
 
     def _validator_address(self):
-        contact_service = self.service_for(ContactService)
-        res = contact_service._validator_create()
-        address_fields = res.keys()
-        for key in address_fields:
-            res[key]['excludes'] = 'id'
-        res['id'] = {
-            'coerce': to_int,
-            'nullable': True,
-            'excluded': address_fields,
-            }
-        return {'type': 'dict', 'schema': res}
+        if self.partner:
+            return {'coerce': to_int}
+        else:
+            contact_service = self.service_for(ContactService)
+            res = contact_service._validator_create()
+            return {'type': 'dict', 'schema': res}
 
     def _validator_update(self):
         return {
-            'id': {'coerce': to_int, 'nullable': True},
+            'id': {'coerce': to_int, 'required': True},
+            'partner_id': {'coerce': to_int},
             'partner_shipping_id': self._validator_address(),
             'partner_invoice_id': self._validator_address(),
             'carrier_id': {'coerce': to_int, 'nullable': True},
@@ -99,37 +86,17 @@ class CartService(ShoptorService):
     # All params are trusted as they have been checked before
 
     def _set_address_for_anonymous_partner(self, key, address, cart):
-        # Be carefull partner is not logged so we have to restrict the
-        # edition and creation of address to the current cart
-        if 'id' in address:
-            if not cart[key].id == address['id']:
-                raise
+        if key == 'partner_invoive_id':
+            if cart.partner_id == self.env.ref('shoptor.anonymous'):
+                raise BadRequest(
+                    "Invoice address can not be set before "
+                    "the shipping address")
             else:
-                cart[key].write(address)
-        else:
-            if key == 'partner_invoive_id':
-                # If we are creating an invoice address
-                # We have to link that address to the not logged
-                # customer and the invoice address must be set
-                # after setting a shipping address
-                if cart.partner_id == self.env.ref('shoptor.anonymous'):
-                    raise
-                else:
-                    address['parent_id'] = cart.partner_id
-            contact = self.env['res.partner'].create(address)
-            if key == 'partner_shipping_id':
-                cart.partner_id = contact['id']
-            cart[key] = contact['id']
-
-    def _set_address_for_logged_partner(
-            self, key, address, cart, partner_email):
-        address['partner_email'] = partner_email
-        contact_service = self.service_for(ContactService)
-        if 'id' in address:
-            contact = contact_service.update(address)
-        else:
-            contact = contact_service.create(address)
-        cart[key] = contact['id']
+                address['parent_id'] = cart.partner_id
+        contact = self.env['res.partner'].create(address)
+        if key == 'partner_shipping_id':
+            cart.partner_id = contact.id
+        cart[key] = contact.id
 
     def _parser_product(self):
         fields = ['name', 'id']
@@ -171,11 +138,10 @@ class CartService(ShoptorService):
     def _to_json(self, cart):
         return cart.jsonify(self._parser_cart())
 
-    def _search_existing_cart(self, partner_email):
-        partner = self._get_partner(partner_email)
+    def _search_existing_cart(self):
         return self.env['sale.order'].search([
             ('sub_state', '=', 'cart'),
-            ('partner_id', '=', partner.id),
+            ('partner_id', '=', self.partner.id),
             ], limit=1)
 
     def _get(self, cart_id):
@@ -186,19 +152,18 @@ class CartService(ShoptorService):
         if not cart:
             raise NotFound('The cart %s do not exist' % cart_id)
         else:
-            return card
+            return cart
 
-    def _create_cart(self, email=None):
-        vals = self._prepare_cart(email)
+    def _create_empty_cart(self):
+        vals = self._prepare_cart()
         return self.env['sale.order'].create(vals)
 
-    def _prepare_cart(self, partner_email=None):
-        if partner_email:
-            partner = self._get_partner(partner_email)
-        else:
-            partner = self.env.ref('shoptor.anonymous')
+    def _prepare_cart(self):
+        partner = self.partner or self.env.ref('shoptor.anonymous')
         return {
             'sub_state': 'cart',
             'partner_id': partner.id,
+            'partner_shipping_id': partner.id,
+            'partner_invoice_id': partner.id,
             'locomotive_backend_id': self.backend_record.id,
             }

@@ -23,7 +23,7 @@ class CartItemService(ShoptorService):
         if params.get('cart_id'):
             cart = cart_service._get(params['cart_id'])
         else:
-            cart = cart_service._create_cart(params.get('partner_email'))
+            cart = cart_service._create_empty_cart()
         self.env['sale.order.line'].create({
             'product_id': params['product_id'],
             'product_uom_qty': params['item_qty'],
@@ -36,14 +36,14 @@ class CartItemService(ShoptorService):
         item = self._get_cart_item(params)
         item.product_uom_qty = params['item_qty']
         cart_service = self.service_for(CartService)
-        return cart_service.get(params)
+        return cart_service._get(params['cart_id'])
 
     @secure_params
     def delete(self, params):
         item = self._get_cart_item(params)
         item.unlink()
         cart_service = self.service_for(CartService)
-        return cart_service.get(params)
+        return cart_service._get(params['cart_id'])
 
     # Validator
     def _validator_create(self):
@@ -51,7 +51,6 @@ class CartItemService(ShoptorService):
             'cart_id': {'coerce': to_int, 'nullable': True},
             'product_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
-            'partner_email': {'type': 'string', 'nullable': True},
             }
 
     def _validator_update(self):

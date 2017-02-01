@@ -36,7 +36,6 @@ class ContactCase(CommonCase):
     def test_add_contact(self):
         contact_ids = [contact['id'] for contact in self.service.list({})]
         contact_list = self.service.create(self.contact_params)
-        created_contact_id = None
         for contact in contact_list:
             if contact['id'] not in contact_ids:
                 created_contact = contact
@@ -55,7 +54,7 @@ class ContactCase(CommonCase):
     def test_update_main_contact(self):
         params = self.contact_params
         params['id'] = self.partner.id
-        res = self.service.update(params)
+        self.service.update(params)
         self.check_data(self.partner, params)
 
     def test_read_contact_profile(self):
@@ -79,7 +78,8 @@ class ContactCase(CommonCase):
         self.service.delete({'id': contact_id})
         contact = self.env['res.partner'].search([('id', '=', contact_id)])
         self.assertEqual(len(contact), 0)
-        partner = self.env['res.partner'].search([('id', '=', self.partner.id)])
+        partner = self.env['res.partner'].search([
+            ('id', '=', self.partner.id)])
         self.assertEqual(len(partner), 1)
 
     def test_delete_main_contact(self):
