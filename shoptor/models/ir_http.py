@@ -16,28 +16,29 @@ class IrHttp(models.Model):
     _inherit = 'ir.http'
 
     def _locomotive_get_partner_from_header(self, headers):
-        partner_email = headers.get('HTTP_X_ODOO_PARTNER_EMAIL')
+        partner_email = headers.get('HTTP_PARTNER_EMAIL')
         if partner_email:
             loco_partner = request.env['locomotive.partner'].search([
-                ('backend_id', '=', backend.id),
+                ('backend_id', '=', request.backend.id),
                 ('partner_email', '=', partner_email),
                 ])
             if loco_partner:
                 return loco_partner.record_id
             else:
-                _logger.error("Wrong HTTP_X_ODOO_PARTNER_EMAIL")
-                raise Unauthorized("Wrong HTTP_X_ODOO_PARTNER_EMAIL")
+                _logger.error("Wrong HTTP_PARTNER_EMAIL")
+                raise Unauthorized("Wrong HTTP_PARTNER_EMAIL")
         return None
 
     def _auth_method_shoptor(self):
         headers = request.httprequest.environ
-        if headers.get('HTTP_X_ODOO_API_KEY'):
+        print headers
+        if headers.get('HTTP_API_KEY'):
             request.uid = 1
             backend = request.env['locomotive.backend'].search(
-                [('odoo_api', '=', headers['HTTP_X_ODOO_API_KEY'])])
+                [('odoo_api', '=', headers['HTTP_API_KEY'])])
             if len(backend) == 1:
                 request.backend = backend
-                request.partner = partner
+                request.partner = self._locomotive_get_partner_from_header(headers)
                 return True
-        _logger.error("Wrong HTTP_X_ODOO_API_KEY, access denied")
-        raise Unauthorized("Wrong HTTP_X_ODOO_API_KEY, access denied")
+        _logger.error("Wrong HTTP_API_KEY, access denied")
+        raise Unauthorized("Wrong HTTP_API_KEY, access denied")

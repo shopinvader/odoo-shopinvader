@@ -55,6 +55,8 @@ class HttpJsonRequest(HttpRequest):
 
     def make_response(self, data, headers=None, cookies=None):
         data = json.dumps(data)
+        if headers is None:
+            headers = {}
         headers['Content-Type'] = 'application/json'
         return super(HttpJsonRequest, self).make_response(
             data, headers=headers, cookies=cookies)

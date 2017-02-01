@@ -28,13 +28,13 @@ class ShoptorController(Controller):
             res = service.update(params)
         elif method == 'DELETE':
             res = service.delete(params)
-        return res
+        return request.make_response(res)
 
     def _get_service(self, service_class):
         model_name = service_class._model_name
         session = ConnectorSession.from_env(request.env)
         env = get_environment(session, model_name, request.backend.id)
-        service = self.backend.get_class(base_class, session, model_name)
+        service = env.backend.get_class(service_class, session, model_name)
         return service(env, request.partner)
 
     # Cart
@@ -58,9 +58,12 @@ class ShoptorController(Controller):
 
     # Contact
     @route('/shoptor/contacts', methods=['GET', 'POST'], auth="shoptor")
+    def contact(self, **params):
+        return self.send_to_service(ContactService, params)
+
     @route('/shoptor/contacts/<id>', methods=['PUT', 'DELETE'],
            auth="shoptor")
-    def contact(self, **params):
+    def contact_update_delete(self, **params):
         return self.send_to_service(ContactService, params)
 
     # Order History
