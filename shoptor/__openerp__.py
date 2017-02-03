@@ -36,6 +36,7 @@
         'views/backend_view.xml',
         'views/partner_view.xml',
         'views/product_category_view.xml',
+        'views/sale_view.xml',
         'security/ir.model.access.csv',
         "data/res_partner.xml",
     ],

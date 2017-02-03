@@ -25,8 +25,7 @@ class IrHttp(models.Model):
             if loco_partner:
                 return loco_partner.record_id
             else:
-                _logger.error("Wrong HTTP_PARTNER_EMAIL")
-                raise Unauthorized("Wrong HTTP_PARTNER_EMAIL")
+                _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
         return None
 
     def _auth_method_shoptor(self):

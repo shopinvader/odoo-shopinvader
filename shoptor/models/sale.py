@@ -13,6 +13,8 @@ class SaleOrder(models.Model):
     locomotive_backend_id = fields.Many2one(
         'locomotive.backend',
         'Backend')
+    cart_step = fields.Char()
+    anonymous_email = fields.Char()
 
 
 class SaleOrderLine(models.Model):
