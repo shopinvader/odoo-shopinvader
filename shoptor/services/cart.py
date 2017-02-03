@@ -64,7 +64,7 @@ class CartService(ShoptorService):
             'payment_method_id': {'coerce': to_int, 'nullable': True},
             'cart_state': {'type': 'string', 'nullable': True},
             'use_different_invoice_address': {'type': 'boolean'},
-            'cart_step': {'type': 'string'},
+            'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             }
         if self.partner:
@@ -122,7 +122,7 @@ class CartService(ShoptorService):
             'amount_total',
             'amount_untaxed',
             'amount_tax',
-            'cart_step',
+            'cart_state',
             'anonymous_email',
             ('partner_id', self._parser_partner()),
             ('partner_shipping_id', contact_parser),

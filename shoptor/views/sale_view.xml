@@ -16,7 +16,7 @@
             <field name="anonymous_email"/>
         </field>
         <field name="sub_state" position="after">
-            <field name="cart_step"/>
+            <field name="cart_state"/>
         </field>
     </field>
 </record>
