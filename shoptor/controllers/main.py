@@ -9,6 +9,7 @@ from openerp.addons.connector_locomotivecms.connector import get_environment
 from ..services.cart import CartService
 from ..services.cart_item import CartItemService
 from ..services.contact import ContactService
+from ..services.customer import CustomerService
 
 
 class ShoptorController(Controller):
@@ -63,6 +64,12 @@ class ShoptorController(Controller):
            auth="shoptor")
     def contact_update_delete(self, **params):
         return self.send_to_service(ContactService, params)
+
+    # Customer
+
+    @route('/shoptor/customer', methods=['POST'], auth="shoptor")
+    def customer(self, **params):
+        return self.send_to_service(CustomerService, params)
 
     # Order History
 

@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from ..services.cart_item import CartItemService
+from ..services.cart import CartService
 from .common import CommonCase
 
 
@@ -53,7 +54,9 @@ class AbstractItemCase(object):
         self.check_partner(cart)
 
     def test_add_item_with_an_existing_cart(self):
-        nbr_line = len(self.cart.order_line)
+        cart = self.cart_service.get({'id': self.cart.id})
+        nbr_line = len(cart['order_line'])
+
         cart = self.add_item(self.cart_id, self.product_1.id, 2)
         self.assertEqual(cart['id'], self.cart.id)
         self.assertEqual(len(cart['order_line']), nbr_line + 1)
@@ -69,8 +72,9 @@ class AbstractItemCase(object):
         self.check_product_and_qty(cart['order_line'][0], product_id, 5)
 
     def test_delete_item(self):
-        nbr_line = len(self.cart.order_line)
-        cart = self.delete_item(self.cart.order_line[0].id)
+        cart = self.cart_service.get({'id': self.cart.id})
+        nbr_line = len(cart['order_line'])
+        cart = self.delete_item(cart['order_line'][0]['id'])
         self.assertEqual(len(cart['order_line']), nbr_line - 1)
 
 
@@ -82,6 +86,7 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
         self.cart = self.env.ref('shoptor.sale_order_1')
         self.cart_id = self.cart.id
         self.service = self._get_service(CartItemService, None)
+        self.cart_service = self._get_service(CartService, None)
 
 
 class ConnectedItemCase(AbstractItemCase, CommonCase):
@@ -92,3 +97,4 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
         self.cart = self.env.ref('shoptor.sale_order_2')
         self.cart_id = self.cart.id
         self.service = self._get_service(CartItemService, self.partner)
+        self.cart_service = self._get_service(CartService, self.partner)

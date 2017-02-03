@@ -29,21 +29,23 @@ class CartItemService(ShoptorService):
             'product_uom_qty': params['item_qty'],
             'order_id': cart.id,
             })
-        return cart_service._to_json(cart)[0]
+        return cart_service._to_json(cart)
 
     @secure_params
     def update(self, params):
         item = self._get_cart_item(params)
         item.product_uom_qty = params['item_qty']
         cart_service = self.service_for(CartService)
-        return cart_service._get(params['cart_id'])
+        cart = cart_service._get(params['cart_id'])
+        return cart_service._to_json(cart)
 
     @secure_params
     def delete(self, params):
         item = self._get_cart_item(params)
         item.unlink()
         cart_service = self.service_for(CartService)
-        return cart_service._get(params['cart_id'])
+        cart = cart_service._get(params['cart_id'])
+        return cart_service._to_json(cart)
 
     # Validator
     def _validator_create(self):

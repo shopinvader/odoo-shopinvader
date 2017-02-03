@@ -11,22 +11,6 @@ class AbstractCartCase(object):
 
     def set_up(self):
         self.contact = self.env.ref('shoptor.partner_1_contact_1')
-        self.address_ship = {
-            'name': 'Purple',
-            'street': 'Rue du jardin',
-            'zip': '43110',
-            'city': 'Aurec sur Loire',
-            'phone': '0485485454',
-            'country_id': self.env.ref('base.fr').id,
-            }
-        self.address_invoice = {
-            'name': 'Gospel',
-            'street': 'Rue du jardin',
-            'zip': '43110',
-            'city': 'Aurec sur Loire',
-            'phone': '0485485454',
-            'country_id': self.env.ref('base.fr').id,
-            }
 
 
 class AnonymousCartCase(AbstractCartCase, CommonCase):
@@ -37,10 +21,30 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self.cart = self.env.ref('shoptor.sale_order_1')
         self.partner = self.env.ref('shoptor.anonymous')
         self.service = self._get_service(CartService, None)
+        self.address_ship = {
+            'name': 'Purple',
+            'street': 'Rue du jardin',
+            'zip': '43110',
+            'city': 'Aurec sur Loire',
+            'phone': '0485485454',
+            'country_id': self.env.ref('base.fr').id,
+            'email': 'anonymous@customer.example.com',
+            'external_id': 'WW5KaGRtOD0=',
+            }
+        self.address_invoice = {
+            'name': 'Gospel',
+            'street': 'Rue du jardin',
+            'zip': '43110',
+            'city': 'Aurec sur Loire',
+            'phone': '0485485454',
+            'country_id': self.env.ref('base.fr').id,
+            }
 
     def _check_address(self, partner, data):
         for key in data:
-            if key == 'country_id':
+            if key == 'external_id':
+                continue
+            elif key == 'country_id':
                 self.assertEqual(partner[key].id, data[key])
             else:
                 self.assertEqual(partner[key], data[key])
