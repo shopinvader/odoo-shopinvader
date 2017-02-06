@@ -46,7 +46,7 @@ class CartService(ShoptorService):
         if params:
             cart.write(params)
         if 'carrier_id' in params:
-            cart.set_delivery()
+            cart.delivery_set()
         return self._to_json(cart)
 
     # Validator
@@ -115,6 +115,9 @@ class CartService(ShoptorService):
     def _parser_partner(self):
         return ['id', 'display_name', 'ref']
 
+    def _parser_carrier(self):
+        return ['id', 'name', 'description']
+
     def _parser_cart(self):
         contact_parser = self.service_for(ContactService)._json_parser()
         return [
@@ -125,6 +128,7 @@ class CartService(ShoptorService):
             'amount_tax',
             'cart_state',
             'anonymous_email',
+            ('carrier_id', self._parser_carrier()),
             ('partner_id', self._parser_partner()),
             ('partner_shipping_id', contact_parser),
             ('partner_invoice_id', contact_parser),
