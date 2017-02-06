@@ -45,6 +45,8 @@ class CartService(ShoptorService):
             self._set_anonymous_partner(params)
         if params:
             cart.write(params)
+        if 'carrier_id' in params:
+            cart.set_delivery()
         return self._to_json(cart)
 
     # Validator
@@ -159,6 +161,8 @@ class CartService(ShoptorService):
             else:
                 filtred_lines.append(line)
         res['order_line'] = filtred_lines
+        for key in ['amount_total', 'amount_untaxed', 'amount_tax']:
+            res['item_%s' % key] = res[key] - res['shipping_%s' % key]
         return res
 
     def _set_anonymous_partner(self, params):
