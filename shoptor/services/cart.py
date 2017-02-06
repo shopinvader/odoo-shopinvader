@@ -62,7 +62,6 @@ class CartService(ShoptorService):
             'partner_id': {'coerce': to_int},
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'payment_method_id': {'coerce': to_int, 'nullable': True},
-            'cart_state': {'type': 'string', 'nullable': True},
             'use_different_invoice_address': {'type': 'boolean'},
             'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
@@ -130,6 +129,14 @@ class CartService(ShoptorService):
             ('order_line', self._parser_order_line()),
         ]
 
+    def _prepare_available_carrier(self, carrier):
+        return {
+           'id': carrier.id,
+           'name': carrier.name,
+           'description': carrier.description,
+           'price': carrier.price,
+            }
+
     def _to_json(self, cart):
         res = cart.jsonify(self._parser_cart())[0]
         carriers = cart.with_context(order_id=cart.id)\
@@ -137,15 +144,18 @@ class CartService(ShoptorService):
         res['available_carriers'] = []
         for carrier in carriers:
             if carrier.available:
-                res['available_carriers'].append({
-                    'id': carrier.id,
-                    'name': carrier.name,
-                    'price': carrier.price,
-                    })
+                res['available_carriers'].append(
+                    self._prepare_available_carrier(carrier))
         filtred_lines = []
         for line in res['order_line']:
             if line['is_delivery']:
-                pass
+                amount_untaxed = line['price_subtotal']
+                amount = line['price_subtotal_gross']
+                res.update({
+                    'shipping_amount_total': amount,
+                    'shipping_amount_untaxed': amount_untaxed,
+                    'shipping_amount_tax': amount - amount_untaxed,
+                    })
             else:
                 filtred_lines.append(line)
         res['order_line'] = filtred_lines
