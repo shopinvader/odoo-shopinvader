@@ -44,9 +44,10 @@ class CategExportMapper(GenericExportMapper):
             'meta_keywords': res.pop('meta_keywords'),
             'meta_description': res.pop('meta_description'),
             '_slug': res['url_key'],
-            'object_id': map_record._source.record_id.id,
+            'erp_id': map_record._source.record_id.id,
             'name': res['name'],
             'data': res,
+            'link_label': res['link_label'],
             }
 
     @mapping
@@ -101,7 +102,7 @@ class ProductExportMapper(GenericExportMapper):
             'meta_description': res.pop('meta_description'),
             'categories': res.pop('categories'),
             '_slug': res['url_key'],
-            'object_id': map_record._source.record_id.id,
+            'erp_id': map_record._source.record_id.id,
             'name': res['prefix_code'],
             'data': res,
             }
@@ -197,7 +198,7 @@ class VariantExportMapper(GenericExportMapper):
         ('default_code', 'default_code'),
         ('stock_state', 'stock_state'),
         ('qty_available', 'stock_qty'),
-        ('id', 'object_id'),
+        ('id', 'erp_id'),
     ]
 
     @mapping

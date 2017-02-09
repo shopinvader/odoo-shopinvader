@@ -30,9 +30,11 @@
         "product_stock_state",
         "sale_cart",
         "sale_different_invoice_address",
+        "sale_payment_method",
     ],
     "data": [
         'views/product_view.xml',
+        'views/payment_method_view.xml',
         'views/image_view.xml',
         'views/media_view.xml',
         'views/backend_view.xml',

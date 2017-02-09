@@ -17,12 +17,24 @@
                        colspan="4"
                        nolabel="True">
                     <tree editable="bottom">
-                        <field name="record_id"/> 
-                        <field name="tax_included"/> 
+                        <field name="record_id"/>
+                        <field name="tax_included"/>
                         <field name="code"/>
                     </tree>
                 </field>
             </group>
+            <group name="payment_method" colspan="4">
+                <field name="payment_method_ids"
+                       string="Payment Method"
+                       colspan="4"
+                       nolabel="True">
+                    <tree editable="top">
+                        <field name="sequence"/>
+                        <field name="payment_method_id" widget="selection"/>
+                    </tree>
+                </field>
+            </group>
+
         </group>
         <notebook position="inside">
             <page name="developper" string="Developper">

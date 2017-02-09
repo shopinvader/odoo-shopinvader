@@ -34,6 +34,10 @@ def clear_dead_content(session, model_name, backend_id):
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
 
+    payment_method_ids = fields.One2many(
+        'locomotive.payment',
+        'backend_id',
+        'Payment Method')
     pricelist_ids = fields.One2many(
         'locomotive.pricelist',
         'backend_id',

@@ -42,7 +42,9 @@ class CartService(AbstractSaleService):
         if 'partner_id' in params and params['partner_id'] != self.partner.id:
             raise Forbidden("Partner can not be set to %s"
                             % params['partner_id'])
-
+        if 'payment_method_id' in params and\
+                method_id not in self.backend_record.payment_method_ids.ids:
+            raise BadRequest(_('Payment method id invalid'))
         if not self.partner:
             self._set_anonymous_partner(params)
         if params:
@@ -74,6 +76,7 @@ class CartService(AbstractSaleService):
             'use_different_invoice_address': {'type': 'boolean'},
             'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
+            'payment_method_id': {'coerce': to_int},
             }
         if self.partner:
             res.update({
@@ -118,7 +121,23 @@ class CartService(AbstractSaleService):
         res['available_carriers'] = self._get_available_carrier(cart)
         filtred_lines = [l for l in res['order_line'] if not l['is_delivery']]
         res['order_line'] = filtred_lines
+        res['available_payment_method_ids'] = self._get_available_payment_method()
         return res
+
+    def _prepare_payment(self, method):
+        method = method.payment_method_id
+        return {
+            'id': method.id,
+            'name': method.name,
+            'code': method.code,
+            'description': method.description,
+            }
+
+    def _get_available_payment_method(self):
+        methods = []
+        for method in self.backend_record.payment_method_ids:
+            methods.append(self._prepare_payment(method))
+        return methods
 
     def _set_anonymous_partner(self, params):
         if 'partner_shipping_id' in params:
