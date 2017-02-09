@@ -42,11 +42,17 @@ class CartService(AbstractSaleService):
         if 'partner_id' in params and params['partner_id'] != self.partner.id:
             raise Forbidden("Partner can not be set to %s"
                             % params['partner_id'])
+
         if not self.partner:
             self._set_anonymous_partner(params)
         if params:
             cart.write(params)
         if 'carrier_id' in params:
+            cart.delivery_set()
+        elif 'shipping_address_id' in params:
+            # If we change the shipping address we update
+            # the current carrier
+            cart.carrier_id = self._get_available_carrier(cart)[0]
             cart.delivery_set()
         return self._to_json(cart)
 
@@ -98,12 +104,14 @@ class CartService(AbstractSaleService):
             'description': carrier.description,
             'price': carrier.price,
             }
+
     def _get_available_carrier(self, cart):
         carriers = cart.with_context(order_id=cart.id)\
             .env['delivery.carrier'].search([])
-        return [self._prepare_available_carrier(carrier)
+        res = [self._prepare_available_carrier(carrier)
                for carrier in carriers
                if carrier.available]
+        return sorted(res, key=lambda x: (x['price'], x['name']))
 
     def _to_json(self, cart):
         res = super(CartService, self)._to_json(cart)[0]
