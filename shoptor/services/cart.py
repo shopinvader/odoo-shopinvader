@@ -9,6 +9,7 @@ from .contact import ContactService
 from .customer import CustomerService
 from openerp.addons.connector_locomotivecms.backend import locomotive
 from werkzeug.exceptions import BadRequest, NotFound, Forbidden
+from openerp.tools.translate import _
 
 
 @locomotive
@@ -43,7 +44,8 @@ class CartService(AbstractSaleService):
             raise Forbidden("Partner can not be set to %s"
                             % params['partner_id'])
         if 'payment_method_id' in params and\
-                method_id not in self.backend_record.payment_method_ids.ids:
+                params['payment_method_id'] not in\
+                self.backend_record.payment_method_ids.ids:
             raise BadRequest(_('Payment method id invalid'))
         if not self.partner:
             self._set_anonymous_partner(params)
@@ -72,7 +74,6 @@ class CartService(AbstractSaleService):
             'id': {'coerce': to_int, 'required': True},
             'partner_id': {'coerce': to_int},
             'carrier_id': {'coerce': to_int, 'nullable': True},
-            'payment_method_id': {'coerce': to_int, 'nullable': True},
             'use_different_invoice_address': {'type': 'boolean'},
             'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
@@ -121,7 +122,8 @@ class CartService(AbstractSaleService):
         res['available_carriers'] = self._get_available_carrier(cart)
         filtred_lines = [l for l in res['order_line'] if not l['is_delivery']]
         res['order_line'] = filtred_lines
-        res['available_payment_method_ids'] = self._get_available_payment_method()
+        res['available_payment_method_ids']\
+            = self._get_available_payment_method()
         return res
 
     def _prepare_payment(self, method):

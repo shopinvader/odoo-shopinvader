@@ -7,3 +7,5 @@ access_product_filter_employee,product.filter employee,model_product_filter,base
 access_product_filter_sale_manager,product.filter salemanager,model_product_filter,base.group_sale_manager,1,1,1,1
 access_locomotive_pricelist_employee,locomotive.pricelist employee,model_locomotive_pricelist,base.group_user,1,0,0,0
 access_locomotive_pricelist_sale_manager,locomotive.pricelist salemanager,model_locomotive_pricelist,base.group_sale_manager,1,1,1,1
+access_locomotive_payment_manager,access_locomotive_payment_manager,model_locomotive_payment,connector.group_connector_manager,1,1,1,1
+access_locomotive_payment_employee,access_locomotive_payment_employee,model_locomotive_payment,base.group_user,1,0,0,0
