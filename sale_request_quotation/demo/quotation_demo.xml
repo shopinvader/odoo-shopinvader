@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+<record id="sale.sale_order_3" model="sale.order">
+     <field name="sub_state" >request_quotation</field>
+</record>
+
+    </data>
+</openerp>

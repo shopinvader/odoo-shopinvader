@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="view_base_multi_image_form" model="ir.ui.view">
+    <field name="model">base_multi_image.image</field>
+    <field name="inherit_id" ref="base_multi_image.image_form_view"/>
+    <field name="arch" type="xml">
+        <group string="Comments" position="after">
+            <group name="Connector">
+                <field name="locomotive_bind_ids" nolabel="1">
+                    <tree editable="bottom">
+                        <field name="backend_id"/>
+                        <field name="size"/>
+                        <field name="sync_date"/>
+                        <field name="external_id"/>
+                        <field name="url"/>
+                    </tree>
+                </field>
+            </group>
+        </group>
+    </field>
+</record>
+
+    </data>
+</openerp>

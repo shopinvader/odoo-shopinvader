@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="locomotive_backend_view_form" model="ir.ui.view">
+    <field name="model">locomotive.backend</field>
+    <field name="inherit_id"
+           ref="connector_locomotivecms.view_locomotive_backend_form" />
+    <field name="arch" type="xml">
+        <page name="config" position="after">
+            <page name="search-engine" string="Search Engine">
+                <group name="search-engine" string="Search Engine" colspan="4">
+                    <field name="search_engine"/>
+                    <field name="search_engine_username"/>
+                    <field name="search_engine_password"/>
+                </group>
+            </page>
+        </page>
+    </field>
+</record>
+
+    </data>
+</openerp>

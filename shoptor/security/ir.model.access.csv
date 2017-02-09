@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_locomotive_category,locomotive_category connector manager,model_locomotive_category,connector.group_connector_manager,1,1,1,1
+access_locomotive_product,locomotive_product connector manager,model_locomotive_product,connector.group_connector_manager,1,1,1,1
+access_locomotive_image,locomotive_image connector manager,model_locomotive_image,connector.group_connector_manager,1,1,1,1
+access_locomotive_media,locomotive_media connector manager,model_locomotive_media,connector.group_connector_manager,1,1,1,1
+access_product_filter_employee,product.filter employee,model_product_filter,base.group_user,1,0,0,0
+access_product_filter_sale_manager,product.filter salemanager,model_product_filter,base.group_sale_manager,1,1,1,1
+access_locomotive_pricelist_employee,locomotive.pricelist employee,model_locomotive_pricelist,base.group_user,1,0,0,0
+access_locomotive_pricelist_sale_manager,locomotive.pricelist salemanager,model_locomotive_pricelist,base.group_sale_manager,1,1,1,1
+access_locomotive_payment_manager,access_locomotive_payment_manager,model_locomotive_payment,connector.group_connector_manager,1,1,1,1
+access_locomotive_payment_employee,access_locomotive_payment_employee,model_locomotive_payment,base.group_user,1,0,0,0

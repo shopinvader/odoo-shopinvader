@@ -1,0 +1,5 @@
+connector
+delivery-carrier
+product-attribute
+sale-workflow
+server-tools https://github.com/akretion/server-tools.git 8.0-jsonify

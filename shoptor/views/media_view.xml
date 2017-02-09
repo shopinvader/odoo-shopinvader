@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="ir_attachment_media_view_form" model="ir.ui.view">
+    <field name="model">ir.attachment.media</field>
+    <field name="inherit_id" ref="attachment_media.ir_attachment_media_view_form"/>
+    <field name="arch" type="xml">
+        <group name="data" position="after">
+            <group name="Connector">
+                <field name="locomotive_bind_ids" nolabel="1">
+                    <tree create="0" edit="0">
+                        <field name="backend_id"/>
+                        <field name="sync_date"/>
+                        <field name="external_id"/>
+                        <field name="url"/>
+                    </tree>
+                </field>
+            </group>
+        </group>
+    </field>
+</record>
+
+    </data>
+</openerp>

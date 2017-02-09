@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+<record id="sale.sale_order_2" model="sale.order">
+    <field name="sub_state" >cart</field>
+</record>
+
+    </data>
+</openerp>
