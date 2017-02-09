@@ -10,6 +10,7 @@ from ..services.cart import CartService
 from ..services.cart_item import CartItemService
 from ..services.contact import ContactService
 from ..services.customer import CustomerService
+from ..services.sale import SaleService
 
 
 class ShoptorController(Controller):
@@ -74,11 +75,5 @@ class ShoptorController(Controller):
     # Order History
 
     @route('/shoptor/orders', methods=['GET'], auth="none")
-    def orders(self, per_page=5, page=1):
-        # TODO get the right partner
-        partner_id = 13470
-        per_page = int(per_page)
-        page = int(page)
-        result = request.env['sale.order'].sudo().get_order_history(
-            partner_id, per_page=per_page, page=page)
-        return result
+    def sale(self, **params):
+        return self.send_to_service(SaleService, params)

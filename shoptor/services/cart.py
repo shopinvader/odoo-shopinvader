@@ -3,7 +3,8 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import to_int, secure_params, ShoptorService
+from .helper import to_int, secure_params
+from .abstract_sale import AbstractSaleService
 from .contact import ContactService
 from .customer import CustomerService
 from openerp.addons.connector_locomotivecms.backend import locomotive
@@ -11,7 +12,7 @@ from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 
 
 @locomotive
-class CartService(ShoptorService):
+class CartService(AbstractSaleService):
     _model_name = 'sale.order'
 
     # The following method are 'public' and can be called from the controller.
@@ -90,83 +91,25 @@ class CartService(ShoptorService):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _parser_product(self):
-        fields = ['name', 'id']
-        if 'product_code_builder' in self.env.registry._init_modules:
-            fields.append('prefix_code')
-        return fields
-
-    def _parser_order_line(self):
-        parser = [
-            'id',
-            ('product_id', self._parser_product()),
-            'product_url',
-            'price_unit',
-            'product_uom_qty',
-            'price_subtotal',
-            'discount',
-            'is_delivery',
-            ]
-        if 'sale_order_line_price_subtotal_gross' in\
-                self.env.registry._init_modules:
-            parser.append('price_subtotal_gross')
-        return parser
-
-    def _parser_partner(self):
-        return ['id', 'display_name', 'ref']
-
-    def _parser_carrier(self):
-        return ['id', 'name', 'description']
-
-    def _parser_cart(self):
-        contact_parser = self.service_for(ContactService)._json_parser()
-        return [
-            'id',
-            'name',
-            'amount_total',
-            'amount_untaxed',
-            'amount_tax',
-            'cart_state',
-            'anonymous_email',
-            ('carrier_id', self._parser_carrier()),
-            ('partner_id', self._parser_partner()),
-            ('partner_shipping_id', contact_parser),
-            ('partner_invoice_id', contact_parser),
-            ('order_line', self._parser_order_line()),
-        ]
-
     def _prepare_available_carrier(self, carrier):
         return {
-           'id': carrier.id,
-           'name': carrier.name,
-           'description': carrier.description,
-           'price': carrier.price,
+            'id': carrier.id,
+            'name': carrier.name,
+            'description': carrier.description,
+            'price': carrier.price,
             }
-
-    def _to_json(self, cart):
-        res = cart.jsonify(self._parser_cart())[0]
+    def _get_available_carrier(self, cart):
         carriers = cart.with_context(order_id=cart.id)\
             .env['delivery.carrier'].search([])
-        res['available_carriers'] = []
-        for carrier in carriers:
-            if carrier.available:
-                res['available_carriers'].append(
-                    self._prepare_available_carrier(carrier))
-        filtred_lines = []
-        for line in res['order_line']:
-            if line['is_delivery']:
-                amount_untaxed = line['price_subtotal']
-                amount = line['price_subtotal_gross']
-                res.update({
-                    'shipping_amount_total': amount,
-                    'shipping_amount_untaxed': amount_untaxed,
-                    'shipping_amount_tax': amount - amount_untaxed,
-                    })
-            else:
-                filtred_lines.append(line)
+        return [self._prepare_available_carrier(carrier)
+               for carrier in carriers
+               if carrier.available]
+
+    def _to_json(self, cart):
+        res = super(CartService, self)._to_json(cart)[0]
+        res['available_carriers'] = self._get_available_carrier(cart)
+        filtred_lines = [l for l in res['order_line'] if not l['is_delivery']]
         res['order_line'] = filtred_lines
-        for key in ['amount_total', 'amount_untaxed', 'amount_tax']:
-            res['item_%s' % key] = res[key] - res['shipping_%s' % key]
         return res
 
     def _set_anonymous_partner(self, params):
