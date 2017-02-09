@@ -74,6 +74,10 @@ class ShoptorController(Controller):
 
     # Order History
 
-    @route('/shoptor/orders', methods=['GET'], auth="none")
+    @route('/shoptor/order', methods=['GET'], auth="shoptor")
+    def sale_list(self, **params):
+        return self.send_to_service(SaleService, params)
+
+    @route('/shoptor/order/<id>', methods=['GET'], auth="shoptor")
     def sale(self, **params):
         return self.send_to_service(SaleService, params)
