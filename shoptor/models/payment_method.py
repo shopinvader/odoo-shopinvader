@@ -26,3 +26,4 @@ class PaymentMethod(models.Model):
 
     code = fields.Char()
     description = fields.Html()
+    show_description_after_validation = fields.Boolean()

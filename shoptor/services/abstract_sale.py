@@ -37,6 +37,14 @@ class AbstractSaleService(ShoptorService):
     def _parser_carrier(self):
         return ['id', 'name', 'description']
 
+    def _parser_payment_method(self):
+        return [
+            'id',
+            'name',
+            'description',
+            'show_description_after_validation',
+        ]
+
     def _parser(self):
         contact_parser = self.service_for(ContactService)._json_parser()
         return [
@@ -59,7 +67,13 @@ class AbstractSaleService(ShoptorService):
             ('partner_shipping_id', contact_parser),
             ('partner_invoice_id', contact_parser),
             ('order_line', self._parser_order_line()),
+            ('payment_method_id', self._parser_payment_method()),
         ]
 
     def _to_json(self, sale):
-        return sale.jsonify(self._parser())
+        res = sale.jsonify(self._parser())
+        for order in res:
+            order['order_line'] = [
+                l for l in order['order_line']
+                if not l['is_delivery']]
+        return res

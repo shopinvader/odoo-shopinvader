@@ -120,8 +120,6 @@ class CartService(AbstractSaleService):
     def _to_json(self, cart):
         res = super(CartService, self)._to_json(cart)[0]
         res['available_carriers'] = self._get_available_carrier(cart)
-        filtred_lines = [l for l in res['order_line'] if not l['is_delivery']]
-        res['order_line'] = filtred_lines
         res['available_payment_method_ids']\
             = self._get_available_payment_method()
         return res
