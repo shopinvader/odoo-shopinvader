@@ -43,10 +43,9 @@ class CartService(AbstractSaleService):
         if 'partner_id' in params and params['partner_id'] != self.partner.id:
             raise Forbidden("Partner can not be set to %s"
                             % params['partner_id'])
-        if 'payment_method_id' in params and\
-                params['payment_method_id'] not in\
-                self.backend_record.payment_method_ids.ids:
-            raise BadRequest(_('Payment method id invalid'))
+        if 'payment_method_id' in params:
+            self._check_valid_payment_method(params['payment_method_id'])
+            payment_params = params.pop('payment_params', {})
         if not self.partner:
             self._set_anonymous_partner(params)
         if params:
@@ -58,6 +57,8 @@ class CartService(AbstractSaleService):
             # the current carrier
             cart.carrier_id = self._get_available_carrier(cart)[0]
             cart.delivery_set()
+        if 'payment_method_id' in params:
+            self._process_payment_transaction(**payment_params)
         return self._to_json(cart)
 
     # Validator
@@ -78,7 +79,11 @@ class CartService(AbstractSaleService):
             'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
+            'payment_params': {
+                'type': 'dict',
+                'schema': {'token': {'type': 'string'}},
             }
+        }
         if self.partner:
             res.update({
                 'partner_shipping_id': {'coerce': to_int},
@@ -188,3 +193,13 @@ class CartService(AbstractSaleService):
             'partner_invoice_id': partner.id,
             'locomotive_backend_id': self.backend_record.id,
             }
+
+    def _check_valid_payment_method(self, params):
+        if params['payment_method_id'] not in\
+                self.backend_record.payment_method_ids.ids:
+            raise BadRequest(_('Payment method id invalid'))
+
+    def _process_payment_transaction(self, cart, **kwargs):
+        provider = cart.payment_method_id.provider
+        if provider:
+            self.env[provider].generate(cart, **kwargs)
