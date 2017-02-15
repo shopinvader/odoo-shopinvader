@@ -33,6 +33,7 @@ class CartService(AbstractSaleService):
 
     @secure_params
     def update(self, params):
+        payment_params = params.pop('payment_params', {})
         cart = self._get(params.pop('id'))
         # Process use_different_invoice_address
         # before processing the invoice and billing address
@@ -45,7 +46,6 @@ class CartService(AbstractSaleService):
                             % params['partner_id'])
         if 'payment_method_id' in params:
             self._check_valid_payment_method(params['payment_method_id'])
-            payment_params = params.pop('payment_params', {})
         if not self.partner:
             self._set_anonymous_partner(params)
         if params:
@@ -58,7 +58,7 @@ class CartService(AbstractSaleService):
             cart.carrier_id = self._get_available_carrier(cart)[0]
             cart.delivery_set()
         if 'payment_method_id' in params:
-            self._process_payment_transaction(**payment_params)
+            self._process_payment_transaction(cart, **payment_params)
         return self._to_json(cart)
 
     # Validator
@@ -194,9 +194,8 @@ class CartService(AbstractSaleService):
             'locomotive_backend_id': self.backend_record.id,
             }
 
-    def _check_valid_payment_method(self, params):
-        if params['payment_method_id'] not in\
-                self.backend_record.payment_method_ids.ids:
+    def _check_valid_payment_method(self, method_id):
+        if method_id not in self.backend_record.payment_method_ids.mapped('payment_method_id.id'):
             raise BadRequest(_('Payment method id invalid'))
 
     def _process_payment_transaction(self, cart, **kwargs):
