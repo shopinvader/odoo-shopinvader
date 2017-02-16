@@ -122,6 +122,14 @@ class CartService(AbstractSaleService):
                if carrier.available]
         return sorted(res, key=lambda x: (x['price'], x['name']))
 
+    def _parser_transaction(self):
+        return ['url']
+
+    def _parser(self):
+        res = super(CartService, self)._parser()
+        res.append(('current_transaction_id', self._parser_transaction()))
+        return res
+
     def _to_json(self, cart):
         res = super(CartService, self)._to_json(cart)[0]
         res['available_carriers'] = self._get_available_carrier(cart)
