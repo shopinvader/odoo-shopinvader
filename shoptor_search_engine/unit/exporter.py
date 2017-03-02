@@ -35,7 +35,7 @@ class ProductExporterIndex(ProductExporter):
         res.update({k: variant[k] for k in variant if k != 'pricelist'
                     if variant[k]})
         res['pricelist'] = variant['pricelist'][pricelist].copy()
-        res['objectID'] = res['object_id']
+        res['objectID'] = res['erp_id']
         return res
 
     def index_to_algolia(self, datas):
@@ -86,7 +86,7 @@ class CategExporterIndex(CategExporter):
         # TODO make it more flexible
         res = {k: self._data['data'][k] for k in self._data['data']
                if self._data['data'][k]}
-        res['objectID'] = self._data['object_id']
+        res['objectID'] = self._data['erp_id']
         return res
 
     def index_to_algolia(self, datas):
