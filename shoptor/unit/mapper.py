@@ -47,6 +47,7 @@ class CategExportMapper(GenericExportMapper):
             'erp_id': map_record._source.record_id.id,
             'name': res['name'],
             'data': res,
+            'products': res.pop('products'),
             'link_label': res['link_label'],
             }
 
@@ -72,6 +73,21 @@ class CategExportMapper(GenericExportMapper):
             res.append(image_data)
         return {'images': res}
 
+    @mapping
+    def products(self, record):
+        binder = self.binder_for('locomotive.product')
+        products = []
+        domain = [('categ_id', '=', record.record_id.id)]
+        if 'product_m2mcategories' in self.env.registry._init_modules:
+            domain = ['|', ('categ_ids', '=', record.record_id.id)] + domain
+        for product in self.env['product.template'].search(domain):
+            external_id = binder.to_backend(product, wrap=True)
+            if external_id:
+                products.append(external_id)
+        return {
+            'products': products,
+            }
+
 
 @locomotive
 class ProductExportMapper(GenericExportMapper):
@@ -95,7 +111,7 @@ class ProductExportMapper(GenericExportMapper):
 
     def _apply(self, map_record, options=None):
         res = super(ProductExportMapper, self)._apply(
-            map_record, options=options)
+            map_record, options=option)
         return {
             'seo_title':  res.pop('seo_title'),
             'meta_keywords': res.pop('meta_keywords'),
