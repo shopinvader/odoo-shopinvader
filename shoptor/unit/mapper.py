@@ -111,7 +111,7 @@ class ProductExportMapper(GenericExportMapper):
 
     def _apply(self, map_record, options=None):
         res = super(ProductExportMapper, self)._apply(
-            map_record, options=option)
+            map_record, options=options)
         return {
             'seo_title':  res.pop('seo_title'),
             'meta_keywords': res.pop('meta_keywords'),
