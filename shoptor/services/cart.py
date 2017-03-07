@@ -40,14 +40,12 @@ class CartService(AbstractSaleService):
         if 'use_different_invoice_address' in params:
             cart.use_different_invoice_address\
                 = params.pop('use_different_invoice_address')
-
-        if 'partner_id' in params and params['partner_id'] != self.partner.id:
-            raise Forbidden("Partner can not be set to %s"
-                            % params['partner_id'])
         if 'payment_method_id' in params:
             self._check_valid_payment_method(params['payment_method_id'])
         if not self.partner:
             self._set_anonymous_partner(params)
+        elif params.pop('assign_partner', None):
+            params['partner_id'] = self.partner.id
         if params:
             cart.write(params)
         if 'carrier_id' in params:
@@ -73,7 +71,7 @@ class CartService(AbstractSaleService):
     def _validator_update(self):
         res = {
             'id': {'coerce': to_int, 'required': True},
-            'partner_id': {'coerce': to_int},
+            'assign_partner': {'type': 'boolean'},
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'use_different_invoice_address': {'type': 'boolean'},
             'cart_state': {'type': 'string'},
