@@ -8,8 +8,8 @@ from .abstract_sale import AbstractSaleService
 from .contact import ContactService
 from .customer import CustomerService
 from openerp.addons.connector_locomotivecms.backend import locomotive
-from werkzeug.exceptions import BadRequest, NotFound, Forbidden
 from openerp.tools.translate import _
+from openerp.exceptions import MissingError, Warning as UserError
 
 
 @locomotive
@@ -33,8 +33,7 @@ class CartService(AbstractSaleService):
 
     @secure_params
     def update(self, params):
-        payment_params = params.pop('payment_params', {})
-        transaction_params = params.pop('transaction_params', {})
+        payment_params = params.pop('payment_params', None)
         cart = self._get(params.pop('id'))
         # Process use_different_invoice_address
         # before processing the invoice and billing address
@@ -56,10 +55,15 @@ class CartService(AbstractSaleService):
             # the current carrier
             cart.carrier_id = self._get_available_carrier(cart)[0]
             cart.delivery_set()
-        if 'payment_method_id' in params:
-            self._process_payment_transaction(cart, **payment_params)
-        if transaction_params:
-            self._capture_transaction(cart, **transaction_params)
+        if payment_params:
+            provider = cart.payment_method_id.provider
+            if not provider:
+                raise UserError(
+                    _("The payment method selected do not "
+                      "need payment_params"))
+            else:
+                self.env[provider]._process_payment_params(
+                    cart, payment_params)
         return self._to_json(cart)
 
     # Validator
@@ -80,21 +84,7 @@ class CartService(AbstractSaleService):
             'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
-            'payment_params': {
-                'type': 'dict',
-                'schema': {
-                    'token': {'type': 'string'},
-                    'cancel_url': {'type': 'string'},
-                    'return_url': {'type': 'string'},
-                    }
-            },
-            'transaction_params': {
-                'type': 'dict',
-                'schema': {
-                    'payer_id': {'type': 'string'},
-                    'payment_id': {'type': 'string'},
-                    }
-            }
+            'payment_params': self._get_payment_validator(),
         }
         if self.partner:
             res.update({
@@ -113,6 +103,19 @@ class CartService(AbstractSaleService):
                     'schema': contact_service._validator_create()},
                 })
         return res
+
+    def _get_payment_validator(self):
+        validator = {
+            'type': 'dict',
+            'schema': {}
+            }
+        for provider in self.env['payment.service']._get_all_provider():
+            name = provider.replace('payment.service.', '')
+            validator['schema'][name] = {
+                'type': 'dict',
+                'schema': self.env[provider]._validator()
+                }
+        return validator
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -196,7 +199,7 @@ class CartService(AbstractSaleService):
             ('locomotive_backend_id', '=', self.backend_record.id),
             ])
         if not cart:
-            raise NotFound('The cart %s do not exist' % cart_id)
+            raise MissingError(_('The cart %s do not exist' % cart_id))
         else:
             return cart
 
@@ -215,15 +218,6 @@ class CartService(AbstractSaleService):
             }
 
     def _check_valid_payment_method(self, method_id):
-        if method_id not in self.backend_record.payment_method_ids.mapped('payment_method_id.id'):
-            raise BadRequest(_('Payment method id invalid'))
-
-    def _process_payment_transaction(self, cart, **kwargs):
-        provider = cart.payment_method_id.provider
-        if provider:
-            self.env[provider].generate(cart, **kwargs)
-
-    def _capture_transaction(self, cart, **kwargs):
-        provider = cart.payment_method_id.provider
-        if provider:
-            self.env[provider].capture(cart.current_transaction_id, **kwargs)
+        if method_id not in self.backend_record.payment_method_ids.mapped(
+                'payment_method_id.id'):
+            raise UserError(_('Payment method id invalid'))

@@ -48,6 +48,9 @@ class HttpJsonRequest(HttpRequest):
         """Called within an except block to allow converting exceptions
            to abitrary responses. Anything returned (except None) will
            be used as response."""
+        # TODO convert odoo exception into Werkzeug exception
+        #from werkzeug.exceptions import BadRequest, NotFound, Forbidden
+        #from openerp.exceptions import UserError, MissingError, AccessError
         try:
             return super(HttpRequest, self)._handle_exception(exception)
         except HTTPException, e:
