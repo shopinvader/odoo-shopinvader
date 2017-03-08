@@ -34,6 +34,7 @@ class CartService(AbstractSaleService):
     @secure_params
     def update(self, params):
         payment_params = params.pop('payment_params', {})
+        transaction_params = params.pop('transaction_params', {})
         cart = self._get(params.pop('id'))
         # Process use_different_invoice_address
         # before processing the invoice and billing address
@@ -57,6 +58,8 @@ class CartService(AbstractSaleService):
             cart.delivery_set()
         if 'payment_method_id' in params:
             self._process_payment_transaction(cart, **payment_params)
+        if transaction_params:
+            self._capture_transaction(cart, **transaction_params)
         return self._to_json(cart)
 
     # Validator
@@ -79,7 +82,18 @@ class CartService(AbstractSaleService):
             'payment_method_id': {'coerce': to_int},
             'payment_params': {
                 'type': 'dict',
-                'schema': {'token': {'type': 'string'}},
+                'schema': {
+                    'token': {'type': 'string'},
+                    'cancel_url': {'type': 'string'},
+                    'return_url': {'type': 'string'},
+                    }
+            },
+            'transaction_params': {
+                'type': 'dict',
+                'schema': {
+                    'payer_id': {'type': 'string'},
+                    'payment_id': {'type': 'string'},
+                    }
             }
         }
         if self.partner:
@@ -208,3 +222,8 @@ class CartService(AbstractSaleService):
         provider = cart.payment_method_id.provider
         if provider:
             self.env[provider].generate(cart, **kwargs)
+
+    def _capture_transaction(self, cart, **kwargs):
+        provider = cart.payment_method_id.provider
+        if provider:
+            self.env[provider].capture(cart.current_transaction_id, **kwargs)
