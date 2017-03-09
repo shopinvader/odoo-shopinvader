@@ -62,8 +62,9 @@ class CartService(AbstractSaleService):
                     _("The payment method selected do not "
                       "need payment_params"))
             else:
+                provider_name = provider.replace('payment.service.', '')
                 self.env[provider]._process_payment_params(
-                    cart, payment_params)
+                    cart, payment_params.pop(provider_name, {}))
         return self._to_json(cart)
 
     # Validator

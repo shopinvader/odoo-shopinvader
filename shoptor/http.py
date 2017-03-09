@@ -7,6 +7,10 @@
 from openerp.http import HttpRequest, Root
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import escape
+from openerp.exceptions import Warning as UserError, MissingError, AccessError
+from werkzeug.exceptions import (
+    BadRequest, NotFound, Forbidden, InternalServerError)
+from openerp.tools import config
 import json
 
 
@@ -48,13 +52,18 @@ class HttpJsonRequest(HttpRequest):
         """Called within an except block to allow converting exceptions
            to abitrary responses. Anything returned (except None) will
            be used as response."""
-        # TODO convert odoo exception into Werkzeug exception
-        #from werkzeug.exceptions import BadRequest, NotFound, Forbidden
-        #from openerp.exceptions import UserError, MissingError, AccessError
         try:
             return super(HttpRequest, self)._handle_exception(exception)
+        except UserError, e:
+            return WrapJsonException(BadRequest(e.message))
+        except MissingError, e:
+            return WrapJsonException(NotFound(e.value))
+        except AccessError, e:
+            return WrapJsonException(Forbidden(e.value))
         except HTTPException, e:
             return WrapJsonException(e)
+        except:
+            return WrapJsonException(InternalServerError())
 
     def make_response(self, data, headers=None, cookies=None):
         data = json.dumps(data)

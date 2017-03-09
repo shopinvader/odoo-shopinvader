@@ -15,5 +15,5 @@ class PaymentService(models.Model):
             'token': {'type': 'string'},
             }
 
-    def _process_payment_params(self, cart):
-        return self.capture(cart.current_transaction_id)
+    def _process_payment_params(self, cart, payment_params):
+        return self.generate(cart, **payment_params)
