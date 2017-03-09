@@ -23,7 +23,9 @@ class PaymentService(models.Model):
     def _process_payment_params(self, cart, params):
         if params['action'] == 'create':
            self.generate(
-                cart, params.get('return_url'), params.get('cancel_url'))
+                cart,
+                return_url=params.get('return_url'),
+                cancel_url=params.get('cancel_url'))
         else:
             transaction = cart.current_transaction_id
             if params['payment_id'] != transaction.external_id:
