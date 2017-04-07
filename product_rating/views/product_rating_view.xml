@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="product_rating_view_tree" model="ir.ui.view">
+    <field name="model">product.rating</field>
+    <field name="arch" type="xml">
+        <tree string="Product Rating">
+            <field name="name"/>
+            <field name="comment"/>
+            <field name="partner_id"/>
+            <field name="partner_name"/>
+            <field name="product_id"/>
+            <field name="rating"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="product_rating_view_form" model="ir.ui.view">
+    <field name="model">product.rating</field>
+    <field name="arch" type="xml">
+        <form string="Product Rating">
+            <header>
+                <field name="state" widget="statusbar"/>
+            </header>
+            <sheet>
+                <label for="name" class="oe_edit_only"/>
+                <h1>
+                    <field name="name"/>
+                </h1>
+                <group>
+                    <field name="partner_id"/>
+                    <field name="partner_name"/>
+                    <field name="product_id"/>
+                    <field name="select_rating" widget="priority"/>
+                </group>
+                    <field name="comment" colspan="4"/>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="product_rating_view_search" model="ir.ui.view">
+    <field name="model">product.rating</field>
+    <field name="arch" type="xml">
+        <search string="Product Rating">
+            <field name="name"/>
+            <field name="comment"/>
+            <field name="partner_name"/>
+            <field name="product_id"/>
+            <field name="rating"/>
+            <field name="state"/>
+            <group expand="0" string="Group By">
+                <filter string="State" context="{'group_by':'state'}"/>
+                <filter string="Rating" context="{'group_by':'rating'}"/>
+                <filter string="State" context="{'group_by':'state'}"/>
+                <filter string="Product" context="{'group_by':'product_id'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_product_rating_view">
+    <field name="name">Product Rating</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.rating</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_rating_view_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_product_rating_view_form">
+    <field name="act_window_id" ref="act_open_product_rating_view"/>
+    <field name="sequence" eval="20"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="product_rating_view_form"/>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_product_rating_view_tree">
+    <field name="act_window_id" ref="act_open_product_rating_view"/>
+    <field name="sequence" eval="10"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="product_rating_view_tree"/>
+</record>
+
+<menuitem id="menu_product_rating"
+    parent="base.menu_product"
+    sequence="100"
+    action="act_open_product_rating_view"/>
+
+    </data>
+</openerp>
