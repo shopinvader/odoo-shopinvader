@@ -12,11 +12,11 @@ class ProductRating(models.Model):
 
     name = fields.Char(required=True)
     comment = fields.Text(required=True)
-    partner_name = fields.Char(required=True)
+    nickname = fields.Char(required=True)
     state = fields.Selection([
-        ('appproved', 'Appproved'),
         ('pending', 'Pending'),
         ('refused', 'Refused'),
+        ('approved', 'Approved'),
         ], default='pending',
         )
     partner_id = fields.Many2one(
@@ -31,7 +31,10 @@ class ProductRating(models.Model):
         'Product Tmpl',
         related='product_id.product_tmpl_id',
         store=True)
-    rating = fields.Integer(compute='_compute_rating', group_operator='avg')
+    rating = fields.Float(
+        compute='_compute_rating',
+        group_operator='avg',
+        store=True)
     select_rating = fieldname = fields.Selection([
         ('0', '0'),
         ('1', '1'),
@@ -41,18 +44,11 @@ class ProductRating(models.Model):
         ('5', '5'),
         ])
 
+    @api.depends('select_rating')
     def _compute_rating(self):
         for record in self:
             record.rating = float(record.select_rating)
 
-    @api.multi
-    def approve(self):
-        return self.write({'state': 'approved'})
-
-    @api.multi
-    def refuse(self):
-        return self.write({'state': 'refused'})
-
     @api.onchange('partner_id')
     def change_partner(self):
-        self.partner_name = self.partner_id.name
+        self.nickname = self.partner_id.name

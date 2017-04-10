@@ -5,11 +5,11 @@
 <record id="product_rating_view_tree" model="ir.ui.view">
     <field name="model">product.rating</field>
     <field name="arch" type="xml">
-        <tree string="Product Rating">
+        <tree string="Product Rating" colors="blue:state == 'pending';red:state == 'refused'">
             <field name="name"/>
             <field name="comment"/>
             <field name="partner_id"/>
-            <field name="partner_name"/>
+            <field name="nickname"/>
             <field name="product_id"/>
             <field name="rating"/>
             <field name="state"/>
@@ -22,7 +22,12 @@
     <field name="arch" type="xml">
         <form string="Product Rating">
             <header>
-                <field name="state" widget="statusbar"/>
+                <field
+                    name="state"
+                    widget="statusbar"
+                    statusbar_visible="pending,refused,approved"
+                    statusbar_colors='{"refused":"red","approved":"green"}'
+                    clickable="True"/>
             </header>
             <sheet>
                 <label for="name" class="oe_edit_only"/>
@@ -31,7 +36,7 @@
                 </h1>
                 <group>
                     <field name="partner_id"/>
-                    <field name="partner_name"/>
+                    <field name="nickname"/>
                     <field name="product_id"/>
                     <field name="select_rating" widget="priority"/>
                 </group>
@@ -47,15 +52,15 @@
         <search string="Product Rating">
             <field name="name"/>
             <field name="comment"/>
-            <field name="partner_name"/>
+            <field name="nickname"/>
             <field name="product_id"/>
             <field name="rating"/>
             <field name="state"/>
             <group expand="0" string="Group By">
-                <filter string="State" context="{'group_by':'state'}"/>
-                <filter string="Rating" context="{'group_by':'rating'}"/>
-                <filter string="State" context="{'group_by':'state'}"/>
                 <filter string="Product" context="{'group_by':'product_id'}"/>
+                <filter string="State" context="{'group_by':'state'}"/>
+                <filter string="Rating" context="{'group_by':'select_rating'}"/>
+                <filter string="Customer" context="{'group_by':'partner_id'}"/>
             </group>
         </search>
     </field>
@@ -90,6 +95,30 @@
     parent="base.menu_product"
     sequence="100"
     action="act_open_product_rating_view"/>
+
+<record model="ir.actions.act_window" id="act_open_product_rating_view_from_product">
+    <field name="name">Product Rating</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.rating</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_rating_view_search"/>
+    <field name="domain">[('product_id', '=', context['active_id'])]</field>
+    <field name="context">{}</field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_product_rating_view_from_template">
+    <field name="name">Product Rating</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.rating</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_rating_view_search"/>
+    <field name="domain">[('product_tmpl_id', '=', context['active_id'])]</field>
+    <field name="context">{}</field>
+</record>
+
+
 
     </data>
 </openerp>

@@ -22,6 +22,8 @@
     ],
     "data": [
         "views/product_rating_view.xml",
+        "views/product_view.xml",
+        "data/product_rating_data.xml",
     ],
     "demo": [
     ],
