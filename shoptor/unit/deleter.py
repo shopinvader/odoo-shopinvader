@@ -18,6 +18,7 @@ class ProductDeleter(LocomotiveDeleter):
 class PartnerDeleter(LocomotiveDeleter):
     _model_name = 'locomotive.partner'
 
+
 @locomotive
 class CategoryDeleter(LocomotiveDeleter):
     _model_name = 'locomotive.category'

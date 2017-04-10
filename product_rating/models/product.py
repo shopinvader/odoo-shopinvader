@@ -22,7 +22,7 @@ class RatingMixing(models.AbstractModel):
             (key, 'in', self.ids),
             ('state', '=', 'approved'),
             ], ['rating', key], [key])
-        res = { x[key][0]: x['rating'] for x in res }
+        res = {x[key][0]: x['rating'] for x in res}
         for record in self:
             record.rating = res.get(record.id, 0)
 

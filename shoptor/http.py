@@ -10,7 +10,6 @@ from werkzeug.utils import escape
 from openerp.exceptions import Warning as UserError, MissingError, AccessError
 from werkzeug.exceptions import (
     BadRequest, NotFound, Forbidden, InternalServerError)
-from openerp.tools import config
 import json
 
 

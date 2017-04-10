@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
 
-import payment_service
+from . import payment_service

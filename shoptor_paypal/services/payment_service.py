@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models
-import json
 from openerp.exceptions import Warning as UserError
+from openerp.tools.translate import _
 
 
 class PaymentService(models.Model):
@@ -22,7 +22,7 @@ class PaymentService(models.Model):
 
     def _process_payment_params(self, cart, params):
         if params['action'] == 'create':
-           self.generate(
+            self.generate(
                 cart,
                 return_url=params.get('return_url'),
                 cancel_url=params.get('cancel_url'))

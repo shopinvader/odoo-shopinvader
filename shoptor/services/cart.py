@@ -112,10 +112,11 @@ class CartService(AbstractSaleService):
             }
         for provider in self.env['payment.service']._get_all_provider():
             name = provider.replace('payment.service.', '')
-            validator['schema'][name] = {
-                'type': 'dict',
-                'schema': self.env[provider]._validator()
-                }
+            if hasattr(self.env[provider], '_validator'):
+                validator['schema'][name] = {
+                    'type': 'dict',
+                    'schema': self.env[provider]._validator()
+                    }
         return validator
 
     # The following method are 'private' and should be never never NEVER call
@@ -180,9 +181,9 @@ class CartService(AbstractSaleService):
         if 'partner_invoice_id' in params:
             invoice_contact = params['partner_invoice_id']
             if not params.get('partner_shipping_id'):
-                raise BadRequest(
+                raise UserError(_(
                     "Invoice address can not be set before "
-                    "the shipping address")
+                    "the shipping address"))
             else:
                 invoice_contact['parent_id'] = params['partner_shipping_id']
                 contact = self.env['res.partner'].create(invoice_contact)

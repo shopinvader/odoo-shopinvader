@@ -2,43 +2,42 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-=====================
-Connector Locomotive
-=====================
+==============
+Product Rating
+==============
 
-Connector with LocomotiveCMS
+This module add the possibility to rate your product
 
 Installation
 ============
 
-Just install it
+To install this module, you need to install it.
 
 Configuration
 =============
 
-To configure this module, you need to:
+No configuration is required
 
-#. Go to Connector > LocomotiveCMS > Backend
 
 Usage
 =====
 
-Base module no feature is implemented
+To use this module, you need to:
+
+#. Go to Sale > Product > Product Rating
 
 Known issues / Roadmap
 ======================
 
-TODO
-
-* Lib extraction
+* Nothing
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/OCA/{project_repo}/issues>`_. In case of trouble, please
+<https://github.com/akretion/ak-web/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
-help us smash it by providing detailed and welcomed feedback.
+help us smashing it by providing a detailed and welcomed feedback.
 
 Credits
 =======
@@ -47,3 +46,10 @@ Contributors
 ------------
 
 * Sébastien BEAU <sebastien.beau@akretion.com>
+
+Funders
+-------
+
+The development of this module has been financially supported by:
+
+* Akretion R&D

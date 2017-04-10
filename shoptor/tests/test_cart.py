@@ -88,7 +88,7 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self.service = self._get_service(CartService, partner)
         self.service.update({
             'id': cart.id,
-            'partner_id': partner.id,
+            'assign_partner': True,
             })
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
