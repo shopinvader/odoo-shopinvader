@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="locomotive_backend_view_form" model="ir.ui.view">
+    <field name="model">locomotive.backend</field>
+    <field name="inherit_id"
+           ref="connector_locomotivecms.view_locomotive_backend_form" />
+    <field name="arch" type="xml">
+        <field name="lang_ids" position="after">
+            <field name="odoo_api"/>
+        </field>
+        <group name="config" position="after">
+            <group name="price" colspan="4">
+                <field name="pricelist_ids"
+                       string="Pricelist"
+                       colspan="4"
+                       nolabel="True">
+                    <tree editable="bottom">
+                        <field name="record_id"/>
+                        <field name="tax_included"/>
+                        <field name="code"/>
+                    </tree>
+                </field>
+            </group>
+            <group name="payment_method" colspan="4">
+                <field name="payment_method_ids"
+                       string="Payment Method"
+                       colspan="4"
+                       nolabel="True">
+                    <tree editable="top">
+                        <field name="sequence"/>
+                        <field name="payment_method_id" widget="selection"/>
+                    </tree>
+                </field>
+            </group>
+
+        </group>
+        <notebook position="inside">
+            <page name="developper" string="Developper">
+                <group name="developper" colspan="4">
+                    <field name="nbr_product"/>
+                    <button
+                        name="clear_dead_product"
+                        string="Clear dead product"
+                        type="object"/>
+                    <button
+                        name="export_all_product"
+                        string="Export all product"
+                        type="object"/>
+                    <field name="nbr_category"/>
+                    <button
+                        name="clear_dead_category"
+                        string="Clear dead category"
+                        type="object"/>
+                    <button
+                        name="export_all_category"
+                        string="Export all category"
+                        type="object"/>
+                </group>
+            </page>
+        </notebook>
+    </field>
+</record>
+
+    </data>
+</openerp>

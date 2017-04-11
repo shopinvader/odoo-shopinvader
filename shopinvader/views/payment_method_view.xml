@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="payment_method_view_form" model="ir.ui.view">
+    <field name="model">payment.method</field>
+    <field name="inherit_id" ref="sale_payment_method.payment_method_view_form"/>
+    <field name="arch" type="xml">
+        <field name="journal_id" position="after">
+            <field name="code"/>
+            <field name="show_description_after_validation"/>
+        </field>
+        <group name="general" position="after">
+            <field name="description" nolabel="1" colspan="4"/>
+        </group>
+    </field>
+</record>
+
+    </data>
+</openerp>
