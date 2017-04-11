@@ -82,8 +82,8 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(AnonymousItemCase, self).setUp(*args, **kwargs)
-        self.partner = self.env.ref('shoptor.anonymous')
-        self.cart = self.env.ref('shoptor.sale_order_1')
+        self.partner = self.env.ref('shopinvader.anonymous')
+        self.cart = self.env.ref('shopinvader.sale_order_1')
         self.cart_id = self.cart.id
         self.service = self._get_service(CartItemService, None)
         self.cart_service = self._get_service(CartService, None)
@@ -93,8 +93,8 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)
-        self.partner = self.env.ref('shoptor.partner_1')
-        self.cart = self.env.ref('shoptor.sale_order_2')
+        self.partner = self.env.ref('shopinvader.partner_1')
+        self.cart = self.env.ref('shopinvader.sale_order_2')
         self.cart_id = self.cart.id
         self.service = self._get_service(CartItemService, self.partner)
         self.cart_service = self._get_service(CartService, self.partner)

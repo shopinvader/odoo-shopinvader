@@ -28,7 +28,7 @@ class IrHttp(models.Model):
                 _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
         return None
 
-    def _auth_method_shoptor(self):
+    def _auth_method_shopinvader(self):
         headers = request.httprequest.environ
         if headers.get('HTTP_API_KEY'):
             request.uid = 1

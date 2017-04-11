@@ -77,7 +77,7 @@ ori_get_request = Root.get_request
 
 
 def get_request(self, httprequest):
-    if 'shoptor' in httprequest.url:
+    if 'shopinvader' in httprequest.url:
         return HttpJsonRequest(httprequest)
     return ori_get_request(self, httprequest)
 

@@ -12,9 +12,9 @@ class ContactCase(CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(ContactCase, self).setUp(*args, **kwargs)
-        self.partner = self.env.ref('shoptor.partner_1')
+        self.partner = self.env.ref('shopinvader.partner_1')
         self.service = self._get_service(ContactService, self.partner)
-        self.contact = self.env.ref('shoptor.partner_1_contact_1')
+        self.contact = self.env.ref('shopinvader.partner_1_contact_1')
         self.contact_params = {
             'name': 'Purple',
             'street': 'Rue du jardin',

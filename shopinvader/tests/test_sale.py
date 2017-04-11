@@ -13,8 +13,8 @@ class SaleCase(CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(SaleCase, self).setUp(*args, **kwargs)
-        self.sale = self.env.ref('shoptor.sale_order_2')
-        self.partner = self.env.ref('shoptor.partner_1')
+        self.sale = self.env.ref('shopinvader.sale_order_2')
+        self.partner = self.env.ref('shopinvader.partner_1')
         self.service = self._get_service(SaleService, self.partner)
 
     def test_read_sale(self):

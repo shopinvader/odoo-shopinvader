@@ -10,7 +10,7 @@ from .common import CommonCase
 class AbstractCartCase(object):
 
     def set_up(self):
-        self.contact = self.env.ref('shoptor.partner_1_contact_1')
+        self.contact = self.env.ref('shopinvader.partner_1_contact_1')
 
 
 class AnonymousCartCase(AbstractCartCase, CommonCase):
@@ -18,8 +18,8 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
     def setUp(self, *args, **kwargs):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
         self.set_up()
-        self.cart = self.env.ref('shoptor.sale_order_1')
-        self.partner = self.env.ref('shoptor.anonymous')
+        self.cart = self.env.ref('shopinvader.sale_order_1')
+        self.partner = self.env.ref('shopinvader.anonymous')
         self.service = self._get_service(CartService, None)
         self.address_ship = {
             'name': 'Purple',
@@ -84,7 +84,7 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
 
     def test_anonymous_cart_then_sign(self):
         cart = self.cart
-        partner = self.env.ref('shoptor.partner_1')
+        partner = self.env.ref('shopinvader.partner_1')
         self.service = self._get_service(CartService, partner)
         self.service.update({
             'id': cart.id,
@@ -100,9 +100,9 @@ class ConnectedCartCase(AbstractCartCase, CommonCase):
     def setUp(self, *args, **kwargs):
         super(ConnectedCartCase, self).setUp(*args, **kwargs)
         self.set_up()
-        self.cart = self.env.ref('shoptor.sale_order_2')
-        self.partner = self.env.ref('shoptor.partner_1')
-        self.contact = self.env.ref('shoptor.partner_1_contact_1')
+        self.cart = self.env.ref('shopinvader.sale_order_2')
+        self.partner = self.env.ref('shopinvader.partner_1')
+        self.contact = self.env.ref('shopinvader.partner_1_contact_1')
         self.service = self._get_service(CartService, self.partner)
 
     def test_set_shipping_contact(self):

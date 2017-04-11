@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    "name": "Shoptor Paypal",
-    "summary": "Shoptor Paypal Payment Gateway",
+    "name": "Shoptor Stripe",
+    "summary": "Shoptor Stripe Payment Gateway",
     "version": "8.0.1.0.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
@@ -19,8 +19,8 @@
         "bin": [],
     },
     "depends": [
-        "shoptor",
-        "payment_gateway_paypal",
+        "shopinvader",
+        "payment_gateway_stripe",
     ],
     "data": [
     ],

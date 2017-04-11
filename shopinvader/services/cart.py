@@ -210,7 +210,7 @@ class CartService(AbstractSaleService):
         return self.env['sale.order'].create(vals)
 
     def _prepare_cart(self):
-        partner = self.partner or self.env.ref('shoptor.anonymous')
+        partner = self.partner or self.env.ref('shopinvader.anonymous')
         return {
             'sub_state': 'cart',
             'partner_id': partner.id,
