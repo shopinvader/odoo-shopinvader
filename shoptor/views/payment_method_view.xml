@@ -8,6 +8,7 @@
     <field name="arch" type="xml">
         <field name="journal_id" position="after">
             <field name="code"/>
+            <field name="show_description_after_validation"/>
         </field>
         <group name="general" position="after">
             <field name="description" nolabel="1" colspan="4"/>

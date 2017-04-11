@@ -132,7 +132,6 @@ class ProductFilter(models.Model):
             'product.template',
             'product.product',
             'locomotive.product',
-            ))],
-        translate=True)
+            ))])
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)

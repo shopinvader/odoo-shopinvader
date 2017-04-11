@@ -19,6 +19,12 @@ class LocomotiveExporter(GenericExporter):
         # As we push a json we always need to push all info
         return self._create_data(map_record, fields=None, **kwargs)
 
+    def run(self, binding_id, *args, **kwargs):
+        ctx = self.env.context.copy()
+        ctx['lang'] = self.model.browse(binding_id).lang_id.code
+        self.session.env = self.env(context=ctx)
+        return super(LocomotiveExporter, self).run(binding_id, *args, **kwargs)
+
     def _run(self, fields=None):
         """ Flow of the synchronization, implemented in inherited classes"""
         assert self.binding_id

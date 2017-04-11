@@ -6,7 +6,7 @@
 
 from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.shoptor.unit.exporter import ProductExporter, CategExporter
-
+from collections import defaultdict
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -35,17 +35,18 @@ class ProductExporterIndex(ProductExporter):
         res.update({k: variant[k] for k in variant if k != 'pricelist'
                     if variant[k]})
         res['pricelist'] = variant['pricelist'][pricelist].copy()
-        res['objectID'] = res['object_id']
+        res['objectID'] = res['erp_id']
         return res
 
     def index_to_algolia(self, datas):
         batch_data = []
         for index_name in datas:
-            batch_data.append({
-                "action": "addObject",
-                "indexName": index_name,
-                "body": datas[index_name],
-                })
+            for variant in datas[index_name]:
+                batch_data.append({
+                    "action": "addObject",
+                    "indexName": index_name,
+                    "body": variant,
+                    })
         # TODO the connection part should be move out of here
         # we will need it to automatise the generation of index
         # Also we can read information from algolia and show them
@@ -57,11 +58,12 @@ class ProductExporterIndex(ProductExporter):
 
     def _index_record(self):
         lang = self.binding_record.lang_id.code
-        datas = {}
+        datas = defaultdict(list)
         for variant in self._data['data']['variants']:
             for pricelist in variant['pricelist']:
                 index_name = self._build_index_name(lang, pricelist)
-                datas[index_name] = self._extract_data(variant, pricelist)
+                datas[index_name].append(
+                    self._extract_data(variant, pricelist))
         # TODO we should use a connector unit or something else
         # to be able to connect to elatic, solr, or algolia
         self.index_to_algolia(datas)
@@ -86,7 +88,7 @@ class CategExporterIndex(CategExporter):
         # TODO make it more flexible
         res = {k: self._data['data'][k] for k in self._data['data']
                if self._data['data'][k]}
-        res['objectID'] = self._data['object_id']
+        res['objectID'] = self._data['erp_id']
         return res
 
     def index_to_algolia(self, datas):

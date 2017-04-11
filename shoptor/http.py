@@ -7,6 +7,9 @@
 from openerp.http import HttpRequest, Root
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import escape
+from openerp.exceptions import Warning as UserError, MissingError, AccessError
+from werkzeug.exceptions import (
+    BadRequest, NotFound, Forbidden, InternalServerError)
 import json
 
 
@@ -50,8 +53,16 @@ class HttpJsonRequest(HttpRequest):
            be used as response."""
         try:
             return super(HttpRequest, self)._handle_exception(exception)
+        except UserError, e:
+            return WrapJsonException(BadRequest(e.message))
+        except MissingError, e:
+            return WrapJsonException(NotFound(e.value))
+        except AccessError, e:
+            return WrapJsonException(Forbidden(e.value))
         except HTTPException, e:
             return WrapJsonException(e)
+        except:
+            return WrapJsonException(InternalServerError())
 
     def make_response(self, data, headers=None, cookies=None):
         data = json.dumps(data)

@@ -1,3 +1,5 @@
 slugify
 cerberus
 algoliasearch
+paypalrestsdk
+stripe

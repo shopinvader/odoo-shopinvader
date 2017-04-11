@@ -40,6 +40,7 @@ class IrHttp(models.Model):
                     self._locomotive_get_partner_from_header(headers)
                 if headers.get('HTTP_LANG'):
                     request.context['lang'] = headers['HTTP_LANG']
+                    request.env = request.env(context=request.context)
                 return True
         _logger.error("Wrong HTTP_API_KEY, access denied")
         raise Unauthorized("Wrong HTTP_API_KEY, access denied")

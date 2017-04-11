@@ -3,3 +3,5 @@ delivery-carrier
 product-attribute
 sale-workflow
 server-tools https://github.com/akretion/server-tools.git 8.0-jsonify
+payment-gateway https://github.com/akretion/payment-gateway.git 8.0
+ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator.git 8.0
