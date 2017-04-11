@@ -40,44 +40,45 @@ class ShoptorController(Controller):
 
     # Cart
 
-    @route('/shoptor/cart', methods=['GET'], auth="shoptor")
+    @route('/shopinvader/cart', methods=['GET'], auth="shopinvader")
     def cart_list(self, **params):
         return self.send_to_service(CartService, params)
 
-    @route('/shoptor/cart/<id>', methods=['GET', 'PUT'],
-           auth="shoptor")
+    @route('/shopinvader/cart/<id>', methods=['GET', 'PUT'],
+           auth="shopinvader")
     def cart(self, **params):
         return self.send_to_service(CartService, params)
 
     # Cart Item
 
-    @route('/shoptor/cart/item', methods=['POST', 'PUT', 'DELETE'],
-           auth="shoptor")
+    @route('/shopinvader/cart/item', methods=['POST', 'PUT', 'DELETE'],
+           auth="shopinvader")
     def item(self, **params):
         return self.send_to_service(CartItemService, params)
 
     # Contact
-    @route('/shoptor/contacts', methods=['GET', 'POST'], auth="shoptor")
+    @route('/shopinvader/contacts',
+           methods=['GET', 'POST'], auth="shopinvader")
     def contact(self, **params):
         return self.send_to_service(ContactService, params)
 
-    @route('/shoptor/contacts/<id>', methods=['PUT', 'DELETE'],
-           auth="shoptor")
+    @route('/shopinvader/contacts/<id>', methods=['PUT', 'DELETE'],
+           auth="shopinvader")
     def contact_update_delete(self, **params):
         return self.send_to_service(ContactService, params)
 
     # Customer
 
-    @route('/shoptor/customer', methods=['POST'], auth="shoptor")
+    @route('/shopinvader/customer', methods=['POST'], auth="shopinvader")
     def customer(self, **params):
         return self.send_to_service(CustomerService, params)
 
     # Order History
 
-    @route('/shoptor/order', methods=['GET'], auth="shoptor")
+    @route('/shopinvader/order', methods=['GET'], auth="shopinvader")
     def sale_list(self, **params):
         return self.send_to_service(SaleService, params)
 
-    @route('/shoptor/order/<id>', methods=['GET'], auth="shoptor")
+    @route('/shopinvader/order/<id>', methods=['GET'], auth="shopinvader")
     def sale(self, **params):
         return self.send_to_service(SaleService, params)

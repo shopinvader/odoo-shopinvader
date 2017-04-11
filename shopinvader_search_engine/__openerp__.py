@@ -11,7 +11,7 @@
  'license': 'AGPL-3',
  'category': 'Generic Modules',
  'depends': [
-     'shoptor',
+     'shopinvader',
  ],
  'data': [
      'views/backend_view.xml',

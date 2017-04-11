@@ -5,7 +5,9 @@
 
 
 from openerp.addons.connector_locomotivecms.backend import locomotive
-from openerp.addons.shoptor.unit.exporter import ProductExporter, CategExporter
+from openerp.addons.shopinvader.unit.exporter import (
+    ProductExporter,
+    CategExporter)
 from collections import defaultdict
 import logging
 
