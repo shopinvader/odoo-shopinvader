@@ -164,19 +164,22 @@ class ProductExportMapper(GenericExportMapper):
 
     @mapping
     def comment(self, record):
-        return {
-            'rating_value': 5,
-            'rating_nbr': 42,
-            "comments": [
-                {"partner": "dupond",
-                 "name": "Top Top",
-                 "description": "Trop fort chez adaptoo, produit qui déchire",
-                 'rating': 5},
-                {"partner": "durant",
-                 "name": "Parfait",
-                 "description": "produit de très bonne qualité",
-                 'rating': 5},
-            ]}
+        if 'product_rating' in self.env.registry._init_modules:
+            comments = []
+            for rating in record.rating_ids:
+                if rating.state == 'approved':
+                    comments.append({
+                        'nickname': rating.nickname,
+                        'name': rating.name,
+                        'comment': rating.comment,
+                        'rating': rating.rating,
+                        'product_code': rating.product_id.default_code,
+                        })
+            return {
+                'rating_value': record.rating,
+                'rating_nbr': len(record.rating_ids),
+                "comments": comments,
+                }
 
     @mapping
     def product_relation(self, record):
