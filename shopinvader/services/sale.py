@@ -65,6 +65,6 @@ class SaleService(AbstractSaleService):
             ('locomotive_backend_id', '=', self.backend_record.id),
             ])
         if not order:
-            raise NotFound('The order %s do not exist' % order_id)
+            raise NotFound('The order %s does not exist' % order_id)
         else:
             return order

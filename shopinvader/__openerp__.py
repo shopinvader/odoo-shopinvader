@@ -25,6 +25,7 @@
         "connector_base_product",
         "connector_locomotivecms",
         "delivery",
+        "onchange_helper",
         "payment_gateway",
         "product_media",
         "product_multi_image",
@@ -32,6 +33,7 @@
         "sale_cart",
         "sale_different_invoice_address",
         "sale_payment_method",
+        "sale_order_price_recalculation",
     ],
     "data": [
         'views/product_view.xml',
@@ -47,6 +49,7 @@
     ],
     "demo": [
         "demo/backend_demo.xml",
+        "demo/pricelist_demo.xml",
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",
     ],

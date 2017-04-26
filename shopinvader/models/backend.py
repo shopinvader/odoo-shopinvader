@@ -56,7 +56,7 @@ class LocomotiveBackend(models.Model):
 
     def _clear_dead_content(self, model):
         """This method will check the existing product on locomotive site
-        and delete it if not do not exist in odoo. This is really usefull
+        and delete it if it does not exist in odoo. This is really usefull
         in dev mode and can be usefull if you have done some mistake in your
         database production."""
         session = ConnectorSession.from_env(self.env)

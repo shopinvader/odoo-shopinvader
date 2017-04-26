@@ -63,7 +63,6 @@ class AbstractItemCase(object):
         self.check_product_and_qty(
             cart['order_line'][-1], self.product_1.id, 2)
         self.check_partner(cart)
-        return cart
 
     def test_update_item(self):
         line_id = self.cart.order_line[0].id
@@ -76,6 +75,14 @@ class AbstractItemCase(object):
         nbr_line = len(cart['order_line'])
         cart = self.delete_item(cart['order_line'][0]['id'])
         self.assertEqual(len(cart['order_line']), nbr_line - 1)
+
+    def test_add_item_with_same_product(self):
+        cart = self.add_item(None, self.product_1.id, 1)
+        self.assertEqual(len(cart['order_line']), 1)
+        self.check_product_and_qty(cart['order_line'][0], self.product_1.id, 1)
+        cart = self.add_item(cart['id'], self.product_1.id, 1)
+        self.assertEqual(len(cart['order_line']), 1)
+        self.check_product_and_qty(cart['order_line'][0], self.product_1.id, 2)
 
 
 class AnonymousItemCase(AbstractItemCase, CommonCase):
