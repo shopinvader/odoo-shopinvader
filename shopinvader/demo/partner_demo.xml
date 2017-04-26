@@ -28,5 +28,39 @@
             <field name="country_id" ref="base.fr"/>
         </record>
 
+        <record id="partner_2" model="res.partner">
+            <field name="name">Anubis</field>
+            <field name="customer" eval="True"/>
+            <field name="email">anubis@my.personal.address.example.com</field>
+            <field name="street">3841 18th St</field>
+            <field name="city">San Francisco</field>
+            <field name="zip">CA 94114</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+
+        <record id="locomotive_partner_2" model="locomotive.partner">
+            <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+            <field name="external_id">Y2hhY2Fs</field>
+            <field name="record_id" ref="partner_2"/>
+        </record>
+
+        <record id="partner_2_contact_1" model="res.partner">
+            <field name="parent_id" ref="partner_2"/>
+            <field name="name">Anubis</field>
+            <field name="customer" eval="True"/>
+            <field name="street">43 Rue de Liège</field>
+            <field name="city">Paris</field>
+            <field name="zip">75008</field>
+            <field name="country_id" ref="base.fr"/>
+        </record>
+
+        <record id="property_product_pricelist" model="ir.property" forcecreate="True">
+            <field name="name">property_product_pricelist</field>
+            <field name="fields_id" search="[('model','=','res.partner'),('name','=','property_product_pricelist')]"/>
+            <field name="type">many2one</field>
+            <field name="value" eval="'product.pricelist,'+str(ref('shopinvader.pricelist_1'))"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+
     </data>
 </openerp>

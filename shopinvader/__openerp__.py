@@ -48,6 +48,7 @@
     ],
     "demo": [
         "demo/backend_demo.xml",
+        "demo/pricelist_demo.xml",
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",
     ],

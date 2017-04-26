@@ -24,17 +24,20 @@ class CartItemService(ShoptorService):
             cart = cart_service._get(params['cart_id'])
         else:
             cart = cart_service._create_empty_cart()
-        self.env['sale.order.line'].create({
-            'product_id': params['product_id'],
-            'product_uom_qty': params['item_qty'],
-            'order_id': cart.id,
-            })
+        existing_item = self._check_existing_cart_item(params, cart)
+        if existing_item:
+            existing_item.product_uom_qty += params['item_qty']
+            cart.recalculate_prices()
+        else:
+            vals = self._prepare_cart_item(params, cart)
+            self.env['sale.order.line'].create(vals)
         return cart_service._to_json(cart)
 
     @secure_params
     def update(self, params):
         item = self._get_cart_item(params)
         item.product_uom_qty = params['item_qty']
+        item.order_id.recalculate_prices()
         cart_service = self.service_for(CartService)
         cart = cart_service._get(params['cart_id'])
         return cart_service._to_json(cart)
@@ -86,3 +89,17 @@ class CartItemService(ShoptorService):
         if not item:
             raise NotFound('No cart item found with id %s' % item_id)
         return item
+
+    def _check_existing_cart_item(self, params, cart):
+        return self.env['sale.order.line'].search([
+            ('order_id', '=', cart.id),
+            ('product_id', '=', params['product_id'])
+            ])
+
+    def _prepare_cart_item(self, params, cart):
+        vals = {
+            'product_id': params['product_id'],
+            'product_uom_qty': params['item_qty'],
+            'order_id': cart.id,
+            }
+        return vals

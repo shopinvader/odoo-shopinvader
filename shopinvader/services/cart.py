@@ -48,8 +48,21 @@ class CartService(AbstractSaleService):
             self._set_anonymous_partner(params)
         elif params.pop('assign_partner', None):
             params['partner_id'] = self.partner.id
+        recompute_price = False
+        if self._check_call_onchange(params):
+            if not 'partner_id' in params:
+                params['partner_id'] = self.partner.id
+            params['order_line'] = cart.order_line
+            params = self.env['sale.order'].play_onchanges(
+                params, ['partner_id', 'partner_shipping_id', 'fiscal_position', 'pricelist_id'])
+            # Used only to trigger onchanges so we can delete it afterwards
+            del params['order_line']
+            if params['pricelist_id'] != cart.pricelist_id.id:
+                recompute_price = True
         if params:
             cart.write(params)
+            if recompute_price:
+                cart.recalculate_prices()
         if 'carrier_id' in params:
             cart.delivery_set()
         elif 'shipping_address_id' in params:
@@ -61,7 +74,7 @@ class CartService(AbstractSaleService):
             provider = cart.payment_method_id.provider
             if not provider:
                 raise UserError(
-                    _("The payment method selected do not "
+                    _("The payment method selected does not "
                       "need payment_params"))
             else:
                 provider_name = provider.replace('payment.service.', '')
@@ -204,7 +217,7 @@ class CartService(AbstractSaleService):
             ('locomotive_backend_id', '=', self.backend_record.id),
             ])
         if not cart:
-            raise MissingError(_('The cart %s do not exist' % cart_id))
+            raise MissingError(_('The cart %s does not exist' % cart_id))
         else:
             return cart
 
@@ -214,15 +227,27 @@ class CartService(AbstractSaleService):
 
     def _prepare_cart(self):
         partner = self.partner or self.env.ref('shopinvader.anonymous')
-        return {
+        vals = {
             'sub_state': 'cart',
             'partner_id': partner.id,
             'partner_shipping_id': partner.id,
             'partner_invoice_id': partner.id,
             'locomotive_backend_id': self.backend_record.id,
             }
+        vals = self.env['sale.order'].play_onchanges(vals, ['partner_id'])
+        return vals
 
     def _check_valid_payment_method(self, method_id):
         if method_id not in self.backend_record.payment_method_ids.mapped(
                 'payment_method_id.id'):
             raise UserError(_('Payment method id invalid'))
+
+    def _get_onchange_trigger_fields(self):
+        return ['partner_id', 'partner_shipping_id', 'partner_invoice_id']
+
+    def _check_call_onchange(self, params):
+        onchange_fields = self._get_onchange_trigger_fields()
+        for changed_field in params.keys():
+            if changed_field in onchange_fields:
+                return True
+        return False
