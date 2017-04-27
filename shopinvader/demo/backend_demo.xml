@@ -6,5 +6,48 @@
     <field name="odoo_api">odooapi</field>
 </record>
 
+<function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'base'), ('name', '=', 'main_company')]"/>
+    </function>
+    <value eval="{'noupdate': False}"/>
+</function>
+
+<record id="base.main_company" model="res.company">
+    <field name="country_id" ref="base.fr"/>
+</record>
+
+<function name="write" model="ir.model.data">
+    <function name="search" model="ir.model.data">
+        <value eval="[('module', '=', 'base'), ('name', '=', 'main_company')]"/>
+    </function>
+    <value eval="{'noupdate': True}"/>
+</function>
+
+<record id="role_1" model="locomotive.role">
+    <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+    <field name="pricelist_id" ref="product.list0"/>
+    <field name="automatic" eval="True"/>
+    <field name="default" eval="True"/>
+    <field name="code">public_tax_inc</field>
+    <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_0')])]"/>
+</record>
+
+<record id="role_2" model="locomotive.role">
+    <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+    <field name="pricelist_id" ref="pricelist_1"/>
+    <field name="automatic" eval="True"/>
+    <field name="code">pro_tax_exc</field>
+    <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_1')])]"/>
+</record>
+
+<record id="role_3" model="locomotive.role">
+    <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+    <field name="pricelist_id" ref="product.list0"/>
+    <field name="automatic" eval="True"/>
+    <field name="code">public_tax_exc</field>
+    <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_2')])]"/>
+</record>
+
     </data>
 </openerp>

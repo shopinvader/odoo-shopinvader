@@ -19,6 +19,8 @@ class CustomerService(ShoptorService):
     @secure_params
     def create(self, params):
         external_id = params.pop('external_id')
+        if 'vat' in params:
+            params['vat_subjected'] = bool(params['vat'])
         partner = self.env['res.partner'].create(params)
         self.env['locomotive.partner'].with_context(
             connector_no_export=True).create({
@@ -38,5 +40,6 @@ class CustomerService(ShoptorService):
         schema.update({
             'email': {'type': 'string', 'required': True},
             'external_id': {'type': 'string', 'required': True},
+            'vat': {'type': 'string', 'required': False},
             })
         return schema
