@@ -38,10 +38,10 @@ class LocomotiveBackend(models.Model):
         'locomotive.payment',
         'backend_id',
         'Payment Method')
-    pricelist_ids = fields.One2many(
-        'locomotive.pricelist',
+    role_ids = fields.One2many(
+        'locomotive.role',
         'backend_id',
-        'Pricelist')
+        'Customer Role')
     odoo_api = fields.Char(
         help=("This is the API key that you need to add in your website in "
               "order to give the posibility to locomotive to access to odoo"))

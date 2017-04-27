@@ -132,7 +132,8 @@ class ContactService(ShoptorService):
             'city',
             'phone',
             ('state_id', ['id', 'name']),
-            ('country_id', ['id', 'name'])
+            ('country_id', ['id', 'name']),
+            'contact_type'
         ]
         if 'partner_firstname' in self.env.registry._init_modules:
             res += ['firstname', 'lastname']

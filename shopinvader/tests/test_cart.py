@@ -11,35 +11,10 @@ class AbstractCartCase(object):
 
     def set_up(self):
         self.contact = self.env.ref('shopinvader.partner_1_contact_1')
-        source_tax = self.env['account.tax'].create({
-            'name': 'Tax source',
-            'type': 'percent',
-            'amount': 0.15,
-            'type_tax_use': 'sale',
-        })
-        dest_tax = self.env['account.tax'].create({
-            'name': 'Tax dest',
-            'type': 'percent',
-            'amount': 0,
-            'type_tax_use': 'sale',
-        })
-        countries = self.env['res.country'].search([('code', '!=', 'FR')])
-        country_group = self.env['res.country.group'].create({
-            'name': 'World',
-            'country_ids': [(6, 0, countries.ids)]
-        })
-        self.fposition = self.env['account.fiscal.position'].create({
-            'name': 'Tax exempt test',
-            'tax_ids': [(0, 0, {
-                'tax_src_id': source_tax.id,
-                'tax_dest_id': dest_tax.id})],
-            'country_group_id': country_group.id,
-            'auto_apply': True
-        })
+        self.fposition = self.env.ref('shopinvader.fiscal_position_2')
+        self.default_fposition = self.env.ref('shopinvader.fiscal_position_0')
         templates = self.env['product.template'].search([])
-        templates.write({'taxes_id': [(6, 0, [source_tax.id])]})
-        fr = self.env['res.country'].search([('code', '=', 'FR')])
-        self.env.user.company_id.country_id = fr.id
+        templates.write({'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
 
 
 class AnonymousCartCase(AbstractCartCase, CommonCase):
@@ -138,7 +113,7 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
 
     def test_anonymous_cart_then_sign_with_pricelist(self):
         cart = self.cart
-        partner = self.env.ref('shopinvader.partner_2')
+        partner = self.env.ref('shopinvader.partner_1')
         pricelist = self.env.ref('shopinvader.pricelist_1')
         self.assertEqual(cart.order_line[0].price_unit, 2950.00)
         self.assertEqual(cart.order_line[1].price_unit, 145.00)
@@ -203,8 +178,7 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.contact)
         self.assertEqual(cart.partner_invoice_id, self.contact)
-        self.assertEqual(
-            cart.fiscal_position, self.env['account.fiscal.position'])
+        self.assertEqual(cart.fiscal_position, self.default_fposition)
         self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
         self.service.update({
             'id': self.cart.id,
