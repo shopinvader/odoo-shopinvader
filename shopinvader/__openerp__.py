@@ -35,6 +35,7 @@
         "sale_different_invoice_address",
         "sale_payment_method",
         "sale_order_price_recalculation",
+        "sale_order_line_price_subtotal_gross",
     ],
     "data": [
         'views/product_view.xml',
