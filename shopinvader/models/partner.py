@@ -25,7 +25,7 @@ class LocomotivePartner(models.Model):
     role_id = fields.Many2one(
         comodel_name='locomotive.role',
         string='Role',
-        compute='_get_role',
+        compute='_compute_role',
         store=True)
 
     _sql_constraints = [
@@ -39,12 +39,13 @@ class LocomotivePartner(models.Model):
         'record_id.country_id', 'country_id',
         'record_id.vat', 'vat',
         'record_id.property_product_pricelist', 'property_product_pricelist')
-    def _get_role(self):
+    def _compute_role(self):
         user_company_id = self.env.user.company_id.id
         fposition_obj = self.env['account.fiscal.position']
         for binding in self:
             role = self.env['locomotive.role']
-            company_id = binding.company_id and binding.company_id.id or user_company_id
+            company_id = binding.company_id and binding.company_id.id \
+                or user_company_id
             partner = binding.record_id
             fposition_id = fposition_obj.get_fiscal_position(
                 company_id, partner.id, delivery_id=partner.id)
@@ -57,7 +58,9 @@ class LocomotivePartner(models.Model):
                     ('default', '=', True),
                     ('backend_id', '=', binding.backend_id.id)])
                 if not role:
-                    raise UserError(_('No default role found for the backend %s' % binding.backend_id.name))
+                    raise UserError(_(
+                        'No default role found for the backend '
+                        '%s' % binding.backend_id.name))
             binding.role_id = role.id
 
     @api.model
@@ -80,11 +83,11 @@ class ResPartner(models.Model):
     contact_type = fields.Selection(
         selection=[('profile', 'Profile'), ('address', 'Address')],
         string='Contact Type',
-        compute='_get_contact_type',
+        compute='_compute_contact_type',
         store=True)
 
     @api.depends('parent_id')
-    def _get_contact_type(self):
+    def _compute_contact_type(self):
         for partner in self:
             if partner.parent_id:
                 partner.contact_type = 'address'
