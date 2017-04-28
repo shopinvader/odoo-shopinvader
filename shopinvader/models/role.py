@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import fields, models, api
+from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError
 
 
@@ -39,4 +40,4 @@ class LocomotiveRole(models.Model):
                 ('default', '=', True),
                 ('backend_id', '=', self.backend_id.id)])
             if len(roles) > 1:
-                raise UserError("Only one default role is authorized")
+                raise UserError(_("Only one default role is authorized"))
