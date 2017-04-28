@@ -5,7 +5,7 @@
 
 from openerp import fields, models, api
 from openerp.tools.translate import _
-from openerp.exceptions import Warning as UserError
+from openerp.exceptions import ValidationError
 
 
 class LocomotiveRole(models.Model):
@@ -42,4 +42,16 @@ class LocomotiveRole(models.Model):
                 ('default', '=', True),
                 ('backend_id', '=', self.backend_id.id)])
             if len(roles) > 1:
-                raise UserError(_("Only one default role is authorized"))
+                raise ValidationError(_("Only one default role is authorized"))
+
+    @api.constrains('backend_id', 'pricelist_id', 'fiscal_position_ids')
+    def _check_unique_pricelist_fposition(self):
+        roles = self.search([
+            ('backend_id', '=', self.backend_id.id),
+            ('pricelist_id', '=', self.pricelist_id.id),
+            ('fiscal_position_ids', 'in', self.fiscal_position_ids)
+            ])
+        if len(roles) > 1:
+            raise ValidationError(_(
+                "Pricelist and fiscal position combination must be uniq "
+                "per backend"))
