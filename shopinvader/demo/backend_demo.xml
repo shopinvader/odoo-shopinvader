@@ -4,6 +4,7 @@
 
 <record id="connector_locomotivecms.backend_1" model="locomotive.backend">
     <field name="odoo_api">odooapi</field>
+    <field name="nosql_backend_id" ref="connector_nosql_algolia.backend_1"/>
 </record>
 
 <function name="write" model="ir.model.data">

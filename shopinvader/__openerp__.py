@@ -24,6 +24,7 @@
         "base_view_inheritance_extension",
         "connector_base_product",
         "connector_locomotivecms",
+        "connector_nosql_algolia_product",
         "delivery",
         "onchange_helper",
         "payment_gateway",

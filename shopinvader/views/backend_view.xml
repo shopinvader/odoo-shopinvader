@@ -9,6 +9,7 @@
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>
+            <field name="nosql_backend_id"/>
         </field>
         <group name="config" position="after">
             <group name="price" colspan="4">

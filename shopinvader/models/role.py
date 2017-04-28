@@ -12,6 +12,8 @@ class LocomotiveRole(models.Model):
     _name = 'locomotive.role'
     _description = 'Locomotive Customer Role'
 
+    _rec_name="code"
+
     backend_id = fields.Many2one(
         'locomotive.backend',
         'Backend')
