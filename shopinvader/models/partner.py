@@ -51,7 +51,7 @@ class LocomotivePartner(models.Model):
                 company_id, partner.id, delivery_id=partner.id)
             if fposition_id:
                 role = self.env['locomotive.role'].search([
-                    ('fiscal_position_ids', 'in', fposition_id),
+                    ('fiscal_position_ids', '=', fposition_id),
                     ('backend_id', '=', binding.backend_id.id)])
             if not role:
                 role = self.env['locomotive.role'].search([

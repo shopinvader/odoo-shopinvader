@@ -103,7 +103,3 @@ class CustomerCase(CommonCase):
         parent = self.env['res.partner'].create(data)
         partner.parent_id = parent.id
         self.assertEqual(partner.contact_type, 'address')
-
-
-# TODO changer adresse par defaut et verifier le role
-# TODO constraints + tests

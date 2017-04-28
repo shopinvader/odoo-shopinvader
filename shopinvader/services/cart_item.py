@@ -97,9 +97,8 @@ class CartItemService(ShoptorService):
             ])
 
     def _prepare_cart_item(self, params, cart):
-        vals = {
+        return {
             'product_id': params['product_id'],
             'product_uom_qty': params['item_qty'],
             'order_id': cart.id,
             }
-        return vals
