@@ -10,7 +10,6 @@
 <record id="role_1" model="locomotive.role">
     <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
     <field name="pricelist_id" ref="product.list0"/>
-    <field name="automatic" eval="True"/>
     <field name="default" eval="True"/>
     <field name="code">public_tax_inc</field>
     <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_0')])]"/>
@@ -19,7 +18,6 @@
 <record id="role_2" model="locomotive.role">
     <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
     <field name="pricelist_id" ref="pricelist_1"/>
-    <field name="automatic" eval="True"/>
     <field name="code">pro_tax_exc</field>
     <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_1')])]"/>
 </record>
@@ -27,7 +25,6 @@
 <record id="role_3" model="locomotive.role">
     <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
     <field name="pricelist_id" ref="product.list0"/>
-    <field name="automatic" eval="True"/>
     <field name="code">public_tax_exc</field>
     <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_2')])]"/>
 </record>
