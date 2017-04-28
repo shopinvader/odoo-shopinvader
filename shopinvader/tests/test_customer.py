@@ -12,7 +12,8 @@ class CustomerCase(CommonCase):
     def setUp(self, *args, **kwargs):
         super(CustomerCase, self).setUp(*args, **kwargs)
         templates = self.env['product.template'].search([])
-        templates.write({'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
+        templates.write({
+            'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
 
     def test_create_customer(self):
         service = self._get_service(CustomerService, None)

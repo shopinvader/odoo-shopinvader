@@ -151,6 +151,7 @@ class ProductFilter(models.Model):
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
 
+
 class NosqlProductProduct(models.Model):
     _inherit = 'nosql.product.product'
 

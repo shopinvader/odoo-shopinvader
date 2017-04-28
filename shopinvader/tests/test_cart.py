@@ -14,7 +14,8 @@ class AbstractCartCase(object):
         self.fposition = self.env.ref('shopinvader.fiscal_position_2')
         self.default_fposition = self.env.ref('shopinvader.fiscal_position_0')
         templates = self.env['product.template'].search([])
-        templates.write({'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
+        templates.write({
+            'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
 
 
 class AnonymousCartCase(AbstractCartCase, CommonCase):
@@ -189,4 +190,3 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.partner_invoice_id, self.partner)
         self.assertEqual(cart.fiscal_position, self.fposition)
         self.assertEqual(cart.amount_total, cart.amount_untaxed)
-

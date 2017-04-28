@@ -48,11 +48,13 @@ class CartService(AbstractSaleService):
             params['partner_id'] = self.partner.id
         recompute_price = False
         if self._check_call_onchange(params):
-            if not 'partner_id' in params:
+            if 'partner_id' not in params:
                 params['partner_id'] = self.partner.id
             params['order_line'] = cart.order_line
             params = self.env['sale.order'].play_onchanges(
-                params, ['partner_id', 'partner_shipping_id', 'fiscal_position', 'pricelist_id'])
+                params,
+                ['partner_id', 'partner_shipping_id', 'fiscal_position',
+                 'pricelist_id'])
             # Used only to trigger onchanges so we can delete it afterwards
             del params['order_line']
             if params['pricelist_id'] != cart.pricelist_id.id:
