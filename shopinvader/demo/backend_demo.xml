@@ -7,24 +7,6 @@
     <field name="nosql_backend_id" ref="connector_nosql_algolia.backend_1"/>
 </record>
 
-<function name="write" model="ir.model.data">
-    <function name="search" model="ir.model.data">
-        <value eval="[('module', '=', 'base'), ('name', '=', 'main_company')]"/>
-    </function>
-    <value eval="{'noupdate': False}"/>
-</function>
-
-<record id="base.main_company" model="res.company">
-    <field name="country_id" ref="base.fr"/>
-</record>
-
-<function name="write" model="ir.model.data">
-    <function name="search" model="ir.model.data">
-        <value eval="[('module', '=', 'base'), ('name', '=', 'main_company')]"/>
-    </function>
-    <value eval="{'noupdate': True}"/>
-</function>
-
 <record id="role_1" model="locomotive.role">
     <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
     <field name="pricelist_id" ref="product.list0"/>
