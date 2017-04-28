@@ -6,3 +6,4 @@ server-tools https://github.com/akretion/server-tools.git 8.0-jsonify
 payment-gateway https://github.com/akretion/payment-gateway.git 8.0
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator.git 8.0
 connector-nosql https://github.com/akretion/connector-nosql.git 8.0
+account-invoicing https://github.com/OCA/account-invoicing.git 8.0
