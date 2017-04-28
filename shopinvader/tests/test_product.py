@@ -4,9 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from ..services.sale import SaleService
 from .common import CommonCase
-from werkzeug.exceptions import NotFound
 
 
 class ProductCase(CommonCase):
@@ -23,5 +21,6 @@ class ProductCase(CommonCase):
         nosql_products = self.env['nosql.product.product'].search([
             ('record_id', 'in', template.product_variant_ids.ids),
             ('backend_id', '=', nosql_backend.id)])
-        self.assertEqual(len(template.product_variant_ids), len(nosql_products))
+        self.assertEqual(len(template.product_variant_ids),
+                         len(nosql_products))
         self.assertEqual(nosql_products[0].index_id.lang_id, lang)
