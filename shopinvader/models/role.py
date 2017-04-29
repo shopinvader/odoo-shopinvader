@@ -49,7 +49,7 @@ class LocomotiveRole(models.Model):
         roles = self.search([
             ('backend_id', '=', self.backend_id.id),
             ('pricelist_id', '=', self.pricelist_id.id),
-            ('fiscal_position_ids', 'in', self.fiscal_position_ids)
+            ('fiscal_position_ids', 'in', self.fiscal_position_ids.ids)
             ])
         if len(roles) > 1:
             raise ValidationError(_(
