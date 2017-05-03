@@ -59,6 +59,21 @@ class LocomotiveProduct(models.Model):
                     'record_id': image.id,
                     'backend_id': binding.backend_id.id,
                     })
+        nosql_backend = binding.backend_id.nosql_backend_id
+        if not nosql_backend:
+            return binding
+        model = self.env['ir.model'].search(
+            [('model', '=', 'nosql.product.product')])
+        index = self.env['nosql.index'].search([
+            ('lang_id', '=', binding.lang_id.id),
+            ('backend_id', '=', binding.backend_id.id),
+            ('model_id', '=', model.id)])
+        for variant in binding.product_variant_ids:
+            self.env['nosql.product.product'].create({
+                'record_id': variant.id,
+                'backend_id': nosql_backend.id,
+                'locomotive_product_id': binding.id,
+                'index_id': index.id})
         return binding
 
     @api.depends('url_builder', 'record_id.name')
@@ -135,3 +150,12 @@ class ProductFilter(models.Model):
             ))])
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
+
+
+class NosqlProductProduct(models.Model):
+    _inherit = 'nosql.product.product'
+
+    locomotive_product_id = fields.Many2one(
+        'locomotive.product',
+        required=True,
+        ondelete='cascade')

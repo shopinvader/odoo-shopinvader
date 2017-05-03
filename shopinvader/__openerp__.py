@@ -24,7 +24,9 @@
         "base_view_inheritance_extension",
         "connector_base_product",
         "connector_locomotivecms",
+        "connector_nosql_algolia_product",
         "delivery",
+        "onchange_helper",
         "payment_gateway",
         "product_media",
         "product_multi_image",
@@ -32,6 +34,8 @@
         "sale_cart",
         "sale_different_invoice_address",
         "sale_payment_method",
+        "sale_order_price_recalculation",
+        "sale_order_line_price_subtotal_gross",
     ],
     "data": [
         'views/product_view.xml',
@@ -46,6 +50,8 @@
         "data/res_partner.xml",
     ],
     "demo": [
+        "demo/account_demo.xml",
+        "demo/pricelist_demo.xml",
         "demo/backend_demo.xml",
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",

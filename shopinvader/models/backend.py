@@ -38,15 +38,16 @@ class LocomotiveBackend(models.Model):
         'locomotive.payment',
         'backend_id',
         'Payment Method')
-    pricelist_ids = fields.One2many(
-        'locomotive.pricelist',
+    role_ids = fields.One2many(
+        'locomotive.role',
         'backend_id',
-        'Pricelist')
+        'Customer Role')
     odoo_api = fields.Char(
         help=("This is the API key that you need to add in your website in "
               "order to give the posibility to locomotive to access to odoo"))
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')
+    nosql_backend_id = fields.Many2one('nosql.backend', 'Nosql Backend')
 
     def _compute_nbr_content(self):
         for record in self:
@@ -56,7 +57,7 @@ class LocomotiveBackend(models.Model):
 
     def _clear_dead_content(self, model):
         """This method will check the existing product on locomotive site
-        and delete it if not do not exist in odoo. This is really usefull
+        and delete it if it does not exist in odoo. This is really usefull
         in dev mode and can be usefull if you have done some mistake in your
         database production."""
         session = ConnectorSession.from_env(self.env)

@@ -4,7 +4,7 @@
 
 <menuitem id="menu_locomotive_root"
     parent="connector.menu_connector_root"
-    name="LcomotiveCMS"
+    name="LocomotiveCMS"
     sequence="10"
     groups="connector.group_connector_manager"/>
 

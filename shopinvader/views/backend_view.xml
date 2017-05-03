@@ -9,17 +9,19 @@
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>
+            <field name="nosql_backend_id"/>
         </field>
         <group name="config" position="after">
             <group name="price" colspan="4">
-                <field name="pricelist_ids"
-                       string="Pricelist"
+                <field name="role_ids"
+                       string="Roles"
                        colspan="4"
                        nolabel="True">
                     <tree editable="bottom">
-                        <field name="record_id"/>
-                        <field name="tax_included"/>
+                        <field name="fiscal_position_ids" widget="many2many_tags"/>
+                        <field name="pricelist_id"/>
                         <field name="code"/>
+                        <field name="default"/>
                     </tree>
                 </field>
             </group>
