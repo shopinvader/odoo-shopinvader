@@ -24,6 +24,7 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
         self.set_up()
         self.cart = self.env.ref('shopinvader.sale_order_1')
+        self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.anonymous')
         self.service = self._get_service(CartService, None)
         self.address_ship = {
@@ -56,14 +57,12 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
 
     def _add_shipping_address(self):
         self.service.update({
-            'id': self.cart.id,
             'partner_shipping_id': self.address_ship,
             })
         self._check_address(self.cart.partner_shipping_id, self.address_ship)
 
     def _add_shipping_and_invoice_address(self):
         self.service.update({
-            'id': self.cart.id,
             'partner_shipping_id': self.address_ship,
             'partner_invoice_id': self.address_invoice,
             'use_different_invoice_address': True
@@ -72,10 +71,8 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self._check_address(self.cart.partner_invoice_id, self.address_invoice)
 
     def _add_partner(self, partner):
-        cart = self.cart
         self.service = self._get_service(CartService, partner)
         self.service.update({
-            'id': cart.id,
             'assign_partner': True,
             })
 
@@ -133,13 +130,13 @@ class ConnectedCartCase(AbstractCartCase, CommonCase):
         super(ConnectedCartCase, self).setUp(*args, **kwargs)
         self.set_up()
         self.cart = self.env.ref('shopinvader.sale_order_2')
+        self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.partner_1')
         self.contact = self.env.ref('shopinvader.partner_1_contact_1')
         self.service = self._get_service(CartService, self.partner)
 
     def test_set_shipping_contact(self):
         self.service.update({
-            'id': self.cart.id,
             'partner_shipping_id': self.contact.id,
             })
         cart = self.cart
@@ -149,7 +146,6 @@ class ConnectedCartCase(AbstractCartCase, CommonCase):
 
     def test_set_invoice_contact(self):
         self.service.update({
-            'id': self.cart.id,
             'use_different_invoice_address': True,
             'partner_invoice_id': self.contact.id,
             })
@@ -166,6 +162,7 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
         super(ConnectedCartNoTaxCase, self).setUp(*args, **kwargs)
         self.set_up()
         self.cart = self.env.ref('shopinvader.sale_order_3')
+        self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.partner_2')
         self.contact = self.env.ref('shopinvader.partner_2_contact_1')
         self.service = self._get_service(CartService, self.partner)
@@ -173,7 +170,6 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
     def test_set_shipping_contact_with_tax(self):
         cart = self.cart
         self.service.update({
-            'id': self.cart.id,
             'partner_shipping_id': self.contact.id,
             })
         self.assertEqual(cart.partner_id, self.partner)
@@ -182,7 +178,6 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.fiscal_position, self.default_fposition)
         self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
         self.service.update({
-            'id': self.cart.id,
             'partner_shipping_id': self.partner.id,
             })
         self.assertEqual(cart.partner_id, self.partner)

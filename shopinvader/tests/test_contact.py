@@ -34,8 +34,10 @@ class ContactCase(CommonCase):
                 self.assertEqual(contact[key], data[key])
 
     def test_add_contact(self):
-        contact_ids = [contact['id'] for contact in self.service.list({})]
-        contact_list = self.service.create(self.contact_params)
+        contact_ids = [
+            contact['id']
+            for contact in self.service.list({})['data']]
+        contact_list = self.service.create(self.contact_params)['data']
         for contact in contact_list:
             if contact['id'] not in contact_ids:
                 created_contact = contact
@@ -58,17 +60,17 @@ class ContactCase(CommonCase):
         self.check_data(self.partner, params)
 
     def test_read_contact_profile(self):
-        res = self.service.list({'contact_type': 'profile'})
+        res = self.service.list({'contact_type': 'profile'})['data']
         self.assertEqual(len(res), 1)
         self.assertEqual(res[0]['id'], self.partner.id)
 
     def test_read_contact_address(self):
-        res = self.service.list({'contact_type': 'address'})
+        res = self.service.list({'contact_type': 'address'})['data']
         self.assertEqual(len(res), 1)
         self.assertEqual(res[0]['id'], self.contact.id)
 
     def test_read_contact_all(self):
-        res = self.service.list({})
+        res = self.service.list({})['data']
         self.assertEqual(len(res), 2)
         self.assertEqual(res[0]['id'], self.partner.id)
         self.assertEqual(res[1]['id'], self.contact.id)

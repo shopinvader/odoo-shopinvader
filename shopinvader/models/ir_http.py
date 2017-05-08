@@ -28,6 +28,16 @@ class IrHttp(models.Model):
                 _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
         return None
 
+    def _extract_shopinvader_session(self, headers):
+        # HTTP_SESS are data that are store in the shopinvader session
+        # and forwarded to odoo at each request
+        # it allow to access to some specific field of the user session
+        # By security always force typing
+        # Note: rails cookies store session are serveless ;)
+        return {
+            'cart_id': int(headers.get('HTTP_SESS_CART_ID', 0))
+            }
+
     def _auth_method_shopinvader(self):
         headers = request.httprequest.environ
         if headers.get('HTTP_API_KEY'):
@@ -41,6 +51,8 @@ class IrHttp(models.Model):
                 if headers.get('HTTP_LANG'):
                     request.context['lang'] = headers['HTTP_LANG']
                     request.env = request.env(context=request.context)
+                request.shopinvader_session =\
+                    self._extract_shopinvader_session(headers)
                 return True
         _logger.error("Wrong HTTP_API_KEY, access denied")
         raise Unauthorized("Wrong HTTP_API_KEY, access denied")

@@ -19,6 +19,7 @@ class SaleService(AbstractSaleService):
     @secure_params
     def list(self, params):
         domain = [('partner_id', '=', self.partner.id)]
+        domain += params.get('domain', [])
         sale_obj = self.env['sale.order']
         total_count = sale_obj.search_count(domain)
         page = params.get('page', 1)
@@ -26,9 +27,8 @@ class SaleService(AbstractSaleService):
         orders = sale_obj.search(
             domain, limit=per_page, offset=per_page*(page-1))
         return {
-            'total_count': total_count,
-            'nbr_page': total_count/per_page + 1,
-            'orders': self._to_json(orders),
+            'size': total_count,
+            'data': self._to_json(orders),
             }
 
     @secure_params
@@ -50,6 +50,10 @@ class SaleService(AbstractSaleService):
                 },
             'page': {
                 'coerce': to_int,
+                'nullable': True,
+                },
+            'domain': {
+                'coerce': self.to_domain,
                 'nullable': True,
                 },
             }

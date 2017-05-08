@@ -109,7 +109,7 @@ class ContactService(ShoptorService):
             result += self.to_json(self.partner)
         if contact_type in ('address', None):
             result += self.to_json(self.partner.child_ids)
-        return result
+        return {'data': result}
 
     def _get_contact(self, params):
         domain = [('id', '=', params['id'])]
