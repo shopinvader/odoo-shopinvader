@@ -9,7 +9,7 @@ from .contact import ContactService
 from .customer import CustomerService
 from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.tools.translate import _
-from openerp.exceptions import MissingError, Warning as UserError
+from openerp.exceptions import Warning as UserError
 
 
 @locomotive
@@ -21,20 +21,18 @@ class CartService(AbstractSaleService):
 
     @secure_params
     def list(self, params):
-        cart = self._search_existing_cart()
-        if cart:
-            return self._to_json(cart)
-        else:
-            return {}
+        """Return the cart that have been set in the session or
+           search an existing cart for the current partner"""
+        return self._to_json(self._get())
 
     @secure_params
     def get(self, params):
-        return self._to_json(self._get(params['id']))
+        return self.list()
 
     @secure_params
     def update(self, params):
         payment_params = params.pop('payment_params', None)
-        cart = self._get(params.pop('id'))
+        cart = self._get()
         # Process use_different_invoice_address
         # before processing the invoice and billing address
         if 'use_different_invoice_address' in params:
@@ -84,16 +82,13 @@ class CartService(AbstractSaleService):
 
     # Validator
     def _validator_get(self):
-        return {
-            'id': {'coerce': to_int},
-            }
+        return {}
 
     def _validator_list(self):
         return {}
 
     def _validator_update(self):
         res = {
-            'id': {'coerce': to_int, 'required': True},
             'assign_partner': {'type': 'boolean'},
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'use_different_invoice_address': {'type': 'boolean'},
@@ -163,11 +158,16 @@ class CartService(AbstractSaleService):
         return res
 
     def _to_json(self, cart):
+        if not cart:
+            return {}
         res = super(CartService, self)._to_json(cart)[0]
         res['available_carriers'] = self._get_available_carrier(cart)
         res['available_payment_method_ids']\
             = self._get_available_payment_method()
-        return res
+        return {
+            'data': res,
+            'set_session': {'cart_id': res['id']},
+            'store_data': 'cart'}
 
     def _prepare_payment(self, method):
         method = method.payment_method_id
@@ -204,21 +204,18 @@ class CartService(AbstractSaleService):
                 contact = self.env['res.partner'].create(invoice_contact)
                 params['partner_invoice_id'] = contact.id
 
-    def _search_existing_cart(self):
-        return self.env['sale.order'].search([
+    def _get(self):
+        domain = [
             ('sub_state', '=', 'cart'),
-            ('partner_id', '=', self.partner.id),
-            ], limit=1)
-
-    def _get(self, cart_id):
-        cart = self.env['sale.order'].search([
-            ('id', '=', cart_id),
             ('locomotive_backend_id', '=', self.backend_record.id),
-            ])
-        if not cart:
-            raise MissingError(_('The cart %s does not exist' % cart_id))
-        else:
+            ]
+        cart = self.env['sale.order'].search(
+            domain + [('id', '=', self.cart_id)])
+        if cart:
             return cart
+        elif self.partner:
+            domain.append(('partner_id', '=', self.partner.id))
+            return self.env['sale.order'].search(domain, limit=1)
 
     def _create_empty_cart(self):
         vals = self._prepare_cart()
@@ -233,8 +230,7 @@ class CartService(AbstractSaleService):
             'partner_invoice_id': partner.id,
             'locomotive_backend_id': self.backend_record.id,
             }
-        vals = self.env['sale.order'].play_onchanges(vals, ['partner_id'])
-        return vals
+        return self.env['sale.order'].play_onchanges(vals, ['partner_id'])
 
     def _check_valid_payment_method(self, method_id):
         if method_id not in self.backend_record.payment_method_ids.mapped(

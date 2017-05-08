@@ -36,7 +36,7 @@ class ShoptorController(Controller):
         session = ConnectorSession.from_env(request.env)
         env = get_environment(session, model_name, request.backend.id)
         service = env.backend.get_class(service_class, session, model_name)
-        return service(env, request.partner)
+        return service(env, request.partner, request.shopinvader_session)
 
     # Cart
 
@@ -75,10 +75,10 @@ class ShoptorController(Controller):
 
     # Order History
 
-    @route('/shopinvader/order', methods=['GET'], auth="shopinvader")
+    @route('/shopinvader/orders', methods=['GET'], auth="shopinvader")
     def sale_list(self, **params):
         return self.send_to_service(SaleService, params)
 
-    @route('/shopinvader/order/<id>', methods=['GET'], auth="shopinvader")
+    @route('/shopinvader/orders/<id>', methods=['GET'], auth="shopinvader")
     def sale(self, **params):
         return self.send_to_service(SaleService, params)

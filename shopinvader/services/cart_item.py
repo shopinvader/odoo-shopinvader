@@ -20,9 +20,8 @@ class CartItemService(ShoptorService):
     @secure_params
     def create(self, params):
         cart_service = self.service_for(CartService)
-        if params.get('cart_id'):
-            cart = cart_service._get(params['cart_id'])
-        else:
+        cart = cart_service._get()
+        if not cart:
             cart = cart_service._create_empty_cart()
         existing_item = self._check_existing_cart_item(params, cart)
         if existing_item:
@@ -39,7 +38,7 @@ class CartItemService(ShoptorService):
         item.product_uom_qty = params['item_qty']
         item.order_id.recalculate_prices()
         cart_service = self.service_for(CartService)
-        cart = cart_service._get(params['cart_id'])
+        cart = cart_service._get()
         return cart_service._to_json(cart)
 
     @secure_params
@@ -47,27 +46,24 @@ class CartItemService(ShoptorService):
         item = self._get_cart_item(params)
         item.unlink()
         cart_service = self.service_for(CartService)
-        cart = cart_service._get(params['cart_id'])
+        cart = cart_service._get()
         return cart_service._to_json(cart)
 
     # Validator
     def _validator_create(self):
         return {
-            'cart_id': {'coerce': to_int, 'nullable': True},
             'product_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
             }
 
     def _validator_update(self):
         return {
-            'cart_id': {'coerce': to_int, 'required': True},
             'item_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
             }
 
     def _validator_delete(self):
         return {
-            'cart_id': {'coerce': to_int, 'required': True},
             'item_id': {'coerce': to_int, 'required': True},
             }
 
@@ -80,14 +76,12 @@ class CartItemService(ShoptorService):
         # indeed the item_id information is given by the
         # end user (untrusted data) and the cart id by the
         # locomotive server (trusted data)
-        cart_id = params['cart_id']
-        item_id = params['item_id']
         item = self.env['sale.order.line'].search([
-            ('id', '=', item_id),
-            ('order_id', '=', cart_id),
+            ('id', '=', params['item_id']),
+            ('order_id', '=', self.cart_id),
             ])
         if not item:
-            raise NotFound('No cart item found with id %s' % item_id)
+            raise NotFound('No cart item found with id %s' % params['item_id'])
         return item
 
     def _check_existing_cart_item(self, params, cart):
