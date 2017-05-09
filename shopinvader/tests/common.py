@@ -13,10 +13,11 @@ class CommonCase(TransactionCase):
     def setUp(self, *args, **kwargs):
         super(CommonCase, self).setUp(*args, **kwargs)
         self.backend = self.env.ref('connector_locomotivecms.backend_1')
+        self.shopinvader_session = {}
 
     def _get_service(self, service_class, partner):
         model_name = service_class._model_name
         session = ConnectorSession.from_env(self.env)
         env = get_environment(session, model_name, self.backend.id)
         service = env.backend.get_class(service_class, session, model_name)
-        return service(env, partner)
+        return service(env, partner, self.shopinvader_session)

@@ -5,7 +5,8 @@
 
 
 from openerp.addons.connector.connector import ConnectorUnit
-from werkzeug.exceptions import BadRequest
+from openerp.exceptions import Warning as UserError
+from openerp.tools.translate import _
 import logging
 import functools
 
@@ -37,14 +38,17 @@ def secure_params(func):
 
 class ShoptorService(ConnectorUnit):
 
-    def __init__(self, env, partner):
+    def __init__(self, env, partner, shopinvader_session):
         super(ShoptorService, self).__init__(env)
         self.partner = partner
+        self.shopinvader_session = shopinvader_session
+        self.cart_id = shopinvader_session.get('cart_id')
 
     def service_for(self, service_class):
         service = self.connector_env.backend.get_class(
             service_class, self.session, service_class._model_name)
-        return service(self.connector_env, self.partner)
+        return service(
+            self.connector_env, self.partner, self.shopinvader_session)
 
     def _get_schema_for_method(self, method):
         validator_method = '_validator_%s' % method
@@ -55,8 +59,26 @@ class ShoptorService(ConnectorUnit):
     def _secure_params(self, method, params):
         schema = self._get_schema_for_method(method)
         v = Validator(schema, purge_unknown=True)
-        secure_params = v.normalized(params)
-        if not v.errors and v.validate(secure_params):
-            return secure_params
+        if v.validate(params):
+            return v.document
         _logger.error("BadRequest %s", v.errors)
-        raise BadRequest("BadRequest %s" % v.errors)
+        raise UserError(_("BadRequest %s") % v.errors)
+
+    def to_domain(scope):
+        # Convert the liquid scope syntax to the odoo domain
+        OPERATORS = {
+            'gt': '>',
+            'gte': '>=',
+            'lt': '<',
+            'lte': '<=',
+            'ne': '!='}
+        domain = []
+        if scope:
+            for key, value in scope.items():
+                if '.' in key:
+                    key, op = key.split('.')
+                    op = OPERATORS[op]
+                else:
+                    op = '='
+                domain.append((key, op, value))
+        return domain

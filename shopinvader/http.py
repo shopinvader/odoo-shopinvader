@@ -46,6 +46,20 @@ class HttpJsonRequest(HttpRequest):
         super(HttpJsonRequest, self).__init__(*args)
         if self.httprequest.headers.get('Content-Type') == 'application/json':
             self.params = json.loads(self.httprequest.stream.read())
+        else:
+            # TODO add support of multilevel dict in urlencode
+            # for now just add the support for url key of dict of 1 level
+            # url encoded/decoded are well done in ruby
+            # https://github.com/sporkmonger/addressable
+            for key, value in self.params.items():
+                if '[' in key:
+                    del self.params[key]
+                    key, subkey = key.split('[')
+                    subkey = subkey.replace(']', '')
+                    if key not in self.params:
+                        self.params[key] = {subkey: value}
+                    else:
+                        self.params[key][subkey] = value
 
     def _handle_exception(self, exception):
         """Called within an except block to allow converting exceptions
