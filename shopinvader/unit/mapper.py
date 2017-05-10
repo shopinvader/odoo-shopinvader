@@ -3,17 +3,13 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
-
-import logging
-
-_logger = logging.getLogger(__name__)
+from ..backend import shopinvader
 
 
-@locomotive
-class PartnerExportMapper(GenericExportMapper):
-    _model_name = 'locomotive.partner'
+@shopinvader
+class ShopinvaderPartnerExportMapper(GenericExportMapper):
+    _model_name = 'shopinvader.partner'
 
     direct = [
         ('email', 'email'),

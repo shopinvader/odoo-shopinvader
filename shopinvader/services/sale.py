@@ -5,11 +5,11 @@
 
 from .helper import to_int, secure_params
 from .abstract_sale import AbstractSaleService
-from openerp.addons.connector_locomotivecms.backend import locomotive
+from ..backend import shopinvader
 from werkzeug.exceptions import NotFound
 
 
-@locomotive
+@shopinvader
 class SaleService(AbstractSaleService):
     _model_name = 'sale.order'
 
@@ -66,7 +66,7 @@ class SaleService(AbstractSaleService):
         order = self.env['sale.order'].search([
             ('id', '=', order_id),
             ('partner_id', '=', self.partner.id),
-            ('locomotive_backend_id', '=', self.backend_record.id),
+            ('shopinvader_backend_id', '=', self.backend_record.id),
             ])
         if not order:
             raise NotFound('The order %s does not exist' % order_id)

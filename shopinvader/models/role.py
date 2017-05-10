@@ -8,9 +8,9 @@ from openerp.tools.translate import _
 from openerp.exceptions import ValidationError
 
 
-class LocomotiveRole(models.Model):
-    _name = 'locomotive.role'
-    _description = 'Locomotive Customer Role'
+class ShopinvaderRole(models.Model):
+    _name = 'shopinvader.role'
+    _description = 'Shopinvader Customer Role'
 
     _rec_name = "code"
 

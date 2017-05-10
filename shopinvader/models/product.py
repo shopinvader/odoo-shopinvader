@@ -60,18 +60,18 @@ class ShopinvaderProduct(models.Model):
                 self.env['nosql.product.product'].create({
                     'record_id': variant.id,
                     'backend_id': nosql_backend.id,
-                    'locomotive_product_id': self.id,
+                    'shopinvader_product_id': self.id,
                     'index_id': index.id})
 
     @api.model
     def create(self, vals):
-        binding = super(LocomotiveProduct, self).create(vals)
+        binding = super(ShopinvaderProduct, self).create(vals)
         binding.create_index_binding()
         return binding
 
     @api.depends('url_builder', 'record_id.name')
     def _compute_url(self):
-        return super(LocomotiveProduct, self)._compute_url()
+        return super(ShopinvaderProduct, self)._compute_url()
 
     @api.onchange('backend_id')
     def set_default_lang(self):
@@ -139,7 +139,7 @@ class ProductFilter(models.Model):
         domain=[('model', 'in', (
             'product.template',
             'product.product',
-            'locomotive.product',
+            'shopinvader.product',
             ))])
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
@@ -147,10 +147,10 @@ class ProductFilter(models.Model):
 
 class NosqlProductProduct(models.Model):
     _inherit = 'nosql.product.product'
-    _inherits = {'locomotive.product': 'locomotive_product_id'}
+    _inherits = {'shopinvader.product': 'shopinvader_product_id'}
 
-    locomotive_product_id = fields.Many2one(
-        'locomotive.product',
+    shopinvader_product_id = fields.Many2one(
+        'shopinvader.product',
         required=True,
         ondelete='cascade')
 
@@ -177,9 +177,9 @@ class NosqlProductProduct(models.Model):
             shop_categs = []
             for categ in record._get_categories():
                 # TODO filtrer les categ qui sont du backend
-                for loco_categ in categ.locomotive_bind_ids:
+                for loco_categ in categ.shopinvader_bind_ids:
                     if loco_categ.backend_id\
-                            == record.locomotive_product_id.backend_id:
+                            == record.shopinvader_product_id.backend_id:
                         shop_categs.append(loco_categ.id)
                         break
             record.categs = shop_categs

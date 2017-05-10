@@ -7,12 +7,12 @@ from .helper import to_int, secure_params
 from .abstract_sale import AbstractSaleService
 from .contact import ContactService
 from .customer import CustomerService
-from openerp.addons.connector_locomotivecms.backend import locomotive
+from ..backend import shopinvader
 from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError
 
 
-@locomotive
+@shopinvader
 class CartService(AbstractSaleService):
     _model_name = 'sale.order'
 
@@ -207,7 +207,7 @@ class CartService(AbstractSaleService):
     def _get(self):
         domain = [
             ('sub_state', '=', 'cart'),
-            ('locomotive_backend_id', '=', self.backend_record.id),
+            ('shopinvader_backend_id', '=', self.backend_record.id),
             ]
         cart = self.env['sale.order'].search(
             domain + [('id', '=', self.cart_id)])
@@ -228,7 +228,7 @@ class CartService(AbstractSaleService):
             'partner_id': partner.id,
             'partner_shipping_id': partner.id,
             'partner_invoice_id': partner.id,
-            'locomotive_backend_id': self.backend_record.id,
+            'shopinvader_backend_id': self.backend_record.id,
             }
         return self.env['sale.order'].play_onchanges(vals, ['partner_id'])
 

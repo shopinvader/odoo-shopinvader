@@ -10,17 +10,17 @@ class ProductCategory(models.Model):
     _name = "product.category"
     _inherit = [_name, "base_multi_image.owner"]
 
-    locomotive_bind_ids = fields.One2many(
-        'locomotive.category',
+    shopinvader_bind_ids = fields.One2many(
+        'shopinvader.category',
         'record_id',
-        string='Locomotive Binding')
+        string='Shopinvader Binding')
     filter_ids = fields.Many2many(
         comodel_name='product.filter',
         string='Filter')
 
 
-class LocomotiveCategory(models.Model):
-    _name = 'locomotive.category'
+class ShopinvaderCategory(models.Model):
+    _name = 'shopinvader.category'
     _inherit = ['locomotive.binding', 'abstract.url']
     _inherits = {'product.category': 'record_id'}
 
@@ -47,4 +47,4 @@ class LocomotiveCategory(models.Model):
 
     @api.depends('url_builder', 'record_id.name')
     def _compute_url(self):
-        return super(LocomotiveCategory, self)._compute_url()
+        return super(ShopinvaderCategory, self)._compute_url()

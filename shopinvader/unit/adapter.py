@@ -4,12 +4,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.connector_locomotivecms.backend import locomotive
 from openerp.addons.connector_locomotivecms.unit.adapter import (
     LocomotiveContentAdapter)
+from ..backend import shopinvader
 
 
-@locomotive
-class PartnerAdapter(LocomotiveContentAdapter):
-    _model_name = 'locomotive.partner'
+@shopinvader
+class ShopinvaderPartnerAdapter(LocomotiveContentAdapter):
+    _model_name = 'shopinvader.partner'
     _content_type = 'customers'

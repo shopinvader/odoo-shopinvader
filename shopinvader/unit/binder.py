@@ -4,11 +4,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp.addons.connector_locomotivecms.unit.binder import LocomotiveBinder
-from openerp.addons.connector_locomotivecms.backend import locomotive
+from ..backend import shopinvader
 
 
-@locomotive
-class LocomotiveEcommerce(LocomotiveBinder):
+@shopinvader
+class ShopinvaderBinder(LocomotiveBinder):
     _model_name = [
-        'locomotive.partner',
+        'shopinvader.partner',
     ]

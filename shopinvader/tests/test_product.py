@@ -13,7 +13,7 @@ class ProductCase(CommonCase):
         template = self.env.ref('product.product_product_25_product_template')
         nosql_backend = self.env.ref('connector_nosql_algolia.backend_1')
         lang = self.env.ref('base.lang_en')
-        self.env['locomotive.product'].create({
+        self.env['shopinvader.product'].create({
             'record_id': template.id,
             'backend_id': self.backend.id,
             'lang_id': lang.id

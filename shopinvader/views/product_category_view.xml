@@ -16,7 +16,7 @@
                 </page>
                 <page name="connector" string="Connector">
                     <group name="Connector" colspan="4">
-                        <field name="locomotive_bind_ids" nolabel="1">
+                        <field name="shopinvader_bind_ids" nolabel="1">
                             <tree>
                                 <field name="backend_id"/>
                                 <field name="lang_id"/>

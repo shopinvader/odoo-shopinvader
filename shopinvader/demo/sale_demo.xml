@@ -6,7 +6,7 @@
             <field name="partner_id" ref="anonymous"/>
             <field name="partner_invoice_id" ref="anonymous"/>
             <field name="partner_shipping_id" ref="anonymous"/>
-            <field name="locomotive_backend_id" ref="connector_locomotivecms.backend_1"/>
+            <field name="shopinvader_backend_id" ref="connector_locomotivecms.backend_1"/>
             <field name="user_id" ref="base.user_demo"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="section_id" ref="sales_team.section_sales_department"/>
@@ -47,7 +47,7 @@
             <field name="partner_id" ref="partner_1"/>
             <field name="partner_invoice_id" ref="partner_1"/>
             <field name="partner_shipping_id" ref="partner_1"/>
-            <field name="locomotive_backend_id" ref="connector_locomotivecms.backend_1"/>
+            <field name="shopinvader_backend_id" ref="connector_locomotivecms.backend_1"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="order_policy">manual</field>
@@ -79,7 +79,7 @@
             <field name="partner_id" ref="partner_2"/>
             <field name="partner_invoice_id" ref="partner_2_contact_1"/>
             <field name="partner_shipping_id" ref="partner_2_contact_1"/>
-            <field name="locomotive_backend_id" ref="connector_locomotivecms.backend_1"/>
+            <field name="shopinvader_backend_id" ref="connector_locomotivecms.backend_1"/>
             <field name="user_id" ref="base.user_root"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="order_policy">manual</field>

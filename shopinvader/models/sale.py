@@ -11,7 +11,7 @@ import openerp.addons.decimal_precision as dp
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    locomotive_backend_id = fields.Many2one(
+    shopinvader_backend_id = fields.Many2one(
         'locomotive.backend',
         'Backend')
     cart_state = fields.Char()
