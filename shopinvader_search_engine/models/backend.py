@@ -8,7 +8,6 @@ from openerp import fields, models
 
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
-
     se_backend_id = fields.Many2one(
         'se.backend',
         'Search Engine Backend')

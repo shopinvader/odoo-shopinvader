@@ -3,7 +3,7 @@
     <data>
 
 <record id="connector_locomotivecms.backend_1" model="locomotive.backend">
-    <field name="nosql_backend_id" ref="connector_nosql_algolia.backend_1"/>
+    <field name="se_backend_id" ref="connector_algolia.backend_1"/>
 </record>
 
     </data>
