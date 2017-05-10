@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="connector_locomotivecms.backend_1" model="locomotive.backend">
+    <field name="nosql_backend_id" ref="connector_nosql_algolia.backend_1"/>
+</record>
+
+    </data>
+</openerp>

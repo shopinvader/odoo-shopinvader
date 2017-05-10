@@ -47,7 +47,8 @@ class LocomotiveBackend(models.Model):
               "order to give the posibility to shopinvader to access to odoo"))
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')
-    nosql_backend_id = fields.Many2one('nosql.backend', 'Nosql Backend')
+    version = fields.Selection(selection_add=[
+        ('shopinvader_v1', 'Shopinvader V1')])
 
     def _compute_nbr_content(self):
         for record in self:

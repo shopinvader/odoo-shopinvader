@@ -10,3 +10,5 @@ from openerp.addons.connector_locomotivecms.backend import locomotive
 
 shopinvader = Backend(parent=locomotive, version='shopinvader')
 """ Shopinvader Backend"""
+
+shopinvader_v1 = Backend(parent=shopinvader, version='shopinvader_v1')

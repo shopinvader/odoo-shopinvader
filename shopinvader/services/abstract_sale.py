@@ -19,7 +19,7 @@ class AbstractSaleService(ShoptorService):
         parser = [
             'id',
             ('product_id', self._parser_product()),
-            'product_url',
+            'product_image_url',
             'price_unit',
             'product_uom_qty',
             'price_subtotal',

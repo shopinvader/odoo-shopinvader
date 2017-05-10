@@ -23,65 +23,6 @@ class ProductTemplate(models.Model):
         return super(ProductTemplate, self).unlink()
 
 
-class ShopinvaderProduct(models.Model):
-    _name = 'shopinvader.product'
-    _inherit = ['locomotive.binding', 'abstract.url']
-    _inherits = {'product.template': 'record_id'}
-
-    record_id = fields.Many2one(
-        'product.template',
-        required=True,
-        ondelete='cascade')
-    lang_id = fields.Many2one(
-        'res.lang',
-        'Lang',
-        required=True)
-    seo_title = fields.Char()
-    meta_description = fields.Char()
-    meta_keywords = fields.Char()
-
-    _sql_constraints = [
-        ('record_uniq', 'unique(backend_id, record_id)',
-         'A product can only have one binding by backend.'),
-    ]
-
-    @api.multi
-    def create_index_binding(self):
-        self.ensure_one()
-        nosql_backend = self.backend_id.nosql_backend_id
-        if nosql_backend:
-            model = self.env['ir.model'].search(
-                [('model', '=', 'nosql.product.product')])
-            index = self.env['nosql.index'].search([
-                ('lang_id', '=', self.lang_id.id),
-                ('backend_id', '=', self.backend_id.id),
-                ('model_id', '=', model.id)])
-            for variant in self.product_variant_ids:
-                self.env['nosql.product.product'].create({
-                    'record_id': variant.id,
-                    'backend_id': nosql_backend.id,
-                    'shopinvader_product_id': self.id,
-                    'index_id': index.id})
-
-    @api.model
-    def create(self, vals):
-        binding = super(ShopinvaderProduct, self).create(vals)
-        binding.create_index_binding()
-        return binding
-
-    @api.depends('url_builder', 'record_id.name')
-    def _compute_url(self):
-        return super(ShopinvaderProduct, self)._compute_url()
-
-    @api.onchange('backend_id')
-    def set_default_lang(self):
-        self.ensure_one()
-        langs = self.backend_id.lang_ids
-        if langs:
-            self.lang_id = langs[0]
-            return {'domain': {'lang_id': [('id', 'in', langs.ids)]}}
-
-
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
@@ -145,12 +86,71 @@ class ProductFilter(models.Model):
     name = fields.Char(translate=True, required=True)
 
 
-class NosqlProductProduct(models.Model):
-    _inherit = 'nosql.product.product'
-    _inherits = {'shopinvader.product': 'shopinvader_product_id'}
+class ShopinvaderProduct(models.Model):
+    _name = 'shopinvader.product'
+    _inherit = ['locomotive.binding', 'abstract.url']
+    _inherits = {'product.template': 'record_id'}
+
+    record_id = fields.Many2one(
+        'product.template',
+        required=True,
+        ondelete='cascade')
+    lang_id = fields.Many2one(
+        'res.lang',
+        'Lang',
+        required=True)
+    seo_title = fields.Char()
+    meta_description = fields.Char()
+    meta_keywords = fields.Char()
+
+    _sql_constraints = [
+        ('record_uniq', 'unique(backend_id, record_id)',
+         'A product can only have one binding by backend.'),
+    ]
+
+    def _prepare_shopinvader_variant(self, variant):
+        return {
+            'record_id': variant.id,
+            'shopinvader_product_id': self.id,
+            }
+
+    def _create_shopinvader_variant(self):
+        self.ensure_one()
+        for variant in self.product_variant_ids:
+            vals = self._prepare_shopinvader_variant(variant)
+            self.env['shopinvader.variant'].create(vals)
+
+    @api.model
+    def create(self, vals):
+        binding = super(ShopinvaderProduct, self).create(vals)
+        binding._create_shopinvader_variant()
+        return binding
+
+    @api.depends('url_builder', 'record_id.name')
+    def _compute_url(self):
+        return super(ShopinvaderProduct, self)._compute_url()
+
+    @api.onchange('backend_id')
+    def set_default_lang(self):
+        self.ensure_one()
+        langs = self.backend_id.lang_ids
+        if langs:
+            self.lang_id = langs[0]
+            return {'domain': {'lang_id': [('id', 'in', langs.ids)]}}
+
+
+class ShopinvaderVariant(models.Model):
+    _name = 'shopinvader.variant'
+    _inherits = {
+        'shopinvader.product': 'shopinvader_product_id',
+        'product.product': 'record_id'}
 
     shopinvader_product_id = fields.Many2one(
         'shopinvader.product',
+        required=True,
+        ondelete='cascade')
+    record_id = fields.Many2one(
+        'product.product',
         required=True,
         ondelete='cascade')
 

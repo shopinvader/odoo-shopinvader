@@ -65,7 +65,7 @@ class SaleOrderLine(models.Model):
 
     product_image_url = fields.Char(compute='_compute_image_url')
 
-    def _compute_product_url(self):
+    def _compute_image_url(self):
         for record in self:
             pass
             # TODO retrieve image from public storage

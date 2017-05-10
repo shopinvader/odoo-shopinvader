@@ -9,8 +9,6 @@ from openerp import fields, models
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
 
-    search_engine = fields.Selection([
-        ('algolia', 'Algolia'),
-        ])
-    search_engine_username = fields.Char()
-    search_engine_password = fields.Char()
+    se_backend_id = fields.Many2one(
+        'se.backend',
+        'Search Engine Backend')
