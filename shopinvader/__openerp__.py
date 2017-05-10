@@ -20,6 +20,7 @@
     "depends": [
         "base_delivery_carrier_label",
         "base_jsonify",
+        "base_sparse_field",
         "base_url",
         "base_view_inheritance_extension",
         "connector_base_product",
@@ -48,6 +49,7 @@
         'views/sale_view.xml',
         'security/ir.model.access.csv',
         "data/res_partner.xml",
+        "data/ir_export.xml",
     ],
     "demo": [
         "demo/account_demo.xml",

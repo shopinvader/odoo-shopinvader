@@ -38,42 +38,51 @@ class LocomotiveProduct(models.Model):
         required=True)
     seo_title = fields.Char()
     meta_description = fields.Char()
-    meta_keyword = fields.Char()
+    meta_keywords = fields.Char()
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id)',
          'A product can only have one binding by backend.'),
     ]
 
-    # Automatically create the locomotive binding for the image
-    @api.model
-    def create(self, vals):
-        binding = super(LocomotiveProduct, self).create(vals)
+    @api.multi
+    def bind_image(self):
+        self.ensure_one()
+        # Automatically create the locomotive binding for the image
         binding_image_obj = \
             self.env['locomotive.image'].with_context(
                 connector_no_export=True)
-        for image in binding.image_ids:
+        for image in self.image_ids:
             for size in binding_image_obj._image_size:
                 binding_image_obj.create({
                     'size': size,
                     'record_id': image.id,
-                    'backend_id': binding.backend_id.id,
+                    'backend_id': self.backend_id.id,
                     })
-        nosql_backend = binding.backend_id.nosql_backend_id
-        if not nosql_backend:
-            return binding
-        model = self.env['ir.model'].search(
-            [('model', '=', 'nosql.product.product')])
-        index = self.env['nosql.index'].search([
-            ('lang_id', '=', binding.lang_id.id),
-            ('backend_id', '=', binding.backend_id.id),
-            ('model_id', '=', model.id)])
-        for variant in binding.product_variant_ids:
-            self.env['nosql.product.product'].create({
-                'record_id': variant.id,
-                'backend_id': nosql_backend.id,
-                'locomotive_product_id': binding.id,
-                'index_id': index.id})
+
+    @api.multi
+    def create_index_binding(self):
+        self.ensure_one()
+        nosql_backend = self.backend_id.nosql_backend_id
+        if nosql_backend:
+            model = self.env['ir.model'].search(
+                [('model', '=', 'nosql.product.product')])
+            index = self.env['nosql.index'].search([
+                ('lang_id', '=', self.lang_id.id),
+                ('backend_id', '=', self.backend_id.id),
+                ('model_id', '=', model.id)])
+            for variant in self.product_variant_ids:
+                self.env['nosql.product.product'].create({
+                    'record_id': variant.id,
+                    'backend_id': nosql_backend.id,
+                    'locomotive_product_id': self.id,
+                    'index_id': index.id})
+
+    @api.model
+    def create(self, vals):
+        binding = super(LocomotiveProduct, self).create(vals)
+        binding.create_index_binding()
+        binding.bind_image()  #TODO remove when refactoring with storage module
         return binding
 
     @api.depends('url_builder', 'record_id.name')
@@ -154,8 +163,54 @@ class ProductFilter(models.Model):
 
 class NosqlProductProduct(models.Model):
     _inherit = 'nosql.product.product'
+    _inherits = {'locomotive.product': 'locomotive_product_id'}
 
     locomotive_product_id = fields.Many2one(
         'locomotive.product',
         required=True,
         ondelete='cascade')
+
+    # TODO some field are related to the template
+    # stock_state
+    # images
+    # from price / best discount
+
+    categs = fields.Many2many(
+        comodel_name='locomotive.category',
+        compute='_compute_categ',
+        string='Shopinvader Categories')
+
+    images = fields.Serialized(
+        compute='_compute_image',
+        string='Shopinvader Image')
+
+    def _get_categories(self):
+        self.ensure_one()
+        return self.categ_id
+
+    def _compute_categ(self):
+        for record in self:
+            shop_categs = []
+            for categ in record._get_categories():
+                # TODO filtrer les categ qui sont du backend
+                for loco_categ in categ.locomotive_bind_ids:
+                    if loco_categ.backend_id\
+                            == record.locomotive_product_id.backend_id:
+                        shop_categs.append(loco_categ.id)
+                        break
+            record.categs = shop_categs
+
+    def _compute_image(self):
+        # TODO refactor me
+        for record in self:
+            images = []
+            for image in record.image_ids:
+                image_data = {'name': image.name}
+                for binding in image.locomotive_bind_ids:
+                    if binding.backend_id\
+                            == record.locomotive_product_id.backend_id:
+                        image_data[binding.size] = binding.url
+                images.append(image_data)
+            record.images = images
+
+

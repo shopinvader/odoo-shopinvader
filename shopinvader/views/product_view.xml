@@ -20,7 +20,7 @@
                         <field name="backend_id" widget="selection"/>
                         <field name="lang_id" widget="selection"/>
                         <field name="seo_title"/>
-                        <field name="meta_keyword"/>
+                        <field name="meta_keywords"/>
                         <field name="meta_description"/>
                     </group>
                     <group name="url" string="Url">
