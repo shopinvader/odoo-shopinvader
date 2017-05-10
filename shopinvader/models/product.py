@@ -10,21 +10,21 @@ from openerp import SUPERUSER_ID
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    locomotive_bind_ids = fields.One2many(
-        'locomotive.product',
+    shopinvader_bind_ids = fields.One2many(
+        'shopinvader.product',
         'record_id',
-        string='Locomotive Binding')
+        string='Shopinvader Binding')
 
     @api.multi
     def unlink(self):
         for record in self:
             # TODO we should propose to redirect the old url
-            record.locomotive_bind_ids.unlink()
+            record.shopinvader_bind_ids.unlink()
         return super(ProductTemplate, self).unlink()
 
 
-class LocomotiveProduct(models.Model):
-    _name = 'locomotive.product'
+class ShopinvaderProduct(models.Model):
+    _name = 'shopinvader.product'
     _inherit = ['locomotive.binding', 'abstract.url']
     _inherits = {'product.template': 'record_id'}
 
@@ -44,21 +44,6 @@ class LocomotiveProduct(models.Model):
         ('record_uniq', 'unique(backend_id, record_id)',
          'A product can only have one binding by backend.'),
     ]
-
-    @api.multi
-    def bind_image(self):
-        self.ensure_one()
-        # Automatically create the locomotive binding for the image
-        binding_image_obj = \
-            self.env['locomotive.image'].with_context(
-                connector_no_export=True)
-        for image in self.image_ids:
-            for size in binding_image_obj._image_size:
-                binding_image_obj.create({
-                    'size': size,
-                    'record_id': image.id,
-                    'backend_id': self.backend_id.id,
-                    })
 
     @api.multi
     def create_index_binding(self):
@@ -82,7 +67,6 @@ class LocomotiveProduct(models.Model):
     def create(self, vals):
         binding = super(LocomotiveProduct, self).create(vals)
         binding.create_index_binding()
-        binding.bind_image()  #TODO remove when refactoring with storage module
         return binding
 
     @api.depends('url_builder', 'record_id.name')
@@ -176,7 +160,7 @@ class NosqlProductProduct(models.Model):
     # from price / best discount
 
     categs = fields.Many2many(
-        comodel_name='locomotive.category',
+        comodel_name='shopinvader.category',
         compute='_compute_categ',
         string='Shopinvader Categories')
 
@@ -201,16 +185,7 @@ class NosqlProductProduct(models.Model):
             record.categs = shop_categs
 
     def _compute_image(self):
-        # TODO refactor me
         for record in self:
             images = []
-            for image in record.image_ids:
-                image_data = {'name': image.name}
-                for binding in image.locomotive_bind_ids:
-                    if binding.backend_id\
-                            == record.locomotive_product_id.backend_id:
-                        image_data[binding.size] = binding.url
-                images.append(image_data)
+            # TODO get image from public storage
             record.images = images
-
-
