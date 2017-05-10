@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="ir_exp_nosql_product_product_cross_sellings" model="ir.exports.line">
+    <field name="name">cross_sellings/id</field>
+    <field name="export_id" ref="shopinvader.ir_exp_nosql_product_product"/>
+</record>
+
+<record id="ir_exp_nosql_product_product_relateds" model="ir.exports.line">
+    <field name="name">relateds/id</field>
+    <field name="export_id" ref="shopinvader.ir_exp_nosql_product_product"/>
+</record>
+
+<record id="ir_exp_nosql_product_product_up_sellings" model="ir.exports.line">
+    <field name="name">up_sellings/id</field>
+    <field name="export_id" ref="shopinvader.ir_exp_nosql_product_product"/>
+</record>
+
+    </data>
+</openerp>
