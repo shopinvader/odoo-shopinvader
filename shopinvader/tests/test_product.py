@@ -9,18 +9,16 @@ from .common import CommonCase
 
 class ProductCase(CommonCase):
 
-    def test_create_nosql_product(self):
+    def test_create_shopinvader_variant(self):
         template = self.env.ref('product.product_product_25_product_template')
-        nosql_backend = self.env.ref('connector_nosql_algolia.backend_1')
         lang = self.env.ref('base.lang_en')
         self.env['shopinvader.product'].create({
             'record_id': template.id,
             'backend_id': self.backend.id,
             'lang_id': lang.id
             })
-        nosql_products = self.env['nosql.product.product'].search([
+        shopinvader_variant = self.env['shopinvader.variant'].search([
             ('record_id', 'in', template.product_variant_ids.ids),
-            ('backend_id', '=', nosql_backend.id)])
+            ('backend_id', '=', self.backend.id)])
         self.assertEqual(len(template.product_variant_ids),
-                         len(nosql_products))
-        self.assertEqual(nosql_products[0].index_id.lang_id, lang)
+                         len(shopinvader_variant))

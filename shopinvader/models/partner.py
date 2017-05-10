@@ -43,7 +43,7 @@ class ShopinvaderPartner(models.Model):
         user_company_id = self.env.user.company_id.id
         fposition_obj = self.env['account.fiscal.position']
         for binding in self:
-            role = self.env['shopinvadr.role']
+            role = self.env['shopinvader.role']
             company_id = binding.company_id and binding.company_id.id \
                 or user_company_id
             partner = binding.record_id

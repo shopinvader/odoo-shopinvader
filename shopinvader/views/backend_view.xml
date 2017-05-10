@@ -9,7 +9,6 @@
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>
-            <field name="nosql_backend_id"/>
         </field>
         <group name="config" position="after">
             <group name="price" colspan="4">
@@ -63,6 +62,14 @@
             </page>
         </notebook>
     </field>
+</record>
+
+<record id="connector_locomotivecms.action_locomotive_backend" model="ir.actions.act_window">
+    <field name="name">ShopInvader Backends</field>
+</record>
+
+<record id="connector_locomotivecms.menu_locomotive_root" model="ir.ui.menu">
+    <field name="name">ShopInvader</field>
 </record>
 
     </data>

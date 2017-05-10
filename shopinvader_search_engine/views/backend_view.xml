@@ -7,15 +7,9 @@
     <field name="inherit_id"
            ref="connector_locomotivecms.view_locomotive_backend_form" />
     <field name="arch" type="xml">
-        <page name="config" position="after">
-            <page name="search-engine" string="Search Engine">
-                <group name="search-engine" string="Search Engine" colspan="4">
-                    <field name="search_engine"/>
-                    <field name="search_engine_username"/>
-                    <field name="search_engine_password"/>
-                </group>
-            </page>
-        </page>
+        <field name="odoo_api" position="after">
+            <field name="nosql_backend_id"/>
+        </field>
     </field>
 </record>
 
