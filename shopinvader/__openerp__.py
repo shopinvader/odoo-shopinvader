@@ -41,8 +41,6 @@
     "data": [
         'views/product_view.xml',
         'views/payment_method_view.xml',
-        'views/image_view.xml',
-        'views/media_view.xml',
         'views/backend_view.xml',
         'views/partner_view.xml',
         'views/product_category_view.xml',

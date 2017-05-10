@@ -48,19 +48,3 @@ class LocomotiveCategory(models.Model):
     @api.depends('url_builder', 'record_id.name')
     def _compute_url(self):
         return super(LocomotiveCategory, self)._compute_url()
-
-    # Automatically create the locomotive binding for the image
-    @api.model
-    def create(self, vals):
-        binding = super(LocomotiveCategory, self).create(vals)
-        binding_image_obj = \
-            self.env['locomotive.image'].with_context(
-                connector_no_export=True)
-        for image in binding.image_ids:
-            for size in binding_image_obj._image_size:
-                binding_image_obj.create({
-                    'size': size,
-                    'record_id': image.id,
-                    'backend_id': binding.backend_id.id,
-                    })
-        return binding
