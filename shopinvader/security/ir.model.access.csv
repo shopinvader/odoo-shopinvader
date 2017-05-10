@@ -1,6 +1,7 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_shopinvader_category,shopinvader_category connector manager,model_shopinvader_category,connector.group_connector_manager,1,1,1,1
 access_shopinvader_product,shopinvader_product connector manager,model_shopinvader_product,connector.group_connector_manager,1,1,1,1
+access_shopinvader_variant,shopinvader_variant connector manager,model_shopinvader_variant,connector.group_connector_manager,1,1,1,1
 access_product_filter_employee,product.filter employee,model_product_filter,base.group_user,1,0,0,0
 access_product_filter_sale_manager,product.filter salemanager,model_product_filter,base.group_sale_manager,1,1,1,1
 access_shopinvader_role_employee,shopinvader.role employee,model_shopinvader_role,base.group_user,1,0,0,0
