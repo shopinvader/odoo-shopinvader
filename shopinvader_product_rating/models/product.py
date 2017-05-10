@@ -3,11 +3,11 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
+from openerp import fields, models
 
 
-class NosqlProductProduct(models.Model):
-    _inherit = 'nosql.product.product'
+class ShopinvaderVariant(models.Model):
+    _inherit = 'shopinvader.variant'
 
     rating = fields.Serialized(
         compute='_compute_rating',
@@ -16,7 +16,7 @@ class NosqlProductProduct(models.Model):
     def _compute_rating(self):
         for record in self:
             reviews = []
-            distribution = {1: 0, 2:0, 3:0, 4:0, 5:0}
+            distribution = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0}
             for rating in record.rating_ids:
                 if rating.state == 'approved':
                     reviews.append({
@@ -38,4 +38,4 @@ class NosqlProductProduct(models.Model):
                         'distribution': distribution,
                         }}
             else:
-               record.rating = {}
+                record.rating = {}
