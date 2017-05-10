@@ -33,7 +33,7 @@ class SaleCase(CommonCase):
 
     def test_hack_read_other_customer_sale(self):
         sale = self.env.ref('sale.sale_order_1')
-        sale.locomotive_backend_id = self.backend
+        sale.shopinvader_backend_id = self.backend
         # We raise a not found error because in a point of view of the hacker
         # and his right the record does not exist
         with self.assertRaises(NotFound):

@@ -4,12 +4,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from .helper import to_int, secure_params, ShoptorService
-from openerp.addons.connector_locomotivecms.backend import locomotive
+from ..backend import shopinvader
 from .cart import CartService
 from werkzeug.exceptions import NotFound
 
 
-@locomotive
+@shopinvader
 class CartItemService(ShoptorService):
     _model_name = 'sale.order.line'
 

@@ -31,7 +31,7 @@ class CustomerCase(CommonCase):
         partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(partner.email, data['email'])
         self.assertEqual(
-            partner.locomotive_bind_ids.external_id,
+            partner.shopinvader_bind_ids.external_id,
             data['external_id'])
         for key in data:
             if key == 'external_id':
@@ -41,7 +41,7 @@ class CustomerCase(CommonCase):
             else:
                 self.assertEqual(partner[key], data[key])
         self.assertEqual(
-            partner.locomotive_bind_ids.role_id,
+            partner.shopinvader_bind_ids.role_id,
             self.env.ref('shopinvader.role_1'))
 
     def test_create_customer_business_role(self):
@@ -60,7 +60,7 @@ class CustomerCase(CommonCase):
         res = service.create(data)
         partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(
-            partner.locomotive_bind_ids.role_id,
+            partner.shopinvader_bind_ids.role_id,
             self.env.ref('shopinvader.role_2'))
 
     def test_create_customer_exclude_role(self):
@@ -78,7 +78,7 @@ class CustomerCase(CommonCase):
         res = service.create(data)
         partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(
-            partner.locomotive_bind_ids.role_id,
+            partner.shopinvader_bind_ids.role_id,
             self.env.ref('shopinvader.role_3'))
 
     def test_contact_type(self):

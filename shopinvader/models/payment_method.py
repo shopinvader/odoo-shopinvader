@@ -7,9 +7,9 @@
 from openerp import fields, models
 
 
-class LocomotivePayment(models.Model):
-    _name = 'locomotive.payment'
-    _description = 'Locomotive Payment'
+class ShopinvaderPayment(models.Model):
+    _name = 'shopinvader.payment'
+    _description = 'Shopinvader Payment'
     _order = 'sequence'
 
     payment_method_id = fields.Many2one(

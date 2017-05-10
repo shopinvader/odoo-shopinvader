@@ -4,11 +4,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from .helper import to_int, secure_params, ShoptorService
-from openerp.addons.connector_locomotivecms.backend import locomotive
+from ..backend import shopinvader
 from werkzeug.exceptions import Forbidden, NotFound
 
 
-@locomotive
+@shopinvader
 class ContactService(ShoptorService):
     _model_name = 'res.partner'
 

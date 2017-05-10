@@ -8,8 +8,8 @@ from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError
 
 
-class LocomotivePartner(models.Model):
-    _name = 'locomotive.partner'
+class ShopinvaderPartner(models.Model):
+    _name = 'shopinvader.partner'
     _inherit = 'locomotive.binding'
     _inherits = {'res.partner': 'record_id'}
 
@@ -23,7 +23,7 @@ class LocomotivePartner(models.Model):
         required=True,
         store=True)
     role_id = fields.Many2one(
-        comodel_name='locomotive.role',
+        comodel_name='shopinvader.role',
         string='Role',
         compute='_compute_role',
         store=True)
@@ -43,18 +43,18 @@ class LocomotivePartner(models.Model):
         user_company_id = self.env.user.company_id.id
         fposition_obj = self.env['account.fiscal.position']
         for binding in self:
-            role = self.env['locomotive.role']
+            role = self.env['shopinvadr.role']
             company_id = binding.company_id and binding.company_id.id \
                 or user_company_id
             partner = binding.record_id
             fposition_id = fposition_obj.get_fiscal_position(
                 company_id, partner.id, delivery_id=partner.id)
             if fposition_id:
-                role = self.env['locomotive.role'].search([
+                role = self.env['shopinvader.role'].search([
                     ('fiscal_position_ids', '=', fposition_id),
                     ('backend_id', '=', binding.backend_id.id)])
             if not role:
-                role = self.env['locomotive.role'].search([
+                role = self.env['shopinvader.role'].search([
                     ('default', '=', True),
                     ('backend_id', '=', binding.backend_id.id)])
                 if not role:
@@ -70,16 +70,16 @@ class LocomotivePartner(models.Model):
         # at the creation of the element
         vals['partner_email'] = self.env['res.partner'].browse(
             vals['record_id']).email
-        return super(LocomotivePartner, self).create(vals)
+        return super(ShopinvaderPartner, self).create(vals)
 
 
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    locomotive_bind_ids = fields.One2many(
-        'locomotive.partner',
+    shopinvader_bind_ids = fields.One2many(
+        'shopinvader.partner',
         'record_id',
-        string='Locomotive Binding')
+        string='Shopinvader Binding')
     contact_type = fields.Selection(
         selection=[('profile', 'Profile'), ('address', 'Address')],
         string='Contact Type',
