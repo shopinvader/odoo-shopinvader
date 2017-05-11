@@ -16,9 +16,9 @@
  ],
  'data': [
      'views/backend_view.xml',
+     'views/product_view.xml',
  ],
  'demo': [
-     'demo/backend_demo.xml',
  ],
  'installable': True,
  'application': True,

@@ -42,6 +42,13 @@
                             </tree>
                         </field>
                     </group>
+                    <group name="variant" string="Variant">
+                        <field name="shopinvader_variant_ids" nolabel="1">
+                            <tree>
+                                <field name="default_code"/>
+                            </tree>
+                        </field>
+                    </group>
                 </form>
             </field>
         </page>

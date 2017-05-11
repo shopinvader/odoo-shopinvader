@@ -4,21 +4,20 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from .common import CommonCase
+from .common import ProductCommonCase
 
 
-class ProductCase(CommonCase):
+class ProductCase(ProductCommonCase):
 
     def test_create_shopinvader_variant(self):
-        template = self.env.ref('product.product_product_25_product_template')
-        lang = self.env.ref('base.lang_en')
-        self.env['shopinvader.product'].create({
-            'record_id': template.id,
-            'backend_id': self.backend.id,
-            'lang_id': lang.id
-            })
-        shopinvader_variant = self.env['shopinvader.variant'].search([
-            ('record_id', 'in', template.product_variant_ids.ids),
-            ('backend_id', '=', self.backend.id)])
-        self.assertEqual(len(template.product_variant_ids),
-                         len(shopinvader_variant))
+        self.assertEqual(
+            len(self.template.product_variant_ids),
+            len(self.shopinvader_variant))
+
+    def test_categories(self):
+        self.assertEqual(len(self.shopinvader_variant[0].categories), 0)
+        self.backend.bind_all_category()
+        self.assertEqual(len(self.shopinvader_variant[0].categories), 1)
+        self.assertEqual(
+            self.shopinvader_variant[0].categories.record_id,
+            self.template.categ_id)

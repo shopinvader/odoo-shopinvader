@@ -45,14 +45,16 @@ class LocomotiveBackend(models.Model):
     odoo_api = fields.Char(
         help=("This is the API key that you need to add in your website in "
               "order to give the posibility to shopinvader to access to odoo"))
-    nbr_product = fields.Integer(compute='_compute_nbr_content')
-    nbr_category = fields.Integer(compute='_compute_nbr_content')
     version = fields.Selection(selection_add=[
         ('shopinvader_v1', 'Shopinvader V1')])
 
+    nbr_product = fields.Integer(compute='_compute_nbr_content')
+    nbr_variant = fields.Integer(compute='_compute_nbr_content')
+    nbr_category = fields.Integer(compute='_compute_nbr_content')
+
     def _compute_nbr_content(self):
         for record in self:
-            for key in ['product', 'category']:
+            for key in ['product', 'category', 'variant']:
                 record['nbr_%s' % key] = self.env['shopinvader.%s' % key]\
                     .search_count([('backend_id', '=', record.id)])
 
@@ -90,3 +92,31 @@ class LocomotiveBackend(models.Model):
     @api.multi
     def export_all_category(self):
         return self._export_all_content('shopinvader.category')
+
+    def _bind_all_content(self, model, bind_model, domain):
+        for backend in self:
+            for record in self.env[model].search(domain):
+                if not self.env[bind_model].search([
+                        ('backend_id', '=', backend.id),
+                        ('lang_id', '=', backend.lang_ids[0].id),
+                        ('record_id', '=', record.id)]):
+                    self.env[bind_model].create({
+                        'backend_id': backend.id,
+                        'lang_id': backend.lang_ids[0].id,
+                        'record_id': record.id})
+        return True
+
+    @api.multi
+    def bind_all_product(self):
+        return self._bind_all_content(
+            'product.template',
+            'shopinvader.product',
+            [('sale_ok', '=', True)],
+            )
+
+    @api.multi
+    def bind_all_category(self):
+        return self._bind_all_content(
+            'product.category',
+            'shopinvader.category',
+            [])
