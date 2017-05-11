@@ -10,6 +10,5 @@ class ShopinvaderVariant(models.Model):
     _inherit = 'shopinvader.variant'
 
     def _get_categories(self):
-        categs = super(ShopinvaderVariant, self)._get_categories()
-        categs += self.categ_ids
-        return categs
+        return self.categ_ids +\
+            super(ShopinvaderVariant, self)._get_categories()
