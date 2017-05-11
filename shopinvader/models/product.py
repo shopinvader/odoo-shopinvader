@@ -102,6 +102,10 @@ class ShopinvaderProduct(models.Model):
     seo_title = fields.Char()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
+    shopinvader_variant_ids = fields.One2many(
+        'shopinvader.variant',
+        'shopinvader_product_id',
+        'Shopinvader Variant')
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id)',
@@ -138,6 +142,16 @@ class ShopinvaderProduct(models.Model):
             self.lang_id = langs[0]
             return {'domain': {'lang_id': [('id', 'in', langs.ids)]}}
 
+    @api.model
+    def default_get(self, fields_list):
+        res = super(ShopinvaderProduct, self).default_get(fields_list)
+        if 'backend_id' in fields_list:
+            backend = self.env['locomotive.backend'].search([], limit=1)
+            res['backend_id'] = backend.id
+            if backend and backend.lang_ids and 'lang_id' in fields_list:
+                res['lang_id'] = backend.lang_ids[0].id
+        return res
+
 
 class ShopinvaderVariant(models.Model):
     _name = 'shopinvader.variant'
@@ -159,9 +173,9 @@ class ShopinvaderVariant(models.Model):
     # images
     # from price / best discount
 
-    categs = fields.Many2many(
+    categories = fields.Many2many(
         comodel_name='shopinvader.category',
-        compute='_compute_categ',
+        compute='_compute_categories',
         string='Shopinvader Categories')
 
     images = fields.Serialized(
@@ -172,17 +186,16 @@ class ShopinvaderVariant(models.Model):
         self.ensure_one()
         return self.categ_id
 
-    def _compute_categ(self):
+    @api.depends('categ_id.shopinvader_bind_ids')
+    def _compute_categories(self):
         for record in self:
             shop_categs = []
             for categ in record._get_categories():
-                # TODO filtrer les categ qui sont du backend
                 for loco_categ in categ.shopinvader_bind_ids:
-                    if loco_categ.backend_id\
-                            == record.shopinvader_product_id.backend_id:
+                    if loco_categ.backend_id == record.backend_id:
                         shop_categs.append(loco_categ.id)
                         break
-            record.categs = shop_categs
+            record.categories = shop_categs
 
     def _compute_image(self):
         for record in self:

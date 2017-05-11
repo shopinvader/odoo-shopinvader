@@ -42,6 +42,10 @@
                 <group name="developper" colspan="4">
                     <field name="nbr_product"/>
                     <button
+                        name="bind_all_product"
+                        string="Bind all product"
+                        type="object"/>
+                    <button
                         name="clear_dead_product"
                         string="Clear dead product"
                         type="object"/>
