@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import api, fields, models
-from openerp import SUPERUSER_ID
 
 
 class ProductTemplate(models.Model):
@@ -21,53 +20,6 @@ class ProductTemplate(models.Model):
             # TODO we should propose to redirect the old url
             record.shopinvader_bind_ids.unlink()
         return super(ProductTemplate, self).unlink()
-
-
-class ProductProduct(models.Model):
-    _inherit = 'product.product'
-
-    def _get_untaxed_price(self, price):
-        if self._uid == SUPERUSER_ID and self._context.get('company_id'):
-            taxes = self.taxes_id.filtered(
-                lambda r: r.company_id.id == self._context['company_id'])
-        else:
-            taxes = self.taxes_id
-        return self.env['account.tax']._fix_tax_included_price(
-            price, taxes, [])
-
-    def _get_rounded_price(self, pricelist, qty, tax_included):
-        price = pricelist.price_get(self.id, qty, None)[pricelist.id]
-        if not tax_included:
-            price = self._get_untaxed_price(price)
-        return pricelist.currency_id.round(price)
-
-    def _get_pricelist_dict(self, pricelist, tax_included):
-        def get_all_parent(categ):
-            if categ:
-                return [categ.id] + get_all_parent(categ.parent_id)
-            else:
-                return []
-        self.ensure_one()
-        res = []
-        categ_ids = get_all_parent(self.categ_id)
-        items = self.env['product.pricelist.item'].search([
-            '|', '|',
-            ('product_id', '=', self.id),
-            ('product_tmpl_id', '=', self.product_tmpl_id.id),
-            ('categ_id', 'in', categ_ids),
-            ])
-        item_qty = set([item.min_quantity
-                        for item in items if item.min_quantity > 1] + [1])
-        last_price = None
-        for qty in item_qty:
-            price = self._get_rounded_price(pricelist, qty, tax_included)
-            if price != last_price:
-                res.append({
-                    'qty': qty,
-                    'price': price,
-                    })
-                last_price = price
-        return res
 
 
 class ProductFilter(models.Model):
@@ -181,6 +133,8 @@ class ShopinvaderVariant(models.Model):
     images = fields.Serialized(
         compute='_compute_image',
         string='Shopinvader Image')
+    variant_count = fields.Integer(
+        related='product_variant_count')
 
     def _get_categories(self):
         self.ensure_one()
@@ -202,3 +156,31 @@ class ShopinvaderVariant(models.Model):
             images = []
             # TODO get image from public storage
             record.images = images
+
+    def _get_price(self, pricelist, fposition):
+        self.ensure_one()
+        return self._get_price_per_qty(1, pricelist, fposition)
+
+    def _extract_price_from_onchange(self, pricelist, onchange_vals):
+        tax_ids = onchange_vals['value']['tax_id']
+        tax_included = False
+        if tax_ids:
+            # Becarefull we only take in account the first tax for
+            # determinating if the price is tax included or tax excluded
+            # This may not work in multi-tax case
+            tax = self.env['account.tax'].browse(tax_ids[0])
+            tax_included = tax.price_include
+        prec = self.env['decimal.precision'].precision_get('Product')
+        return {
+            'value': round(onchange_vals['value']['price_unit'], prec),
+            'tax_included': tax_included,
+            }
+
+    def _get_price_per_qty(self, qty, pricelist, fposition):
+        # Get an partner in order to avoid the raise in the onchange
+        # the partner selected will not impacted the result
+        partner = self.env['res.partner'].search([], limit=1)
+        result = self.env['sale.order.line'].product_id_change(
+            pricelist.id, self.record_id.id, qty=qty,
+            fiscal_position=fposition.id, partner_id=partner.id)
+        return self._extract_price_from_onchange(pricelist, result)

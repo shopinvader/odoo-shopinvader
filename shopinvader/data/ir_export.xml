@@ -47,6 +47,11 @@
     <field name="export_id" ref="ir_exp_shopinvader_variant"/>
 </record>
 
+<record id="ir_exp_shopinvader_variant_variant_count" model="ir.exports.line">
+    <field name="name">variant_count</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
 <record id="ir_exp_shopinvader_variant_categs_id" model="ir.exports.line">
     <field name="name">categories/id</field>
     <field name="export_id" ref="ir_exp_shopinvader_variant"/>

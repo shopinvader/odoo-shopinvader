@@ -29,6 +29,7 @@ class ProductCommonCase(CommonCase):
         super(ProductCommonCase, self).setUp()
         self.template = self.env.ref(
             'product.product_product_25_product_template')
+        self.template.taxes_id = self.env.ref('shopinvader.tax_1')
         lang = self.env.ref('base.lang_en')
         self.env['shopinvader.product'].create({
             'record_id': self.template.id,
