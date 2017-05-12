@@ -12,7 +12,19 @@ class ShopinvaderVariant(models.Model):
 
     index_id = fields.Many2one(
         compute="_compute_index",
-        store=True)
+        store=True,
+        required=False)
+
+    price = fields.Serialized(
+        compute='_compute_price',
+        string='Shopinvader Image')
+
+    def _compute_price(self):
+        for record in self:
+            record.price = {}
+            for role in record.backend_id.role_ids:
+                record.price[role.code] = record._get_price(
+                    role.pricelist_id, role.fiscal_position_ids[0])
 
     @api.depends('lang_id', 'backend_id.se_backend_id')
     def _compute_index(self):
