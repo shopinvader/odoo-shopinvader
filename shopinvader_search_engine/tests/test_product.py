@@ -13,16 +13,15 @@ class ProductCase(ProductCommonCase):
         result = {
             'public_tax_exc': {
                 'tax_included': False,
-                'value': 2565.22},
+                'value': 652.17},
             'public_tax_inc': {
                 'tax_included': True,
-                'value': 2950.0},
+                'value': 750.0},
             'pro_tax_exc': {
                 'tax_included': False,
-                'value': 2052.17,
+                'value': 521.74,
             }}
-        variant = self.shopinvader_variant[0]
-        for role, vals in variant.price.items():
+        for role, vals in self.shopinvader_variant.price.items():
             self.assertEqual(
                 result[role]['tax_included'], vals['tax_included'])
             self.assertEqual(
