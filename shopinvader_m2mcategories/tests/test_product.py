@@ -13,7 +13,7 @@ class ProductCase(ProductCommonCase):
         self.backend.bind_all_category()
         self.assertEqual(
             self.template.categ_id,
-            self.shopinvader_variant[0].categories.record_id)
+            self.shopinvader_variant.categories.record_id)
 
     def test_multi_categories(self):
         self.backend.bind_all_category()
