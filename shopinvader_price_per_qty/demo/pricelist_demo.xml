@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="item_discount_price_variant_4b" model="product.pricelist.item">
+            <field name="price_version_id" ref="shopinvader.version_1"/>
+            <field name="base" ref="product.list_price"/>
+            <field name="sequence">990</field>
+            <field name="price_discount" eval="-0.30"/>
+            <field name="min_quantity" eval="10"/>
+            <field name="product_id" ref="product.product_product_4b"/>
+            <field name="name">Discount for the variant 4b</field>
+        </record>
+
+        <record id="item_discount_price_variant_4c" model="product.pricelist.item">
+            <field name="price_version_id" ref="shopinvader.version_1"/>
+            <field name="base" ref="product.list_price"/>
+            <field name="sequence">995</field>
+            <field name="price_discount" eval="-0.30"/>
+            <field name="min_quantity" eval="15"/>
+            <field name="product_id" ref="product.product_product_4c"/>
+            <field name="name">Discount for the variant 4c</field>
+        </record>
+
+        <record id="item_discount_price_template" model="product.pricelist.item">
+            <field name="price_version_id" ref="shopinvader.version_1"/>
+            <field name="base" ref="product.list_price"/>
+            <field name="sequence">980</field>
+            <field name="price_discount" eval="-0.40"/>
+            <field name="min_quantity" eval="20"/>
+            <field name="product_tmpl_id" ref="product.product_product_4"/>
+            <field name="name">Discount for the product 4</field>
+        </record>
+
+        <record id="item_discount_price_categ" model="product.pricelist.item">
+            <field name="price_version_id" ref="shopinvader.version_1"/>
+            <field name="base" ref="product.list_price"/>
+            <field name="sequence">970</field>
+            <field name="price_discount" eval="-0.50"/>
+            <field name="min_quantity" eval="30"/>
+            <field name="categ_id" ref="product.ipad"/>
+            <field name="name">Discount for the category ipad</field>
+        </record>
+
+        <record id="item_discount_all" model="product.pricelist.item">
+            <field name="price_version_id" ref="shopinvader.version_1"/>
+            <field name="base" ref="product.list_price"/>
+            <field name="sequence">960</field>
+            <field name="price_discount" eval="-0.60"/>
+            <field name="min_quantity" eval="40"/>
+            <field name="name">Discount for all</field>
+        </record>
+
+    </data>
+</openerp>

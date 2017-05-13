@@ -27,8 +27,8 @@ class ProductCommonCase(CommonCase):
 
     def setUp(self):
         super(ProductCommonCase, self).setUp()
-        self.template = self.env.ref(
-            'product.product_product_25_product_template')
+        self.template = self.env.ref('product.product_product_4')
+        self.variant = self.env.ref('product.product_product_4b')
         self.template.taxes_id = self.env.ref('shopinvader.tax_1')
         lang = self.env.ref('base.lang_en')
         self.env['shopinvader.product'].create({
@@ -36,6 +36,9 @@ class ProductCommonCase(CommonCase):
             'backend_id': self.backend.id,
             'lang_id': lang.id
             })
-        self.shopinvader_variant = self.env['shopinvader.variant'].search([
+        self.shopinvader_variants = self.env['shopinvader.variant'].search([
             ('record_id', 'in', self.template.product_variant_ids.ids),
+            ('backend_id', '=', self.backend.id)])
+        self.shopinvader_variant = self.env['shopinvader.variant'].search([
+            ('record_id', '=', self.variant.id),
             ('backend_id', '=', self.backend.id)])

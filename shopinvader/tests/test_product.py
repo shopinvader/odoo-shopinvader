@@ -12,12 +12,12 @@ class ProductCase(ProductCommonCase):
     def test_create_shopinvader_variant(self):
         self.assertEqual(
             len(self.template.product_variant_ids),
-            len(self.shopinvader_variant))
+            len(self.shopinvader_variants))
 
     def test_categories(self):
-        self.assertEqual(len(self.shopinvader_variant[0].categories), 0)
+        self.assertEqual(len(self.shopinvader_variant.categories), 0)
         self.backend.bind_all_category()
-        self.assertEqual(len(self.shopinvader_variant[0].categories), 1)
+        self.assertEqual(len(self.shopinvader_variant.categories), 1)
         self.assertEqual(
-            self.shopinvader_variant[0].categories.record_id,
+            self.shopinvader_variant.categories.record_id,
             self.template.categ_id)
