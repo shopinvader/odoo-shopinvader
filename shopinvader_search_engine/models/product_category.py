@@ -6,26 +6,15 @@
 from openerp import api, fields, models
 
 
-class ShopinvaderVariant(models.Model):
-    _inherit = ['shopinvader.variant', 'se.binding']
-    _name = 'shopinvader.variant'
-    _description = 'Shopinvader Variant'
+class ShopinvaderCategory(models.Model):
+    _inherit = ['shopinvader.category', 'se.binding']
+    _name = 'shopinvader.category'
+    _description = 'Shopinvader Category'
 
     index_id = fields.Many2one(
         compute="_compute_index",
         store=True,
         required=False)
-
-    price = fields.Serialized(
-        compute='_compute_price',
-        string='Shopinvader Price')
-
-    def _compute_price(self):
-        for record in self:
-            record.price = {}
-            for role in record.backend_id.role_ids:
-                record.price[role.code] = record._get_price(
-                    role.pricelist_id, role.fiscal_position_ids[0])
 
     @api.depends('lang_id', 'backend_id.se_backend_id')
     def _compute_index(self):
