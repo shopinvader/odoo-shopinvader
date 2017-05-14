@@ -58,24 +58,6 @@ class LocomotiveBackend(models.Model):
                 record['nbr_%s' % key] = self.env['shopinvader.%s' % key]\
                     .search_count([('backend_id', '=', record.id)])
 
-    def _clear_dead_content(self, model):
-        """This method will check the existing product on shopinvader site
-        and delete it if it does not exist in odoo. This is really usefull
-        in dev mode and can be usefull if you have done some mistake in your
-        database production."""
-        session = ConnectorSession.from_env(self.env)
-        for record in self:
-            clear_dead_content.delay(session, model, record.id)
-        return True
-
-    @api.multi
-    def clear_dead_product(self):
-        return self._clear_dead_content('shopinvader.product')
-
-    @api.multi
-    def clear_dead_category(self):
-        return self._clear_dead_content('shopinvader.category')
-
     def _export_all_content(self, model):
         session = ConnectorSession.from_env(self.env)
         for record in self:
@@ -85,17 +67,33 @@ class LocomotiveBackend(models.Model):
                 delay_export(session, model, binding.id, {})
         return True
 
-    @api.multi
-    def export_all_product(self):
-        return self._export_all_content('shopinvader.product')
+    def _clear_dead_locomotive_content(self, model):
+        """This method will check the existing product on shopinvader site
+        and delete it if it does not exist in odoo. This is really usefull
+        in dev mode and can be usefull if you have done some mistake in your
+        database production."""
+        session = ConnectorSession.from_env(self.env)
+        for record in self:
+            clear_dead_content.delay(session, model, record.id)
+        return True
 
-    @api.multi
-    def export_all_category(self):
-        return self._export_all_content('shopinvader.category')
+    def _search_content(self, model, bind_model, domain):
+        if model == 'product.category':
+            # order the category in order to start to bind the parent
+            categs = self.env['product.category'].search(
+                domain + [('parent_id', '=', False)])
+            ordered_categs = categs
+            while categs:
+                categs = self.env['product.category'].search(
+                    domain + [('parent_id', 'in', categs.ids)])
+                ordered_categs += categs
+            return ordered_categs
+        else:
+            return self.env[model].search(domain)
 
     def _bind_all_content(self, model, bind_model, domain):
         for backend in self:
-            for record in self.env[model].search(domain):
+            for record in self._search_content(model, bind_model, domain):
                 if not self.env[bind_model].search([
                         ('backend_id', '=', backend.id),
                         ('lang_id', '=', backend.lang_ids[0].id),
@@ -111,12 +109,11 @@ class LocomotiveBackend(models.Model):
         return self._bind_all_content(
             'product.template',
             'shopinvader.product',
-            [('sale_ok', '=', True)],
-            )
+            [('sale_ok', '=', True)])
 
     @api.multi
     def bind_all_category(self):
-        return self._bind_all_content(
+        self._bind_all_content(
             'product.category',
             'shopinvader.category',
             [])

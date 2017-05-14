@@ -46,10 +46,12 @@
         'views/sale_view.xml',
         'security/ir.model.access.csv',
         "data/res_partner.xml",
-        "data/ir_export.xml",
+        "data/ir_export_product.xml",
+        "data/ir_export_category.xml",
     ],
     "demo": [
         "demo/account_demo.xml",
+        "demo/product_demo.xml",
         "demo/pricelist_demo.xml",
         "demo/backend_demo.xml",
         "demo/partner_demo.xml",

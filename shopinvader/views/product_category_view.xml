@@ -32,7 +32,6 @@
                                     <page name="description" string="Description">
                                         <group colspan="4">
                                             <field name="subtitle"/>
-                                            <field name="link_label"/>
                                             <separator string="Short Description" colspan="4"/>
                                             <field name="short_description" nolabel="1" colspan="4"/>
                                             <separator string="Description" colspan="4"/>
@@ -42,7 +41,7 @@
                                     <page name="seo" string="SEO">
                                         <group name="backend">
                                             <field name="seo_title"/>
-                                            <field name="meta_keyword"/>
+                                            <field name="meta_keywords"/>
                                             <field name="meta_description"/>
                                             <field name="url_builder"/>
                                             <field

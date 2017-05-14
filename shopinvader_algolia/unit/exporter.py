@@ -11,14 +11,17 @@ from openerp.addons.connector_search_engine.unit.exporter import (
 from openerp.addons.connector_algolia.backend import algolia
 
 
-@job(default_channel='root.shopinvader.variant')
+@job(default_channel='root.shopinvader.catalog')
 def export_record(session, model_name, binding_ids):
     return export_record_se(session, model_name, binding_ids)
 
 
 @algolia
 class AlgoliaExporter(SeExporter):
-    _model_name = 'shopinvader.variant'
+    _model_name = [
+        'shopinvader.variant',
+        'shopinvader.category',
+        ]
 
     def get_export_func(self):
         """ Should return the delay export func of the binding """

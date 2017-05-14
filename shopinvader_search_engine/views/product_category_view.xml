@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="view_shopinvader_category_tree" model="ir.ui.view">
+    <field name="model">shopinvader.category</field>
+    <field name="arch" type="xml">
+    <tree string="Shopinvader Category" create="0" edit="0" delete="0">
+        <field name="name"/>
+        <field name="backend_id"/>
+        <field name="index_id"/>
+        <field name="sync_state"/>
+        <field name="date_modified"/>
+        <field name="date_syncronized"/>
+    </tree>
+    </field>
+</record>
+
+<record id="view_shopinvader_category_search" model="ir.ui.view">
+    <field name="model">shopinvader.category</field>
+    <field name="arch" type="xml">
+    <search string="Shopinvader Product">
+        <field name="name"/>
+        <field name="backend_id"/>
+        <field name="index_id"/>
+        <field name="sync_state"/>
+        <separator/>
+        <filter string="To Update" name="to_update"
+                domain="[('sync_state','=','to_update')]"/>
+        <filter string="Scheduled" name="scheduled"
+                domain="[('sync_state','=','scheduled')]"/>
+        <filter string="Done" name="done"
+                domain="[('sync_state','=','done')]"/>
+        <group string="Group By">
+            <filter string="Backend" domain="[]" context="{'group_by':'backend_id'}"/>
+            <filter string="Index" domain="[]" context="{'group_by':'index_id'}"/>
+            <filter string="State" domain="[]" context="{'group_by':'sync_state'}"/>
+        </group>
+    </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_shopinvader_category_view">
+    <field name="name">Shopinvader Category</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">shopinvader.category</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree</field>
+    <field name="search_view_id" ref="view_shopinvader_category_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{'search_default_to_update': 1}</field>
+</record>
+
+<menuitem id="menu_shopinvader_category"
+    parent="connector_locomotivecms.menu_locomotive_root"
+    sequence="30"
+    action="act_open_shopinvader_category_view"/>
+    </data>
+</openerp>

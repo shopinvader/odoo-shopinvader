@@ -34,11 +34,13 @@ class ShopinvaderCategory(models.Model):
         required=True)
     seo_title = fields.Char()
     meta_description = fields.Char()
-    meta_keyword = fields.Char()
+    meta_keywords = fields.Char()
     subtitle = fields.Char()
-    link_label = fields.Char()
     short_description = fields.Html()
     description = fields.Html()
+    images = fields.Serialized(
+        compute='_compute_image',
+        string='Shopinvader Image')
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
@@ -48,3 +50,9 @@ class ShopinvaderCategory(models.Model):
     @api.depends('url_builder', 'record_id.name')
     def _compute_url(self):
         return super(ShopinvaderCategory, self)._compute_url()
+
+    def _compute_image(self):
+        for record in self:
+            images = []
+            # TODO get image from public storage
+            record.images = images
