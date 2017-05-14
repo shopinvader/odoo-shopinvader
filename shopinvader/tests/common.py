@@ -14,6 +14,10 @@ class CommonCase(TransactionCase):
         super(CommonCase, self).setUp(*args, **kwargs)
         self.backend = self.env.ref('connector_locomotivecms.backend_1')
         self.shopinvader_session = {}
+        # Compatibility with product_visible_discount
+        if 'visible_discount' in self.env['product.pricelist']._fields:
+            pricelist = self.env['product.pricelist'].search([])
+            pricelist.write({'visible_discount': False})
 
     def _get_service(self, service_class, partner):
         model_name = service_class._model_name

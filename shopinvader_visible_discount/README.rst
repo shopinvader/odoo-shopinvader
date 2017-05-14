@@ -2,11 +2,11 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============================
-ShopInvader Price per Quantity
-==============================
+============================
+ShopInvader visible discount
+============================
 
-Thsi module extract the price per quantity in order to make in available in your shopinvader website
+This module show the discount of your pricelist into your shopinvader website
 
 Installation
 ============
@@ -18,12 +18,8 @@ To install this module, you need to:
 Configuration
 =============
 
-No configuration is required
-
-Usage
-=====
-
-Configure your pricelist like usual
+This module depend of product_visible_discount (look at it's documentation)
+Basically you need to tic the field "visible_discount" into your pricelist
 
 Known issues / Roadmap
 ======================
@@ -52,7 +48,7 @@ Funders
 The development of this module has been financially supported by:
 
 * Akretion R&D
-* Encredubuit
+* Adaptoo
 
 Maintainer
 ----------
