@@ -82,6 +82,12 @@ class ShopinvaderProduct(models.Model):
         binding._create_shopinvader_variant()
         return binding
 
+    def _build_url_key(self):
+        key = super(ShopinvaderProduct, self)._build_url_key()
+        if self.default_code:
+            key = '-'.join([key, self.default_code])
+        return key
+
     @api.depends('url_builder', 'record_id.name')
     def _compute_url(self):
         return super(ShopinvaderProduct, self)._compute_url()
