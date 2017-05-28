@@ -160,7 +160,12 @@ class ShopinvaderVariant(models.Model):
     def _compute_image(self):
         for record in self:
             images = []
-            # TODO get image from public storage
+            for image in record.record_id.image_ids:
+                res = {'original': image.url}
+                for resize in record.backend_id.image_resize_ids:
+                    res[resize.key] = \
+                        image.get_thumbnail_from_resize(resize).url
+                images.append(res)
             record.images = images
 
     def _get_price(self, pricelist, fposition):

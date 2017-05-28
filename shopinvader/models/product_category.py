@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 class ProductCategory(models.Model):
     _name = "product.category"
-    _inherit = [_name, "base_multi_image.owner"]
+    _inherit = [_name, "storage.image.owner"]
 
     shopinvader_bind_ids = fields.One2many(
         'shopinvader.category',
