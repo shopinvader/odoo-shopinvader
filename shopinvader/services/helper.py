@@ -64,7 +64,9 @@ class ShoptorService(ConnectorUnit):
         _logger.error("BadRequest %s", v.errors)
         raise UserError(_("BadRequest %s") % v.errors)
 
-    def to_domain(scope):
+    def to_domain(self, scope):
+        if not scope:
+            return []
         # Convert the liquid scope syntax to the odoo domain
         OPERATORS = {
             'gt': '>',
