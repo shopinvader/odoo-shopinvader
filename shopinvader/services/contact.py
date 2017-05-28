@@ -21,7 +21,7 @@ class ContactService(ShoptorService):
         if not self.partner:
             return []
         else:
-            return self._list(contact_type=params.get('contact_type'))
+            return self._list(params.pop('domain', None))
 
     @secure_params
     def create(self, params):
@@ -50,10 +50,10 @@ class ContactService(ShoptorService):
     # Validator
     def _validator_list(self):
         return {
-            'contact_type': {
-                'type': 'string',
+            'domain': {
+                'coerce': self.to_domain,
                 'nullable': True,
-                'allowed': ['profile', 'address']},
+                },
             }
 
     def _validator_create(self):
@@ -103,13 +103,12 @@ class ContactService(ShoptorService):
             'id': {'coerce': to_int, 'required': True},
             }
 
-    def _list(self, contact_type=None):
-        result = []
-        if contact_type in ('profile', None):
-            result += self.to_json(self.partner)
-        if contact_type in ('address', None):
-            result += self.to_json(self.partner.child_ids)
-        return {'data': result}
+    def _list(self, domain=None):
+        if not domain:
+            domain = []
+        domain = [('id', 'child_of', self.partner.id)] + domain
+        partners = self.env['res.partner'].search(domain)
+        return {'data': self.to_json(partners)}
 
     def _get_contact(self, params):
         domain = [('id', '=', params['id'])]

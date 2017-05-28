@@ -40,13 +40,8 @@ class ShoptorController(Controller):
 
     # Cart
 
-    @route('/shopinvader/cart', methods=['GET'], auth="shopinvader")
+    @route('/shopinvader/cart', methods=['GET', 'PUT'], auth="shopinvader")
     def cart_list(self, **params):
-        return self.send_to_service(CartService, params)
-
-    @route('/shopinvader/cart/<id>', methods=['GET', 'PUT'],
-           auth="shopinvader")
-    def cart(self, **params):
         return self.send_to_service(CartService, params)
 
     # Cart Item

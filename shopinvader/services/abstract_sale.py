@@ -10,7 +10,7 @@ from .contact import ContactService
 class AbstractSaleService(ShoptorService):
 
     def _parser_product(self):
-        fields = ['name', 'id']
+        fields = ['name', 'id']  # TODO url_key
         if 'product_code_builder' in self.env.registry._init_modules:
             fields.append('prefix_code')
         return fields
@@ -76,4 +76,7 @@ class AbstractSaleService(ShoptorService):
             order['order_line'] = [
                 l for l in order['order_line']
                 if not l['is_delivery']]
+            order['item_number'] = sum([
+                l['product_uom_qty']
+                for l in order['order_line']])
         return res
