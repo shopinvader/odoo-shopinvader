@@ -65,7 +65,7 @@ class ShopinvaderCategory(models.Model):
         for record in self:
             for binding in record.parent_id.shopinvader_bind_ids:
                 if binding.backend_id == record.backend_id:
-                    record.shopinvader_parent_id = binding.id
+                    record.parent = binding
                     break
             if not record.parent and record._should_have_parent():
                 raise UserError(
