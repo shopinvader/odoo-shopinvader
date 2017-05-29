@@ -13,7 +13,7 @@ from ..services.customer import CustomerService
 from ..services.sale import SaleService
 
 
-class ShoptorController(Controller):
+class ShopinvaderController(Controller):
 
     def send_to_service(self, service_class, params):
         method = request.httprequest.method

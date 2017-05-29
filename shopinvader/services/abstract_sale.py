@@ -3,11 +3,11 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import ShoptorService
+from .helper import ShopinvaderService
 from .contact import ContactService
 
 
-class AbstractSaleService(ShoptorService):
+class AbstractSaleService(ShopinvaderService):
 
     def _parser_product(self):
         fields = ['name', 'id']  # TODO url_key
