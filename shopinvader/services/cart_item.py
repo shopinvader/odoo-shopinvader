@@ -3,14 +3,14 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import to_int, secure_params, ShoptorService
+from .helper import to_int, secure_params, ShopinvaderService
 from ..backend import shopinvader
 from .cart import CartService
 from werkzeug.exceptions import NotFound
 
 
 @shopinvader
-class CartItemService(ShoptorService):
+class CartItemService(ShopinvaderService):
     _model_name = 'sale.order.line'
 
     # The following method are 'public' and can be called from the controller.
