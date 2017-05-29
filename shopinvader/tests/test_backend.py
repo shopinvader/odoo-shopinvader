@@ -32,7 +32,7 @@ class BackendCase(CommonCase):
     def test_bind_all_category(self):
         self.assertEqual(*self._bind_all_category())
 
-    def test_rebind_all_product(self):
+    def test_rebind_all_category(self):
         self._bind_all_category()
         self.env['shopinvader.category'].search([], limit=1).unlink()
         self.assertEqual(*self._bind_all_category())

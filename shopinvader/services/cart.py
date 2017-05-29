@@ -168,7 +168,7 @@ class CartService(AbstractSaleService):
         res['available_payment_method_ids']\
             = self._get_available_payment_method()
         return {
-            'data': [res],
+            'data': res,
             'set_session': {'cart_id': res['id']},
             'store_data': 'cart'}
 

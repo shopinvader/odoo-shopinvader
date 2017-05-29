@@ -80,23 +80,9 @@ class LocomotiveBackend(models.Model):
             clear_dead_content.delay(session, model, record.id)
         return True
 
-    def _search_content(self, model, bind_model, domain):
-        if model == 'product.category':
-            # order the category in order to start to bind the parent
-            categs = self.env['product.category'].search(
-                domain + [('parent_id', '=', False)])
-            ordered_categs = categs
-            while categs:
-                categs = self.env['product.category'].search(
-                    domain + [('parent_id', 'in', categs.ids)])
-                ordered_categs += categs
-            return ordered_categs
-        else:
-            return self.env[model].search(domain)
-
     def _bind_all_content(self, model, bind_model, domain):
         for backend in self:
-            for record in self._search_content(model, bind_model, domain):
+            for record in self.env[model].search(domain):
                 if not self.env[bind_model].search([
                         ('backend_id', '=', backend.id),
                         ('lang_id', '=', backend.lang_ids[0].id),
