@@ -57,9 +57,6 @@ class ShopinvaderCategory(models.Model):
          'A category can only have one binding by backend.'),
     ]
 
-    def _should_have_parent(self):
-        return bool(self.parent_id)
-
     @api.depends('parent_id.shopinvader_bind_ids')
     def _compute_parent_category(self):
         for record in self:
@@ -67,10 +64,6 @@ class ShopinvaderCategory(models.Model):
                 if binding.backend_id == record.backend_id:
                     record.parent = binding
                     break
-            if not record.parent and record._should_have_parent():
-                raise UserError(
-                    _('The category must have its parent '
-                      'exported into shopinvader'))
 
     def _build_url_key(self):
         key = super(ShopinvaderCategory, self)._build_url_key()
