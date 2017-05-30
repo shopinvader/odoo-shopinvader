@@ -3,6 +3,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from unidecode import unidecode
+
 from openerp import api, fields, models
 
 
@@ -142,6 +144,11 @@ class ShopinvaderVariant(models.Model):
     variant_count = fields.Integer(
         related='product_variant_count')
 
+    attributes = fields.Serialized(
+        compute='_compute_attributes',
+        string='Shopinvader Attributes'
+    )
+
     def _get_categories(self):
         self.ensure_one()
         return self.categ_id
@@ -167,6 +174,15 @@ class ShopinvaderVariant(models.Model):
                         image.get_thumbnail_from_resize(resize).url
                 images.append(res)
             record.images = images
+
+    def _compute_attributes(self):
+        for record in self:
+            attributes = dict()
+            for att_value in record.attribute_value_ids:
+                key = att_value.attribute_id.name
+                sanitized_key = unidecode(key.replace(' ', '_').lower())
+                attributes[sanitized_key] = att_value.name
+            record.attributes = attributes
 
     def _get_price(self, pricelist, fposition):
         self.ensure_one()
