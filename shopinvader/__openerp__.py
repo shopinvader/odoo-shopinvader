@@ -14,7 +14,7 @@
     "application": True,
     "installable": True,
     "external_dependencies": {
-        "python": [],
+        "python": ['cerberus'],
         "bin": [],
     },
     "depends": [
