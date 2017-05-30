@@ -15,10 +15,7 @@ from openerp.addons.connector_locomotivecms.unit.deleter import (
 
 
 @on_record_create(model_names=[
-    'locomotive.category',
-    'locomotive.product',
-    'locomotive.image',
-    'locomotive.partner',
+    'shopinvader.partner',
     ])
 def delay_export(session, model_name, record_id, vals=None):
     with session.change_context(connector_force_export=True):
@@ -27,10 +24,7 @@ def delay_export(session, model_name, record_id, vals=None):
 
 
 @on_record_write(model_names=[
-    'locomotive.category',
-    'locomotive.product',
-    'locomotive.image',
-    'locomotive.partner',
+    'shopinvader.partner',
     ])
 def delay_export(session, model_name, record_id, vals=None):
     consumer = Consumer(session, get_environment, model_name, record_id)
@@ -38,22 +32,16 @@ def delay_export(session, model_name, record_id, vals=None):
 
 
 @on_record_write(model_names=[
-    'product.template',
-    'product.category',
-    'base_multi_image.image',
     'res.partner',
     ])
 def delay_export_all_binding(session, model_name, record_id, vals=None):
     consumer = Consumer(session, get_environment, model_name, record_id)
     consumer.delay_export_all_binding(
-        export_record, 'locomotive_bind_ids', vals=vals)
+        export_record, 'shopinvader_bind_ids', vals=vals)
 
 
 @on_record_unlink(model_names=[
-    'locomotive.product',
-    'locomotive.category',
-    'locomotive.image',
-    'locomotive.partner',
+    'shopinvader.partner',
     ])
 def delay_unlink(session, model_name, record_id):
     consumer = Consumer(session, get_environment, model_name, record_id)
@@ -61,12 +49,9 @@ def delay_unlink(session, model_name, record_id):
 
 
 @on_record_unlink(model_names=[
-    'product.template',
-    'product.category',
-    'base_multi_image.image',
     'res.partner',
 ])
 def delay_unlink_all_option_binding(session, model_name, record_id):
     consumer = Consumer(session, get_environment, model_name, record_id)
     consumer.delay_unlink_all_binding(
-        export_delete_record, 'locomotive_bind_ids')
+        export_delete_record, 'shopinvader_bind_ids')

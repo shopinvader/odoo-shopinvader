@@ -7,9 +7,7 @@ from . import partner
 from . import product
 from . import product_category
 from . import role
-from . import image
 from . import sale
-from . import media
 from . import backend
 from . import ir_http
 from . import url

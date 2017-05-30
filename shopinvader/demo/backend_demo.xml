@@ -4,10 +4,11 @@
 
 <record id="connector_locomotivecms.backend_1" model="locomotive.backend">
     <field name="odoo_api">odooapi</field>
-    <field name="nosql_backend_id" ref="connector_nosql_algolia.backend_1"/>
+    <field name="version">shopinvader_v1</field>
+    <field name="image_resize_ids" eval="[(6, 0, [ref('small'), ref('medium'), ref('large')])]"/>
 </record>
 
-<record id="role_1" model="locomotive.role">
+<record id="role_1" model="shopinvader.role">
     <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
     <field name="pricelist_id" ref="product.list0"/>
     <field name="default" eval="True"/>
@@ -15,14 +16,14 @@
     <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_0')])]"/>
 </record>
 
-<record id="role_2" model="locomotive.role">
+<record id="role_2" model="shopinvader.role">
     <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
     <field name="pricelist_id" ref="pricelist_1"/>
     <field name="code">pro_tax_exc</field>
     <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_1')])]"/>
 </record>
 
-<record id="role_3" model="locomotive.role">
+<record id="role_3" model="shopinvader.role">
     <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
     <field name="pricelist_id" ref="product.list0"/>
     <field name="code">public_tax_exc</field>

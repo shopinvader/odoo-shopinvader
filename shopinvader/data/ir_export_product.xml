@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="ir_exp_shopinvader_variant" model="ir.exports">
+    <field name="name">ShopInvader Product Export</field>
+    <field name="resource">shopinvader.variant</field>
+</record>
+
+<record id="ir_exp_shopinvader_variant_name" model="ir.exports.line">
+    <field name="name">name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_url_key" model="ir.exports.line">
+    <field name="name">url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_description" model="ir.exports.line">
+    <field name="name">description</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_stock_state" model="ir.exports.line">
+    <field name="name">stock_state</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_qty_available" model="ir.exports.line">
+    <field name="name">qty_available</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_seo_title" model="ir.exports.line">
+    <field name="name">seo_title</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_meta_keywords" model="ir.exports.line">
+    <field name="name">meta_keywords</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_meta_description" model="ir.exports.line">
+    <field name="name">meta_description</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_variant_count" model="ir.exports.line">
+    <field name="name">variant_count</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_id" model="ir.exports.line">
+    <field name="name">categories/id</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_name" model="ir.exports.line">
+    <field name="name">categories/name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_url_key" model="ir.exports.line">
+    <field name="name">categories/url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_parent_id" model="ir.exports.line">
+    <field name="name">categories/parent/id</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_parent_name" model="ir.exports.line">
+    <field name="name">categories/parent/name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_parent_url_key" model="ir.exports.line">
+    <field name="name">categories/parent/url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_parent_parent_id" model="ir.exports.line">
+    <field name="name">categories/parent/parent/id</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_parent_parent_name" model="ir.exports.line">
+    <field name="name">categories/parent/parent/name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_categs_parent_parent_url_key" model="ir.exports.line">
+    <field name="name">categories/parent/parent/url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_images" model="ir.exports.line">
+    <field name="name">images</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_default_code" model="ir.exports.line">
+    <field name="name">default_code</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
+<!--
+<record id="ir_exp_shopinvader_variant_quantity_available" model="ir.exports.line">
+    <field name="name">quantity_available</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+-->
+
+
+    </data>
+</openerp>

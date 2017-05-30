@@ -10,7 +10,7 @@
             <attribute name="invisible">0</attribute>
         </page>
         <page name="connector" position="inside">
-            <field name="locomotive_bind_ids">
+            <field name="shopinvader_bind_ids">
                 <tree>
                     <field name="backend_id"/>
                     <field name="sync_date"/>
@@ -20,7 +20,7 @@
                         <field name="backend_id" widget="selection"/>
                         <field name="lang_id" widget="selection"/>
                         <field name="seo_title"/>
-                        <field name="meta_keyword"/>
+                        <field name="meta_keywords"/>
                         <field name="meta_description"/>
                     </group>
                     <group name="url" string="Url">
@@ -39,6 +39,13 @@
                             colspan="4">
                             <tree>
                                 <field name="url_key" string="Redirect Url"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group name="variant" string="Variant">
+                        <field name="shopinvader_variant_ids" nolabel="1">
+                            <tree>
+                                <field name="default_code"/>
                             </tree>
                         </field>
                     </group>

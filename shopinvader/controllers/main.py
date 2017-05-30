@@ -13,7 +13,7 @@ from ..services.customer import CustomerService
 from ..services.sale import SaleService
 
 
-class ShoptorController(Controller):
+class ShopinvaderController(Controller):
 
     def send_to_service(self, service_class, params):
         method = request.httprequest.method
@@ -40,13 +40,8 @@ class ShoptorController(Controller):
 
     # Cart
 
-    @route('/shopinvader/cart', methods=['GET'], auth="shopinvader")
+    @route('/shopinvader/cart', methods=['GET', 'PUT'], auth="shopinvader")
     def cart_list(self, **params):
-        return self.send_to_service(CartService, params)
-
-    @route('/shopinvader/cart/<id>', methods=['GET', 'PUT'],
-           auth="shopinvader")
-    def cart(self, **params):
         return self.send_to_service(CartService, params)
 
     # Cart Item

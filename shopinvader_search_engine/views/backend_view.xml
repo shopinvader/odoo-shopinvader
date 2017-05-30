@@ -5,17 +5,31 @@
 <record id="locomotive_backend_view_form" model="ir.ui.view">
     <field name="model">locomotive.backend</field>
     <field name="inherit_id"
-           ref="connector_locomotivecms.view_locomotive_backend_form" />
+           ref="shopinvader.locomotive_backend_view_form" />
     <field name="arch" type="xml">
-        <page name="config" position="after">
-            <page name="search-engine" string="Search Engine">
-                <group name="search-engine" string="Search Engine" colspan="4">
-                    <field name="search_engine"/>
-                    <field name="search_engine_username"/>
-                    <field name="search_engine_password"/>
-                </group>
-            </page>
-        </page>
+        <field name="odoo_api" position="after">
+            <field name="se_backend_id"/>
+        </field>
+        <button name="bind_all_product" position="after">
+            <button
+                name="export_all_product"
+                string="Export all product"
+                type="object"/>
+            <button
+                name="clear_dead_product"
+                string="Clear dead product"
+                type="object"/>
+        </button>
+        <button name="bind_all_category" position="after">
+            <button
+                name="export_all_category"
+                string="Export all category"
+                type="object"/>
+            <button
+                name="clear_dead_category"
+                string="Clear dead category"
+                type="object"/>
+        </button>
     </field>
 </record>
 

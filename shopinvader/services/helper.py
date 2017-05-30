@@ -36,10 +36,10 @@ def secure_params(func):
     return wrapped
 
 
-class ShoptorService(ConnectorUnit):
+class ShopinvaderService(ConnectorUnit):
 
     def __init__(self, env, partner, shopinvader_session):
-        super(ShoptorService, self).__init__(env)
+        super(ShopinvaderService, self).__init__(env)
         self.partner = partner
         self.shopinvader_session = shopinvader_session
         self.cart_id = shopinvader_session.get('cart_id')
@@ -64,7 +64,9 @@ class ShoptorService(ConnectorUnit):
         _logger.error("BadRequest %s", v.errors)
         raise UserError(_("BadRequest %s") % v.errors)
 
-    def to_domain(scope):
+    def to_domain(self, scope):
+        if not scope:
+            return []
         # Convert the liquid scope syntax to the odoo domain
         OPERATORS = {
             'gt': '>',

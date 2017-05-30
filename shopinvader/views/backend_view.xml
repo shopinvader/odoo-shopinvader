@@ -9,7 +9,7 @@
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>
-            <field name="nosql_backend_id"/>
+            <field name="image_resize_ids" widget="many2many_tags"/>
         </field>
         <group name="config" position="after">
             <group name="price" colspan="4">
@@ -41,28 +41,32 @@
         <notebook position="inside">
             <page name="developper" string="Developper">
                 <group name="developper" colspan="4">
-                    <field name="nbr_product"/>
-                    <button
-                        name="clear_dead_product"
-                        string="Clear dead product"
-                        type="object"/>
-                    <button
-                        name="export_all_product"
-                        string="Export all product"
-                        type="object"/>
-                    <field name="nbr_category"/>
-                    <button
-                        name="clear_dead_category"
-                        string="Clear dead category"
-                        type="object"/>
-                    <button
-                        name="export_all_category"
-                        string="Export all category"
-                        type="object"/>
+                    <group name="product" string="Product" col="10" colspan="4">
+                        <field name="nbr_product"/>
+                            <button
+                                name="bind_all_product"
+                                string="Bind all product"
+                                type="object"/>
+                    </group>
+                    <group name="category" string="Category" col="10" colspan="4">
+                        <field name="nbr_category"/>
+                        <button
+                            name="bind_all_category"
+                            string="Bind all category"
+                            type="object"/>
+                    </group>
                 </group>
             </page>
         </notebook>
     </field>
+</record>
+
+<record id="connector_locomotivecms.action_locomotive_backend" model="ir.actions.act_window">
+    <field name="name">ShopInvader Backends</field>
+</record>
+
+<record id="connector_locomotivecms.menu_locomotive_root" model="ir.ui.menu">
+    <field name="name">ShopInvader</field>
 </record>
 
     </data>

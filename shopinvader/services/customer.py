@@ -3,13 +3,13 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from .helper import secure_params, ShoptorService
-from openerp.addons.connector_locomotivecms.backend import locomotive
+from .helper import secure_params, ShopinvaderService
+from ..backend import shopinvader
 from .contact import ContactService
 
 
-@locomotive
-class CustomerService(ShoptorService):
+@shopinvader
+class CustomerService(ShopinvaderService):
     _model_name = 'res.partner'
 
     # The following method are 'public' and can be called from the controller.
@@ -22,7 +22,7 @@ class CustomerService(ShoptorService):
         if 'vat' in params:
             params['vat_subjected'] = bool(params['vat'])
         partner = self.env['res.partner'].create(params)
-        self.env['locomotive.partner'].with_context(
+        self.env['shopinvader.partner'].with_context(
             connector_no_export=True).create({
                 'backend_id': self.backend_record.id,
                 'external_id': external_id,

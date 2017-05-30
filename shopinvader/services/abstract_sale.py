@@ -3,14 +3,14 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import ShoptorService
+from .helper import ShopinvaderService
 from .contact import ContactService
 
 
-class AbstractSaleService(ShoptorService):
+class AbstractSaleService(ShopinvaderService):
 
     def _parser_product(self):
-        fields = ['name', 'id']
+        fields = ['name', 'id']  # TODO url_key
         if 'product_code_builder' in self.env.registry._init_modules:
             fields.append('prefix_code')
         return fields
@@ -19,7 +19,7 @@ class AbstractSaleService(ShoptorService):
         parser = [
             'id',
             ('product_id', self._parser_product()),
-            'product_url',
+            'product_image_url',
             'price_unit',
             'product_uom_qty',
             'price_subtotal',
@@ -76,4 +76,7 @@ class AbstractSaleService(ShoptorService):
             order['order_line'] = [
                 l for l in order['order_line']
                 if not l['is_delivery']]
+            order['item_number'] = sum([
+                l['product_uom_qty']
+                for l in order['order_line']])
         return res

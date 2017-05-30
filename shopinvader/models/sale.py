@@ -11,7 +11,7 @@ import openerp.addons.decimal_precision as dp
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    locomotive_backend_id = fields.Many2one(
+    shopinvader_backend_id = fields.Many2one(
         'locomotive.backend',
         'Backend')
     cart_state = fields.Char()
@@ -63,16 +63,9 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    product_url = fields.Char(compute='_compute_product_url')
+    product_image_url = fields.Char(compute='_compute_image_url')
 
-    def _get_product_url(self, backend, size='medium'):
-        for image in self.product_id.image_ids:
-            for binding in image.locomotive_bind_ids:
-                if binding.backend_id == backend and binding.size == size:
-                    return binding.url
-
-    def _compute_product_url(self):
+    def _compute_image_url(self):
         for record in self:
-            loco_backend = record.order_id.locomotive_backend_id
-            if loco_backend:
-                record.product_url = record._get_product_url(loco_backend)
+            pass
+            # TODO retrieve image from public storage

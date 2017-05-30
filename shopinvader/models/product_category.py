@@ -4,23 +4,25 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import api, fields, models
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ProductCategory(models.Model):
     _name = "product.category"
-    _inherit = [_name, "base_multi_image.owner"]
+    _inherit = [_name, "storage.image.owner"]
 
-    locomotive_bind_ids = fields.One2many(
-        'locomotive.category',
+    shopinvader_bind_ids = fields.One2many(
+        'shopinvader.category',
         'record_id',
-        string='Locomotive Binding')
+        string='Shopinvader Binding')
     filter_ids = fields.Many2many(
         comodel_name='product.filter',
         string='Filter')
 
 
-class LocomotiveCategory(models.Model):
-    _name = 'locomotive.category'
+class ShopinvaderCategory(models.Model):
+    _name = 'shopinvader.category'
     _inherit = ['locomotive.binding', 'abstract.url']
     _inherits = {'product.category': 'record_id'}
 
@@ -34,33 +36,62 @@ class LocomotiveCategory(models.Model):
         required=True)
     seo_title = fields.Char()
     meta_description = fields.Char()
-    meta_keyword = fields.Char()
+    meta_keywords = fields.Char()
     subtitle = fields.Char()
-    link_label = fields.Char()
     short_description = fields.Html()
     description = fields.Html()
+    images = fields.Serialized(
+        compute='_compute_image',
+        string='Shopinvader Image')
+    parent = fields.Many2one(
+        'shopinvader.category',
+        'Shopinvader Parent',
+        compute='_compute_parent_category',
+        store=True)
+    level = fields.Integer(compute='_compute_level')
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
          'A category can only have one binding by backend.'),
     ]
 
-    @api.depends('url_builder', 'record_id.name')
-    def _compute_url(self):
-        return super(LocomotiveCategory, self)._compute_url()
+    @api.depends('parent_id.shopinvader_bind_ids')
+    def _compute_parent_category(self):
+        for record in self:
+            for binding in record.parent_id.shopinvader_bind_ids:
+                if binding.backend_id == record.backend_id:
+                    record.parent = binding
+                    break
 
-    # Automatically create the locomotive binding for the image
-    @api.model
-    def create(self, vals):
-        binding = super(LocomotiveCategory, self).create(vals)
-        binding_image_obj = \
-            self.env['locomotive.image'].with_context(
-                connector_no_export=True)
-        for image in binding.image_ids:
-            for size in binding_image_obj._image_size:
-                binding_image_obj.create({
-                    'size': size,
-                    'record_id': image.id,
-                    'backend_id': binding.backend_id.id,
-                    })
-        return binding
+    def _build_url_key(self):
+        key = super(ShopinvaderCategory, self)._build_url_key()
+        if self.parent_id and self.parent:
+            # TODO using self.shopinvader_parent_id.url_key fail...
+            if self.parent.url_builder == 'manual':
+                parent_url = self.parent.manual_url_key
+            else:
+                parent_url = self.parent._build_url_key()
+            key = '/'.join([parent_url, key])
+        return key
+
+    @api.depends(
+        'url_builder',
+        'record_id.name',
+        'parent.url_key')
+    def _compute_url(self):
+        return super(ShopinvaderCategory, self)._compute_url()
+
+    @api.depends('parent.level')
+    def _compute_level(self):
+        for record in self:
+            record.level = 0
+            parent = record.parent
+            while parent:
+                record.level += 1
+                parent = parent.parent
+
+    def _compute_image(self):
+        for record in self:
+            images = []
+            # TODO get image from public storage
+            record.images = images

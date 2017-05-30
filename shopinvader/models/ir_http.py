@@ -15,10 +15,10 @@ _logger = logging.getLogger(__name__)
 class IrHttp(models.Model):
     _inherit = 'ir.http'
 
-    def _locomotive_get_partner_from_header(self, headers):
+    def _shopinvader_get_partner_from_header(self, headers):
         partner_email = headers.get('HTTP_PARTNER_EMAIL')
         if partner_email:
-            loco_partner = request.env['locomotive.partner'].search([
+            loco_partner = request.env['shopinvader.partner'].search([
                 ('backend_id', '=', request.backend.id),
                 ('partner_email', '=', partner_email),
                 ])
@@ -47,7 +47,7 @@ class IrHttp(models.Model):
             if len(backend) == 1:
                 request.backend = backend
                 request.partner =\
-                    self._locomotive_get_partner_from_header(headers)
+                    self._shopinvader_get_partner_from_header(headers)
                 if headers.get('HTTP_LANG'):
                     request.context['lang'] = headers['HTTP_LANG']
                     request.env = request.env(context=request.context)

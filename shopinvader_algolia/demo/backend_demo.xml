@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="connector_locomotivecms.backend_1" model="locomotive.backend">
+    <field name="se_backend_id" ref="connector_algolia.backend_1"/>
+</record>
+
+<record id="index_1" model="se.index">
+    <field name="backend_id" ref="connector_algolia.backend_1"/>
+    <field name="name">algolia-product</field>
+    <field name="lang_id" ref="base.lang_en"/>
+    <field name="model_id" ref="shopinvader.model_shopinvader_variant"/>
+    <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    <field name="id_key">record_id</field>
+</record>
+
+<record id="index_2" model="se.index">
+    <field name="backend_id" ref="connector_algolia.backend_1"/>
+    <field name="name">algolia-category</field>
+    <field name="lang_id" ref="base.lang_en"/>
+    <field name="model_id" ref="shopinvader.model_shopinvader_category"/>
+    <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_category"/>
+    <field name="id_key">record_id</field>
+</record>
+
+
+    </data>
+</openerp>
