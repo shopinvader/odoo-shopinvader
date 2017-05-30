@@ -15,5 +15,10 @@ class ShopinvaderClaimController(ShopinvaderController):
         return self.send_to_service(ClaimService, params)
 
     @route('/shopinvader/claim_subjects', methods=['GET'], auth="shopinvader")
-    def claim(self, **params):
+    def claim_subject(self, **params):
         return self.send_to_service(ClaimSubjectService, params)
+
+    @route('/shopinvader/claims/<id>', methods=['PUT'],
+           auth="shopinvader")
+    def claim_messages(self, **params):
+        return self.send_to_service(ClaimService, params)

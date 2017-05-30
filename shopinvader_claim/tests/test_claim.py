@@ -37,6 +37,9 @@ class ClaimCase(CommonCase):
             self.assertIn(categ['id'], categ_ids)
 
     def test_create_claim(self):
+        so = self.sol_1.order_id
+        so.order_policy = 'prepaid'
+        so.action_button_confirm()
         data = {
             'message': 'Message Test',
             'subject_id': self.claim_categ.id,
@@ -52,6 +55,7 @@ class ClaimCase(CommonCase):
         claim_line = claim.claim_line_ids[0]
         self.assertEqual(claim_line.product_id, self.sol_1.product_id)
         self.assertEqual(claim_line.product_returned_quantity, 2)
+        self.assertEqual(claim.invoice_id, so.invoice_ids[0])
 
     def test_empty_claim(self):
         data = {
@@ -74,3 +78,21 @@ class ClaimCase(CommonCase):
         }
         with self.assertRaises(NotFound):
             self.service.create(data)
+
+    def test_add_message(self):
+        data = {
+            'id': self.env.ref('shopinvader_claim.crm_claim_1').id,
+            'add_message': 'New message'
+        }
+        res = self.service.update(data)
+        messages = res[0]['message_ids']
+        self.assertEqual(len(messages), 1)
+        self.assertEqual(messages[0]['body'], u'<p>New message</p>')
+
+    def test_claim_not_found(self):
+        data = {
+            'id': self.env.ref('shopinvader_claim.crm_claim_3').id,
+            'add_message': 'New message'
+        }
+        with self.assertRaises(NotFound):
+            self.service.update(data)

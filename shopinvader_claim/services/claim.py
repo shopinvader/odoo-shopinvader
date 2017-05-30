@@ -40,6 +40,22 @@ class ClaimService(ShopinvaderService):
         claim = self.env['crm.claim'].create(vals)
         return self.to_json(claim)
 
+    @secure_params
+    def update(self, params):
+        claim = self.env['crm.claim'].search([
+            ('partner_id', '=', self.partner.id),
+            ('shopinvader_backend_id', '=', self.backend_record.id),
+            ('id', '=', params['id'])])
+        if not claim:
+            raise NotFound('Claim not found')
+        if params.get('add_message', ''):
+            claim.message_post(
+                body=params['add_message'],
+                type='comment',
+                subtype='mail.mt_comment',
+                content_subtype='plaintext')
+        return self.to_json(claim)
+
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
@@ -73,6 +89,12 @@ class ClaimService(ShopinvaderService):
             'subject_id': {'coerce': to_int, 'nullable': True},
             }
 
+    def _validator_update(self):
+        return {
+            'id': {'coerce': to_int, 'required': True},
+            'add_message': {'type': 'string', 'required': True}
+        }
+
     def _parser_partner(self):
         return ['id', 'display_name', 'ref']
 
@@ -88,8 +110,26 @@ class ClaimService(ShopinvaderService):
         ]
         return res
 
-    def to_json(self, claim):
-        return claim.jsonify(self._json_parser())
+    def to_json(self, claims):
+        res = []
+        if not claims:
+            return res
+        for claim in claims:
+            parsed_claim = claim.jsonify(self._json_parser())[0]
+            parsed_claim['message_ids'] = []
+            for message in claim.message_ids:
+                if message.type != 'comment' or not message.subtype_id:
+                    continue
+                parsed_claim['message_ids'].append({
+                    'body': message.body,
+                    'date': message.date,
+                    'author_id': {
+                        'display_name': message.author_id.display_name,
+                        'id': message.author_id.id
+                        }
+                    })
+            res.append(parsed_claim)
+        return res
 
     def _prepare_claim(self, params):
         categ = self.env['crm.case.categ'].search(
@@ -123,7 +163,7 @@ class ClaimService(ShopinvaderService):
             elif order != so_line.order_id:
                 raise BadRequest(
                     'All sale order lines must come from the same sale order')
-            if order.invoice_ids and not vals['invoice_id']:
+            if order.invoice_ids and not vals.get('invoice_id', False):
                 vals['invoice_id'] = order.invoice_ids[0].id
             vals['claim_line_ids'].append((0, 0, {
                 'product_id': so_line.product_id.id,
