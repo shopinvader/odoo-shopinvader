@@ -102,7 +102,8 @@ class LocomotiveBackend(models.Model):
 
     @api.multi
     def bind_all_category(self):
-        self._bind_all_content(
+        self.with_context(recompute=False)._bind_all_content(
             'product.category',
             'shopinvader.category',
             [])
+        self.recompute()
