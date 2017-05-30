@@ -9,3 +9,5 @@ connector-search-engine https://github.com/akretion/connector-search-engine.git 
 account-invoicing https://github.com/OCA/account-invoicing.git 8.0
 e-commerce
 storage https://github.com/akretion/storage.git 8.0
+crm https://github.com/OCA/crm.git 8.0
+rma https://github.com/OCA/rma.git 8.0
