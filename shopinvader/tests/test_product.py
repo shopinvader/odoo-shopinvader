@@ -21,3 +21,9 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             self.shopinvader_variant.categories.record_id,
             self.template.categ_id)
+
+    def test_attributes(self):
+        attr_dict = {'color': u'Black',
+                     'wi-fi': u'2.4 GHz',
+                     'memory': u'16 GB'}
+        self.assertDictEqual(self.shopinvader_variant.attributes, attr_dict)
