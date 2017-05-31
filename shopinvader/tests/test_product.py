@@ -27,3 +27,21 @@ class ProductCase(ProductCommonCase):
                      'wi-fi': u'2.4 GHz',
                      'memory': u'16 GB'}
         self.assertDictEqual(self.shopinvader_variant.attributes, attr_dict)
+
+    def test_product_filter(self):
+        field_id = self.env['ir.model.fields'].search([
+            ('model', '=', 'shopinvader.product'),
+            ('name', '=', 'name')])
+        filter_on_field = self.env['product.filter'].create(
+            {'name': 'Test Filter on field name',
+             'based_on': 'field',
+             'field_id': field_id.id})
+        self.assertEqual(filter_on_field.display_name, 'name')
+
+        attribute_id = self.env['product.attribute'].search([
+            ('name', '=', 'Wi-Fi')])
+        filter_on_attr = self.env['product.filter'].create(
+            {'name': 'Test Filter on field name',
+             'based_on': 'attribute',
+             'attribute_id': attribute_id.id})
+        self.assertEqual(filter_on_attr.display_name, 'wi-fi')

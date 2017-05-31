@@ -8,6 +8,10 @@ from unidecode import unidecode
 from openerp import api, fields, models
 
 
+def sanitize_attr_name(attribute):
+    key = attribute.name
+    return unidecode(key.replace(' ', '_').lower())
+
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
@@ -28,6 +32,13 @@ class ProductFilter(models.Model):
     _name = 'product.filter'
     _description = 'Product Filter'
 
+    based_on = fields.Selection(
+        selection=[
+            ('field', 'Field'),
+            ('attribute', 'Attribute')
+        ],
+        required=True
+    )
     field_id = fields.Many2one(
         'ir.model.fields',
         'Field',
@@ -36,8 +47,22 @@ class ProductFilter(models.Model):
             'product.product',
             'shopinvader.product',
             ))])
+    attribute_id = fields.Many2one(
+        string='Attribute',
+        comodel_name='product.attribute'
+    )
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
+    display_name = fields.Char(
+        compute="_compute_display_name"
+    )
+
+    def _compute_display_name(self):
+        for pfilter in self:
+            if pfilter.based_on == 'field':
+                pfilter.display_name = pfilter.field_id.name
+            else:
+                pfilter.display_name = sanitize_attr_name(pfilter.attribute_id)
 
 
 class ShopinvaderProduct(models.Model):
@@ -179,8 +204,7 @@ class ShopinvaderVariant(models.Model):
         for record in self:
             attributes = dict()
             for att_value in record.attribute_value_ids:
-                key = att_value.attribute_id.name
-                sanitized_key = unidecode(key.replace(' ', '_').lower())
+                sanitized_key = sanitize_attr_name(att_value.attribute_id)
                 attributes[sanitized_key] = att_value.name
             record.attributes = attributes
 
