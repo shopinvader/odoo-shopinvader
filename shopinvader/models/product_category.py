@@ -48,6 +48,10 @@ class ShopinvaderCategory(models.Model):
         'Shopinvader Parent',
         compute='_compute_parent_category',
         store=True)
+    childs = fields.Many2many(
+        'shopinvader.category',
+        'Shopinvader Childs',
+        compute='_compute_child_category')
     level = fields.Integer(compute='_compute_level')
 
     _sql_constraints = [
@@ -62,6 +66,14 @@ class ShopinvaderCategory(models.Model):
                 if binding.backend_id == record.backend_id:
                     record.parent = binding
                     break
+
+    def _compute_child_category(self):
+        for record in self:
+            record.childs = self.search([
+                ('record_id', 'child_of', record.record_id.id),
+                ('id', '!=', record.id),
+                ('backend_id', '=', record.backend_id.id),
+                ])
 
     def _build_url_key(self):
         key = super(ShopinvaderCategory, self)._build_url_key()
