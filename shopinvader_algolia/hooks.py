@@ -1,0 +1,111 @@
+# -*- coding: utf-8 -*-
+# Copyright 2017 Akretion (http://www.akretion.com)
+# Benoît GUILLOT <benoit.guillot@akretion.com>
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+DESCRIPTION = """
+<h2>Fusce ac ligula ante</h2>
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales
+  lacus quam, eget laoreet mauris ultrices ut. Sed ante lectus, vulputate
+  in nunc sit amet, interdum pellentesque est. <br>
+  <strong>
+    Vivamus varius justo justo, eu ultricies orci ullamcorper eget
+  </strong>
+  <ul>
+    <li>Praesent sodales tempor nibh quis vehicula.</li>
+    <li>Varius faucibus velit pulvinar.</li>
+    <li> Proin iaculis dapibus vestibulum. Sed feugiat augue sagittis, ullamcorper nunc sit amet, egestas eros.</li>
+    <li>Vivamus varius justo justo, eu ultricies orci ullamcorper eget.</li>
+  </ul>
+</p>
+<h2>Furabitur sodales nisi odio, sed egestas velit placerat faucibus</h2>
+<h3>Phasellus congue nibh nunc, vel euismod justo lacinia ut</h3>
+<p>
+  Vivamus varius justo justo, eu ultricies orci ullamcorper eget. Integer
+  et ante sit amet erat placerat viverra a in nisl. Phasellus ac nulla
+  blandit, sodales nunc non, blandit sapien. Donec libero nisl, fermentum
+  aliquam velit sit amet, luctus luctus ex. Etiam rutrum ullamcorper
+  dapibus. Vestibulum cursus iaculis elit et <strong>ultricies</strong>. Ut est sapien,
+  vestibulum quis libero eu, mattis iaculis risus. Ut ante magna, congue
+  eget diam a, volutpat lobortis arcu. Orci varius natoque penatibus et
+  magnis dis parturient montes, nascetur ridiculus mus. <strong>Ut tempus urna at
+  malesuada fermentum.&nbsp;</strong>
+</p>
+<h3>In finibus nulla pulvinar dolor feugiat, varius faucibus velit pulvinar</h3>
+<p>
+  Donec at hendrerit orci. Mauris velit lorem, pretium eu tellus eu,
+  laoreet faucibus ligula. Vivamus nibh nisl, vestibulum nec<strong> metus sit
+  amet, viverra sollicitudin sem</strong>. Sed a finibus sem. Curabitur fermentum
+  metus purus, ut bibendum augue consequat nec. Morbi ex tellus, rutrum
+  quis diam in, aliquet vestibulum mi. Donec id pulvinar lacus. Nunc
+  scelerisque porta nisi in pharetra.
+</p>
+<h2>Pellentesque vitae erat imperdiet, pulvinar tortor nec</h2>
+<h3>In finibus nulla pulvinar dolor feugiat, varius faucibus velit pulvinar</h3>
+<p>
+  Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+  cubilia Curae.
+</p>
+<p>
+  Cras non feugiat ipsum, ac ultricies ipsum. Sed porttitor sit amet lacus ut vehicula.
+  Fusce placerat, nisi vitae ullamcorper fermentum, lectus odio sodales elit, quis rhoncus nisl
+  tortor vel ipsum. Vestibulum ante ipsum primis in faucibus orci luctus
+  et ultrices posuere cubilia Curae; Proin et justo mauris. Nunc sit amet
+  posuere justo. Donec at fermentum augue. Orci varius natoque penatibus
+  et magnis dis parturient montes, nascetur ridiculus mus.
+</p>
+<p>
+  Aenean eget
+  nunc dictum ipsum elementum pharetra. Integer mattis nisi eget dignissim
+   dapibus. Sed et justo erat. Aenean dapibus arcu vitae eros sagittis,
+  vel tincidunt est tincidunt. Maecenas nec sodales mi.
+</p>
+<blockquote>
+  <i>
+    Estibulum ante ipsum primis in faucibus orci luctus et ultrices posuere
+    cubilia Curae; Cras non feugiat ipsum, ac ultricies ipsum. Sed porttitor
+    sit amet lacus ut vehicula. Fusce placerat, nisi vitae ullamcorper
+    fermentum
+  </i>
+</blockquote>
+<p>
+  Pellentesque iaculis auctor ornare. Nulla posuere nisi leo, ut dapibus
+  ipsum pretium in. Donec pharetra est sed nunc lobortis tincidunt. Fusce
+  convallis suscipit sem, sed elementum orci tempor vel. Donec pretium
+  felis nec nisi auctor, sed dignissim enim dictum. Etiam a lectus
+  molestie, tincidunt urna quis, sodales augue. Curabitur venenatis justo
+  quam, sit amet dictum ex cursus a. Nunc nulla dolor, molestie sit amet
+  tempor a, maximus eu erat. Morbi vel tempor nulla. Maecenas eu dictum
+  enim, et rutrum dui. Vivamus non efficitur urna. Morbi blandit massa vel
+   metus fringilla tristique. Praesent malesuada ante nec magna
+   <strong> elementum dapibus eget a elit.</strong>
+</p>
+<h3>Pellentesque iaculis auctor ornare</h3>
+<p>
+  Nulla posuere nisi leo, ut dapibus
+  ipsum pretium in. Donec pharetra est sed nunc lobortis tincidunt.
+</p>
+<p>
+  Fusce convallis suscipit sem, sed elementum orci tempor vel. Donec pretium
+  felis nec nisi auctor, sed dignissim enim dictum. Etiam a lectus
+  molestie, tincidunt urna quis, sodales augue. Curabitur venenatis justo
+  quam, sit amet dictum ex cursus a. Nunc nulla dolor, molestie sit amet
+  tempor a, maximus eu erat. Morbi vel tempor nulla. Maecenas eu dictum
+  enim, et rutrum dui. <br></p><p>Vivamus non efficitur urna. Morbi blandit massa vel
+   metus fringilla tristique. Praesent malesuada ante nec magna elementum
+  dapibus eget a elit.
+</p>
+"""
+
+
+def post_init_hook(cr, registry):
+    module_obj = registry['ir.module.module']
+    product_obj = registry['product.template']
+    module_ids = module_obj.search(
+        cr, 1, [('name', '=', 'shopinvader_algolia')])
+    module = module_obj.browse(cr, 1, module_ids[0])
+    if module.demo:
+        vals = {'description': DESCRIPTION}
+        product_ids = product_obj.search(cr, 1, [])
+        product_obj.write(cr, 1, product_ids, vals)

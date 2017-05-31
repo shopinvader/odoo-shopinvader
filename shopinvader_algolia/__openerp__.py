@@ -10,6 +10,7 @@
  'website': 'www.akretion.com',
  'license': 'AGPL-3',
  'category': 'Generic Modules',
+ 'post_init_hook': 'post_init_hook',
  'depends': [
      'shopinvader_search_engine',
      'connector_algolia',
