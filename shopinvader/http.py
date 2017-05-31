@@ -11,6 +11,8 @@ from openerp.exceptions import Warning as UserError, MissingError, AccessError
 from werkzeug.exceptions import (
     BadRequest, NotFound, Forbidden, InternalServerError)
 import json
+import logging
+_logger = logging.getLogger(__name__)
 
 
 def WrapJsonException(exception):
@@ -65,6 +67,7 @@ class HttpJsonRequest(HttpRequest):
         """Called within an except block to allow converting exceptions
            to abitrary responses. Anything returned (except None) will
            be used as response."""
+        _logger.debug('Shopinvader Handle exception %s', exception)
         try:
             return super(HttpRequest, self)._handle_exception(exception)
         except UserError, e:
@@ -79,6 +82,7 @@ class HttpJsonRequest(HttpRequest):
             return WrapJsonException(InternalServerError())
 
     def make_response(self, data, headers=None, cookies=None):
+        _logger.debug('response: %s', data)
         data = json.dumps(data)
         if headers is None:
             headers = {}
