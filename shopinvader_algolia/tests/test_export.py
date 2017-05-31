@@ -6,7 +6,11 @@
 from openerp.tests.common import TransactionCase
 import os
 import unittest
+import time
 from openerp.addons.connector.tests.common import mock_job_delay_to_direct
+import logging
+
+_logger = logging.getLogger(__name__)
 
 
 try:
@@ -16,8 +20,8 @@ except ImportError:
 
 
 @unittest.skipUnless(
-    os.environ.get('ALGOLIA_APP', '') and \
-        os.environ.get('ALGOLIA_API_KEY', ''),
+    os.environ.get('ALGOLIA_APP', '') and
+    os.environ.get('ALGOLIA_API_KEY', ''),
     "Missing algolia connection environment variables")
 class ExportCase(TransactionCase):
 
@@ -28,15 +32,22 @@ class ExportCase(TransactionCase):
         self.se_backend.username = os.environ['ALGOLIA_APP']
         self.se_backend.password = os.environ['ALGOLIA_API_KEY']
         self.backend.bind_all_product()
-        if os.environ.get('TRAVIS_JOB_ID', False):
+        self.path = (
+            'openerp.addons.shopinvader_algolia.unit.exporter.export_record')
+        if os.environ.get('TRAVIS_JOB_NUMBER', False):
             for index in self.env['se.index'].search(
                     [('backend_id', '=', self.se_backend.id)]):
-                index.name = '%s-%s' % (os.environ['TRAVIS_JOB_ID'], index.name)
+                index.name = '%s-%s' % (
+                    os.environ['TRAVIS_JOB_NUMBER'].replace('.', '_'),
+                    index.name)
 
     def test_10_export_one_product(self):
         product = self.env.ref('product.product_product_3_product_template')
         si_variant = product.shopinvader_bind_ids[0].shopinvader_variant_ids[0]
-        si_variant._scheduler_export(domain=[('id', '=', si_variant.id)])
+        with mock_job_delay_to_direct(self.path):
+            si_variant._scheduler_export(domain=[('id', '=', si_variant.id)])
+        # If someone else has a less ugly solution, I'm interrested.
+        time.sleep(5)
         client = algoliasearch.client.Client(
             self.se_backend.username, self.se_backend.password)
         index = client.initIndex(si_variant.index_id.name)
@@ -50,7 +61,5 @@ class ExportCase(TransactionCase):
             si_variant.default_code)
 
     def test_20_export_all_products(self):
-        path = (
-            'openerp.addons.shopinvader_algolia.unit.exporter.export_record')
-        with mock_job_delay_to_direct(path):
+        with mock_job_delay_to_direct(self.path):
             self.backend.export_all_product()
