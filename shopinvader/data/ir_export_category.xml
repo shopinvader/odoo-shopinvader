@@ -97,5 +97,10 @@
     <field name="export_id" ref="ir_exp_shopinvader_category"/>
 </record>
 
+<record id="ir_exp_shopinvader_category_filter_ids_display_name" model="ir.exports.line">
+    <field name="name">filter_ids/display_name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
     </data>
 </openerp>

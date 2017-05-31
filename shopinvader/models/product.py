@@ -3,8 +3,14 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from unidecode import unidecode
+
 from openerp import api, fields, models
 
+
+def sanitize_attr_name(attribute):
+    key = attribute.name
+    return unidecode(key.replace(' ', '_').lower())
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -26,6 +32,13 @@ class ProductFilter(models.Model):
     _name = 'product.filter'
     _description = 'Product Filter'
 
+    based_on = fields.Selection(
+        selection=[
+            ('field', 'Field'),
+            ('attribute', 'Attribute')
+        ],
+        required=True
+    )
     field_id = fields.Many2one(
         'ir.model.fields',
         'Field',
@@ -34,8 +47,22 @@ class ProductFilter(models.Model):
             'product.product',
             'shopinvader.product',
             ))])
+    attribute_id = fields.Many2one(
+        string='Attribute',
+        comodel_name='product.attribute'
+    )
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
+    display_name = fields.Char(
+        compute="_compute_display_name"
+    )
+
+    def _compute_display_name(self):
+        for pfilter in self:
+            if pfilter.based_on == 'field':
+                pfilter.display_name = pfilter.field_id.name
+            else:
+                pfilter.display_name = sanitize_attr_name(pfilter.attribute_id)
 
 
 class ShopinvaderProduct(models.Model):
@@ -142,6 +169,11 @@ class ShopinvaderVariant(models.Model):
     variant_count = fields.Integer(
         related='product_variant_count')
 
+    attributes = fields.Serialized(
+        compute='_compute_attributes',
+        string='Shopinvader Attributes'
+    )
+
     def _get_categories(self):
         self.ensure_one()
         return self.categ_id
@@ -167,6 +199,14 @@ class ShopinvaderVariant(models.Model):
                         image.get_thumbnail_from_resize(resize).url
                 images.append(res)
             record.images = images
+
+    def _compute_attributes(self):
+        for record in self:
+            attributes = dict()
+            for att_value in record.attribute_value_ids:
+                sanitized_key = sanitize_attr_name(att_value.attribute_id)
+                attributes[sanitized_key] = att_value.name
+            record.attributes = attributes
 
     def _get_price(self, pricelist, fposition):
         self.ensure_one()
