@@ -19,6 +19,7 @@
  ],
  'demo': [
      'demo/backend_demo.xml',
+     'demo/product_demo.xml',
  ],
  'installable': True,
  'application': True,
