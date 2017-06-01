@@ -102,5 +102,50 @@
     <field name="export_id" ref="ir_exp_shopinvader_category"/>
 </record>
 
+<record id="ir_exp_shopinvader_category_childs_id" model="ir.exports.line">
+    <field name="name">childs/id</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_name" model="ir.exports.line">
+    <field name="name">childs/name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_url_key" model="ir.exports.line">
+    <field name="name">childs/url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_childs_id" model="ir.exports.line">
+    <field name="name">childs/childs/id</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_childs_name" model="ir.exports.line">
+    <field name="name">childs/childs/name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_childs_url_key" model="ir.exports.line">
+    <field name="name">childs/childs/url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_childs_childs_id" model="ir.exports.line">
+    <field name="name">childs/childs/childs/id</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_childs_childs_name" model="ir.exports.line">
+    <field name="name">childs/childs/childs/name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_childs_childs_childs_url_key" model="ir.exports.line">
+    <field name="name">childs/childs/childs/url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
     </data>
 </openerp>

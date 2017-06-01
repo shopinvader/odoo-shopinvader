@@ -68,32 +68,7 @@
 </record>
 
 <record id="ir_exp_shopinvader_variant_categs_parent_id" model="ir.exports.line">
-    <field name="name">categories/parent/id</field>
-    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-</record>
-
-<record id="ir_exp_shopinvader_variant_categs_parent_name" model="ir.exports.line">
-    <field name="name">categories/parent/name</field>
-    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-</record>
-
-<record id="ir_exp_shopinvader_variant_categs_parent_url_key" model="ir.exports.line">
-    <field name="name">categories/parent/url_key</field>
-    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-</record>
-
-<record id="ir_exp_shopinvader_variant_categs_parent_parent_id" model="ir.exports.line">
-    <field name="name">categories/parent/parent/id</field>
-    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-</record>
-
-<record id="ir_exp_shopinvader_variant_categs_parent_parent_name" model="ir.exports.line">
-    <field name="name">categories/parent/parent/name</field>
-    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-</record>
-
-<record id="ir_exp_shopinvader_variant_categs_parent_parent_url_key" model="ir.exports.line">
-    <field name="name">categories/parent/parent/url_key</field>
+    <field name="name">categories/level</field>
     <field name="export_id" ref="ir_exp_shopinvader_variant"/>
 </record>
 

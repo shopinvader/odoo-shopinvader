@@ -3,9 +3,15 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from unidecode import unidecode
 
 from openerp import api, fields, models
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    from unidecode import unidecode
+except:
+    _logger.debug('Cannot `import unidecode`.')
 
 
 def sanitize_attr_name(attribute):
@@ -153,42 +159,35 @@ class ShopinvaderVariant(models.Model):
         'product.product',
         required=True,
         ondelete='cascade')
-
-    # TODO some field are related to the template
-    # stock_state
-    # images
-    # from price / best discount
-
     categories = fields.Many2many(
         comodel_name='shopinvader.category',
         compute='_compute_categories',
         string='Shopinvader Categories')
-
     images = fields.Serialized(
         compute='_compute_image',
         string='Shopinvader Image')
     variant_count = fields.Integer(
         related='product_variant_count')
-
     attributes = fields.Serialized(
         compute='_compute_attributes',
-        string='Shopinvader Attributes'
-    )
+        string='Shopinvader Attributes')
 
     def _get_categories(self):
         self.ensure_one()
         return self.categ_id
 
-    @api.depends('categ_id.shopinvader_bind_ids')
     def _compute_categories(self):
         for record in self:
-            shop_categs = []
-            for categ in record._get_categories():
-                for loco_categ in categ.shopinvader_bind_ids:
-                    if loco_categ.backend_id == record.backend_id:
-                        shop_categs.append(loco_categ.id)
-                        break
-            record.categories = shop_categs
+            ids = []
+            categs = record._get_categories()
+            for categ in categs:
+                parents = self.env['shopinvader.category'].search([
+                    ('parent_left', '<=', categ.parent_left),
+                    ('parent_right', '>=', categ.parent_right),
+                    ('backend_id', '=', record.backend_id.id),
+                    ])
+                ids += parents.ids
+            record.categories = ids
 
     def _compute_image(self):
         for record in self:

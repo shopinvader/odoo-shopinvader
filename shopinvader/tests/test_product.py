@@ -17,10 +17,11 @@ class ProductCase(ProductCommonCase):
     def test_categories(self):
         self.assertEqual(len(self.shopinvader_variant.categories), 0)
         self.backend.bind_all_category()
-        self.assertEqual(len(self.shopinvader_variant.categories), 1)
+        self.shopinvader_variant.invalidate_cache()
+        self.assertEqual(len(self.shopinvader_variant.categories), 2)
         self.assertEqual(
-            self.shopinvader_variant.categories.record_id,
-            self.template.categ_id)
+            self.shopinvader_variant.categories.mapped('record_id'),
+            self.template.categ_id + self.template.categ_id.parent_id)
 
     def test_attributes(self):
         attr_dict = {'color': u'Black',
