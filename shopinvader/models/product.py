@@ -3,7 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-<<<<<<< eac022c8cf4108067cdd4df1d802417dbef79c61
 
 from openerp import api, fields, models
 import logging
