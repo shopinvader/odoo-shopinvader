@@ -32,6 +32,7 @@ install:
   - printf '[options]\n\nrunning_env = dev\n' > ${HOME}/.openerp_serverrc
   - git clone https://github.com/akretion/akretion-quality-tools ${HOME}/akretion-quality-tools
   - export PATH=${HOME}/akretion-quality-tools/travis:${PATH}
+  - export PATH=.travis:${PATH}
   - travis_configure
 
 script:
