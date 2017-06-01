@@ -63,9 +63,18 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    product_image_url = fields.Char(compute='_compute_image_url')
+    shopinvader_variant_id = fields.Many2one(
+        'shopinvader.variant',
+        compute='_compute_shopinvader_variant',
+        string='Shopinvader Variant',
+        store=True)
 
-    def _compute_image_url(self):
+    @api.depends('order_id.shopinvader_backend_id', 'product_id')
+    def _compute_shopinvader_variant(self):
         for record in self:
-            pass
-            # TODO retrieve image from public storage
+            record.shopinvader_variant_id = self.env['shopinvader.variant']\
+                .search([
+                    ('record_id', '=', record.product_id.id),
+                    ('backend_id', '=',
+                        record.order_id.shopinvader_backend_id.id),
+                    ])

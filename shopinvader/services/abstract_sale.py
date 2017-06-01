@@ -10,7 +10,7 @@ from .contact import ContactService
 class AbstractSaleService(ShopinvaderService):
 
     def _parser_product(self):
-        fields = ['name', 'id']  # TODO url_key
+        fields = ['name', 'id', 'url_key', 'images', ('record_id', ['id'])]
         if 'product_code_builder' in self.env.registry._init_modules:
             fields.append('prefix_code')
         return fields
@@ -18,8 +18,7 @@ class AbstractSaleService(ShopinvaderService):
     def _parser_order_line(self):
         parser = [
             'id',
-            ('product_id', self._parser_product()),
-            'product_image_url',
+            ('shopinvader_variant_id', self._parser_product()),
             'price_unit',
             'product_uom_qty',
             'price_subtotal',
