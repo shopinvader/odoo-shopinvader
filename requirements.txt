@@ -3,3 +3,4 @@ cerberus
 algoliasearch
 paypalrestsdk
 stripe
+unidecode
