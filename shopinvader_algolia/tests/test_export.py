@@ -32,6 +32,7 @@ class ExportCase(TransactionCase):
         self.se_backend.username = os.environ['ALGOLIA_APP']
         self.se_backend.password = os.environ['ALGOLIA_API_KEY']
         self.backend.bind_all_product()
+        self.backend.bind_all_category()
         self.path = (
             'openerp.addons.shopinvader_algolia.unit.exporter.export_record')
         if os.environ.get('TRAVIS_JOB_NUMBER', False):
@@ -63,3 +64,7 @@ class ExportCase(TransactionCase):
     def test_20_export_all_products(self):
         with mock_job_delay_to_direct(self.path):
             self.backend.export_all_product()
+
+    def test_30_export_all_categories(self):
+        with mock_job_delay_to_direct(self.path):
+            self.backend.export_all_category()
