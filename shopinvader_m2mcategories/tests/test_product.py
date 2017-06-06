@@ -13,7 +13,7 @@ class ProductCase(ProductCommonCase):
         self.backend.bind_all_category()
         self.assertEqual(
             self.template.categ_id + self.template.categ_id.parent_id,
-            self.shopinvader_variant.categories.mapped('record_id'))
+            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'))
 
     def test_multi_categories(self):
         self.backend.bind_all_category()
@@ -22,4 +22,4 @@ class ProductCase(ProductCommonCase):
         self.template.categ_ids = categs
         self.assertEqual(
             self.template.categ_id + categs,
-            self.shopinvader_variant.categories.mapped('record_id'))
+            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'))
