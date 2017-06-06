@@ -75,6 +75,6 @@ class SaleOrderLine(models.Model):
             record.shopinvader_variant_id = self.env['shopinvader.variant']\
                 .search([
                     ('record_id', '=', record.product_id.id),
-                    ('backend_id', '=',
+                    ('shopinvader_product_id.backend_id', '=',
                         record.order_id.shopinvader_backend_id.id),
                     ])

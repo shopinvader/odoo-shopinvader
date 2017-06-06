@@ -30,6 +30,9 @@ class ShopinvaderCategory(models.Model):
         'product.category',
         required=True,
         ondelete='cascade')
+    object_id = fields.Integer(
+        compute='_compute_object_id',
+        store=True)
     lang_id = fields.Many2one(
         'res.lang',
         'Lang',
@@ -43,12 +46,12 @@ class ShopinvaderCategory(models.Model):
     images = fields.Serialized(
         compute='_compute_image',
         string='Shopinvader Image')
-    parent = fields.Many2one(
+    shopinvader_parent_id = fields.Many2one(
         'shopinvader.category',
         'Shopinvader Parent',
         compute='_compute_parent_category',
         store=True)
-    childs = fields.Many2many(
+    shopinvader_child_ids = fields.Many2many(
         'shopinvader.category',
         'Shopinvader Childs',
         compute='_compute_child_category')
@@ -59,17 +62,22 @@ class ShopinvaderCategory(models.Model):
          'A category can only have one binding by backend.'),
     ]
 
+    @api.depends('record_id')
+    def _compute_object_id(self):
+        for record in self:
+            record.object_id = record.record_id.id
+
     @api.depends('parent_id.shopinvader_bind_ids')
     def _compute_parent_category(self):
         for record in self:
             for binding in record.parent_id.shopinvader_bind_ids:
                 if binding.backend_id == record.backend_id:
-                    record.parent = binding
+                    record.shopinvader_parent_id = binding
                     break
 
     def _compute_child_category(self):
         for record in self:
-            record.childs = self.search([
+            record.child_ids = self.search([
                 ('record_id', 'child_of', record.record_id.id),
                 ('id', '!=', record.id),
                 ('backend_id', '=', record.backend_id.id),
@@ -77,30 +85,30 @@ class ShopinvaderCategory(models.Model):
 
     def _build_url_key(self):
         key = super(ShopinvaderCategory, self)._build_url_key()
-        if self.parent_id and self.parent:
+        if self.parent_id and self.shopinvader_parent_id:
             # TODO using self.shopinvader_parent_id.url_key fail...
-            if self.parent.url_builder == 'manual':
-                parent_url = self.parent.manual_url_key
+            if self.shopinvader_parent_id.url_builder == 'manual':
+                parent_url = self.shopinvader_parent_id.manual_url_key
             else:
-                parent_url = self.parent._build_url_key()
+                parent_url = self.shopinvader_parent_id._build_url_key()
             key = '/'.join([parent_url, key])
         return key
 
     @api.depends(
         'url_builder',
         'record_id.name',
-        'parent.url_key')
+        'shopinvader_parent_id.url_key')
     def _compute_url(self):
         return super(ShopinvaderCategory, self)._compute_url()
 
-    @api.depends('parent.level')
+    @api.depends('shopinvader_parent_id.level')
     def _compute_level(self):
         for record in self:
             record.level = 0
-            parent = record.parent
+            parent = record.shopinvader_parent_id
             while parent:
                 record.level += 1
-                parent = parent.parent
+                parent = parent.shopinvader_parent_id
 
     def _compute_image(self):
         for record in self:

@@ -42,7 +42,7 @@ class AbstractItemCase(object):
                 }))
 
     def check_product_and_qty(self, line, product_id, qty):
-        self.assertEqual(line['product_id']['id'], product_id)
+        self.assertEqual(line['product']['id'], product_id)
         self.assertEqual(line['product_uom_qty'], qty)
 
     def check_partner(self, cart):
@@ -103,6 +103,7 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
         super(AnonymousItemCase, self).setUp(*args, **kwargs)
         self.partner = self.env.ref('shopinvader.anonymous')
         self.cart = self.env.ref('shopinvader.sale_order_1')
+        self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.service = self._get_service(CartItemService, None)
         self.cart_service = self._get_service(CartService, None)
@@ -114,6 +115,7 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)
         self.partner = self.env.ref('shopinvader.partner_1')
         self.cart = self.env.ref('shopinvader.sale_order_2')
+        self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.service = self._get_service(CartItemService, self.partner)
         self.cart_service = self._get_service(CartService, self.partner)
