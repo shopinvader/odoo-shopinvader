@@ -57,6 +57,12 @@ class ShopinvaderService(ConnectorUnit):
         return getattr(self, validator_method)()
 
     def _secure_params(self, method, params):
+        if self.partner:
+            partner = "%s (%s)" % (self.partner.name, self.partner.id)
+        else:
+            partner = "anonymous"
+        _logger.debug(
+            'Shopinvader call for partner %s with params %s', partner, params)
         schema = self._get_schema_for_method(method)
         v = Validator(schema, purge_unknown=True)
         if v.validate(params):

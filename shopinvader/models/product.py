@@ -159,9 +159,12 @@ class ShopinvaderVariant(models.Model):
         'product.product',
         required=True,
         ondelete='cascade')
-    categories = fields.Many2many(
+    object_id = fields.Integer(
+        compute='_compute_object_id',
+        store=True)
+    shopinvader_categ_ids = fields.Many2many(
         comodel_name='shopinvader.category',
-        compute='_compute_categories',
+        compute='_compute_shopinvader_category',
         string='Shopinvader Categories')
     images = fields.Serialized(
         compute='_compute_image',
@@ -172,11 +175,16 @@ class ShopinvaderVariant(models.Model):
         compute='_compute_attributes',
         string='Shopinvader Attributes')
 
+    @api.depends('record_id')
+    def _compute_object_id(self):
+        for record in self:
+            record.object_id = record.record_id.id
+
     def _get_categories(self):
         self.ensure_one()
         return self.categ_id
 
-    def _compute_categories(self):
+    def _compute_shopinvader_category(self):
         for record in self:
             ids = []
             categs = record._get_categories()
@@ -187,7 +195,7 @@ class ShopinvaderVariant(models.Model):
                     ('backend_id', '=', record.backend_id.id),
                     ])
                 ids += parents.ids
-            record.categories = ids
+            record.shopinvader_categ_ids = ids
 
     def _compute_image(self):
         for record in self:
