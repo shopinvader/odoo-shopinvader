@@ -15,6 +15,65 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
+def convert_list(values):
+    if not isinstance(values, (dict, list)):
+        return values
+    is_list = True
+    keys = []
+    res = {}
+    for key, subvals in values.items():
+        res[key] = convert_list(subvals)
+        try:
+            int(key)
+        except:
+            is_list = False
+    if is_list:
+        res = {int(k): v for k, v in res.items()}
+        keys = res.keys()
+        keys.sort()
+        return [res[k] for k in keys]
+    else:
+        return res
+
+
+def split_key(key):
+    if '[' in key:
+        return [k for k in key.replace(']', '[').split('[') if k]
+    return [key]
+
+
+def update_res(res, keys, value):
+    key = keys[0]
+    if len(keys) == 1:
+        res[key] = value
+    else:
+        if key not in res:
+            res[key] = {}
+        update_res(res[key], keys[1:], value)
+
+
+def convert_nested_html_form_params(params):
+    """ Add the support of nested form
+    vals = {
+        'sale_order_line[0][qty]': u'1',
+        'sale_order_line[0][id]': u'325761',
+        'message': u'test de message',
+        'subject_id': u'2'})
+
+    should give with convert_nested_html_form_params(vals)
+
+    result = {
+        'message': u'my message',
+        'subject_id': u'2',
+        'sale_order_line': [{'id': u'325761', 'qty': u'1'}]}
+    """
+    res = {}
+    for key, value in params.items():
+        keys = split_key(key)
+        update_res(res, keys, value)
+    return convert_list(res)
+
+
 def WrapJsonException(exception):
     """Wrapper method that modify the exception in order
     to render it like a json"""
@@ -49,19 +108,7 @@ class HttpJsonRequest(HttpRequest):
         if self.httprequest.headers.get('Content-Type') == 'application/json':
             self.params = json.loads(self.httprequest.stream.read())
         else:
-            # TODO add support of multilevel dict in urlencode
-            # for now just add the support for url key of dict of 1 level
-            # url encoded/decoded are well done in ruby
-            # https://github.com/sporkmonger/addressable
-            for key, value in self.params.items():
-                if '[' in key:
-                    del self.params[key]
-                    key, subkey = key.split('[')
-                    subkey = subkey.replace(']', '')
-                    if key not in self.params:
-                        self.params[key] = {subkey: value}
-                    else:
-                        self.params[key][subkey] = value
+            self.params = convert_nested_html_form_params(self.params)
 
     def _handle_exception(self, exception):
         """Called within an except block to allow converting exceptions
