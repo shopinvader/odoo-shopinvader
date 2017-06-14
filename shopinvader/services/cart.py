@@ -3,7 +3,7 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import to_int, secure_params
+from .helper import to_int, to_bool, secure_params
 from .abstract_sale import AbstractSaleService
 from .contact import ContactService
 from .customer import CustomerService
@@ -89,9 +89,9 @@ class CartService(AbstractSaleService):
 
     def _validator_update(self):
         res = {
-            'assign_partner': {'type': 'boolean'},
+            'assign_partner': {'type': 'boolean', 'coerce': to_bool},
             'carrier_id': {'coerce': to_int, 'nullable': True},
-            'use_different_invoice_address': {'type': 'boolean'},
+            'use_different_invoice_address': {'type': 'boolean', 'coerce': to_bool},
             'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
