@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="ir_exp_shopinvader_variant_tag_name" model="ir.exports.line">
+    <field name="name">tag_ids/name</field>
+    <field name="alias">tag_ids:tags/name</field>
+    <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+</record>
+
+<record id="ir_exp_shopinvader_variant_tag_code" model="ir.exports.line">
+    <field name="name">tag_ids/code</field>
+    <field name="alias">tag_ids:tags/code</field>
+    <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+</record>
+
+    </data>
+</openerp>
