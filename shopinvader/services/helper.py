@@ -27,6 +27,11 @@ def to_int(val):
     else:
         return None
 
+def to_bool(val):
+    if val in ('true', 'True', '1', True):
+        return True
+    else:
+        return False
 
 def secure_params(func):
     @functools.wraps(func)

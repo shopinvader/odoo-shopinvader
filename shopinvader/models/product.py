@@ -173,6 +173,8 @@ class ShopinvaderVariant(models.Model):
     attributes = fields.Serialized(
         compute='_compute_attributes',
         string='Shopinvader Attributes')
+    main = fields.Boolean(
+        compute='_compute_main_product')
 
     @api.depends('record_id')
     def _compute_object_id(self):
@@ -242,3 +244,11 @@ class ShopinvaderVariant(models.Model):
             pricelist.id, self.record_id.id, qty=qty,
             fiscal_position=fposition.id, partner_id=partner.id)
         return self._extract_price_from_onchange(pricelist, result)
+
+    def _compute_main_product(self):
+        for record in self:
+            if record.record_id \
+                    == record.product_tmpl_id.product_variant_ids[0]:
+                record.main = True
+            else:
+                record.main = False
