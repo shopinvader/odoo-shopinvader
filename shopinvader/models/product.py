@@ -204,7 +204,7 @@ class ShopinvaderVariant(models.Model):
             images = []
             for image in record.record_id.image_ids:
                 res = {'original': image.url}
-                for resize in record.backend_id.image_resize_ids:
+                for resize in record.backend_id.product_image_resize_ids:
                     res[resize.key] = \
                         image.get_thumbnail_from_resize(resize).url
                 images.append(res)

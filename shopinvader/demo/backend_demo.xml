@@ -5,7 +5,8 @@
 <record id="connector_locomotivecms.backend_1" model="locomotive.backend">
     <field name="odoo_api">odooapi</field>
     <field name="version">shopinvader_v1</field>
-    <field name="image_resize_ids" eval="[(6, 0, [ref('small'), ref('medium'), ref('large')])]"/>
+    <field name="product_image_resize_ids" eval="[(6, 0, [ref('small'), ref('medium'), ref('large')])]"/>
+    <field name="categ_image_resize_ids" eval="[(6, 0, [ref('small'), ref('medium')])]"/>
 </record>
 
 <record id="role_1" model="shopinvader.role">

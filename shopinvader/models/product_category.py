@@ -62,6 +62,17 @@ class ShopinvaderCategory(models.Model):
          'A category can only have one binding by backend.'),
     ]
 
+    def _compute_image(self):
+        for record in self:
+            images = []
+            for image in record.record_id.image_ids:
+                res = {'original': image.url}
+                for resize in record.backend_id.categ_image_resize_ids:
+                    res[resize.key] = \
+                        image.get_thumbnail_from_resize(resize).url
+                images.append(res)
+            record.images = images
+
     @api.depends('record_id')
     def _compute_object_id(self):
         for record in self:
@@ -109,9 +120,3 @@ class ShopinvaderCategory(models.Model):
             while parent:
                 record.level += 1
                 parent = parent.shopinvader_parent_id
-
-    def _compute_image(self):
-        for record in self:
-            images = []
-            # TODO get image from public storage
-            record.images = images

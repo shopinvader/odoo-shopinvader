@@ -47,9 +47,12 @@ class LocomotiveBackend(models.Model):
               "order to give the posibility to shopinvader to access to odoo"))
     version = fields.Selection(selection_add=[
         ('shopinvader_v1', 'Shopinvader V1')])
-    image_resize_ids = fields.Many2many(
+    product_image_resize_ids = fields.Many2many(
         comodel_name='image.resize',
-        string='Image Resize')
+        string='Product Image Resize')
+    categ_image_resize_ids = fields.Many2many(
+        comodel_name='image.resize',
+        string='Category Image Resize')
 
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_variant = fields.Integer(compute='_compute_nbr_content')
