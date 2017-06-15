@@ -42,8 +42,12 @@ class CartService(AbstractSaleService):
             self._check_valid_payment_method(params['payment_method_id'])
         if not self.partner:
             self._set_anonymous_partner(params)
-        elif params.pop('assign_partner', None):
-            params['partner_id'] = self.partner.id
+        else:
+            if params.pop('assign_partner', None):
+                params['partner_id'] = self.partner.id
+            for key in ('partner_shipping', 'partner_invoice'):
+                if key in params:
+                    params['%s_id' % key] = params[key]['id']
         recompute_price = False
         if self._check_call_onchange(params):
             if 'partner_id' not in params:
@@ -99,17 +103,23 @@ class CartService(AbstractSaleService):
         }
         if self.partner:
             res.update({
-                'partner_shipping_id': {'coerce': to_int},
-                'partner_invoice_id': {'coerce': to_int},
+                'partner_shipping': {
+                    'type': 'dict',
+                    'schema': {'coerce': to_int},
+                    },
+                'partner_invoice': {
+                    'type': 'dict',
+                    'schema': {'coerce': to_int},
+                    },
                 })
         else:
             customer_service = self.service_for(CustomerService)
             contact_service = self.service_for(ContactService)
             res.update({
-                'partner_shipping_id': {
+                'partner_shipping': {
                     'type': 'dict',
                     'schema': customer_service._validator_create()},
-                'partner_invoice_id': {
+                'partner_invoice': {
                     'type': 'dict',
                     'schema': contact_service._validator_create()},
                 })
@@ -185,16 +195,16 @@ class CartService(AbstractSaleService):
         return methods
 
     def _set_anonymous_partner(self, params):
-        if 'partner_shipping_id' in params:
-            shipping_contact = params['partner_shipping_id']
+        if 'partner_shipping' in params:
+            shipping_contact = params.pop('partner_shipping')
             service_customer = self.service_for(CustomerService)
             customer = service_customer.create(shipping_contact)
             params.update({
                 'partner_id': customer['id'],
                 'partner_shipping_id': customer['id'],
                 })
-        if 'partner_invoice_id' in params:
-            invoice_contact = params['partner_invoice_id']
+        if 'partner_invoice' in params:
+            invoice_contact = params.pop('partner_invoice_id')
             if not params.get('partner_shipping_id'):
                 raise UserError(_(
                     "Invoice address can not be set before "
