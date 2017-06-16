@@ -60,13 +60,16 @@ class AbstractSaleService(ShopinvaderService):
             'item_amount_tax',
             'cart_state',
             'anonymous_email',
+            'use_different_invoice_address',
             'state',
-            ('carrier_id', self._parser_carrier()),
-            ('partner_id', self._parser_partner()),
-            ('partner_shipping_id', contact_parser),
-            ('partner_invoice_id', contact_parser),
+            'date_order',
+            ('carrier_id:carrier', self._parser_carrier()),
+            ('partner_id:partner', self._parser_partner()),
+            ('partner_shipping_id:partner_shipping', contact_parser),
+            ('partner_invoice_id:partner_invoice', contact_parser),
             ('order_line', self._parser_order_line()),
-            ('payment_method_id', self._parser_payment_method()),
+            ('payment_method_id:payment_method',
+                self._parser_payment_method()),
         ]
 
     def _to_json(self, sale):

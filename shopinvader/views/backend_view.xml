@@ -9,7 +9,8 @@
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>
-            <field name="image_resize_ids" widget="many2many_tags"/>
+            <field name="product_image_resize_ids" widget="many2many_tags"/>
+            <field name="categ_image_resize_ids" widget="many2many_tags"/>
         </field>
         <group name="config" position="after">
             <group name="price" colspan="4">

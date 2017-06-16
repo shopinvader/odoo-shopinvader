@@ -2,31 +2,35 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==========================
-ShopInvader Product Rating
-==========================
+==============
+Product Tag
+==============
 
-This module extends the functionality of product rating/review to support your
-ShopInvader Shop
+This module add the possibility to tag your product
 
 Installation
 ============
 
-To install this module, you need to:
-
-#. Install the module
+Just install this module.
 
 Configuration
 =============
 
 No configuration is required
 
+
 Usage
 =====
 
 To use this module, you need to:
 
-#. Go to your product rating menu
+To see all the existing product tag
+
+#. Go to Sale > Product > Product Tag
+
+To tag a product
+
+# Go to the product variant and tag it
 
 Known issues / Roadmap
 ======================
@@ -37,7 +41,7 @@ Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues
-<https://github.com/akretion/odoo-shopinvader/issues>`_. In case of trouble, please
+<https://github.com/akretion/ak-web/issues>`_. In case of trouble, please
 check there if your issue has already been reported. If you spotted it first,
 help us smashing it by providing a detailed and welcomed feedback.
 
@@ -55,9 +59,3 @@ Funders
 The development of this module has been financially supported by:
 
 * Akretion R&D
-* Adaptoo
-
-Maintainer
-----------
-
-This module is maintained by Akretion.

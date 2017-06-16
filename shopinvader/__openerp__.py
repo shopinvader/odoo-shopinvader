@@ -28,7 +28,6 @@
         "delivery",
         "onchange_helper",
         "payment_gateway",
-        "product_media",
         "product_multi_image",
         "product_stock_state",
         "sale_cart",

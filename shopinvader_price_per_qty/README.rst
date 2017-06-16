@@ -57,4 +57,4 @@ The development of this module has been financially supported by:
 Maintainer
 ----------
 
-This module is maintained by the Akretion.
+This module is maintained by Akretion.

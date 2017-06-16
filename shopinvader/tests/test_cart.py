@@ -57,14 +57,14 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
 
     def _add_shipping_address(self):
         self.service.update({
-            'partner_shipping_id': self.address_ship,
+            'partner_shipping': self.address_ship,
             })
         self._check_address(self.cart.partner_shipping_id, self.address_ship)
 
     def _add_shipping_and_invoice_address(self):
         self.service.update({
-            'partner_shipping_id': self.address_ship,
-            'partner_invoice_id': self.address_invoice,
+            'partner_shipping': self.address_ship,
+            'partner_invoice': self.address_invoice,
             'use_different_invoice_address': True
             })
         self._check_address(self.cart.partner_shipping_id, self.address_ship)
@@ -137,7 +137,7 @@ class ConnectedCartCase(AbstractCartCase, CommonCase):
 
     def test_set_shipping_contact(self):
         self.service.update({
-            'partner_shipping_id': self.contact.id,
+            'partner_shipping': {'id': self.contact.id},
             })
         cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
@@ -147,7 +147,7 @@ class ConnectedCartCase(AbstractCartCase, CommonCase):
     def test_set_invoice_contact(self):
         self.service.update({
             'use_different_invoice_address': True,
-            'partner_invoice_id': self.contact.id,
+            'partner_invoice': {'id': self.contact.id},
             })
 
         cart = self.cart
@@ -170,7 +170,7 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
     def test_set_shipping_contact_with_tax(self):
         cart = self.cart
         self.service.update({
-            'partner_shipping_id': self.contact.id,
+            'partner_shipping': {'id': self.contact.id},
             })
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.contact)
@@ -178,7 +178,7 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.fiscal_position, self.default_fposition)
         self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
         self.service.update({
-            'partner_shipping_id': self.partner.id,
+            'partner_shipping': {'id': self.partner.id},
             })
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)

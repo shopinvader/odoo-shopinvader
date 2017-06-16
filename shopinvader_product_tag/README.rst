@@ -3,10 +3,10 @@
    :alt: License: AGPL-3
 
 ==========================
-ShopInvader Product Rating
+ShopInvader Product Tag
 ==========================
 
-This module extends the functionality of product rating/review to support your
+This module extends the functionality of product tag to support your
 ShopInvader Shop
 
 Installation
@@ -26,7 +26,7 @@ Usage
 
 To use this module, you need to:
 
-#. Go to your product rating menu
+#. Go to your product and tag it
 
 Known issues / Roadmap
 ======================

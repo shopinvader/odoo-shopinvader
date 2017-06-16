@@ -3,10 +3,10 @@
    :alt: License: AGPL-3
 
 ==========================
-ShopInvader Product Rating
+ShopInvader Product Media
 ==========================
 
-This module extends the functionality of product rating/review to support your
+This module extends the functionality of product media to support your
 ShopInvader Shop
 
 Installation
@@ -24,9 +24,7 @@ No configuration is required
 Usage
 =====
 
-To use this module, you need to:
-
-#. Go to your product rating menu
+Re-Export your product
 
 Known issues / Roadmap
 ======================
