@@ -49,7 +49,7 @@ class CartService(AbstractSaleService):
                 params['partner_id'] = self.partner.id
             for key in ('partner_shipping', 'partner_invoice'):
                 if key in params:
-                    params['%s_id' % key] = params[key]['id']
+                    params['%s_id' % key] = params.pop(key)['id']
         recompute_price = False
         if self._check_call_onchange(params):
             if 'partner_id' not in params:
@@ -109,11 +109,11 @@ class CartService(AbstractSaleService):
             res.update({
                 'partner_shipping': {
                     'type': 'dict',
-                    'schema': {'coerce': to_int},
+                    'schema': {'id': {'coerce': to_int}},
                     },
                 'partner_invoice': {
                     'type': 'dict',
-                    'schema': {'coerce': to_int},
+                    'schema': {'id': {'coerce': to_int}},
                     },
                 })
         else:
@@ -208,7 +208,7 @@ class CartService(AbstractSaleService):
                 'partner_shipping_id': customer['id'],
                 })
         if 'partner_invoice' in params:
-            invoice_contact = params.pop('partner_invoice_id')
+            invoice_contact = params.pop('partner_invoice')
             if not params.get('partner_shipping_id'):
                 raise UserError(_(
                     "Invoice address can not be set before "

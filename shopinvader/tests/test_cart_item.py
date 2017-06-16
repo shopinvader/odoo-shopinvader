@@ -46,9 +46,9 @@ class AbstractItemCase(object):
         self.assertEqual(line['product_uom_qty'], qty)
 
     def check_partner(self, cart):
-        self.assertEqual(cart['partner_id']['id'], self.partner.id)
-        self.assertEqual(cart['partner_shipping_id']['id'], self.partner.id)
-        self.assertEqual(cart['partner_invoice_id']['id'], self.partner.id)
+        self.assertEqual(cart['partner']['id'], self.partner.id)
+        self.assertEqual(cart['partner_shipping']['id'], self.partner.id)
+        self.assertEqual(cart['partner_invoice']['id'], self.partner.id)
 
     def test_add_item_without_cart(self):
         self.remove_cart()
