@@ -19,11 +19,11 @@
     },
     "depends": [
         "product",
-        "attachment_media",
+        "storage_image",
     ],
     "data": [
         "views/product_view.xml",
-        "views/product_menu.xml",
+        "data/ir_parameter.xml",
         "security/ir.model.access.csv",
     ],
     "demo": [
