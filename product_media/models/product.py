@@ -5,6 +5,8 @@
 
 import os
 from openerp import api, fields, models
+import logging
+_logger = logging.getLogger(__name__)
 
 try:
     from slugify import slugify
@@ -106,7 +108,7 @@ class ProductProduct(models.Model):
 
     def _compute_media(self):
         for record in self:
-            record.media_ids  = self.env['product.media'].search([
+            record.media_ids = self.env['product.media'].search([
                 '|',
                 ('restrict_variant_ids', '=', False),
                 ('restrict_variant_ids', '=', record.id),
