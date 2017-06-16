@@ -97,7 +97,8 @@ class CartService(AbstractSaleService):
         res = {
             'assign_partner': {'type': 'boolean', 'coerce': to_bool},
             'carrier_id': {'coerce': to_int, 'nullable': True},
-            'use_different_invoice_address': {'type': 'boolean', 'coerce': to_bool},
+            'use_different_invoice_address': {
+                'type': 'boolean', 'coerce': to_bool},
             'cart_state': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
