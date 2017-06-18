@@ -38,7 +38,7 @@ class ClaimService(ShopinvaderService):
     def create(self, params):
         vals = self._prepare_claim(params)
         claim = self.env['crm.claim'].create(vals)
-        return self.to_json(claim)
+        return {'data' : self.to_json(claim)}
 
     @secure_params
     def update(self, params):
@@ -54,7 +54,7 @@ class ClaimService(ShopinvaderService):
                 type='comment',
                 subtype='mail.mt_comment',
                 content_subtype='plaintext')
-        return self.to_json(claim)
+        return {'data' : self.to_json(claim)}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -82,11 +82,11 @@ class ClaimService(ShopinvaderService):
                 'type': 'list',
                 'schema': {
                     'id': {'coerce': to_int, 'required': True},
-                    'quantity': {'coerce': to_int, 'nullable': True}
+                    'qty': {'coerce': to_int, 'nullable': True}
                     }
                 },
             'message': {'type': 'string', 'required': True},
-            'subject_id': {'coerce': to_int, 'nullable': True},
+            'subject_id': {'coerce': to_int, 'required': True},
             }
 
     def _validator_update(self):
@@ -105,8 +105,14 @@ class ClaimService(ShopinvaderService):
         res = [
             'id',
             'name',
+            'code',
+            'create_date',
             ('stage_id', self._parser_stage()),
-            ('partner_id', self._parser_partner()),
+            ('claim_line_ids:lines', [
+                ('product_id:product', ('id', 'name')),
+                'product_returned_quantity:qty',
+		]),
+            ('ref', ('id', 'name')),
         ]
         return res
 
@@ -116,18 +122,23 @@ class ClaimService(ShopinvaderService):
             return res
         for claim in claims:
             parsed_claim = claim.jsonify(self._json_parser())[0]
-            parsed_claim['message_ids'] = []
+            parsed_claim['messages'] = []
             for message in claim.message_ids:
                 if message.type != 'comment' or not message.subtype_id:
                     continue
-                parsed_claim['message_ids'].append({
+                parsed_claim['messages'].append({
                     'body': message.body,
                     'date': message.date,
-                    'author_id': {
-                        'display_name': message.author_id.display_name,
-                        'id': message.author_id.id
-                        }
+                    'author': message.author_id.display_name,
+                    'email': message.author_id.email,
                     })
+            parsed_claim['messages'].append({
+                'body': claim.description,
+                'date': claim.create_date,
+                'author': claim.partner_id.name,
+                'email': claim.partner_id.email,
+                })
+            parsed_claim['messages'].reverse()
             res.append(parsed_claim)
         return res
 
@@ -148,7 +159,7 @@ class ClaimService(ShopinvaderService):
         vals = self.env['crm.claim'].play_onchanges(vals, ['partner_id'])
         order = False
         for line in params['sale_order_line']:
-            if line['quantity'] == 0:
+            if line['qty'] == 0:
                 continue
             so_line = self.env['sale.order.line'].search([
                 ('id', '=', line['id']),
@@ -160,6 +171,7 @@ class ClaimService(ShopinvaderService):
                     'The sale order line %s does not exist' % line['id'])
             if not order:
                 order = so_line.order_id
+                vals['ref'] = 'sale.order,%s' % order.id
             elif order != so_line.order_id:
                 raise BadRequest(
                     'All sale order lines must come from the same sale order')
@@ -167,7 +179,7 @@ class ClaimService(ShopinvaderService):
                 vals['invoice_id'] = order.invoice_ids[0].id
             vals['claim_line_ids'].append((0, 0, {
                 'product_id': so_line.product_id.id,
-                'product_returned_quantity': line['quantity'],
+                'product_returned_quantity': line['qty'],
                 'claim_origin': 'none'}))
         if not vals['claim_line_ids']:
             raise BadRequest('The claim must have at least one line')
