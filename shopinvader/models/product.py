@@ -25,6 +25,7 @@ class ProductTemplate(models.Model):
         'shopinvader.product',
         'record_id',
         string='Shopinvader Binding')
+    description = fields.Html(translate=True)
 
     @api.multi
     def unlink(self):
