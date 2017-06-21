@@ -160,9 +160,9 @@ class CartService(AbstractSaleService):
         if 'next_step' in params:
             params['current_step_id'] = self._get_step_from_code(
                 params.pop('next_step')).id
-        if 'done_step' in params:
+        if 'current_step' in params:
             params['done_step_ids'] = [(4, self._get_step_from_code(
-                params.pop('next_step')).id)]
+                params.pop('current_step')).id, 0)]
 
     def _prepare_available_carrier(self, carrier):
         return {
@@ -196,8 +196,8 @@ class CartService(AbstractSaleService):
             'available_carriers': self._get_available_carrier(cart),
             'available_payment_method_ids':\
                 self._get_available_payment_method(),
-            'current_step': cart.current_step.code,
-            'done_step': cart.done_step_ids.mapped('code'),
+            'current_step': cart.current_step_id.code,
+            'done_steps': cart.done_step_ids.mapped('code'),
             })
         return {
             'data': res,
