@@ -30,7 +30,6 @@
         "payment_gateway",
         "product_multi_image",
         "product_stock_state",
-        "sale_cart",
         "sale_different_invoice_address",
         "sale_payment_method",
         "sale_order_price_recalculation",
