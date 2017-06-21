@@ -152,6 +152,9 @@ class ShopinvaderVariant(models.Model):
         'shopinvader.product': 'shopinvader_product_id',
         'product.product': 'record_id'}
 
+    default_code = fields.Char(
+        related='record_id.default_code',
+        readonly=True)
     shopinvader_product_id = fields.Many2one(
         'shopinvader.product',
         required=True,
