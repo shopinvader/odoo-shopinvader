@@ -58,7 +58,6 @@ class AbstractSaleService(ShopinvaderService):
             'item_amount_total',
             'item_amount_untaxed',
             'item_amount_tax',
-            'cart_state',
             'anonymous_email',
             'use_different_invoice_address',
             'state',
