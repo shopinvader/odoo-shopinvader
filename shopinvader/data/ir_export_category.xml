@@ -119,6 +119,19 @@
 
 <record id="ir_exp_shopinvader_category_filter_ids_display_name" model="ir.exports.line">
     <field name="name">filter_ids/display_name</field>
+    <field name="alias">filter_ids:filters/display_name:code</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_filter_ids_name" model="ir.exports.line">
+    <field name="name">filter_ids/name</field>
+    <field name="alias">filter_ids:filters/name</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
+<record id="ir_exp_shopinvader_category_filter_ids_help" model="ir.exports.line">
+    <field name="name">filter_ids/help</field>
+    <field name="alias">filter_ids:filters/help</field>
     <field name="export_id" ref="ir_exp_shopinvader_category"/>
 </record>
 
