@@ -61,6 +61,7 @@ class CartService(AbstractSaleService):
             del params['order_line']
             if params['pricelist_id'] != cart.pricelist_id.id:
                 recompute_price = True
+        self._update_cart_step(params)
         if params:
             cart.write(params)
             if recompute_price:
@@ -97,7 +98,8 @@ class CartService(AbstractSaleService):
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'use_different_invoice_address': {
                 'type': 'boolean', 'coerce': to_bool},
-            'cart_state': {'type': 'string'},
+            'current_step': {'type': 'string'},
+            'next_step': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
             'payment_params': self._get_payment_validator(),
@@ -144,6 +146,21 @@ class CartService(AbstractSaleService):
     # from the controller.
     # All params are trusted as they have been checked before
 
+    def _get_step_from_code(self, code):
+        step = self.env['shopinvader.cart.step'].search([('code', '=', code)])
+        if not step:
+            raise UserError(_('Invalid step code %s') % code)
+        else:
+            return step
+
+    def _update_cart_step(self, params):
+        if 'next_step' in params:
+            params['current_step_id'] = self._get_step_from_code(
+                params.pop('next_step')).id
+        if 'done_step' in params:
+            params['done_step_ids'] = [(4, self._get_step_from_code(
+                params.pop('next_step')).id)]
+
     def _prepare_available_carrier(self, carrier):
         return {
             'id': carrier.id,
@@ -172,9 +189,13 @@ class CartService(AbstractSaleService):
         if not cart:
             return {'data': {}, 'store_data': 'cart'}
         res = super(CartService, self)._to_json(cart)[0]
-        res['available_carriers'] = self._get_available_carrier(cart)
-        res['available_payment_method_ids']\
-            = self._get_available_payment_method()
+        res.update({
+            'available_carriers': self._get_available_carrier(cart),
+            'available_payment_method_ids':\
+                self._get_available_payment_method(),
+            'current_step': cart.current_step.code,
+            'done_step': cart.done_step_ids.mapped('code'),
+            })
         return {
             'data': res,
             'set_session': {'cart_id': res['id']},
@@ -217,7 +238,7 @@ class CartService(AbstractSaleService):
 
     def _get(self):
         domain = [
-            ('sub_state', '=', 'cart'),
+            ('typology', '=', 'cart'),
             ('shopinvader_backend_id', '=', self.backend_record.id),
             ]
         cart = self.env['sale.order'].search(
@@ -235,7 +256,7 @@ class CartService(AbstractSaleService):
     def _prepare_cart(self):
         partner = self.partner or self.env.ref('shopinvader.anonymous')
         vals = {
-            'sub_state': 'cart',
+            'typology': 'cart',
             'partner_id': partner.id,
             'partner_shipping_id': partner.id,
             'partner_invoice_id': partner.id,
