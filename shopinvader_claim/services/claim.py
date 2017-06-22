@@ -38,7 +38,7 @@ class ClaimService(ShopinvaderService):
     def create(self, params):
         vals = self._prepare_claim(params)
         claim = self.env['crm.claim'].create(vals)
-        return {'data' : self.to_json(claim)}
+        return {'data': self.to_json(claim)}
 
     @secure_params
     def update(self, params):
@@ -54,7 +54,7 @@ class ClaimService(ShopinvaderService):
                 type='comment',
                 subtype='mail.mt_comment',
                 content_subtype='plaintext')
-        return {'data' : self.to_json(claim)}
+        return {'data': self.to_json(claim)}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -111,7 +111,7 @@ class ClaimService(ShopinvaderService):
             ('claim_line_ids:lines', [
                 ('product_id:product', ('id', 'name')),
                 'product_returned_quantity:qty',
-		]),
+                ]),
             ('ref', ('id', 'name')),
         ]
         return res

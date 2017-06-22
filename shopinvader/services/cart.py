@@ -194,7 +194,7 @@ class CartService(AbstractSaleService):
         res = super(CartService, self)._to_json(cart)[0]
         res.update({
             'available_carriers': self._get_available_carrier(cart),
-            'available_payment_method_ids':\
+            'available_payment_method_ids':
                 self._get_available_payment_method(),
             'current_step': cart.current_step_id.code,
             'done_steps': cart.done_step_ids.mapped('code'),

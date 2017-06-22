@@ -6,6 +6,7 @@
 
 from openerp import api, fields, models
 import openerp.addons.decimal_precision as dp
+import uuid
 
 
 class ShopinvaderCartStep(models.Model):
@@ -62,10 +63,15 @@ class SaleOrder(models.Model):
         dp=dp.get_precision('Account'),
         store=True)
 
+    _sql_constraints = [
+        ('token_uniq', 'unique(anonymous_token)',
+         'Token must be uniq.'),
+    ]
+
     @api.multi
     def action_confirm_cart(self):
         for record in self:
-            vals['typology'] = 'sale'
+            vals = {'typology': 'sale'}
             if record.anonylous_email:
                 vals['anonymous_token'] = str(uuid.uuid4())
             record.write(vals)
