@@ -21,6 +21,7 @@ env:
   - ODOO_REPO="OCA/OCB"
   - UNIT_TEST="1" ODOO_REPO="odoo/odoo"
   - UNIT_TEST="1" ODOO_REPO="OCA/OCB"
+  - ALGOLIA_TEST="1" UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE=shopinvader_algolia
 
 virtualenv:
   system_site_packages: true

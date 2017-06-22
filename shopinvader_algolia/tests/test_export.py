@@ -20,7 +20,7 @@ except ImportError:
 
 
 @unittest.skipUnless(
-    os.environ.get('ALGOLIA_APP', '') and
+    os.environ.get('ALGOLIA_TEST') and os.environ.get('ALGOLIA_APP', '') and
     os.environ.get('ALGOLIA_API_KEY', ''),
     "Missing algolia connection environment variables")
 class ExportCase(TransactionCase):
