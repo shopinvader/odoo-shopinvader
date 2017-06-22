@@ -84,7 +84,7 @@ class CartService(AbstractSaleService):
                 provider_name = provider.replace('payment.service.', '')
                 self.env[provider]._process_payment_params(
                     cart, payment_params.pop(provider_name, {}))
-        if cart.current_step_id == self.backend.last_step_id:
+        if cart.current_step_id == self.backend_record.last_step_id:
             cart.action_confirm_cart()
         return self._to_json(cart)
 
@@ -225,8 +225,8 @@ class CartService(AbstractSaleService):
             service_customer = self.service_for(CustomerService)
             customer = service_customer.create(shipping_contact)
             params.update({
-                'partner_id': customer['id'],
-                'partner_shipping_id': customer['id'],
+                'partner_id': customer['data']['id'],
+                'partner_shipping_id': customer['data']['id'],
                 })
         if 'partner_invoice' in params:
             invoice_contact = params.pop('partner_invoice')

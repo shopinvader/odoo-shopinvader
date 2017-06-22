@@ -22,13 +22,16 @@ class CustomerService(ShopinvaderService):
         if 'vat' in params:
             params['vat_subjected'] = bool(params['vat'])
         partner = self.env['res.partner'].create(params)
-        self.env['shopinvader.partner'].with_context(
+        shop_partner = self.env['shopinvader.partner'].with_context(
             connector_no_export=True).create({
                 'backend_id': self.backend_record.id,
                 'external_id': external_id,
                 'record_id': partner.id,
                 })
-        return {'data': {'role': partner.role_id.code}}
+        return {'data': {
+            'role': shop_partner.role_id.code,
+            'id': partner.id,
+            }}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.

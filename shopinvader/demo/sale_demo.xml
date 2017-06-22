@@ -10,7 +10,7 @@
             <field name="user_id" ref="base.user_demo"/>
             <field name="pricelist_id" ref="product.list0"/>
             <field name="section_id" ref="sales_team.section_sales_department"/>
-            <field name="sub_state">cart</field>
+            <field name="typology">cart</field>
         </record>
 
         <record id="sale_order_line_1" model="sale.order.line">
@@ -52,7 +52,7 @@
             <field name="pricelist_id" ref="product.list0"/>
             <field name="order_policy">manual</field>
             <field name="section_id" ref="sales_team.section_sales_department"/>
-            <field name="sub_state">cart</field>
+            <field name="typology">cart</field>
         </record>
 
         <record id="sale_order_line_4" model="sale.order.line">
@@ -84,7 +84,7 @@
             <field name="pricelist_id" ref="product.list0"/>
             <field name="order_policy">manual</field>
             <field name="section_id" ref="sales_team.section_sales_department"/>
-            <field name="sub_state">cart</field>
+            <field name="typology">cart</field>
         </record>
 
         <record id="sale_order_line_6" model="sale.order.line">
