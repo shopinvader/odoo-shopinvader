@@ -68,6 +68,11 @@ class ShopinvaderController(Controller):
     def customer(self, **params):
         return self.send_to_service(CustomerService, params)
 
+    # Anonymous Customer
+    @route('/shopinvader/anonymous/register', methods=['POST'], auth="shopinvader")
+    def customer(self, **params):
+        return self.send_to_service(RegisterAnonymousService, params)
+
     # Order History
 
     @route('/shopinvader/orders', methods=['GET'], auth="shopinvader")

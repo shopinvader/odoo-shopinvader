@@ -33,6 +33,8 @@ class CartService(AbstractSaleService):
     @secure_params
     def update(self, params):
         payment_params = params.pop('payment_params', None)
+        action_confirm_cart = \
+            params.get('current_step') == self.backend_record.last_step_id.code
         cart = self._get()
         # Process use_different_invoice_address
         # before processing the invoice and billing address
@@ -44,7 +46,7 @@ class CartService(AbstractSaleService):
             params = self.env['sale.order'].play_onchanges(
                 params, ['payment_method_id'])
         if not self.partner:
-            self._set_anonymous_partner(params)
+            self._set_anonymous_partner(cart, params)
         else:
             if params.pop('assign_partner', None):
                 params['partner_id'] = self.partner.id
@@ -86,7 +88,7 @@ class CartService(AbstractSaleService):
                 provider_name = provider.replace('payment.service.', '')
                 self.env[provider]._process_payment_params(
                     cart, payment_params.pop(provider_name, {}))
-        if cart.current_step_id == self.backend_record.last_step_id:
+        if action_confirm_cart:
             cart.action_confirm_cart()
         return self._to_json(cart)
 
@@ -122,12 +124,11 @@ class CartService(AbstractSaleService):
                     },
                 })
         else:
-            customer_service = self.service_for(CustomerService)
             contact_service = self.service_for(ContactService)
             res.update({
                 'partner_shipping': {
                     'type': 'dict',
-                    'schema': customer_service._validator_create()},
+                    'schema': contact_service._validator_create()},
                 'partner_invoice': {
                     'type': 'dict',
                     'schema': contact_service._validator_create()},
@@ -176,7 +177,7 @@ class CartService(AbstractSaleService):
             }
 
     def _get_available_carrier(self, cart):
-        carriers = cart.with_context(order_id=cart.id)\
+        carriers = cart.with_context(ordetep_id_id=cart.id)\
             .env['delivery.carrier'].search([])
         res = [self._prepare_available_carrier(carrier)
                for carrier in carriers
@@ -222,14 +223,19 @@ class CartService(AbstractSaleService):
             methods.append(self._prepare_payment(method))
         return methods
 
-    def _set_anonymous_partner(self, params):
+    def _set_anonymous_partner(self, cart, params):
         if 'partner_shipping' in params:
             shipping_contact = params.pop('partner_shipping')
-            service_customer = self.service_for(CustomerService)
-            customer = service_customer.create(shipping_contact)
+            if params.get('anonymous_email'):
+                shipping_contact['email'] = params['anonymous_email']
+            elif cart.anonymous_email:
+                shipping_contact['email'] = cart.anonymous_email
+            else:
+                raise UserError(_('Anonymous Email is missing'))
+            partner = self.env['res.partner'].create(shipping_contact)
             params.update({
-                'partner_id': customer['data']['id'],
-                'partner_shipping_id': customer['data']['id'],
+                'partner_id': partner.id,
+                'partner_shipping_id': partner.id,
                 })
         if 'partner_invoice' in params:
             invoice_contact = params.pop('partner_invoice')

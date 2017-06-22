@@ -5,6 +5,7 @@
 
 from ..services.cart import CartService
 from .common import CommonCase
+from ..services.register_anonymous import RegisterAnonymousService
 
 
 class AbstractCartCase(object):
@@ -35,7 +36,6 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
             'phone': '0485485454',
             'country_id': self.env.ref('base.fr').id,
             'email': 'anonymous@customer.example.com',
-            'external_id': 'WW5KaGRtOD0=',
             }
         self.address_invoice = {
             'name': 'Gospel',
@@ -57,12 +57,14 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
 
     def _add_shipping_address(self):
         self.service.update({
+            'anonymous_email': self.address_ship.pop('email'),
             'partner_shipping': self.address_ship,
             })
         self._check_address(self.cart.partner_shipping_id, self.address_ship)
 
     def _add_shipping_and_invoice_address(self):
         self.service.update({
+            'anonymous_email': self.address_ship.pop('email'),
             'partner_shipping': self.address_ship,
             'partner_invoice': self.address_invoice,
             'use_different_invoice_address': True
@@ -122,6 +124,22 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.order_line[0].price_unit, 2360.00)
         self.assertEqual(cart.order_line[1].price_unit, 116.00)
         self.assertEqual(cart.order_line[2].price_unit, 52.00)
+
+    def test_anonymous_cart_then_create_account(self):
+        external_id = "SmUgdmFpcyBldHJlIHBhcGEh"
+        self._add_shipping_address()
+        self.service.update({
+            'current_step': self.backend.last_step_id.code})
+        token = self.cart.anonymous_token
+        anonymous_service = self._get_service(RegisterAnonymousService, None)
+        anonymous_service.create({
+            'external_id': external_id,
+            'token': self.cart.anonymous_token,
+            })
+        shop_partner = self.cart.partner_id.shopinvader_bind_ids
+        self.assertEqual(len(shop_partner), 1)
+        self.assertEqual(shop_partner.external_id, external_id)
+        self.assertEqual(shop_partner.backend_id, self.backend)
 
 
 class ConnectedCartCase(AbstractCartCase, CommonCase):
