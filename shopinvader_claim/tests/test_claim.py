@@ -24,7 +24,6 @@ class ClaimCase(CommonCase):
         self.assertEqual(len(res['data']), 2)
         stage_id = self.env.ref('crm_claim.stage_claim1').id
         for claim in res['data']:
-            self.assertEqual(claim['partner_id']['id'], self.partner.id)
             self.assertEqual(claim['stage_id']['id'], stage_id)
 
     def test_list_claim_subject(self):
@@ -44,10 +43,10 @@ class ClaimCase(CommonCase):
             'message': 'Message Test',
             'subject_id': self.claim_categ.id,
             'sale_order_line': [
-                {'id': self.sol_1.id, 'quantity': 2},
-                {'id': self.sol_2.id, 'quantity': 0}]
+                {'id': self.sol_1.id, 'qty': 2},
+                {'id': self.sol_2.id, 'qty': 0}]
         }
-        res = self.service.create(data)
+        res = self.service.create(data)['data']
         claim = self.env['crm.claim'].search([('id', '=', res[0]['id'])])
         self.assertEqual(claim.partner_id, self.partner)
         self.assertEqual(len(claim.claim_line_ids), 1)
@@ -62,8 +61,8 @@ class ClaimCase(CommonCase):
             'message': 'Message Test',
             'subject_id': self.claim_categ.id,
             'sale_order_line': [
-                {'id': self.sol_1.id, 'quantity': 0},
-                {'id': self.sol_2.id, 'quantity': 0}]
+                {'id': self.sol_1.id, 'qty': 0},
+                {'id': self.sol_2.id, 'qty': 0}]
         }
         with self.assertRaises(BadRequest):
             self.service.create(data)
@@ -73,8 +72,8 @@ class ClaimCase(CommonCase):
             'message': 'Message Test',
             'subject_id': self.claim_categ.id,
             'sale_order_line': [
-                {'id': self.sol_1.id, 'quantity': 2},
-                {'id': self.sol_3.id, 'quantity': 1}]
+                {'id': self.sol_1.id, 'qty': 2},
+                {'id': self.sol_3.id, 'qty': 1}]
         }
         with self.assertRaises(NotFound):
             self.service.create(data)
@@ -84,10 +83,10 @@ class ClaimCase(CommonCase):
             'id': self.env.ref('shopinvader_claim.crm_claim_1').id,
             'add_message': 'New message'
         }
-        res = self.service.update(data)
-        messages = res[0]['message_ids']
-        self.assertEqual(len(messages), 1)
-        self.assertEqual(messages[0]['body'], u'<p>New message</p>')
+        res = self.service.update(data)['data']
+        messages = res[0]['messages']
+        self.assertEqual(len(messages), 2)
+        self.assertEqual(messages[1]['body'], u'<p>New message</p>')
 
     def test_claim_not_found(self):
         data = {
