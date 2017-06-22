@@ -27,7 +27,7 @@ class CustomerCase(CommonCase):
             'phone': '0485485454',
             'country_id': self.env.ref('base.fr').id,
             }
-        res = service.create(data)
+        res = service.create(data)['data']
         partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(partner.email, data['email'])
         self.assertEqual(
@@ -57,7 +57,7 @@ class CustomerCase(CommonCase):
             'country_id': self.env.ref('base.fr').id,
             'vat': 'BE0477472701',
             }
-        res = service.create(data)
+        res = service.create(data)['data']
         partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(
             partner.shopinvader_bind_ids.role_id,
@@ -75,7 +75,7 @@ class CustomerCase(CommonCase):
             'phone': '0485485454',
             'country_id': self.env.ref('base.us').id,
             }
-        res = service.create(data)
+        res = service.create(data)['data']
         partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(
             partner.shopinvader_bind_ids.role_id,

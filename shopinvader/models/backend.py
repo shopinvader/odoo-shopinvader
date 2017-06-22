@@ -61,7 +61,8 @@ class LocomotiveBackend(models.Model):
     nbr_category = fields.Integer(compute='_compute_nbr_content')
     last_step_id = fields.Many2one(
         'shopinvader.cart.step',
-        string='Last cart step')
+        string='Last cart step',
+        required=True)
 
     def _compute_nbr_content(self):
         for record in self:

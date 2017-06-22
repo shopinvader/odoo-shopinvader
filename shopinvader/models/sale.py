@@ -72,7 +72,7 @@ class SaleOrder(models.Model):
     def action_confirm_cart(self):
         for record in self:
             vals = {'typology': 'sale'}
-            if record.anonylous_email:
+            if record.anonymous_email:
                 vals['anonymous_token'] = str(uuid.uuid4())
             record.write(vals)
         return True
