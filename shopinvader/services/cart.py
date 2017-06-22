@@ -29,6 +29,7 @@ class CartService(AbstractSaleService):
     def get(self, params):
         return self.list()
 
+    # TODO REFACTOR too many line of code here
     @secure_params
     def update(self, params):
         payment_params = params.pop('payment_params', None)
@@ -85,6 +86,8 @@ class CartService(AbstractSaleService):
                 provider_name = provider.replace('payment.service.', '')
                 self.env[provider]._process_payment_params(
                     cart, payment_params.pop(provider_name, {}))
+        if cart.current_step_id == self.backend.last_step_id:
+            cart.action_confirm_cart()
         return self._to_json(cart)
 
     # Validator

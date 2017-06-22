@@ -28,7 +28,7 @@ class CustomerService(ShopinvaderService):
                 'external_id': external_id,
                 'record_id': partner.id,
                 })
-        return {'id': partner.id}
+        return {'data': {'role': partner.role_id.code}}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
