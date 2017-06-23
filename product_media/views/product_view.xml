@@ -42,6 +42,7 @@
                 <field name="name"/>
                 <field name="media_type_id" widget="selection"/>
                 <field name="restrict_variant_ids"
+                       domain="[('product_tmpl_id', '=', parent.id)]"
                        widget="many2many_tags"/>
             </group>
         </form>

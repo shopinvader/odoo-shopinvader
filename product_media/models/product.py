@@ -29,7 +29,6 @@ class ProductMedia(models.Model):
 
     restrict_variant_ids = fields.Many2many(
         comodel_name='product.product',
-        domain="[('product_tmpl_id', '=', product_tmpl_id)]",
         string='Restrict Variant')
 
     media_type_id = fields.Many2one(
