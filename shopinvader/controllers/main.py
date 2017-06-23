@@ -70,7 +70,7 @@ class ShopinvaderController(Controller):
 
     # Anonymous Customer
     @route('/shopinvader/anonymous/register', methods=['POST'], auth="shopinvader")
-    def customer(self, **params):
+    def anonymous_register(self, **params):
         return self.send_to_service(RegisterAnonymousService, params)
 
     # Order History
