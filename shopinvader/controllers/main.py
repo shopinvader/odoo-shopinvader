@@ -11,11 +11,15 @@ from ..services.cart_item import CartItemService
 from ..services.contact import ContactService
 from ..services.customer import CustomerService
 from ..services.sale import SaleService
+from datetime import datetime
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ShopinvaderController(Controller):
 
     def send_to_service(self, service_class, params):
+        start = datetime.now()
         method = request.httprequest.method
         service = self._get_service(service_class)
         if method == 'GET':
@@ -29,7 +33,9 @@ class ShopinvaderController(Controller):
             res = service.update(params)
         elif method == 'DELETE':
             res = service.delete(params)
-        return request.make_response(res)
+        res = request.make_response(res)
+        _logger.info('Shopinvader Response in %s', datetime.now() - start)
+        return res
 
     def _get_service(self, service_class):
         model_name = service_class._model_name
