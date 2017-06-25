@@ -85,6 +85,19 @@ class ResPartner(models.Model):
         string='Contact Type',
         compute='_compute_contact_type',
         store=True)
+    # In europe we use more the opt_in
+    opt_in = fields.Boolean(
+        compute='_compute_opt_in',
+        inverse='_inverse_opt_in')
+
+    @api.depends('opt_out')
+    def _compute_opt_in(self):
+        for record in self:
+            record.opt_in = not record.opt_out
+
+    def _inverse_opt_in(self):
+        for record in self:
+            record.opt_out = not record.opt_in
 
     @api.depends('parent_id')
     def _compute_contact_type(self):
