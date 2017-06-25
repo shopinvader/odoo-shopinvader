@@ -88,7 +88,15 @@ class CartService(AbstractSaleService):
                     cart, payment_params.pop(provider_name, {}))
         if action_confirm_cart:
             cart.action_confirm_cart()
-        return self._to_json(cart)
+            res = self._to_json(cart)
+            res.update({
+                'store_clear': ['cart'],
+                'store_data': 'last_sale',
+                'set_session': {'cart_id': 0},
+                })
+        else:
+            res = self._to_json(cart)
+        return res
 
     # Validator
     def _validator_get(self):
@@ -174,7 +182,7 @@ class CartService(AbstractSaleService):
             }
 
     def _get_available_carrier(self, cart):
-        carriers = cart.with_context(ordetep_id_id=cart.id)\
+        carriers = cart.with_context(order_id=cart.id)\
             .env['delivery.carrier'].search([])
         res = [self._prepare_available_carrier(carrier)
                for carrier in carriers
@@ -234,7 +242,7 @@ class CartService(AbstractSaleService):
                 'partner_id': partner.id,
                 'partner_shipping_id': partner.id,
                 })
-        if 'partner_invoice' in params:
+        if cart.use_different_invoice_address and 'partner_invoice' in params:
             invoice_contact = params.pop('partner_invoice')
             if not params.get('partner_shipping_id'):
                 raise UserError(_(
