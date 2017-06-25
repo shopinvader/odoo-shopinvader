@@ -66,6 +66,8 @@ class ContactService(ShopinvaderService):
             'state_id': {'coerce': to_int, 'nullable': True},
             'country_id': {'coerce': to_int, 'required': True},
             'is_company': {'coerce': bool},
+            'opt_in': {'coerce': bool},
+            'opt_out': {'coerce': bool},
             }
         if 'partner_firstname' in self.env.registry._init_modules:
             res.update({
@@ -130,6 +132,8 @@ class ContactService(ShopinvaderService):
             'zip',
             'city',
             'phone',
+            'opt_in',
+            'opt_out',
             ('state_id', ['id', 'name']),
             ('country_id', ['id', 'name']),
             'contact_type'
