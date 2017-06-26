@@ -108,7 +108,7 @@ class HttpJsonRequest(HttpRequest):
         super(HttpJsonRequest, self).__init__(*args)
         if self.httprequest.headers.get('Content-Type') == 'application/json':
             self.params = json.loads(self.httprequest.stream.read())
-        else:
+        elif self.params:
             self.params = convert_nested_html_form_params(self.params)
 
     def _handle_exception(self, exception):

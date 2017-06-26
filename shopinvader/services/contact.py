@@ -33,7 +33,10 @@ class ContactService(ShopinvaderService):
     def update(self, params):
         contact = self._get_contact(params)
         contact.write(params)
-        return self._list()
+        res = self._list()
+        if contact.contact_type == 'profile':
+            res['store_cache'] = {'customer': self.to_json(contact)[0]}
+        return res
 
     @secure_params
     def delete(self, params):
