@@ -34,7 +34,7 @@ class CartService(AbstractSaleService):
     def update(self, params):
         payment_params = params.pop('payment_params', None)
         action_confirm_cart = \
-            params.get('current_step') == self.backend_record.last_step_id.code
+            params.get('next_step') == self.backend_record.last_step_id.code
         cart = self._get()
         # Process use_different_invoice_address
         # before processing the invoice and billing address
@@ -91,7 +91,7 @@ class CartService(AbstractSaleService):
             res = self._to_json(cart)
             res.update({
                 'store_clear': ['cart'],
-                'store_data': 'last_sale',
+                'store_cache': {'last_sale': res['data']},
                 'set_session': {'cart_id': 0},
                 })
         else:
@@ -130,10 +130,12 @@ class CartService(AbstractSaleService):
                 })
         else:
             contact_service = self.service_for(ContactService)
+            shipping_schema = contact_service._validator_create()
+            shipping_schema['vat'] = {'type': 'string', 'required': False}
             res.update({
                 'partner_shipping': {
                     'type': 'dict',
-                    'schema': contact_service._validator_create()},
+                    'schema': shipping_schema},
                 'partner_invoice': {
                     'type': 'dict',
                     'schema': contact_service._validator_create()},
@@ -194,12 +196,13 @@ class CartService(AbstractSaleService):
 
     def _parser(self):
         res = super(CartService, self)._parser()
-        res.append(('current_transaction_id', self._parser_transaction()))
+        res.append(('current_transaction_id:current_transaction',
+                    self._parser_transaction()))
         return res
 
     def _to_json(self, cart):
         if not cart:
-            return {'data': {}, 'store_data': 'cart'}
+            return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
         res.update({
             'available_carriers': self._get_available_carrier(cart),
@@ -211,7 +214,8 @@ class CartService(AbstractSaleService):
         return {
             'data': res,
             'set_session': {'cart_id': res['id']},
-            'store_data': 'cart'}
+            'store_cache': {'cart': res},
+            }
 
     def _prepare_payment(self, method):
         method = method.payment_method_id

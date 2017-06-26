@@ -69,8 +69,7 @@ class ShopinvaderController(Controller):
         return self.send_to_service(ContactService, params)
 
     # Customer
-
-    @route('/shopinvader/customer', methods=['POST'], auth="shopinvader")
+    @route('/shopinvader/customer', methods=['POST', 'GET'], auth="shopinvader")
     def customer(self, **params):
         return self.send_to_service(CustomerService, params)
 
@@ -80,7 +79,6 @@ class ShopinvaderController(Controller):
         return self.send_to_service(RegisterAnonymousService, params)
 
     # Order History
-
     @route('/shopinvader/orders', methods=['GET'], auth="shopinvader")
     def sale_list(self, **params):
         return self.send_to_service(SaleService, params)

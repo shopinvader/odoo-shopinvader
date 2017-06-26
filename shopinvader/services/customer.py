@@ -17,6 +17,18 @@ class CustomerService(ShopinvaderService):
     # secure params and the linked validator !
 
     @secure_params
+    def list(self, params):
+        if self.partner:
+            contact = self.service_for(ContactService)
+            customer = contact.to_json(self.partner)[0]
+            return {
+                'data': customer,
+                'store_cache': {'customer': customer},
+                }
+        else:
+            return {'data': {}}
+
+    @secure_params
     def create(self, params):
         external_id = params.pop('external_id')
         if 'vat' in params:
@@ -28,10 +40,14 @@ class CustomerService(ShopinvaderService):
                 'external_id': external_id,
                 'record_id': partner.id,
                 })
-        return {'data': {
+        contact = self.service_for(ContactService)
+        return {
+          'data': {
             'role': shop_partner.role_id.code,
             'id': partner.id,
-            }}
+            },
+          'store_cache': {'customer': contact.to_json(partner)},
+        }
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -46,3 +62,6 @@ class CustomerService(ShopinvaderService):
             'vat': {'type': 'string', 'required': False},
             })
         return schema
+
+    def _validator_list(self):
+        return {}
