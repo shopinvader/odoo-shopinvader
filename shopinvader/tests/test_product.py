@@ -47,4 +47,4 @@ class ProductCase(ProductCommonCase):
             {'name': 'Test Filter on field name',
              'based_on': 'attribute',
              'attribute_id': attribute_id.id})
-        self.assertEqual(filter_on_attr.display_name, 'wi-fi')
+        self.assertEqual(filter_on_attr.display_name, 'attributes.wi-fi')
