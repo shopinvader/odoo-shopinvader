@@ -6,7 +6,6 @@
 from .helper import to_int, to_bool, secure_params
 from .abstract_sale import AbstractSaleService
 from .contact import ContactService
-from .customer import CustomerService
 from ..backend import shopinvader
 from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError
