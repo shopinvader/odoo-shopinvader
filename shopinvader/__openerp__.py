@@ -14,7 +14,7 @@
     "application": True,
     "installable": True,
     "external_dependencies": {
-        "python": ['cerberus', 'unidecode'],
+        "python": ['cerberus', 'unidecode', 'pysimplesoap'],
         "bin": [],
     },
     "depends": [
@@ -22,6 +22,7 @@
         "base_jsonify",
         "base_sparse_field",
         "base_url",
+        "base_vat",
         "base_view_inheritance_extension",
         "connector_base_product",
         "connector_locomotivecms",

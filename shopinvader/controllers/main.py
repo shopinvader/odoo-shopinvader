@@ -11,6 +11,7 @@ from ..services.cart_item import CartItemService
 from ..services.contact import ContactService
 from ..services.customer import CustomerService
 from ..services.sale import SaleService
+from ..services.check_vat import CheckVatService
 from ..services.register_anonymous import RegisterAnonymousService
 from datetime import datetime
 import logging
@@ -41,6 +42,11 @@ class ShopinvaderController(Controller):
         env = get_environment(session, model_name, request.backend.id)
         service = env.backend.get_class(service_class, session, model_name)
         return service(env, request.partner, request.shopinvader_session)
+
+    # Check Vat
+    @route('/shopinvader/check_vat', methods=['GET'], auth="shopinvader")
+    def check_vat(self, **params):
+        return self.send_to_service(CheckVatService, params)
 
     # Cart
     @route('/shopinvader/cart', methods=['GET', 'PUT'], auth="shopinvader")

@@ -9,3 +9,4 @@ from . import test_customer
 from . import test_product
 from . import test_role
 from . import test_sale
+from . import test_check_vat
