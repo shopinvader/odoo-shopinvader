@@ -130,7 +130,6 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self._add_shipping_address()
         self.service.update({
             'current_step': self.backend.last_step_id.code})
-        token = self.cart.anonymous_token
         anonymous_service = self._get_service(RegisterAnonymousService, None)
         anonymous_service.create({
             'external_id': external_id,

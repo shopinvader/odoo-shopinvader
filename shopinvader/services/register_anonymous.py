@@ -5,7 +5,6 @@
 
 from .helper import secure_params, ShopinvaderService
 from ..backend import shopinvader
-from .contact import ContactService
 from openerp.exceptions import Warning as UserError
 from openerp.tools.translate import _
 

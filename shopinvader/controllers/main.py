@@ -11,6 +11,7 @@ from ..services.cart_item import CartItemService
 from ..services.contact import ContactService
 from ..services.customer import CustomerService
 from ..services.sale import SaleService
+from ..services.register_anonymous import RegisterAnonymousService
 from datetime import datetime
 import logging
 _logger = logging.getLogger(__name__)
@@ -69,12 +70,14 @@ class ShopinvaderController(Controller):
         return self.send_to_service(ContactService, params)
 
     # Customer
-    @route('/shopinvader/customer', methods=['POST', 'GET'], auth="shopinvader")
+    @route('/shopinvader/customer',
+           methods=['POST', 'GET'], auth="shopinvader")
     def customer(self, **params):
         return self.send_to_service(CustomerService, params)
 
     # Anonymous Customer
-    @route('/shopinvader/anonymous/register', methods=['POST'], auth="shopinvader")
+    @route('/shopinvader/anonymous/register',
+           methods=['POST'], auth="shopinvader")
     def anonymous_register(self, **params):
         return self.send_to_service(RegisterAnonymousService, params)
 

@@ -42,11 +42,11 @@ class CustomerService(ShopinvaderService):
                 })
         contact = self.service_for(ContactService)
         return {
-          'data': {
-            'role': shop_partner.role_id.code,
-            'id': partner.id,
+            'data': {
+                'role': shop_partner.role_id.code,
+                'id': partner.id,
             },
-          'store_cache': {'customer': contact.to_json(partner)},
+            'store_cache': {'customer': contact.to_json(partner)},
         }
 
     # The following method are 'private' and should be never never NEVER call
