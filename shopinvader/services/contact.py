@@ -17,7 +17,7 @@ class ContactService(ShopinvaderService):
     # secure params and the linked validator !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         if not self.partner:
             return []
         else:
@@ -51,7 +51,7 @@ class ContactService(ShopinvaderService):
     # All params are trusted as they have been checked before
 
     # Validator
-    def _validator_list(self):
+    def _validator_get(self):
         return {
             'domain': {
                 'coerce': self.to_domain,

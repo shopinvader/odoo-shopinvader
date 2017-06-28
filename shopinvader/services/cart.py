@@ -19,14 +19,10 @@ class CartService(AbstractSaleService):
     # All params are untrusted so please check it !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         """Return the cart that have been set in the session or
            search an existing cart for the current partner"""
         return self._to_json(self._get())
-
-    @secure_params
-    def get(self, params):
-        return self.list()
 
     # TODO REFACTOR too many line of code here
     @secure_params
@@ -101,9 +97,6 @@ class CartService(AbstractSaleService):
 
     # Validator
     def _validator_get(self):
-        return {}
-
-    def _validator_list(self):
         return {}
 
     def _validator_update(self):
