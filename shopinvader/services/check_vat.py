@@ -27,19 +27,27 @@ class CheckVatService(ShopinvaderService):
         partner_obj = self.env['res.partner']
         country_code, vat_number = partner_obj._split_vat(params['vat_number'])
         vat_number = country_code.upper() + vat_number
-        res = {'valid': False, 'vat_number': vat_number}
-        if self.backend_record.company_id.vat_check_vies:
-            response = stdnum.eu.vat.check_vies(vat_number)
-            if response['valid']:
-                res.update({
-                    'with_details': True,
-                    'name': response['name'],
-                    'address': response['address'],
-                    'valid': True,
-                    })
-        else:
-            res['valid'] = partner_obj.simple_vat_check(
-                country_code, vat_number)
+        res = {
+            'valid': partner_obj.simple_vat_check(country_code, vat_number),
+            'vat_number': vat_number,
+            }
+        if self.backend_record.company_id.vat_check_vies and\
+                self.env['res.country'].search([
+                    ('code', '=ilike', country_code),
+                    ('intrastat', '=', True)]):
+            try:
+                response = stdnum.eu.vat.check_vies(vat_number)
+                if response['valid']:
+                    res.update({
+                        'with_details': True,
+                        'name': response['name'],
+                        'address': response['address'],
+                        'valid': True,
+                        })
+                else:
+                    res['valid'] = False
+            except:
+                _logger.debug('Invalid number for vies')
         return res
 
     # The following method are 'private' and should be never never NEVER call
