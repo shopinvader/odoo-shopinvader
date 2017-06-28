@@ -17,7 +17,7 @@ class CustomerService(ShopinvaderService):
     # secure params and the linked validator !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         if self.partner:
             contact = self.service_for(ContactService)
             customer = contact.to_json(self.partner)[0]
@@ -63,5 +63,5 @@ class CustomerService(ShopinvaderService):
             })
         return schema
 
-    def _validator_list(self):
+    def _validator_get(self):
         return {}

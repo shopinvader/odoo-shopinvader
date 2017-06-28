@@ -24,10 +24,7 @@ class ShopinvaderController(Controller):
         method = request.httprequest.method
         service = self._get_service(service_class)
         if method == 'GET':
-            if 'id' in params:
-                res = service.get(params)
-            else:
-                res = service.list(params)
+            res = service.get(params)
         elif method == 'POST':
             res = service.create(params)
         elif method == 'PUT':
@@ -46,13 +43,11 @@ class ShopinvaderController(Controller):
         return service(env, request.partner, request.shopinvader_session)
 
     # Cart
-
     @route('/shopinvader/cart', methods=['GET', 'PUT'], auth="shopinvader")
     def cart_list(self, **params):
         return self.send_to_service(CartService, params)
 
     # Cart Item
-
     @route('/shopinvader/cart/item', methods=['POST', 'PUT', 'DELETE'],
            auth="shopinvader")
     def item(self, **params):
