@@ -17,8 +17,6 @@ env:
 
   matrix:
   - TESTS="0" LINT_CHECK="1"
-  - ODOO_REPO="odoo/odoo"
-  - ODOO_REPO="OCA/OCB"
   - UNIT_TEST="1" ODOO_REPO="odoo/odoo"
   - UNIT_TEST="1" ODOO_REPO="OCA/OCB"
   - ALGOLIA_TEST="1" UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE=shopinvader_algolia
