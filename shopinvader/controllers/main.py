@@ -8,7 +8,7 @@ from openerp.addons.connector.session import ConnectorSession
 from openerp.addons.connector_locomotivecms.connector import get_environment
 from ..services.cart import CartService
 from ..services.cart_item import CartItemService
-from ..services.contact import ContactService
+from ..services.address import AddressService
 from ..services.customer import CustomerService
 from ..services.sale import SaleService
 from ..services.check_vat import CheckVatService
@@ -59,16 +59,16 @@ class ShopinvaderController(Controller):
     def item(self, **params):
         return self.send_to_service(CartItemService, params)
 
-    # Contact
-    @route('/shopinvader/contacts',
+    # Address
+    @route('/shopinvader/addresses',
            methods=['GET', 'POST'], auth="shopinvader")
-    def contact(self, **params):
-        return self.send_to_service(ContactService, params)
+    def address(self, **params):
+        return self.send_to_service(AddressService, params)
 
-    @route('/shopinvader/contacts/<id>', methods=['PUT', 'DELETE'],
+    @route('/shopinvader/addresses/<id>', methods=['PUT', 'DELETE'],
            auth="shopinvader")
-    def contact_update_delete(self, **params):
-        return self.send_to_service(ContactService, params)
+    def address_update_delete(self, **params):
+        return self.send_to_service(AddressService, params)
 
     # Customer
     @route('/shopinvader/customer',

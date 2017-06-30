@@ -9,7 +9,7 @@ from werkzeug.exceptions import Forbidden, NotFound
 
 
 @shopinvader
-class ContactService(ShopinvaderService):
+class AddressService(ShopinvaderService):
     _model_name = 'res.partner'
 
     # The following method are 'public' and can be called from the controller.
@@ -31,19 +31,19 @@ class ContactService(ShopinvaderService):
 
     @secure_params
     def update(self, params):
-        contact = self._get_contact(params)
-        contact.write(params)
+        address = self._get_address(params)
+        address.write(params)
         res = self._list()
-        if contact.contact_type == 'profile':
-            res['store_cache'] = {'customer': self.to_json(contact)[0]}
+        if address.address_type == 'profile':
+            res['store_cache'] = {'customer': self.to_json(address)[0]}
         return res
 
     @secure_params
     def delete(self, params):
-        contact = self._get_contact(params)
-        if self.partner == contact:
+        address = self._get_address(params)
+        if self.partner == address:
             raise Forbidden('Can not delete the partner account')
-        contact.unlink()
+        address.unlink()
         return self._list()
 
     # The following method are 'private' and should be never never NEVER call
@@ -115,14 +115,14 @@ class ContactService(ShopinvaderService):
         partners = self.env['res.partner'].search(domain)
         return {'data': self.to_json(partners)}
 
-    def _get_contact(self, params):
+    def _get_address(self, params):
         domain = [('id', '=', params['id'])]
         if self.partner.id != params['id']:
             domain.append(('parent_id', '=', self.partner.id))
-        contact = self.env['res.partner'].search(domain)
-        if not contact:
+        address = self.env['res.partner'].search(domain)
+        if not address:
             raise NotFound('Not address found')
-        return contact
+        return address
 
     def _json_parser(self):
         res = [
@@ -139,11 +139,11 @@ class ContactService(ShopinvaderService):
             'opt_out',
             ('state_id', ['id', 'name']),
             ('country_id', ['id', 'name']),
-            'contact_type'
+            'address_type'
         ]
         if 'partner_firstname' in self.env.registry._init_modules:
             res += ['firstname', 'lastname']
         return res
 
-    def to_json(self, contact):
-        return contact.jsonify(self._json_parser())
+    def to_json(self, address):
+        return address.jsonify(self._json_parser())

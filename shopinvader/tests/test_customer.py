@@ -81,20 +81,20 @@ class CustomerCase(CommonCase):
             partner.shopinvader_bind_ids.role_id,
             self.env.ref('shopinvader.role_3'))
 
-    def test_contact_type(self):
+    def test_address_type(self):
         partner = self.env.ref('shopinvader.partner_1')
-        self.assertEqual(partner.contact_type, 'profile')
-        contact = self.env.ref('shopinvader.partner_1_contact_1')
-        self.assertEqual(contact.contact_type, 'address')
+        self.assertEqual(partner.address_type, 'profile')
+        address = self.env.ref('shopinvader.partner_1_address_1')
+        self.assertEqual(address.address_type, 'address')
 
-    def test_update_contact_type(self):
+    def test_update_address_type(self):
         data = {
-            'email': 'contact@customer.example.com',
-            'name': 'Contact',
+            'email': 'address@customer.example.com',
+            'name': 'Address',
             'country_id': self.env.ref('base.fr').id,
             }
         partner = self.env['res.partner'].create(data)
-        self.assertEqual(partner.contact_type, 'profile')
+        self.assertEqual(partner.address_type, 'profile')
         data = {
             'email': 'parent@customer.example.com',
             'name': 'Parent',
@@ -102,4 +102,4 @@ class CustomerCase(CommonCase):
             }
         parent = self.env['res.partner'].create(data)
         partner.parent_id = parent.id
-        self.assertEqual(partner.contact_type, 'address')
+        self.assertEqual(partner.address_type, 'address')

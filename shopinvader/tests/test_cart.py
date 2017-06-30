@@ -11,7 +11,7 @@ from ..services.register_anonymous import RegisterAnonymousService
 class AbstractCartCase(object):
 
     def set_up(self):
-        self.contact = self.env.ref('shopinvader.partner_1_contact_1')
+        self.address = self.env.ref('shopinvader.partner_1_address_1')
         self.fposition = self.env.ref('shopinvader.fiscal_position_2')
         self.default_fposition = self.env.ref('shopinvader.fiscal_position_0')
         templates = self.env['product.template'].search([])
@@ -78,7 +78,7 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
             'assign_partner': True,
             })
 
-    def test_add_new_shipping_contact(self):
+    def test_add_new_shipping_address(self):
         cart = self.cart
         self._add_shipping_address()
 
@@ -86,7 +86,7 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.partner_id, cart.partner_shipping_id)
         self.assertEqual(cart.partner_id, cart.partner_invoice_id)
 
-    def test_add_new_shipping_and_billing_contact(self):
+    def test_add_new_shipping_and_billing_address(self):
         self._add_shipping_and_invoice_address()
 
         cart = self.cart
@@ -97,7 +97,7 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
     def test_anonymous_cart_then_sign(self):
         cart = self.cart
         partner = self.env.ref('shopinvader.partner_1')
-        addr = partner.address_get(['delivery', 'invoice', 'contact'])
+        addr = partner.address_get(['delivery', 'invoice', 'address'])
         self._add_partner(partner)
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id.id, addr['delivery'])
@@ -149,28 +149,28 @@ class ConnectedCartCase(AbstractCartCase, CommonCase):
         self.cart = self.env.ref('shopinvader.sale_order_2')
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.partner_1')
-        self.contact = self.env.ref('shopinvader.partner_1_contact_1')
+        self.address = self.env.ref('shopinvader.partner_1_address_1')
         self.service = self._get_service(CartService, self.partner)
 
-    def test_set_shipping_contact(self):
+    def test_set_shipping_address(self):
         self.service.update({
-            'partner_shipping': {'id': self.contact.id},
+            'partner_shipping': {'id': self.address.id},
             })
         cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
-        self.assertEqual(cart.partner_shipping_id, self.contact)
-        self.assertEqual(cart.partner_invoice_id, self.contact)
+        self.assertEqual(cart.partner_shipping_id, self.address)
+        self.assertEqual(cart.partner_invoice_id, self.address)
 
-    def test_set_invoice_contact(self):
+    def test_set_invoice_address(self):
         self.service.update({
             'use_different_invoice_address': True,
-            'partner_invoice': {'id': self.contact.id},
+            'partner_invoice': {'id': self.address.id},
             })
 
         cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
-        self.assertEqual(cart.partner_invoice_id, self.contact)
+        self.assertEqual(cart.partner_invoice_id, self.address)
 
 
 class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
@@ -181,17 +181,17 @@ class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
         self.cart = self.env.ref('shopinvader.sale_order_3')
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.partner_2')
-        self.contact = self.env.ref('shopinvader.partner_2_contact_1')
+        self.address = self.env.ref('shopinvader.partner_2_address_1')
         self.service = self._get_service(CartService, self.partner)
 
-    def test_set_shipping_contact_with_tax(self):
+    def test_set_shipping_address_with_tax(self):
         cart = self.cart
         self.service.update({
-            'partner_shipping': {'id': self.contact.id},
+            'partner_shipping': {'id': self.address.id},
             })
         self.assertEqual(cart.partner_id, self.partner)
-        self.assertEqual(cart.partner_shipping_id, self.contact)
-        self.assertEqual(cart.partner_invoice_id, self.contact)
+        self.assertEqual(cart.partner_shipping_id, self.address)
+        self.assertEqual(cart.partner_invoice_id, self.address)
         self.assertEqual(cart.fiscal_position, self.default_fposition)
         self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
         self.service.update({

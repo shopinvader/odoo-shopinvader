@@ -5,7 +5,7 @@
 
 from .helper import to_int, to_bool, secure_params
 from .abstract_sale import AbstractSaleService
-from .contact import ContactService
+from .address import AddressService
 from ..backend import shopinvader
 from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError
@@ -121,14 +121,14 @@ class CartService(AbstractSaleService):
                     },
                 })
         else:
-            contact_service = self.service_for(ContactService)
+            address_service = self.service_for(AddressService)
             res.update({
                 'partner_shipping': {
                     'type': 'dict',
-                    'schema': contact_service._validator_create()},
+                    'schema': address_service._validator_create()},
                 'partner_invoice': {
                     'type': 'dict',
-                    'schema': contact_service._validator_create()},
+                    'schema': address_service._validator_create()},
                 })
         return res
 
@@ -224,28 +224,28 @@ class CartService(AbstractSaleService):
 
     def _set_anonymous_partner(self, cart, params):
         if 'partner_shipping' in params:
-            shipping_contact = params.pop('partner_shipping')
+            shipping_address = params.pop('partner_shipping')
             if params.get('anonymous_email'):
-                shipping_contact['email'] = params['anonymous_email']
+                shipping_address['email'] = params['anonymous_email']
             elif cart.anonymous_email:
-                shipping_contact['email'] = cart.anonymous_email
+                shipping_address['email'] = cart.anonymous_email
             else:
                 raise UserError(_('Anonymous Email is missing'))
-            partner = self.env['res.partner'].create(shipping_contact)
+            partner = self.env['res.partner'].create(shipping_address)
             params.update({
                 'partner_id': partner.id,
                 'partner_shipping_id': partner.id,
                 })
         if cart.use_different_invoice_address and 'partner_invoice' in params:
-            invoice_contact = params.pop('partner_invoice')
+            invoice_address = params.pop('partner_invoice')
             if not params.get('partner_shipping_id'):
                 raise UserError(_(
                     "Invoice address can not be set before "
                     "the shipping address"))
             else:
-                invoice_contact['parent_id'] = params['partner_shipping_id']
-                contact = self.env['res.partner'].create(invoice_contact)
-                params['partner_invoice_id'] = contact.id
+                invoice_address['parent_id'] = params['partner_shipping_id']
+                address = self.env['res.partner'].create(invoice_address)
+                params['partner_invoice_id'] = address.id
 
     def _get(self):
         domain = [
