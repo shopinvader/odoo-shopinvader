@@ -46,7 +46,7 @@ class CustomerService(ShopinvaderService):
                 'role': shop_partner.role_id.code,
                 'id': partner.id,
             },
-            'store_cache': {'customer': address.to_json(partner)},
+            'store_cache': {'customer': address.to_json(partner)[0]},
         }
 
     # The following method are 'private' and should be never never NEVER call
