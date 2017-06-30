@@ -122,12 +122,10 @@ class CartService(AbstractSaleService):
                 })
         else:
             contact_service = self.service_for(ContactService)
-            shipping_schema = contact_service._validator_create()
-            shipping_schema['vat'] = {'type': 'string', 'required': False}
             res.update({
                 'partner_shipping': {
                     'type': 'dict',
-                    'schema': shipping_schema},
+                    'schema': contact_service._validator_create()},
                 'partner_invoice': {
                     'type': 'dict',
                     'schema': contact_service._validator_create()},
