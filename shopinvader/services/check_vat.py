@@ -34,7 +34,7 @@ class CheckVatService(ShopinvaderService):
         if self.backend_record.company_id.vat_check_vies and\
                 self.env['res.country'].search([
                     ('code', '=ilike', country_code),
-                    ('intrastat', '=', True)]):
+                    ('country_group_ids', '=', self.env.ref('base.europe').id)]):
             try:
                 response = stdnum.eu.vat.check_vies(vat_number)
                 if response['valid']:
