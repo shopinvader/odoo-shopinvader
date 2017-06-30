@@ -83,10 +83,10 @@ class ShopinvaderController(Controller):
         return self.send_to_service(RegisterAnonymousService, params)
 
     # Order History
-    @route('/shopinvader/orders', methods=['GET'], auth="shopinvader")
+    @route('/shopinvader/sales', methods=['GET'], auth="shopinvader")
     def sale_list(self, **params):
         return self.send_to_service(SaleService, params)
 
-    @route('/shopinvader/orders/<id>', methods=['GET'], auth="shopinvader")
+    @route('/shopinvader/sales/<id>', methods=['GET'], auth="shopinvader")
     def sale(self, **params):
         return self.send_to_service(SaleService, params)
