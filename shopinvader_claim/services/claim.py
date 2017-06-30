@@ -18,7 +18,7 @@ class ClaimService(ShopinvaderService):
     # secure params and the linked validator !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         domain = [
             ('partner_id', '=', self.partner.id),
             ('shopinvader_backend_id', '=', self.backend_record.id)]
