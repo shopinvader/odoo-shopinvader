@@ -6,6 +6,7 @@
 from ..services.cart import CartService
 from .common import CommonCase
 from ..services.register_anonymous import RegisterAnonymousService
+from openerp.exceptions import Warning as UserError
 
 
 class AbstractCartCase(object):
@@ -85,6 +86,22 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self.assertNotEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_id, cart.partner_shipping_id)
         self.assertEqual(cart.partner_id, cart.partner_invoice_id)
+
+    def test_add_new_shipping_address_existing_email(self):
+        cart = self.cart
+        self.address_ship['email'] = 'osiris@my.personal.address.example.com'
+        self.backend.restrict_anonymous = False
+        self._add_shipping_address()
+
+        self.assertNotEqual(cart.partner_id, self.partner)
+        self.assertEqual(cart.partner_id, cart.partner_shipping_id)
+        self.assertEqual(cart.partner_id, cart.partner_invoice_id)
+
+    def test_add_new_shipping_address_existing_email_fordidden(self):
+        self.backend.restrict_anonymous = True
+        self.address_ship['email'] = 'osiris@my.personal.address.example.com'
+        with self.assertRaises(UserError):
+            self._add_shipping_address()
 
     def test_add_new_shipping_and_billing_address(self):
         self._add_shipping_and_invoice_address()

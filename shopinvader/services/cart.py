@@ -31,6 +31,9 @@ class CartService(AbstractSaleService):
         action_confirm_cart = \
             params.get('next_step') == self.backend_record.last_step_id.code
         cart = self._get()
+        if params.get('anonymous_email'):
+            self._check_allowed_anonymous_email(cart, params)
+
         # Process use_different_invoice_address
         # before processing the invoice and billing address
         if 'use_different_invoice_address' in params:
@@ -149,6 +152,19 @@ class CartService(AbstractSaleService):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
+
+    def _check_allowed_anonymous_email(self, cart, params):
+        if self.backend_record.restrict_anonymous and\
+                self.env['shopinvader.partner'].search([
+                    ('backend_id', '=', self.backend_record.id),
+                    ('email', '=', params['anonymous_email']),
+                    ]):
+            # In that case we want to raise an error to block the process
+            # but before we save the anonymous partner to avoid
+            # losing this important information
+            cart.anonymous_email = params['anonymous_email']
+            cart._cr.commit()
+            raise UserError(_('An account already exist for this email'))
 
     def _get_step_from_code(self, code):
         step = self.env['shopinvader.cart.step'].search([('code', '=', code)])
