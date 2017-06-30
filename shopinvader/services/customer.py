@@ -5,7 +5,7 @@
 
 from .helper import secure_params, ShopinvaderService
 from ..backend import shopinvader
-from .contact import ContactService
+from .address import AddressService
 
 
 @shopinvader
@@ -19,8 +19,8 @@ class CustomerService(ShopinvaderService):
     @secure_params
     def get(self, params):
         if self.partner:
-            contact = self.service_for(ContactService)
-            customer = contact.to_json(self.partner)[0]
+            address = self.service_for(AddressService)
+            customer = address.to_json(self.partner)[0]
             return {
                 'data': customer,
                 'store_cache': {'customer': customer},
@@ -40,13 +40,13 @@ class CustomerService(ShopinvaderService):
                 'external_id': external_id,
                 'record_id': partner.id,
                 })
-        contact = self.service_for(ContactService)
+        address = self.service_for(AddressService)
         return {
             'data': {
                 'role': shop_partner.role_id.code,
                 'id': partner.id,
             },
-            'store_cache': {'customer': contact.to_json(partner)},
+            'store_cache': {'customer': address.to_json(partner)},
         }
 
     # The following method are 'private' and should be never never NEVER call
@@ -54,8 +54,8 @@ class CustomerService(ShopinvaderService):
     # All params are trusted as they have been checked before
 
     def _validator_create(self):
-        contact = self.service_for(ContactService)
-        schema = contact._validator_create()
+        address = self.service_for(AddressService)
+        schema = address._validator_create()
         schema.update({
             'email': {'type': 'string', 'required': True},
             'external_id': {'type': 'string', 'required': True},

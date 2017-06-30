@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from .helper import ShopinvaderService
-from .contact import ContactService
+from .address import AddressService
 
 
 class AbstractSaleService(ShopinvaderService):
@@ -45,7 +45,7 @@ class AbstractSaleService(ShopinvaderService):
         ]
 
     def _parser(self):
-        contact_parser = self.service_for(ContactService)._json_parser()
+        address_parser = self.service_for(AddressService)._json_parser()
         return [
             'id',
             'name',
@@ -64,8 +64,8 @@ class AbstractSaleService(ShopinvaderService):
             'date_order',
             ('carrier_id:carrier', self._parser_carrier()),
             ('partner_id:partner', self._parser_partner()),
-            ('partner_shipping_id:partner_shipping', contact_parser),
-            ('partner_invoice_id:partner_invoice', contact_parser),
+            ('partner_shipping_id:partner_shipping', address_parser),
+            ('partner_invoice_id:partner_invoice', address_parser),
             ('order_line', self._parser_order_line()),
             ('payment_method_id:payment_method',
                 self._parser_payment_method()),

@@ -18,7 +18,7 @@
             <field name="record_id" ref="partner_1"/>
         </record>
 
-        <record id="partner_1_contact_1" model="res.partner">
+        <record id="partner_1_address_1" model="res.partner">
             <field name="parent_id" ref="partner_1"/>
             <field name="name">Osiris</field>
             <field name="customer" eval="True"/>
@@ -44,7 +44,7 @@
             <field name="record_id" ref="partner_2"/>
         </record>
 
-        <record id="partner_2_contact_1" model="res.partner">
+        <record id="partner_2_address_1" model="res.partner">
             <field name="parent_id" ref="partner_2"/>
             <field name="name">Anubis</field>
             <field name="customer" eval="True"/>

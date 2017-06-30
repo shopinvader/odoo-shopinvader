@@ -80,10 +80,10 @@ class ResPartner(models.Model):
         'shopinvader.partner',
         'record_id',
         string='Shopinvader Binding')
-    contact_type = fields.Selection(
+    address_type = fields.Selection(
         selection=[('profile', 'Profile'), ('address', 'Address')],
-        string='Contact Type',
-        compute='_compute_contact_type',
+        string='Address Type',
+        compute='_compute_address_type',
         store=True)
     # In europe we use more the opt_in
     opt_in = fields.Boolean(
@@ -100,9 +100,9 @@ class ResPartner(models.Model):
             record.opt_out = not record.opt_in
 
     @api.depends('parent_id')
-    def _compute_contact_type(self):
+    def _compute_address_type(self):
         for partner in self:
             if partner.parent_id:
-                partner.contact_type = 'address'
+                partner.address_type = 'address'
             else:
-                partner.contact_type = 'profile'
+                partner.address_type = 'profile'
