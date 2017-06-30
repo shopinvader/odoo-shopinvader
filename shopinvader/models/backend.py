@@ -63,6 +63,9 @@ class LocomotiveBackend(models.Model):
         'shopinvader.cart.step',
         string='Last cart step',
         required=True)
+    restrict_anonymous = fields.Boolean(
+        help=("Tic that box if yo don't want to forbid an existing customer "
+              "to create a sale order in anonymous mode"))
 
     def _compute_nbr_content(self):
         for record in self:
