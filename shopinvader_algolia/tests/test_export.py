@@ -29,8 +29,8 @@ class ExportCase(TransactionCase):
         super(ExportCase, self).setUp()
         self.backend = self.env.ref('connector_locomotivecms.backend_1')
         self.se_backend = self.env.ref('connector_algolia.backend_1')
-        self.se_backend.username = os.environ['ALGOLIA_APP']
-        self.se_backend.password = os.environ['ALGOLIA_API_KEY']
+        self.se_backend.algolia_app_id = os.environ['ALGOLIA_APP']
+        self.se_backend.algolia_api_key = os.environ['ALGOLIA_API_KEY']
         self.backend.bind_all_product()
         self.backend.bind_all_category()
         self.path = (
