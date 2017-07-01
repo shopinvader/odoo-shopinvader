@@ -60,7 +60,7 @@ class ClaimService(ShopinvaderService):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _validator_list(self):
+    def _validator_get(self):
         return {
             'per_page': {
                 'coerce': to_int,
@@ -195,7 +195,7 @@ class ClaimSubjectService(ShopinvaderService):
     # secure params and the linked validator !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         domain = [('object_id.model', '=', 'crm.claim')]
         domain += params.get('domain', [])
         subjects = self.env['crm.case.categ'].search(domain)
@@ -205,7 +205,7 @@ class ClaimSubjectService(ShopinvaderService):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _validator_list(self):
+    def _validator_get(self):
         return {
             'domain': {
                 'coerce': self.to_domain,

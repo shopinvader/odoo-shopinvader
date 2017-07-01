@@ -19,16 +19,16 @@ class ClaimCase(CommonCase):
         self.sol_3 = self.env.ref('shopinvader.sale_order_line_6')
         self.claim_categ = self.env.ref('crm_claim_rma.categ_claim10')
 
-    def test_list_claim(self):
-        res = self.service.list({})
+    def test_get_claim(self):
+        res = self.service.get({})
         self.assertEqual(len(res['data']), 2)
         stage_id = self.env.ref('crm_claim.stage_claim1').id
         for claim in res['data']:
             self.assertEqual(claim['stage_id']['id'], stage_id)
 
-    def test_list_claim_subject(self):
+    def test_get_claim_subject(self):
         self.service = self._get_service(ClaimSubjectService, self.partner)
-        res = self.service.list({})
+        res = self.service.get({})
         self.assertEqual(len(res['data']), 15)
         categ_ids = self.env['crm.case.categ'].search(
             [('object_id.model', '=', 'crm.claim')]).ids
