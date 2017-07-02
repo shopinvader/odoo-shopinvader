@@ -9,6 +9,8 @@ from .address import AddressService
 from ..backend import shopinvader
 from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 @shopinvader
@@ -162,6 +164,9 @@ class CartService(AbstractSaleService):
             # In that case we want to raise an error to block the process
             # but before we save the anonymous partner to avoid
             # losing this important information
+            _logger.debug(
+                'An account already exist for %s, block it',
+                params['anonymous_email'])
             cart.anonymous_email = params['anonymous_email']
             cart._cr.commit()
             raise UserError(_('An account already exist for this email'))
