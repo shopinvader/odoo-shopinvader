@@ -143,7 +143,8 @@ class AbstractUrl(models.AbstractModel):
         todo = self.env.all.todo
         self.env.all.todo = {}
         for record in self:
-            if type(record.record_id.id) == models.NewId:
+            if type(record.record_id.id) == models.NewId\
+                    or type(record.id) == models.NewId:
                 # Do not update field value on onchange
                 # as with_context is broken on NewId
                 continue
