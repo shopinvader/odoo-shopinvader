@@ -7,11 +7,14 @@ from ..services.cart import CartService
 from .common import CommonCase
 from ..services.register_anonymous import RegisterAnonymousService
 from openerp.exceptions import Warning as UserError
+from openerp import api, registry
 
 
-class AbstractCartCase(object):
+class CartCase(CommonCase):
 
-    def set_up(self):
+    def setUp(self):
+        super(CartCase, self).setUp()
+        self.registry.enter_test_mode()
         self.address = self.env.ref('shopinvader.partner_1_address_1')
         self.fposition = self.env.ref('shopinvader.fiscal_position_2')
         self.default_fposition = self.env.ref('shopinvader.fiscal_position_0')
@@ -19,12 +22,15 @@ class AbstractCartCase(object):
         templates.write({
             'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
 
+    def tearDown(self):
+        self.registry.leave_test_mode()
+        super(CartCase, self).tearDown()
 
-class AnonymousCartCase(AbstractCartCase, CommonCase):
+
+class AnonymousCartCase(CartCase):
 
     def setUp(self, *args, **kwargs):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
-        self.set_up()
         self.cart = self.env.ref('shopinvader.sale_order_1')
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.anonymous')
@@ -98,10 +104,20 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.partner_id, cart.partner_invoice_id)
 
     def test_add_new_shipping_address_existing_email_fordidden(self):
-        self.backend.restrict_anonymous = True
-        self.address_ship['email'] = 'osiris@my.personal.address.example.com'
+        email = 'osiris@my.personal.address.example.com'
         with self.assertRaises(UserError):
-            self._add_shipping_address()
+            with registry(self.env.cr.dbname).cursor() as new_cr:
+                self.env = api.Environment(
+                    new_cr, self.env.uid, self.env.context)
+                self.service = self._get_service(CartService, None)
+                self.service.backend_record.restrict_anonymous = True
+                self.service.update({
+                    'anonymous_email': email,
+                    'partner_shipping': self.address_ship,
+                })
+        self.assertEqual(
+            self.env['sale.order'].browse(self.cart.id).anonymous_email,
+            email)
 
     def test_add_new_shipping_and_billing_address(self):
         self._add_shipping_and_invoice_address()
@@ -158,11 +174,10 @@ class AnonymousCartCase(AbstractCartCase, CommonCase):
         self.assertEqual(shop_partner.backend_id, self.backend)
 
 
-class ConnectedCartCase(AbstractCartCase, CommonCase):
+class ConnectedCartCase(CartCase):
 
     def setUp(self, *args, **kwargs):
         super(ConnectedCartCase, self).setUp(*args, **kwargs)
-        self.set_up()
         self.cart = self.env.ref('shopinvader.sale_order_2')
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.partner_1')
@@ -190,11 +205,10 @@ class ConnectedCartCase(AbstractCartCase, CommonCase):
         self.assertEqual(cart.partner_invoice_id, self.address)
 
 
-class ConnectedCartNoTaxCase(AbstractCartCase, CommonCase):
+class ConnectedCartNoTaxCase(CartCase):
 
     def setUp(self, *args, **kwargs):
         super(ConnectedCartNoTaxCase, self).setUp(*args, **kwargs)
-        self.set_up()
         self.cart = self.env.ref('shopinvader.sale_order_3')
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.partner_2')
