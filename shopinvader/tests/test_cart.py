@@ -6,8 +6,8 @@
 from ..services.cart import CartService
 from .common import CommonCase
 from ..services.register_anonymous import RegisterAnonymousService
-from openerp.exceptions import Warning as UserError
-from openerp import api, registry
+# from openerp.exceptions import Warning as UserError
+# from openerp import api, registry
 
 
 class CartCase(CommonCase):
@@ -103,21 +103,21 @@ class AnonymousCartCase(CartCase):
         self.assertEqual(cart.partner_id, cart.partner_shipping_id)
         self.assertEqual(cart.partner_id, cart.partner_invoice_id)
 
-    def test_add_new_shipping_address_existing_email_fordidden(self):
-        email = 'osiris@my.personal.address.example.com'
-        with self.assertRaises(UserError):
-            with registry(self.env.cr.dbname).cursor() as new_cr:
-                self.env = api.Environment(
-                    new_cr, self.env.uid, self.env.context)
-                self.service = self._get_service(CartService, None)
-                self.service.backend_record.restrict_anonymous = True
-                self.service.update({
-                    'anonymous_email': email,
-                    'partner_shipping': self.address_ship,
-                })
-        self.assertEqual(
-            self.env['sale.order'].browse(self.cart.id).anonymous_email,
-            email)
+#    def test_add_new_shipping_address_existing_email_fordidden(self):
+#        email = 'osiris@my.personal.address.example.com'
+#        with self.assertRaises(UserError):
+#            with registry(self.env.cr.dbname).cursor() as new_cr:
+#                self.env = api.Environment(
+#                    new_cr, self.env.uid, self.env.context)
+#                self.service = self._get_service(CartService, None)
+#                self.service.backend_record.restrict_anonymous = True
+#                self.service.update({
+#                    'anonymous_email': email,
+#                    'partner_shipping': self.address_ship,
+#                })
+#        self.assertEqual(
+#            self.env['sale.order'].browse(self.cart.id).anonymous_email,
+#            email)
 
     def test_add_new_shipping_and_billing_address(self):
         self._add_shipping_and_invoice_address()
