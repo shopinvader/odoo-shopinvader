@@ -50,11 +50,12 @@ class ExportCase(TransactionCase):
         # If someone else has a less ugly solution, I'm interrested.
         time.sleep(5)
         client = algoliasearch.client.Client(
-            self.se_backend.username, self.se_backend.password)
+            self.se_backend.algolia_app_id, self.se_backend.algolia_api_key)
         index = client.initIndex(si_variant.index_id.name)
         algolia_product = index.search(si_variant.name)
         self.assertEqual(algolia_product['nbHits'], 1)
-        self.assertEqual(algolia_product['hits'][0]['name'], si_variant.name)
+        self.assertEqual(
+            algolia_product['hits'][0]['model_name'], si_variant.name)
         self.assertEqual(
             int(algolia_product['hits'][0]['objectID']), product.id)
         self.assertEqual(
