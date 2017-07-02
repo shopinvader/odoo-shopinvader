@@ -11,9 +11,7 @@
     'summary': 'Product categories dedicated to online shop',
     'author': 'Akretion',
     'website': 'http://www.akretion.com/fr',
-    'depends': ['product'],
-    'data': [
-        'views/product_view.xml',
-        ],
+    'depends': ['product_m2mcategories'],
+    'data': [],
     'installable': True,
 }
