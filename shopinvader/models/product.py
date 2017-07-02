@@ -70,7 +70,8 @@ class ProductFilter(models.Model):
             if pfilter.based_on == 'field':
                 pfilter.display_name = pfilter.field_id.name
             else:
-                pfilter.display_name = sanitize_attr_name(pfilter.attribute_id)
+                pfilter.display_name =\
+                    'attributes.%s' % sanitize_attr_name(pfilter.attribute_id)
 
 
 class ShopinvaderProduct(models.Model):
@@ -152,6 +153,9 @@ class ShopinvaderVariant(models.Model):
         'shopinvader.product': 'shopinvader_product_id',
         'product.product': 'record_id'}
 
+    default_code = fields.Char(
+        related='record_id.default_code',
+        readonly=True)
     shopinvader_product_id = fields.Many2one(
         'shopinvader.product',
         required=True,

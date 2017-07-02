@@ -20,7 +20,7 @@ except ImportError:
 
 
 @unittest.skipUnless(
-    os.environ.get('ALGOLIA_APP', '') and
+    os.environ.get('ALGOLIA_TEST') and os.environ.get('ALGOLIA_APP', '') and
     os.environ.get('ALGOLIA_API_KEY', ''),
     "Missing algolia connection environment variables")
 class ExportCase(TransactionCase):
@@ -29,8 +29,8 @@ class ExportCase(TransactionCase):
         super(ExportCase, self).setUp()
         self.backend = self.env.ref('connector_locomotivecms.backend_1')
         self.se_backend = self.env.ref('connector_algolia.backend_1')
-        self.se_backend.username = os.environ['ALGOLIA_APP']
-        self.se_backend.password = os.environ['ALGOLIA_API_KEY']
+        self.se_backend.algolia_app_id = os.environ['ALGOLIA_APP']
+        self.se_backend.algolia_api_key = os.environ['ALGOLIA_API_KEY']
         self.backend.bind_all_product()
         self.backend.bind_all_category()
         self.path = (
@@ -50,11 +50,12 @@ class ExportCase(TransactionCase):
         # If someone else has a less ugly solution, I'm interrested.
         time.sleep(5)
         client = algoliasearch.client.Client(
-            self.se_backend.username, self.se_backend.password)
+            self.se_backend.algolia_app_id, self.se_backend.algolia_api_key)
         index = client.initIndex(si_variant.index_id.name)
         algolia_product = index.search(si_variant.name)
         self.assertEqual(algolia_product['nbHits'], 1)
-        self.assertEqual(algolia_product['hits'][0]['name'], si_variant.name)
+        self.assertEqual(
+            algolia_product['hits'][0]['model_name'], si_variant.name)
         self.assertEqual(
             int(algolia_product['hits'][0]['objectID']), product.id)
         self.assertEqual(

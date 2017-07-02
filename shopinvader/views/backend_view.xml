@@ -9,6 +9,9 @@
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>
+            <field name="last_step_id"/>
+            <field name="restrict_anonymous"/>
+            <separator name="image" colspan="4"/>
             <field name="product_image_resize_ids" widget="many2many_tags"/>
             <field name="categ_image_resize_ids" widget="many2many_tags"/>
         </field>

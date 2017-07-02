@@ -49,14 +49,23 @@ class LocomotiveBackend(models.Model):
         ('shopinvader_v1', 'Shopinvader V1')])
     product_image_resize_ids = fields.Many2many(
         comodel_name='image.resize',
+        relation="product_image_resize",
         string='Product Image Resize')
     categ_image_resize_ids = fields.Many2many(
         comodel_name='image.resize',
+        relation="category_image_resize",
         string='Category Image Resize')
 
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_variant = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')
+    last_step_id = fields.Many2one(
+        'shopinvader.cart.step',
+        string='Last cart step',
+        required=True)
+    restrict_anonymous = fields.Boolean(
+        help=("Tic that box if yo don't want to forbid an existing customer "
+              "to create a sale order in anonymous mode"))
 
     def _compute_nbr_content(self):
         for record in self:

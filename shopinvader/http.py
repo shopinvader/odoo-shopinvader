@@ -7,7 +7,8 @@
 from openerp.http import HttpRequest, Root
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import escape
-from openerp.exceptions import Warning as UserError, MissingError, AccessError
+from openerp.exceptions import (
+    Warning as UserError, MissingError, AccessError, ValidationError)
 from werkzeug.exceptions import (
     BadRequest, NotFound, Forbidden, InternalServerError)
 import json
@@ -107,7 +108,7 @@ class HttpJsonRequest(HttpRequest):
         super(HttpJsonRequest, self).__init__(*args)
         if self.httprequest.headers.get('Content-Type') == 'application/json':
             self.params = json.loads(self.httprequest.stream.read())
-        else:
+        elif self.params:
             self.params = convert_nested_html_form_params(self.params)
 
     def _handle_exception(self, exception):
@@ -117,8 +118,8 @@ class HttpJsonRequest(HttpRequest):
         _logger.debug('Shopinvader Handle exception %s', exception)
         try:
             return super(HttpRequest, self)._handle_exception(exception)
-        except UserError, e:
-            return WrapJsonException(BadRequest(e.message))
+        except (UserError, ValidationError), e:
+            return WrapJsonException(BadRequest(e.message or e.value))
         except MissingError, e:
             return WrapJsonException(NotFound(e.value))
         except AccessError, e:

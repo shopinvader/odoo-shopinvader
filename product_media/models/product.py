@@ -27,9 +27,11 @@ class ProductMedia(models.Model):
     _description = 'Product Media'
     _inherits = {'storage.file': 'file_id'}
 
+    file_id = fields.Many2one(
+        'storage.file',
+        'File')
     restrict_variant_ids = fields.Many2many(
         comodel_name='product.product',
-        domain="[('product_tmpl_id', '=', product_tmpl_id)]",
         string='Restrict Variant')
 
     media_type_id = fields.Many2one(
@@ -101,14 +103,14 @@ class ProductTemplate(models.Model):
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
-    media_ids = fields.Many2many(
+    variant_media_ids = fields.Many2many(
         comodel_name='product.media',
         string='Media',
         compute='_compute_media')
 
     def _compute_media(self):
         for record in self:
-            record.media_ids = self.env['product.media'].search([
+            record.variant_media_ids = self.env['product.media'].search([
                 '|',
                 ('restrict_variant_ids', '=', False),
                 ('restrict_variant_ids', '=', record.id),

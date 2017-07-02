@@ -17,10 +17,8 @@ env:
 
   matrix:
   - TESTS="0" LINT_CHECK="1"
-  - ODOO_REPO="odoo/odoo"
-  - ODOO_REPO="OCA/OCB"
   - UNIT_TEST="1" ODOO_REPO="odoo/odoo"
-  - UNIT_TEST="1" ODOO_REPO="OCA/OCB"
+  - ALGOLIA_TEST="1" UNIT_TEST="1" ODOO_REPO="OCA/OCB"
 
 virtualenv:
   system_site_packages: true
@@ -29,7 +27,7 @@ install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - printf '[options]\n\nrunning_env = dev\n' > ${HOME}/.openerp_serverrc
+  - printf '[options]\n\nrunning_env = dev\nkeychain_key_dev = HRdthrkXp28SCHX0kmwOgIob-82N-w8zWoE_UsctE7E=' > ${HOME}/.openerp_serverrc
   - git clone https://github.com/akretion/akretion-quality-tools ${HOME}/akretion-quality-tools
   - export PATH=${HOME}/akretion-quality-tools/travis:${PATH}
   - export PATH=.travis:${PATH}

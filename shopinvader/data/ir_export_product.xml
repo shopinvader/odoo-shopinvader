@@ -13,14 +13,8 @@
     <field name="export_id" ref="ir_exp_shopinvader_variant"/>
 </record>
 
-<record id="ir_exp_shopinvader_variant_name" model="ir.exports.line">
-    <field name="name">name</field>
-    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-</record>
-
 <record id="ir_exp_shopinvader_variant_model_name" model="ir.exports.line">
-    <field name="name">product_tmpl_id/name</field>
-    <field name="name">product_tmpl_id:model/name</field>
+    <field name="name">name:model_name</field>
     <field name="export_id" ref="ir_exp_shopinvader_variant"/>
 </record>
 

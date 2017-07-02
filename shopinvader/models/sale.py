@@ -6,16 +6,37 @@
 
 from openerp import api, fields, models
 import openerp.addons.decimal_precision as dp
+import uuid
+
+
+class ShopinvaderCartStep(models.Model):
+    _name = 'shopinvader.cart.step'
+    _description = 'Shopinvader Cart Step'
+
+    name = fields.Char(required=True)
+    code = fields.Char(required=True)
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    typology = fields.Selection([
+        ('sale', 'Sale'),
+        ('cart', 'Cart'),
+        ], default='sale')
     shopinvader_backend_id = fields.Many2one(
         'locomotive.backend',
         'Backend')
-    cart_state = fields.Char()
+    current_step_id = fields.Many2one(
+        'shopinvader.cart.step',
+        'Current Cart Step',
+        readonly=True)
+    done_step_ids = fields.Many2many(
+        comodel_name='shopinvader.cart.step',
+        string='Done Cart Step',
+        readonly=True)
     anonymous_email = fields.Char()
+    anonymous_token = fields.Char()
     # TODO move this in an extra OCA module
     shipping_amount_total = fields.Float(
         compute='_compute_shipping',
@@ -41,6 +62,20 @@ class SaleOrder(models.Model):
         compute='_compute_shipping',
         dp=dp.get_precision('Account'),
         store=True)
+
+    _sql_constraints = [
+        ('token_uniq', 'unique(anonymous_token)',
+         'Token must be uniq.'),
+    ]
+
+    @api.multi
+    def action_confirm_cart(self):
+        for record in self:
+            vals = {'typology': 'sale'}
+            if record.anonymous_email:
+                vals['anonymous_token'] = str(uuid.uuid4())
+            record.write(vals)
+        return True
 
     @api.depends('amount_total', 'amount_untaxed')
     def _compute_shipping(self):

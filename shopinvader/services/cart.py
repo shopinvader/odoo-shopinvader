@@ -5,11 +5,12 @@
 
 from .helper import to_int, to_bool, secure_params
 from .abstract_sale import AbstractSaleService
-from .contact import ContactService
-from .customer import CustomerService
+from .address import AddressService
 from ..backend import shopinvader
 from openerp.tools.translate import _
 from openerp.exceptions import Warning as UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 @shopinvader
@@ -20,19 +21,21 @@ class CartService(AbstractSaleService):
     # All params are untrusted so please check it !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         """Return the cart that have been set in the session or
            search an existing cart for the current partner"""
         return self._to_json(self._get())
 
-    @secure_params
-    def get(self, params):
-        return self.list()
-
+    # TODO REFACTOR too many line of code here
     @secure_params
     def update(self, params):
         payment_params = params.pop('payment_params', None)
+        action_confirm_cart = \
+            params.get('next_step') == self.backend_record.last_step_id.code
         cart = self._get()
+        if params.get('anonymous_email'):
+            self._check_allowed_anonymous_email(cart, params)
+
         # Process use_different_invoice_address
         # before processing the invoice and billing address
         if 'use_different_invoice_address' in params:
@@ -41,7 +44,7 @@ class CartService(AbstractSaleService):
         if 'payment_method_id' in params:
             self._check_valid_payment_method(params['payment_method_id'])
         if not self.partner:
-            self._set_anonymous_partner(params)
+            self._set_anonymous_partner(cart, params)
         else:
             if params.pop('assign_partner', None):
                 params['partner_id'] = self.partner.id
@@ -61,6 +64,7 @@ class CartService(AbstractSaleService):
             del params['order_line']
             if params['pricelist_id'] != cart.pricelist_id.id:
                 recompute_price = True
+        self._update_cart_step(params)
         if params:
             cart.write(params)
             if recompute_price:
@@ -82,13 +86,20 @@ class CartService(AbstractSaleService):
                 provider_name = provider.replace('payment.service.', '')
                 self.env[provider]._process_payment_params(
                     cart, payment_params.pop(provider_name, {}))
-        return self._to_json(cart)
+        if action_confirm_cart:
+            cart.action_confirm_cart()
+            res = self._to_json(cart)
+            res.update({
+                'store_clear': ['cart'],
+                'store_cache': {'last_sale': res['data']},
+                'set_session': {'cart_id': 0},
+                })
+        else:
+            res = self._to_json(cart)
+        return res
 
     # Validator
     def _validator_get(self):
-        return {}
-
-    def _validator_list(self):
         return {}
 
     def _validator_update(self):
@@ -97,7 +108,8 @@ class CartService(AbstractSaleService):
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'use_different_invoice_address': {
                 'type': 'boolean', 'coerce': to_bool},
-            'cart_state': {'type': 'string'},
+            'current_step': {'type': 'string'},
+            'next_step': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
             'payment_params': self._get_payment_validator(),
@@ -114,15 +126,14 @@ class CartService(AbstractSaleService):
                     },
                 })
         else:
-            customer_service = self.service_for(CustomerService)
-            contact_service = self.service_for(ContactService)
+            address_service = self.service_for(AddressService)
             res.update({
                 'partner_shipping': {
                     'type': 'dict',
-                    'schema': customer_service._validator_create()},
+                    'schema': address_service._validator_create()},
                 'partner_invoice': {
                     'type': 'dict',
-                    'schema': contact_service._validator_create()},
+                    'schema': address_service._validator_create()},
                 })
         return res
 
@@ -143,6 +154,37 @@ class CartService(AbstractSaleService):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
+
+    def _check_allowed_anonymous_email(self, cart, params):
+        if self.backend_record.restrict_anonymous and\
+                self.env['shopinvader.partner'].search([
+                    ('backend_id', '=', self.backend_record.id),
+                    ('email', '=', params['anonymous_email']),
+                    ]):
+            # In that case we want to raise an error to block the process
+            # but before we save the anonymous partner to avoid
+            # losing this important information
+            _logger.debug(
+                'An account already exist for %s, block it',
+                params['anonymous_email'])
+            cart.anonymous_email = params['anonymous_email']
+            cart._cr.commit()
+            raise UserError(_('An account already exist for this email'))
+
+    def _get_step_from_code(self, code):
+        step = self.env['shopinvader.cart.step'].search([('code', '=', code)])
+        if not step:
+            raise UserError(_('Invalid step code %s') % code)
+        else:
+            return step
+
+    def _update_cart_step(self, params):
+        if 'next_step' in params:
+            params['current_step_id'] = self._get_step_from_code(
+                params.pop('next_step')).id
+        if 'current_step' in params:
+            params['done_step_ids'] = [(4, self._get_step_from_code(
+                params.pop('current_step')).id, 0)]
 
     def _prepare_available_carrier(self, carrier):
         return {
@@ -165,20 +207,26 @@ class CartService(AbstractSaleService):
 
     def _parser(self):
         res = super(CartService, self)._parser()
-        res.append(('current_transaction_id', self._parser_transaction()))
+        res.append(('current_transaction_id:current_transaction',
+                    self._parser_transaction()))
         return res
 
     def _to_json(self, cart):
         if not cart:
-            return {'data': {}, 'store_data': 'cart'}
+            return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
-        res['available_carriers'] = self._get_available_carrier(cart)
-        res['available_payment_method_ids']\
-            = self._get_available_payment_method()
+        res.update({
+            'available_carriers': self._get_available_carrier(cart),
+            'available_payment_method_ids':
+                self._get_available_payment_method(),
+            'current_step': cart.current_step_id.code,
+            'done_steps': cart.done_step_ids.mapped('code'),
+            })
         return {
             'data': res,
             'set_session': {'cart_id': res['id']},
-            'store_data': 'cart'}
+            'store_cache': {'cart': res},
+            }
 
     def _prepare_payment(self, method):
         method = method.payment_method_id
@@ -195,29 +243,34 @@ class CartService(AbstractSaleService):
             methods.append(self._prepare_payment(method))
         return methods
 
-    def _set_anonymous_partner(self, params):
+    def _set_anonymous_partner(self, cart, params):
         if 'partner_shipping' in params:
-            shipping_contact = params.pop('partner_shipping')
-            service_customer = self.service_for(CustomerService)
-            customer = service_customer.create(shipping_contact)
+            shipping_address = params.pop('partner_shipping')
+            if params.get('anonymous_email'):
+                shipping_address['email'] = params['anonymous_email']
+            elif cart.anonymous_email:
+                shipping_address['email'] = cart.anonymous_email
+            else:
+                raise UserError(_('Anonymous Email is missing'))
+            partner = self.env['res.partner'].create(shipping_address)
             params.update({
-                'partner_id': customer['id'],
-                'partner_shipping_id': customer['id'],
+                'partner_id': partner.id,
+                'partner_shipping_id': partner.id,
                 })
-        if 'partner_invoice' in params:
-            invoice_contact = params.pop('partner_invoice')
+        if cart.use_different_invoice_address and 'partner_invoice' in params:
+            invoice_address = params.pop('partner_invoice')
             if not params.get('partner_shipping_id'):
                 raise UserError(_(
                     "Invoice address can not be set before "
                     "the shipping address"))
             else:
-                invoice_contact['parent_id'] = params['partner_shipping_id']
-                contact = self.env['res.partner'].create(invoice_contact)
-                params['partner_invoice_id'] = contact.id
+                invoice_address['parent_id'] = params['partner_shipping_id']
+                address = self.env['res.partner'].create(invoice_address)
+                params['partner_invoice_id'] = address.id
 
     def _get(self):
         domain = [
-            ('sub_state', '=', 'cart'),
+            ('typology', '=', 'cart'),
             ('shopinvader_backend_id', '=', self.backend_record.id),
             ]
         cart = self.env['sale.order'].search(
@@ -235,7 +288,7 @@ class CartService(AbstractSaleService):
     def _prepare_cart(self):
         partner = self.partner or self.env.ref('shopinvader.anonymous')
         vals = {
-            'sub_state': 'cart',
+            'typology': 'cart',
             'partner_id': partner.id,
             'partner_shipping_id': partner.id,
             'partner_invoice_id': partner.id,

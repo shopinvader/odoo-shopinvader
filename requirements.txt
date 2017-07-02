@@ -4,3 +4,4 @@ algoliasearch
 paypalrestsdk
 stripe
 unidecode
+pysimplesoap

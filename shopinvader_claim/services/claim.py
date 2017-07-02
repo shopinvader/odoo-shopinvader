@@ -18,7 +18,7 @@ class ClaimService(ShopinvaderService):
     # secure params and the linked validator !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         domain = [
             ('partner_id', '=', self.partner.id),
             ('shopinvader_backend_id', '=', self.backend_record.id)]
@@ -38,7 +38,7 @@ class ClaimService(ShopinvaderService):
     def create(self, params):
         vals = self._prepare_claim(params)
         claim = self.env['crm.claim'].create(vals)
-        return {'data' : self.to_json(claim)}
+        return {'data': self.to_json(claim)}
 
     @secure_params
     def update(self, params):
@@ -54,13 +54,13 @@ class ClaimService(ShopinvaderService):
                 type='comment',
                 subtype='mail.mt_comment',
                 content_subtype='plaintext')
-        return {'data' : self.to_json(claim)}
+        return {'data': self.to_json(claim)}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _validator_list(self):
+    def _validator_get(self):
         return {
             'per_page': {
                 'coerce': to_int,
@@ -111,7 +111,7 @@ class ClaimService(ShopinvaderService):
             ('claim_line_ids:lines', [
                 ('product_id:product', ('id', 'name')),
                 'product_returned_quantity:qty',
-		]),
+                ]),
             ('ref', ('id', 'name')),
         ]
         return res
@@ -195,7 +195,7 @@ class ClaimSubjectService(ShopinvaderService):
     # secure params and the linked validator !
 
     @secure_params
-    def list(self, params):
+    def get(self, params):
         domain = [('object_id.model', '=', 'crm.claim')]
         domain += params.get('domain', [])
         subjects = self.env['crm.case.categ'].search(domain)
@@ -205,7 +205,7 @@ class ClaimSubjectService(ShopinvaderService):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _validator_list(self):
+    def _validator_get(self):
         return {
             'domain': {
                 'coerce': self.to_domain,
