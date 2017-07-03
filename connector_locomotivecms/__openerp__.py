@@ -21,7 +21,6 @@
         'security/ir.model.access.csv',
     ],
     'demo': [
-        'demo/backend_demo.xml',
     ],
     'test': [
     ],

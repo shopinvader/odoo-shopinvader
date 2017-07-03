@@ -27,7 +27,13 @@
     <field name="code">cart_end</field>
 </record>
 
-<record id="connector_locomotivecms.backend_1" model="locomotive.backend">
+<record id="backend_1" model="locomotive.backend">
+    <field name="name">Demo LocomotiveCMS Backend</field>
+    <field name="version">locomotive_v3</field>
+    <field name="location">http://locomotive.akretion</field>
+    <field name="username">user</field>
+    <field name="password">apikey</field>
+    <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]"/>
     <field name="odoo_api">odooapi</field>
     <field name="version">shopinvader_v1</field>
     <field name="product_image_resize_ids" eval="[(6, 0, [ref('small'), ref('medium'), ref('large')])]"/>
@@ -36,7 +42,7 @@
 </record>
 
 <record id="role_1" model="shopinvader.role">
-    <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+    <field name="backend_id" ref="shopinvader.backend_1"/>
     <field name="pricelist_id" ref="product.list0"/>
     <field name="default" eval="True"/>
     <field name="code">public_tax_inc</field>
@@ -44,14 +50,14 @@
 </record>
 
 <record id="role_2" model="shopinvader.role">
-    <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+    <field name="backend_id" ref="shopinvader.backend_1"/>
     <field name="pricelist_id" ref="pricelist_1"/>
     <field name="code">pro_tax_exc</field>
     <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_1')])]"/>
 </record>
 
 <record id="role_3" model="shopinvader.role">
-    <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+    <field name="backend_id" ref="shopinvader.backend_1"/>
     <field name="pricelist_id" ref="product.list0"/>
     <field name="code">public_tax_exc</field>
     <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_2')])]"/>

@@ -12,7 +12,7 @@ class CommonCase(TransactionCase):
 
     def setUp(self, *args, **kwargs):
         super(CommonCase, self).setUp(*args, **kwargs)
-        self.backend = self.env.ref('connector_locomotivecms.backend_1')
+        self.backend = self.env.ref('shopinvader.backend_1')
         self.backend.bind_all_product()
         self.shopinvader_session = {}
         # Compatibility with product_visible_discount
