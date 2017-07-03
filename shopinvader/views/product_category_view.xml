@@ -6,9 +6,8 @@
     <field name="model">product.category</field>
     <field name="inherit_id" ref="product.product_category_form_view"/>
     <field name="arch" type="xml">
-        <xpath expr="//sheet/group" position="before">
+        <xpath expr="//sheet/group" position="after">
             <notebook>
-                <page name="information" string="Information"/>
                 <page name="filter" string="Filter">
                     <group colspan="4">
                         <field name="filter_ids" nolabel="1"/>
@@ -78,10 +77,6 @@
                 </page>
             </notebook>
         </xpath>
-        <xpath
-            expr="//sheet/group"
-            position="move"
-            target="//page[@name='information']"/>
     </field>
 </record>
 
