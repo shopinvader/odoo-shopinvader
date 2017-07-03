@@ -59,7 +59,6 @@ class AbstractSaleService(ShopinvaderService):
             'item_amount_untaxed',
             'item_amount_tax',
             'anonymous_email',
-            'use_different_invoice_address',
             'state',
             'date_order',
             ('carrier_id:carrier', self._parser_carrier()),
@@ -80,4 +79,7 @@ class AbstractSaleService(ShopinvaderService):
             order['item_number'] = sum([
                 l['product_uom_qty']
                 for l in order['order_line']])
+            order['use_different_invoice_address'] = (
+                order['partner_shipping']['id'] !=
+                order['partner_invoice']['id'])
         return res
