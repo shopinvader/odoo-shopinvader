@@ -27,7 +27,7 @@ class ExportCase(TransactionCase):
 
     def setUp(self):
         super(ExportCase, self).setUp()
-        self.backend = self.env.ref('connector_locomotivecms.backend_1')
+        self.backend = self.env.ref('shopinvader.backend_1')
         self.se_backend = self.env.ref('connector_algolia.backend_1')
         self.se_backend.algolia_app_id = os.environ['ALGOLIA_APP']
         self.se_backend.algolia_api_key = os.environ['ALGOLIA_API_KEY']

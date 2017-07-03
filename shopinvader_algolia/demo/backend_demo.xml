@@ -2,7 +2,7 @@
 <openerp>
     <data>
 
-<record id="connector_locomotivecms.backend_1" model="locomotive.backend">
+<record id="shopinvader.backend_1" model="locomotive.backend">
     <field name="se_backend_id" ref="connector_algolia.backend_1"/>
 </record>
 
