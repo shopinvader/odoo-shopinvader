@@ -13,7 +13,7 @@
         </record>
 
         <record id="shopinvader_partner_1" model="shopinvader.partner">
-            <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+            <field name="backend_id" ref="shopinvader.backend_1"/>
             <field name="external_id">UG9uZXk=</field>
             <field name="record_id" ref="partner_1"/>
         </record>
@@ -39,7 +39,7 @@
         </record>
 
         <record id="shopinvader_partner_2" model="shopinvader.partner">
-            <field name="backend_id" ref="connector_locomotivecms.backend_1"/>
+            <field name="backend_id" ref="shopinvader.backend_1"/>
             <field name="external_id">Y2hhY2Fs</field>
             <field name="record_id" ref="partner_2"/>
         </record>
