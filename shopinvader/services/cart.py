@@ -36,11 +36,6 @@ class CartService(AbstractSaleService):
         if params.get('anonymous_email'):
             self._check_allowed_anonymous_email(cart, params)
 
-        # Process use_different_invoice_address
-        # before processing the invoice and billing address
-        if 'use_different_invoice_address' in params:
-            cart.use_different_invoice_address\
-                = params.pop('use_different_invoice_address')
         if 'payment_method_id' in params:
             self._check_valid_payment_method(params['payment_method_id'])
             params = self.env['sale.order'].play_onchanges(
@@ -50,9 +45,16 @@ class CartService(AbstractSaleService):
         else:
             if params.pop('assign_partner', None):
                 params['partner_id'] = self.partner.id
-            for key in ('partner_shipping', 'partner_invoice'):
-                if key in params:
-                    params['%s_id' % key] = params.pop(key)['id']
+            if 'partner_shipping' in params:
+                # By default we always set the invoice address with the
+                # shipping address, if you want a different invoice address
+                # just pass it
+                params['partner_shipping_id'] = params.pop(
+                    'partner_shipping')['id']
+                params['partner_invoice_id'] = params['partner_shipping_id']
+            if 'partner_invoice' in params:
+                params['partner_invoice_id'] = params.pop(
+                    'partner_invoice')['id']
         recompute_price = False
         if self._check_call_onchange(params):
             if 'partner_id' not in params:
@@ -108,8 +110,6 @@ class CartService(AbstractSaleService):
         res = {
             'assign_partner': {'type': 'boolean', 'coerce': to_bool},
             'carrier_id': {'coerce': to_int, 'nullable': True},
-            'use_different_invoice_address': {
-                'type': 'boolean', 'coerce': to_bool},
             'current_step': {'type': 'string'},
             'next_step': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
@@ -259,8 +259,9 @@ class CartService(AbstractSaleService):
             params.update({
                 'partner_id': partner.id,
                 'partner_shipping_id': partner.id,
+                'partner_invoice_id': partner.id,
                 })
-        if cart.use_different_invoice_address and 'partner_invoice' in params:
+        if 'partner_invoice' in params:
             invoice_address = params.pop('partner_invoice')
             if not params.get('partner_shipping_id'):
                 raise UserError(_(

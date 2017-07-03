@@ -63,21 +63,22 @@ class AnonymousCartCase(CartCase):
                 self.assertEqual(partner[key], data[key])
 
     def _add_shipping_address(self):
-        self.service.update({
+        cart = self.service.update({
             'anonymous_email': self.address_ship.pop('email'),
             'partner_shipping': self.address_ship,
             })
         self._check_address(self.cart.partner_shipping_id, self.address_ship)
+        self.assertEqual(cart['data']['use_different_invoice_address'], False)
 
     def _add_shipping_and_invoice_address(self):
-        self.service.update({
+        cart = self.service.update({
             'anonymous_email': self.address_ship.pop('email'),
             'partner_shipping': self.address_ship,
             'partner_invoice': self.address_invoice,
-            'use_different_invoice_address': True
             })
         self._check_address(self.cart.partner_shipping_id, self.address_ship)
         self._check_address(self.cart.partner_invoice_id, self.address_invoice)
+        self.assertEqual(cart['data']['use_different_invoice_address'], True)
 
     def _add_partner(self, partner):
         self.service = self._get_service(CartService, partner)
@@ -195,7 +196,6 @@ class ConnectedCartCase(CartCase):
 
     def test_set_invoice_address(self):
         self.service.update({
-            'use_different_invoice_address': True,
             'partner_invoice': {'id': self.address.id},
             })
 
