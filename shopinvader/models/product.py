@@ -35,6 +35,17 @@ class ProductTemplate(models.Model):
         return super(ProductTemplate, self).unlink()
 
 
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    @api.model
+    def create(self, vals):
+        variant = super(ProductProduct, self).create(vals)
+        for binding in variant.shopinvader_bind_ids:
+            binding._create_shopinvader_variant()
+        return variant
+
+
 class ProductFilter(models.Model):
     _name = 'product.filter'
     _description = 'Product Filter'
@@ -108,8 +119,12 @@ class ShopinvaderProduct(models.Model):
     def _create_shopinvader_variant(self):
         self.ensure_one()
         for variant in self.product_variant_ids:
-            vals = self._prepare_shopinvader_variant(variant)
-            self.env['shopinvader.variant'].create(vals)
+            if not self.env['shopinvader.variant'].search([
+                    ('record_id', '=', variant.id),
+                    ('shopinvader_product_id', '=', self.id),
+                    ]):
+                vals = self._prepare_shopinvader_variant(variant)
+                self.env['shopinvader.variant'].create(vals)
 
     @api.model
     def create(self, vals):
