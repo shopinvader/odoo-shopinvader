@@ -49,7 +49,9 @@ class ProductProduct(models.Model):
 class ProductFilter(models.Model):
     _name = 'product.filter'
     _description = 'Product Filter'
+    _order = 'sequence,name'
 
+    sequence = fields.Integer()
     based_on = fields.Selection(
         selection=[
             ('field', 'Field'),
