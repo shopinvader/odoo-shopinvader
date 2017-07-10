@@ -15,7 +15,7 @@ class ProductCategory(models.Model):
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    categ_ids = fields.Many2one(
-        'product.category', string='Online Shop Category',
+    categ_ids = fields.Many2many(
+        string='Online Shop Category',
         domain=[('type', '=', 'shop')],
         track_visibility='onchange')
