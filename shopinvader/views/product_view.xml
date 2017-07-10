@@ -77,6 +77,7 @@
     <field name="model">product.filter</field>
     <field name="arch" type="xml">
         <tree string="Filter">
+            <field name="sequence" widget="handle"/>
             <field name="name"/>
         </tree>
     </field>
