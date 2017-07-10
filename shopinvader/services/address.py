@@ -61,13 +61,16 @@ class AddressService(ShopinvaderService):
 
     def _validator_create(self):
         res = {
-            'street': {'type': 'string', 'required': True},
+            'street': {'type': 'string', 'required': True, 'empty': False},
             'street2': {'type': 'string', 'nullable': True},
-            'zip': {'type': 'string', 'required': True},
-            'city': {'type': 'string', 'required': True},
-            'phone': {'type': 'string', 'nullable': True},
+            'zip': {'type': 'string', 'required': True, 'empty': False},
+            'city': {'type': 'string', 'required': True, 'empty': False},
+            'phone': {'type': 'string', 'nullable': True, 'empty': False},
             'state_id': {'coerce': to_int, 'nullable': True},
-            'country_id': {'coerce': to_int, 'required': True},
+            'country_id': {
+                'coerce': to_int,
+                'required': True,
+                'nullable': False},
             'is_company': {'coerce': bool},
             'opt_in': {'coerce': bool},
             'opt_out': {'coerce': bool},
@@ -78,16 +81,20 @@ class AddressService(ShopinvaderService):
                     'type': 'string',
                     'required': True,
                     'excludes': 'name',
+                    'empty': False
                     },
                 'lastname': {
                     'type': 'string',
                     'required': True,
                     'excludes': 'name',
+                    'empty': False
                     },
                 'name': {
                     'type': 'string',
                     'required': True,
-                    'excludes': ['firstname', 'lastname']},
+                    'excludes': ['firstname', 'lastname'],
+                    'empty': False,
+                    },
                 })
         else:
             res.update({
