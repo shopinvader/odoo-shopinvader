@@ -86,8 +86,11 @@ class CartService(AbstractSaleService):
                       "need payment_params"))
             else:
                 provider_name = provider.replace('payment.service.', '')
-                self.env[provider]._process_payment_params(
+                response = self.env[provider]._process_payment_params(
                     cart, payment_params.pop(provider_name, {}))
+                if response and response.get('redirect_to'):
+                    return {'redirect_to': response['redirect_to']}
+
         if action_confirm_cart:
             cart.action_confirm_cart()
             res = self._to_json(cart)
@@ -201,15 +204,6 @@ class CartService(AbstractSaleService):
                for carrier in carriers
                if carrier.available]
         return sorted(res, key=lambda x: (x['price'], x['name']))
-
-    def _parser_transaction(self):
-        return ['url']
-
-    def _parser(self):
-        res = super(CartService, self)._parser()
-        res.append(('current_transaction_id:current_transaction',
-                    self._parser_transaction()))
-        return res
 
     def _to_json(self, cart):
         if not cart:
