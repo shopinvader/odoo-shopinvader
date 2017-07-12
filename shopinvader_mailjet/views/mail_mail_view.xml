@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="view_mail_form" model="ir.ui.view">
+    <field name="model">mail.mail</field>
+    <field name="inherit_id" ref="mail.view_mail_form"/>
+    <field name="arch" type="xml">
+        <notebook position="inside">
+            <page name="mailjet" string="Mailjet">
+                <field name="external_template_key"/>
+                <field name="data" colspan="4" nolabel="1"/>
+            </page>
+        </notebook>
+    </field>
+</record>
+
+    </data>
+</openerp>
