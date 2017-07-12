@@ -70,11 +70,7 @@ class ShopinvaderPartner(models.Model):
         # at the creation of the element
         vals['partner_email'] = self.env['res.partner'].browse(
             vals['record_id']).email
-        record = super(ShopinvaderPartner, self).create(vals)
-        if vals['external_id']:
-            # The partner have been created from the front sending welcome
-            record.shopinvader_backend_id.send('new_customer_welcome', record)
-        return record
+        return super(ShopinvaderPartner, self).create(vals)
 
 
 class ResPartner(models.Model):
