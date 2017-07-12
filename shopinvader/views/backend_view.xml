@@ -37,12 +37,25 @@
                     <tree editable="top">
                         <field name="sequence"/>
                         <field name="payment_method_id" widget="selection"/>
+                        <field name="notification"/>
                     </tree>
                 </field>
             </group>
 
         </group>
         <notebook position="inside">
+            <page name="email" string="Email">
+                <group name="notification" string="Notification">
+                    <field name="notification_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="notification_type"/>
+                            <field name="model_id"/>
+                            <field name="template_id"
+                                   domain="[('model_id', '=', model_id)]"/>
+                        </tree>
+                    </field>
+                </group>
+            </page>
             <page name="developper" string="Developper">
                 <group name="developper" colspan="4">
                     <group name="product" string="Product" col="10" colspan="4">

@@ -19,6 +19,13 @@ class ShopinvaderPayment(models.Model):
     backend_id = fields.Many2one(
         'locomotive.backend',
         'Backend')
+    notification = fields.Selection([
+        ('cart_confirmation', 'Cart Validation'),
+        ('sale_confirmation', 'Sale Confirmation'),
+        ('cart_confirmation_and_sale_confirmation',
+         'Cart and Sale Confirmation'),
+        ])
+    manual = fields.Boolean()
 
 
 class PaymentMethod(models.Model):

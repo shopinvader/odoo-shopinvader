@@ -42,6 +42,10 @@ class LocomotiveBackend(models.Model):
         'shopinvader.role',
         'backend_id',
         'Customer Role')
+    notification_ids = fields.One2many(
+        'shopinvader.notification',
+        'backend_id',
+        'Notification')
     odoo_api = fields.Char(
         help=("This is the API key that you need to add in your website in "
               "order to give the posibility to shopinvader to access to odoo"))
@@ -119,3 +123,13 @@ class LocomotiveBackend(models.Model):
             'shopinvader.category',
             [])
         self.recompute()
+
+    def _send_notification(self, notification, record):
+        self.ensure_one()
+        record.ensure_one()
+        notification = self.env['shopinvader.notification'].search([
+            ('backend_id', '=', self.id),
+            ('notification_type', '=', notification),
+            ])
+        if notification:
+            return notification._send(record)
