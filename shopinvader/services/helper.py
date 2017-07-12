@@ -9,7 +9,6 @@ from openerp.exceptions import Warning as UserError
 from openerp.tools.translate import _
 import logging
 import functools
-from collections import defaultdict
 
 _logger = logging.getLogger(__name__)
 
@@ -64,25 +63,6 @@ class ShopinvaderService(ConnectorUnit):
             raise NotImplemented
         return getattr(self, validator_method)()
 
-    def _format_error(self, errors):
-        # the way we manage error are really simple
-        # it will be great to have a better system
-        messages = defaultdict(list)
-        for key, code_error in errors.items():
-            for code in code_error:
-                messages[code].append(key)
-        human_message = []
-        for code, data in messages.items():
-            if code == 'required field':
-                human_message.append(
-                    _('The following fields are required: %s')
-                    % ', '.join(data))
-            else:
-                human_message.append(
-                    _('The following fields are required: %s')
-                    % ', '.join(data))
-        return "\n".join(human_message)
-
     def _secure_params(self, method, params):
         if self.partner:
             partner = "%s (%s)" % (self.partner.name, self.partner.id)
@@ -95,7 +75,7 @@ class ShopinvaderService(ConnectorUnit):
         if v.validate(params):
             return v.document
         _logger.error("BadRequest %s", v.errors)
-        raise UserError(self._format_error(v.errors))
+        raise UserError(_('Invalid Form'))
 
     def to_domain(self, scope):
         if not scope:

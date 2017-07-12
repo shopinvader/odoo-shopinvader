@@ -31,14 +31,15 @@ class ClaimService(ShopinvaderService):
             domain, limit=per_page, offset=per_page*(page-1))
         return {
             'size': total_count,
-            'data': self.to_json(claims),
+            'data': self._to_json(claims),
             }
 
     @secure_params
     def create(self, params):
         vals = self._prepare_claim(params)
         claim = self.env['crm.claim'].create(vals)
-        return {'data': self.to_json(claim)}
+        self.backend_record._send_notification('claim_confirmation', claim)
+        return {'data': self._to_json(claim)}
 
     @secure_params
     def update(self, params):
@@ -54,7 +55,7 @@ class ClaimService(ShopinvaderService):
                 type='comment',
                 subtype='mail.mt_comment',
                 content_subtype='plaintext')
-        return {'data': self.to_json(claim)}
+        return {'data': self._to_json(claim)}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -116,7 +117,7 @@ class ClaimService(ShopinvaderService):
         ]
         return res
 
-    def to_json(self, claims):
+    def _to_json(self, claims):
         res = []
         if not claims:
             return res
@@ -199,7 +200,7 @@ class ClaimSubjectService(ShopinvaderService):
         domain = [('object_id.model', '=', 'crm.claim')]
         domain += params.get('domain', [])
         subjects = self.env['crm.case.categ'].search(domain)
-        return {'data': self.to_json(subjects)}
+        return {'data': self._to_json(subjects)}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -220,5 +221,5 @@ class ClaimSubjectService(ShopinvaderService):
         ]
         return res
 
-    def to_json(self, subject):
+    def _to_json(self, subject):
         return subject.jsonify(self._json_parser())
