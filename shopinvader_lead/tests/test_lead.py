@@ -16,6 +16,7 @@ class LeadCase(CommonCase):
 
     def test_create_lead(self):
         data = {
+            'email': 'revolution@shopinvader.com',
             'name': 'Besoin d\'un nouveau site',
             'company': 'Adaptoo',
             'street': '1 Rue Henri Matisse',
