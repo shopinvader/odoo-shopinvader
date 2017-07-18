@@ -35,7 +35,7 @@ class AddressService(ShopinvaderService):
         address.write(params)
         res = self._list()
         if address.address_type == 'profile':
-            res['store_cache'] = {'customer': self.to_json(address)[0]}
+            res['store_cache'] = {'customer': self._to_json(address)[0]}
         return res
 
     @secure_params
@@ -120,7 +120,7 @@ class AddressService(ShopinvaderService):
             domain = []
         domain = [('id', 'child_of', self.partner.id)] + domain
         partners = self.env['res.partner'].search(domain)
-        return {'data': self.to_json(partners)}
+        return {'data': self._to_json(partners)}
 
     def _get_address(self, params):
         domain = [('id', '=', params['id'])]
@@ -152,5 +152,5 @@ class AddressService(ShopinvaderService):
             res += ['firstname', 'lastname']
         return res
 
-    def to_json(self, address):
+    def _to_json(self, address):
         return address.jsonify(self._json_parser())

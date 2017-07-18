@@ -17,8 +17,7 @@ class ShopinvaderNotification(models.Model):
 
     def _get_service(self, record, service_class):
         session = ConnectorSession.from_env(self.env)
-        env = get_environment(
-            session, record._name, record.shopinvader_backend_id.id)
+        env = get_environment(session, record._name, self.backend_id.id)
         service = env.backend.get_class(service_class, session, record._name)
         return service(env, None, {})
 
