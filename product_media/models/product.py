@@ -29,7 +29,9 @@ class ProductMedia(models.Model):
 
     file_id = fields.Many2one(
         'storage.file',
-        'File')
+        'File',
+        required=True,
+        ondelete='cascade')
     restrict_variant_ids = fields.Many2many(
         comodel_name='product.product',
         string='Restrict Variant')
