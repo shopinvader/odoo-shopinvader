@@ -32,7 +32,8 @@ class ProductCommonCase(CommonCase):
 
     def setUp(self):
         super(ProductCommonCase, self).setUp()
-        self.template = self.env.ref('product.product_product_4')
+        self.template = self.env.ref(
+            'product.product_product_4_product_template')
         self.variant = self.env.ref('product.product_product_4b')
         self.template.taxes_id = self.env.ref('shopinvader.tax_1')
         self.shopinvader_variants = self.env['shopinvader.variant'].search([
