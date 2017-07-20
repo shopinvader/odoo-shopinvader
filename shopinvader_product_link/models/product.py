@@ -35,6 +35,7 @@ class ShopinvaderVariant(models.Model):
 
     def _compute_link(self):
         for record in self:
-            record.cross_selling_ids = record._get_related_product('cross_sell')
+            record.cross_selling_ids =\
+                record._get_related_product('cross_sell')
             record.related_ids = record._get_related_product('related')
             record.up_selling_ids = record._get_related_product('up_sell')
