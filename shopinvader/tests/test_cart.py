@@ -147,11 +147,12 @@ class AnonymousCartCase(CartCase):
 
     def test_anonymous_cart_then_sign_with_pricelist(self):
         cart = self.cart
-        partner = self.env.ref('shopinvader.partner_1')
-        pricelist = self.env.ref('shopinvader.pricelist_1')
         self.assertEqual(cart.order_line[0].price_unit, 2950.00)
         self.assertEqual(cart.order_line[1].price_unit, 145.00)
         self.assertEqual(cart.order_line[2].price_unit, 65.00)
+        partner = self.env.ref('shopinvader.partner_1')
+        pricelist = self.env.ref('shopinvader.pricelist_1')
+        partner.property_product_pricelist = pricelist
         self._add_partner(partner)
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.pricelist_id, pricelist)

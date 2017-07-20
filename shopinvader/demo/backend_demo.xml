@@ -53,7 +53,8 @@
     <field name="backend_id" ref="shopinvader.backend_1"/>
     <field name="pricelist_id" ref="pricelist_1"/>
     <field name="code">pro_tax_exc</field>
-    <field name="fiscal_position_ids" eval="[(6, 0, [ref('fiscal_position_1')])]"/>
+    <field name="fiscal_position_ids"
+           eval="[(6, 0, [ref('fiscal_position_1'), ref('fiscal_position_2')])]"/>
 </record>
 
 <record id="role_3" model="shopinvader.role">

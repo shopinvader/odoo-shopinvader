@@ -54,13 +54,5 @@
             <field name="country_id" ref="base.fr"/>
         </record>
 
-        <record id="property_product_pricelist" model="ir.property" forcecreate="True">
-            <field name="name">property_product_pricelist</field>
-            <field name="fields_id" search="[('model','=','res.partner'),('name','=','property_product_pricelist')]"/>
-            <field name="type">many2one</field>
-            <field name="value" eval="'product.pricelist,'+str(ref('shopinvader.pricelist_1'))"/>
-            <field name="company_id" ref="base.main_company"/>
-        </record>
-
     </data>
 </openerp>
