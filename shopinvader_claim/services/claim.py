@@ -160,7 +160,7 @@ class ClaimService(ShopinvaderService):
         vals = self.env['crm.claim'].play_onchanges(vals, ['partner_id'])
         order = False
         for line in params['sale_order_line']:
-            if line['qty'] == 0:
+            if not line['qty']:
                 continue
             so_line = self.env['sale.order.line'].search([
                 ('id', '=', line['id']),
