@@ -16,6 +16,7 @@ class LeadCase(CommonCase):
 
     def test_create_lead(self):
         data = {
+            'email': 'revolution@shopinvader.com',
             'name': 'Besoin d\'un nouveau site',
             'company': 'Adaptoo',
             'street': '1 Rue Henri Matisse',
@@ -27,7 +28,10 @@ class LeadCase(CommonCase):
             'mobile': '0600000000',
             }
         check_data = data.copy()
-        check_data['partner_name'] = check_data.pop('company')
+        check_data.update({
+            'partner_name': check_data.pop('company'),
+            'email_from': check_data.pop('email'),
+            })
 
         self.service.create(data)
         lead = self.env['crm.lead'].search([], order='id desc', limit=1)[0]

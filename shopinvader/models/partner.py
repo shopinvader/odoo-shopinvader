@@ -52,6 +52,8 @@ class ShopinvaderPartner(models.Model):
             if fposition_id:
                 role = self.env['shopinvader.role'].search([
                     ('fiscal_position_ids', '=', fposition_id),
+                    ('pricelist_id', '=',
+                        partner.property_product_pricelist.id),
                     ('backend_id', '=', binding.backend_id.id)])
             if not role:
                 role = self.env['shopinvader.role'].search([

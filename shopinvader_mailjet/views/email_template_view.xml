@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="email_template_form" model="ir.ui.view">
+    <field name="model">email.template</field>
+    <field name="inherit_id" ref="email_template.email_template_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='model']/.." position="after">
+            <group>
+                <field name="external_template_key"/>
+            </group>
+        </xpath>
+    </field>
+</record>
+
+    </data>
+</openerp>

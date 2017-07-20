@@ -20,7 +20,7 @@ class CustomerService(ShopinvaderService):
     def get(self, params):
         if self.partner:
             address = self.service_for(AddressService)
-            customer = address.to_json(self.partner)[0]
+            customer = address._to_json(self.partner)[0]
             return {
                 'data': customer,
                 'store_cache': {'customer': customer},
@@ -34,6 +34,7 @@ class CustomerService(ShopinvaderService):
         if 'vat' in params:
             params['vat_subjected'] = bool(params['vat'])
         partner = self.env['res.partner'].create(params)
+        self.backend_record._send_notification('new_customer_welcome', partner)
         shop_partner = self.env['shopinvader.partner'].with_context(
             connector_no_export=True).create({
                 'backend_id': self.backend_record.id,
@@ -46,7 +47,7 @@ class CustomerService(ShopinvaderService):
                 'role': shop_partner.role_id.code,
                 'id': partner.id,
             },
-            'store_cache': {'customer': address.to_json(partner)[0]},
+            'store_cache': {'customer': address._to_json(partner)[0]},
         }
 
     # The following method are 'private' and should be never never NEVER call

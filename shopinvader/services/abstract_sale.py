@@ -59,6 +59,7 @@ class AbstractSaleService(ShopinvaderService):
             'item_amount_untaxed',
             'item_amount_tax',
             'anonymous_email',
+            'anonymous_token',
             'state',
             'date_order',
             ('carrier_id:carrier', self._parser_carrier()),

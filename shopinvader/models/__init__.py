@@ -12,3 +12,5 @@ from . import backend
 from . import ir_http
 from . import url
 from . import payment_method
+from . import account_invoice
+from . import notification

@@ -95,8 +95,7 @@ class CartService(AbstractSaleService):
             cart.action_confirm_cart()
             res = self._to_json(cart)
             res.update({
-                'store_clear': ['cart'],
-                'store_cache': {'last_sale': res['data']},
+                'store_cache': {'last_sale': res['data'], 'cart': {}},
                 'set_session': {'cart_id': 0},
                 })
         else:

@@ -59,6 +59,11 @@ class CustomerCase(CommonCase):
             }
         res = service.create(data)['data']
         partner = self.env['res.partner'].browse(res['id'])
+        # Note for now we do not have automatic rule to
+        # set a specific pricelist depending on vat number
+        # so we set it manually
+        partner.property_product_pricelist =\
+            self.env.ref('shopinvader.pricelist_1').id
         self.assertEqual(
             partner.shopinvader_bind_ids.role_id,
             self.env.ref('shopinvader.role_2'))

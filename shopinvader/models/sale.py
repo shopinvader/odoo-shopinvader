@@ -68,6 +68,12 @@ class SaleOrder(models.Model):
          'Token must be uniq.'),
     ]
 
+    @api.model
+    def _prepare_invoice(self, order, lines):
+        res = super(SaleOrder, self)._prepare_invoice(order, lines)
+        res['shopinvader_backend_id'] = order.shopinvader_backend_id.id
+        return res
+
     @api.multi
     def action_confirm_cart(self):
         for record in self:
@@ -75,6 +81,9 @@ class SaleOrder(models.Model):
             if record.anonymous_email:
                 vals['anonymous_token'] = str(uuid.uuid4())
             record.write(vals)
+            if record.shopinvader_backend_id:
+                record.shopinvader_backend_id._send_notification(
+                    'cart_confirmation', record)
         return True
 
     @api.depends('amount_total', 'amount_untaxed')
@@ -93,6 +102,15 @@ class SaleOrder(models.Model):
                         line['price_subtotal_gross'] - line['price_subtotal']
         for key in ['amount_total', 'amount_untaxed', 'amount_tax']:
             record['item_%s' % key] = record[key] - record['shipping_%s' % key]
+
+    @api.multi
+    def action_button_confirm(self):
+        res = super(SaleOrder, self).action_button_confirm()
+        for record in self:
+            if record.state != 'draft' and record.shopinvader_backend_id:
+                record.shopinvader_backend_id._send_notification(
+                    'sale_confirmation', record)
+        return res
 
 
 class SaleOrderLine(models.Model):
