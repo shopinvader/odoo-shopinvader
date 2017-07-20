@@ -63,6 +63,19 @@ class ShopinvaderService(ConnectorUnit):
             raise NotImplemented
         return getattr(self, validator_method)()
 
+    def _validate_list(self, schema, params):
+        for field, vals in schema.items():
+            if vals.get('type') == 'list':
+                v = Validator(vals['schema'], purge_unknown=True)
+                parsed = []
+                for elem in params[field]:
+                    if not v.validate(elem):
+                        _logger.error("BadRequest %s", v.errors)
+                        raise UserError(_('Invalid Form'))
+                    parsed.append(v.document)
+                params[field] = parsed
+        return params
+
     def _secure_params(self, method, params):
         if self.partner:
             partner = "%s (%s)" % (self.partner.name, self.partner.id)
@@ -73,7 +86,9 @@ class ShopinvaderService(ConnectorUnit):
         schema = self._get_schema_for_method(method)
         v = Validator(schema, purge_unknown=True)
         if v.validate(params):
-            return v.document
+            # TODO we should fix cerberus issue
+            # https://github.com/pyeve/cerberus/issues/325
+            return self._validate_list(schema, v.document)
         _logger.error("BadRequest %s", v.errors)
         raise UserError(_('Invalid Form'))
 
