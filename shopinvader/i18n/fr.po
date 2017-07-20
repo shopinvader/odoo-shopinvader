@@ -16,7 +16,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/helper.py:78
+#: code:addons/shopinvader/services/register_anonymous.py:26
 #, python-format
 msgid "Invalid Form"
 msgstr "Une ou plusieurs valeurs saisies ne sont pas correct"
+
+#. module: shopinvader
+#: code:addons/shopinvader/services/helper.py:78
+#, python-format
+msgid "Invalid Token"
+msgstr "Votre lien de création de compte n'est plus valide"
