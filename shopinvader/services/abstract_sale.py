@@ -3,14 +3,14 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import ShoptorService
-from .contact import ContactService
+from .helper import ShopinvaderService
+from .address import AddressService
 
 
-class AbstractSaleService(ShoptorService):
+class AbstractSaleService(ShopinvaderService):
 
     def _parser_product(self):
-        fields = ['name', 'id']
+        fields = ['name', 'object_id:id', 'url_key', 'images']
         if 'product_code_builder' in self.env.registry._init_modules:
             fields.append('prefix_code')
         return fields
@@ -18,8 +18,7 @@ class AbstractSaleService(ShoptorService):
     def _parser_order_line(self):
         parser = [
             'id',
-            ('product_id', self._parser_product()),
-            'product_url',
+            ('shopinvader_variant_id:product', self._parser_product()),
             'price_unit',
             'product_uom_qty',
             'price_subtotal',
@@ -46,7 +45,7 @@ class AbstractSaleService(ShoptorService):
         ]
 
     def _parser(self):
-        contact_parser = self.service_for(ContactService)._json_parser()
+        address_parser = self.service_for(AddressService)._json_parser()
         return [
             'id',
             'name',
@@ -59,15 +58,17 @@ class AbstractSaleService(ShoptorService):
             'item_amount_total',
             'item_amount_untaxed',
             'item_amount_tax',
-            'cart_state',
             'anonymous_email',
+            'anonymous_token',
             'state',
-            ('carrier_id', self._parser_carrier()),
-            ('partner_id', self._parser_partner()),
-            ('partner_shipping_id', contact_parser),
-            ('partner_invoice_id', contact_parser),
+            'date_order',
+            ('carrier_id:carrier', self._parser_carrier()),
+            ('partner_id:partner', self._parser_partner()),
+            ('partner_shipping_id:partner_shipping', address_parser),
+            ('partner_invoice_id:partner_invoice', address_parser),
             ('order_line', self._parser_order_line()),
-            ('payment_method_id', self._parser_payment_method()),
+            ('payment_method_id:payment_method',
+                self._parser_payment_method()),
         ]
 
     def _to_json(self, sale):
@@ -76,4 +77,10 @@ class AbstractSaleService(ShoptorService):
             order['order_line'] = [
                 l for l in order['order_line']
                 if not l['is_delivery']]
+            order['item_number'] = sum([
+                l['product_uom_qty']
+                for l in order['order_line']])
+            order['use_different_invoice_address'] = (
+                order['partner_shipping']['id'] !=
+                order['partner_invoice']['id'])
         return res

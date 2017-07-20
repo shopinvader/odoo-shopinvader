@@ -3,3 +3,6 @@ cerberus
 algoliasearch
 paypalrestsdk
 stripe
+unidecode
+pysimplesoap
+mailjet_rest

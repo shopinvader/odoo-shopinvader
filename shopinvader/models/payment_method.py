@@ -7,9 +7,9 @@
 from openerp import fields, models
 
 
-class LocomotivePayment(models.Model):
-    _name = 'locomotive.payment'
-    _description = 'Locomotive Payment'
+class ShopinvaderPayment(models.Model):
+    _name = 'shopinvader.payment'
+    _description = 'Shopinvader Payment'
     _order = 'sequence'
 
     payment_method_id = fields.Many2one(
@@ -19,6 +19,13 @@ class LocomotivePayment(models.Model):
     backend_id = fields.Many2one(
         'locomotive.backend',
         'Backend')
+    notification = fields.Selection([
+        ('cart_confirmation', 'Cart Validation'),
+        ('sale_confirmation', 'Sale Confirmation'),
+        ('cart_confirmation_and_sale_confirmation',
+         'Cart and Sale Confirmation'),
+        ])
+    manual = fields.Boolean()
 
 
 class PaymentMethod(models.Model):

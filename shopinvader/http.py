@@ -7,10 +7,72 @@
 from openerp.http import HttpRequest, Root
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import escape
-from openerp.exceptions import Warning as UserError, MissingError, AccessError
+from openerp.exceptions import (
+    Warning as UserError, MissingError, AccessError, ValidationError)
 from werkzeug.exceptions import (
     BadRequest, NotFound, Forbidden, InternalServerError)
 import json
+import logging
+_logger = logging.getLogger(__name__)
+
+
+def convert_list(values):
+    if not isinstance(values, (dict, list)):
+        return values
+    is_list = True
+    keys = []
+    res = {}
+    for key, subvals in values.items():
+        res[key] = convert_list(subvals)
+        try:
+            int(key)
+        except:
+            is_list = False
+    if is_list:
+        res = {int(k): v for k, v in res.items()}
+        keys = res.keys()
+        keys.sort()
+        return [res[k] for k in keys]
+    else:
+        return res
+
+
+def split_key(key):
+    if '[' in key:
+        return [k for k in key.replace(']', '[').split('[') if k]
+    return [key]
+
+
+def update_res(res, keys, value):
+    key = keys[0]
+    if len(keys) == 1:
+        res[key] = value
+    else:
+        if key not in res:
+            res[key] = {}
+        update_res(res[key], keys[1:], value)
+
+
+def convert_nested_html_form_params(params):
+    """ Add the support of nested form
+    vals = {
+        'sale_order_line[0][qty]': u'1',
+        'sale_order_line[0][id]': u'325761',
+        'message': u'test de message',
+        'subject_id': u'2'})
+
+    should give with convert_nested_html_form_params(vals)
+
+    result = {
+        'message': u'my message',
+        'subject_id': u'2',
+        'sale_order_line': [{'id': u'325761', 'qty': u'1'}]}
+    """
+    res = {}
+    for key, value in params.items():
+        keys = split_key(key)
+        update_res(res, keys, value)
+    return convert_list(res)
 
 
 def WrapJsonException(exception):
@@ -46,15 +108,18 @@ class HttpJsonRequest(HttpRequest):
         super(HttpJsonRequest, self).__init__(*args)
         if self.httprequest.headers.get('Content-Type') == 'application/json':
             self.params = json.loads(self.httprequest.stream.read())
+        elif self.params:
+            self.params = convert_nested_html_form_params(self.params)
 
     def _handle_exception(self, exception):
         """Called within an except block to allow converting exceptions
            to abitrary responses. Anything returned (except None) will
            be used as response."""
+        _logger.debug('Shopinvader Handle exception %s', exception)
         try:
             return super(HttpRequest, self)._handle_exception(exception)
-        except UserError, e:
-            return WrapJsonException(BadRequest(e.message))
+        except (UserError, ValidationError), e:
+            return WrapJsonException(BadRequest(e.message or e.value))
         except MissingError, e:
             return WrapJsonException(NotFound(e.value))
         except AccessError, e:
@@ -65,6 +130,7 @@ class HttpJsonRequest(HttpRequest):
             return WrapJsonException(InternalServerError())
 
     def make_response(self, data, headers=None, cookies=None):
+        _logger.debug('response: %s', data)
         data = json.dumps(data)
         if headers is None:
             headers = {}
@@ -77,7 +143,7 @@ ori_get_request = Root.get_request
 
 
 def get_request(self, httprequest):
-    if 'shopinvader' in httprequest.url:
+    if '/shopinvader/' in httprequest.url:
         return HttpJsonRequest(httprequest)
     return ori_get_request(self, httprequest)
 

@@ -11,8 +11,13 @@ class PaymentService(models.Model):
 
     def _validator(self):
         return {
-            'token': {'type': 'string'},
+            'source': {'type': 'string'},
+            'return_url': {'type': 'string'},
             }
 
     def _process_payment_params(self, cart, payment_params):
-        return self.generate(cart, **payment_params)
+        transaction = self.generate(cart, **payment_params)
+        if transaction.url:
+            return {'redirect_to': transaction.url}
+        else:
+            return {}

@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-{'name': 'Shoptor Catalog Search Engine Connector',
+{'name': 'Shopinvader Catalog Search Engine Connector',
  'version': '8.0.0.0.1',
  'author': 'Akretion',
  'website': 'www.akretion.com',
@@ -12,9 +12,13 @@
  'category': 'Generic Modules',
  'depends': [
      'shopinvader',
+     'connector_search_engine',
  ],
  'data': [
      'views/backend_view.xml',
+     'views/product_view.xml',
+     'views/product_category_view.xml',
+     'data/ir_export_product.xml',
  ],
  'demo': [
  ],

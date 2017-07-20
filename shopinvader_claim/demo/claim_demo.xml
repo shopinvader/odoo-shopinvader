@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+       <record id="crm_claim_1" model="crm.claim">
+            <field name="partner_id" ref="shopinvader.partner_1"/>
+            <field name="shopinvader_backend_id" ref="shopinvader.backend_1"/>
+            <field name="name">Claim 1</field>
+            <field name="claim_type" ref="crm_claim_type.crm_claim_type_customer"/>
+        </record>
+
+       <record id="crm_claim_2" model="crm.claim">
+            <field name="partner_id" ref="shopinvader.partner_1"/>
+            <field name="shopinvader_backend_id" ref="shopinvader.backend_1"/>
+            <field name="name">Claim 2</field>
+            <field name="claim_type" ref="crm_claim_type.crm_claim_type_customer"/>
+        </record>
+
+        <record id="crm_claim_3" model="crm.claim">
+            <field name="partner_id" ref="shopinvader.partner_2"/>
+            <field name="shopinvader_backend_id" ref="shopinvader.backend_1"/>
+            <field name="name">Claim 3</field>
+            <field name="claim_type" ref="crm_claim_type.crm_claim_type_customer"/>
+        </record>
+
+    </data>
+</openerp>

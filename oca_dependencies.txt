@@ -1,7 +1,13 @@
 connector
 delivery-carrier
-product-attribute
+product-attribute https://github.com/akretion/product-attribute.git 8.0-storage-image
 sale-workflow
 server-tools https://github.com/akretion/server-tools.git 8.0-jsonify
 payment-gateway https://github.com/akretion/payment-gateway.git 8.0
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator.git 8.0
+connector-search-engine https://github.com/akretion/connector-search-engine.git 8.0
+account-invoicing https://github.com/OCA/account-invoicing.git 8.0
+e-commerce
+storage https://github.com/akretion/storage.git 8.0
+crm https://github.com/OCA/crm.git 8.0
+rma https://github.com/OCA/rma.git 8.0

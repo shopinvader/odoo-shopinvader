@@ -35,42 +35,50 @@ class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
 
     payment_method_ids = fields.One2many(
-        'locomotive.payment',
+        'shopinvader.payment',
         'backend_id',
         'Payment Method')
-    pricelist_ids = fields.One2many(
-        'locomotive.pricelist',
+    role_ids = fields.One2many(
+        'shopinvader.role',
         'backend_id',
-        'Pricelist')
+        'Customer Role')
+    notification_ids = fields.One2many(
+        'shopinvader.notification',
+        'backend_id',
+        'Notification')
     odoo_api = fields.Char(
         help=("This is the API key that you need to add in your website in "
-              "order to give the posibility to locomotive to access to odoo"))
+              "order to give the posibility to shopinvader to access to odoo"))
+    version = fields.Selection(selection_add=[
+        ('shopinvader_v1', 'Shopinvader V1')])
+    product_image_resize_ids = fields.Many2many(
+        comodel_name='image.resize',
+        relation="product_image_resize",
+        string='Product Image Resize')
+    categ_image_resize_ids = fields.Many2many(
+        comodel_name='image.resize',
+        relation="category_image_resize",
+        string='Category Image Resize')
+
     nbr_product = fields.Integer(compute='_compute_nbr_content')
+    nbr_variant = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')
+    last_step_id = fields.Many2one(
+        'shopinvader.cart.step',
+        string='Last cart step',
+        required=True)
+    restrict_anonymous = fields.Boolean(
+        help=("Tic that box if yo don't want to forbid an existing customer "
+              "to create a sale order in anonymous mode"))
+    allowed_country_ids = fields.Many2many(
+        comodel_name='res.country',
+        string='Allowed Country')
 
     def _compute_nbr_content(self):
         for record in self:
-            for key in ['product', 'category']:
-                record['nbr_%s' % key] = self.env['locomotive.%s' % key]\
+            for key in ['product', 'category', 'variant']:
+                record['nbr_%s' % key] = self.env['shopinvader.%s' % key]\
                     .search_count([('backend_id', '=', record.id)])
-
-    def _clear_dead_content(self, model):
-        """This method will check the existing product on locomotive site
-        and delete it if not do not exist in odoo. This is really usefull
-        in dev mode and can be usefull if you have done some mistake in your
-        database production."""
-        session = ConnectorSession.from_env(self.env)
-        for record in self:
-            clear_dead_content.delay(session, model, record.id)
-        return True
-
-    @api.multi
-    def clear_dead_product(self):
-        return self._clear_dead_content('locomotive.product')
-
-    @api.multi
-    def clear_dead_category(self):
-        return self._clear_dead_content('locomotive.category')
 
     def _export_all_content(self, model):
         session = ConnectorSession.from_env(self.env)
@@ -81,10 +89,50 @@ class LocomotiveBackend(models.Model):
                 delay_export(session, model, binding.id, {})
         return True
 
-    @api.multi
-    def export_all_product(self):
-        return self._export_all_content('locomotive.product')
+    def _clear_dead_locomotive_content(self, model):
+        """This method will check the existing product on shopinvader site
+        and delete it if it does not exist in odoo. This is really usefull
+        in dev mode and can be usefull if you have done some mistake in your
+        database production."""
+        session = ConnectorSession.from_env(self.env)
+        for record in self:
+            clear_dead_content.delay(session, model, record.id)
+        return True
+
+    def _bind_all_content(self, model, bind_model, domain):
+        for backend in self:
+            for record in self.env[model].search(domain):
+                if not self.env[bind_model].search([
+                        ('backend_id', '=', backend.id),
+                        ('lang_id', '=', backend.lang_ids[0].id),
+                        ('record_id', '=', record.id)]):
+                    self.env[bind_model].create({
+                        'backend_id': backend.id,
+                        'lang_id': backend.lang_ids[0].id,
+                        'record_id': record.id})
+        return True
 
     @api.multi
-    def export_all_category(self):
-        return self._export_all_content('locomotive.category')
+    def bind_all_product(self):
+        return self._bind_all_content(
+            'product.template',
+            'shopinvader.product',
+            [('sale_ok', '=', True)])
+
+    @api.multi
+    def bind_all_category(self):
+        self.with_context(recompute=False)._bind_all_content(
+            'product.category',
+            'shopinvader.category',
+            [])
+        self.recompute()
+
+    def _send_notification(self, notification, record):
+        self.ensure_one()
+        record.ensure_one()
+        notification = self.env['shopinvader.notification'].search([
+            ('backend_id', '=', self.id),
+            ('notification_type', '=', notification),
+            ])
+        if notification:
+            return notification._send(record)

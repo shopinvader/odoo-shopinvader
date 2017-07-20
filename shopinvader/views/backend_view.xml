@@ -9,17 +9,23 @@
     <field name="arch" type="xml">
         <field name="lang_ids" position="after">
             <field name="odoo_api"/>
+            <field name="last_step_id"/>
+            <field name="restrict_anonymous"/>
+            <separator name="image" colspan="4"/>
+            <field name="product_image_resize_ids" widget="many2many_tags"/>
+            <field name="categ_image_resize_ids" widget="many2many_tags"/>
         </field>
         <group name="config" position="after">
             <group name="price" colspan="4">
-                <field name="pricelist_ids"
-                       string="Pricelist"
+                <field name="role_ids"
+                       string="Roles"
                        colspan="4"
                        nolabel="True">
                     <tree editable="bottom">
-                        <field name="record_id"/>
-                        <field name="tax_included"/>
+                        <field name="fiscal_position_ids" widget="many2many_tags"/>
+                        <field name="pricelist_id"/>
                         <field name="code"/>
+                        <field name="default"/>
                     </tree>
                 </field>
             </group>
@@ -31,36 +37,55 @@
                     <tree editable="top">
                         <field name="sequence"/>
                         <field name="payment_method_id" widget="selection"/>
+                        <field name="notification"/>
                     </tree>
                 </field>
             </group>
-
+            <group name="allowed_country" colspan="4">
+                <field name="allowed_country_ids" nolabel="1"/>
+            </group>
         </group>
         <notebook position="inside">
+            <page name="email" string="Email">
+                <group name="notification" string="Notification">
+                    <field name="notification_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="notification_type"/>
+                            <field name="model_id"/>
+                            <field name="template_id"
+                                   domain="[('model_id', '=', model_id)]"/>
+                        </tree>
+                    </field>
+                </group>
+            </page>
             <page name="developper" string="Developper">
                 <group name="developper" colspan="4">
-                    <field name="nbr_product"/>
-                    <button
-                        name="clear_dead_product"
-                        string="Clear dead product"
-                        type="object"/>
-                    <button
-                        name="export_all_product"
-                        string="Export all product"
-                        type="object"/>
-                    <field name="nbr_category"/>
-                    <button
-                        name="clear_dead_category"
-                        string="Clear dead category"
-                        type="object"/>
-                    <button
-                        name="export_all_category"
-                        string="Export all category"
-                        type="object"/>
+                    <group name="product" string="Product" col="10" colspan="4">
+                        <field name="nbr_product"/>
+                            <button
+                                name="bind_all_product"
+                                string="Bind all product"
+                                type="object"/>
+                    </group>
+                    <group name="category" string="Category" col="10" colspan="4">
+                        <field name="nbr_category"/>
+                        <button
+                            name="bind_all_category"
+                            string="Bind all category"
+                            type="object"/>
+                    </group>
                 </group>
             </page>
         </notebook>
     </field>
+</record>
+
+<record id="connector_locomotivecms.action_locomotive_backend" model="ir.actions.act_window">
+    <field name="name">ShopInvader Backends</field>
+</record>
+
+<record id="connector_locomotivecms.menu_locomotive_root" model="ir.ui.menu">
+    <field name="name">ShopInvader</field>
 </record>
 
     </data>

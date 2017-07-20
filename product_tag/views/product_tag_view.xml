@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="product_tag_view_tree" model="ir.ui.view">
+    <field name="model">product.tag</field>
+    <field name="arch" type="xml">
+        <tree string="Product Tag">
+            <field name="name"/>
+            <field name="code"/>
+        </tree>
+    </field>
+</record>
+
+<record id="product_tag_view_form" model="ir.ui.view">
+    <field name="model">product.tag</field>
+    <field name="arch" type="xml">
+        <form string="Product Tag">
+            <sheet>
+                <label for="name" class="oe_edit_only"/>
+                <h1>
+                    <field name="name"/>
+                </h1>
+                <group>
+                    <field name="code"/>
+                </group>
+            </sheet>
+        </form>
+    </field>
+</record>
+
+<record id="product_tag_view_search" model="ir.ui.view">
+    <field name="model">product.tag</field>
+    <field name="arch" type="xml">
+        <search string="Product Tag">
+            <field name="name"/>
+            <field name="code"/>
+        </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_product_tag_view">
+    <field name="name">Product Tag</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.tag</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_tag_view_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_product_tag_view_form">
+    <field name="act_window_id" ref="act_open_product_tag_view"/>
+    <field name="sequence" eval="20"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="product_tag_view_form"/>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_product_tag_view_tree">
+    <field name="act_window_id" ref="act_open_product_tag_view"/>
+    <field name="sequence" eval="10"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="product_tag_view_tree"/>
+</record>
+
+<menuitem id="menu_product_tag"
+    parent="base.menu_product"
+    sequence="150"
+    action="act_open_product_tag_view"/>
+
+<record model="ir.actions.act_window" id="act_open_product_tag_view_from_product">
+    <field name="name">Product Tag</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.tag</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_tag_view_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_product_tag_view_from_template">
+    <field name="name">Product Tag</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.tag</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_tag_view_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+    </data>
+</openerp>

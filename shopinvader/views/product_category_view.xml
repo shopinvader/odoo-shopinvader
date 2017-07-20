@@ -6,9 +6,8 @@
     <field name="model">product.category</field>
     <field name="inherit_id" ref="product.product_category_form_view"/>
     <field name="arch" type="xml">
-        <xpath expr="//sheet/group" position="before">
+        <xpath expr="//sheet/group" position="after">
             <notebook>
-                <page name="information" string="Information"/>
                 <page name="filter" string="Filter">
                     <group colspan="4">
                         <field name="filter_ids" nolabel="1"/>
@@ -16,21 +15,16 @@
                 </page>
                 <page name="image" string="Image">
                     <group colspan="4">
-                        <field
-                            name="image_ids"
-                            nolabel="1"
-                            context="{
-                                'default_owner_model': 'product.category',
-                                'default_owner_id': id,
-                                'form_view_ref': 'base_multi_image.image_form_view',
-                                'kanban_view_ref': 'base_multi_image.image_kanban_view',
-                                 }"
-                            mode="kanban"/>
+                        <field name="image_ids" nolabel="1" context="{
+                            'default_res_model': 'product.category',
+                            'form_view_ref': 'storage_image.storage_image_view_form',
+                            'kanban_view_ref': 'storage_image.storage_image_view_kanban',
+                         }" mode="kanban"/>
                     </group>
                 </page>
                 <page name="connector" string="Connector">
                     <group name="Connector" colspan="4">
-                        <field name="locomotive_bind_ids" nolabel="1">
+                        <field name="shopinvader_bind_ids" nolabel="1">
                             <tree>
                                 <field name="backend_id"/>
                                 <field name="lang_id"/>
@@ -46,7 +40,6 @@
                                     <page name="description" string="Description">
                                         <group colspan="4">
                                             <field name="subtitle"/>
-                                            <field name="link_label"/>
                                             <separator string="Short Description" colspan="4"/>
                                             <field name="short_description" nolabel="1" colspan="4"/>
                                             <separator string="Description" colspan="4"/>
@@ -56,7 +49,7 @@
                                     <page name="seo" string="SEO">
                                         <group name="backend">
                                             <field name="seo_title"/>
-                                            <field name="meta_keyword"/>
+                                            <field name="meta_keywords"/>
                                             <field name="meta_description"/>
                                             <field name="url_builder"/>
                                             <field
@@ -84,10 +77,6 @@
                 </page>
             </notebook>
         </xpath>
-        <xpath
-            expr="//sheet/group"
-            position="move"
-            target="//page[@name='information']"/>
     </field>
 </record>
 

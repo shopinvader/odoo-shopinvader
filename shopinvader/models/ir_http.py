@@ -15,10 +15,10 @@ _logger = logging.getLogger(__name__)
 class IrHttp(models.Model):
     _inherit = 'ir.http'
 
-    def _locomotive_get_partner_from_header(self, headers):
+    def _shopinvader_get_partner_from_header(self, headers):
         partner_email = headers.get('HTTP_PARTNER_EMAIL')
         if partner_email:
-            loco_partner = request.env['locomotive.partner'].search([
+            loco_partner = request.env['shopinvader.partner'].search([
                 ('backend_id', '=', request.backend.id),
                 ('partner_email', '=', partner_email),
                 ])
@@ -27,6 +27,16 @@ class IrHttp(models.Model):
             else:
                 _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
         return None
+
+    def _extract_shopinvader_session(self, headers):
+        # HTTP_SESS are data that are store in the shopinvader session
+        # and forwarded to odoo at each request
+        # it allow to access to some specific field of the user session
+        # By security always force typing
+        # Note: rails cookies store session are serveless ;)
+        return {
+            'cart_id': int(headers.get('HTTP_SESS_CART_ID', 0))
+            }
 
     def _auth_method_shopinvader(self):
         headers = request.httprequest.environ
@@ -37,10 +47,12 @@ class IrHttp(models.Model):
             if len(backend) == 1:
                 request.backend = backend
                 request.partner =\
-                    self._locomotive_get_partner_from_header(headers)
+                    self._shopinvader_get_partner_from_header(headers)
                 if headers.get('HTTP_LANG'):
                     request.context['lang'] = headers['HTTP_LANG']
                     request.env = request.env(context=request.context)
+                request.shopinvader_session =\
+                    self._extract_shopinvader_session(headers)
                 return True
         _logger.error("Wrong HTTP_API_KEY, access denied")
         raise Unauthorized("Wrong HTTP_API_KEY, access denied")

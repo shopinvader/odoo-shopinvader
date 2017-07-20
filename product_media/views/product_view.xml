@@ -2,24 +2,126 @@
 <openerp>
     <data>
 
-<record id="product_template_only_view_form" model="ir.ui.view">
-    <field name="model">product.template</field>
-    <field name="inherit_id" ref="product.product_template_form_view"/>
+<record id="product_normal_form_view" model="ir.ui.view">
+    <field name="model">product.product</field>
+    <field name="inherit_id" ref="product.product_normal_form_view"/>
     <field name="arch" type="xml">
         <notebook position="inside">
-            <page string="Media" name="media">
-                <field name="media_link_ids">
-                    <tree editable="bottom">
-                       <field name="media_ids"
-                              widget="many2many_tags"/>
-                       <field name="restrict_variant_ids"
-                              widget="many2many_tags"/>
-                    </tree>
-                </field>
+            <page string="Public Media" name="media">
+                <field name="variant_media_ids"/>
             </page>
         </notebook>
     </field>
 </record>
+
+<record id="product_template_only_form_view" model="ir.ui.view">
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_only_form_view"/>
+    <field name="arch" type="xml">
+        <notebook position="inside">
+            <page string="Public Media" name="media">
+                <field name="media_ids"/>
+            </page>
+        </notebook>
+    </field>
+</record>
+
+<record id="product_media_view_tree" model="ir.ui.view">
+    <field name="model">product.media</field>
+    <field name="arch" type="xml">
+        <tree string="Product Media">
+            <field name="name"/>
+            <field name="media_type_id"/>
+            <field name="restrict_variant_ids"
+                   widget="many2many_tags"/>
+        </tree>
+    </field>
+</record>
+
+<record id="product_media_view_form" model="ir.ui.view">
+    <field name="model">product.media</field>
+    <field name="arch" type="xml">
+        <form string="Product Media">
+            <group>
+                <field name="id" invisible="True"/>
+                <field name="datas"
+                       filename="name"
+                       attrs="{'invisible': [('id', '!=', False)]}"/>
+                <field name="url"
+                       readonly="True"
+                       attrs="{'invisible': [('id', '=', False)]}"
+                       widget="url"/>
+                <field name="name"/>
+                <field name="media_type_id" widget="selection"/>
+                <field name="restrict_variant_ids"
+                       domain="[('product_tmpl_id', '=', parent.id)]"
+                       widget="many2many_tags"/>
+            </group>
+        </form>
+    </field>
+</record>
+
+<record id="product_media_type_view_tree" model="ir.ui.view">
+    <field name="model">product.media.type</field>
+    <field name="arch" type="xml">
+        <tree string="Product Media Type">
+            <field name="name"/>
+            <field name="code"/>
+        </tree>
+    </field>
+</record>
+
+<record id="product_media_type_view_form" model="ir.ui.view">
+    <field name="model">product.media.type</field>
+    <field name="arch" type="xml">
+        <form string="Product Media Type">
+            <group>
+                <field name="name"/>
+                <field name="code"/>
+           </group>
+        </form>
+    </field>
+</record>
+
+<record id="product_media_type_view_search" model="ir.ui.view">
+    <field name="model">product.media.type</field>
+    <field name="arch" type="xml">
+        <search string="Product Media Type">
+            <field name="name"/>
+            <field name="code"/>
+        </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_product_media_type_view">
+    <field name="name">Product Media Type</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">product.media.type</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="product_media_type_view_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_product_media_type_view_form">
+    <field name="act_window_id" ref="act_open_product_media_type_view"/>
+    <field name="sequence" eval="20"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="product_media_type_view_form"/>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_product_media_type_view_tree">
+    <field name="act_window_id" ref="act_open_product_media_type_view"/>
+    <field name="sequence" eval="10"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="product_media_type_view_tree"/>
+</record>
+
+<menuitem id="menu_product_media_type"
+    parent="product.prod_config_main"
+    sequence="20"
+    action="act_open_product_media_type_view"/>
 
     </data>
 </openerp>

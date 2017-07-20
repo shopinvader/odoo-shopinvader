@@ -5,7 +5,7 @@
 
 {
     'name': 'Connector Generic',
-    'version': '9.0.0.0.1',
+    'version': '8.0.0.0.1',
     'category': 'Connector',
     'summary': 'Connector Generic mapper, exporter...',
     'author': 'Akretion',
