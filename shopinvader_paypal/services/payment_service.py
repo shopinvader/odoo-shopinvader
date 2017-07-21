@@ -31,4 +31,5 @@ class PaymentService(models.Model):
             transaction = cart.current_transaction_id
             if params['payment_id'] != transaction.external_id:
                 raise UserError(_("Wrong Paypal transaction id"))
-            return self.capture(transaction, params['payer_id'])
+            self.capture(transaction, payer_id=params['payer_id'])
+            return {}
