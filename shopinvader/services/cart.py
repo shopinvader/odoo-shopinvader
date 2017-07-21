@@ -38,6 +38,8 @@ class CartService(AbstractSaleService):
 
         if 'payment_method_id' in params:
             self._check_valid_payment_method(params['payment_method_id'])
+            params = self.env['sale.order'].play_onchanges(
+                params, ['payment_method_id'])
         if not self.partner:
             self._set_anonymous_partner(cart, params)
         else:
@@ -115,6 +117,7 @@ class CartService(AbstractSaleService):
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
             'payment_params': self._get_payment_validator(),
+            'note': {'type': 'string'},
         }
         if self.partner:
             res.update({

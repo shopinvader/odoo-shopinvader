@@ -30,6 +30,7 @@
         "payment_gateway",
         "product_multi_image",
         "product_stock_state",
+        "sale_payment_method_automatic_workflow",
         "sale_payment_method",
         "sale_order_price_recalculation",
         "sale_order_line_price_subtotal_gross",
