@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data noupdate="1">
+
+<record id="shopinvader_payment_paypal" model="shopinvader.payment">
+    <field name="sequence">10</field>
+    <field name="payment_method_id" ref="payment_gateway_paypal.payment_method_paypal"/>
+    <field name="backend_id" ref="shopinvader.backend_1"/>
+</record>
+
+    </data>
+</openerp>
