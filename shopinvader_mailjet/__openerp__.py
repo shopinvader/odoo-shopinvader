@@ -19,6 +19,7 @@
     },
     "depends": [
         "shopinvader",
+        "account_invoice_sale_link",
     ],
     "data": [
         "views/email_template_view.xml",

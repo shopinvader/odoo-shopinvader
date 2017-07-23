@@ -11,3 +11,4 @@ e-commerce
 storage https://github.com/akretion/storage.git 8.0
 crm https://github.com/OCA/crm.git 8.0
 rma https://github.com/OCA/rma.git 8.0
+odoo-usability https://github.com/akretion/odoo-usability 8.0
