@@ -84,6 +84,11 @@ class SaleOrder(models.Model):
             if record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
                     'cart_confirmation', record)
+            for transaction in record.transaction_ids:
+                # If we confirm the card this mean we come back from the
+                # payment provider and so transaction are ready to be captured
+                if transaction.state == 'pending':
+                    transaction.state = 'to_capture'
         return True
 
     @api.depends('amount_total', 'amount_untaxed')
