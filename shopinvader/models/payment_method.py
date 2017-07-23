@@ -18,7 +18,9 @@ class ShopinvaderPayment(models.Model):
     sequence = fields.Integer()
     backend_id = fields.Many2one(
         'locomotive.backend',
-        'Backend')
+        'Backend',
+        required=True,
+        ondelete='cascade')
     notification = fields.Selection([
         ('cart_confirmation', 'Cart Validation'),
         ('sale_confirmation', 'Sale Confirmation'),
