@@ -100,6 +100,8 @@ class AddressService(ShopinvaderService):
             res.update({
                 'name': {'type': 'string', 'required': True},
             })
+        if 'company' in self.env['res.partner']._fields:
+            res.update({'company': {'type': 'string'}})
         return res
 
     def _validator_update(self):
@@ -150,6 +152,8 @@ class AddressService(ShopinvaderService):
         ]
         if 'partner_firstname' in self.env.registry._init_modules:
             res += ['firstname', 'lastname']
+        if 'company' in self.env['res.partner']._fields:
+            res.append('company')
         return res
 
     def _to_json(self, address):
