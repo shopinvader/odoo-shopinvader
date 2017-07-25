@@ -45,15 +45,12 @@ class TransactionService(ShopinvaderService):
     def _validator_get(self):
         validator = {}
         for provider in self.env['payment.service']._get_all_provider():
-            name = provider.replace('payment.service.', '')
             if hasattr(self.env[provider], '_return_validator'):
                 validator.update(self.env[provider]._return_validator())
         return validator
 
-
     def _get_provider(self, params):
         for provider in self.env['payment.service']._get_all_provider():
-            name = provider.replace('payment.service.', '')
             provider_obj = self.env[provider]
             if hasattr(provider_obj, '_transaction_match'):
                 if provider_obj._transaction_match(params):
