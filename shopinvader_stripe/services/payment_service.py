@@ -24,7 +24,7 @@ class PaymentService(models.Model):
             return {}
 
     def _return_validator(self):
-        return {'source':{'type': 'string'}}
+        return {'source': {'type': 'string'}}
 
     def _transaction_match(self, params):
         return params.get('source') and params['source'][0:3] == 'src'
