@@ -13,6 +13,7 @@ from ..services.customer import CustomerService
 from ..services.sale import SaleService
 from ..services.check_vat import CheckVatService
 from ..services.register_anonymous import RegisterAnonymousService
+from ..services.transaction import TransactionService
 from datetime import datetime
 import logging
 _logger = logging.getLogger(__name__)
@@ -90,3 +91,9 @@ class ShopinvaderController(Controller):
     @route('/shopinvader/sales/<id>', methods=['GET'], auth="shopinvader")
     def sale(self, **params):
         return self.send_to_service(SaleService, params)
+
+    # Check Transaction
+    @route('/shopinvader/check_transaction',
+           methods=['GET'], auth="shopinvader")
+    def check_transaction(self, **params):
+        return self.send_to_service(TransactionService, params)
