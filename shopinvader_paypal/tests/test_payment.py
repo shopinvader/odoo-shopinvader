@@ -17,6 +17,7 @@ REDIRECT_URL = {
     'redirect_success_url': 'https://ThanksYou.com',
     }
 
+
 class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
 
     def setUp(self, *args, **kwargs):
@@ -36,7 +37,6 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
         self.transaction_service = self._get_service(
             TransactionService, self.partner)
 
-
     def test_create_transaction(self):
         with paypal_mock(PaypalPaymentSuccess):
             params = REDIRECT_URL.copy()
@@ -47,8 +47,8 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
             self._check_payment_create_sale_order({
                 'cancel_url': REDIRECT_URL['redirect_cancel_url'],
                 'return_url':
-	            'http://locomotive.akretion/_store/check_transaction',
-		})
+                    'http://locomotive.akretion/_store/check_transaction',
+                })
             transaction = self.sale.transaction_ids[0]
             response = self.transaction_service.get({
                 'paymentId': transaction.external_id,
