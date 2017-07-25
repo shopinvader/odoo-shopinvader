@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="view_partner_form_firstname" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='child_ids']/form/sheet/group/div/field[@name='street']" position="before">
+            <field name="company"
+                placeholder="Company"
+                attrs="{'invisible': [('is_company', '=', True)]}"/>
+        </xpath>
+    </field>
+</record>
+
+    </data>
+</openerp>
