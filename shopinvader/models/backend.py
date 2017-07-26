@@ -15,6 +15,14 @@ from ..unit.consumer import delay_export
 
 
 @job
+def send_notification(session, notif_id, model_name, record_id):
+    record = session.env[model_name].browse(record_id)
+    notif = session.env['shopinvader.notification'].browse(notif_id)
+    notif._send(record)
+    return 'Notification sent'
+
+
+@job
 def clear_dead_content(session, model_name, backend_id):
     env = get_environment(session, model_name, backend_id)
     adapter = env.get_connector_unit(CRUDAdapter)
@@ -59,7 +67,6 @@ class LocomotiveBackend(models.Model):
         comodel_name='image.resize',
         relation="category_image_resize",
         string='Category Image Resize')
-
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_variant = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')
@@ -135,4 +142,7 @@ class LocomotiveBackend(models.Model):
             ('notification_type', '=', notification),
             ])
         if notification:
-            return notification._send(record)
+            session = ConnectorSession.from_env(self.env)
+            send_notification.delay(
+                session, notification.id, record._name, record.id)
+        return True

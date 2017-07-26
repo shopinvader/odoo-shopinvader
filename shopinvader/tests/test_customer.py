@@ -67,6 +67,7 @@ class CustomerCase(CommonCase):
         self.assertEqual(
             partner.shopinvader_bind_ids.role_id,
             self.env.ref('shopinvader.role_2'))
+        self.assertEqual(partner.is_company, True)
 
     def test_create_customer_exclude_role(self):
         service = self._get_service(CustomerService, None)
