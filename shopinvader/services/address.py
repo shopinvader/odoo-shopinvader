@@ -43,7 +43,7 @@ class AddressService(ShopinvaderService):
         address = self._get_address(params)
         if self.partner == address:
             raise Forbidden('Can not delete the partner account')
-        address.unlink()
+        address.active = False
         return self._list()
 
     # The following method are 'private' and should be never never NEVER call
