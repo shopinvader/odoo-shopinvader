@@ -168,7 +168,7 @@ class AnonymousCartCase(CartCase):
         anonymous_service = self._get_service(RegisterAnonymousService, None)
         anonymous_service.create({
             'external_id': external_id,
-            'token': self.cart.anonymous_token,
+            'anonymous_token': self.cart.anonymous_token,
             })
         shop_partner = self.cart.partner_id.shopinvader_bind_ids
         self.assertEqual(len(shop_partner), 1)
