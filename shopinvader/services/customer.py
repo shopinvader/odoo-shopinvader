@@ -21,7 +21,6 @@ class CustomerService(ShopinvaderService):
         if self.partner:
             address = self.service_for(AddressService)
             customer = address._to_json(self.partner)[0]
-            customer['vat'] = self.partner.vat
             return {
                 'data': customer,
                 'store_cache': {'customer': customer},
