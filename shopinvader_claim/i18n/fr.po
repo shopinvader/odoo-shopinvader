@@ -18,8 +18,8 @@ msgstr ""
 #. module: shopinvader_claim
 #: code:addons/shopinvader_claim/services/claim.py:186
 #, python-format
-msgid "The claim must have at least one line"
-msgstr "Vous devez au moins selectionner une quantité à retourner"
+msgid "You have to select an item"
+msgstr "Vous devez selectionner un article à retourner"
 
 #. module: shopinvader_claim
 #: code:addons/shopinvader_claim/services/claim.py:186

@@ -186,7 +186,7 @@ class ClaimService(ShopinvaderService):
                 'product_returned_quantity': line['qty'],
                 'claim_origin': 'none'}))
         if not vals['claim_line_ids']:
-            raise UserError(_('The claim must have at least one line'))
+            raise UserError(_('You have to select an item'))
         return vals
 
 

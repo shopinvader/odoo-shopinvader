@@ -34,7 +34,7 @@ class TransactionService(ShopinvaderService):
                     'store_cache': {
                         'notifications': [{
                             'type': 'danger',
-                            'message': _('Paiment failed please retry'),
+                            'message': _('Payment failed please retry'),
                         }]
                     }
                 }
