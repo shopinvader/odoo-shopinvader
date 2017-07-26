@@ -10,7 +10,7 @@ from .address import AddressService
 class AbstractSaleService(ShopinvaderService):
 
     def _parser_product(self):
-        fields = ['name', 'object_id:id', 'url_key', 'images']
+        fields = ['name', 'object_id:id', 'url_key', 'images', 'default_code']
         if 'product_code_builder' in self.env.registry._init_modules:
             fields.append('prefix_code')
         return fields

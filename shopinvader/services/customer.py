@@ -34,6 +34,7 @@ class CustomerService(ShopinvaderService):
         external_id = params.pop('external_id')
         if 'vat' in params:
             params['vat_subjected'] = bool(params['vat'])
+            params['is_company'] = True
         partner = self.env['res.partner'].create(params)
         self.backend_record._send_notification('new_customer_welcome', partner)
         shop_partner = self.env['shopinvader.partner'].with_context(
