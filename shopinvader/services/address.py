@@ -146,6 +146,7 @@ class AddressService(ShopinvaderService):
             'phone',
             'opt_in',
             'opt_out',
+            'vat',
             ('state_id', ['id', 'name']),
             ('country_id', ['id', 'name']),
             'address_type',
