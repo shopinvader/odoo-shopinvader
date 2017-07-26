@@ -20,7 +20,7 @@ class RegisterAnonymousService(ShopinvaderService):
     @secure_params
     def create(self, params):
         sale = self.env['sale.order'].search([
-            ('anonymous_token', '=', params['token']),
+            ('anonymous_token', '=', params['anonymous_token']),
             ])
         if not sale:
             raise UserError(_('Invalid Token'))
@@ -45,6 +45,6 @@ class RegisterAnonymousService(ShopinvaderService):
 
     def _validator_create(self):
         return {
-            'token': {'type': 'string', 'required': True},
+            'anonymous_token': {'type': 'string', 'required': True},
             'external_id': {'type': 'string', 'required': True},
             }
