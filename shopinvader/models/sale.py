@@ -62,11 +62,36 @@ class SaleOrder(models.Model):
         compute='_compute_shipping',
         dp=dp.get_precision('Account'),
         store=True)
+    shopinvader_state = fields.Selection([
+        ('cancel', 'Cancel'),
+        ('pending', 'Pending'),
+        ('processing', 'Processing'),
+        ('shipped', 'Shipped'),
+        ], compute='_compute_shopinvader_state',
+        store=True)
 
     _sql_constraints = [
         ('token_uniq', 'unique(anonymous_token)',
          'Token must be uniq.'),
     ]
+
+    @api.depends('state')
+    def _get_shopinvader_state(self):
+        self.ensure_one()
+        if self.state == 'cancel':
+            return 'cancel'
+        elif self.state == 'done':
+            return 'shipped'
+        elif self.state == 'draft':
+            return 'pending'
+        else:
+            return 'processing'
+
+    def _compute_shopinvader_state(self):
+        # simple way to have more human friendly name for
+        # the sale order on the website
+        for record in self:
+            record.shopinvader_state = record._get_shopinvader_state()
 
     @api.model
     def _prepare_invoice(self, order, lines):
