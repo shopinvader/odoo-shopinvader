@@ -10,6 +10,7 @@ from openerp.addons.shopinvader.services.sale import SaleService
 from openerp.addons.shopinvader_claim.services.claim import ClaimService
 from openerp.addons.shopinvader.services.address import AddressService
 import json
+import urllib
 
 
 class ShopinvaderNotification(models.Model):
@@ -30,7 +31,18 @@ class ShopinvaderNotification(models.Model):
             if record._name == 'account.invoice':
                 record = record.sale_ids[0]
             service = self._get_service(record, SaleService)
-            data = {'sale': service._to_json(record)[0]}
+            sale = service._to_json(record)[0]
+            if sale['anonymous_token']:
+                sale.update({
+                    'is_anonymous': True,
+                    'url_anonymous': urllib.urlencode({
+                        'token': sale['anonymous_token'],
+                        'email': sale['anonymous_email'],
+                        })
+                    })
+            else:
+                sale['is_anonymous'] = False
+            data = {'sale': sale}
         elif self.notification_type == 'new_customer_welcome':
             service = self._get_service(record, AddressService)
             data = {'customer': service._to_json(record)[0]}
