@@ -176,8 +176,9 @@ class ClaimService(ShopinvaderService):
                 order = so_line.order_id
                 vals['ref'] = 'sale.order,%s' % order.id
             elif order != so_line.order_id:
-                raise BadRequest(
-                    'All sale order lines must come from the same sale order')
+                raise UserError(
+                    _('All sale order lines must'
+                      'come from the same sale order'))
             if order.invoice_ids and not vals.get('invoice_id', False):
                 vals['invoice_id'] = order.invoice_ids[0].id
             vals['claim_line_ids'].append((0, 0, {
