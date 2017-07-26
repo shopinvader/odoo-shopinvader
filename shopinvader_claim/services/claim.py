@@ -55,7 +55,8 @@ class ClaimService(ShopinvaderService):
                 body=params['add_message'],
                 type='comment',
                 subtype='mail.mt_comment',
-                content_subtype='plaintext')
+                content_subtype='plaintext',
+                author_id=self.partner.id)
         return {'data': self._to_json(claim)}
 
     # The following method are 'private' and should be never never NEVER call

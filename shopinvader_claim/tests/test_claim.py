@@ -87,6 +87,7 @@ class ClaimCase(CommonCase):
         messages = res[0]['messages']
         self.assertEqual(len(messages), 2)
         self.assertEqual(messages[1]['body'], u'<p>New message</p>')
+        self.assertEqual(messages[1]['author'], self.partner.display_name)
 
     def test_claim_not_found(self):
         data = {
