@@ -5,12 +5,17 @@
 
 from openerp.addons.shopinvader.tests.common import CommonCase
 from openerp.addons.shopinvader.services.cart import CartService
+from openerp.addons.shopinvader.services.transaction import TransactionService
 
 from openerp.addons.payment_gateway_paypal.tests.test_payment import (
     PaypalCommonCase,
     PaypalPaymentSuccess,
-    REDIRECT_URL,
     paypal_mock)
+
+REDIRECT_URL = {
+    'redirect_cancel_url': 'https://IamGoingToKickYourAssIfYouDoNotPaid.com',
+    'redirect_success_url': 'https://ThanksYou.com',
+    }
 
 
 class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
@@ -28,13 +33,28 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
             'typology': 'cart',
             'shopinvader_backend_id': self.backend.id,
             })
-        self.service = self._get_service(CartService, self.partner)
+        self.cart_service = self._get_service(CartService, self.partner)
+        self.transaction_service = self._get_service(
+            TransactionService, self.partner)
 
     def test_create_transaction(self):
         with paypal_mock(PaypalPaymentSuccess):
             params = REDIRECT_URL.copy()
             params['action'] = 'create'
-            response = self.service.update(
+            response = self.cart_service.update(
                 {'payment_params': {'paypal': params}})
             self.assertEqual(response, {'redirect_to': 'https://redirect'})
-            self._check_payment_create_sale_order()
+            self._check_payment_create_sale_order({
+                'cancel_url': REDIRECT_URL['redirect_cancel_url'],
+                'return_url':
+                    'http://locomotive.akretion/_store/check_transaction',
+                })
+            transaction = self.sale.transaction_ids[0]
+            response = self.transaction_service.get({
+                'paymentId': transaction.external_id,
+                })
+            self.assertEqual(
+                response['redirect_to'],
+                REDIRECT_URL['redirect_success_url'])
+            self.assertIn('store_cache', response)
+            self.assertIn('last_sale', response['store_cache'])

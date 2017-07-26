@@ -12,14 +12,23 @@ class PaymentService(models.Model):
     def _validator(self):
         return {
             'action': {'type': 'string', 'allowed': ['create']},
-            'cancel_url': {'type': 'string'},
-            'return_url': {'type': 'string'},
+            'redirect_cancel_url': {'type': 'string'},
+            'redirect_success_url': {'type': 'string'},
             }
 
     def _process_payment_params(self, cart, params):
         if params['action'] == 'create':
-            transaction = self.generate(
-                cart,
-                return_url=params.get('return_url'),
-                cancel_url=params.get('cancel_url'))
+            params['cancel_url'] = params.get('redirect_cancel_url')
+            transaction = self.generate(cart, **params)
             return {'redirect_to': transaction.url}
+
+    def _return_validator(self):
+        return {'paymentId': {'type': 'string'}}
+
+    def _transaction_match(self, params):
+        return 'paymentId' in params
+
+    def _get_transaction_from_return(self, params):
+        return self.env['gateway.transaction'].search([
+            ('external_id', '=', params['paymentId']),
+            ('state', '=', 'pending')])

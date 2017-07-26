@@ -12,7 +12,8 @@ class PaymentService(models.Model):
     def _validator(self):
         return {
             'source': {'type': 'string'},
-            'return_url': {'type': 'string'},
+            'redirect_success_url': {'type': 'string'},
+            'redirect_cancel_url': {'type': 'string'},
             }
 
     def _process_payment_params(self, cart, payment_params):
@@ -21,3 +22,14 @@ class PaymentService(models.Model):
             return {'redirect_to': transaction.url}
         else:
             return {}
+
+    def _return_validator(self):
+        return {'source': {'type': 'string'}}
+
+    def _transaction_match(self, params):
+        return params.get('source') and params['source'][0:3] == 'src'
+
+    def _get_transaction_from_return(self, params):
+        return self.env['gateway.transaction'].search([
+            ('external_id', '=', params['source']),
+            ('state', '=', 'pending')])

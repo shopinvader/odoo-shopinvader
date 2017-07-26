@@ -148,7 +148,8 @@ class AddressService(ShopinvaderService):
             'opt_out',
             ('state_id', ['id', 'name']),
             ('country_id', ['id', 'name']),
-            'address_type'
+            'address_type',
+            'is_company',
         ]
         if 'partner_firstname' in self.env.registry._init_modules:
             res += ['firstname', 'lastname']

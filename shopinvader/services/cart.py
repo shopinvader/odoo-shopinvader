@@ -88,8 +88,12 @@ class CartService(AbstractSaleService):
                       "need payment_params"))
             else:
                 provider_name = provider.replace('payment.service.', '')
+                provider_params = payment_params.pop(provider_name, {})
+                provider_params['return_url'] = "%s/%s" % (
+                    self.backend_record.location,
+                    '_store/check_transaction')
                 response = self.env[provider]._process_payment_params(
-                    cart, payment_params.pop(provider_name, {}))
+                    cart, provider_params)
                 if response and response.get('redirect_to'):
                     return {'redirect_to': response['redirect_to']}
 
