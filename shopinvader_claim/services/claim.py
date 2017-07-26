@@ -6,7 +6,8 @@
 from openerp.addons.shopinvader.services.helper import (
     secure_params, ShopinvaderService, to_int)
 from openerp.addons.shopinvader.backend import shopinvader
-from werkzeug.exceptions import NotFound, BadRequest
+from openerp.exceptions import MissingError, Warning as UserError
+from openerp.tools.translate import _
 
 
 @shopinvader
@@ -48,7 +49,7 @@ class ClaimService(ShopinvaderService):
             ('shopinvader_backend_id', '=', self.backend_record.id),
             ('id', '=', params['id'])])
         if not claim:
-            raise NotFound('Claim not found')
+            raise MissingError(_('Claim not found'))
         if params.get('add_message', ''):
             claim.message_post(
                 body=params['add_message'],
@@ -168,8 +169,8 @@ class ClaimService(ShopinvaderService):
                 ('order_id.shopinvader_backend_id', '=', backend_id)
             ])
             if not so_line:
-                raise NotFound(
-                    'The sale order line %s does not exist' % line['id'])
+                raise MissingError(
+                    _('The sale order line %s does not exist') % line['id'])
             if not order:
                 order = so_line.order_id
                 vals['ref'] = 'sale.order,%s' % order.id
@@ -183,7 +184,7 @@ class ClaimService(ShopinvaderService):
                 'product_returned_quantity': line['qty'],
                 'claim_origin': 'none'}))
         if not vals['claim_line_ids']:
-            raise BadRequest('The claim must have at least one line')
+            raise UserError(_('The claim must have at least one line'))
         return vals
 
 

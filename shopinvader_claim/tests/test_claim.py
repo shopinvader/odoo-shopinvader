@@ -5,7 +5,7 @@
 
 from ..services.claim import ClaimService, ClaimSubjectService
 from openerp.addons.shopinvader.tests.common import CommonCase
-from werkzeug.exceptions import NotFound, BadRequest
+from openerp.exceptions import MissingError, Warning as UserError
 
 
 class ClaimCase(CommonCase):
@@ -64,7 +64,7 @@ class ClaimCase(CommonCase):
                 {'id': self.sol_1.id, 'qty': 0},
                 {'id': self.sol_2.id, 'qty': 0}]
         }
-        with self.assertRaises(BadRequest):
+        with self.assertRaises(UserError):
             self.service.create(data)
 
     def test_line_not_found(self):
@@ -75,7 +75,7 @@ class ClaimCase(CommonCase):
                 {'id': self.sol_1.id, 'qty': 2},
                 {'id': self.sol_3.id, 'qty': 1}]
         }
-        with self.assertRaises(NotFound):
+        with self.assertRaises(MissingError):
             self.service.create(data)
 
     def test_add_message(self):
@@ -93,5 +93,5 @@ class ClaimCase(CommonCase):
             'id': self.env.ref('shopinvader_claim.crm_claim_3').id,
             'add_message': 'New message'
         }
-        with self.assertRaises(NotFound):
+        with self.assertRaises(MissingError):
             self.service.update(data)
