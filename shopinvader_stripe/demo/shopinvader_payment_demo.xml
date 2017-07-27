@@ -10,6 +10,7 @@
     <field name="sequence">10</field>
     <field name="payment_method_id" ref="payment_gateway_stripe.payment_method_stripe"/>
     <field name="backend_id" ref="shopinvader.backend_1"/>
+    <field name="notification">sale_confirmation</field>
 </record>
 
     </data>
