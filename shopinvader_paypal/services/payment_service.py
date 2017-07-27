@@ -21,6 +21,7 @@ class PaymentService(models.Model):
             params['cancel_url'] = params.get('redirect_cancel_url')
             transaction = self.generate(cart, **params)
             return {'redirect_to': transaction.url}
+        return {}
 
     def _return_validator(self):
         return {'paymentId': {'type': 'string'}}

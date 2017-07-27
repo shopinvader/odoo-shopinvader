@@ -77,16 +77,18 @@ class CartService(AbstractSaleService):
                     '_store/check_transaction')
                 response = self.env[provider]._process_payment_params(
                     cart, provider_params)
-                if response and response.get('redirect_to'):
-                    return {'redirect_to': response['redirect_to']}
+                if response.get('redirect_to'):
+                    return response
+                elif response.get('action_confirm_cart'):
+                    # TODO find a more elengant way to do it
+                    action_confirm_cart = True
 
         if action_confirm_cart:
-            cart.action_confirm_cart()
-            res = self._to_json(cart)
-            res.update({
-                'store_cache': {'last_sale': res['data'], 'cart': {}},
-                'set_session': {'cart_id': 0},
-                })
+            # TODO improve me, it will be better to block the cart
+            # confirmation if the user have set manually the end step
+            # and the payment method do not support it
+            # the best will be to have a params on the payment method
+            return self._confirm_cart(cart)
         else:
             res = self._to_json(cart)
         return res
@@ -296,3 +298,12 @@ class CartService(AbstractSaleService):
             if changed_field in onchange_fields:
                 return True
         return False
+
+    def _confirm_cart(self, cart):
+        cart.action_confirm_cart()
+        res = self._to_json(cart)
+        res.update({
+            'store_cache': {'last_sale': res['data'], 'cart': {}},
+            'set_session': {'cart_id': 0},
+            })
+        return res

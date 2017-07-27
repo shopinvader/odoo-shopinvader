@@ -25,6 +25,7 @@
     "data": [
     ],
     "demo": [
+        "demo/shopinvader_payment_demo.xml",
     ],
     "qweb": [
     ]
