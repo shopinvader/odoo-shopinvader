@@ -4,6 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import models
+from openerp.exceptions import Warning as UserError
+from openerp.tools.translate import _
 
 
 class PaymentService(models.Model):
@@ -20,8 +22,10 @@ class PaymentService(models.Model):
         transaction = self.generate(cart, **payment_params)
         if transaction.url:
             return {'redirect_to': transaction.url}
+        elif transaction.state in ('succeeded', 'to_capture'):
+            return {'action_confirm_cart': True}
         else:
-            return {}
+            raise UserError(_('Payment failed please retry'))
 
     def _return_validator(self):
         return {'source': {'type': 'string'}}
