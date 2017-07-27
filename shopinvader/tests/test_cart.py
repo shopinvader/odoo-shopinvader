@@ -131,11 +131,10 @@ class AnonymousCartCase(CartCase):
     def test_anonymous_cart_then_sign(self):
         cart = self.cart
         partner = self.env.ref('shopinvader.partner_1')
-        addr = partner.address_get(['delivery', 'invoice', 'address'])
         self._add_partner(partner)
         self.assertEqual(cart.partner_id, partner)
-        self.assertEqual(cart.partner_shipping_id.id, addr['delivery'])
-        self.assertEqual(cart.partner_invoice_id.id, addr['invoice'])
+        self.assertEqual(cart.partner_shipping_id, partner)
+        self.assertEqual(cart.partner_invoice_id, partner)
 
     def test_anonymous_cart_then_sign_with_fiscal_position(self):
         cart = self.cart
@@ -232,5 +231,21 @@ class ConnectedCartNoTaxCase(CartCase):
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
         self.assertEqual(cart.partner_invoice_id, self.partner)
+        self.assertEqual(cart.fiscal_position, self.fposition)
+        self.assertEqual(cart.amount_total, cart.amount_untaxed)
+
+    def test_edit_shipping_address_with_tax(self):
+        cart = self.cart
+        self.service.update({
+            'partner_shipping': {'id': self.address.id},
+            })
+        self.assertEqual(cart.partner_id, self.partner)
+        self.assertEqual(cart.partner_shipping_id, self.address)
+        self.assertEqual(cart.partner_invoice_id, self.address)
+        self.assertEqual(cart.fiscal_position, self.default_fposition)
+        self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
+
+        self.address.write({'country_id': self.env.ref('base.us').id})
+        self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.fiscal_position, self.fposition)
         self.assertEqual(cart.amount_total, cart.amount_untaxed)
