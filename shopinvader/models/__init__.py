@@ -14,3 +14,4 @@ from . import url
 from . import payment_method
 from . import account_invoice
 from . import notification
+from . import automatic_workflow_job
