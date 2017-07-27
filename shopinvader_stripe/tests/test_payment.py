@@ -37,7 +37,7 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
         self.cart_service = self._get_service(CartService, self.partner)
         self.transaction_service = self._get_service(
             TransactionService, self.partner)
-        self.cr.commit = Mock() # Do not commit
+        self.cr.commit = Mock()  # Do not commit
 
     def _create_transaction(self, card):
         params = REDIRECT_URL.copy()

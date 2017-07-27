@@ -38,7 +38,7 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
         self.cart_service = self._get_service(CartService, self.partner)
         self.transaction_service = self._get_service(
             TransactionService, self.partner)
-        self.cr.commit = Mock() # TODO not commit
+        self.cr.commit = Mock()  # TODO not commit
 
     def test_create_transaction(self):
         with paypal_mock(PaypalPaymentSuccess):

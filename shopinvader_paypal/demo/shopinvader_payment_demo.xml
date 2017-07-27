@@ -10,6 +10,7 @@
     <field name="sequence">20</field>
     <field name="payment_method_id" ref="payment_gateway_paypal.payment_method_paypal"/>
     <field name="backend_id" ref="shopinvader.backend_1"/>
+    <field name="notification">sale_confirmation</field>
 </record>
 
     </data>
