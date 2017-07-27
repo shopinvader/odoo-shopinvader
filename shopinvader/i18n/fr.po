@@ -30,5 +30,5 @@ msgstr "Votre lien de création de compte n'est plus valide"
 #. module: shopinvader
 #: code:addons/shopinvader/services/transaction.py:35
 #, python-format
-msgid: "Payment failed please retry"
+msgid "Payment failed please retry"
 msgstr "Le paiement à échoué veuillez ré-essayer"
