@@ -34,14 +34,14 @@ class ShopinvaderNotification(models.Model):
             sale = service._to_json(record)[0]
             if sale['anonymous_token']:
                 sale.update({
-                    'is_anonymous': True,
+                    'is_anonymous': 1,
                     'url_anonymous': urllib.urlencode({
                         'token': sale['anonymous_token'],
                         'email': sale['anonymous_email'],
                         })
                     })
             else:
-                sale['is_anonymous'] = False
+                sale['is_anonymous'] = 0
             data = {'sale': sale}
         elif self.notification_type == 'new_customer_welcome':
             service = self._get_service(record, AddressService)
