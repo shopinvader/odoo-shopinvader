@@ -75,7 +75,6 @@ class SaleOrder(models.Model):
          'Token must be uniq.'),
     ]
 
-    @api.depends('state')
     def _get_shopinvader_state(self):
         self.ensure_one()
         if self.state == 'cancel':
@@ -87,6 +86,7 @@ class SaleOrder(models.Model):
         else:
             return 'processing'
 
+    @api.depends('state')
     def _compute_shopinvader_state(self):
         # simple way to have more human friendly name for
         # the sale order on the website
