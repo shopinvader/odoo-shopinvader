@@ -144,27 +144,7 @@ class SaleOrder(models.Model):
 
     def reset_cart_lines(self):
         for record in self:
-            for line in record.order_line:
-                res = line.product_id_change(
-                    record.pricelist_id.id,
-                    line.product_id.id,
-                    qty=line.product_uom_qty,
-                    uom=line.product_uom.id,
-                    qty_uos=line.product_uos_qty,
-                    uos=line.product_uos.id,
-                    name=line.name,
-                    partner_id=self.partner_id.id,
-                    lang=False,
-                    update_tax=True,
-                    date_order=self.date_order,
-                    packaging=False,
-                    fiscal_position=self.fiscal_position.id,
-                    flag=True)['value']
-                line.write({
-                    'price_unit': res['price_unit'],
-                    'discount': res.get('discount'),
-                    'tax_id': [(6, 0, res.get('tax_id', []))]
-                    })
+            record.order_line.reset_price_tax()
 
     def _play_cart_onchange(self, vals):
         result = {}
@@ -183,15 +163,18 @@ class SaleOrder(models.Model):
                 result['fiscal_position'] = res['fiscal_position']
         return result
 
-    @api.multi
-    def write_cart(self, vals):
-        self.ensure_one()
-        vals.update(self._play_cart_onchange(vals))
-
+    def _need_to_reset_tax_price_on_line(self, vals):
         reset = False
         for field in ['fiscal_position', 'pricelist_id']:
             if field in vals and self[field].id != vals[field]:
                 reset = True
+        return reset
+
+    @api.multi
+    def write_with_onchange(self, vals):
+        self.ensure_one()
+        vals.update(self._play_cart_onchange(vals))
+        reset = self._need_to_reset_tax_price_on_line(vals)
         self.write(vals)
 
         if 'payment_method_id' in vals:
@@ -199,7 +182,7 @@ class SaleOrder(models.Model):
         if 'carrier_id' in vals:
             self.delivery_set()
         # TODO FIXME
-        #elif 'shipping_address_id' in vals:
+        # elif 'shipping_address_id' in vals:
         #    # If we change the shipping address we update
         #    # the current carrier
         #    self.carrier_id = self._get_available_carrier(sale)[0]
@@ -218,6 +201,29 @@ class SaleOrderLine(models.Model):
         compute='_compute_shopinvader_variant',
         string='Shopinvader Variant',
         store=True)
+
+    def reset_price_tax(self):
+        for line in self:
+            res = line.product_id_change(
+                line.order_id.pricelist_id.id,
+                line.product_id.id,
+                qty=line.product_uom_qty,
+                uom=line.product_uom.id,
+                qty_uos=line.product_uos_qty,
+                uos=line.product_uos.id,
+                name=line.name,
+                partner_id=line.order_id.partner_id.id,
+                lang=False,
+                update_tax=True,
+                date_order=line.order_id.date_order,
+                packaging=False,
+                fiscal_position=line.order_id.fiscal_position.id,
+                flag=True)['value']
+            line.write({
+                'price_unit': res['price_unit'],
+                'discount': res.get('discount'),
+                'tax_id': [(6, 0, res.get('tax_id', []))]
+                })
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):
