@@ -29,6 +29,15 @@ class CartService(AbstractSaleService):
     # TODO REFACTOR too many line of code here
     @secure_params
     def update(self, params):
+        if params.pop('assign_partner', None):
+            if len(params) == 0:
+                params['partner_id'] = self.partner.id
+                params['partner_shipping_id'] = self.partner.id
+                params['partner_invoice_id'] = self.partner.id
+            else:
+                _logger.warning(
+                    'Assign Partner is a reserved key that should'
+                    'be called alone')
         payment_params = params.pop('payment_params', None)
         action_confirm_cart = \
             params.get('next_step') == self.backend_record.last_step_id.code
@@ -38,13 +47,9 @@ class CartService(AbstractSaleService):
 
         if 'payment_method_id' in params:
             self._check_valid_payment_method(params['payment_method_id'])
-            params = self.env['sale.order'].play_onchanges(
-                params, ['payment_method_id'])
         if not self.partner:
             self._set_anonymous_partner(cart, params)
         else:
-            if params.pop('assign_partner', None):
-                params['partner_id'] = self.partner.id
             if 'partner_shipping' in params:
                 # By default we always set the invoice address with the
                 # shipping address, if you want a different invoice address
@@ -55,31 +60,9 @@ class CartService(AbstractSaleService):
             if 'partner_invoice' in params:
                 params['partner_invoice_id'] = params.pop(
                     'partner_invoice')['id']
-        recompute_price = False
-        if self._check_call_onchange(params):
-            if 'partner_id' not in params:
-                params['partner_id'] = self.partner.id
-            params['order_line'] = cart.order_line
-            params = self.env['sale.order'].play_onchanges(
-                params,
-                ['partner_id', 'partner_shipping_id', 'fiscal_position',
-                 'pricelist_id'])
-            # Used only to trigger onchanges so we can delete it afterwards
-            del params['order_line']
-            if params['pricelist_id'] != cart.pricelist_id.id:
-                recompute_price = True
         self._update_cart_step(params)
         if params:
-            cart.write(params)
-            if recompute_price:
-                cart.recalculate_prices()
-        if 'carrier_id' in params:
-            cart.delivery_set()
-        elif 'shipping_address_id' in params:
-            # If we change the shipping address we update
-            # the current carrier
-            cart.carrier_id = self._get_available_carrier(cart)[0]
-            cart.delivery_set()
+            cart.write_cart(params)
         if payment_params:
             provider = cart.payment_method_id.provider
             if not provider:

@@ -31,7 +31,6 @@
         "product_multi_image",
         "product_stock_state",
         "sale_payment_method",
-        "sale_order_price_recalculation",
         "sale_order_line_price_subtotal_gross",
     ],
     "data": [

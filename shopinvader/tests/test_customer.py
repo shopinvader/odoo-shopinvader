@@ -82,9 +82,9 @@ class CustomerCase(CommonCase):
             'country_id': self.env.ref('base.us').id,
             }
         res = service.create(data)['data']
-        partner = self.env['res.partner'].browse(res['id'])
+        self.partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(
-            partner.shopinvader_bind_ids.role_id,
+            self.partner.shopinvader_bind_ids.role_id,
             self.env.ref('shopinvader.role_3'))
 
     def test_address_type(self):
