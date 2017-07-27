@@ -62,7 +62,7 @@ class CartService(AbstractSaleService):
                     'partner_invoice')['id']
         self._update_cart_step(params)
         if params:
-            cart.write_cart(params)
+            cart.write_with_onchange(params)
         if payment_params:
             provider = cart.payment_method_id.provider
             if not provider:
@@ -278,7 +278,9 @@ class CartService(AbstractSaleService):
             'partner_invoice_id': partner.id,
             'shopinvader_backend_id': self.backend_record.id,
             }
-        return self.env['sale.order'].play_onchanges(vals, ['partner_id'])
+        res = self.env['sale.order']._play_cart_onchange(vals)
+        vals.update(res)
+        return vals
 
     def _check_valid_payment_method(self, method_id):
         if method_id not in self.backend_record.payment_method_ids.mapped(

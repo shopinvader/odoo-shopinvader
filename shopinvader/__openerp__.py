@@ -26,7 +26,6 @@
         "connector_base_product",
         "connector_locomotivecms",
         "delivery",
-        "onchange_helper",
         "payment_gateway",
         "product_multi_image",
         "product_stock_state",
