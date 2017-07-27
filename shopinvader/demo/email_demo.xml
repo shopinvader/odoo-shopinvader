@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="email_cart_notification" model="email.template">
+    <field name="name">Cart notification</field>
+    <field name="email_from">${(object.user_id.email or '')|safe}</field>
+    <field name="subject">Cart notification ${object.name}</field>
+    <field name="partner_to">${object.partner_id.id}</field>
+    <field name="model_id" ref="sale.model_sale_order"/>
+    <field name="auto_delete" eval="False"/>
+    <field name="lang">${object.partner_id.lang}</field>
+    <field name="body_html"><![CDATA[ Thanks for your card ]]></field>
+</record>
+
+<record id="email_sale_notification" model="email.template">
+    <field name="name">Sale notification</field>
+    <field name="email_from">${(object.user_id.email or '')|safe}</field>
+    <field name="subject">Sale notification ${object.name}</field>
+    <field name="partner_to">${object.partner_id.id}</field>
+    <field name="model_id" ref="sale.model_sale_order"/>
+    <field name="auto_delete" eval="False"/>
+    <field name="lang">${object.partner_id.lang}</field>
+    <field name="body_html"><![CDATA[ Thanks for your card ]]></field>
+</record>
+
+    </data>
+</openerp>

@@ -53,6 +53,8 @@
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",
         "demo/payment_demo.xml",
+        "demo/email_demo.xml",
+        "demo/notification_demo.xml",
     ],
     "qweb": [
     ]

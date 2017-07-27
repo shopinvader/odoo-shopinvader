@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+from . import test_notification
 from . import test_http
 from . import test_backend
 from . import test_cart
