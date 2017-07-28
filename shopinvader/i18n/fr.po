@@ -19,7 +19,7 @@ msgstr ""
 #: code:addons/shopinvader/services/register_anonymous.py:26
 #, python-format
 msgid "Invalid Form"
-msgstr "Une ou plusieurs valeurs saisies ne sont pas correct"
+msgstr "Une ou plusieurs valeurs saisies ne sont pas correctes"
 
 #. module: shopinvader
 #: code:addons/shopinvader/services/helper.py:78
