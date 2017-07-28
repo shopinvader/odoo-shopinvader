@@ -80,6 +80,11 @@ class LocomotiveBackend(models.Model):
     allowed_country_ids = fields.Many2many(
         comodel_name='res.country',
         string='Allowed Country')
+    anonymous_partner_id = fields.Many2one(
+        'res.partner',
+        'Anonymous Partner',
+        required=True,
+        default=lambda self: self.env.ref('shopinvader.anonymous'))
 
     def _compute_nbr_content(self):
         for record in self:

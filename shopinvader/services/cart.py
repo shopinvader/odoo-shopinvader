@@ -272,7 +272,7 @@ class CartService(AbstractSaleService):
         return self.env['sale.order'].create(vals)
 
     def _prepare_cart(self):
-        partner = self.partner or self.env.ref('shopinvader.anonymous')
+        partner = self.partner or self.backend_record.anonymous_partner_id
         vals = {
             'typology': 'cart',
             'partner_id': partner.id,

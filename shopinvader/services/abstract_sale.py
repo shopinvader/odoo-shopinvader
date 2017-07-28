@@ -83,4 +83,7 @@ class AbstractSaleService(ShopinvaderService):
             order['use_different_invoice_address'] = (
                 order['partner_shipping']['id'] !=
                 order['partner_invoice']['id'])
+            for key in ['partner', 'partner_shipping', 'partner_invoice']:
+                if order[key]['id'] == self.backend_record.anonymous_partner_id.id:
+                    order[key] = {}
         return res
