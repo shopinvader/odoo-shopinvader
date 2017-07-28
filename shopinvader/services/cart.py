@@ -180,28 +180,12 @@ class CartService(AbstractSaleService):
             params['done_step_ids'] = [(4, self._get_step_from_code(
                 params.pop('current_step')).id, 0)]
 
-    def _prepare_available_carrier(self, carrier):
-        return {
-            'id': carrier.id,
-            'name': carrier.name,
-            'description': carrier.description,
-            'price': carrier.price,
-            }
-
-    def _get_available_carrier(self, cart):
-        carriers = cart.with_context(order_id=cart.id)\
-            .env['delivery.carrier'].search([])
-        res = [self._prepare_available_carrier(carrier)
-               for carrier in carriers
-               if carrier.available]
-        return sorted(res, key=lambda x: (x['price'], x['name']))
-
     def _to_json(self, cart):
         if not cart:
             return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
         res.update({
-            'available_carriers': self._get_available_carrier(cart),
+            'available_carriers': cart._get_available_carrier(),
             'available_payment_method_ids':
                 self._get_available_payment_method(),
             'current_step': cart.current_step_id.code,
