@@ -33,7 +33,7 @@ class AnonymousCartCase(CartCase):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref('shopinvader.sale_order_1')
         self.shopinvader_session = {'cart_id': self.cart.id}
-        self.partner = self.env.ref('shopinvader.anonymous')
+        self.partner = self.backend.anonymous_partner_id
         self.service = self._get_service(CartService, None)
         self.address_ship = {
             'name': 'Purple',
