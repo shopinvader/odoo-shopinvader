@@ -27,6 +27,7 @@ class CartItemService(ShopinvaderService):
         if existing_item:
             existing_item.product_uom_qty += params['item_qty']
             existing_item.reset_price_tax()
+            existing_item.order_id._update_default_carrier()
         else:
             vals = self._prepare_cart_item(params, cart)
             self.env['sale.order.line'].create(vals)
@@ -37,6 +38,7 @@ class CartItemService(ShopinvaderService):
         item = self._get_cart_item(params)
         item.product_uom_qty = params['item_qty']
         item.reset_price_tax()
+        item.order_id._update_default_carrier()
         cart_service = self.service_for(CartService)
         cart = cart_service._get()
         return cart_service._to_json(cart)

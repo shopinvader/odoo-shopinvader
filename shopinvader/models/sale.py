@@ -5,8 +5,12 @@
 
 
 from openerp import api, fields, models
+from openerp.exceptions import Warning as UserError
 import openerp.addons.decimal_precision as dp
 import uuid
+import logging
+from openerp.tools.translate import _
+_logger = logging.getLogger(__name__)
 
 
 class ShopinvaderCartStep(models.Model):
@@ -74,6 +78,11 @@ class SaleOrder(models.Model):
         ('token_uniq', 'unique(anonymous_token)',
          'Token must be uniq.'),
     ]
+
+    def is_anonymous(self):
+        self.ensure_one()
+        return self.partner_id ==\
+            self.shopinvader_backend_id.anonymous_partner_id
 
     def _get_shopinvader_state(self):
         self.ensure_one()
@@ -170,24 +179,63 @@ class SaleOrder(models.Model):
                 reset = True
         return reset
 
+    def _prepare_available_carrier(self, carrier):
+        return {
+            'id': carrier.id,
+            'name': carrier.name,
+            'description': carrier.description,
+            'price': carrier.price,
+            }
+
+    def _get_available_carrier(self):
+        self.ensure_one()
+        if self.is_anonymous():
+            return []
+        else:
+            carriers = self.with_context(order_id=self.id)\
+                .env['delivery.carrier'].search([])
+            res = [self._prepare_available_carrier(carrier)
+                   for carrier in carriers
+                   if carrier.available]
+            return sorted(res, key=lambda x: (x['price'], x['name']))
+
+    def _update_default_carrier(self):
+        if self.is_anonymous():
+            return
+        carrier_ids = [x['id'] for x in self._get_available_carrier()]
+        if not self.carrier_id and carrier_ids:
+            self.carrier_id = carrier_ids[0]
+        elif self.carrier_id.id not in carrier_ids:
+            _logger.debug('Update obsolet carrier for sale order %s', self.id)
+            if carrier_ids:
+                self.carrier_id = carrier_ids[0]
+            else:
+                self.carrier_id = False
+                self.env['sale.order.line'].search([
+                    ('order_id', '=', self.id),
+                    ('is_delivery', '=', True)]).unlink()
+        if self.carrier_id:
+            self.delivery_set()
+
+    def _check_allowed_carrier(self, vals):
+        carrier_ids = [x['id'] for x in self._get_available_carrier()]
+        if 'carrier_id' in vals:
+            if vals['carrier_id'] not in carrier_ids:
+                raise UserError(
+                    _('Invalid carrier delivey method for your country'))
+
     @api.multi
     def write_with_onchange(self, vals):
         self.ensure_one()
         vals.update(self._play_cart_onchange(vals))
         reset = self._need_to_reset_tax_price_on_line(vals)
         self.write(vals)
-
         if 'payment_method_id' in vals:
             self.onchange_payment_method_set_workflow()
+        self._update_default_carrier()
         if 'carrier_id' in vals:
+            self._check_allowed_carrier(vals)
             self.delivery_set()
-        # TODO FIXME
-        # elif 'shipping_address_id' in vals:
-        #    # If we change the shipping address we update
-        #    # the current carrier
-        #    self.carrier_id = self._get_available_carrier(sale)[0]
-        #    self.delivery_set()
-
         if reset:
             self.reset_cart_lines()
         return True
