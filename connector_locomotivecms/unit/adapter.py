@@ -129,7 +129,7 @@ class LocomotiveAdapter(CRUDAdapter):
         client = LocomotiveClient(
             backend.username,
             backend.password,
-            'adaptoo',  # TODO backend.handle
+            backend.handle,
             backend.location)
         client.auth()
         self.client = client
