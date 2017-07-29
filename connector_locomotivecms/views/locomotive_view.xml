@@ -19,6 +19,7 @@
                                 colspan="2"/>
                             <field name="username" colspan="2"/>
                             <field name="password" colspan="2"/>
+                            <field name="handle" colspan="2"/>
                             <field name="lang_ids" widget="many2many_tags"/>
                         </group>
                     </page>

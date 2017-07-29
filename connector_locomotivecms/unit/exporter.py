@@ -21,8 +21,9 @@ class LocomotiveExporter(GenericExporter):
 
     def run(self, binding_id, *args, **kwargs):
         ctx = self.env.context.copy()
-        ctx['lang'] = self.model.browse(binding_id).lang_id.code
-        self.session.env = self.env(context=ctx)
+        if 'lang_id' in self.model._fields:
+            ctx['lang'] = self.model.browse(binding_id).lang_id.code
+            self.session.env = self.env(context=ctx)
         return super(LocomotiveExporter, self).run(binding_id, *args, **kwargs)
 
     def _run(self, fields=None):
