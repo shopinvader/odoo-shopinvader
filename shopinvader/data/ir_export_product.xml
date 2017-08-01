@@ -23,6 +23,11 @@
     <field name="export_id" ref="ir_exp_shopinvader_variant"/>
 </record>
 
+<record id="ir_exp_shopinvader_variant_redirect_url_key" model="ir.exports.line">
+    <field name="name">redirect_url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+</record>
+
 <record id="ir_exp_shopinvader_variant_main" model="ir.exports.line">
     <field name="name">main</field>
     <field name="export_id" ref="ir_exp_shopinvader_variant"/>

@@ -56,11 +56,21 @@ class ShopinvaderCategory(models.Model):
         'Shopinvader Childs',
         compute='_compute_child_category')
     level = fields.Integer(compute='_compute_level')
+    redirect_url_key = fields.Serialized(
+        compute='_compute_redirect_url_key',
+        string='Redirect Url Keys')
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
          'A category can only have one binding by backend.'),
     ]
+
+    def _compute_redirect_url_key(self):
+        for record in self:
+            res = []
+            for url in record.redirect_url_key_ids:
+                res.append(url.url_key)
+            record.redirect_url_key = res
 
     def _compute_image(self):
         for record in self:
