@@ -197,11 +197,21 @@ class ShopinvaderVariant(models.Model):
         string='Shopinvader Attributes')
     main = fields.Boolean(
         compute='_compute_main_product')
+    redirect_url_key = fields.Serialized(
+        compute='_compute_redirect_url_key',
+        string='Redirect Url Keys')
 
     @api.depends('record_id')
     def _compute_object_id(self):
         for record in self:
             record.object_id = record.record_id.id
+
+    def _compute_redirect_url_key(self):
+        for record in self:
+            res = []
+            for url in record.redirect_url_key_ids:
+                res.append(url.url_key)
+            record.redirect_url_key = res
 
     def _get_categories(self):
         self.ensure_one()

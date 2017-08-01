@@ -23,6 +23,11 @@
     <field name="export_id" ref="ir_exp_shopinvader_category"/>
 </record>
 
+<record id="ir_exp_shopinvader_category_redirect_url_key" model="ir.exports.line">
+    <field name="name">redirect_url_key</field>
+    <field name="export_id" ref="ir_exp_shopinvader_category"/>
+</record>
+
 <record id="ir_exp_shopinvader_category_subtitle" model="ir.exports.line">
     <field name="name">subtitle</field>
     <field name="export_id" ref="ir_exp_shopinvader_category"/>
