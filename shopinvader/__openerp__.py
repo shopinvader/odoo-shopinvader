@@ -19,6 +19,7 @@
     },
     "depends": [
         "base_delivery_carrier_label",
+        "delivery_carrier_url",
         "base_jsonify",
         "base_sparse_field",
         "base_url",
