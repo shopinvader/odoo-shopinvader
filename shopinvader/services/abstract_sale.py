@@ -87,4 +87,15 @@ class AbstractSaleService(ShopinvaderService):
                 if order[key]['id'] ==\
                         self.backend_record.anonymous_partner_id.id:
                     order[key] = {}
+            trackings = []
+            for picking in sale.picking_ids:
+                for pack in picking._get_packages_from_picking():
+                    if pack.parcel_tracking:
+                        data = pack.with_context(picking=self).open_tracking_url()
+                        trackings.append({
+                            'name': picking.carrier_id.name,
+                            'url': data.get('url'),
+                            'code': pack.parcel_tracking,
+                            })
+            order['trackings'] = trackings
         return res
