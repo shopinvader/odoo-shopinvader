@@ -13,7 +13,7 @@
                attrs="{'invisible': [('anonymous_email', '=', False)]}"></i>
         </xpath>
         <field name="partner_id" position="before">
-            <field name="anonymous_email"/>
+            <field name="anonymous_email" readonly="True" attrs="{'invisible': [('anonymous_email', '=', False)]}"/>
         </field>
         <field name="partner_id" position="after">
             <field name="typology" invisible="True"/>
