@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader MailJet",
     "summary": "Send shopinvader email using mailjet API",
-    "version": "8.1.0.0",
+    "version": "8.0.1.0.0",
     "category": "mail",
     "website": "www.akretion.com",
     "author": " Akretion",

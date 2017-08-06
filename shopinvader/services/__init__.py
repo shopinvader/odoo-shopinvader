@@ -8,4 +8,4 @@ from . import cart_item
 from . import sale
 from . import address
 from . import customer
-from . import register_anonymous
+from . import sign

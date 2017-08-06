@@ -40,7 +40,7 @@ class SaleOrder(models.Model):
         string='Done Cart Step',
         readonly=True)
     anonymous_email = fields.Char()
-    anonymous_token = fields.Char()
+    anonymous_token = fields.Char(copy=False)
     # TODO move this in an extra OCA module
     shipping_amount_total = fields.Float(
         compute='_compute_shipping',
