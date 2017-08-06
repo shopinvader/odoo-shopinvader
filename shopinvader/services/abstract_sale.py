@@ -91,7 +91,8 @@ class AbstractSaleService(ShopinvaderService):
             for picking in sale.picking_ids:
                 for pack in picking._get_packages_from_picking():
                     if pack.parcel_tracking:
-                        data = pack.with_context(picking=self).open_tracking_url()
+                        data = pack.with_context(
+                            picking=self).open_tracking_url()
                         trackings.append({
                             'name': picking.carrier_id.name,
                             'url': data.get('url'),

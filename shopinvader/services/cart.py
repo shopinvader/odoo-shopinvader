@@ -3,7 +3,7 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import to_int, to_bool, secure_params
+from .helper import to_int, secure_params
 from .abstract_sale import AbstractSaleService
 from .address import AddressService
 from ..backend import shopinvader
@@ -29,15 +29,6 @@ class CartService(AbstractSaleService):
     # TODO REFACTOR too many line of code here
     @secure_params
     def update(self, params):
-        if params.pop('assign_partner', None):
-            if len(params) == 0:
-                params['partner_id'] = self.partner.id
-                params['partner_shipping_id'] = self.partner.id
-                params['partner_invoice_id'] = self.partner.id
-            else:
-                _logger.warning(
-                    'Assign Partner is a reserved key that should'
-                    'be called alone')
         payment_params = params.pop('payment_params', None)
         action_confirm_cart = \
             params.get('next_step') == self.backend_record.last_step_id.code
@@ -99,7 +90,6 @@ class CartService(AbstractSaleService):
 
     def _validator_update(self):
         res = {
-            'assign_partner': {'type': 'boolean', 'coerce': to_bool},
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'current_step': {'type': 'string'},
             'next_step': {'type': 'string'},

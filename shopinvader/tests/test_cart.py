@@ -5,7 +5,7 @@
 
 from ..services.cart import CartService
 from .common import CommonCase
-from ..services.register_anonymous import RegisterAnonymousService
+from ..services.sign import SignService
 # from openerp.exceptions import Warning as UserError
 # from openerp import api, registry
 
@@ -81,10 +81,8 @@ class AnonymousCartCase(CartCase):
         self.assertEqual(cart['data']['use_different_invoice_address'], True)
 
     def _add_partner(self, partner):
-        self.service = self._get_service(CartService, partner)
-        self.service.update({
-            'assign_partner': True,
-            })
+        service_sign = self._get_service(SignService, partner)
+        service_sign.get({})
 
     def test_add_new_shipping_address(self):
         cart = self.cart
@@ -164,8 +162,8 @@ class AnonymousCartCase(CartCase):
         self._add_shipping_address()
         self.service.update({
             'next_step': self.backend.last_step_id.code})
-        anonymous_service = self._get_service(RegisterAnonymousService, None)
-        anonymous_service.create({
+        sign_service = self._get_service(SignService, None)
+        sign_service.update({
             'external_id': external_id,
             'anonymous_token': self.cart.anonymous_token,
             })

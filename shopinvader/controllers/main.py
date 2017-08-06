@@ -12,7 +12,7 @@ from ..services.address import AddressService
 from ..services.customer import CustomerService
 from ..services.sale import SaleService
 from ..services.check_vat import CheckVatService
-from ..services.register_anonymous import RegisterAnonymousService
+from ..services.sign import SignService
 from ..services.transaction import TransactionService
 from datetime import datetime
 import logging
@@ -73,15 +73,9 @@ class ShopinvaderController(Controller):
 
     # Customer
     @route('/shopinvader/customer',
-           methods=['POST', 'GET'], auth="shopinvader")
+           methods=['GET'], auth="shopinvader")
     def customer(self, **params):
         return self.send_to_service(CustomerService, params)
-
-    # Anonymous Customer
-    @route('/shopinvader/anonymous/register',
-           methods=['POST'], auth="shopinvader")
-    def anonymous_register(self, **params):
-        return self.send_to_service(RegisterAnonymousService, params)
 
     # Order History
     @route('/shopinvader/sales', methods=['GET'], auth="shopinvader")
@@ -97,3 +91,9 @@ class ShopinvaderController(Controller):
            methods=['GET'], auth="shopinvader")
     def check_transaction(self, **params):
         return self.send_to_service(TransactionService, params)
+
+    # Sign action
+    @route('/shopinvader/sign',
+           methods=['GET', 'PUT', 'POST'], auth="shopinvader")
+    def sign(self, **params):
+        return self.send_to_service(SignService, params)
