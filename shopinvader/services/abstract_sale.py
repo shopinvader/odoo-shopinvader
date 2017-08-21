@@ -88,7 +88,8 @@ class AbstractSaleService(ShopinvaderService):
                         self.backend_record.anonymous_partner_id.id:
                     order[key] = {}
             trackings = []
-            for picking in sale.picking_ids:
+            sale_order = self.env['sale.order'].browse(order['id'])
+            for picking in sale_order.picking_ids:
                 for pack in picking._get_packages_from_picking():
                     if pack.parcel_tracking:
                         data = pack.with_context(
