@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data noupdate="1">
+
+    <record id="shopinvader_google_shopping_cron" model="ir.cron">
+        <field name="name">Generate google shopping file</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/>
+        <field name="model">locomotive.backend</field>
+        <field name="function">export_all_google_shopping</field>
+        <field name="args">()</field>
+        <field name="active" eval="False"/>
+    </record>
+
+</data>
+</openerp>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="google_category_view_tree" model="ir.ui.view">
+    <field name="model">google.category</field>
+    <field name="arch" type="xml">
+        <tree string="Google Category">
+            <field name="name"/>
+            <field name="google_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="google_category_view_form" model="ir.ui.view">
+    <field name="model">google.category</field>
+    <field name="arch" type="xml">
+        <form string="Google Category">
+            <field name="name"/>
+            <field name="google_id"/>
+        </form>
+    </field>
+</record>
+
+<record id="google_category_view_search" model="ir.ui.view">
+    <field name="model">google.category</field>
+    <field name="arch" type="xml">
+        <search string="Google Category">
+            <field name="name"/>
+            <field name="google_id"/>
+        </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_google_category_view">
+    <field name="name">Google Category</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">google.category</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">tree,form</field>
+    <field name="search_view_id" ref="google_category_view_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_google_category_view_form">
+    <field name="act_window_id" ref="act_open_google_category_view"/>
+    <field name="sequence" eval="20"/>
+    <field name="view_mode">form</field>
+    <field name="view_id" ref="google_category_view_form"/>
+</record>
+
+<record model="ir.actions.act_window.view" id="act_open_google_category_view_tree">
+    <field name="act_window_id" ref="act_open_google_category_view"/>
+    <field name="sequence" eval="10"/>
+    <field name="view_mode">tree</field>
+    <field name="view_id" ref="google_category_view_tree"/>
+</record>
+
+<menuitem id="menu_google_category"
+    parent="base.menu_base_config"
+    sequence="300"
+    action="act_open_google_category_view"/>
+
+<menuitem id="menu_google_category_list"
+    parent="menu_google_category"
+    sequence="10"
+    action="act_open_google_category_view"/>
+
+    </data>
+</openerp>
