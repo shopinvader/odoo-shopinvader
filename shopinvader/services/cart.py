@@ -256,6 +256,8 @@ class CartService(AbstractSaleService):
             }
         res = self.env['sale.order']._play_cart_onchange(vals)
         vals.update(res)
+        if self.backend_record.sequence_id:
+            vals['name'] = self.backend_record.sequence_id._next()
         return vals
 
     def _check_valid_payment_method(self, method_id):
