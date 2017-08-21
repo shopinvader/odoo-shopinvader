@@ -85,6 +85,9 @@ class LocomotiveBackend(models.Model):
         'Anonymous Partner',
         required=True,
         default=lambda self: self.env.ref('shopinvader.anonymous'))
+    sequence_id = fields.Many2one(
+        'ir.sequence',
+        'Sequence')
 
     def _compute_nbr_content(self):
         for record in self:
