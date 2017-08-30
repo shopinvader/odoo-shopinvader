@@ -44,7 +44,8 @@ class LocomotiveBackend(models.Model):
             'id': variant.default_code,
             'title': variant.name,
             'description': variant.description[0:5000],
-            'link': self._get_absolute_url(variant.url_key),
+            'link': self._get_absolute_url(
+                variant.url_key + '?ref=%s' % variant.default_code),
             'image_link': images[0].url,
             'additional_image_link': ','.join([
                 image.url for image in images[1:]]),
