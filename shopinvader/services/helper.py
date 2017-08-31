@@ -7,6 +7,7 @@
 from openerp.addons.connector.connector import ConnectorUnit
 from openerp.exceptions import Warning as UserError
 from openerp.tools.translate import _
+from openerp.http import request
 import logging
 import functools
 
@@ -39,7 +40,9 @@ def secure_params(func):
     @functools.wraps(func)
     def wrapped(self, params):
         secure_params = self._secure_params(func.__name__, params)
-        return func(self, secure_params)
+        res = func(self, secure_params)
+        self._log_call(func, params, secure_params, res)
+        return res
     return wrapped
 
 
@@ -50,6 +53,21 @@ class ShopinvaderService(ConnectorUnit):
         self.partner = partner
         self.shopinvader_session = shopinvader_session
         self.cart_id = shopinvader_session.get('cart_id')
+
+    def _log_call(self, func, params, secure_params, res):
+        httprequest = request.httprequest
+        headers = dict(httprequest.headers)
+        headers.pop('Api-Key')
+        _logger.debug({
+            'module': 'shopinvader',
+            'shopinvader_url': httprequest.url,
+            'shopinvader_method': httprequest.method,
+            'params': params,
+            'headers': headers,
+            'secure_params': secure_params,
+            'res': res,
+            'status': 200,
+            })
 
     def service_for(self, service_class):
         service = self.connector_env.backend.get_class(
