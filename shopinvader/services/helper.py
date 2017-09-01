@@ -13,6 +13,7 @@ import functools
 
 _logger = logging.getLogger(__name__)
 
+
 try:
     from cerberus import Validator
 except ImportError:
@@ -54,12 +55,12 @@ class ShopinvaderService(ConnectorUnit):
         self.shopinvader_session = shopinvader_session
         self.cart_id = shopinvader_session.get('cart_id')
 
-    def _log_call(self, func, params, secure_params, res):
+    def _prepare_extra_log(self, func, params, secure_params, res):
         httprequest = request.httprequest
         headers = dict(httprequest.headers)
         headers.pop('Api-Key')
-        _logger.debug({
-            'module': 'shopinvader',
+        return {
+            'application': 'shopinvader',
             'shopinvader_url': httprequest.url,
             'shopinvader_method': httprequest.method,
             'params': params,
@@ -67,7 +68,16 @@ class ShopinvaderService(ConnectorUnit):
             'secure_params': secure_params,
             'res': res,
             'status': 200,
-            })
+        }
+
+    def _log_call(self, func, params, secure_params, res):
+        """If you want to enjoy the advanced log install the module
+        logging_json"""
+        httprequest = request.httprequest
+        extra = self._prepare_extra_log(func, params, secure_params, res)
+        args = [httprequest.url, httprequest.method]
+        message = 'Shopinvader call url %s method %s'
+        _logger.debug(message, *args, extra=extra)
 
     def service_for(self, service_class):
         service = self.connector_env.backend.get_class(
@@ -99,8 +109,6 @@ class ShopinvaderService(ConnectorUnit):
             partner = "%s (%s)" % (self.partner.name, self.partner.id)
         else:
             partner = "anonymous"
-        _logger.debug(
-            'Shopinvader call for partner %s with params %s', partner, params)
         schema = self._get_schema_for_method(method)
         v = Validator(schema, purge_unknown=True)
         if v.validate(params):
