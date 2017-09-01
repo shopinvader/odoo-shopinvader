@@ -104,8 +104,12 @@ def WrapJsonException(exception):
     httprequest = request.httprequest
     headers = dict(httprequest.headers)
     headers.pop('Api-Key')
-    _logger.error({
-        'module': 'shopinvader',
+    message = (
+        'Shopinvader call url %s method %s with params %s '
+        'raise the following error %s')
+    args = (httprequest.url, httprequest.method, request.params, exception)
+    extra = {
+        'application': 'shopinvader',
         'shopinvader_url': httprequest.url,
         'shopinvader_method': httprequest.method,
         'params': request.params,
@@ -113,7 +117,8 @@ def WrapJsonException(exception):
         'status': exception.code,
         'exception_body': exception.get_body(),
         'traceback': ''.join(traceback.format_exception(*sys.exc_info())),
-        })
+        }
+    _logger.error(message, *args, extra=extra)
     return exception
 
 
@@ -146,7 +151,6 @@ class HttpJsonRequest(HttpRequest):
             return WrapJsonException(InternalServerError())
 
     def make_response(self, data, headers=None, cookies=None):
-        _logger.debug('response: %s', data)
         data = json.dumps(data)
         if headers is None:
             headers = {}
