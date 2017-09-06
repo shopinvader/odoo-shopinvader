@@ -73,11 +73,12 @@ class ShopinvaderService(ConnectorUnit):
     def _log_call(self, func, params, secure_params, res):
         """If you want to enjoy the advanced log install the module
         logging_json"""
-        httprequest = request.httprequest
-        extra = self._prepare_extra_log(func, params, secure_params, res)
-        args = [httprequest.url, httprequest.method]
-        message = 'Shopinvader call url %s method %s'
-        _logger.debug(message, *args, extra=extra)
+        if request:
+            httprequest = request.httprequest
+            extra = self._prepare_extra_log(func, params, secure_params, res)
+            args = [httprequest.url, httprequest.method]
+            message = 'Shopinvader call url %s method %s'
+            _logger.debug(message, *args, extra=extra)
 
     def service_for(self, service_class):
         service = self.connector_env.backend.get_class(
