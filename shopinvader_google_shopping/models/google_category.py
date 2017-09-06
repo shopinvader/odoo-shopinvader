@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
+from openerp import fields, models
 
 
 class GoogleCategory(models.Model):
@@ -15,7 +15,6 @@ class GoogleCategory(models.Model):
     google_id = fields.Integer()
 
     _sql_constraints = [
-         ('record_uniq', 'unique(google_id)',
-             'Google category id must be uniq.')
-         ]
-
+        ('record_uniq', 'unique(google_id)',
+         'Google category id must be uniq.')
+        ]

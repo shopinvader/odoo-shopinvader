@@ -37,4 +37,4 @@ class ImportGoogleCategory(models.TransientModel):
                 categ_obj.create({
                     'name': name,
                     'google_id': google_id,
-                        })
+                    })

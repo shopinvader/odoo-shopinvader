@@ -3,8 +3,11 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
+from openerp import api, models
 import base64
+import logging
+_logger = logging.getLogger(__name__)
+
 
 try:
     import cStringIO as StringIO
@@ -85,7 +88,7 @@ class LocomotiveBackend(models.Model):
             writer.writerow(line)
         f.seek(0)
         datas = base64.b64encode(f.read())
-	storage_path = self._get_storage_path(lang)
+        storage_path = self._get_storage_path(lang)
         storage = self.env['storage.backend'].browse(
             self._get_storage_backend_id())
         storage.store(storage_path, datas, is_public=True)
@@ -108,5 +111,3 @@ class LocomotiveBackend(models.Model):
         if domain is None:
             domain = []
         self.search(domain).export_google_shopping_product()
-
-
