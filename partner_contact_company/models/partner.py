@@ -56,7 +56,7 @@ class ResPartner(models.Model):
                 if ctx.get('show_address'):
                     name = name + "\n" + self._display_address(
                         record, without_company=True)
-                name = name.replace('\n\n','\n')
-                name = name.replace('\n\n','\n')
+                name = name.replace('\n\n', '\n')
+                name = name.replace('\n\n', '\n')
             res.append((record.id, name))
         return res
