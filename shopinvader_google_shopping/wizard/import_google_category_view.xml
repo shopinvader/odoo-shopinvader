@@ -8,12 +8,12 @@
         <form string="Import Google Category">
             Select the lang to import
             <field name="lang_id"/>
+            <footer>
+                <button name="run" string="Confirm"  type="object" class="oe_highlight" />
+                or
+                <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
         </form>
-        <footer>
-            <button name="run" string="Confirm"  type="object" class="oe_highlight" />
-            or
-            <button string="Cancel" class="oe_link" special="cancel"/>
-        </footer>
     </field>
 </record>
 
