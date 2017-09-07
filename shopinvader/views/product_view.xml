@@ -43,9 +43,11 @@
                         </field>
                     </group>
                     <group name="variant" string="Variant">
-                        <field name="shopinvader_variant_ids" nolabel="1">
+                        <field name="shopinvader_variant_ids" nolabel="1" readonly="1">
                             <tree>
+                                <field name="id"/>
                                 <field name="default_code"/>
+                                <field name="record_id"/>
                             </tree>
                         </field>
                     </group>
