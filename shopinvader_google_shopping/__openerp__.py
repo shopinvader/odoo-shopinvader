@@ -26,6 +26,7 @@
         "wizard/import_google_category_view.xml",
         "data/ir_cron.xml",
         "data/ir_parameter.xml",
+        "security/ir.model.access.csv",
     ],
     "demo": [
     ],
