@@ -56,7 +56,7 @@ class AbstractItemCase(object):
         self.check_partner(cart)
 
     def test_add_item_with_an_existing_cart(self):
-        cart = self.cart_service._get()
+        cart = self.cart_service.get({})['data']
         nbr_line = len(cart['order_line'])
 
         cart = self.add_item(self.product_1.id, 2)
@@ -73,7 +73,7 @@ class AbstractItemCase(object):
         self.check_product_and_qty(cart['order_line'][0], product_id, 5)
 
     def test_delete_item(self):
-        cart = self.cart_service._get()
+        cart = self.cart_service.get({})['data']
         nbr_line = len(cart['order_line'])
         cart = self.delete_item(cart['order_line'][0]['id'])
         self.assertEqual(len(cart['order_line']), nbr_line - 1)
