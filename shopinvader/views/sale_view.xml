@@ -13,12 +13,15 @@
                attrs="{'invisible': [('anonymous_email', '=', False)]}"></i>
         </xpath>
         <field name="partner_id" position="before">
-            <field name="anonymous_email"/>
+            <field name="anonymous_email" readonly="True" attrs="{'invisible': [('anonymous_email', '=', False)]}"/>
         </field>
         <field name="partner_id" position="after">
             <field name="typology" invisible="True"/>
             <field name="current_step_id" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
             <field name="done_step_ids" widget="many2many_tags" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
+        </field>
+        <field name="company_id" position="before">
+            <field name="shopinvader_backend_id"/>
         </field>
     </field>
 </record>

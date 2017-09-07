@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from openerp.addons.connector_generic.unit.mapper import GenericExportMapper
+from openerp.addons.connector.unit.mapper import mapping
 from ..backend import shopinvader
 
 
@@ -13,5 +14,8 @@ class ShopinvaderPartnerExportMapper(GenericExportMapper):
 
     direct = [
         ('email', 'email'),
-        ('name', 'name'),
     ]
+
+    @mapping
+    def role(self, record):
+        return {'role': record.role_id.code}

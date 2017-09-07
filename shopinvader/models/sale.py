@@ -5,8 +5,12 @@
 
 
 from openerp import api, fields, models
+from openerp.exceptions import Warning as UserError
 import openerp.addons.decimal_precision as dp
 import uuid
+import logging
+from openerp.tools.translate import _
+_logger = logging.getLogger(__name__)
 
 
 class ShopinvaderCartStep(models.Model):
@@ -36,7 +40,7 @@ class SaleOrder(models.Model):
         string='Done Cart Step',
         readonly=True)
     anonymous_email = fields.Char()
-    anonymous_token = fields.Char()
+    anonymous_token = fields.Char(copy=False)
     # TODO move this in an extra OCA module
     shipping_amount_total = fields.Float(
         compute='_compute_shipping',
@@ -75,7 +79,11 @@ class SaleOrder(models.Model):
          'Token must be uniq.'),
     ]
 
-    @api.depends('state')
+    def is_anonymous(self):
+        self.ensure_one()
+        return self.partner_id ==\
+            self.shopinvader_backend_id.anonymous_partner_id
+
     def _get_shopinvader_state(self):
         self.ensure_one()
         if self.state == 'cancel':
@@ -87,6 +95,7 @@ class SaleOrder(models.Model):
         else:
             return 'processing'
 
+    @api.depends('state')
     def _compute_shopinvader_state(self):
         # simple way to have more human friendly name for
         # the sale order on the website
@@ -142,6 +151,95 @@ class SaleOrder(models.Model):
                     'sale_confirmation', record)
         return res
 
+    def reset_cart_lines(self):
+        for record in self:
+            record.order_line.reset_price_tax()
+
+    def _play_cart_onchange(self, vals):
+        result = {}
+        # TODO in 10 use and improve onchange helper module
+        if 'partner_id' in vals:
+            res = self.onchange_partner_id(vals['partner_id']).get('value', {})
+            for key in ['pricelist_id', 'payment_term']:
+                if key in res:
+                    result[key] = res[key]
+        if 'partner_shipping_id' in vals:
+            res = self.onchange_delivery_id(
+                self.company_id.id,
+                vals.get('partner_id') or self.partner_id.id,
+                vals['partner_shipping_id'], None).get('value', {})
+            if 'fiscal_position' in res:
+                result['fiscal_position'] = res['fiscal_position']
+        return result
+
+    def _need_to_reset_tax_price_on_line(self, vals):
+        reset = False
+        for field in ['fiscal_position', 'pricelist_id']:
+            if field in vals and self[field].id != vals[field]:
+                reset = True
+        return reset
+
+    def _prepare_available_carrier(self, carrier):
+        return {
+            'id': carrier.id,
+            'name': carrier.name,
+            'description': carrier.description,
+            'price': carrier.price,
+            }
+
+    def _get_available_carrier(self):
+        self.ensure_one()
+        if self.is_anonymous():
+            return []
+        else:
+            carriers = self.with_context(order_id=self.id)\
+                .env['delivery.carrier'].search([])
+            res = [self._prepare_available_carrier(carrier)
+                   for carrier in carriers
+                   if carrier.available]
+            return sorted(res, key=lambda x: (x['price'], x['name']))
+
+    def _update_default_carrier(self):
+        if self.is_anonymous():
+            return
+        carrier_ids = [x['id'] for x in self._get_available_carrier()]
+        if not self.carrier_id and carrier_ids:
+            self.carrier_id = carrier_ids[0]
+        elif self.carrier_id.id not in carrier_ids:
+            _logger.debug('Update obsolet carrier for sale order %s', self.id)
+            if carrier_ids:
+                self.carrier_id = carrier_ids[0]
+            else:
+                self.carrier_id = False
+                self.env['sale.order.line'].search([
+                    ('order_id', '=', self.id),
+                    ('is_delivery', '=', True)]).unlink()
+        if self.carrier_id:
+            self.delivery_set()
+
+    def _check_allowed_carrier(self, vals):
+        carrier_ids = [x['id'] for x in self._get_available_carrier()]
+        if 'carrier_id' in vals:
+            if vals['carrier_id'] not in carrier_ids:
+                raise UserError(
+                    _('Invalid carrier delivey method for your country'))
+
+    @api.multi
+    def write_with_onchange(self, vals):
+        self.ensure_one()
+        vals.update(self._play_cart_onchange(vals))
+        reset = self._need_to_reset_tax_price_on_line(vals)
+        self.write(vals)
+        if 'payment_method_id' in vals:
+            self.onchange_payment_method_set_workflow()
+        self._update_default_carrier()
+        if 'carrier_id' in vals:
+            self._check_allowed_carrier(vals)
+            self.delivery_set()
+        if reset:
+            self.reset_cart_lines()
+        return True
+
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
@@ -151,6 +249,29 @@ class SaleOrderLine(models.Model):
         compute='_compute_shopinvader_variant',
         string='Shopinvader Variant',
         store=True)
+
+    def reset_price_tax(self):
+        for line in self:
+            res = line.product_id_change(
+                line.order_id.pricelist_id.id,
+                line.product_id.id,
+                qty=line.product_uom_qty,
+                uom=line.product_uom.id,
+                qty_uos=line.product_uos_qty,
+                uos=line.product_uos.id,
+                name=line.name,
+                partner_id=line.order_id.partner_id.id,
+                lang=False,
+                update_tax=True,
+                date_order=line.order_id.date_order,
+                packaging=False,
+                fiscal_position=line.order_id.fiscal_position.id,
+                flag=True)['value']
+            line.write({
+                'price_unit': res['price_unit'],
+                'discount': res.get('discount'),
+                'tax_id': [(6, 0, res.get('tax_id', []))]
+                })
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):

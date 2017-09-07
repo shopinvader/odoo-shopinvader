@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="import_google_category_view_form" model="ir.ui.view">
+    <field name="model">import.google.category</field>
+    <field name="arch" type="xml">
+        <form string="Import Google Category">
+            Select the lang to import
+            <field name="lang_id"/>
+            <footer>
+                <button name="run" string="Confirm"  type="object" class="oe_highlight" />
+                or
+                <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_import_google_category_view">
+    <field name="name">Import Google Category</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">import.google.category</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<menuitem id="menu_google_category_import"
+    parent="menu_google_category"
+    sequence="300"
+    action="act_import_google_category_view"/>
+
+    </data>
+</openerp>

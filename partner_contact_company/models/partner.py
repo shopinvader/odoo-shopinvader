@@ -39,3 +39,24 @@ class ResPartner(models.Model):
             self.company = None
         elif self.parent_id.is_company:
             self.company = self.parent_id.name
+
+    @api.multi
+    def name_get(self):
+        res = []
+        for record in self:
+            record_id, name = super(ResPartner, record).name_get()[0]
+            ctx = self._context
+            if not ctx.get('show_address_only'):
+                if record.company:
+                    name = "%s, %s" % (record.company, record.name)
+                else:
+                    name = record.name
+                if ctx.get('show_email') and record.email:
+                    name = "%s <%s>" % (name, record.email)
+                if ctx.get('show_address'):
+                    name = name + "\n" + self._display_address(
+                        record, without_company=True)
+                name = name.replace('\n\n', '\n')
+                name = name.replace('\n\n', '\n')
+            res.append((record.id, name))
+        return res

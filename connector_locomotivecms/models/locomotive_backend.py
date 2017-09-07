@@ -18,6 +18,7 @@ class LocomotiveBackend(models.Model):
     location = fields.Char(required=True)
     username = fields.Char(required=True)
     password = fields.Char(required=True)
+    handle = fields.Char(required=True)
     lang_ids = fields.Many2many(
         'res.lang',
         string='Lang',

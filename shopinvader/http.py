@@ -11,6 +11,9 @@ from openerp.exceptions import (
     Warning as UserError, MissingError, AccessError, ValidationError)
 from werkzeug.exceptions import (
     BadRequest, NotFound, Forbidden, InternalServerError)
+from openerp.http import request
+import sys
+import traceback
 import json
 import logging
 _logger = logging.getLogger(__name__)
@@ -98,6 +101,25 @@ def WrapJsonException(exception):
 
     exception.get_body = get_body
     exception.get_headers = get_headers
+    if request:
+        httprequest = request.httprequest
+        headers = dict(httprequest.headers)
+        headers.pop('Api-Key')
+        message = (
+            'Shopinvader call url %s method %s with params %s '
+            'raise the following error %s')
+        args = (httprequest.url, httprequest.method, request.params, exception)
+        extra = {
+            'application': 'shopinvader',
+            'shopinvader_url': httprequest.url,
+            'shopinvader_method': httprequest.method,
+            'params': request.params,
+            'headers': headers,
+            'status': exception.code,
+            'exception_body': exception.get_body(),
+            'traceback': ''.join(traceback.format_exception(*sys.exc_info())),
+            }
+        _logger.error(message, *args, extra=extra)
     return exception
 
 
@@ -130,7 +152,6 @@ class HttpJsonRequest(HttpRequest):
             return WrapJsonException(InternalServerError())
 
     def make_response(self, data, headers=None, cookies=None):
-        _logger.debug('response: %s', data)
         data = json.dumps(data)
         if headers is None:
             headers = {}

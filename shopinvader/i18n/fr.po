@@ -19,7 +19,13 @@ msgstr ""
 #: code:addons/shopinvader/services/register_anonymous.py:26
 #, python-format
 msgid "Invalid Form"
-msgstr "Une ou plusieurs valeurs saisies ne sont pas correct"
+msgstr "Une ou plusieurs valeurs saisies ne sont pas correctes"
+
+#. module: shopinvader
+#: code:addons/shopinvader/services/helper.py:26
+#, python-format
+msgid "Invalid Form"
+msgstr "Une ou plusieurs valeurs saisies ne sont pas correctes"
 
 #. module: shopinvader
 #: code:addons/shopinvader/services/helper.py:78
@@ -30,5 +36,11 @@ msgstr "Votre lien de création de compte n'est plus valide"
 #. module: shopinvader
 #: code:addons/shopinvader/services/transaction.py:35
 #, python-format
-msgid: "Payment failed please retry"
-msgstr "Le paiement à échoué veuillez ré-essayer"
+msgid "Payment failed please retry"
+msgstr "Le paiement a échoué veuillez ré-essayer"
+
+#. module: shopinvader
+#: code:addons/shopinvader/services/cart.py:175
+#, python-format
+msgid "An account already exist for this email"
+msgstr "Un compte existe déjà pour cet adresse email, veuillez-vous connecter"

@@ -16,6 +16,7 @@ class AccountInvoice(models.Model):
     def invoice_validate(self):
         res = super(AccountInvoice, self).invoice_validate()
         for record in self:
-            record.shopinvader_backend_id._send_notification(
-                'invoice_open', record)
+            backend = record.shopinvader_backend_id
+            if backend:
+                backend._send_notification('invoice_open', record)
         return res

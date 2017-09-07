@@ -19,6 +19,7 @@
     },
     "depends": [
         "base_delivery_carrier_label",
+        "delivery_carrier_url",
         "base_jsonify",
         "base_sparse_field",
         "base_url",
@@ -26,13 +27,11 @@
         "connector_base_product",
         "connector_locomotivecms",
         "delivery",
-        "onchange_helper",
         "payment_gateway",
         "product_multi_image",
         "product_stock_state",
         "sale_payment_method_automatic_workflow",
         "sale_payment_method",
-        "sale_order_price_recalculation",
         "sale_order_line_price_subtotal_gross",
     ],
     "data": [
@@ -55,6 +54,9 @@
         "demo/backend_demo.xml",
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",
+        "demo/payment_demo.xml",
+        "demo/email_demo.xml",
+        "demo/notification_demo.xml",
     ],
     "qweb": [
     ]

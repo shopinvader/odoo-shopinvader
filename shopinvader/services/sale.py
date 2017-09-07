@@ -22,7 +22,10 @@ class SaleService(AbstractSaleService):
             order = self._get(params['id'])
             return self._to_json(order)[0]
         else:
-            domain = [('partner_id', '=', self.partner.id)]
+            domain = [
+                ('partner_id', '=', self.partner.id),
+                ('shopinvader_backend_id', '=', self.backend_record.id),
+                ]
             domain += params.get('domain', [])
             sale_obj = self.env['sale.order']
             total_count = sale_obj.search_count(domain)

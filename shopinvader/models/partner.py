@@ -108,3 +108,17 @@ class ResPartner(models.Model):
                 partner.address_type = 'address'
             else:
                 partner.address_type = 'profile'
+
+    @api.multi
+    def write(self, vals):
+        super(ResPartner, self).write(vals)
+        if 'country_id' in vals:
+            carts = self.env['sale.order'].search([
+                ('typology', '=', 'cart'),
+                ('partner_shipping_id', 'in', self.ids)])
+            for cart in carts:
+                # Trigger a write on cart to recompute the
+                # fiscal position if needed
+                cart.write_with_onchange({
+                    'partner_shipping_id': cart.partner_shipping_id.id})
+        return True

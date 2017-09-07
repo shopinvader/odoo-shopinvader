@@ -26,6 +26,7 @@
         <tree string="Shopinvader Partner">
             <field name="name"/>
             <field name="email"/>
+            <field name="role_id"/>
             <field name="external_id"/>
             <field name="create_date"/>
         </tree>
@@ -38,6 +39,7 @@
         <search string="Shopinvader Partner">
             <field name="name"/>
             <field name="email"/>
+            <field name="role_id"/>
             <field name="external_id"/>
         </search>
     </field>

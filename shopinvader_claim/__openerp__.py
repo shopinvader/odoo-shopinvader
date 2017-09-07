@@ -18,6 +18,7 @@
         "bin": [],
     },
     "depends": [
+        "onchange_helper",
         "shopinvader",
         "crm_claim_rma",
     ],

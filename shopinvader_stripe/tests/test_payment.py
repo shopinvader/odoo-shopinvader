@@ -10,6 +10,7 @@ from openerp.addons.payment_gateway_stripe.tests.test_payment import (
     StripeCommonCase,
     StripeScenario)
 import json
+from mock import Mock
 
 
 REDIRECT_URL = {
@@ -36,12 +37,14 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
         self.cart_service = self._get_service(CartService, self.partner)
         self.transaction_service = self._get_service(
             TransactionService, self.partner)
+        self.cr.commit = Mock()  # Do not commit
 
     def _create_transaction(self, card):
         params = REDIRECT_URL.copy()
         params['source'] = self._get_source(card)['id']
-        response = self.cart_service.update(
-            {'payment_params': {'stripe': params}})
+        response = self.cart_service.update({
+            'payment_method_id': self.payment_method.id,
+            'payment_params': {'stripe': params}})
         transaction = self.sale.transaction_ids
         self.assertEqual(len(transaction), 1)
         return response, transaction, json.loads(transaction.data)
@@ -55,10 +58,20 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
         self.assertEqual(charge['amount'], int(transaction.amount*100))
         self.assertEqual(transaction.risk_level, expected_risk_level)
 
+        self.env['automatic.workflow.job'].run()
+        self.assertNotEqual(self.sale.state, 'draft')
+
+        self.assertIn('store_cache', response)
+        self.assertIn('last_sale', response['store_cache'])
+
     def _test_3d(self, card, success=True):
         response, transaction, source = self._create_transaction(card)
         self.assertEqual(response['redirect_to'], transaction.url)
         self.assertEqual(transaction.state, 'pending')
+
+        self.env['automatic.workflow.job'].run()
+        self.assertEqual(self.sale.state, 'draft')
+
         self._fill_3d_secure(source, success=success)
         response = self.transaction_service.get({'source': source['id']})
         if success:
@@ -66,8 +79,6 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
             self.assertEqual(
                 response['redirect_to'],
                 REDIRECT_URL['redirect_success_url'])
-            self.assertIn('store_cache', response)
-            self.assertIn('last_sale', response['store_cache'])
         else:
             self.assertEqual(transaction.state, 'failed')
             self.assertEqual(
@@ -76,10 +87,12 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
             self.assertIn('store_cache', response)
             self.assertIn('notifications', response['store_cache'])
 
+            self.env['automatic.workflow.job'].run()
+            self.assertEqual(self.sale.state, 'draft')
+
     def _test_card(self, card, **kwargs):
         response, transaction, source = self._create_transaction(card)
         self._check_captured(transaction, response, **kwargs)
-        self.assertIn('store_cache', response)
         self.assertNotIn('redirect_to', response)
 
     def test_create_transaction_3d_not_supported(self):
@@ -87,4 +100,3 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
             self._create_transaction('378282246310005')
         self._check_captured(transaction, response)
         self.assertNotIn('redirect_to', response)
-        self.assertIn('store_cache', response)

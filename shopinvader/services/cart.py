@@ -3,7 +3,7 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import to_int, to_bool, secure_params
+from .helper import to_int, secure_params
 from .abstract_sale import AbstractSaleService
 from .address import AddressService
 from ..backend import shopinvader
@@ -38,13 +38,9 @@ class CartService(AbstractSaleService):
 
         if 'payment_method_id' in params:
             self._check_valid_payment_method(params['payment_method_id'])
-            params = self.env['sale.order'].play_onchanges(
-                params, ['payment_method_id'])
         if not self.partner:
             self._set_anonymous_partner(cart, params)
         else:
-            if params.pop('assign_partner', None):
-                params['partner_id'] = self.partner.id
             if 'partner_shipping' in params:
                 # By default we always set the invoice address with the
                 # shipping address, if you want a different invoice address
@@ -55,31 +51,9 @@ class CartService(AbstractSaleService):
             if 'partner_invoice' in params:
                 params['partner_invoice_id'] = params.pop(
                     'partner_invoice')['id']
-        recompute_price = False
-        if self._check_call_onchange(params):
-            if 'partner_id' not in params:
-                params['partner_id'] = self.partner.id
-            params['order_line'] = cart.order_line
-            params = self.env['sale.order'].play_onchanges(
-                params,
-                ['partner_id', 'partner_shipping_id', 'fiscal_position',
-                 'pricelist_id'])
-            # Used only to trigger onchanges so we can delete it afterwards
-            del params['order_line']
-            if params['pricelist_id'] != cart.pricelist_id.id:
-                recompute_price = True
         self._update_cart_step(params)
         if params:
-            cart.write(params)
-            if recompute_price:
-                cart.recalculate_prices()
-        if 'carrier_id' in params:
-            cart.delivery_set()
-        elif 'shipping_address_id' in params:
-            # If we change the shipping address we update
-            # the current carrier
-            cart.carrier_id = self._get_available_carrier(cart)[0]
-            cart.delivery_set()
+            cart.write_with_onchange(params)
         if payment_params:
             provider = cart.payment_method_id.provider
             if not provider:
@@ -94,16 +68,18 @@ class CartService(AbstractSaleService):
                     '_store/check_transaction')
                 response = self.env[provider]._process_payment_params(
                     cart, provider_params)
-                if response and response.get('redirect_to'):
-                    return {'redirect_to': response['redirect_to']}
+                if response.get('redirect_to'):
+                    return response
+                elif response.get('action_confirm_cart'):
+                    # TODO find a more elengant way to do it
+                    action_confirm_cart = True
 
         if action_confirm_cart:
-            cart.action_confirm_cart()
-            res = self._to_json(cart)
-            res.update({
-                'store_cache': {'last_sale': res['data'], 'cart': {}},
-                'set_session': {'cart_id': 0},
-                })
+            # TODO improve me, it will be better to block the cart
+            # confirmation if the user have set manually the end step
+            # and the payment method do not support it
+            # the best will be to have a params on the payment method
+            return self._confirm_cart(cart)
         else:
             res = self._to_json(cart)
         return res
@@ -114,7 +90,6 @@ class CartService(AbstractSaleService):
 
     def _validator_update(self):
         res = {
-            'assign_partner': {'type': 'boolean', 'coerce': to_bool},
             'carrier_id': {'coerce': to_int, 'nullable': True},
             'current_step': {'type': 'string'},
             'next_step': {'type': 'string'},
@@ -195,28 +170,12 @@ class CartService(AbstractSaleService):
             params['done_step_ids'] = [(4, self._get_step_from_code(
                 params.pop('current_step')).id, 0)]
 
-    def _prepare_available_carrier(self, carrier):
-        return {
-            'id': carrier.id,
-            'name': carrier.name,
-            'description': carrier.description,
-            'price': carrier.price,
-            }
-
-    def _get_available_carrier(self, cart):
-        carriers = cart.with_context(order_id=cart.id)\
-            .env['delivery.carrier'].search([])
-        res = [self._prepare_available_carrier(carrier)
-               for carrier in carriers
-               if carrier.available]
-        return sorted(res, key=lambda x: (x['price'], x['name']))
-
     def _to_json(self, cart):
         if not cart:
             return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
         res.update({
-            'available_carriers': self._get_available_carrier(cart),
+            'available_carriers': cart._get_available_carrier(),
             'available_payment_method_ids':
                 self._get_available_payment_method(),
             'current_step': cart.current_step_id.code,
@@ -287,7 +246,7 @@ class CartService(AbstractSaleService):
         return self.env['sale.order'].create(vals)
 
     def _prepare_cart(self):
-        partner = self.partner or self.env.ref('shopinvader.anonymous')
+        partner = self.partner or self.backend_record.anonymous_partner_id
         vals = {
             'typology': 'cart',
             'partner_id': partner.id,
@@ -295,7 +254,11 @@ class CartService(AbstractSaleService):
             'partner_invoice_id': partner.id,
             'shopinvader_backend_id': self.backend_record.id,
             }
-        return self.env['sale.order'].play_onchanges(vals, ['partner_id'])
+        res = self.env['sale.order']._play_cart_onchange(vals)
+        vals.update(res)
+        if self.backend_record.sequence_id:
+            vals['name'] = self.backend_record.sequence_id._next()
+        return vals
 
     def _check_valid_payment_method(self, method_id):
         if method_id not in self.backend_record.payment_method_ids.mapped(
@@ -311,3 +274,12 @@ class CartService(AbstractSaleService):
             if changed_field in onchange_fields:
                 return True
         return False
+
+    def _confirm_cart(self, cart):
+        cart.action_confirm_cart()
+        res = self._to_json(cart)
+        res.update({
+            'store_cache': {'last_sale': res['data'], 'cart': {}},
+            'set_session': {'cart_id': 0},
+            })
+        return res

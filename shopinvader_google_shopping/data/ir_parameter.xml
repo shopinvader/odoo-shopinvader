@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <record id="google_shopping_flux_backend" model="ir.config_parameter">
+        <field name="key">google_shopping_flux.backend_id</field>
+        <field name="value" ref="storage_backend.default_odoo_backend"/>
+    </record>
+
+</data>
+</openerp>

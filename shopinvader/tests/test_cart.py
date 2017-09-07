@@ -5,7 +5,7 @@
 
 from ..services.cart import CartService
 from .common import CommonCase
-from ..services.register_anonymous import RegisterAnonymousService
+from ..services.sign import SignService
 # from openerp.exceptions import Warning as UserError
 # from openerp import api, registry
 
@@ -33,7 +33,7 @@ class AnonymousCartCase(CartCase):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref('shopinvader.sale_order_1')
         self.shopinvader_session = {'cart_id': self.cart.id}
-        self.partner = self.env.ref('shopinvader.anonymous')
+        self.partner = self.backend.anonymous_partner_id
         self.service = self._get_service(CartService, None)
         self.address_ship = {
             'name': 'Purple',
@@ -81,10 +81,8 @@ class AnonymousCartCase(CartCase):
         self.assertEqual(cart['data']['use_different_invoice_address'], True)
 
     def _add_partner(self, partner):
-        self.service = self._get_service(CartService, partner)
-        self.service.update({
-            'assign_partner': True,
-            })
+        service_sign = self._get_service(SignService, partner)
+        service_sign.get({})
 
     def test_add_new_shipping_address(self):
         cart = self.cart
@@ -131,11 +129,10 @@ class AnonymousCartCase(CartCase):
     def test_anonymous_cart_then_sign(self):
         cart = self.cart
         partner = self.env.ref('shopinvader.partner_1')
-        addr = partner.address_get(['delivery', 'invoice', 'address'])
         self._add_partner(partner)
         self.assertEqual(cart.partner_id, partner)
-        self.assertEqual(cart.partner_shipping_id.id, addr['delivery'])
-        self.assertEqual(cart.partner_invoice_id.id, addr['invoice'])
+        self.assertEqual(cart.partner_shipping_id, partner)
+        self.assertEqual(cart.partner_invoice_id, partner)
 
     def test_anonymous_cart_then_sign_with_fiscal_position(self):
         cart = self.cart
@@ -165,8 +162,8 @@ class AnonymousCartCase(CartCase):
         self._add_shipping_address()
         self.service.update({
             'next_step': self.backend.last_step_id.code})
-        anonymous_service = self._get_service(RegisterAnonymousService, None)
-        anonymous_service.create({
+        sign_service = self._get_service(SignService, None)
+        sign_service.update({
             'external_id': external_id,
             'anonymous_token': self.cart.anonymous_token,
             })
@@ -232,5 +229,21 @@ class ConnectedCartNoTaxCase(CartCase):
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
         self.assertEqual(cart.partner_invoice_id, self.partner)
+        self.assertEqual(cart.fiscal_position, self.fposition)
+        self.assertEqual(cart.amount_total, cart.amount_untaxed)
+
+    def test_edit_shipping_address_with_tax(self):
+        cart = self.cart
+        self.service.update({
+            'partner_shipping': {'id': self.address.id},
+            })
+        self.assertEqual(cart.partner_id, self.partner)
+        self.assertEqual(cart.partner_shipping_id, self.address)
+        self.assertEqual(cart.partner_invoice_id, self.address)
+        self.assertEqual(cart.fiscal_position, self.default_fposition)
+        self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
+
+        self.address.write({'country_id': self.env.ref('base.us').id})
+        self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.fiscal_position, self.fposition)
         self.assertEqual(cart.amount_total, cart.amount_untaxed)

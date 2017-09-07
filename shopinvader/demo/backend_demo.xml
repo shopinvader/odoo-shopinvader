@@ -31,6 +31,7 @@
     <field name="name">Demo LocomotiveCMS Backend</field>
     <field name="location">http://locomotive.akretion</field>
     <field name="username">user</field>
+    <field name="handle">spacediscount</field>
     <field name="password">apikey</field>
     <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]"/>
     <field name="odoo_api">odooapi</field>

@@ -83,4 +83,21 @@ class AbstractSaleService(ShopinvaderService):
             order['use_different_invoice_address'] = (
                 order['partner_shipping']['id'] !=
                 order['partner_invoice']['id'])
+            for key in ['partner', 'partner_shipping', 'partner_invoice']:
+                if order[key]['id'] ==\
+                        self.backend_record.anonymous_partner_id.id:
+                    order[key] = {}
+            trackings = []
+            sale_order = self.env['sale.order'].browse(order['id'])
+            for picking in sale_order.picking_ids:
+                for pack in picking._get_packages_from_picking():
+                    if pack.parcel_tracking:
+                        data = pack.with_context(
+                            picking=self).open_tracking_url()
+                        trackings.append({
+                            'name': picking.carrier_id.name,
+                            'url': data.get('url'),
+                            'code': pack.parcel_tracking,
+                            })
+            order['trackings'] = trackings
         return res

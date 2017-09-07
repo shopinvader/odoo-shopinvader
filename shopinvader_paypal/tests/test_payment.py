@@ -12,6 +12,8 @@ from openerp.addons.payment_gateway_paypal.tests.test_payment import (
     PaypalPaymentSuccess,
     paypal_mock)
 
+from mock import Mock
+
 REDIRECT_URL = {
     'redirect_cancel_url': 'https://IamGoingToKickYourAssIfYouDoNotPaid.com',
     'redirect_success_url': 'https://ThanksYou.com',
@@ -36,19 +38,24 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
         self.cart_service = self._get_service(CartService, self.partner)
         self.transaction_service = self._get_service(
             TransactionService, self.partner)
+        self.cr.commit = Mock()  # TODO not commit
 
     def test_create_transaction(self):
         with paypal_mock(PaypalPaymentSuccess):
             params = REDIRECT_URL.copy()
             params['action'] = 'create'
-            response = self.cart_service.update(
-                {'payment_params': {'paypal': params}})
+            response = self.cart_service.update({
+                'payment_method_id': self.payment_method.id,
+                'payment_params': {'paypal': params}})
             self.assertEqual(response, {'redirect_to': 'https://redirect'})
             self._check_payment_create_sale_order({
                 'cancel_url': REDIRECT_URL['redirect_cancel_url'],
                 'return_url':
                     'http://locomotive.akretion/_store/check_transaction',
                 })
+            self.env['automatic.workflow.job'].run()
+            self.assertEqual(self.sale.state, 'draft')
+
             transaction = self.sale.transaction_ids[0]
             response = self.transaction_service.get({
                 'paymentId': transaction.external_id,
@@ -58,3 +65,6 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase):
                 REDIRECT_URL['redirect_success_url'])
             self.assertIn('store_cache', response)
             self.assertIn('last_sale', response['store_cache'])
+
+            self.env['automatic.workflow.job'].run()
+            self.assertNotEqual(self.sale.state, 'draft')

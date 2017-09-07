@@ -15,9 +15,9 @@ from ..unit.consumer import delay_export
 
 
 @job
-def send_notification(session, notif_id, model_name, record_id):
-    record = session.env[model_name].browse(record_id)
-    notif = session.env['shopinvader.notification'].browse(notif_id)
+def send_notification(session, model_name, notif_id, record_name, record_id):
+    record = session.env[record_name].browse(record_id)
+    notif = session.env[model_name].browse(notif_id)
     notif._send(record)
     return 'Notification sent'
 
@@ -80,6 +80,14 @@ class LocomotiveBackend(models.Model):
     allowed_country_ids = fields.Many2many(
         comodel_name='res.country',
         string='Allowed Country')
+    anonymous_partner_id = fields.Many2one(
+        'res.partner',
+        'Anonymous Partner',
+        required=True,
+        default=lambda self: self.env.ref('shopinvader.anonymous'))
+    sequence_id = fields.Many2one(
+        'ir.sequence',
+        'Sequence')
 
     def _compute_nbr_content(self):
         for record in self:
@@ -137,12 +145,12 @@ class LocomotiveBackend(models.Model):
     def _send_notification(self, notification, record):
         self.ensure_one()
         record.ensure_one()
-        notification = self.env['shopinvader.notification'].search([
+        notif = self.env['shopinvader.notification'].search([
             ('backend_id', '=', self.id),
             ('notification_type', '=', notification),
             ])
-        if notification:
+        if notif:
             session = ConnectorSession.from_env(self.env)
             send_notification.delay(
-                session, notification.id, record._name, record.id)
+                session, notif._name, notif.id, record._name, record.id)
         return True
