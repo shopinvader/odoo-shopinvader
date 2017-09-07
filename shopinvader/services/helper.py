@@ -106,10 +106,6 @@ class ShopinvaderService(ConnectorUnit):
         return params
 
     def _secure_params(self, method, params):
-        if self.partner:
-            partner = "%s (%s)" % (self.partner.name, self.partner.id)
-        else:
-            partner = "anonymous"
         schema = self._get_schema_for_method(method)
         v = Validator(schema, purge_unknown=True)
         if v.validate(params):
