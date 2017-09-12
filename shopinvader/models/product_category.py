@@ -23,6 +23,7 @@ class ProductCategory(models.Model):
 
 class ShopinvaderCategory(models.Model):
     _name = 'shopinvader.category'
+    _description = 'Shopinvader Category'
     _inherit = ['locomotive.binding', 'abstract.url']
     _inherits = {'product.category': 'record_id'}
 
