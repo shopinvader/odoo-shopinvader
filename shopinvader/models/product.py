@@ -89,6 +89,7 @@ class ProductFilter(models.Model):
 
 class ShopinvaderProduct(models.Model):
     _name = 'shopinvader.product'
+    _description = 'Shopinvader Product'
     _inherit = ['locomotive.binding', 'abstract.url']
     _inherits = {'product.template': 'record_id'}
 
@@ -166,6 +167,7 @@ class ShopinvaderProduct(models.Model):
 
 class ShopinvaderVariant(models.Model):
     _name = 'shopinvader.variant'
+    _description = 'Shopinvader Variant'
     _inherits = {
         'shopinvader.product': 'shopinvader_product_id',
         'product.product': 'record_id'}

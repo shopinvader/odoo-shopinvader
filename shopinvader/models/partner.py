@@ -10,6 +10,7 @@ from openerp.exceptions import Warning as UserError
 
 class ShopinvaderPartner(models.Model):
     _name = 'shopinvader.partner'
+    _description = 'Shopinvader Partner'
     _inherit = 'locomotive.binding'
     _inherits = {'res.partner': 'record_id'}
 
