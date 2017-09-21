@@ -100,8 +100,7 @@ class ShopinvaderCategory(models.Model):
     def _compute_child_category(self):
         for record in self:
             record.shopinvader_child_ids = self.search([
-                ('record_id', 'child_of', record.record_id.id),
-                ('id', '!=', record.id),
+                ('record_id.parent_id', '=', record.record_id.id),
                 ('backend_id', '=', record.backend_id.id),
                 ])
 
