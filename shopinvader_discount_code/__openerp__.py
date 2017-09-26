@@ -17,7 +17,7 @@
         "bin": [],
     },
     "depends": [
-        "sale",
+        "shopinvader",
     ],
     "data": [
     ],

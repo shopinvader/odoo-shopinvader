@@ -3,8 +3,8 @@
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.shopinvader.services.helper import to_int, secure_params
-from openerp.shopinvader.services.cart import CartService
+from openerp.addons.shopinvader.services.helper import secure_params
+from openerp.addons.shopinvader.services.cart import CartService
 from openerp.addons.shopinvader.backend import shopinvader
 
 
@@ -26,7 +26,7 @@ class DiscountService(CartService):
     # Validator
     def _validator_update(self):
         res = super(DiscountService, self)._validator_update()
-        res['discount_code']: {'type': 'string'}
+        res['discount_code'] = {'type': 'string'}
         return res
 
     def _parser(self):
