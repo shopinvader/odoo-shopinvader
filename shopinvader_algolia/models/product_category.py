@@ -15,6 +15,7 @@ class ShopinvaderVariant(models.Model):
 
     def _compute_shopinvader_category(self):
         super(ShopinvaderVariant, self)._compute_shopinvader_category()
+
         def get_full_name(categ):
             result = []
             while categ:
