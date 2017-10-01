@@ -16,6 +16,7 @@
      'connector_algolia',
  ],
  'data': [
+     'data/ir_export_product.xml',
  ],
  'demo': [
      'demo/backend_demo.xml',
