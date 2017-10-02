@@ -3,10 +3,10 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.addons.shopinvader.tests.common import CommonCase
-from openerp.addons.shopinvader.services.cart import CartService
-from openerp.addons.shopinvader.services.transaction import TransactionService
-from openerp.addons.payment_gateway_stripe.tests.test_payment import (
+from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader.services.cart import CartService
+from odoo.addons.shopinvader.services.transaction import TransactionService
+from odoo.addons.payment_gateway_stripe.tests.test_payment import (
     StripeCommonCase,
     StripeScenario)
 import json
