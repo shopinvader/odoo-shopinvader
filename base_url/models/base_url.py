@@ -79,8 +79,8 @@ class AbstractUrl(models.AbstractModel):
         compute='_compute_redirect_url',
         comodel_name='url.url')
 
-    @api.model
     def _build_url_key(self):
+        self.ensure_one()
         return slugify(self.record_id.with_context(
             lang=self.lang_id.code).name)
 
