@@ -4,10 +4,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.connector.connector import ConnectorUnit
-from openerp.exceptions import Warning as UserError
-from openerp.tools.translate import _
-from openerp.http import request
+from odoo.addons.connector.connector import ConnectorUnit
+from odoo.exceptions import UserError
+from odoo.tools.translate import _
+from odoo.http import request
 import logging
 import functools
 

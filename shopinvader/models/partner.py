@@ -3,9 +3,9 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp import api, fields, models
-from openerp.tools.translate import _
-from openerp.exceptions import Warning as UserError
+from odoo import api, fields, models
+from odoo.tools.translate import _
+from odoo.exceptions import UserError
 
 
 class ShopinvaderPartner(models.Model):

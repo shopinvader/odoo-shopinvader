@@ -3,11 +3,11 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 import os
 import unittest
 import time
-from openerp.addons.connector.tests.common import mock_job_delay_to_direct
+from odoo.addons.connector.tests.common import mock_job_delay_to_direct
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ class ExportCase(TransactionCase):
         self.backend.bind_all_product()
         self.backend.bind_all_category()
         self.path = (
-            'openerp.addons.shopinvader_algolia.unit.exporter.export_record')
+            'odoo.addons.shopinvader_algolia.unit.exporter.export_record')
         if os.environ.get('TRAVIS_JOB_NUMBER', False):
             for index in self.env['se.index'].search(
                     [('backend_id', '=', self.se_backend.id)]):

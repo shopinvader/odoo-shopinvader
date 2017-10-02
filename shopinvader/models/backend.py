@@ -3,14 +3,14 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
-from openerp.addons.connector.queue.job import job
-from openerp.addons.connector.unit.backend_adapter import CRUDAdapter
-from openerp.addons.connector.connector import Binder
-from openerp.addons.connector_locomotivecms.unit.deleter import (
+from odoo import api, fields, models
+from odoo.addons.connector.queue.job import job
+from odoo.addons.connector.unit.backend_adapter import CRUDAdapter
+from odoo.addons.connector.connector import Binder
+from odoo.addons.connector_locomotivecms.unit.deleter import (
     export_delete_record)
-from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector_locomotivecms.connector import get_environment
+from odoo.addons.connector.session import ConnectorSession
+from odoo.addons.connector_locomotivecms.connector import get_environment
 from ..unit.consumer import delay_export
 
 
@@ -34,7 +34,7 @@ def clear_dead_content(session, model_name, backend_id):
             break
         page += 1
         for content in data:
-            if not binder.to_openerp(content['_id']):
+            if not binder.to_odoo(content['_id']):
                 export_delete_record.delay(
                     session, model_name, backend_id, content['_id'])
 

@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.shopinvader.tests.common import ProductCommonCase
+from odoo.addons.shopinvader.tests.common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):

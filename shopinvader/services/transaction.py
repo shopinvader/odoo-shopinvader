@@ -7,7 +7,7 @@ from .helper import secure_params, ShopinvaderService
 from .cart import CartService
 from ..backend import shopinvader
 import logging
-from openerp.tools.translate import _
+from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 

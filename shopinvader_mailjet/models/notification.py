@@ -3,12 +3,12 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models
-from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector_locomotivecms.connector import get_environment
-from openerp.addons.shopinvader.services.sale import SaleService
-from openerp.addons.shopinvader_claim.services.claim import ClaimService
-from openerp.addons.shopinvader.services.address import AddressService
+from odoo import models
+from odoo.addons.connector.session import ConnectorSession
+from odoo.addons.connector_locomotivecms.connector import get_environment
+from odoo.addons.shopinvader.services.sale import SaleService
+from odoo.addons.shopinvader_claim.services.claim import ClaimService
+from odoo.addons.shopinvader.services.address import AddressService
 import json
 import urllib
 

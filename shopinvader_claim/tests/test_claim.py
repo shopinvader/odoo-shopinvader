@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from ..services.claim import ClaimService, ClaimSubjectService
-from openerp.addons.shopinvader.tests.common import CommonCase
-from openerp.exceptions import MissingError, Warning as UserError
+from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.exceptions import MissingError, Warning as UserError
 
 
 class ClaimCase(CommonCase):

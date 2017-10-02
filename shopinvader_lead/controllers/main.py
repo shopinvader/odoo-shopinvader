@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.http import route
-from openerp.addons.shopinvader.controllers.main import ShopinvaderController
+from odoo.http import route
+from odoo.addons.shopinvader.controllers.main import ShopinvaderController
 from ..services.lead import LeadService
 
 

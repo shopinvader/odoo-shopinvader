@@ -4,12 +4,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp import api, fields, models
-from openerp.exceptions import Warning as UserError
-import openerp.addons.decimal_precision as dp
+from odoo import api, fields, models
+from odoo.exceptions import UserError
+import odoo.addons.decimal_precision as dp
 import uuid
 import logging
-from openerp.tools.translate import _
+from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 

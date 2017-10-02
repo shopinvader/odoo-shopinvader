@@ -7,8 +7,8 @@ from .helper import to_int, secure_params
 from .abstract_sale import AbstractSaleService
 from .address import AddressService
 from ..backend import shopinvader
-from openerp.tools.translate import _
-from openerp.exceptions import Warning as UserError
+from odoo.tools.translate import _
+from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 

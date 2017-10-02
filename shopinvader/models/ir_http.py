@@ -5,8 +5,8 @@
 
 from werkzeug.exceptions import Unauthorized
 
-from openerp import models
-from openerp.http import request
+from odoo import models
+from odoo.http import request
 import logging
 
 _logger = logging.getLogger(__name__)

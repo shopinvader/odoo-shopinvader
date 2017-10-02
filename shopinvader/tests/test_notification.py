@@ -5,7 +5,7 @@
 
 from ..services.cart import CartService
 from .common import CommonCase
-from openerp.addons.connector.tests.common import mock_job_delay_to_direct
+from odoo.addons.connector.tests.common import mock_job_delay_to_direct
 
 
 class NotificationCartCase(CommonCase):
@@ -21,7 +21,7 @@ class NotificationCartCase(CommonCase):
         self.shopinvader_payment_method =\
             self.env.ref('shopinvader.shopinvader_payment_banktransfert')
         self.job_path =\
-            'openerp.addons.shopinvader.models.backend.send_notification'
+            'odoo.addons.shopinvader.models.backend.send_notification'
 
     def _check_notification(self, notif_type, exist=True):
         if notif_type == 'cart':

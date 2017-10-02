@@ -6,8 +6,8 @@
 
 
 import logging
-from openerp.addons.connector.connector import Binder
-from openerp.addons.connector.unit.mapper import ExportMapper
+from odoo.addons.connector.connector import Binder
+from odoo.addons.connector.unit.mapper import ExportMapper
 
 _logger = logging.getLogger(__name__)
 

@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.connector_locomotivecms.unit.exporter import (
+from odoo.addons.connector_locomotivecms.unit.exporter import (
     LocomotiveExporter)
 from ..backend import shopinvader
 
