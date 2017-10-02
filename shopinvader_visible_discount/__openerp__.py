@@ -12,7 +12,7 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    'installable': False,
     "auto_install": False,
     "post_init_hook": "post_init_hook",
     "external_dependencies": {
