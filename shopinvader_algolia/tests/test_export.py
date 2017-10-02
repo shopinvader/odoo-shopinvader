@@ -34,7 +34,7 @@ class ExportCase(TransactionCase):
         self.backend.bind_all_product()
         self.backend.bind_all_category()
         self.path = (
-            'openerp.addons.shopinvader_algolia.unit.exporter.export_record')
+            'odoo.addons.shopinvader_algolia.unit.exporter.export_record')
         if os.environ.get('TRAVIS_JOB_NUMBER', False):
             for index in self.env['se.index'].search(
                     [('backend_id', '=', self.se_backend.id)]):

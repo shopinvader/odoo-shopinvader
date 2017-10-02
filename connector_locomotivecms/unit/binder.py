@@ -9,4 +9,4 @@ from odoo.addons.connector.connector import Binder
 
 class LocomotiveBinder(Binder):
     "Base Binder for locomotive"
-    _openerp_field = 'record_id'
+    _odoo_field = 'record_id'

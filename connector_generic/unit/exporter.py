@@ -72,7 +72,7 @@ class GenericExporter(Exporter):
         record created by :meth:`_export_dependency`), resulting in:
 
             IntegrityError: duplicate key value violates unique
-            constraint "mybackend_product_product_openerp_uniq"
+            constraint "mybackend_product_product_odoo_uniq"
             DETAIL:  Key (backend_id, record_id)=(1, 4851) already exists.
 
         In that case, we'll retry the import just later.
@@ -116,14 +116,14 @@ class GenericExporter(Exporter):
                      in :meth:`~._export_dependencies`.
 
         :param relation: record to export if not already exported
-        :type relation: :py:class:`openerp.models.BaseModel`
+        :type relation: :py:class:`odoo.models.BaseModel`
         :param binding_model: name of the binding model for the relation
         :type binding_model: str | unicode
-        :param exporter_cls: :py:class:`openerp.addons.connector\
+        :param exporter_cls: :py:class:`odoo.addons.connector\
                                         .connector.ConnectorUnit`
                              class or parent class to use for the export.
                              By default: GenericExporter
-        :type exporter_cls: :py:class:`openerp.addons.connector\
+        :type exporter_cls: :py:class:`odoo.addons.connector\
                                        .connector.MetaConnectorUnit`
         :param binding_field: name of the one2many field on a normal
                               record that points to the binding record
@@ -195,7 +195,7 @@ class GenericExporter(Exporter):
 
     def _map_data(self):
         """ Returns an instance of
-        :py:class:`~openerp.addons.connector.unit.mapper.MapRecord`
+        :py:class:`~odoo.addons.connector.unit.mapper.MapRecord`
         """
         return self.mapper.map_record(self.binding_record)
 

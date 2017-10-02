@@ -34,7 +34,7 @@ def clear_dead_content(session, model_name, backend_id):
             break
         page += 1
         for content in data:
-            if not binder.to_openerp(content['_id']):
+            if not binder.to_odoo(content['_id']):
                 export_delete_record.delay(
                     session, model_name, backend_id, content['_id'])
 
