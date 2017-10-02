@@ -24,5 +24,5 @@
     'demo': [],
 
     'url': '',
-    'installable': True,
+    'installable': False,
 }
