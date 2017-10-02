@@ -3,11 +3,12 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import ShopinvaderService
-from .address import AddressService
+from odoo.addons.component.core import Component
 
 
-class AbstractSaleService(ShopinvaderService):
+class AbstractSaleService(Component):
+    _inherit = 'shopinvader.service'
+    _name = 'shopinvader.abstract.sale.service'
 
     def _parser_product(self):
         fields = ['name', 'object_id:id', 'url_key', 'images', 'default_code']

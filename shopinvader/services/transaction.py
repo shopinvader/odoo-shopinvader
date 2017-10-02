@@ -3,7 +3,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from .helper import secure_params, ShopinvaderService
+from odoo.addons.component.core import Component
+from .helper import secure_params
 from .cart import CartService
 from ..backend import shopinvader
 import logging
@@ -12,8 +13,10 @@ _logger = logging.getLogger(__name__)
 
 
 @shopinvader
-class TransactionService(ShopinvaderService):
-    _model_name = 'gateway.transaction'
+class TransactionService(Component):
+    _inherit = 'shopinvader.service'
+    _name = 'shopinvader.transaction.service'
+    _usage = 'transaction.service'
 
     @secure_params
     def get(self, params):

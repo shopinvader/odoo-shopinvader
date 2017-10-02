@@ -5,7 +5,7 @@
 
 {
     'name': 'Locomotive CMS Connector',
-    'version': '8.0.0.0.1',
+    'version': '10.0.0.0.1',
     'category': 'Connector',
     'summary': 'Connector For Locomotive CMS',
     'author': 'Akretion',
@@ -27,7 +27,7 @@
     'external_dependencies': {
         'python': [],
         },
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

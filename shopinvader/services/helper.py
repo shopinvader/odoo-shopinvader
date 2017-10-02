@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo.addons.connector.connector import ConnectorUnit
+from odoo.addons.component.core import Component
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 from odoo.http import request
@@ -47,10 +47,14 @@ def secure_params(func):
     return wrapped
 
 
-class ShopinvaderService(ConnectorUnit):
+class ShopinvaderService(Component):
+    _name = 'shopinvader.service'
+
+    _usage = 'shopinvader.service'
+    _collection = 'shopinvader.backend'
 
     def __init__(self, env, partner, shopinvader_session):
-        super(ShopinvaderService, self).__init__(env)
+        super(ShopinvaderComponent, self).__init__(env)
         self.partner = partner
         self.shopinvader_session = shopinvader_session
         self.cart_id = shopinvader_session.get('cart_id')

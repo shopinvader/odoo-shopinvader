@@ -127,20 +127,22 @@ class SaleOrder(models.Model):
 
     @api.depends('amount_total', 'amount_untaxed')
     def _compute_shipping(self):
-        for record in self:
-            record.shipping_amount_untaxed = 0
-            record.shipping_amount_total = 0
-            record.shipping_amount_tax = 0
-            for line in record.order_line:
-                if line['is_delivery']:
-                    record.shipping_amount_untaxed = line['price_subtotal']
-                    # TODO depends on sale order line gross subtotal module
-                    # Need to move this code to not depend on this module
-                    record.shipping_amount_total = line['price_subtotal_gross']
-                    record.shipping_amount_tax = \
-                        line['price_subtotal_gross'] - line['price_subtotal']
-        for key in ['amount_total', 'amount_untaxed', 'amount_tax']:
-            record['item_%s' % key] = record[key] - record['shipping_%s' % key]
+    # TODO MIGRATE
+        pass
+    #    for record in self:
+    #        record.shipping_amount_untaxed = 0
+    #        record.shipping_amount_total = 0
+    #        record.shipping_amount_tax = 0
+    #        for line in record.order_line:
+    #            if line['is_delivery']:
+    #                record.shipping_amount_untaxed = line['price_subtotal']
+    #                # TODO depends on sale order line gross subtotal module
+    #                # Need to move this code to not depend on this module
+    #                record.shipping_amount_total = line['price_subtotal_gross']
+    #                record.shipping_amount_tax = \
+    #                    line['price_subtotal_gross'] - line['price_subtotal']
+    #    for key in ['amount_total', 'amount_untaxed', 'amount_tax']:
+    #        record['item_%s' % key] = record[key] - record['shipping_%s' % key]
 
     @api.multi
     def action_button_confirm(self):

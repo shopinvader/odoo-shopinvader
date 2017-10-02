@@ -3,15 +3,18 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import to_int, secure_params, ShopinvaderService
+from .helper import to_int, secure_params
+from odoo.addons.component.core import Component
 from ..backend import shopinvader
 from .cart import CartService
 from werkzeug.exceptions import NotFound
 
 
 @shopinvader
-class CartItemService(ShopinvaderService):
-    _model_name = 'sale.order.line'
+class CartItemService(Component):
+    _inherit = 'shopinvader.service'
+    _name = 'shopinvader.cart.item.service'
+    _usage = 'cart.item.service'
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator

@@ -12,7 +12,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class IrHttp(models.Model):
+class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
 
     def _shopinvader_get_partner_from_header(self, headers):

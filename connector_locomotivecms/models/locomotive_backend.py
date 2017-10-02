@@ -27,8 +27,8 @@ class LocomotiveBackend(models.Model):
         'res.company',
         'Company',
         required=True,
-        default=lambda self: self.env['res.company'].browse(
-            self.env['res.company']._company_default_get('locomotive.backend'))
+        default=lambda self:
+            self.env['res.company']._company_default_get('locomotive.backend')
         )
 
 

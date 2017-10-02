@@ -3,14 +3,18 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from .helper import secure_params, ShopinvaderService
+from odoo.addons.component.core import Component
+from .helper import secure_params
 from ..backend import shopinvader
 from .address import AddressService
 
 
 @shopinvader
-class CustomerService(ShopinvaderService):
-    _model_name = 'res.partner'
+class CustomerService(Component):
+    _inherit = 'shopinvader.service'
+    _name = 'shopinvader.customer.service'
+    _usage = 'customer.service'
+
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator

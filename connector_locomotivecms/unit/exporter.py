@@ -5,8 +5,9 @@
 
 
 from odoo.addons.connector_generic.unit.exporter import GenericExporter
-from ..related_action import unwrap_binding
-from odoo.addons.connector.queue.job import job, related_action
+# TODO MIGRATE
+#from ..related_action import unwrap_binding
+from odoo.addons.queue_job.job import job, related_action
 from ..connector import get_environment
 from odoo.tools.translate import _
 
@@ -62,7 +63,7 @@ class LocomotiveExporter(GenericExporter):
 
 
 @job(default_channel='root.locomotive')
-@related_action(action=unwrap_binding)
+#@related_action(action=unwrap_binding)
 def export_record(session, model_name, binding_id, fields=None):
     """ Export a record on LocomotiveCMS """
     record = session.env[model_name].browse(binding_id)

@@ -36,8 +36,10 @@
     <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]"/>
     <field name="odoo_api">odooapi</field>
     <field name="version">shopinvader_v1</field>
+    <!-- TODO MIGRATE
     <field name="product_image_resize_ids" eval="[(6, 0, [ref('small'), ref('medium'), ref('large')])]"/>
     <field name="categ_image_resize_ids" eval="[(6, 0, [ref('small'), ref('medium')])]"/>
+-->
     <field name="last_step_id" ref="cart_end"/>
 </record>
 

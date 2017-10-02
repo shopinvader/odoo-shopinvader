@@ -4,9 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from .helper import secure_params, ShopinvaderService
-from .cart import CartService
-from .address import AddressService
+from odoo.addons.component.core import Component
+from .helper import secure_params
 from ..backend import shopinvader
 from odoo.exceptions import UserError
 import logging
@@ -15,8 +14,11 @@ _logger = logging.getLogger(__name__)
 
 
 @shopinvader
-class SignService(ShopinvaderService):
-    _model_name = 'res.partner'
+class SignService(Component):
+    _inherit = 'shopinvader.service'
+    _name = 'shopinvader.sign.service'
+    _usage = 'sign.service'
+
 
     @secure_params
     def get(self, params):
