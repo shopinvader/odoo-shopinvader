@@ -5,10 +5,10 @@
 
 import logging
 import psycopg2
-from openerp.addons.connector.unit.synchronizer import Exporter
+from odoo.addons.connector.unit.synchronizer import Exporter
 from contextlib import contextmanager
-from openerp.tools.translate import _
-from openerp.addons.connector.exception import RetryableJobError
+from odoo.tools.translate import _
+from odoo.addons.connector.exception import RetryableJobError
 
 _logger = logging.getLogger(__name__)
 

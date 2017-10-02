@@ -3,11 +3,11 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.addons.shopinvader.services.helper import (
+from odoo.addons.shopinvader.services.helper import (
     secure_params, ShopinvaderService, to_int)
-from openerp.addons.shopinvader.backend import shopinvader
-from openerp.exceptions import MissingError, Warning as UserError
-from openerp.tools.translate import _
+from odoo.addons.shopinvader.backend import shopinvader
+from odoo.exceptions import MissingError, Warning as UserError
+from odoo.tools.translate import _
 
 
 @shopinvader

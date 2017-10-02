@@ -3,14 +3,14 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.addons.connector.event import (on_record_write,
+from odoo.addons.connector.event import (on_record_write,
                                             on_record_create,
                                             on_record_unlink
                                             )
-from openerp.addons.connector_generic.consumer import Consumer
-from openerp.addons.connector_locomotivecms.connector import get_environment
-from openerp.addons.connector_locomotivecms.unit.exporter import export_record
-from openerp.addons.connector_locomotivecms.unit.deleter import (
+from odoo.addons.connector_generic.consumer import Consumer
+from odoo.addons.connector_locomotivecms.connector import get_environment
+from odoo.addons.connector_locomotivecms.unit.exporter import export_record
+from odoo.addons.connector_locomotivecms.unit.deleter import (
     export_delete_record)
 
 

@@ -3,9 +3,9 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.http import Controller, request, route
-from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector_locomotivecms.connector import get_environment
+from odoo.http import Controller, request, route
+from odoo.addons.connector.session import ConnectorSession
+from odoo.addons.connector_locomotivecms.connector import get_environment
 from ..services.cart import CartService
 from ..services.cart_item import CartItemService
 from ..services.address import AddressService

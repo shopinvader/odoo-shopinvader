@@ -3,9 +3,9 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tests.common import TransactionCase
-from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector_locomotivecms.connector import get_environment
+from odoo.tests.common import TransactionCase
+from odoo.addons.connector.session import ConnectorSession
+from odoo.addons.connector_locomotivecms.connector import get_environment
 
 
 class CommonCase(TransactionCase):

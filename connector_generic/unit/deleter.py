@@ -3,8 +3,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.tools.translate import _
-from openerp.addons.connector.unit.synchronizer import Deleter
+from odoo.tools.translate import _
+from odoo.addons.connector.unit.synchronizer import Deleter
 
 
 class GenericDeleter(Deleter):

@@ -3,8 +3,8 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.http import route
-from openerp.addons.shopinvader.controllers.main import ShopinvaderController
+from odoo.http import route
+from odoo.addons.shopinvader.controllers.main import ShopinvaderController
 from ..services.claim import ClaimService, ClaimSubjectService
 
 

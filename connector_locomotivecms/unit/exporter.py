@@ -4,11 +4,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.connector_generic.unit.exporter import GenericExporter
+from odoo.addons.connector_generic.unit.exporter import GenericExporter
 from ..related_action import unwrap_binding
-from openerp.addons.connector.queue.job import job, related_action
+from odoo.addons.connector.queue.job import job, related_action
 from ..connector import get_environment
-from openerp.tools.translate import _
+from odoo.tools.translate import _
 
 
 class LocomotiveExporter(GenericExporter):

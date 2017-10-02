@@ -3,9 +3,9 @@
 #    @author EBII MonsieurB <monsieurb@saaslys.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import models, api, fields, _
+from odoo import models, api, fields, _
 import logging
-from openerp.exceptions import Warning as UserError
+from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
 try:
     from slugify import slugify
