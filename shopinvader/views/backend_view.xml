@@ -14,8 +14,9 @@
             <field name="anonymous_partner_id"/>
             <field name="restrict_anonymous"/>
             <separator name="image" colspan="4"/>
+            <!-- TODO MIGRATE
             <field name="product_image_resize_ids" widget="many2many_tags"/>
-            <field name="categ_image_resize_ids" widget="many2many_tags"/>
+            <field name="categ_image_resize_ids" widget="many2many_tags"/> -->
         </field>
         <group name="config" position="after">
             <group name="price" colspan="4">
@@ -31,6 +32,7 @@
                     </tree>
                 </field>
             </group>
+            <!-- TODO MIGRATE
             <group name="payment_method" colspan="4">
                 <field name="payment_method_ids"
                        string="Payment Method"
@@ -42,12 +44,13 @@
                         <field name="notification"/>
                     </tree>
                 </field>
-            </group>
+            </group>-->
             <group name="allowed_country" colspan="4">
                 <field name="allowed_country_ids" nolabel="1"/>
             </group>
         </group>
         <notebook position="inside">
+            <!-- TODO Migrate
             <page name="email" string="Email">
                 <group name="notification" string="Notification">
                     <field name="notification_ids" nolabel="1">
@@ -59,7 +62,7 @@
                         </tree>
                     </field>
                 </group>
-            </page>
+            </page>-->
             <page name="developper" string="Developper">
                 <group name="developper" colspan="4">
                     <group name="product" string="Product" col="10" colspan="4">

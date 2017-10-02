@@ -5,7 +5,7 @@
 
 {
     'name': 'Connector Generic',
-    'version': '8.0.0.0.1',
+    'version': '10.0.0.0.1',
     'category': 'Connector',
     'summary': 'Connector Generic mapper, exporter...',
     'author': 'Akretion',
@@ -24,7 +24,7 @@
     'external_dependencies': {
         'python': [],
         },
-    'installable': False,
+    'installable': True,
     'auto_install': False,
     'application': False,
 }

@@ -94,7 +94,7 @@
 <menuitem
     id="menu_product_filter_action"
     action="product_filter_action"
-    parent="product.prod_config_main"
+    parent="sale.prod_config_main"
     sequence="15" />
 
     </data>

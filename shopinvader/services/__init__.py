@@ -3,6 +3,8 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from . import helper
+from . import abstract_sale
 from . import cart
 from . import cart_item
 from . import sale

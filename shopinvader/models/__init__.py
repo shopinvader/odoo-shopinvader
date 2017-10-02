@@ -11,7 +11,8 @@ from . import sale
 from . import backend
 from . import ir_http
 from . import url
-from . import payment_method
+# TODO move payment + autoworkflow in shopinvader_payment
+#from . import payment_method
+#from . import automatic_workflow_job
 from . import account_invoice
 from . import notification
-from . import automatic_workflow_job

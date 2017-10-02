@@ -3,8 +3,8 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.addons.component.core import Component
 from .helper import to_int, secure_params
-from .abstract_sale import AbstractSaleService
 from .address import AddressService
 from ..backend import shopinvader
 from odoo.tools.translate import _
@@ -14,8 +14,10 @@ _logger = logging.getLogger(__name__)
 
 
 @shopinvader
-class CartService(AbstractSaleService):
-    _model_name = 'sale.order'
+class CartService(Component):
+    _inherit = 'shopinvader.abstract.sale.service'
+    _name = 'shopinvader.cart.service'
+    _usage = 'cart.service'
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !

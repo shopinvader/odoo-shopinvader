@@ -13,6 +13,7 @@
                         <field name="filter_ids" nolabel="1"/>
                     </group>
                 </page>
+                <!-- TODO MIGRATE
                 <page name="image" string="Image">
                     <group colspan="4">
                         <field name="image_ids" nolabel="1" context="{
@@ -21,7 +22,7 @@
                             'kanban_view_ref': 'storage_image.storage_image_view_kanban',
                          }" mode="kanban"/>
                     </group>
-                </page>
+                </page>-->
                 <page name="connector" string="Connector">
                     <group name="Connector" colspan="4">
                         <field name="shopinvader_bind_ids" nolabel="1">

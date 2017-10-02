@@ -3,15 +3,18 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.addons.component.core import Component
 from .helper import to_int, secure_params
-from .abstract_sale import AbstractSaleService
 from ..backend import shopinvader
 from werkzeug.exceptions import NotFound
 
 
 @shopinvader
-class SaleService(AbstractSaleService):
-    _model_name = 'sale.order'
+class SaleService(Component):
+    _inherit = 'shopinvader.abstract.sale.service'
+    _name = 'shopinvader.sale.service'
+    _usage = 'sale.service'
+
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !

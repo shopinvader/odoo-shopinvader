@@ -4,12 +4,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.addons.connector.queue.job import job
+from odoo.addons.queue_job.job import job
 from odoo.addons.connector.unit.backend_adapter import CRUDAdapter
 from odoo.addons.connector.connector import Binder
 from odoo.addons.connector_locomotivecms.unit.deleter import (
     export_delete_record)
-from odoo.addons.connector.session import ConnectorSession
+# TODO MIGRATE
+#from odoo.addons.connector.session import ConnectorSession
 from odoo.addons.connector_locomotivecms.connector import get_environment
 from ..unit.consumer import delay_export
 
@@ -41,11 +42,11 @@ def clear_dead_content(session, model_name, backend_id):
 
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
-
-    payment_method_ids = fields.One2many(
-        'shopinvader.payment',
-        'backend_id',
-        'Payment Method')
+    # TODO move to shopinvader payment
+    #payment_method_ids = fields.One2many(
+    #    'shopinvader.payment',
+    #    'backend_id',
+    #    'Payment Method')
     role_ids = fields.One2many(
         'shopinvader.role',
         'backend_id',
@@ -59,14 +60,15 @@ class LocomotiveBackend(models.Model):
               "order to give the posibility to shopinvader to access to odoo"))
     version = fields.Selection(selection_add=[
         ('shopinvader_v1', 'Shopinvader V1')])
-    product_image_resize_ids = fields.Many2many(
-        comodel_name='image.resize',
-        relation="product_image_resize",
-        string='Product Image Resize')
-    categ_image_resize_ids = fields.Many2many(
-        comodel_name='image.resize',
-        relation="category_image_resize",
-        string='Category Image Resize')
+    # TODO move to shopinvader_image
+    #product_image_resize_ids = fields.Many2many(
+    #    comodel_name='image.resize',
+    #    relation="product_image_resize",
+    #    string='Product Image Resize')
+    #categ_image_resize_ids = fields.Many2many(
+    #    comodel_name='image.resize',
+    #    relation="category_image_resize",
+    #    string='Category Image Resize')
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_variant = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')

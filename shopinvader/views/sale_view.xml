@@ -7,7 +7,7 @@
     <field name="inherit_id" ref="sale.view_order_form"/>
     <field name="priority" eval="20"/>
     <field name="arch" type="xml">
-        <xpath expr="//h1/label" position="before">
+        <xpath expr="//h1/field[@name='name']" position="before">
             <i class="fa fa-eye-slash"
                aria-hidden="true"
                attrs="{'invisible': [('anonymous_email', '=', False)]}"></i>
@@ -44,9 +44,9 @@
 <menuitem
     action="action_cart"
     id="menu_sale_order"
-    parent="base.menu_sales"
+    parent="sales_team.menu_sales"
     sequence="4"
-    groups="base.group_sale_salesman,base.group_sale_manager"/>
+    groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
 
 <record id="shopinvader_cart_step_view_tree" model="ir.ui.view">
     <field name="model">shopinvader.cart.step</field>

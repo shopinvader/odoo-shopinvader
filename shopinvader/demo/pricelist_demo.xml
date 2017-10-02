@@ -6,10 +6,7 @@
             <field name="name">Business Pricelist</field>
             <field name="type">sale</field>
         </record>
-        <record id="version_1" model="product.pricelist.version">
-            <field name="pricelist_id" ref="pricelist_1"/>
-            <field name="name">Default Business Pricelist Version</field>
-        </record>
+        <!-- TODO MIGRATE
         <record id="item_1" model="product.pricelist.item">
             <field name="price_version_id" ref="version_1"/>
             <field name="base" ref="product.list_price"/>
@@ -17,6 +14,7 @@
             <field name="price_discount" eval="-0.20"/>
             <field name="name">Default Business Pricelist Line</field>
         </record>
+        -->
 
     </data>
 </openerp>

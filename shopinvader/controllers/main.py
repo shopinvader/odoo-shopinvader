@@ -4,8 +4,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.http import Controller, request, route
-from odoo.addons.connector.session import ConnectorSession
-from odoo.addons.connector_locomotivecms.connector import get_environment
+# TODO migrate
+#from odoo.addons.connector.session import ConnectorSession
+#from odoo.addons.connector_locomotivecms.connector import get_environment
 from ..services.cart import CartService
 from ..services.cart_item import CartItemService
 from ..services.address import AddressService
