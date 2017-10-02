@@ -3,7 +3,7 @@
 #    @author EBII MonsieurB <monsieurb@saaslys.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, api, fields, _
+from odoo import api, fields, models, _
 import logging
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
@@ -15,53 +15,6 @@ except ImportError:
 
 def get_model_ref(record):
     return "%s,%s" % (record._name, record.id)
-
-
-class UrlUrl(models.Model):
-
-    _name = "url.url"
-
-    url_key = fields.Char(required=True)
-    model_id = fields.Reference(
-        selection=[],
-        help="The id of content linked to the url.",
-        readonly=True,
-        string="Model",
-        required=True)
-    redirect = fields.Boolean(
-        help="If tick this url is a redirection to the new url")
-    backend_id = fields.Reference(
-        selection=[],
-        compute='_compute_related_fields',
-        store=True,
-        help="Backend linked to this URL",
-        string="Backend")
-    lang_id = fields.Many2one(
-        'res.lang',
-        'Lang',
-        compute='_compute_related_fields',
-        store=True)
-
-    _sql_constraints = [('unique_key_per_backend_per_lang',
-                         'unique(url_key, backend_id, lang_id)',
-                         'Already exists in database')]
-
-    @api.depends('model_id')
-    def _compute_related_fields(self):
-        for record in self:
-            record.backend_id = get_model_ref(record.model_id.backend_id)
-            record.lang_id = record.model_id.lang_id
-
-    @api.model
-    def _reference_models(self):
-        return []
-
-    @api.multi
-    def _get_object(self, url):
-        """
-        :return: return object attach to the url
-        """
-        return self.search([('url_key', "=", url)]).model_id
 
 
 class AbstractUrl(models.AbstractModel):
@@ -81,9 +34,11 @@ class AbstractUrl(models.AbstractModel):
         comodel_name='url.url')
 
     def _build_url_key(self):
+        self.ensure_one()
         return slugify(self.record_id.with_context(
             lang=self.lang_id.code).name)
 
+    @api.model
     def _prepare_url(self, url_key):
         return {
             'url_key': url_key,
@@ -91,7 +46,6 @@ class AbstractUrl(models.AbstractModel):
             'model_id': get_model_ref(self),
             }
 
-    @api.multi
     def set_url(self, url_key):
         """
         backup old url
@@ -132,7 +86,6 @@ class AbstractUrl(models.AbstractModel):
             ('redirect', '=', False)])
         redirect_urls.write({'redirect': True})
 
-    @api.multi
     @api.depends('url_builder')
     def _compute_url(self):
         # We need a clear env before call the set_url method
@@ -157,7 +110,6 @@ class AbstractUrl(models.AbstractModel):
             record.url_key = new_url
         self.env.all.todo = todo
 
-    @api.multi
     def _compute_redirect_url(self):
         for record in self:
             record.redirect_url_key_ids = record.env["url.url"].search([
@@ -178,7 +130,6 @@ class AbstractUrl(models.AbstractModel):
                         'message': 'it will be adapted to %s' % url,
                     }}
 
-    @api.multi
     def unlink(self):
         for record in self:
             # TODO we should propose to redirect the old url
