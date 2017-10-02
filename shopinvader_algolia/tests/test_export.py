@@ -3,11 +3,11 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from openerp.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase
 import os
 import unittest
 import time
-from openerp.addons.connector.tests.common import mock_job_delay_to_direct
+from odoo.addons.connector.tests.common import mock_job_delay_to_direct
 import logging
 
 _logger = logging.getLogger(__name__)

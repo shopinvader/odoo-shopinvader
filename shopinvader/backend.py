@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from openerp.addons.connector.backend import Backend
-from openerp.addons.connector_locomotivecms.backend import locomotive
+from odoo.addons.connector.backend import Backend
+from odoo.addons.connector_locomotivecms.backend import locomotive
 
 
 shopinvader = Backend(parent=locomotive, version='shopinvader')

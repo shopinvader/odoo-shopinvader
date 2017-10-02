@@ -8,9 +8,9 @@ from .helper import secure_params, ShopinvaderService
 from .cart import CartService
 from .address import AddressService
 from ..backend import shopinvader
-from openerp.exceptions import Warning as UserError
+from odoo.exceptions import UserError
 import logging
-from openerp.tools.translate import _
+from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 

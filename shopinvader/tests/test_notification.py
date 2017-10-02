@@ -5,7 +5,7 @@
 
 from ..services.cart import CartService
 from .common import CommonCase
-from openerp.addons.connector.tests.common import mock_job_delay_to_direct
+from odoo.addons.connector.tests.common import mock_job_delay_to_direct
 
 
 class NotificationCartCase(CommonCase):

@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from .common import CommonCase
-from openerp.exceptions import ValidationError
+from odoo.exceptions import ValidationError
 
 
 class RoleCase(CommonCase):

@@ -6,8 +6,8 @@
 from ..services.cart import CartService
 from .common import CommonCase
 from ..services.sign import SignService
-# from openerp.exceptions import Warning as UserError
-# from openerp import api, registry
+# from odoo.exceptions import UserError
+# from odoo import api, registry
 
 
 class CartCase(CommonCase):

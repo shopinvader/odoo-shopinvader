@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from openerp.addons.connector.unit.backend_adapter import CRUDAdapter
+from odoo.addons.connector.unit.backend_adapter import CRUDAdapter
 import logging
 import requests
 
