@@ -6,7 +6,7 @@
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-import openerp.addons.decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 import uuid
 import logging
 from odoo.tools.translate import _
