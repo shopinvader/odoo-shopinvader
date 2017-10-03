@@ -33,7 +33,7 @@ class CartService(Component):
     def update(self, params):
         payment_params = params.pop('payment_params', None)
         action_confirm_cart = \
-            params.get('next_step') == self.backend_record.last_step_id.code
+            params.get('next_step') == self.collection.last_step_id.code
         cart = self._get()
         if params.get('anonymous_email'):
             self._check_allowed_anonymous_email(cart, params)
@@ -56,25 +56,26 @@ class CartService(Component):
         self._update_cart_step(params)
         if params:
             cart.write_with_onchange(params)
-        if payment_params:
-            provider = cart.payment_method_id.provider
-            if not provider:
-                raise UserError(
-                    _("The payment method selected does not "
-                      "need payment_params"))
-            else:
-                provider_name = provider.replace('payment.service.', '')
-                provider_params = payment_params.pop(provider_name, {})
-                provider_params['return_url'] = "%s/%s" % (
-                    self.backend_record.location,
-                    '_store/check_transaction')
-                response = self.env[provider]._process_payment_params(
-                    cart, provider_params)
-                if response.get('redirect_to'):
-                    return response
-                elif response.get('action_confirm_cart'):
-                    # TODO find a more elengant way to do it
-                    action_confirm_cart = True
+        # TODO MIGRATE shopinvader_payment
+        # if payment_params:
+        #    provider = cart.payment_method_id.provider
+        #    if not provider:
+        #        raise UserError(
+        #            _("The payment method selected does not "
+        #              "need payment_params"))
+        #    else:
+        #        provider_name = provider.replace('payment.service.', '')
+        #        provider_params = payment_params.pop(provider_name, {})
+        #        provider_params['return_url'] = "%s/%s" % (
+        #            self.collection.location,
+        #            '_store/check_transaction')
+        #        response = self.env[provider]._process_payment_params(
+        #            cart, provider_params)
+        #        if response.get('redirect_to'):
+        #            return response
+        #        elif response.get('action_confirm_cart'):
+        #            # TODO find a more elengant way to do it
+        #            action_confirm_cart = True
 
         if action_confirm_cart:
             # TODO improve me, it will be better to block the cart
@@ -97,7 +98,8 @@ class CartService(Component):
             'next_step': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
-            'payment_params': self._get_payment_validator(),
+            # TODO MIGRATE shopinvader_payment
+            # 'payment_params': self._get_payment_validator(),
             'note': {'type': 'string'},
         }
         if self.partner:
@@ -112,7 +114,7 @@ class CartService(Component):
                     },
                 })
         else:
-            address_service = self.service_for(AddressService)
+            address_service = self.component(usage='address.service')
             res.update({
                 'partner_shipping': {
                     'type': 'dict',
@@ -123,6 +125,7 @@ class CartService(Component):
                 })
         return res
 
+    # TODO MIGRATE shopinvader_payment
     def _get_payment_validator(self):
         validator = {
             'type': 'dict',
@@ -142,9 +145,9 @@ class CartService(Component):
     # All params are trusted as they have been checked before
 
     def _check_allowed_anonymous_email(self, cart, params):
-        if self.backend_record.restrict_anonymous and\
+        if self.collection.restrict_anonymous and\
                 self.env['shopinvader.partner'].search([
-                    ('backend_id', '=', self.backend_record.id),
+                    ('backend_id', '=', self.collection.id),
                     ('email', '=', params['anonymous_email']),
                     ]):
             # In that case we want to raise an error to block the process
@@ -177,9 +180,10 @@ class CartService(Component):
             return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
         res.update({
-            'available_carriers': cart._get_available_carrier(),
-            'available_payment_method_ids':
-                self._get_available_payment_method(),
+            # TODO MIGRATE in shopinvader_payment and shopinvader_delivery
+            # 'available_carriers': cart._get_available_carrier(),
+            # 'available_payment_method_ids':
+            #    self._get_available_payment_method(),
             'current_step': cart.current_step_id.code,
             'done_steps': cart.done_step_ids.mapped('code'),
             })
@@ -200,7 +204,7 @@ class CartService(Component):
 
     def _get_available_payment_method(self):
         methods = []
-        for method in self.backend_record.payment_method_ids:
+        for method in self.collection.payment_method_ids:
             methods.append(self._prepare_payment(method))
         return methods
 
@@ -233,7 +237,7 @@ class CartService(Component):
     def _get(self):
         domain = [
             ('typology', '=', 'cart'),
-            ('shopinvader_backend_id', '=', self.backend_record.id),
+            ('shopinvader_backend_id', '=', self.collection.id),
             ]
         cart = self.env['sale.order'].search(
             domain + [('id', '=', self.cart_id)])
@@ -248,22 +252,22 @@ class CartService(Component):
         return self.env['sale.order'].create(vals)
 
     def _prepare_cart(self):
-        partner = self.partner or self.backend_record.anonymous_partner_id
+        partner = self.partner or self.collection.anonymous_partner_id
         vals = {
             'typology': 'cart',
             'partner_id': partner.id,
             'partner_shipping_id': partner.id,
             'partner_invoice_id': partner.id,
-            'shopinvader_backend_id': self.backend_record.id,
+            'shopinvader_backend_id': self.collection.id,
             }
         res = self.env['sale.order']._play_cart_onchange(vals)
         vals.update(res)
-        if self.backend_record.sequence_id:
-            vals['name'] = self.backend_record.sequence_id._next()
+        if self.collection.sequence_id:
+            vals['name'] = self.collection.sequence_id._next()
         return vals
 
     def _check_valid_payment_method(self, method_id):
-        if method_id not in self.backend_record.payment_method_ids.mapped(
+        if method_id not in self.collection.payment_method_ids.mapped(
                 'payment_method_id.id'):
             raise UserError(_('Payment method id invalid'))
 

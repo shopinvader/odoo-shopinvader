@@ -31,7 +31,7 @@ class SignService(Component):
         if not sale:
             raise UserError(_('invalid token'))
         for binding in sale.partner_id.shopinvader_bind_ids:
-            if self.backend_record == binding.backend_id:
+            if self.collection == binding.backend_id:
                 raise UserError(_('customer already registred'))
         self.partner = sale.partner_id
         return self._create_shopinvader_binding(params['external_id'])
@@ -43,7 +43,7 @@ class SignService(Component):
             params['vat_subjected'] = bool(params['vat'])
             params['is_company'] = True
         self.partner = self.env['res.partner'].create(params)
-        self.backend_record._send_notification(
+        self.collection._send_notification(
             'new_customer_welcome', self.partner)
         return self._create_shopinvader_binding(external_id)
 
@@ -55,7 +55,7 @@ class SignService(Component):
         return {}
 
     def _validator_create(self):
-        address = self.service_for(AddressService)
+        address = self.component(usage='address.service')
         schema = address._validator_create()
         schema.update({
             'email': {
@@ -86,7 +86,7 @@ class SignService(Component):
             }
 
     def _get_and_assign_cart(self):
-        cart_service = self.service_for(CartService)
+        cart_service = self.component(usage='cart.service')
         cart = cart_service._get()
         if cart:
             if self.partner and cart.partner_id != self.partner:
@@ -101,7 +101,7 @@ class SignService(Component):
             return {}
 
     def _assign_cart_and_get_store_cache(self):
-        address = self.service_for(AddressService)
+        address = self.component(usage='address.service')
         return {
             'store_cache': {
                 'cart': self._get_and_assign_cart(),
@@ -112,7 +112,7 @@ class SignService(Component):
     def _create_shopinvader_binding(self, external_id):
         shop_partner = self.env['shopinvader.partner'].with_context(
             connector_no_export=True).create({
-                'backend_id': self.backend_record.id,
+                'backend_id': self.collection.id,
                 'external_id': external_id,
                 'record_id': self.partner.id,
                 })

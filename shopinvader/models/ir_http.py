@@ -43,8 +43,6 @@ class IrHttp(models.AbstractModel):
     @classmethod
     def _auth_method_shopinvader(self):
         headers = request.httprequest.environ
-        headers['HTTP_API_KEY'] = 'odooapi'
-        headers['HTTP_PARTNER_EMAIL'] = 'agrolait@yourcompany.example.com'
         if headers.get('HTTP_API_KEY'):
             request.uid = 1
             backend = request.env['locomotive.backend'].search(
