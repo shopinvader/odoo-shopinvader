@@ -5,11 +5,8 @@
 
 from odoo.addons.component.core import Component
 from .helper import secure_params
-from ..backend import shopinvader
-from .address import AddressService
 
 
-@shopinvader
 class CustomerService(Component):
     _inherit = 'shopinvader.service'
     _name = 'shopinvader.customer.service'

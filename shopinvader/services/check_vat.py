@@ -5,7 +5,6 @@
 
 from odoo.addons.component.core import Component
 from .helper import secure_params
-from ..backend import shopinvader
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -15,7 +14,6 @@ except (ImportError, IOError) as err:
         _logger.debug(err)
 
 
-@shopinvader
 class CheckVatService(Component):
     _inherit = 'shopinvader.service'
     _name = 'shopinvader.check.vat.service'

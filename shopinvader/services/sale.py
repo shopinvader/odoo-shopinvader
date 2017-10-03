@@ -5,11 +5,9 @@
 
 from odoo.addons.component.core import Component
 from .helper import to_int, secure_params
-from ..backend import shopinvader
 from werkzeug.exceptions import NotFound
 
 
-@shopinvader
 class SaleService(Component):
     _inherit = 'shopinvader.abstract.sale.service'
     _name = 'shopinvader.sale.service'

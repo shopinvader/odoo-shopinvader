@@ -6,14 +6,12 @@
 
 from odoo.addons.component.core import Component
 from .helper import secure_params
-from ..backend import shopinvader
 from odoo.exceptions import UserError
 import logging
 from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 
-@shopinvader
 class SignService(Component):
     _inherit = 'shopinvader.service'
     _name = 'shopinvader.sign.service'

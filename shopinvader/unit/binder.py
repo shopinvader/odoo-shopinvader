@@ -4,10 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.connector_locomotivecms.unit.binder import LocomotiveBinder
-from ..backend import shopinvader
 
 
-@shopinvader
 class ShopinvaderBinder(LocomotiveBinder):
     _model_name = [
         'shopinvader.partner',

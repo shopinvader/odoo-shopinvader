@@ -5,12 +5,9 @@
 
 from .helper import to_int, secure_params
 from odoo.addons.component.core import Component
-from ..backend import shopinvader
-from .cart import CartService
 from werkzeug.exceptions import NotFound
 
 
-@shopinvader
 class CartItemService(Component):
     _inherit = 'shopinvader.service'
     _name = 'shopinvader.cart.item.service'
