@@ -24,7 +24,7 @@ class SaleService(Component):
         else:
             domain = [
                 ('partner_id', '=', self.partner.id),
-                ('shopinvader_backend_id', '=', self.backend_record.id),
+                ('shopinvader_backend_id', '=', self.collection.id),
                 ]
             domain += params.get('domain', [])
             sale_obj = self.env['sale.order']
@@ -64,7 +64,7 @@ class SaleService(Component):
         order = self.env['sale.order'].search([
             ('id', '=', order_id),
             ('partner_id', '=', self.partner.id),
-            ('shopinvader_backend_id', '=', self.backend_record.id),
+            ('shopinvader_backend_id', '=', self.collection.id),
             ])
         if not order:
             raise NotFound('The order %s does not exist' % order_id)
