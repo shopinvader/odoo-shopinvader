@@ -12,7 +12,6 @@ from ..services.cart_item import CartItemService
 from ..services.address import AddressService
 from ..services.customer import CustomerService
 from ..services.sale import SaleService
-from ..services.check_vat import CheckVatService
 from ..services.sign import SignService
 from ..services.transaction import TransactionService
 from datetime import datetime
@@ -41,11 +40,6 @@ class ShopinvaderController(Controller):
             res = request.make_response(res)
             _logger.info('Shopinvader Response in %s', datetime.now() - start)
             return res
-
-    # Check Vat
-    @route('/shopinvader/check_vat', methods=['GET'], auth="shopinvader")
-    def check_vat(self, **params):
-        return self.send_to_service(CheckVatService, params)
 
     # Cart
     @route('/shopinvader/cart', methods=['GET', 'PUT'], auth="shopinvader")

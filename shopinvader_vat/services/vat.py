@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
-from odoo.addons.services.helper import secure_params
-from odoo.addons.backend import shopinvader
+from odoo.addons.shopinvader.services.helper import secure_params
+from odoo.addons.shopinvader.backend import shopinvader
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -20,6 +20,7 @@ class CheckVatService(Component):
     _inherit = 'shopinvader.service'
     _name = 'shopinvader.check.vat.service'
     _usage = 'check.vat.service'
+    _model_name = 'locomotive.backend'
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
@@ -33,7 +34,7 @@ class CheckVatService(Component):
             'valid': partner_obj.simple_vat_check(country_code, vat_number),
             'vat_number': vat_number,
             }
-        if self.backend_record.company_id.vat_check_vies and\
+        if self.work.collection.company_id.vat_check_vies and\
                 self.env['res.country'].search([
                     ('code', '=ilike', country_code),
                     ('country_group_ids', '=',
