@@ -5,6 +5,7 @@
 
 
 from odoo.http import HttpRequest, Root
+from odoo.tools import config
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import escape
 from odoo.exceptions import (
@@ -104,7 +105,7 @@ def WrapJsonException(exception):
     if request:
         httprequest = request.httprequest
         headers = dict(httprequest.headers)
-        headers.pop('Api-Key')
+        headers.pop('Api-Key', None)
         message = (
             'Shopinvader call url %s method %s with params %s '
             'raise the following error %s')
@@ -138,6 +139,8 @@ class HttpJsonRequest(HttpRequest):
            to abitrary responses. Anything returned (except None) will
            be used as response."""
         _logger.debug('Shopinvader Handle exception %s', exception)
+        if config['dev_mode']:
+            raise exception
         try:
             return super(HttpRequest, self)._handle_exception(exception)
         except (UserError, ValidationError), e:

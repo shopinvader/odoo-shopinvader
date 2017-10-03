@@ -54,7 +54,7 @@ class ShopinvaderNotification(models.Model):
         'Model',
         required=True)
     # TODO Migrate
-    #template_id = fields.Many2one(
+    # template_id = fields.Many2one(
     #    'email.template',
     #    'Email Template',
     #    required=True)

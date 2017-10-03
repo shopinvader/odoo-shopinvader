@@ -19,7 +19,6 @@ class SignService(Component):
     _name = 'shopinvader.sign.service'
     _usage = 'sign.service'
 
-
     @secure_params
     def get(self, params):
         return self._assign_cart_and_get_store_cache()

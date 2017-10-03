@@ -10,9 +10,10 @@ from odoo.addons.connector.connector import Binder
 from odoo.addons.connector_locomotivecms.unit.deleter import (
     export_delete_record)
 # TODO MIGRATE
-#from odoo.addons.connector.session import ConnectorSession
+# from odoo.addons.connector.session import ConnectorSession
 from odoo.addons.connector_locomotivecms.connector import get_environment
-from ..unit.consumer import delay_export
+# TODO MIGRATE
+# from ..unit.consumer import delay_export
 
 
 @job
@@ -43,7 +44,7 @@ def clear_dead_content(session, model_name, backend_id):
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
     # TODO move to shopinvader payment
-    #payment_method_ids = fields.One2many(
+    # payment_method_ids = fields.One2many(
     #    'shopinvader.payment',
     #    'backend_id',
     #    'Payment Method')
@@ -61,11 +62,11 @@ class LocomotiveBackend(models.Model):
     version = fields.Selection(selection_add=[
         ('shopinvader_v1', 'Shopinvader V1')])
     # TODO move to shopinvader_image
-    #product_image_resize_ids = fields.Many2many(
+    # product_image_resize_ids = fields.Many2many(
     #    comodel_name='image.resize',
     #    relation="product_image_resize",
     #    string='Product Image Resize')
-    #categ_image_resize_ids = fields.Many2many(
+    # categ_image_resize_ids = fields.Many2many(
     #    comodel_name='image.resize',
     #    relation="category_image_resize",
     #    string='Category Image Resize')

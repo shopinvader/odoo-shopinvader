@@ -8,4 +8,5 @@ from . import mapper
 from . import exporter
 from . import adapter
 from . import deleter
-from . import consumer
+# TODO MIGRATE
+#from . import consumer

@@ -14,7 +14,7 @@ class AddressService(Component):
     _inherit = 'shopinvader.service'
     _name = 'shopinvader.address.service'
     _usage = 'address.service'
-
+    _model_name = 'locomotive.backend'
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator
@@ -30,6 +30,8 @@ class AddressService(Component):
     @secure_params
     def create(self, params):
         params['parent_id'] = self.partner.id
+        if not params.get('type'):
+            params['type'] = 'other'
         self.env['res.partner'].create(params)
         return self._list()
 

@@ -3,12 +3,10 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
-from odoo.addons.connector.session import ConnectorSession
-from odoo.addons.connector_locomotivecms.connector import get_environment
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
-class CommonCase(TransactionCase):
+class CommonCase(SavepointComponentCase):
 
     def setUp(self, *args, **kwargs):
         super(CommonCase, self).setUp(*args, **kwargs)
@@ -19,13 +17,6 @@ class CommonCase(TransactionCase):
         if 'visible_discount' in self.env['product.pricelist']._fields:
             pricelist = self.env['product.pricelist'].search([])
             pricelist.write({'visible_discount': False})
-
-    def _get_service(self, service_class, partner):
-        model_name = service_class._model_name
-        session = ConnectorSession.from_env(self.env)
-        env = get_environment(session, model_name, self.backend.id)
-        service = env.backend.get_class(service_class, session, model_name)
-        return service(env, partner, self.shopinvader_session)
 
 
 class ProductCommonCase(CommonCase):

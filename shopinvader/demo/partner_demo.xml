@@ -30,6 +30,7 @@
 
         <record id="partner_2" model="res.partner">
             <field name="name">Anubis</field>
+            <field name="type">other</field>
             <field name="customer" eval="True"/>
             <field name="email">anubis@my.personal.address.example.com</field>
             <field name="street">3841 18th St</field>
