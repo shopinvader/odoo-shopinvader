@@ -22,7 +22,7 @@ class CartItemService(Component):
 
     @secure_params
     def create(self, params):
-        cart_service = self.service_for(CartService)
+        cart_service = self.component(usage='cart.service')
         cart = cart_service._get()
         if not cart:
             cart = cart_service._create_empty_cart()
@@ -30,7 +30,8 @@ class CartItemService(Component):
         if existing_item:
             existing_item.product_uom_qty += params['item_qty']
             existing_item.reset_price_tax()
-            existing_item.order_id._update_default_carrier()
+            # TODO MIGRATE shopinvader delivery
+            # existing_item.order_id._update_default_carrier()
         else:
             vals = self._prepare_cart_item(params, cart)
             self.env['sale.order.line'].create(vals)
@@ -41,8 +42,9 @@ class CartItemService(Component):
         item = self._get_cart_item(params)
         item.product_uom_qty = params['item_qty']
         item.reset_price_tax()
-        item.order_id._update_default_carrier()
-        cart_service = self.service_for(CartService)
+        # TODO MIGRATE shopinvader delivery
+        # item.order_id._update_default_carrier()
+        cart_service = self.component(usage='cart.service')
         cart = cart_service._get()
         return cart_service._to_json(cart)
 
@@ -50,7 +52,7 @@ class CartItemService(Component):
     def delete(self, params):
         item = self._get_cart_item(params)
         item.unlink()
-        cart_service = self.service_for(CartService)
+        cart_service = self.component(usage='cart.service')
         cart = cart_service._get()
         return cart_service._to_json(cart)
 

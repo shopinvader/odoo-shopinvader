@@ -91,12 +91,6 @@ class ShopinvaderService(Component):
             message = 'Shopinvader call url %s method %s'
             _logger.debug(message, *args, extra=extra)
 
-    def service_for(self, service_class):
-        service = self.connector_env.backend.get_class(
-            service_class, self.session, service_class._model_name)
-        return service(
-            self.connector_env, self.partner, self.shopinvader_session)
-
     def _get_schema_for_method(self, method):
         validator_method = '_validator_%s' % method
         if not hasattr(self, validator_method):

@@ -13,7 +13,7 @@ class AbstractItemCase(object):
     def setUp(self, *args, **kwargs):
         super(AbstractItemCase, self).setUp(*args, **kwargs)
         self.product_1 = self.env.ref('product.product_product_4b')
-        self.product_2 = self.env.ref('product.product_product_14')
+        self.product_2 = self.env.ref('product.product_product_13')
 
     def extract_cart(self, response):
         self.shopinvader_session['cart_id'] =\
@@ -100,8 +100,13 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
         self.cart = self.env.ref('shopinvader.sale_order_1')
         self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {'cart_id': self.cart.id}
-        self.service = self._get_service(CartItemService, None)
-        self.cart_service = self._get_service(CartService, None)
+        with self.backend.work_on(
+                model_name='locomotive.backend',
+                partner=None,
+                shopinvader_session=self.shopinvader_session) as work:
+            self.service = work.component(usage='cart.item.service')
+            self.cart_service = work.component(usage='cart.service')
+
 
     def check_partner(self, cart):
         self.assertEqual(cart['partner'], {})
@@ -117,8 +122,13 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
         self.cart = self.env.ref('shopinvader.sale_order_2')
         self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {'cart_id': self.cart.id}
-        self.service = self._get_service(CartItemService, self.partner)
-        self.cart_service = self._get_service(CartService, self.partner)
+        with self.backend.work_on(
+                model_name='locomotive.backend',
+                partner=self.partner,
+                shopinvader_session=self.shopinvader_session) as work:
+            self.service = work.component(usage='cart.item.service')
+            self.cart_service = work.component(usage='cart.service')
+
 
     def check_partner(self, cart):
         self.assertEqual(cart['partner']['id'], self.partner.id)
