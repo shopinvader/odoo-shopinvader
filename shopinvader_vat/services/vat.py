@@ -34,7 +34,7 @@ class CheckVatService(Component):
             'valid': partner_obj.simple_vat_check(country_code, vat_number),
             'vat_number': vat_number,
             }
-        if self.work.collection.company_id.vat_check_vies and\
+        if self.collection.company_id.vat_check_vies and\
                 self.env['res.country'].search([
                     ('code', '=ilike', country_code),
                     ('country_group_ids', '=',

@@ -18,7 +18,7 @@ class CheckVatCase(CommonCase):
 
     def test_check_valid_vat_with_vies(self):
         vat_number = 'FR86792377731'
-        self.service.work.collection.company_id.vat_check_vies = True
+        self.service.collection.company_id.vat_check_vies = True
         res = self.service.get({'vat_number': vat_number})
         self.assertEqual(res, {
             'with_details': True,
@@ -30,7 +30,7 @@ class CheckVatCase(CommonCase):
 
     def test_check_invalid_vat_with_vies(self):
         vat_number = 'FR54348545954'
-        self.service.work.collection.company_id.vat_check_vies = True
+        self.service.collection.company_id.vat_check_vies = True
         res = self.service.get({'vat_number': vat_number})
         self.assertEqual(res, {'valid': False, 'vat_number': vat_number})
 
