@@ -118,11 +118,12 @@ class SaleOrder(models.Model):
             if record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
                     'cart_confirmation', record)
-            for transaction in record.transaction_ids:
-                # If we confirm the card this mean we come back from the
-                # payment provider and so transaction are ready to be captured
-                if transaction.state == 'pending':
-                    transaction.state = 'to_capture'
+            # TODO TODO MIGRATE shopinvader_payment
+            # for transaction in record.transaction_ids:
+            #    # If we confirm the card this mean we come back from the
+            #    # payment provider and so transaction are ready to be captured
+            #    if transaction.state == 'pending':
+            #        transaction.state = 'to_capture'
         return True
 
     @api.depends('amount_total', 'amount_untaxed')
@@ -160,18 +161,19 @@ class SaleOrder(models.Model):
     def _play_cart_onchange(self, vals):
         result = {}
         # TODO in 10 use and improve onchange helper module
-        if 'partner_id' in vals:
-            res = self.onchange_partner_id(vals['partner_id']).get('value', {})
-            for key in ['pricelist_id', 'payment_term']:
-                if key in res:
-                    result[key] = res[key]
-        if 'partner_shipping_id' in vals:
-            res = self.onchange_delivery_id(
-                self.company_id.id,
-                vals.get('partner_id') or self.partner_id.id,
-                vals['partner_shipping_id'], None).get('value', {})
-            if 'fiscal_position' in res:
-                result['fiscal_position'] = res['fiscal_position']
+        # TODO MIGRATE
+        # if 'partner_id' in vals:
+        #     res = self.onchange_partner_id(vals['partner_id']).get('value', {})
+        #     for key in ['pricelist_id', 'payment_term']:
+        #         if key in res:
+        #             result[key] = res[key]
+        # if 'partner_shipping_id' in vals:
+        #     res = self.onchange_delivery_id(
+        #         self.company_id.id,
+        #         vals.get('partner_id') or self.partner_id.id,
+        #         vals['partner_shipping_id'], None).get('value', {})
+        #     if 'fiscal_position' in res:
+        #         result['fiscal_position'] = res['fiscal_position']
         return result
 
     def _need_to_reset_tax_price_on_line(self, vals):
@@ -234,7 +236,8 @@ class SaleOrder(models.Model):
         self.write(vals)
         if 'payment_method_id' in vals:
             self.onchange_payment_method_set_workflow()
-        self._update_default_carrier()
+        # TODO MIGRATE move in shopinvader_delivery
+        # self._update_default_carrier()
         if 'carrier_id' in vals:
             self._check_allowed_carrier(vals)
             self.delivery_set()
