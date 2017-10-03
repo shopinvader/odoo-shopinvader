@@ -33,7 +33,7 @@ class SignService(Component):
         for binding in sale.partner_id.shopinvader_bind_ids:
             if self.collection == binding.backend_id:
                 raise UserError(_('customer already registred'))
-        self.partner = sale.partner_id
+        self.work.partner = sale.partner_id
         return self._create_shopinvader_binding(params['external_id'])
 
     @secure_params
@@ -42,7 +42,7 @@ class SignService(Component):
         if 'vat' in params:
             params['vat_subjected'] = bool(params['vat'])
             params['is_company'] = True
-        self.partner = self.env['res.partner'].create(params)
+        self.work.partner = self.env['res.partner'].create(params)
         self.collection._send_notification(
             'new_customer_welcome', self.partner)
         return self._create_shopinvader_binding(external_id)

@@ -54,11 +54,17 @@ class ShopinvaderService(Component):
     _usage = 'shopinvader.service'
     _collection = 'locomotive.backend'
 
-    def __init__(self, work_context):
-        super(ShopinvaderService, self).__init__(work_context)
-        self.partner = work_context.partner
-        self.shopinvader_session = work_context.shopinvader_session
-        self.cart_id = self.shopinvader_session.get('cart_id')
+    @property
+    def partner(self):
+        return self.work.partner
+
+    @property
+    def shopinvader_session(self):
+        return self.work.shopinvader_session
+
+    @property
+    def cart_id(self):
+        return self.work.shopinvader_session.get('cart_id')
 
     def _prepare_extra_log(self, func, params, secure_params, res):
         httprequest = request.httprequest

@@ -14,7 +14,11 @@ class CustomerCase(CommonCase):
         templates = self.env['product.template'].search([])
         templates.write({
             'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
-        self.service = self._get_service(SignService, None)
+        with self.backend.work_on(
+                model_name='locomotive.backend',
+                partner=None,
+                shopinvader_session={}) as work:
+            self.service = work.component(usage='sign.service')
 
     def test_create_customer(self):
         data = {
