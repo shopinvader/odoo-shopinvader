@@ -256,27 +256,29 @@ class SaleOrderLine(models.Model):
         store=True)
 
     def reset_price_tax(self):
-        for line in self:
-            res = line.product_id_change(
-                line.order_id.pricelist_id.id,
-                line.product_id.id,
-                qty=line.product_uom_qty,
-                uom=line.product_uom.id,
-                qty_uos=line.product_uos_qty,
-                uos=line.product_uos.id,
-                name=line.name,
-                partner_id=line.order_id.partner_id.id,
-                lang=False,
-                update_tax=True,
-                date_order=line.order_id.date_order,
-                packaging=False,
-                fiscal_position=line.order_id.fiscal_position.id,
-                flag=True)['value']
-            line.write({
-                'price_unit': res['price_unit'],
-                'discount': res.get('discount'),
-                'tax_id': [(6, 0, res.get('tax_id', []))]
-                })
+        pass
+        # TODO MIGRATE
+        # for line in self:
+        #     res = line.product_id_change(
+        #         line.order_id.pricelist_id.id,
+        #         line.product_id.id,
+        #         qty=line.product_uom_qty,
+        #         uom=line.product_uom.id,
+        #         qty_uos=line.product_uos_qty,
+        #         uos=line.product_uos.id,
+        #         name=line.name,
+        #         partner_id=line.order_id.partner_id.id,
+        #         lang=False,
+        #         update_tax=True,
+        #         date_order=line.order_id.date_order,
+        #         packaging=False,
+        #         fiscal_position=line.order_id.fiscal_position.id,
+        #         flag=True)['value']
+        #     line.write({
+        #         'price_unit': res['price_unit'],
+        #         'discount': res.get('discount'),
+        #         'tax_id': [(6, 0, res.get('tax_id', []))]
+        #         })
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):

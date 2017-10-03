@@ -234,14 +234,16 @@ class ShopinvaderVariant(models.Model):
 
     def _compute_image(self):
         for record in self:
-            images = []
-            for image in record.record_id.image_ids:
-                res = {'original': image.url}
-                for resize in record.backend_id.product_image_resize_ids:
-                    res[resize.key] = \
-                        image.get_thumbnail_from_resize(resize).url
-                images.append(res)
-            record.images = images
+            pass
+            # TODO MIGRATE shopinvader_storage_image
+            # images = []
+            # for image in record.record_id.image_ids:
+            #     res = {'original': image.url}
+            #     for resize in record.backend_id.product_image_resize_ids:
+            #         res[resize.key] = \
+            #             image.get_thumbnail_from_resize(resize).url
+            #     images.append(res)
+            # record.images = images
 
     def _compute_attributes(self):
         for record in self:
