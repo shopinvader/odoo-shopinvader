@@ -5,14 +5,11 @@
 
 from odoo.addons.component.core import Component
 from .helper import secure_params
-from .cart import CartService
-from ..backend import shopinvader
 import logging
 from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 
-@shopinvader
 class TransactionService(Component):
     _inherit = 'shopinvader.service'
     _name = 'shopinvader.transaction.service'

@@ -5,15 +5,12 @@
 
 from odoo.addons.component.core import Component
 from .helper import to_int, secure_params
-from .address import AddressService
-from ..backend import shopinvader
 from odoo.tools.translate import _
 from odoo.exceptions import UserError
 import logging
 _logger = logging.getLogger(__name__)
 
 
-@shopinvader
 class CartService(Component):
     _inherit = 'shopinvader.abstract.sale.service'
     _name = 'shopinvader.cart.service'
