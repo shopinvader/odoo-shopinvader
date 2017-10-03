@@ -4,8 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
-from .helper import secure_params
-from ..backend import shopinvader
+from odoo.addons.services.helper import secure_params
+from odoo.addons.backend import shopinvader
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -49,7 +49,8 @@ class CheckVatService(Component):
                         })
                 else:
                     res['valid'] = False
-            except:
+            except Exception:
+                # TODO improve exception management
                 _logger.debug('Invalid number for vies')
         return res
 
