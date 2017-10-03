@@ -20,12 +20,13 @@ class CheckVatCase(CommonCase):
         vat_number = 'FR86792377731'
         self.service.collection.company_id.vat_check_vies = True
         res = self.service.get({'vat_number': vat_number})
+        # Address can change, we remove unstable data
+        res.pop('address')
         self.assertEqual(res, {
             'with_details': True,
             'name': u'SARL AKRETION FRANCE',
             'vat_number': vat_number,
             'valid': True,
-            'address': u'35 B RUE MONTGOLFIER\n69100 VILLEURBANNE',
             })
 
     def test_check_invalid_vat_with_vies(self):
