@@ -15,10 +15,15 @@ class SaleCase(CommonCase):
         super(SaleCase, self).setUp(*args, **kwargs)
         self.sale = self.env.ref('shopinvader.sale_order_2')
         self.partner = self.env.ref('shopinvader.partner_1')
-        self.service = self._get_service(SaleService, self.partner)
+        with self.backend.work_on(
+                model_name='locomotive.backend',
+                partner=self.partner,
+                shopinvader_session={}) as work:
+            self.service = work.component(usage='sale.service')
+
 
     def test_read_sale(self):
-        self.sale.action_button_confirm()
+        self.sale.action_confirm()
         res = self.service.get({'id': self.sale.id})
         self.assertEqual(res['id'], self.sale.id)
         self.assertEqual(res['name'], self.sale.name)
