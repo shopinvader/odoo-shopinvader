@@ -15,7 +15,6 @@ class CustomerService(Component):
     _name = 'shopinvader.customer.service'
     _usage = 'customer.service'
 
-
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator
     # secure params and the linked validator !

@@ -49,15 +49,16 @@ def secure_params(func):
 
 class ShopinvaderService(Component):
     _name = 'shopinvader.service'
+    _model_name = 'locomotive.backend'
 
     _usage = 'shopinvader.service'
-    _collection = 'shopinvader.backend'
+    _collection = 'locomotive.backend'
 
-    def __init__(self, env, partner, shopinvader_session):
-        super(ShopinvaderComponent, self).__init__(env)
-        self.partner = partner
-        self.shopinvader_session = shopinvader_session
-        self.cart_id = shopinvader_session.get('cart_id')
+    def __init__(self, work_context):
+        super(ShopinvaderService, self).__init__(work_context)
+        self.partner = work_context.partner
+        self.shopinvader_session = work_context.shopinvader_session
+        self.cart_id = self.shopinvader_session.get('cart_id')
 
     def _prepare_extra_log(self, func, params, secure_params, res):
         httprequest = request.httprequest

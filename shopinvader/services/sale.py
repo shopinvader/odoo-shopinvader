@@ -15,7 +15,6 @@ class SaleService(Component):
     _name = 'shopinvader.sale.service'
     _usage = 'sale.service'
 
-
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
 

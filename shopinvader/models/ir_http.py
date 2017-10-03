@@ -15,6 +15,7 @@ _logger = logging.getLogger(__name__)
 class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
 
+    @classmethod
     def _shopinvader_get_partner_from_header(self, headers):
         partner_email = headers.get('HTTP_PARTNER_EMAIL')
         if partner_email:
@@ -28,6 +29,7 @@ class IrHttp(models.AbstractModel):
                 _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
         return None
 
+    @classmethod
     def _extract_shopinvader_session(self, headers):
         # HTTP_SESS are data that are store in the shopinvader session
         # and forwarded to odoo at each request
@@ -38,8 +40,11 @@ class IrHttp(models.AbstractModel):
             'cart_id': int(headers.get('HTTP_SESS_CART_ID', 0))
             }
 
+    @classmethod
     def _auth_method_shopinvader(self):
         headers = request.httprequest.environ
+        headers['HTTP_API_KEY'] = 'odooapi'
+        headers['HTTP_PARTNER_EMAIL'] = 'agrolait@yourcompany.example.com'
         if headers.get('HTTP_API_KEY'):
             request.uid = 1
             backend = request.env['locomotive.backend'].search(

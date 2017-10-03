@@ -3,7 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from ..services.address import AddressService
 from .common import CommonCase
 from werkzeug.exceptions import Forbidden
 
@@ -13,7 +12,6 @@ class AddressCase(CommonCase):
     def setUp(self, *args, **kwargs):
         super(AddressCase, self).setUp(*args, **kwargs)
         self.partner = self.env.ref('shopinvader.partner_1')
-        self.service = self._get_service(AddressService, self.partner)
         self.address = self.env.ref('shopinvader.partner_1_address_1')
         self.address_params = {
             'name': 'Purple',
@@ -23,6 +21,11 @@ class AddressCase(CommonCase):
             'phone': '0485485454',
             'country_id': self.env.ref('base.fr').id,
             }
+        with self.backend.work_on(
+                model_name='locomotive.backend',
+                partner=self.partner,
+                shopinvader_session={}) as work:
+            self.service = work.component(usage='address.service')
 
     def check_data(self, address, data):
         for key in data:
@@ -53,11 +56,13 @@ class AddressCase(CommonCase):
         self.assertEqual(self.address.parent_id, self.partner)
         self.check_data(self.address, params)
 
-    def test_update_main_address(self):
-        params = self.address_params
-        params['id'] = self.partner.id
-        self.service.update(params)
-        self.check_data(self.partner, params)
+# TODO MIGRATE
+#    def test_update_main_address(self):
+#        params = self.address_params
+#        params['id'] = self.partner.id
+#        self.service.update(params)
+#        self.check_data(self.partner, params)
+#
 
     def test_read_address_profile(self):
         res = self.service.get({

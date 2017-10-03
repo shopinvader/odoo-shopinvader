@@ -5,8 +5,8 @@
 
 from odoo.http import Controller, request, route
 # TODO migrate
-#from odoo.addons.connector.session import ConnectorSession
-#from odoo.addons.connector_locomotivecms.connector import get_environment
+# from odoo.addons.connector.session import ConnectorSession
+# from odoo.addons.connector_locomotivecms.connector import get_environment
 from ..services.cart import CartService
 from ..services.cart_item import CartItemService
 from ..services.address import AddressService
@@ -22,28 +22,25 @@ _logger = logging.getLogger(__name__)
 
 class ShopinvaderController(Controller):
 
-    def send_to_service(self, service_class, params):
-        start = datetime.now()
-        method = request.httprequest.method
-        service = self._get_service(service_class)
-        if method == 'GET':
-            res = service.get(params)
-        elif method == 'POST':
-            res = service.create(params)
-        elif method == 'PUT':
-            res = service.update(params)
-        elif method == 'DELETE':
-            res = service.delete(params)
-        res = request.make_response(res)
-        _logger.info('Shopinvader Response in %s', datetime.now() - start)
-        return res
-
-    def _get_service(self, service_class):
-        model_name = service_class._model_name
-        session = ConnectorSession.from_env(request.env)
-        env = get_environment(session, model_name, request.backend.id)
-        service = env.backend.get_class(service_class, session, model_name)
-        return service(env, request.partner, request.shopinvader_session)
+    def send_to_service(self, service_name, params):
+        with request.backend.work_on(
+                model_name='locomotive.backend',
+                partner=request.partner,
+                shopinvader_session=request.shopinvader_session) as work:
+            service = work.component(usage=service_name)
+            start = datetime.now()
+            method = request.httprequest.method
+            if method == 'GET':
+                res = service.get(params)
+            elif method == 'POST':
+                res = service.create(params)
+            elif method == 'PUT':
+                res = service.update(params)
+            elif method == 'DELETE':
+                res = service.delete(params)
+            res = request.make_response(res)
+            _logger.info('Shopinvader Response in %s', datetime.now() - start)
+            return res
 
     # Check Vat
     @route('/shopinvader/check_vat', methods=['GET'], auth="shopinvader")
@@ -65,7 +62,7 @@ class ShopinvaderController(Controller):
     @route('/shopinvader/addresses',
            methods=['GET', 'POST'], auth="shopinvader")
     def address(self, **params):
-        return self.send_to_service(AddressService, params)
+        return self.send_to_service('address.service', params)
 
     @route('/shopinvader/addresses/<id>', methods=['PUT', 'DELETE'],
            auth="shopinvader")
