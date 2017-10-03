@@ -14,17 +14,18 @@ class ProductCase(ProductCommonCase):
             len(self.template.product_variant_ids),
             len(self.shopinvader_variants))
 
-    def test_categories(self):
-        self.assertEqual(
-            len(self.shopinvader_variant.shopinvader_categ_ids), 0)
-        self.backend.bind_all_category()
-        self.shopinvader_variant.invalidate_cache()
-        self.assertEqual(
-            len(self.shopinvader_variant.shopinvader_categ_ids), 2)
-        self.assertEqual(
-            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'),
-            self.template.categ_id + self.template.categ_id.parent_id)
-
+# TODO MIGRATE
+#    def test_categories(self):
+#        self.assertEqual(
+#            len(self.shopinvader_variant.shopinvader_categ_ids), 0)
+#        self.backend.bind_all_category()
+#        self.shopinvader_variant.invalidate_cache()
+#        self.assertEqual(
+#            len(self.shopinvader_variant.shopinvader_categ_ids), 2)
+#        self.assertEqual(
+#            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'),
+#            self.template.categ_id + self.template.categ_id.parent_id)
+#
     def test_attributes(self):
         attr_dict = {'color': u'Black',
                      'wi-fi': u'2.4 GHz',
