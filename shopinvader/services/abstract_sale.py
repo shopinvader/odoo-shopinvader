@@ -5,6 +5,8 @@
 
 from .helper import ShopinvaderService
 from .address import AddressService
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class AbstractSaleService(ShopinvaderService):
@@ -88,16 +90,20 @@ class AbstractSaleService(ShopinvaderService):
                         self.backend_record.anonymous_partner_id.id:
                     order[key] = {}
             trackings = []
-            sale_order = self.env['sale.order'].browse(order['id'])
-            for picking in sale_order.picking_ids:
-                for pack in picking._get_packages_from_picking():
-                    if pack.parcel_tracking:
-                        data = pack.with_context(
-                            picking=self).open_tracking_url()
-                        trackings.append({
-                            'name': picking.carrier_id.name,
-                            'url': data.get('url'),
-                            'code': pack.parcel_tracking,
-                            })
+            try:
+                sale_order = self.env['sale.order'].browse(order['id'])
+                for picking in sale_order.picking_ids:
+                    for pack in picking._get_packages_from_picking():
+                        if pack.parcel_tracking:
+                            data = pack.with_context(
+                                picking=self).open_tracking_url()
+                            trackings.append({
+                                'name': picking.carrier_id.name,
+                                'url': data.get('url'),
+                                'code': pack.parcel_tracking,
+                                })
+            except:
+                _logger.error("Fail to get the tracking number for order"
+                              "id %s", order['id'])
             order['trackings'] = trackings
         return res

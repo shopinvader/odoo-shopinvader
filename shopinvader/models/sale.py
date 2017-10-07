@@ -88,14 +88,14 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if self.state == 'cancel':
             return 'cancel'
-        elif self.state == 'done':
+        elif self.shipped:
             return 'shipped'
         elif self.state == 'draft':
             return 'pending'
         else:
             return 'processing'
 
-    @api.depends('state')
+    @api.depends('state', 'shipped')
     def _compute_shopinvader_state(self):
         # simple way to have more human friendly name for
         # the sale order on the website
