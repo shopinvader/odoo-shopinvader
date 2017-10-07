@@ -97,3 +97,10 @@ class ShopinvaderController(Controller):
            methods=['GET', 'PUT', 'POST'], auth="shopinvader")
     def sign(self, **params):
         return self.send_to_service(SignService, params)
+
+    # Simple status page
+    @route('/shopinvader/status', methods=['GET'], auth="shopinvader")
+    def status(self, **params):
+        return request.make_response({
+            'status': 200,
+            })
