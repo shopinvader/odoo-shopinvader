@@ -22,7 +22,7 @@ class TransactionService(Component):
             transaction = provider._get_transaction_from_return(params)
             transaction.check_state()
             if transaction.state in ['to_capture', 'succeeded']:
-                cart_service = self.service_for(CartService)
+                cart_service = self.component(usage='cart.service')
                 # confirm the card
                 data = cart_service.update({
                     'next_step': self.backend_record.last_step_id.code})

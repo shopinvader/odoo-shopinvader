@@ -3,8 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from ..services.cart_item import CartItemService
-from ..services.cart import CartService
 from .common import CommonCase
 
 
@@ -107,7 +105,6 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
             self.service = work.component(usage='cart.item.service')
             self.cart_service = work.component(usage='cart.service')
 
-
     def check_partner(self, cart):
         self.assertEqual(cart['partner'], {})
         self.assertEqual(cart['partner_shipping'], {})
@@ -128,7 +125,6 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
                 shopinvader_session=self.shopinvader_session) as work:
             self.service = work.component(usage='cart.item.service')
             self.cart_service = work.component(usage='cart.service')
-
 
     def check_partner(self, cart):
         self.assertEqual(cart['partner']['id'], self.partner.id)

@@ -10,5 +10,3 @@ class LocomotiveExportMapper(AbstractComponent):
     _name = 'locomotive.export.mapper'
     _inherit = ['base.locomotive.connector', 'base.export.mapper']
     _usage = 'export.mapper'
-
-

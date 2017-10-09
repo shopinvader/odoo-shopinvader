@@ -3,8 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-
-from ..services.sale import SaleService
 from .common import CommonCase
 from werkzeug.exceptions import NotFound
 
@@ -20,7 +18,6 @@ class SaleCase(CommonCase):
                 partner=self.partner,
                 shopinvader_session={}) as work:
             self.service = work.component(usage='sale.service')
-
 
     def test_read_sale(self):
         self.sale.action_confirm()

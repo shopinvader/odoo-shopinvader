@@ -71,7 +71,7 @@ class AbstractSaleService(Component):
             ('partner_invoice_id:partner_invoice', address_parser),
             ('order_line', self._parser_order_line()),
             # TODO MIGRATE shopinvader_payment
-            #('payment_method_id:payment_method',
+            # ('payment_method_id:payment_method',
             #    self._parser_payment_method()),
         ]
 
