@@ -3,14 +3,14 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.connector_generic.unit.mapper import GenericExportMapper
-from odoo.addons.connector.unit.mapper import mapping
-from ..backend import shopinvader
+from odoo.addons.component.core import Component
+from odoo.addons.connector.components.mapper import mapping
 
 
-@shopinvader
-class ShopinvaderPartnerExportMapper(GenericExportMapper):
-    _model_name = 'shopinvader.partner'
+class ShopinvaderPartnerExportMapper(Component):
+    _name = 'shopinvader.partner.export.mapper'
+    _inherit = ['locomotive.export.mapper']
+    _usage = 'export.mapper'
 
     direct = [
         ('email', 'email'),

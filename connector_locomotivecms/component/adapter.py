@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from odoo.addons.connector.unit.backend_adapter import CRUDAdapter
+from odoo.addons.component.core import AbstractComponent, Component
 import logging
 import requests
 
@@ -122,10 +122,13 @@ class LocomotiveClient(object):
 # end of lib code
 
 
-class LocomotiveAdapter(CRUDAdapter):
+class LocomotiveAdapter(AbstractComponent):
+    _name = 'locomotive.abstract.adapter'
+    _inherit = ['base.backend.adapter', 'base.locomotive.connector']
 
-    def __init__(self, connector_env):
-        backend = connector_env.backend_record
+    def __init__(self, work_context):
+        super(LocomotiveAdapter, self).__init__(work_context)
+        backend = self.collection
         client = LocomotiveClient(
             backend.username,
             backend.password,
@@ -150,16 +153,23 @@ class LocomotiveAdapter(CRUDAdapter):
         return self.resource.search(page=page, per_page=per_page)
 
 
-class LocomotiveContentAdapter(LocomotiveAdapter):
+class LocomotiveContentAdapter(Component):
+    _name = 'locomotive.content.adapter'
+    _inherit = 'locomotive.abstract.adapter'
     _content_type = None
+    _apply_on = []
 
-    def __init__(self, connector_env):
-        super(LocomotiveContentAdapter, self).__init__(connector_env)
+    def __init__(self, work_context):
+        super(LocomotiveContentAdapter, self).__init__(work_context)
         self.resource = self.client.content(self._content_type)
 
 
-class LocomotiveAssetAdapter(LocomotiveAdapter):
+class LocomotiveAssetAdapter(Component):
+    _name = 'locomotive.asset.adapter'
+    _inherit = 'locomotive.abstract.adapter'
+    _content_type = None
+    _apply_on = []
 
-    def __init__(self, connector_env):
-        super(LocomotiveAssetAdapter, self).__init__(connector_env)
+    def __init__(self, work_context):
+        super(LocomotiveAssetAdapter, self).__init__(work_context)
         self.resource = self.client.asset()
