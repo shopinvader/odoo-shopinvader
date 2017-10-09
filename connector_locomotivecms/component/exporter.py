@@ -4,33 +4,30 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo.addons.connector_generic.unit.exporter import GenericExporter
-# TODO MIGRATE
-#from ..related_action import unwrap_binding
-from odoo.addons.queue_job.job import job, related_action
-from ..connector import get_environment
+from odoo.addons.component.core import Component
 from odoo.tools.translate import _
 
 
-class LocomotiveExporter(GenericExporter):
-    _default_binding_fields = 'locomotive_bind_ids'
+class LocomotiveExporter(Component):
+    _name = 'locomotive.exporter'
+    _inherit = ['generic.exporter', 'base.locomotive.connector']
+    _usage = 'record.exporter'
 
     def _update_data(self, map_record, fields=None, **kwargs):
         """ Get the data to pass to :py:meth:`_update` """
         # As we push a json we always need to push all info
         return self._create_data(map_record, fields=None, **kwargs)
 
-    def run(self, binding_id, *args, **kwargs):
+    def run(self, record, *args, **kwargs):
         ctx = self.env.context.copy()
         if 'lang_id' in self.model._fields:
             ctx['lang'] = self.model.browse(binding_id).lang_id.code
             self.session.env = self.env(context=ctx)
-        return super(LocomotiveExporter, self).run(binding_id, *args, **kwargs)
+        return super(LocomotiveExporter, self).run(record, *args, **kwargs)
 
     def _run(self, fields=None):
         """ Flow of the synchronization, implemented in inherited classes"""
-        assert self.binding_id
-        assert self.binding_record
+        assert self.binding
 
         if not self.external_id:
             fields = None  # should be created with all the fields
@@ -60,13 +57,3 @@ class LocomotiveExporter(GenericExporter):
             self.external_id = self.result['_id']
         return _('Record exported with ID %s on %s.') % (
             self.external_id, self.backend_record.name)
-
-
-@job(default_channel='root.locomotive')
-#@related_action(action=unwrap_binding)
-def export_record(session, model_name, binding_id, fields=None):
-    """ Export a record on LocomotiveCMS """
-    record = session.env[model_name].browse(binding_id)
-    env = get_environment(session, model_name, record.backend_id.id)
-    exporter = env.get_connector_unit(GenericExporter)
-    return exporter.run(binding_id, fields=fields)

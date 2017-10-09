@@ -13,7 +13,7 @@
     'license': 'AGPL-3',
     'images': [],
     'depends': [
-        'connector_generic',
+        'connector',
     ],
     'data': [
         'views/locomotive_view.xml',

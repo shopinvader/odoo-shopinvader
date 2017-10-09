@@ -4,41 +4,32 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.addons.queue_job.job import job
-from odoo.addons.connector.unit.backend_adapter import CRUDAdapter
-from odoo.addons.connector.connector import Binder
-from odoo.addons.connector_locomotivecms.unit.deleter import (
-    export_delete_record)
-# TODO MIGRATE
-# from odoo.addons.connector.session import ConnectorSession
-from odoo.addons.connector_locomotivecms.connector import get_environment
-# TODO MIGRATE
-# from ..unit.consumer import delay_export
 
 
-@job
-def send_notification(session, model_name, notif_id, record_name, record_id):
-    record = session.env[record_name].browse(record_id)
-    notif = session.env[model_name].browse(notif_id)
-    notif._send(record)
-    return 'Notification sent'
-
-
-@job
-def clear_dead_content(session, model_name, backend_id):
-    env = get_environment(session, model_name, backend_id)
-    adapter = env.get_connector_unit(CRUDAdapter)
-    binder = env.get_connector_unit(Binder)
-    page = 1
-    while True:
-        data = adapter.search(page=page)
-        if not data:
-            break
-        page += 1
-        for content in data:
-            if not binder.to_odoo(content['_id']):
-                export_delete_record.delay(
-                    session, model_name, backend_id, content['_id'])
+# TODO TO MIGRATE
+#@job
+#def send_notification(session, model_name, notif_id, record_name, record_id):
+#    record = session.env[record_name].browse(record_id)
+#    notif = session.env[model_name].browse(notif_id)
+#    notif._send(record)
+#    return 'Notification sent'
+#
+#
+#@job
+#def clear_dead_content(session, model_name, backend_id):
+#    env = get_environment(session, model_name, backend_id)
+#    adapter = env.get_connector_unit(CRUDAdapter)
+#    binder = env.get_connector_unit(Binder)
+#    page = 1
+#    while True:
+#        data = adapter.search(page=page)
+#        if not data:
+#            break
+#        page += 1
+#        for content in data:
+#            if not binder.to_odoo(content['_id']):
+#                export_delete_record.delay(
+#                    session, model_name, backend_id, content['_id'])
 
 
 class LocomotiveBackend(models.Model):
