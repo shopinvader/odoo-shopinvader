@@ -41,14 +41,13 @@ class ShopinvaderRecordListener(Component):
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_write(self, record, fields=None):
-        """ Called when a record is updated """
         if fields == ['shopinvader_bind_ids']:
             return
         for binding in record.shopinvader_bind_ids:
             binding.with_delay().export_record(fields=fields)
 
-    @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_unlink(self, record, fields=None):
-        """ Called when a record is unlink """
+        """ Unlink all binding before removing the record in order to
+        trigger an event for deleting the record in locomotive"""
         for binding in record.shopinvader_bind_ids:
-            binding.with_delay().delete_record(fields=fields)
+            binding.unlink()
