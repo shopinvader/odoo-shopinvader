@@ -1,4 +1,4 @@
-connector
+connector https://github.com/akretion/connector.git 10-generic-exporter
 server-tools https://github.com/akretion/server-tools.git 10.0-imp-keychain-backend_model
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10-base_jsonify
 e-commerce
