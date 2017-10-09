@@ -28,7 +28,7 @@ class CartService(Component):
     # TODO REFACTOR too many line of code here
     @secure_params
     def update(self, params):
-        payment_params = params.pop('payment_params', None)
+        # payment_params = params.pop('payment_params', None)
         action_confirm_cart = \
             params.get('next_step') == self.collection.last_step_id.code
         cart = self._get()

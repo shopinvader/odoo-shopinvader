@@ -19,7 +19,7 @@ class CustomerService(Component):
     @secure_params
     def get(self, params):
         if self.partner:
-            address = self.service_for(AddressService)
+            address = self.component(usage='address.service')
             customer = address._to_json(self.partner)[0]
             return {
                 'data': customer,

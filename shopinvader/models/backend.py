@@ -7,29 +7,29 @@ from odoo import api, fields, models
 
 
 # TODO TO MIGRATE
-#@job
-#def send_notification(session, model_name, notif_id, record_name, record_id):
-#    record = session.env[record_name].browse(record_id)
-#    notif = session.env[model_name].browse(notif_id)
-#    notif._send(record)
-#    return 'Notification sent'
+# @job
+# def send_notification(session, model_name, notif_id, record_name, record_id):
+#     record = session.env[record_name].browse(record_id)
+#     notif = session.env[model_name].browse(notif_id)
+#     notif._send(record)
+#     return 'Notification sent'
 #
 #
-#@job
-#def clear_dead_content(session, model_name, backend_id):
-#    env = get_environment(session, model_name, backend_id)
-#    adapter = env.get_connector_unit(CRUDAdapter)
-#    binder = env.get_connector_unit(Binder)
-#    page = 1
-#    while True:
-#        data = adapter.search(page=page)
-#        if not data:
-#            break
-#        page += 1
-#        for content in data:
-#            if not binder.to_odoo(content['_id']):
-#                export_delete_record.delay(
-#                    session, model_name, backend_id, content['_id'])
+# @job
+# def clear_dead_content(session, model_name, backend_id):
+#     env = get_environment(session, model_name, backend_id)
+#     adapter = env.get_connector_unit(CRUDAdapter)
+#     binder = env.get_connector_unit(Binder)
+#     page = 1
+#     while True:
+#         data = adapter.search(page=page)
+#         if not data:
+#             break
+#         page += 1
+#         for content in data:
+#             if not binder.to_odoo(content['_id']):
+#                 export_delete_record.delay(
+#                     session, model_name, backend_id, content['_id'])
 
 
 class LocomotiveBackend(models.Model):
@@ -90,23 +90,27 @@ class LocomotiveBackend(models.Model):
                     .search_count([('backend_id', '=', record.id)])
 
     def _export_all_content(self, model):
-        session = ConnectorSession.from_env(self.env)
-        for record in self:
-            bindings = self.env[model]\
-                .search([('backend_id', '=', record.id)])
-            for binding in bindings:
-                delay_export(session, model, binding.id, {})
-        return True
+        pass
+        # TODO Migrate
+        # session = ConnectorSession.from_env(self.env)
+        # for record in self:
+        #     bindings = self.env[model]\
+        #         .search([('backend_id', '=', record.id)])
+        #     for binding in bindings:
+        #         delay_export(session, model, binding.id, {})
+        # return True
 
     def _clear_dead_locomotive_content(self, model):
-        """This method will check the existing product on shopinvader site
-        and delete it if it does not exist in odoo. This is really usefull
-        in dev mode and can be usefull if you have done some mistake in your
-        database production."""
-        session = ConnectorSession.from_env(self.env)
-        for record in self:
-            clear_dead_content.delay(session, model, record.id)
-        return True
+        pass
+        # TODO Migrate
+        # """This method will check the existing product on shopinvader site
+        # and delete it if it does not exist in odoo. This is really usefull
+        # in dev mode and can be usefull if you have done some mistake in your
+        # database production."""
+        # session = ConnectorSession.from_env(self.env)
+        # for record in self:
+        #     clear_dead_content.delay(session, model, record.id)
+        # return True
 
     def _bind_all_content(self, model, bind_model, domain):
         for backend in self:
@@ -137,14 +141,16 @@ class LocomotiveBackend(models.Model):
         self.recompute()
 
     def _send_notification(self, notification, record):
-        self.ensure_one()
-        record.ensure_one()
-        notif = self.env['shopinvader.notification'].search([
-            ('backend_id', '=', self.id),
-            ('notification_type', '=', notification),
-            ])
-        if notif:
-            session = ConnectorSession.from_env(self.env)
-            send_notification.delay(
-                session, notif._name, notif.id, record._name, record.id)
-        return True
+        pass
+        # TODO Migrate
+        # self.ensure_one()
+        # record.ensure_one()
+        # notif = self.env['shopinvader.notification'].search([
+        #     ('backend_id', '=', self.id),
+        #     ('notification_type', '=', notification),
+        #     ])
+        # if notif:
+        #     session = ConnectorSession.from_env(self.env)
+        #     send_notification.delay(
+        #         session, notif._name, notif.id, record._name, record.id)
+        # return True
