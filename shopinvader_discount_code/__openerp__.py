@@ -18,6 +18,7 @@
     },
     "depends": [
         "shopinvader",
+        "sale_discount_code",
     ],
     "data": [
     ],

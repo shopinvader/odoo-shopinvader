@@ -8,7 +8,7 @@ from openerp.addons.shopinvader.services.cart import CartService
 from openerp.addons.shopinvader.backend import shopinvader
 
 
-@shopinvader
+@shopinvader(replacing=CartService)
 class DiscountService(CartService):
     _model_name = 'sale.order'
 
