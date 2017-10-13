@@ -6,6 +6,8 @@
 from openerp.addons.shopinvader.services.helper import secure_params
 from openerp.addons.shopinvader.services.cart import CartService
 from openerp.addons.shopinvader.backend import shopinvader
+from openerp.exceptions import Warning as UserError
+from openerp.tools.translate import _
 
 
 @shopinvader(replacing=CartService)
@@ -19,8 +21,13 @@ class DiscountService(CartService):
     def update(self, params):
         res = super(DiscountService, self).update(params)
         if params.get('discount_code'):
+            if 'payment_params' in params:
+                raise UserError(
+                    _("Appling discount and paying can "
+                      "not be done in the same call"))
             cart = self._get()
             cart.apply_discount()
+            return self._to_json(cart)
         return res
 
     # Validator
