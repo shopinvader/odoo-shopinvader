@@ -3,8 +3,8 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
-    "name": "shopvinvader_discount_code",
-    "summary": "Module to manage discount code with shopinvader",
+    "name": "Shopvinvader Promotion Rule",
+    "summary": "Module to manage Promotion Rule with shopinvader",
     "version": "8.0.1.0.0",
     "category": "Sale",
     "website": "https://akretion.com",
@@ -18,7 +18,7 @@
     },
     "depends": [
         "shopinvader",
-        "sale_discount_code",
+        "sale_promotion_rule",
     ],
     "data": [
     ],

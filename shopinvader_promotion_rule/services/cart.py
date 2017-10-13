@@ -11,32 +11,45 @@ from openerp.tools.translate import _
 
 
 @shopinvader(replacing=CartService)
-class DiscountService(CartService):
-    _model_name = 'sale.order'
+class DiscountCartService(CartService):
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
 
     @secure_params
     def update(self, params):
-        res = super(DiscountService, self).update(params)
-        if params.get('discount_code'):
+        coupon_code = params.pop('coupon_code', None)
+        res = super(DiscountCartService, self).update(params)
+        if coupon_code is not None:
             if 'payment_params' in params:
                 raise UserError(
                     _("Appling discount and paying can "
                       "not be done in the same call"))
             cart = self._get()
-            cart.apply_discount()
+            if coupon_code:
+                cart.add_coupon(coupon_code)
+            else:
+                cart.promotion_rule_id = None
+                cart.clear_promotion_line()
             return self._to_json(cart)
         return res
 
     # Validator
     def _validator_update(self):
-        res = super(DiscountService, self)._validator_update()
-        res['discount_code'] = {'type': 'string'}
+        res = super(DiscountCartService, self)._validator_update()
+        res['coupon_code'] = {'type': 'string'}
         return res
 
     def _parser(self):
-        res = super(DiscountService, self)._parser()
-        res.append('discount_code')
+        res = super(DiscountCartService, self)._parser()
+        res.append(
+            ('promotion_rule_id:promotion_rule',
+                ['name', 'code', 'discount_amount', 'rule_type:type']))
         return res
+
+    def _parser_order_line(self):
+        parser = super(DiscountCartService, self)._parser_order_line()
+        parser.append(
+            ('promotion_rule_id:promotion_rule',
+                ['name', 'code', 'discount_amount', 'rule_type:type']))
+        return parser

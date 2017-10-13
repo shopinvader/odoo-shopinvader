@@ -38,6 +38,6 @@ class DiscountCartItemService(CartItemService):
     def _clear_discount(self):
         cart_service = self.service_for(CartService)
         cart = cart_service._get()
-        if cart and cart.discount_code:
-            cart.discount_code = None
-            cart.clear_discount()
+        if cart and cart.promotion_rule_id:
+            cart.promotion_rule_id = None
+            cart.clear_promotion_line()
