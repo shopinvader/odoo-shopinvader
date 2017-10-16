@@ -18,7 +18,7 @@
     },
     "depends": [
         "shopinvader",
-        "sale_promotion_rule",
+        "sale_delivery_promotion_rule",
     ],
     "data": [
     ],
