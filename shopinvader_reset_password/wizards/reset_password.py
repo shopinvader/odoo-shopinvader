@@ -25,7 +25,7 @@ def reset_password(session, model_name, binding_id, template_id,
     return 'Reset Password Sent'
 
 
-class ShopinvaderResetPassword(models.Model):
+class ShopinvaderResetPassword(models.TransientModel):
     _name = 'shopinvader.reset.password'
     _description = 'Shopinvader Reset Password'
 
