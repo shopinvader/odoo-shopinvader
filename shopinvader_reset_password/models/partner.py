@@ -15,8 +15,8 @@ class ShopinvaderPartner(models.Model):
         'Initialisation Date',
         help='date of first connection of the customer')
     date_last_reset = fields.Datetime(
-        'Initialisation Date',
-        help='date of first connection of the customer')
+        'Password reset send at',
+        help='date of last password reset sent')
     nbr_reset = fields.Integer()
 
 
