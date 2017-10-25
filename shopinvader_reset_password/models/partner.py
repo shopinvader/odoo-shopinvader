@@ -19,7 +19,6 @@ class ShopinvaderPartner(models.Model):
         help='date of last password reset sent')
     nbr_reset = fields.Integer()
 
-
     def _send_reset_password_email(self, template_id, token):
         return self.env['email.template'].with_context(token=token).browse(
             template_id).send_mail(self.id)
