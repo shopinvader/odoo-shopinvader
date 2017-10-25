@@ -24,6 +24,8 @@ class ShopinvaderNotification(models.Model):
 
     def _send(self, record):
         msg_ids = super(ShopinvaderNotification, self)._send(record)
+        if not msg_ids:
+            return msg_ids
         message = self.env['mail.mail'].browse(msg_ids)[0]
         message.external_template_key = self.template_id.external_template_key
         data = {}
