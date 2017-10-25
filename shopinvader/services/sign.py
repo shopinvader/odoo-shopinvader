@@ -101,12 +101,16 @@ class SignService(ShopinvaderService):
 
     def _assign_cart_and_get_store_cache(self):
         address = self.service_for(AddressService)
-        return {
+        cart = self._get_and_assign_cart()
+        res = {
             'store_cache': {
-                'cart': self._get_and_assign_cart(),
+                'cart': cart,
                 'customer': address._to_json(self.partner)[0],
                 }
             }
+        if cart:
+            res['set_session'] = {'cart_id': cart['id']}
+        return res
 
     def _create_shopinvader_binding(self, external_id):
         shop_partner = self.env['shopinvader.partner'].with_context(
