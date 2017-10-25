@@ -28,10 +28,6 @@ class ShopinvaderNotification(models.Model):
                 'name': _('New customer Welcome'),
                 'model': 'res.partner',
                 },
-            'password_migration': {
-                'name': _('Password Migration'),
-                'model': 'res.partner',
-                },
             'manual_message': {
                 'name': _('Manual Message'),
                 }
