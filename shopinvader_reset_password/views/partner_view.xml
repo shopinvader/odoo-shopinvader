@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="shopinvader_partner_view_tree" model="ir.ui.view">
+    <field name="model">shopinvader.partner</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
+    <field name="arch" type="xml">
+        <field name="create_date" position="after">
+            <field name="date_initialisation"/>
+        </field>
+    </field>
+</record>
+
+<record id="shopinvader_partner_view_search" model="ir.ui.view">
+    <field name="model">shopinvader.partner</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search"/>
+    <field name="arch" type="xml">
+        <field name="external_id" position="after">
+            <filter
+                name="not_initialized"
+                string="Not Initialized"
+                domain="[('date_initilisation', '=', False)]"/>
+            <group expand="0" string="Group By">
+                <filter
+                    string="Nbr Reset"
+                    context="{'group_by':'nbr_reset'}"/>
+            </group>
+        </field>
+    </field>
+</record>
+
+    </data>
+</openerp>
