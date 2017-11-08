@@ -183,7 +183,7 @@ class SaleOrder(models.Model):
         return {
             'id': carrier.id,
             'name': carrier.name,
-            'description': carrier.description,
+            'description': carrier.description or '',
             'price': carrier.price,
             }
 
