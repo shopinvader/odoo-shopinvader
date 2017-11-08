@@ -2,6 +2,19 @@
 <openerp>
     <data>
 
+<record id="res_partner_view_form" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="shopinvader.res_partner_view_form"/>
+    <field name="arch" type="xml">
+        <field name="role_id" position="after">
+            <button
+                icon="gtk-refresh"
+                name="%(act_open_shopinvader_reset_password_view)d"
+                type="action"/>
+        </field>
+    </field>
+</record>
+
 <record id="shopinvader_partner_view_tree" model="ir.ui.view">
     <field name="model">shopinvader.partner</field>
     <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
