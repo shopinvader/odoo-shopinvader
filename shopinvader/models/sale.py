@@ -193,7 +193,9 @@ class SaleOrder(models.Model):
             return []
         else:
             carriers = self.with_context(order_id=self.id)\
-                .env['delivery.carrier'].search([])
+                .env['delivery.carrier'].search([
+                    ('id', 'in',
+                        self.shopinvader_backend_id.allowed_carrier_ids.ids)])
             res = [self._prepare_available_carrier(carrier)
                    for carrier in carriers
                    if carrier.available]

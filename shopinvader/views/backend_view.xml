@@ -46,6 +46,9 @@
             <group name="allowed_country" colspan="4">
                 <field name="allowed_country_ids" nolabel="1"/>
             </group>
+            <group name="allowed_carrier" colspan="4">
+                <field name="allowed_carrier_ids" nolabel="1"/>
+            </group>
         </group>
         <notebook position="inside">
             <page name="email" string="Email">

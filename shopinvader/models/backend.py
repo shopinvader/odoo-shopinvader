@@ -88,6 +88,9 @@ class LocomotiveBackend(models.Model):
     sequence_id = fields.Many2one(
         'ir.sequence',
         'Sequence')
+    allowed_carrier_ids = fields.Many2many(
+        comodel_name='delivery.carrier',
+        string='Allowed Carrier')
 
     def _compute_nbr_content(self):
         for record in self:
