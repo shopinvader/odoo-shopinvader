@@ -251,7 +251,11 @@ class SaleOrderLine(models.Model):
         store=True)
 
     def reset_price_tax(self):
+        reset_carrier = False
         for line in self:
+            if line.is_delivery:
+                reset_carrier = True
+                continue
             res = line.product_id_change(
                 line.order_id.pricelist_id.id,
                 line.product_id.id,
@@ -272,6 +276,8 @@ class SaleOrderLine(models.Model):
                 'discount': res.get('discount'),
                 'tax_id': [(6, 0, res.get('tax_id', []))]
                 })
+        if reset_carrier:
+            self.mapped('order_id').delivery_set()
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):
