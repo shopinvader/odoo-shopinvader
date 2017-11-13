@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SignService(Component):
-    _inherit = 'shopinvader.service'
+    _inherit = ['shopinvader.service', 'base.locomotive.connector']
     _name = 'shopinvader.sign.service'
     _usage = 'sign.service'
 
