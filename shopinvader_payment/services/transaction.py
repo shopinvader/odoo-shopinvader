@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
-from .helper import secure_params
+from odoo.addons.shopinvader.services.helper import secure_params
 import logging
 from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
@@ -25,7 +25,7 @@ class TransactionService(Component):
                 cart_service = self.component(usage='cart.service')
                 # confirm the card
                 data = cart_service.update({
-                    'next_step': self.backend_record.last_step_id.code})
+                    'next_step': self.collection.last_step_id.code})
                 data['redirect_to'] = transaction.redirect_success_url
                 return data
             else:
@@ -39,7 +39,7 @@ class TransactionService(Component):
                     }
                 }
         _logger.error('Shopinvader: Transaction params are invalid')
-        return {'redirect_to': self.backend_record.location}
+        return {'redirect_to': self.collection.location}
 
     # Validator
     def _validator_get(self):

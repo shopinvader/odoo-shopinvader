@@ -30,13 +30,13 @@ class AddressService(Component):
         params['parent_id'] = self.partner.id
         if not params.get('type'):
             params['type'] = 'other'
-        self.env['res.partner'].create(params)
+        self.env['res.partner'].create(self._prepare_params(params))
         return self._list()
 
     @secure_params
     def update(self, params):
         address = self._get_address(params)
-        address.write(params)
+        address.write(self._prepare_params(params, update=True))
         res = self._list()
         if address.address_type == 'profile':
             res['store_cache'] = {'customer': self._to_json(address)[0]}
@@ -164,3 +164,6 @@ class AddressService(Component):
 
     def _to_json(self, address):
         return address.jsonify(self._json_parser())
+
+    def _prepare_params(self, params, update=False):
+        return params

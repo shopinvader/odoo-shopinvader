@@ -99,7 +99,7 @@ class ShopinvaderService(Component):
 
     def _validate_list(self, schema, params):
         for field, vals in schema.items():
-            if vals.get('type') == 'list':
+            if vals.get('type') == 'list' and params.get(field):
                 v = Validator(vals['schema'], purge_unknown=True)
                 parsed = []
                 for elem in params[field]:

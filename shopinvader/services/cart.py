@@ -28,7 +28,20 @@ class CartService(Component):
     # TODO REFACTOR too many line of code here
     @secure_params
     def update(self, params):
-        # payment_params = params.pop('payment_params', None)
+        response = self._update(params)
+        cart = self._get()
+        if response.get('action_confirm_cart'):
+            # TODO improve me, it will be better to block the cart
+            # confirmation if the user have set manually the end step
+            # and the payment method do not support it
+            # the best will be to have a params on the payment method
+            return self._confirm_cart(cart)
+        elif response.get('redirect_to'):
+            return response
+        else:
+            return self._to_json(cart)
+
+    def _update(self, params):
         action_confirm_cart = \
             params.get('next_step') == self.collection.last_step_id.code
         cart = self._get()
@@ -53,36 +66,7 @@ class CartService(Component):
         self._update_cart_step(params)
         if params:
             cart.write_with_onchange(params)
-        # TODO MIGRATE shopinvader_payment
-        # if payment_params:
-        #    provider = cart.payment_method_id.provider
-        #    if not provider:
-        #        raise UserError(
-        #            _("The payment method selected does not "
-        #              "need payment_params"))
-        #    else:
-        #        provider_name = provider.replace('payment.service.', '')
-        #        provider_params = payment_params.pop(provider_name, {})
-        #        provider_params['return_url'] = "%s/%s" % (
-        #            self.collection.location,
-        #            '_store/check_transaction')
-        #        response = self.env[provider]._process_payment_params(
-        #            cart, provider_params)
-        #        if response.get('redirect_to'):
-        #            return response
-        #        elif response.get('action_confirm_cart'):
-        #            # TODO find a more elengant way to do it
-        #            action_confirm_cart = True
-
-        if action_confirm_cart:
-            # TODO improve me, it will be better to block the cart
-            # confirmation if the user have set manually the end step
-            # and the payment method do not support it
-            # the best will be to have a params on the payment method
-            return self._confirm_cart(cart)
-        else:
-            res = self._to_json(cart)
-        return res
+        return {'action_confirm_cart': action_confirm_cart}
 
     # Validator
     def _validator_get(self):
@@ -95,8 +79,6 @@ class CartService(Component):
             'next_step': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
             'payment_method_id': {'coerce': to_int},
-            # TODO MIGRATE shopinvader_payment
-            # 'payment_params': self._get_payment_validator(),
             'note': {'type': 'string'},
         }
         if self.partner:
@@ -122,20 +104,6 @@ class CartService(Component):
                 })
         return res
 
-    # TODO MIGRATE shopinvader_payment
-    def _get_payment_validator(self):
-        validator = {
-            'type': 'dict',
-            'schema': {}
-            }
-        for provider in self.env['payment.service']._get_all_provider():
-            name = provider.replace('payment.service.', '')
-            if hasattr(self.env[provider], '_validator'):
-                validator['schema'][name] = {
-                    'type': 'dict',
-                    'schema': self.env[provider]._validator()
-                    }
-        return validator
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -177,10 +145,8 @@ class CartService(Component):
             return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
         res.update({
-            # TODO MIGRATE in shopinvader_payment and shopinvader_delivery
+            # TODO MIGRATE in shopinvader_delivery
             # 'available_carriers': cart._get_available_carrier(),
-            # 'available_payment_method_ids':
-            #    self._get_available_payment_method(),
             'current_step': cart.current_step_id.code,
             'done_steps': cart.done_step_ids.mapped('code'),
             })
@@ -189,21 +155,6 @@ class CartService(Component):
             'set_session': {'cart_id': res['id']},
             'store_cache': {'cart': res},
             }
-
-    def _prepare_payment(self, method):
-        method = method.payment_method_id
-        return {
-            'id': method.id,
-            'name': method.name,
-            'code': method.code,
-            'description': method.description,
-            }
-
-    def _get_available_payment_method(self):
-        methods = []
-        for method in self.collection.payment_method_ids:
-            methods.append(self._prepare_payment(method))
-        return methods
 
     def _set_anonymous_partner(self, cart, params):
         if 'partner_shipping' in params:

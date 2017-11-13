@@ -44,6 +44,8 @@ class IrHttp(models.AbstractModel):
     def _auth_method_shopinvader(self):
         headers = request.httprequest.environ
         if headers.get('HTTP_API_KEY'):
+            if headers.get('HTTP_LANG'):
+                request.context = {'lang': headers['HTTP_LANG']}
             request.uid = 1
             backend = request.env['locomotive.backend'].search(
                 [('odoo_api', '=', headers['HTTP_API_KEY'])])
@@ -51,9 +53,6 @@ class IrHttp(models.AbstractModel):
                 request.backend = backend
                 request.partner =\
                     self._shopinvader_get_partner_from_header(headers)
-                if headers.get('HTTP_LANG'):
-                    request.context['lang'] = headers['HTTP_LANG']
-                    request.env = request.env(context=request.context)
                 request.shopinvader_session =\
                     self._extract_shopinvader_session(headers)
                 return True

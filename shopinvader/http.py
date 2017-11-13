@@ -139,12 +139,11 @@ class HttpJsonRequest(HttpRequest):
            to abitrary responses. Anything returned (except None) will
            be used as response."""
         _logger.debug('Shopinvader Handle exception %s', exception)
-        if config['dev_mode']:
-            raise exception
         try:
             return super(HttpRequest, self)._handle_exception(exception)
         except (UserError, ValidationError), e:
-            return WrapJsonException(BadRequest(e.message or e.value))
+            return WrapJsonException(
+                BadRequest(e.message or e.value or e.name))
         except MissingError, e:
             return WrapJsonException(NotFound(e.value))
         except AccessError, e:

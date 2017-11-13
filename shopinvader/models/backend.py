@@ -34,11 +34,6 @@ from odoo import api, fields, models
 
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
-    # TODO move to shopinvader payment
-    # payment_method_ids = fields.One2many(
-    #    'shopinvader.payment',
-    #    'backend_id',
-    #    'Payment Method')
     role_ids = fields.One2many(
         'shopinvader.role',
         'backend_id',
@@ -154,3 +149,13 @@ class LocomotiveBackend(models.Model):
         #     send_notification.delay(
         #         session, notif._name, notif.id, record._name, record.id)
         # return True
+
+    def _extract_configuration(self):
+        return {}
+
+    @api.multi
+    def export_store_configuration(self):
+        self.ensure_one()
+        config = self._extract_configuration()
+        return ('test', '.csv')
+

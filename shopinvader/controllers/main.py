@@ -4,17 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.http import Controller, request, route
-# TODO migrate
-# from odoo.addons.connector.session import ConnectorSession
-# from odoo.addons.connector_locomotivecms.connector import get_environment
-from ..services.cart import CartService
-from ..services.cart_item import CartItemService
-from ..services.address import AddressService
-from ..services.customer import CustomerService
-from ..services.sale import SaleService
-from ..services.check_vat import CheckVatService
-from ..services.sign import SignService
-from ..services.transaction import TransactionService
 from datetime import datetime
 import logging
 _logger = logging.getLogger(__name__)
@@ -45,53 +34,48 @@ class ShopinvaderController(Controller):
     # Check Vat
     @route('/shopinvader/check_vat', methods=['GET'], auth="shopinvader")
     def check_vat(self, **params):
-        return self.send_to_service(CheckVatService, params)
+        return self.send_to_service('check.vat.service', params)
 
     # Cart
-    @route('/shopinvader/cart', methods=['GET', 'PUT'], auth="shopinvader")
+    @route('/shopinvader/cart', methods=['GET', 'PUT'],
+           auth="shopinvader", csrf=False)
     def cart_list(self, **params):
-        return self.send_to_service(CartService, params)
+        return self.send_to_service('cart.service', params)
 
     # Cart Item
     @route('/shopinvader/cart/item', methods=['POST', 'PUT', 'DELETE'],
-           auth="shopinvader")
+           auth="shopinvader", csrf=False)
     def item(self, **params):
-        return self.send_to_service(CartItemService, params)
+        return self.send_to_service('cart.item.service', params)
 
     # Address
     @route('/shopinvader/addresses',
-           methods=['GET', 'POST'], auth="shopinvader")
+           methods=['GET', 'POST'], auth="shopinvader", csrf=False)
     def address(self, **params):
         return self.send_to_service('address.service', params)
 
     @route('/shopinvader/addresses/<id>', methods=['PUT', 'DELETE'],
-           auth="shopinvader")
+           auth="shopinvader", csrf=False)
     def address_update_delete(self, **params):
-        return self.send_to_service(AddressService, params)
+        return self.send_to_service('address.service', params)
 
     # Customer
     @route('/shopinvader/customer',
            methods=['GET'], auth="shopinvader")
     def customer(self, **params):
-        return self.send_to_service(CustomerService, params)
+        return self.send_to_service('customer.service', params)
 
     # Order History
     @route('/shopinvader/sales', methods=['GET'], auth="shopinvader")
     def sale_list(self, **params):
-        return self.send_to_service(SaleService, params)
+        return self.send_to_service('sale.service', params)
 
     @route('/shopinvader/sales/<id>', methods=['GET'], auth="shopinvader")
     def sale(self, **params):
-        return self.send_to_service(SaleService, params)
-
-    # Check Transaction
-    @route('/shopinvader/check_transaction',
-           methods=['GET'], auth="shopinvader")
-    def check_transaction(self, **params):
-        return self.send_to_service(TransactionService, params)
+        return self.send_to_service('sale.service', params)
 
     # Sign action
     @route('/shopinvader/sign',
            methods=['GET', 'PUT', 'POST'], auth="shopinvader")
     def sign(self, **params):
-        return self.send_to_service(SignService, params)
+        return self.send_to_service('sign.service', params)

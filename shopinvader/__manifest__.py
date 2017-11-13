@@ -14,7 +14,7 @@
     "application": True,
     'installable': True,
     "external_dependencies": {
-        "python": ['cerberus', 'unidecode', 'pysimplesoap'],
+        "python": ['cerberus', 'unidecode'],
         "bin": [],
     },
     "depends": [

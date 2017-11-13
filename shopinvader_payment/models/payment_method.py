@@ -12,9 +12,9 @@ class ShopinvaderPayment(models.Model):
     _description = 'Shopinvader Payment'
     _order = 'sequence'
 
-    payment_method_id = fields.Many2one(
-        'payment.method',
-        'Payment Method')
+    payment_mode_id = fields.Many2one(
+        'account.payment.mode',
+        'Payment Mode')
     sequence = fields.Integer()
     backend_id = fields.Many2one(
         'locomotive.backend',
@@ -28,11 +28,6 @@ class ShopinvaderPayment(models.Model):
          'Cart and Sale Confirmation'),
         ])
     manual = fields.Boolean()
-
-
-class PaymentMethod(models.Model):
-    _inherit = 'payment.method'
-
     code = fields.Char()
     description = fields.Html()
     show_description_after_validation = fields.Boolean()
