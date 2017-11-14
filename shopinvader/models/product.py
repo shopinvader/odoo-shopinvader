@@ -46,6 +46,14 @@ class ProductProduct(models.Model):
             binding._create_shopinvader_variant()
         return variant
 
+    @api.multi
+    def write(self, vals):
+        res = super(ProductProduct, self).write(vals)
+        if 'active' in vals:
+            for binding in self.mapped('shopinvader_bind_ids'):
+                binding._create_shopinvader_variant()
+        return res
+
 
 class ProductFilter(models.Model):
     _name = 'product.filter'
