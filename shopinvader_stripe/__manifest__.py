@@ -19,7 +19,7 @@
         "bin": [],
     },
     "depends": [
-        "shopinvader",
+        "shopinvader_payment",
         "payment_gateway_stripe",
     ],
     "data": [
