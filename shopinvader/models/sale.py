@@ -102,10 +102,9 @@ class SaleOrder(models.Model):
         for record in self:
             record.shopinvader_state = record._get_shopinvader_state()
 
-    @api.model
-    def _prepare_invoice(self, order, lines):
-        res = super(SaleOrder, self)._prepare_invoice(order, lines)
-        res['shopinvader_backend_id'] = order.shopinvader_backend_id.id
+    def _prepare_invoice(self):
+        res = super(SaleOrder, self)._prepare_invoice()
+        res['shopinvader_backend_id'] = self.shopinvader_backend_id.id
         return res
 
     @api.multi
