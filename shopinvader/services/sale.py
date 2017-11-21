@@ -23,6 +23,7 @@ class SaleService(AbstractSaleService):
             return self._to_json(order)[0]
         else:
             domain = [
+                ('typology', '=', 'sale'),
                 ('partner_id', '=', self.partner.id),
                 ('shopinvader_backend_id', '=', self.backend_record.id),
                 ]
