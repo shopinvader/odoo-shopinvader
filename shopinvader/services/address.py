@@ -25,9 +25,13 @@ class AddressService(ShopinvaderService):
 
     @secure_params
     def create(self, params):
-        params['parent_id'] = self.partner.id
+        params = self._prepare_create(params)
         self.env['res.partner'].create(params)
         return self._list()
+
+    def _prepare_create(self, params):
+        params['parent_id'] = self.partner.id
+        return params
 
     @secure_params
     def update(self, params):
