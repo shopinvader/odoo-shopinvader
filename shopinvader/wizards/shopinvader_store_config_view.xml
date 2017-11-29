@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="shopinvader_store_config_view_form" model="ir.ui.view">
+    <field name="model">shopinvader.store.config</field>
+    <field name="arch" type="xml">
+        <form string="Site Config">
+            <field name="filename" invisible="1"/>
+            <field name="data" filename="filename"/>
+        </form>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_shopinvader_store_config_view">
+    <field name="name">Shopinvader Store Config</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">shopinvader.store.config</field>
+    <field name="view_type">form</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+    </data>
+</openerp>
