@@ -27,7 +27,7 @@ class ShopinvaderController(Controller):
                 res = service.update(params)
             elif method == 'DELETE':
                 res = service.delete(params)
-            res = request.make_response(res)
+            res = request.make_json_response(res)
             _logger.info('Shopinvader Response in %s', datetime.now() - start)
             return res
 

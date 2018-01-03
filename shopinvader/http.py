@@ -153,13 +153,12 @@ class HttpJsonRequest(HttpRequest):
         except:
             return WrapJsonException(InternalServerError())
 
-    def make_response(self, data, headers=None, cookies=None):
+    def make_json_response(self, data, headers=None, cookies=None):
         data = json.dumps(data)
         if headers is None:
             headers = {}
         headers['Content-Type'] = 'application/json'
-        return super(HttpJsonRequest, self).make_response(
-            data, headers=headers, cookies=cookies)
+        return self.make_response(data, headers=headers, cookies=cookies)
 
 
 ori_get_request = Root.get_request
