@@ -3,18 +3,18 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo import SUPERUSER_ID
+from odoo.api import Environment
+
 
 def post_init_hook(cr, registry):
-    module_obj = registry['ir.module.module']
-    product_obj = registry['product.template']
-    data_obj = registry['ir.model.data']
-    module_ids = module_obj.search(
-        cr, 1, [('name', '=', 'shopinvader_algolia')])
-    module = module_obj.browse(cr, 1, module_ids[0])
+    env = Environment(cr, SUPERUSER_ID, {})
+    module_obj = env['ir.module.module']
+    product_obj = env['product.template']
+    module = module_obj.search([('name', '=', 'shopinvader_algolia')])
     if module.demo:
-        product_id = data_obj.xmlid_to_res_id(
-            cr, 1, 'product.product_product_4_product_template')
-        description = product_obj.browse(cr, 1, product_id).description
+        product = env.ref('product.product_product_4_product_template')
+        description = product.description
         vals = {'description': description}
-        product_ids = product_obj.search(cr, 1, [])
-        product_obj.write(cr, 1, product_ids, vals)
+        products = product_obj.search([])
+        products.write(vals)

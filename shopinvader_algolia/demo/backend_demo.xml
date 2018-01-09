@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
 <record id="shopinvader.backend_1" model="locomotive.backend">
     <field name="se_backend_id" ref="connector_algolia.backend_1"/>
@@ -22,6 +21,4 @@
     <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_category"/>
 </record>
 
-
-    </data>
-</openerp>
+</odoo>

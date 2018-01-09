@@ -262,7 +262,7 @@ class ShopinvaderVariant(models.Model):
         taxes = product_id.taxes_id.sudo().filtered(
             lambda r: not company or r.company_id == company)
         tax_id = fposition.map_tax(taxes, product_id) if fposition else taxes
-        tax_id = tax_id[0]
+        tax_id = tax_id and tax_id[0]
         product = product_id.with_context(
             quantity=qty,
             pricelist=pricelist.id,
