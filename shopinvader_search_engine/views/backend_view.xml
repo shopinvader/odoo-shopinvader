@@ -6,7 +6,7 @@
     <field name="inherit_id"
            ref="shopinvader.locomotive_backend_view_form" />
     <field name="arch" type="xml">
-        <field name="odoo_api" position="after">
+        <field name="auth_api_key_id" position="after">
             <field name="se_backend_id"/>
         </field>
         <button name="bind_all_product" position="after">

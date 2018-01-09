@@ -5,7 +5,7 @@
 
 
 {'name': 'Shopinvader Algolia Connector',
- 'version': '8.0.0.0.1',
+ 'version': '10.0.1.0.0',
  'author': 'Akretion',
  'website': 'www.akretion.com',
  'license': 'AGPL-3',
@@ -22,6 +22,6 @@
      'demo/backend_demo.xml',
      'demo/product_demo.xml',
  ],
- 'installable': False,
+ 'installable': True,
  'application': True,
  }

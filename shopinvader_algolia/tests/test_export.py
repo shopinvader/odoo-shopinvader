@@ -4,68 +4,114 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.tests.common import TransactionCase
+from odoo.addons.connector_algolia.tests.common import mock_api, ConnectorAlgoliaCase
 import os
 import unittest
 import time
-from odoo.addons.connector.tests.common import mock_job_delay_to_direct
 import logging
+from odoo import _
+from odoo.addons.queue_job.job import Job
 
 _logger = logging.getLogger(__name__)
 
 
-try:
-    import algoliasearch
-except ImportError:
-    _logger.debug('Can not import algoliasearch')
+class TestExport(ConnectorAlgoliaCase):
 
-
-@unittest.skipUnless(
-    os.environ.get('ALGOLIA_TEST') and os.environ.get('ALGOLIA_APP', '') and
-    os.environ.get('ALGOLIA_API_KEY', ''),
-    "Missing algolia connection environment variables")
-class ExportCase(TransactionCase):
-
-    def setUp(self):
-        super(ExportCase, self).setUp()
-        self.backend = self.env.ref('shopinvader.backend_1')
-        self.se_backend = self.env.ref('connector_algolia.backend_1')
-        self.se_backend.algolia_app_id = os.environ['ALGOLIA_APP']
-        self.se_backend.algolia_api_key = os.environ['ALGOLIA_API_KEY']
-        self.backend.bind_all_product()
-        self.backend.bind_all_category()
-        self.path = (
-            'odoo.addons.shopinvader_algolia.unit.exporter.export_record')
-        if os.environ.get('TRAVIS_JOB_NUMBER', False):
-            for index in self.env['se.index'].search(
-                    [('backend_id', '=', self.se_backend.id)]):
-                index.name = '%s-%s' % (
-                    os.environ['TRAVIS_JOB_NUMBER'].replace('.', '_'),
-                    index.name)
+    @classmethod
+    def setUpClass(cls):
+        super(TestExport, cls).setUpClass()
+        cls.shopinvader_backend = cls.env.ref('shopinvader.backend_1')
+        cls.shopinvader_backend.bind_all_product()
+        cls.shopinvader_backend.bind_all_category()
 
     def test_10_export_one_product(self):
         product = self.env.ref('product.product_product_3_product_template')
         si_variant = product.shopinvader_bind_ids[0].shopinvader_variant_ids[0]
-        with mock_job_delay_to_direct(self.path):
-            si_variant._scheduler_export(domain=[('id', '=', si_variant.id)])
-        # If someone else has a less ugly solution, I'm interrested.
-        time.sleep(5)
-        client = algoliasearch.client.Client(
-            self.se_backend.algolia_app_id, self.se_backend.algolia_api_key)
-        index = client.initIndex(si_variant.index_id.name)
-        algolia_product = index.search(si_variant.name)
-        self.assertEqual(algolia_product['nbHits'], 1)
+        with mock_api(self.env) as mocked_api:
+            si_variant._scheduler_export(
+                domain=[('id', '=', si_variant.id)], delay=False)
+            self.assertTrue('algolia-product' in mocked_api.index)
+        index = mocked_api.index['algolia-product']
+        self.assertEqual(1, len(index._calls))
+        method, values = index._calls[0]
+        self.assertEqual('add_objects', method)
         self.assertEqual(
-            algolia_product['hits'][0]['model_name'], si_variant.name)
-        self.assertEqual(
-            int(algolia_product['hits'][0]['objectID']), product.id)
-        self.assertEqual(
-            algolia_product['hits'][0]['default_code'],
-            si_variant.default_code)
+            1, len(values), "Only one shopinvader variant should be exported")
+        value = values[0]
+        self.assertEqual(value['model_name'], si_variant.name)
+        self.assertEqual(value['objectID'], product.id)
+        self.assertEqual(value['default_code'], si_variant.default_code)
 
     def test_20_export_all_products(self):
-        with mock_job_delay_to_direct(self.path):
-            self.backend.export_all_product()
+        queue_job = self.env['queue.job']
+        existing_jobs = queue_job.search([])
+        # a job is created to export all products
+        self.shopinvader_backend.export_all_product()
+        new_jobs = queue_job.search([])
+        new_job = new_jobs - existing_jobs
+        self.assertEqual(1, len(new_job))
+        job = Job.load(self.env, new_job.uuid)
+        self.assertEqual(
+            _('Prepare a batch export of indexes'),
+            job.description)
+        existing_jobs = new_jobs
+        # perform the job
+        job.perform()
+        new_jobs = queue_job.search([])
+        new_job = new_jobs - existing_jobs
+        self.assertEqual(1, len(new_job))
+        job = Job.load(self.env, new_job.uuid)
+        count = self.env['product.product'].search_count([])
+        self.assertEqual(
+            _("Export %d records of %d for index 'algolia-product'") % (
+                count, count),
+            job.description)
+        # the last job is the one performing the export
+        job = Job.load(self.env, new_job.uuid)
+        with mock_api(self.env) as mocked_api:
+            job.perform()
+        self.assertTrue('algolia-product' in mocked_api.index)
+        index = mocked_api.index['algolia-product']
+        self.assertEqual(
+            1, len(index._calls), "All variants must be exported in 1 call")
+        method, values = index._calls[0]
+        self.assertEqual('add_objects', method)
+        self.assertEqual(
+            count, len(values), "All variants should be exported")
 
     def test_30_export_all_categories(self):
-        with mock_job_delay_to_direct(self.path):
-            self.backend.export_all_category()
+        queue_job = self.env['queue.job']
+        existing_jobs = queue_job.search([])
+        # a job is created to export all products
+        self.shopinvader_backend.export_all_category()
+        new_jobs = queue_job.search([])
+        new_job = new_jobs - existing_jobs
+        self.assertEqual(1, len(new_job))
+        job = Job.load(self.env, new_job.uuid)
+        self.assertEqual(
+            _('Prepare a batch export of indexes'),
+            job.description)
+        existing_jobs = new_jobs
+        # perform the job
+        job.perform()
+        new_jobs = queue_job.search([])
+        new_job = new_jobs - existing_jobs
+        self.assertEqual(1, len(new_job))
+        job = Job.load(self.env, new_job.uuid)
+        count = self.env['product.category'].search_count([])
+        self.assertEqual(
+            _("Export %d records of %d for index 'algolia-category'") % (
+                count, count),
+            job.description)
+        # the last job is the one performing the export
+        job = Job.load(self.env, new_job.uuid)
+        with mock_api(self.env) as mocked_api:
+            job.perform()
+        self.assertTrue('algolia-category' in mocked_api.index)
+        index = mocked_api.index['algolia-category']
+        self.assertEqual(
+            1, len(index._calls), "All categories must be exported in 1 call")
+        method, values = index._calls[0]
+        self.assertEqual('add_objects', method)
+        self.assertEqual(
+            count, len(values), "All categories should be exported")

@@ -17,7 +17,6 @@ class KeychainAccount(models.Model):
 
     @api.multi
     def get_password(self):
-        self.ensure_one()
         if self.env.registry.in_test_mode():
             return self.password
         return super(KeychainAccount, self).get_password()
