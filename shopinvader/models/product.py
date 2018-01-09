@@ -254,33 +254,30 @@ class ShopinvaderVariant(models.Model):
                 attributes[sanitized_key] = att_value.name
             record.attributes = attributes
 
-    def _get_price(self, pricelist, fposition):
+    def _get_price(self, pricelist, fposition, company=None):
         self.ensure_one()
-        return self._get_price_per_qty(1, pricelist, fposition)
+        return self._get_price_per_qty(1, pricelist, fposition, company)
 
-    def _extract_price_from_onchange(self, pricelist, onchange_vals):
-        tax_ids = onchange_vals['value']['tax_id']
-        tax_included = False
-        if tax_ids:
-            # Becarefull we only take in account the first tax for
-            # determinating if the price is tax included or tax excluded
-            # This may not work in multi-tax case
-            tax = self.env['account.tax'].browse(tax_ids[0])
-            tax_included = tax.price_include
-        prec = self.env['decimal.precision'].precision_get('Product')
+    def _get_price_per_qty(self, qty, pricelist, fposition, company=None):
+        product_id = self.record_id
+        taxes = product_id.taxes_id.sudo().filtered(
+            lambda r: not company or r.company_id == company)
+        tax_id = fposition.map_tax(taxes, product_id) if fposition else taxes
+        tax_id = tax_id[0]
+        product = product_id.with_context(
+            quantity=qty,
+            pricelist=pricelist.id,
+            fiscal_position=fposition,
+        )
+        final_price, rule_id = pricelist.get_product_price_rule(
+            product, qty or 1.0, None)
+        tax_included = tax_id.price_include
+        value = self.env['account.tax']._fix_tax_included_price_company(
+            final_price, product.taxes_id, tax_id, company)
         return {
-            'value': round(onchange_vals['value']['price_unit'], prec),
-            'tax_included': tax_included,
-            }
-
-    def _get_price_per_qty(self, qty, pricelist, fposition):
-        # Get an partner in order to avoid the raise in the onchange
-        # the partner selected will not impacted the result
-        partner = self.env['res.partner'].search([], limit=1)
-        result = self.env['sale.order.line'].product_id_change(
-            pricelist.id, self.record_id.id, qty=qty,
-            fiscal_position=fposition.id, partner_id=partner.id)
-        return self._extract_price_from_onchange(pricelist, result)
+            'value': value,
+            'tax_included': tax_included
+        }
 
     def _compute_main_product(self):
         for record in self:
