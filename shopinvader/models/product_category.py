@@ -35,10 +35,6 @@ class ShopinvaderCategory(models.Model):
     object_id = fields.Integer(
         compute='_compute_object_id',
         store=True)
-    lang_id = fields.Many2one(
-        'res.lang',
-        'Lang',
-        required=True)
     seo_title = fields.Char()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
@@ -63,7 +59,7 @@ class ShopinvaderCategory(models.Model):
         string='Redirect Url Keys')
 
     _sql_constraints = [
-        ('record_uniq', 'unique(backend_id, record_id, lang_id)',
+        ('record_uniq', 'unique(backend_id, record_id)',
          'A category can only have one binding by backend.'),
     ]
 

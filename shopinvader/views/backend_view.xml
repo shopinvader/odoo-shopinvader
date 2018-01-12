@@ -6,6 +6,27 @@
         <field name="inherit_id"
                ref="connector_locomotivecms.view_locomotive_backend_form"/>
         <field name="arch" type="xml">
+            <header position="inside">
+                <button name="%(shopinvader_variant_binding_wizard_act_window)d"
+                        type="action"
+                        string="Bind Products"
+                        class="oe_highlight"
+                        groups="connector.group_connector_manager"/>
+            </header>
+            <xpath expr="//div[@name='buttons']" position="inside">
+                <button class="oe_stat_button oe_right"
+                        name="%(shopinvader_variant_no_group_by_act_window)d" type="action"
+                        icon="fa-file-text-o"
+                        context="{'search_default_backend_id': active_id}">
+                    <div>
+                        <strong>
+                            <field nolabel="1" name="nbr_variant" widget="statinfo"/>
+                        </strong>
+                        Products
+                    </div>
+                </button>
+            </xpath>
+
             <field name="handle" position="after">
                 <field name="auth_api_key_id"/>
                 <field name="lang_ids" widget="many2many_tags"/>

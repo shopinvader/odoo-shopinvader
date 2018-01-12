@@ -10,3 +10,4 @@ from . import test_product
 #from . import test_role
 from . import test_sale
 #from . import test_check_vat
+from . import test_shopinvader_variant_binding_wizard
