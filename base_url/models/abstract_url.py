@@ -20,6 +20,12 @@ def get_model_ref(record):
 class AbstractUrl(models.AbstractModel):
     _name = 'abstract.url'
 
+    def _search_url_key(self, operator, value):
+        urls = self.env['url.url'].search([
+            ('url_key', operator, value)
+        ])
+        return [('id', 'in', urls.mapped('model_id.id'))]
+
     url_builder = fields.Selection(
         selection=[
             ('auto', 'Automatic'),
@@ -27,16 +33,24 @@ class AbstractUrl(models.AbstractModel):
             ], default='auto')
     manual_url_key = fields.Char()
     url_key = fields.Char(
+        string='Url key',
         compute='_compute_url',
-        store=True)
+        search=_search_url_key,
+        help='The url is the one in current lang if the lang is supported by '
+             'the backend, otherwise None'
+    )
+    url_url_ids = fields.One2many(
+        compute='_compute_url_url_id',
+        comodel_name='url.url')
     redirect_url_key_ids = fields.One2many(
         compute='_compute_redirect_url',
         comodel_name='url.url')
 
+
     def _build_url_key(self):
         self.ensure_one()
         return slugify(self.record_id.with_context(
-            lang=self.lang_id.code).name)
+            lang=self.env.lang).name)
 
     @api.model
     def _prepare_url(self, url_key):
@@ -57,11 +71,12 @@ class AbstractUrl(models.AbstractModel):
         3 write the new one
         """
         self.ensure_one()
-
+        lang = self.env['res.lang'].search(
+            [('code', '=', self.env.lang)], limit=1)
         existing_url = self.env['url.url'].search([
             ('url_key', '=', url_key),
             ('backend_id', '=', get_model_ref(self.backend_id)),
-            ('lang_id', '=', self.lang_id.id),
+            ('lang_id', '=', lang.id),
             ])
         if existing_url:
             if self != existing_url.model_id:
@@ -101,12 +116,14 @@ class AbstractUrl(models.AbstractModel):
                 # Do not update field value on onchange
                 # as with_context is broken on NewId
                 continue
+            new_url = None
+            # TODO 1 URL BY lang into the backend if not manual!!!!!
             if record.url_builder == 'manual':
                 new_url = record.manual_url_key
-            else:
-                new_url = record._build_url_key()
-            if new_url:
-                record.set_url(new_url)
+            #else:
+            #    new_url = record._build_url_key()
+            #if new_url:
+            #    record.set_url(new_url)
             record.url_key = new_url
         self.env.all.todo = todo
 
@@ -115,6 +132,12 @@ class AbstractUrl(models.AbstractModel):
             record.redirect_url_key_ids = record.env["url.url"].search([
                 ('model_id', '=', get_model_ref(record)),
                 ('redirect', '=', True),
+                ])
+
+    def _compute_url_url_ids(self):
+        for record in self:
+            record.redirect_url_key_ids = record.env["url.url"].search([
+                ('model_id', '=', get_model_ref(record)),
                 ])
 
     @api.onchange('manual_url_key')

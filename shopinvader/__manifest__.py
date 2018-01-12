@@ -38,6 +38,9 @@
         # "sale_order_line_price_subtotal_gross",
     ],
     "data": [
+        'views/shopinvader_variant.xml',
+        'wizards/shopinvader_variant_unbinding_wizard.xml',
+        'wizards/shopinvader_variant_binding_wizard.xml',
         'views/product_view.xml',
         # 'views/payment_method_view.xml',
         'views/backend_view.xml',
