@@ -29,6 +29,11 @@ Contributors
 * Monsieur B <monsieurb@saaslys.com>
 * Sebastien Beau <sebastien.beau@akretion.com>
 
+RoadMap
+--------
+* access right should be implemented in a better way. Indeed like in the attachement the access right should depend
+  on the object that own the url
+
 Maintainer
 ----------
 
