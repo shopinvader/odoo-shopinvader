@@ -33,7 +33,7 @@ from odoo import api, fields, models
 
 
 class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
+    _inherit = ['locomotive.backend', 'connector.backend']
     role_ids = fields.One2many(
         'shopinvader.role',
         'backend_id',
@@ -42,9 +42,6 @@ class LocomotiveBackend(models.Model):
         'shopinvader.notification',
         'backend_id',
         'Notification')
-    odoo_api = fields.Char(
-        help=("This is the API key that you need to add in your website in "
-              "order to give the posibility to shopinvader to access to odoo"))
     version = fields.Selection(selection_add=[
         ('shopinvader_v1', 'Shopinvader V1')])
     # TODO move to shopinvader_image
