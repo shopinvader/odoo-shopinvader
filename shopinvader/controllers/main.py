@@ -3,33 +3,26 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.http import Controller, request, route
-from datetime import datetime
 import logging
+from datetime import datetime
+
+from odoo.addons.partner_invader.controllers import main
+from odoo.http import request, route
+
 _logger = logging.getLogger(__name__)
 
 
-class ShopinvaderController(Controller):
+class InvaderController(main.InvaderController):
 
-    def send_to_service(self, service_name, params):
-        with request.backend.work_on(
-                model_name='locomotive.backend',
-                partner=request.partner,
-                shopinvader_session=request.shopinvader_session) as work:
-            service = work.component(usage=service_name)
-            start = datetime.now()
-            method = request.httprequest.method
-            if method == 'GET':
-                res = service.get(params)
-            elif method == 'POST':
-                res = service.create(params)
-            elif method == 'PUT':
-                res = service.update(params)
-            elif method == 'DELETE':
-                res = service.delete(params)
-            res = request.make_json_response(res)
-            _logger.info('Shopinvader Response in %s', datetime.now() - start)
-            return res
+    def _get_component_context(self):
+        """
+        This method can be inherited to add parameter into the component
+        context
+        :return: dict of key value.
+        """
+        params = super(InvaderController, self)._get_component_context()
+        params['shopinvader_session'] = request.shopinvader_session
+        return params
 
     # Check Vat
     @route('/shopinvader/check_vat', methods=['GET'], auth="shopinvader")
