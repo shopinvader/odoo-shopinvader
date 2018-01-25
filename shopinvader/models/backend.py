@@ -12,6 +12,14 @@ from openerp.addons.connector_locomotivecms.unit.deleter import (
 from openerp.addons.connector.session import ConnectorSession
 from openerp.addons.connector_locomotivecms.connector import get_environment
 from ..unit.consumer import delay_export
+import json
+import yaml
+import base64
+
+try:
+    from cStringIO import StringIO
+except ImportError:
+    from StringIO import StringIO
 
 
 @job
@@ -154,3 +162,35 @@ class LocomotiveBackend(models.Model):
             send_notification.delay(
                 session, notif._name, notif.id, record._name, record.id)
         return True
+
+    def _extract_configuration(self):
+        return {}
+
+    def _extract_json_configuration(self):
+        config = self._extract_configuration()
+        for key in config:
+            config[key] = json.dumps(
+                config[key], sort_keys=True,
+                indent=4, encoding='utf-8',
+                separators=(',', ':'))
+        return config
+
+    @api.multi
+    def export_store_configuration(self):
+        self.ensure_one()
+        config = self._extract_json_configuration()
+        fp = StringIO()
+        fp.write(yaml.dump(
+            {'_store': config},
+            encoding='utf-8',
+            default_style='>'))
+        fp.seek(0)
+        data = base64.b64encode(fp.read())
+        wizard = self.env['shopinvader.store.config'].create({
+            'data': data,
+            'filename': 'site.yml',
+            })
+        action = self.env.ref(
+            'shopinvader.act_open_shopinvader_store_config_view').read()[0]
+        action['res_id'] = wizard.id
+        return action

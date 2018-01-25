@@ -45,6 +45,7 @@
         "data/res_partner.xml",
         "data/ir_export_product.xml",
         "data/ir_export_category.xml",
+        "wizards/shopinvader_store_config_view.xml",
     ],
     "demo": [
         "demo/account_demo.xml",

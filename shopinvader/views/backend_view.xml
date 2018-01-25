@@ -76,6 +76,12 @@
                             string="Bind all category"
                             type="object"/>
                     </group>
+                    <group name="site" string="Site Configuration" col="10" colspan="4">
+                        <button
+                            name="export_store_configuration"
+                            string="Export Store Config"
+                            type="object"/>
+                    </group>
                 </group>
             </page>
         </notebook>
