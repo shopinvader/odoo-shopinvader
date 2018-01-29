@@ -7,9 +7,9 @@
 import logging
 
 from odoo.http import request
+from odoo import models
 from werkzeug.exceptions import Unauthorized
 
-from odoo import models
 
 _logger = logging.getLogger(__name__)
 

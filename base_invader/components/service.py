@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-import functools
 import logging
 
 from odoo.addons.component.core import Component
@@ -32,20 +31,16 @@ def to_int(val):
 
 
 def to_bool(val):
-    if val in ('true', 'True', '1', True):
-        return True
-    else:
-        return False
+    return val in ('true', 'True', '1', True)
 
 
-def secure_params(func):
-    @functools.wraps(func)
-    def wrapped(self, params):
-        secure_params = self._secure_params(func.__name__, params)
-        res = func(self, secure_params)
-        self._log_call(func, params, secure_params, res)
-        return res
-    return wrapped
+def skip_secure_params(func):
+    """
+    Used to decorate methods
+    :param func:
+    :return:
+    """
+    func.skip_secure_params = True
 
 
 class InvaderService(Component):
@@ -79,10 +74,10 @@ class InvaderService(Component):
             message = 'Invader call url %s method %s'
             _logger.debug(message, *args, extra=extra)
 
-    def _get_schema_for_method(self, method):
-        validator_method = '_validator_%s' % method
+    def _get_schema_for_method(self, method_name):
+        validator_method = '_validator_%s' % method_name
         if not hasattr(self, validator_method):
-            raise NotImplemented
+            raise NotImplementedError(validator_method)
         return getattr(self, validator_method)()
 
     def _validate_list(self, schema, params):
@@ -99,7 +94,21 @@ class InvaderService(Component):
         return params
 
     def _secure_params(self, method, params):
-        schema = self._get_schema_for_method(method)
+        """
+        This internal method is used to validate and sanitize the parameters
+        expected by the given method.  These parameters are validated and
+        sanitized according to a schema provided by a method  following the
+        naming convention: '_validator_{method_name}'. If the method is
+        decorated with `@skip_secure_params` the check and sanitize of the
+        parameters are skipped.
+        :param method:
+        :param params:
+        :return:
+        """
+        method_name = method.__name__
+        if hasattr(method, 'skip_secure_params'):
+            return params
+        schema = self._get_schema_for_method(method_name)
         v = Validator(schema, purge_unknown=True)
         if v.validate(params):
             # TODO we should fix cerberus issue
@@ -107,3 +116,23 @@ class InvaderService(Component):
             return self._validate_list(schema, v.document)
         _logger.error("BadRequest %s", v.errors)
         raise UserError(_('Invalid Form'))
+
+    def dispatch(self, method_name, _id=None, **params):
+        """
+        This method dispatch the call to expected method name. Before the call
+        the parameters are secured by a call to `secure_params`.
+        :param method_name:
+        :param _id:
+        :param params:
+        :return:
+        """
+        func = getattr(self, method_name, None)
+        if not func:
+            raise NotImplementedError('Method %s not found in service %s' %
+                                      method_name, self._name)
+        secure_params = self._secure_params(func, params)
+        if _id:
+            secure_params['_id'] = _id
+        res = func(**secure_params)
+        self._log_call(func, params, secure_params, res)
+        return res
