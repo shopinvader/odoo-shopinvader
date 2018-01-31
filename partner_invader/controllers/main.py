@@ -20,5 +20,5 @@ class InvaderController(main.InvaderController):
         :return: dict of key value.
         """
         params = super(InvaderController, self)._get_component_context()
-        params['partner'] =request.partner
+        params['partner'] = request.partner
         return params

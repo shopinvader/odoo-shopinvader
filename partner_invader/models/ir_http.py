@@ -28,10 +28,10 @@ class IrHttp(models.AbstractModel):
     @classmethod
     def _invader_get_partner_from_header(cls, headers):
         partner_domin = cls._get_partner_domain(headers)
+        partner_model = request.env[
+            request.backend.partner_model_id.model]
         if partner_domin:
-            partner = request.env[
-                request.backend.partner_model_id.model].search(
-                    partner_domin)
+            partner = partner_model.search(partner_domin)
             if len(partner) == 1:
                 return partner
             else:
@@ -42,7 +42,7 @@ class IrHttp(models.AbstractModel):
                         request.backend.partner_model_id.name,
                         partner_domin
                     )
-        return None
+        return partner_model.browse([])
 
     @classmethod
     def _auth_method_api_key(cls):
