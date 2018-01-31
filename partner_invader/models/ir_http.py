@@ -48,6 +48,5 @@ class IrHttp(models.AbstractModel):
     def _auth_method_api_key(cls):
         ret = super(IrHttp, cls)._auth_method_api_key()
         headers = request.httprequest.environ
-        request.partner =\
-           cls._invader_get_partner_from_header(headers)
+        request.partner = cls._invader_get_partner_from_header(headers)
         return ret

@@ -3,8 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.addons.server_environment import serv_config
-from odoo.osv.expression import TRUE_DOMAIN, FALSE_DOMAIN
 
 CONFIG_SECTION = 'greenbox_website'
 

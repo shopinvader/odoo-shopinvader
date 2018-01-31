@@ -6,7 +6,9 @@
 {
     'name': 'Partner Invader',
     'description': """
-        Bind locomotive user to odoo user and manage partner into locomotive requests""",
+        Bind the request to an odoo partner according to the partner_email
+        found into the HTTP headers
+    """,
     'version': '10.0.1.0.0',
     'license': 'AGPL-3',
     'author': 'Akretion, ACSONE SA/NV',
