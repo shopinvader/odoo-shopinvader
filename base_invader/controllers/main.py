@@ -76,8 +76,8 @@ class InvaderController(Controller):
             else:
                 method_name = 'create'
         if method_name.startswith('_'):
-            _logger.error('Invader service called with an unallowed method '
-                          'name: %s.\n Method can\'t start with "-"',
+            _logger.error("Invader service called with an unallowed method "
+                          "name: %s.\n Method can't start with '_'",
                           method_name)
             raise BadRequest()
         with self.service_component(_service_name) as service:
