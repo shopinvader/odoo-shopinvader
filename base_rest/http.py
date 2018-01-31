@@ -12,14 +12,12 @@ from datetime import datetime
 
 from odoo.exceptions import (
     Warning as UserError, MissingError, AccessError, ValidationError)
-from odoo.http import HttpRequest, Root
-from odoo.http import request
-from werkzeug.exceptions import (
-    BadRequest, NotFound, Forbidden, InternalServerError)
-from werkzeug.exceptions import HTTPException
+from odoo.http import HttpRequest, Root, request
+from werkzeug.exceptions import BadRequest, NotFound, Forbidden, \
+    InternalServerError, HTTPException
 from werkzeug.utils import escape
 
-from .controllers.main import ROOT_PATH
+from .core import _rest_services_databases
 
 _logger = logging.getLogger(__name__)
 
@@ -66,7 +64,7 @@ def wrapJsonException(exception):
             'raise the following error %s')
         args = (httprequest.url, httprequest.method, request.params, exception)
         extra = {
-            'application': request.backend.name,
+            'application': 'REST Services',
             'url': httprequest.url,
             'method': httprequest.method,
             'params': request.params,
@@ -82,10 +80,11 @@ def wrapJsonException(exception):
 class HttpRestRequest(HttpRequest):
     """Http request that always return json, usefull for rest api"""
 
-    def __init__(self, *args):
-        super(HttpRestRequest, self).__init__(*args)
+    def __init__(self, httprequest, collection_name):
+        super(HttpRestRequest, self).__init__(httprequest)
         if self.httprequest.headers.get('Content-Type') == 'application/json':
             self.params = json.loads(self.httprequest.stream.read())
+        self.collection_name = collection_name
 
     def _handle_exception(self, exception):
         """Called within an except block to allow converting exceptions
@@ -118,8 +117,12 @@ ori_get_request = Root.get_request
 
 
 def get_request(self, httprequest):
-    if httprequest.path.startswith(ROOT_PATH):
-        return HttpRestRequest(httprequest)
+    db = httprequest.session.db
+    service_registry = _rest_services_databases.get(db)
+    if service_registry:
+        for root_path, collection_name in service_registry.items():
+            if httprequest.path.startswith(root_path):
+                return HttpRestRequest(httprequest, collection_name)
     return ori_get_request(self, httprequest)
 
 

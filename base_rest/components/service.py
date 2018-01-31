@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# Copyright 2018 ACSONE SA/NV
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -43,18 +44,15 @@ def skip_secure_params(func):
     func.skip_secure_params = True
 
 
-class InvaderService(Component):
-    _name = 'invader.service'
-    _model_name = 'invader.entrypoint'
-    _usage = 'invader.service'
-    _collection = 'default.service.collection'
+class BaseRestService(Component):
+    _name = 'base.rest.service'
 
     def _prepare_extra_log(self, func, params, secure_params, res):
         httprequest = request.httprequest
         headers = dict(httprequest.headers)
         headers.pop('Api-Key')
         return {
-            'application': 'Invader',
+            'application': 'Rest Service',
             'invader_url': httprequest.url,
             'invader_method': httprequest.method,
             'params': params,
