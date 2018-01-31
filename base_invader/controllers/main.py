@@ -66,9 +66,9 @@ class InvaderController(Controller):
             return self.make_response(res)
 
     @route([
-        ROOT_PATH + '<string:_service_name>/',
+        ROOT_PATH + '<string:_service_name>',
         ROOT_PATH + '<string:_service_name>/search',
-        ROOT_PATH + '<string:_service_name>/<int:_id>/',
+        ROOT_PATH + '<string:_service_name>/<int:_id>',
         ROOT_PATH + '<string:_service_name>/<int:_id>/get'
     ], methods=['GET'], auth="api_key", csrf=False)
     def get(self, _service_name, _id=None, **params):
@@ -76,9 +76,9 @@ class InvaderController(Controller):
         return self._process_method(_service_name, method_name, _id, params)
 
     @route([
-        ROOT_PATH + '<string:_service_name>/',
+        ROOT_PATH + '<string:_service_name>',
         ROOT_PATH + '<string:_service_name>/<string:method_name>',
-        ROOT_PATH + '<string:_service_name>/<int:_id>/',
+        ROOT_PATH + '<string:_service_name>/<int:_id>',
         ROOT_PATH + '<string:_service_name>/<int:_id>/<string:method_name>'
     ], methods=['POST'], auth="api_key", csrf=False)
     def modify(self, _service_name, _id=None, method_name=None, **params):
@@ -87,13 +87,13 @@ class InvaderController(Controller):
         return self._process_method(_service_name, method_name, _id, params)
 
     @route([
-        ROOT_PATH + '<string:_service_name>/<int:_id>/',
+        ROOT_PATH + '<string:_service_name>/<int:_id>',
     ], methods=['PUT'], auth="api_key", csrf=False)
     def update(self, _service_name, _id, **params):
         return self._process_method(_service_name, 'update', _id, params)
 
     @route([
-        ROOT_PATH + '<string:_service_name>/<int:_id>/',
+        ROOT_PATH + '<string:_service_name>/<int:_id>',
     ], methods=['DELETE'], auth="api_key", csrf=False)
     def delete(self, _service_name, _id):
         return self._process_method(_service_name, 'delete', _id)
