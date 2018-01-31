@@ -117,15 +117,18 @@ class InvaderService(Component):
         _logger.error("BadRequest %s", v.errors)
         raise UserError(_('Invalid Form'))
 
-    def dispatch(self, method_name, _id=None, **params):
+    def dispatch(self, method_name, _id=None, params=None):
         """
         This method dispatch the call to expected method name. Before the call
         the parameters are secured by a call to `secure_params`.
         :param method_name:
         :param _id:
-        :param params:
+        :param params: A dictionary with the parameters of the method. Once
+                       secured and sanitized, these parameters will be passed
+                       to the method as keyword args.
         :return:
         """
+        params = params or {}
         func = getattr(self, method_name, None)
         if not func:
             raise NotImplementedError('Method %s not found in service %s' %

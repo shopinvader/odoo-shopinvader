@@ -59,7 +59,7 @@ class InvaderController(Controller):
     def get(self, _service_name, _id=None, **params):
         with self.service_component(_service_name) as service:
             method_name = 'get' if _id else 'search'
-            res = service.dispatch(method_name, _id, **params)
+            res = service.dispatch(method_name, _id, params)
             return self.make_response(res)
 
     @route([
@@ -81,5 +81,5 @@ class InvaderController(Controller):
                           method_name)
             raise BadRequest()
         with self.service_component(_service_name) as service:
-            res = service.dispatch(method_name, _id, **params)
+            res = service.dispatch(method_name, _id, params)
             return self.make_response(res)
