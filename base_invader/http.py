@@ -91,7 +91,7 @@ class HttpRestRequest(HttpRequest):
         """Called within an except block to allow converting exceptions
            to abitrary responses. Anything returned (except None) will
            be used as response."""
-        _logger.debug('Shopinvader Handle exception %s', exception)
+        _logger.exception('Shopinvader Handle exception %s', exception)
         try:
             return super(HttpRestRequest, self)._handle_exception(exception)
         except (UserError, ValidationError), e:
