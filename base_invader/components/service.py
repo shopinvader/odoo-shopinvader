@@ -139,3 +139,10 @@ class InvaderService(Component):
         res = func(**secure_params)
         self._log_call(func, params, secure_params, res)
         return res
+
+    def _validator_delete(self):
+        """
+        Default validator for delete method.
+        By default delete should never be called with parameters.
+        """
+        return {}

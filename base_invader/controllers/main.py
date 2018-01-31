@@ -67,14 +67,10 @@ class InvaderController(Controller):
         ROOT_PATH + '<string:_service_name>/<string:method_name>',
         ROOT_PATH + '<string:_service_name>/<int:_id>/',
         ROOT_PATH + '<string:_service_name>/<int:_id>/<string:method_name>'
-    ], methods=['POST', 'PUT', 'DELETE'], auth="api_key", csrf=False)
+    ], methods=['POST', 'PUT'], auth="api_key", csrf=False)
     def modify(self, _service_name, _id=None, method_name=None, **params):
-        method = request.httprequest.method
         if not method_name:
-            if _id:
-                method_name = 'delete' if method == 'DELETE' else 'update'
-            else:
-                method_name = 'create'
+            method_name = 'update' if _id else 'create'
         if method_name.startswith('_'):
             _logger.error("Invader service called with an unallowed method "
                           "name: %s.\n Method can't start with '_'",
@@ -82,4 +78,12 @@ class InvaderController(Controller):
             raise BadRequest()
         with self.service_component(_service_name) as service:
             res = service.dispatch(method_name, _id, params)
+            return self.make_response(res)
+
+    @route([
+        ROOT_PATH + '<string:_service_name>/<int:_id>/',
+    ], methods=['DELETE'], auth="api_key", csrf=False)
+    def delete(self, _service_name, _id):
+        with self.service_component(_service_name) as service:
+            res = service.dispatch('delete', _id)
             return self.make_response(res)
