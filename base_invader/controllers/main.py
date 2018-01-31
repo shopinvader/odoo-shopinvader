@@ -50,6 +50,21 @@ class InvaderController(Controller):
             service = work.component(usage=service_name)
             yield service
 
+    def _validate_method_name(self, method_name):
+        if method_name.startswith('_'):
+            _logger.error("Invader service called with an unallowed method "
+                          "name: %s.\n Method can't start with '_'",
+                          method_name)
+            raise BadRequest()
+        return True
+
+    def _process_method(self, service_name, method_name, _id=None,
+                        params=None):
+        self._validate_method_name(method_name)
+        with self.service_component(service_name) as service:
+            res = service.dispatch(method_name, _id, params)
+            return self.make_response(res)
+
     @route([
         ROOT_PATH + '<string:_service_name>/',
         ROOT_PATH + '<string:_service_name>/search',
@@ -57,33 +72,28 @@ class InvaderController(Controller):
         ROOT_PATH + '<string:_service_name>/<int:_id>/get'
     ], methods=['GET'], auth="api_key", csrf=False)
     def get(self, _service_name, _id=None, **params):
-        with self.service_component(_service_name) as service:
-            method_name = 'get' if _id else 'search'
-            res = service.dispatch(method_name, _id, params)
-            return self.make_response(res)
+        method_name = 'get' if _id else 'search'
+        return self._process_method(_service_name, method_name, _id, params)
 
     @route([
         ROOT_PATH + '<string:_service_name>/',
         ROOT_PATH + '<string:_service_name>/<string:method_name>',
         ROOT_PATH + '<string:_service_name>/<int:_id>/',
         ROOT_PATH + '<string:_service_name>/<int:_id>/<string:method_name>'
-    ], methods=['POST', 'PUT'], auth="api_key", csrf=False)
+    ], methods=['POST'], auth="api_key", csrf=False)
     def modify(self, _service_name, _id=None, method_name=None, **params):
         if not method_name:
             method_name = 'update' if _id else 'create'
-        if method_name.startswith('_'):
-            _logger.error("Invader service called with an unallowed method "
-                          "name: %s.\n Method can't start with '_'",
-                          method_name)
-            raise BadRequest()
-        with self.service_component(_service_name) as service:
-            res = service.dispatch(method_name, _id, params)
-            return self.make_response(res)
+        return self._process_method(_service_name, method_name, _id, params)
+
+    @route([
+        ROOT_PATH + '<string:_service_name>/<int:_id>/',
+    ], methods=['PUT'], auth="api_key", csrf=False)
+    def update(self, _service_name, _id, **params):
+        return self._process_method(_service_name, 'update', _id, params)
 
     @route([
         ROOT_PATH + '<string:_service_name>/<int:_id>/',
     ], methods=['DELETE'], auth="api_key", csrf=False)
     def delete(self, _service_name, _id):
-        with self.service_component(_service_name) as service:
-            res = service.dispatch('delete', _id)
-            return self.make_response(res)
+        return self._process_method(_service_name, 'delete', _id)
