@@ -3,6 +3,6 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from . import mapper
-from . import adapter
-from . import consumer
+from . import shopinvader_partner_export_mapper
+from . import shopinvader_partner_adapter
+from . import event_listeners

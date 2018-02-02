@@ -19,6 +19,7 @@
         'views/locomotive_view.xml',
         'views/locomotive_menu.xml',
         'security/ir.model.access.csv',
+        'security/locomotive_backend_security.xml',
     ],
     'demo': [
     ],

@@ -3,11 +3,11 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.component.core import Component
+from odoo.addons.component.core import AbstractComponent
 
 
-class AbstractSaleService(Component):
-    _inherit = 'shopinvader.service'
+class AbstractSaleService(AbstractComponent):
+    _inherit = 'base.shopinvader.service'
     _name = 'shopinvader.abstract.sale.service'
 
     def _parser_product(self):
@@ -47,7 +47,7 @@ class AbstractSaleService(Component):
         ]
 
     def _parser(self):
-        address_parser = self.component(usage='address.service')._json_parser()
+        address_parser = self.component(usage='address')._json_parser()
         return [
             'id',
             'name',
@@ -90,7 +90,7 @@ class AbstractSaleService(Component):
                 order['partner_invoice']['id'])
             for key in ['partner', 'partner_shipping', 'partner_invoice']:
                 if order[key]['id'] ==\
-                        self.collection.anonymous_partner_id.id:
+                        self.locomotive_backend.anonymous_partner_id.id:
                     order[key] = {}
             # TODO MIGRATE shopinvader_delivery
             # trackings = []

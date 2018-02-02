@@ -3,31 +3,34 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.component.core import Component
-from .helper import to_int, secure_params
-from odoo.tools.translate import _
-from odoo.exceptions import UserError
 import logging
+
+from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.component.core import Component
+from odoo.exceptions import UserError
+from odoo.tools.translate import _
+from werkzeug.exceptions import NotFound
+
 _logger = logging.getLogger(__name__)
 
 
 class CartService(Component):
     _inherit = 'shopinvader.abstract.sale.service'
     _name = 'shopinvader.cart.service'
-    _usage = 'cart.service'
+    _usage = 'cart'
+
+    @property
+    def cart_id(self):
+        return self.shopinvader_session.get('cart_id', 0)
 
     # The following method are 'public' and can be called from the controller.
-    # All params are untrusted so please check it !
 
-    @secure_params
-    def get(self, params):
+    def search(self):
         """Return the cart that have been set in the session or
            search an existing cart for the current partner"""
         return self._to_json(self._get())
 
-    # TODO REFACTOR too many line of code here
-    @secure_params
-    def update(self, params):
+    def update(self, **params):
         response = self._update(params)
         cart = self._get()
         if response.get('action_confirm_cart'):
@@ -41,9 +44,95 @@ class CartService(Component):
         else:
             return self._to_json(cart)
 
+    def add_item(self, **params):
+        cart = self._get()
+        if not cart:
+            cart = self._create_empty_cart()
+        existing_item = self._check_existing_cart_item(params, cart)
+        if existing_item:
+            existing_item.product_uom_qty += params['item_qty']
+            existing_item.reset_price_tax()
+            # TODO MIGRATE shopinvader delivery
+            # existing_item.order_id._update_default_carrier()
+        else:
+            vals = self._prepare_cart_item(params, cart)
+            self.env['sale.order.line'].create(vals)
+        return self._to_json(cart)
+
+    def update_item(self, **params):
+        item = self._get_cart_item(params)
+        item.product_uom_qty = params['item_qty']
+        item.reset_price_tax()
+        # TODO MIGRATE shopinvader delivery
+        # item.order_id._update_default_carrier()
+        cart = self._get()
+        return self._to_json(cart)
+
+    def delete_item(self, **params):
+        item = self._get_cart_item(params)
+        item.unlink()
+        cart = self._get()
+        return self._to_json(cart)
+
+    # Validator
+    def _validator_search(self):
+        return {}
+
+    def _validator_update(self):
+        res = {
+            'carrier_id': {'coerce': to_int, 'nullable': True},
+            'current_step': {'type': 'string'},
+            'next_step': {'type': 'string'},
+            'anonymous_email': {'type': 'string'},
+            'payment_method_id': {'coerce': to_int},
+            'note': {'type': 'string'},
+        }
+        if self.partner:
+            res.update({
+                'partner_shipping': {
+                    'type': 'dict',
+                    'schema': {'id': {'coerce': to_int}},
+                    },
+                'partner_invoice': {
+                    'type': 'dict',
+                    'schema': {'id': {'coerce': to_int}},
+                    },
+                })
+        else:
+            address_service = self.component(usage='address')
+            res.update({
+                'partner_shipping': {
+                    'type': 'dict',
+                    'schema': address_service._validator_create()},
+                'partner_invoice': {
+                    'type': 'dict',
+                    'schema': address_service._validator_create()},
+                })
+        return res
+
+    def _validator_add_item(self):
+        return {
+            'product_id': {'coerce': to_int, 'required': True},
+            'item_qty': {'coerce': float, 'required': True},
+        }
+
+    def _validator_update_item(self):
+        return {
+            'item_id': {'coerce': to_int, 'required': True},
+            'item_qty': {'coerce': float, 'required': True},
+        }
+
+    def _validator_delete_item(self):
+        return {
+            'item_id': {'coerce': to_int, 'required': True},
+        }
+    # The following method are 'private' and should be never never NEVER call
+    # from the controller.
+    # All params are trusted as they have been checked before
+
     def _update(self, params):
         action_confirm_cart = \
-            params.get('next_step') == self.collection.last_step_id.code
+            params.get('next_step') == self.locomotive_backend.last_step_id.code
         cart = self._get()
         if params.get('anonymous_email'):
             self._check_allowed_anonymous_email(cart, params)
@@ -68,51 +157,10 @@ class CartService(Component):
             cart.write_with_onchange(params)
         return {'action_confirm_cart': action_confirm_cart}
 
-    # Validator
-    def _validator_get(self):
-        return {}
-
-    def _validator_update(self):
-        res = {
-            'carrier_id': {'coerce': to_int, 'nullable': True},
-            'current_step': {'type': 'string'},
-            'next_step': {'type': 'string'},
-            'anonymous_email': {'type': 'string'},
-            'payment_method_id': {'coerce': to_int},
-            'note': {'type': 'string'},
-        }
-        if self.partner:
-            res.update({
-                'partner_shipping': {
-                    'type': 'dict',
-                    'schema': {'id': {'coerce': to_int}},
-                    },
-                'partner_invoice': {
-                    'type': 'dict',
-                    'schema': {'id': {'coerce': to_int}},
-                    },
-                })
-        else:
-            address_service = self.component(usage='address.service')
-            res.update({
-                'partner_shipping': {
-                    'type': 'dict',
-                    'schema': address_service._validator_create()},
-                'partner_invoice': {
-                    'type': 'dict',
-                    'schema': address_service._validator_create()},
-                })
-        return res
-
-
-    # The following method are 'private' and should be never never NEVER call
-    # from the controller.
-    # All params are trusted as they have been checked before
-
     def _check_allowed_anonymous_email(self, cart, params):
-        if self.collection.restrict_anonymous and\
+        if self.locomotive_backend.restrict_anonymous and\
                 self.env['shopinvader.partner'].search([
-                    ('backend_id', '=', self.collection.id),
+                    ('backend_id', '=', self.locomotive_backend.id),
                     ('email', '=', params['anonymous_email']),
                     ]):
             # In that case we want to raise an error to block the process
@@ -185,7 +233,7 @@ class CartService(Component):
     def _get(self):
         domain = [
             ('typology', '=', 'cart'),
-            ('shopinvader_backend_id', '=', self.collection.id),
+            ('shopinvader_backend_id', '=', self.locomotive_backend.id),
             ]
         cart = self.env['sale.order'].search(
             domain + [('id', '=', self.cart_id)])
@@ -200,22 +248,22 @@ class CartService(Component):
         return self.env['sale.order'].create(vals)
 
     def _prepare_cart(self):
-        partner = self.partner or self.collection.anonymous_partner_id
+        partner = self.partner or self.locomotive_backend.anonymous_partner_id
         vals = {
             'typology': 'cart',
             'partner_id': partner.id,
             'partner_shipping_id': partner.id,
             'partner_invoice_id': partner.id,
-            'shopinvader_backend_id': self.collection.id,
+            'shopinvader_backend_id': self.locomotive_backend.id,
             }
         res = self.env['sale.order']._play_cart_onchange(vals)
         vals.update(res)
-        if self.collection.sequence_id:
-            vals['name'] = self.collection.sequence_id._next()
+        if self.locomotive_backend.sequence_id:
+            vals['name'] = self.locomotive_backend.sequence_id._next()
         return vals
 
     def _check_valid_payment_method(self, method_id):
-        if method_id not in self.collection.payment_method_ids.mapped(
+        if method_id not in self.locomotive_backend.payment_method_ids.mapped(
                 'payment_method_id.id'):
             raise UserError(_('Payment method id invalid'))
 
@@ -237,3 +285,29 @@ class CartService(Component):
             'set_session': {'cart_id': 0},
             })
         return res
+
+    def _get_cart_item(self, params):
+        # We search the line based on the item id and the cart id
+        # indeed the item_id information is given by the
+        # end user (untrusted data) and the cart id by the
+        # locomotive server (trusted data)
+        item = self.env['sale.order.line'].search([
+            ('id', '=', params['item_id']),
+            ('order_id', '=', self.cart_id),
+            ])
+        if not item:
+            raise NotFound('No cart item found with id %s' % params['item_id'])
+        return item
+
+    def _check_existing_cart_item(self, params, cart):
+        return self.env['sale.order.line'].search([
+            ('order_id', '=', cart.id),
+            ('product_id', '=', params['product_id'])
+            ])
+
+    def _prepare_cart_item(self, params, cart):
+        return {
+            'product_id': params['product_id'],
+            'product_uom_qty': params['item_qty'],
+            'order_id': cart.id,
+            }

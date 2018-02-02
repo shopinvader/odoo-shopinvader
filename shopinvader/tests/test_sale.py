@@ -13,20 +13,18 @@ class SaleCase(CommonCase):
         super(SaleCase, self).setUp(*args, **kwargs)
         self.sale = self.env.ref('shopinvader.sale_order_2')
         self.partner = self.env.ref('shopinvader.partner_1')
-        with self.backend.work_on(
-                model_name='locomotive.backend',
-                partner=self.partner,
-                shopinvader_session={}) as work:
-            self.service = work.component(usage='sale.service')
+        with self.work_on_services(
+                partner=self.partner) as work:
+            self.service = work.component(usage='sale')
 
     def test_read_sale(self):
         self.sale.action_confirm()
-        res = self.service.get({'id': self.sale.id})
+        res = self.service.get(self.sale.id)
         self.assertEqual(res['id'], self.sale.id)
         self.assertEqual(res['name'], self.sale.name)
 
     def test_allow_read_cart(self):
-        res = self.service.get({'id': self.sale.id})
+        res = self.service.get(self.sale.id)
         self.assertEqual(res['id'], self.sale.id)
         self.assertEqual(res['name'], self.sale.name)
 
@@ -39,4 +37,4 @@ class SaleCase(CommonCase):
         # We raise a not found error because in a point of view of the hacker
         # and his right the record does not exist
         with self.assertRaises(NotFound):
-            self.service.get({'id': sale.id})
+            self.service.get(sale.id)
