@@ -20,8 +20,8 @@
     "depends": [
         # "base_delivery_carrier_label",
         # "delivery_carrier_url",
-        "base_invader",
-        "partner_invader",
+        "base_rest",
+        'auth_api_key',
         # "base_sparse_field",
         "base_url",
         "base_vat",

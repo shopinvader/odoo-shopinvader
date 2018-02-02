@@ -4,25 +4,43 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
-from datetime import datetime
 
-from odoo.addons.partner_invader.controllers import main
+from odoo.addons.base_rest.controllers import main
 from odoo.http import request, route
 
 _logger = logging.getLogger(__name__)
 
 
-class InvaderController(main.InvaderController):
+class InvaderController(main.RestController):
+
+    @classmethod
+    def _get_partner_from_header(cls, headers):
+        partner_model = request.env['shopinvader.partner']
+        partner_email = headers.get('HTTP_PARTNER_EMAIL')
+        if partner_email:
+            partner_domain = [
+                ('partner_email', '=', partner_email),
+            ]
+            partner = partner_model.search(partner_domain)
+            if len(partner) == 1:
+                return partner
+            else:
+                _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
+                if len(partner) > 1:
+                    _logger.warning(
+                        "More than one shopinvader.partner found for domain:"
+                        " %s", partner_domain
+                    )
+        return partner_model.browse([])
 
     def _get_component_context(self):
         """
-        This method can be inherited to add parameter into the component
-        context
-        :return: dict of key value.
+        This method add the partner into the component context
         """
-        params = super(InvaderController, self)._get_component_context()
-        params['shopinvader_session'] = request.shopinvader_session
-        return params
+        res = super(main.RestController, self)._get_component_context()
+        headers = request.httprequest.environ
+        res['partner'] = self._get_partner_from_header(headers)
+        return res
 
     # Check Vat
     @route('/shopinvader/check_vat', methods=['GET'], auth="shopinvader")
