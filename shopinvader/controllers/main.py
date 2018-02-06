@@ -3,33 +3,44 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.http import Controller, request, route
-from datetime import datetime
 import logging
+
+from odoo.addons.base_rest.controllers import main
+from odoo.http import request, route
+
 _logger = logging.getLogger(__name__)
 
 
-class ShopinvaderController(Controller):
+class InvaderController(main.RestController):
 
-    def send_to_service(self, service_name, params):
-        with request.backend.work_on(
-                model_name='locomotive.backend',
-                partner=request.partner,
-                shopinvader_session=request.shopinvader_session) as work:
-            service = work.component(usage=service_name)
-            start = datetime.now()
-            method = request.httprequest.method
-            if method == 'GET':
-                res = service.get(params)
-            elif method == 'POST':
-                res = service.create(params)
-            elif method == 'PUT':
-                res = service.update(params)
-            elif method == 'DELETE':
-                res = service.delete(params)
-            res = request.make_json_response(res)
-            _logger.info('Shopinvader Response in %s', datetime.now() - start)
-            return res
+    @classmethod
+    def _get_partner_from_header(cls, headers):
+        partner_model = request.env['shopinvader.partner']
+        partner_email = headers.get('HTTP_PARTNER_EMAIL')
+        if partner_email:
+            partner_domain = [
+                ('partner_email', '=', partner_email),
+            ]
+            partner = partner_model.search(partner_domain)
+            if len(partner) == 1:
+                return partner
+            else:
+                _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
+                if len(partner) > 1:
+                    _logger.warning(
+                        "More than one shopinvader.partner found for domain:"
+                        " %s", partner_domain
+                    )
+        return partner_model.browse([])
+
+    def _get_component_context(self):
+        """
+        This method add the partner into the component context
+        """
+        res = super(main.RestController, self)._get_component_context()
+        headers = request.httprequest.environ
+        res['partner'] = self._get_partner_from_header(headers)
+        return res
 
     # Check Vat
     @route('/shopinvader/check_vat', methods=['GET'], auth="shopinvader")

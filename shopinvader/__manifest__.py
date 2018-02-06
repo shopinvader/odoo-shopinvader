@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
@@ -20,7 +20,8 @@
     "depends": [
         # "base_delivery_carrier_label",
         # "delivery_carrier_url",
-        "base_jsonify",
+        "base_rest",
+        'auth_api_key',
         # "base_sparse_field",
         "base_url",
         "base_vat",
