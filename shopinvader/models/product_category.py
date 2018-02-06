@@ -35,12 +35,12 @@ class ShopinvaderCategory(models.Model):
     object_id = fields.Integer(
         compute='_compute_object_id',
         store=True)
-    seo_title = fields.Char()
-    meta_description = fields.Char()
-    meta_keywords = fields.Char()
-    subtitle = fields.Char()
-    short_description = fields.Html()
-    description = fields.Html()
+    seo_title = fields.Char(translate=True)
+    meta_description = fields.Char(translate=True)
+    meta_keywords = fields.Char(translate=True)
+    subtitle = fields.Char(translate=True)
+    short_description = fields.Html(translate=True)
+    description = fields.Html(translate=True)
     images = fields.Serialized(
         compute='_compute_image',
         string='Shopinvader Image')
