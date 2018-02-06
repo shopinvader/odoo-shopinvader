@@ -82,7 +82,7 @@ class LocomotiveBackend(models.Model):
         required=True)
 
     _sql_constraints = [
-        ('auth_api_key_uniq', 'unique(auth_api_key)',
+        ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',
          'An authentication API Key can be used by one backend.'),
     ]
 
