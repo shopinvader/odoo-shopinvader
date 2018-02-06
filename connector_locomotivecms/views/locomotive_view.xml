@@ -7,7 +7,9 @@
         <field name="model">locomotive.backend</field>
         <field name="arch" type="xml">
             <form string="LocomotiveCMS Backend">
+                <header></header>
                 <sheet>
+                    <div class="oe_right oe_button_box" name="buttons"></div>
                     <label for="name" class="oe_edit_only"/>
                     <h1>
                         <field name="name" class="oe_inline"/>

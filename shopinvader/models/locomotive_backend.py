@@ -120,11 +120,10 @@ class LocomotiveBackend(models.Model):
             for record in self.env[model].search(domain):
                 if not self.env[bind_model].search([
                         ('backend_id', '=', backend.id),
-                        ('lang_id', '=', backend.lang_ids[0].id),
                         ('record_id', '=', record.id)]):
-                    self.env[bind_model].create({
+                    self.env[bind_model].with_context(
+                        map_children=True).create({
                         'backend_id': backend.id,
-                        'lang_id': backend.lang_ids[0].id,
                         'record_id': record.id})
         return True
 
