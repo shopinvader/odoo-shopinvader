@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
-<record id="anonymous" model="res.partner">
-    <field name="name">Anonymous</field>
-</record>
+    <record id="anonymous" model="res.partner">
+        <field name="name">Anonymous</field>
+    </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -1,101 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
-<record id="view_product_template_form" model="ir.ui.view">
-    <field name="model">product.template</field>
-    <field name="inherit_id" ref="connector_base_product.product_template_common_form"/>
-    <field name="arch" type="xml">
-        <page name="connector" position="attributes">
-            <attribute name="invisible">0</attribute>
-        </page>
-        <page name="connector" position="inside">
-            <field name="shopinvader_bind_ids">
-                <tree>
-                    <field name="backend_id"/>
-                    <field name="sync_date"/>
-                </tree>
-                <form>
-                    <group name="backend">
-                        <field name="backend_id" widget="selection"/>
-                        <field name="lang_id" widget="selection"/>
-                        <field name="seo_title"/>
-                        <field name="meta_keywords"/>
-                        <field name="meta_description"/>
-                    </group>
-                    <group name="url" string="Url">
-                        <field name="url_builder"/>
-                        <field
-                            name="manual_url_key"
-                            attrs="{
+    <record id="view_product_template_form" model="ir.ui.view">
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="connector_base_product.product_template_common_form"/>
+        <field name="arch" type="xml">
+            <page name="connector" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </page>
+            <page name="connector" position="inside">
+                <field name="shopinvader_bind_ids">
+                    <tree>
+                        <field name="backend_id"/>
+                        <field name="sync_date"/>
+                    </tree>
+                    <form>
+                        <group name="backend">
+                            <field name="backend_id" widget="selection"/>
+                            <field name="lang_id" widget="selection"/>
+                            <field name="seo_title"/>
+                            <field name="meta_keywords"/>
+                            <field name="meta_description"/>
+                        </group>
+                        <group name="url" string="Url">
+                            <field name="url_builder"/>
+                            <field
+                                    name="manual_url_key"
+                                    attrs="{
                                 'invisible': [('url_builder', '!=', 'manual')],
                                 'required': [('url_builder', '=', 'manual')]}"/>
-                        <field
-                            name="url_key"
-                            attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
-                        <field
-                            name="redirect_url_key_ids"
-                            nolabel="1"
-                            colspan="4">
-                            <tree>
-                                <field name="url_key" string="Redirect Url"/>
-                            </tree>
-                        </field>
-                    </group>
-                    <group name="variant" string="Variant">
-                        <field name="shopinvader_variant_ids" nolabel="1" readonly="1">
-                            <tree>
-                                <field name="id"/>
-                                <field name="default_code"/>
-                                <field name="record_id"/>
-                            </tree>
-                        </field>
-                    </group>
-                </form>
-            </field>
-        </page>
-    </field>
-</record>
+                            <field
+                                    name="url_key"
+                                    attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
+                            <field
+                                    name="redirect_url_key_ids"
+                                    nolabel="1"
+                                    colspan="4">
+                                <tree>
+                                    <field name="url_key" string="Redirect Url"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group name="variant" string="Variant">
+                            <field name="shopinvader_variant_ids" nolabel="1" readonly="1">
+                                <tree>
+                                    <field name="id"/>
+                                    <field name="default_code"/>
+                                    <field name="record_id"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </form>
+                </field>
+            </page>
+        </field>
+    </record>
 
-<record id="product_filter_view_form" model="ir.ui.view">
-    <field name="model">product.filter</field>
-    <field name="arch" type="xml">
-        <form string="Filter">
-            <group>
-                <field name="name"/>
-                <field name="based_on"/>
-                <field name="field_id" attrs="{'invisible': [('based_on', '!=', 'field')],
+    <record id="product_filter_view_form" model="ir.ui.view">
+        <field name="model">product.filter</field>
+        <field name="arch" type="xml">
+            <form string="Filter">
+                <group>
+                    <field name="name"/>
+                    <field name="based_on"/>
+                    <field name="field_id" attrs="{'invisible': [('based_on', '!=', 'field')],
                                                'required': [('based_on', '=', 'field')]}"/>
-                <field name="attribute_id" attrs="{'invisible': [('based_on', '!=', 'attribute')],
+                    <field name="attribute_id" attrs="{'invisible': [('based_on', '!=', 'attribute')],
                                                    'required': [('based_on', '=', 'attribute')]}"/>
-                <separator string="Help"/>
-                <field name="help" colspan="4" nolabel="1"/>
-            </group>
-        </form>
-    </field>
-</record>
+                    <separator string="Help"/>
+                    <field name="help" colspan="4" nolabel="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
 
-<record id="product_filter_view_tree" model="ir.ui.view">
-    <field name="model">product.filter</field>
-    <field name="arch" type="xml">
-        <tree string="Filter">
-            <field name="sequence" widget="handle"/>
-            <field name="name"/>
-        </tree>
-    </field>
-</record>
+    <record id="product_filter_view_tree" model="ir.ui.view">
+        <field name="model">product.filter</field>
+        <field name="arch" type="xml">
+            <tree string="Filter">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
 
-<record id="product_filter_action" model="ir.actions.act_window">
-    <field name="name">Product filter</field>
-    <field name="res_model">product.filter</field>
-    <field name="view_mode">tree,form</field>
-</record>
+    <record id="product_filter_action" model="ir.actions.act_window">
+        <field name="name">Product filter</field>
+        <field name="res_model">product.filter</field>
+        <field name="view_mode">tree,form</field>
+    </record>
 
-<menuitem
-    id="menu_product_filter_action"
-    action="product_filter_action"
-    parent="sale.prod_config_main"
-    sequence="15" />
+    <menuitem
+            id="menu_product_filter_action"
+            action="product_filter_action"
+            parent="sale.prod_config_main"
+            sequence="15"/>
 
-    </data>
-</openerp>
+</odoo>

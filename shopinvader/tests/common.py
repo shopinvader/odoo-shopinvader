@@ -4,6 +4,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.tests.common import SavepointComponentCase
+from contextlib import contextmanager
+from odoo.addons.component.core import WorkContext
+from odoo.addons.base_rest.controllers.main import _PseudoCollection
 
 
 class CommonCase(SavepointComponentCase):
@@ -17,6 +20,17 @@ class CommonCase(SavepointComponentCase):
         if 'visible_discount' in self.env['product.pricelist']._fields:
             pricelist = self.env['product.pricelist'].search([])
             pricelist.write({'visible_discount': False})
+
+    @contextmanager
+    def work_on_services(self, **params):
+        params = params or {}
+        if 'locomotive_backend' not in params:
+            params['locomotive_backend'] = self.backend
+        if 'shopinvader_session' not in params:
+            params['shopinvader_session'] = {}
+        collection = _PseudoCollection('locomotive.backend',  self.env)
+        yield WorkContext(model_name='rest.service.registration',
+                          collection=collection, **params)
 
 
 class ProductCommonCase(CommonCase):

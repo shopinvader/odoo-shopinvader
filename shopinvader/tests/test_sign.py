@@ -13,11 +13,9 @@ class CustomerCase(CommonCase):
         templates = self.env['product.template'].search([])
         templates.write({
             'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
-        with self.backend.work_on(
-                model_name='locomotive.backend',
-                partner=None,
-                shopinvader_session={}) as work:
-            self.service = work.component(usage='sign.service')
+        with self.work_on_services(
+                partner=None) as work:
+            self.service = work.component(usage='sign')
 
     def test_create_customer(self):
         data = {
@@ -30,7 +28,7 @@ class CustomerCase(CommonCase):
             'phone': '0485485454',
             'country_id': self.env.ref('base.fr').id,
             }
-        res = self.service.create(data)['data']
+        res = self.service.dispatch('create', params=data)['data']
         partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(partner.email, data['email'])
         self.assertEqual(
@@ -59,7 +57,7 @@ class CustomerCase(CommonCase):
             'country_id': self.env.ref('base.fr').id,
             'vat': 'BE0477472701',
             }
-        res = self.service.create(data)['data']
+        res = self.service.dispatch('create', params=data)['data']
         partner = self.env['res.partner'].browse(res['id'])
         # Note for now we do not have automatic rule to
         # set a specific pricelist depending on vat number
@@ -82,7 +80,7 @@ class CustomerCase(CommonCase):
             'phone': '0485485454',
             'country_id': self.env.ref('base.us').id,
             }
-        res = self.service.create(data)['data']
+        res = self.service.dispatch('create', params=data)['data']
         self.partner = self.env['res.partner'].browse(res['id'])
         self.assertEqual(
             self.partner.shopinvader_bind_ids.role_id,

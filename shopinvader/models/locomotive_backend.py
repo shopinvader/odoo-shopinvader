@@ -33,7 +33,7 @@ from odoo import api, fields, models
 
 
 class LocomotiveBackend(models.Model):
-    _inherit = ['locomotive.backend', 'connector.backend']
+    _inherit = 'locomotive.backend'
     role_ids = fields.One2many(
         'shopinvader.role',
         'backend_id',
@@ -42,8 +42,6 @@ class LocomotiveBackend(models.Model):
         'shopinvader.notification',
         'backend_id',
         'Notification')
-    version = fields.Selection(selection_add=[
-        ('shopinvader_v1', 'Shopinvader V1')])
     # TODO move to shopinvader_image
     # product_image_resize_ids = fields.Many2many(
     #    comodel_name='image.resize',
@@ -74,6 +72,19 @@ class LocomotiveBackend(models.Model):
     sequence_id = fields.Many2one(
         'ir.sequence',
         'Sequence')
+    auth_api_key_id = fields.Many2one(
+        'auth.api.key',
+        required=True,
+    )
+    lang_ids = fields.Many2many(
+        'res.lang',
+        string='Lang',
+        required=True)
+
+    _sql_constraints = [
+        ('auth_api_key_uniq', 'unique(auth_api_key)',
+         'An authentication API Key can be used by one backend.'),
+    ]
 
     def _compute_nbr_content(self):
         for record in self:

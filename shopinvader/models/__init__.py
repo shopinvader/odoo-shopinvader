@@ -8,11 +8,11 @@ from . import product
 from . import product_category
 from . import role
 from . import sale
-from . import backend
-from . import ir_http
+from . import locomotive_backend
 from . import url
 # TODO move payment + autoworkflow in shopinvader_payment
 #from . import payment_method
 #from . import automatic_workflow_job
 from . import account_invoice
 from . import notification
+from . import keychain_account

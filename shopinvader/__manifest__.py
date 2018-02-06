@@ -20,8 +20,9 @@
     "depends": [
         # "base_delivery_carrier_label",
         # "delivery_carrier_url",
-        "base_rest",
+        'base_rest',
         'auth_api_key',
+        'base_jsonify',
         # "base_sparse_field",
         "base_url",
         "base_vat",
@@ -49,6 +50,7 @@
         "data/ir_export_category.xml",
     ],
     "demo": [
+        "demo/auth_api_key_demo.xml",
         "demo/account_demo.xml",
         "demo/product_demo.xml",
         "demo/pricelist_demo.xml",
