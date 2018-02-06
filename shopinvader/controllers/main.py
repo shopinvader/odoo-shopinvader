@@ -14,7 +14,8 @@ _logger = logging.getLogger(__name__)
 class InvaderController(main.RestController):
 
     _root_path = '/shopinvader/'
-    _collection_name = ''
+    _collection = 'locomotive.backend'
+    _default_auth = 'api_key'
 
     @classmethod
     def _get_partner_from_headers(cls, headers):
