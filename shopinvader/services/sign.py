@@ -35,9 +35,6 @@ class SignService(Component):
 
     def create(self, **params):
         external_id = params.pop('external_id')
-        if 'vat' in params:
-            params['vat_subjected'] = bool(params['vat'])
-
         params['is_company'] = True
         self.work.partner = self.env['res.partner'].create(params)
         self.locomotive_backend._send_notification(

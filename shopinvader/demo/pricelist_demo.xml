@@ -3,7 +3,6 @@
 
     <record id="pricelist_1" model="product.pricelist">
         <field name="name">Business Pricelist</field>
-        <field name="type">sale</field>
         <field name="currency_id" ref="base.USD"/>
     </record>
 
