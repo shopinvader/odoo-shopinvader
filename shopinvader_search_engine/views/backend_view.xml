@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
 <record id="locomotive_backend_view_form" model="ir.ui.view">
     <field name="model">locomotive.backend</field>
@@ -33,5 +32,4 @@
     </field>
 </record>
 
-    </data>
-</openerp>
+</odoo>

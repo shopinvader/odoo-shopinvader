@@ -3,7 +3,7 @@
 
     <record id="tax_1" model="account.tax">
         <field name="name">Tax inc</field>
-        <field eval="0.15" name="amount"/>
+        <field eval="15" name="amount"/>
         <field name="type">percent</field>
         <field name="type_tax_use">sale</field>
         <field eval="1" name="price_include"/>
@@ -11,7 +11,7 @@
 
     <record id="tax_2" model="account.tax">
         <field name="name">Tax exc</field>
-        <field eval="0.15" name="amount"/>
+        <field eval="15" name="amount"/>
         <field name="type">percent</field>
         <field name="type_tax_use">sale</field>
     </record>
