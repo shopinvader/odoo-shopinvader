@@ -37,16 +37,6 @@
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
-    <record id="ir_exp_shopinvader_variant_stock_state" model="ir.exports.line">
-        <field name="name">stock_state</field>
-        <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-    </record>
-
-    <record id="ir_exp_shopinvader_variant_qty_available" model="ir.exports.line">
-        <field name="name">qty_available</field>
-        <field name="export_id" ref="ir_exp_shopinvader_variant"/>
-    </record>
-
     <record id="ir_exp_shopinvader_variant_seo_title" model="ir.exports.line">
         <field name="name">seo_title</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
