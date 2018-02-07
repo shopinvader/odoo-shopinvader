@@ -29,7 +29,6 @@ class ProductTemplate(models.Model):
         store=False,
         search=_search_locomotive_backend_ids)
 
-    description = fields.Html(translate=True)
     active = fields.Boolean(inverse='_inverse_active')
 
     @api.multi
