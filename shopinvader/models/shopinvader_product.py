@@ -9,13 +9,15 @@ from odoo import api, fields, models
 class ShopinvaderProduct(models.Model):
     _name = 'shopinvader.product'
     _description = 'Shopinvader Product'
-    _inherit = ['locomotive.binding']
+    _inherit = ['locomotive.binding', 'abstract.url']
     _inherits = {'product.template': 'record_id'}
 
     record_id = fields.Many2one(
         'product.template',
         required=True,
-        ondelete='cascade')
+        ondelete='cascade',
+        index=True,
+    )
     seo_title = fields.Char()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
@@ -28,8 +30,8 @@ class ShopinvaderProduct(models.Model):
         inverse='_inverse_active')
 
     _sql_constraints = [
-        ('record_uniq', 'unique(backend_id, record_id)',
-         'A product can only have one binding by backend.'),
+        ('record_uniq', 'unique(backend_id, record_id, lang_id)',
+         'A product can only have one binding by backend and lang.'),
     ]
 
     @api.multi

@@ -10,7 +10,6 @@ from .tools import sanitize_attr_name
 class ShopinvaderVariant(models.Model):
     _name = 'shopinvader.variant'
     _description = 'Shopinvader Variant'
-    _inherit = 'abstract.url'
     _inherits = {
         'shopinvader.product': 'shopinvader_product_id',
         'product.product': 'record_id'}
@@ -21,14 +20,20 @@ class ShopinvaderVariant(models.Model):
     shopinvader_product_id = fields.Many2one(
         'shopinvader.product',
         required=True,
-        ondelete='cascade')
+        ondelete='cascade',
+        index=True,
+    )
     record_id = fields.Many2one(
         'product.product',
         required=True,
-        ondelete='cascade')
+        ondelete='cascade',
+        index=True,
+    )
     object_id = fields.Integer(
         compute='_compute_object_id',
-        store=True)
+        store=True,
+        index=True,
+    )
     shopinvader_categ_ids = fields.Many2many(
         comodel_name='shopinvader.category',
         compute='_compute_shopinvader_category',
@@ -107,7 +112,7 @@ class ShopinvaderVariant(models.Model):
         taxes = product_id.taxes_id.sudo().filtered(
             lambda r: not company or r.company_id == company)
         tax_id = fposition.map_tax(taxes, product_id) if fposition else taxes
-        tax_id = tax_id[0]
+        tax_id = tax_id and tax_id[0]
         product = product_id.with_context(
             quantity=qty,
             pricelist=pricelist.id,
