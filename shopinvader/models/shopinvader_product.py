@@ -16,9 +16,9 @@ class ShopinvaderProduct(models.Model):
         'product.template',
         required=True,
         ondelete='cascade')
-    seo_title = fields.Char(translate=True)
-    meta_description = fields.Char(translate=True)
-    meta_keywords = fields.Char(translate=True)
+    seo_title = fields.Char()
+    meta_description = fields.Char()
+    meta_keywords = fields.Char()
     shopinvader_variant_ids = fields.One2many(
         'shopinvader.variant',
         'shopinvader_product_id',
