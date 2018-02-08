@@ -27,12 +27,14 @@
                             <field name="shopinvader_bind_ids" nolabel="1">
                                 <tree>
                                     <field name="backend_id"/>
+                                    <field name="lang_id"/>
                                     <field name="sync_date"/>
                                     <field name="external_id"/>
                                 </tree>
                                 <form>
                                     <group colspan="4" col="4">
                                         <field name="backend_id"/>
+                                        <field name="lang_id"/>
                                     </group>
                                     <notebook>
                                         <page name="description" string="Description">

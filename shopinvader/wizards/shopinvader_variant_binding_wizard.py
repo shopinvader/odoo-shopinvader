@@ -2,6 +2,7 @@
 # Copyright 2017 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
 from odoo import api, fields, models
 
 
@@ -41,17 +42,23 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         binded_templates = binding.with_context(active_test=False).search(
             [('record_id', 'in', product_template_ids.ids),
              ('backend_id', '=', self.backend_id.id)])
-        ret = {bt.record_id: bt for bt in binded_templates}
+        ret = defaultdict(dict)
+        for bt in binded_templates:
+            ret[bt.record_id][bt.lang_id] = bt
         for product in self.mapped('product_ids.product_tmpl_id'):
             product_tmpl_id = product
-            bind_record = ret.get(product_tmpl_id)
-            if not bind_record:
-                data = {
-                    'record_id': product.id,
-                    'backend_id': self.backend_id.id}
-                ret[product_tmpl_id] = binding.create(data)
-            elif not bind_record.active:
-                bind_record.write({'active': True})
+            bind_records = ret.get(product_tmpl_id)
+            for lang_id in self.backend_id.lang_ids:
+                bind_record = bind_records and bind_records.get(lang_id)
+                if not bind_record:
+                    data = {
+                        'record_id': product.id,
+                        'backend_id': self.backend_id.id,
+                        'lang_id': lang_id.id
+                    }
+                    ret[product_tmpl_id][lang_id] = binding.create(data)
+                elif not bind_record.active:
+                    bind_record.write({'active': True})
         return ret
 
     @api.multi
@@ -60,16 +67,18 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
             binded_templates = self._get_binded_templates()
             binding = self.env['shopinvader.variant']
             for product in self.product_ids:
-                data = {
-                    'record_id': product.id,
-                    'backend_id': wizard.backend_id.id,
-                    'shopinvader_product_id':
-                        binded_templates[product.product_tmpl_id].id
-                }
-                bind_record = binding.with_context(active_test=False).search(
-                    [('record_id', '=', product.id),
-                     ('backend_id', '=', wizard.backend_id.id)])
-                if not bind_record:
-                    binding.create(data)
-                elif not bind_record.active:
-                    bind_record.write({'active': True})
+                for shopinvader_product in binded_templates[
+                        product.product_tmpl_id].values():
+                    data = {
+                        'record_id': product.id,
+                        'backend_id': wizard.backend_id.id,
+                        'shopinvader_product_id': shopinvader_product.id
+                    }
+                    binded_variants = shopinvader_product.\
+                        shopinvader_variant_ids
+                    bind_record = binded_variants.filtered(
+                            lambda p: p.record_id.id == product.id)
+                    if not bind_record:
+                        binding.create(data)
+                    elif not bind_record.active:
+                        bind_record.write({'active': True})
