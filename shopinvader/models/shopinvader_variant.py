@@ -10,6 +10,7 @@ from .tools import sanitize_attr_name
 class ShopinvaderVariant(models.Model):
     _name = 'shopinvader.variant'
     _description = 'Shopinvader Variant'
+    _inherit = 'abstract.url'
     _inherits = {
         'shopinvader.product': 'shopinvader_product_id',
         'product.product': 'record_id'}
