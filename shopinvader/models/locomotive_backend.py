@@ -117,14 +117,17 @@ class LocomotiveBackend(models.Model):
 
     def _bind_all_content(self, model, bind_model, domain):
         for backend in self:
-            for record in self.env[model].search(domain):
-                if not self.env[bind_model].search([
-                        ('backend_id', '=', backend.id),
-                        ('record_id', '=', record.id)]):
-                    self.env[bind_model].with_context(
-                        map_children=True).create({
-                        'backend_id': backend.id,
-                        'record_id': record.id})
+            for lang_id in self.lang_ids:
+                for record in self.env[model].search(domain):
+                    if not self.env[bind_model].search([
+                            ('backend_id', '=', backend.id),
+                            ('record_id', '=', record.id),
+                            ('lang_id', '=', lang_id.id)]):
+                        self.env[bind_model].with_context(
+                            map_children=True).create({
+                            'backend_id': backend.id,
+                            'record_id': record.id,
+                            'lang_id': lang_id.id})
         return True
 
     @api.multi

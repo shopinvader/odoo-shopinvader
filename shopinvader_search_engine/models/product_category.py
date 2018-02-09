@@ -24,4 +24,5 @@ class ShopinvaderCategory(models.Model):
                 record.index_id = self.env['se.index'].search([
                     ('backend_id', '=', se_backend.id),
                     ('model_id.model', '=', record._name),
+                    ('lang_id', '=', record.lang_id.id)
                     ])

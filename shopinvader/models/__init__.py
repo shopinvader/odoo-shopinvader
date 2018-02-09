@@ -17,5 +17,6 @@ from . import url
 #from . import automatic_workflow_job
 from . import account_invoice
 from . import notification
+from . import shopinvader_category
 from . import shopinvader_product
 from . import shopinvader_variant
