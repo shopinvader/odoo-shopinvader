@@ -55,7 +55,6 @@
     "demo": [
         "demo/auth_api_key_demo.xml",
         "demo/account_demo.xml",
-        "demo/product_demo.xml",
         "demo/pricelist_demo.xml",
         # "demo/image_resize_demo.xml",
         "demo/backend_demo.xml",
