@@ -59,7 +59,6 @@ class CustomerService(Component):
                 _logger.debug('Invalid number for vies')
         return res
 
-
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before

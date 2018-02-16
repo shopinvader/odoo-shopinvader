@@ -3,13 +3,13 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
+from openerp import fields, models
 
 
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
 
     payment_method_ids = fields.One2many(
-       'shopinvader.payment',
-       'backend_id',
-       'Payment Method')
+        'shopinvader.payment',
+        'backend_id',
+        'Payment Method')

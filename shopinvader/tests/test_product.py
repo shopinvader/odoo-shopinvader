@@ -68,6 +68,6 @@ class ProductCase(ProductCommonCase):
             if len(fposition) > 0:
                 fposition = fposition[0]
 
-            result =  product._get_price(
+            result = product._get_price(
                 role.pricelist_id, fposition, self.backend.company_id)
             self.assertDictEqual(expected_result[role.code], result)

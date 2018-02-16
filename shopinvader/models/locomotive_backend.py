@@ -125,9 +125,9 @@ class LocomotiveBackend(models.Model):
                             ('lang_id', '=', lang_id.id)]):
                         self.env[bind_model].with_context(
                             map_children=True).create({
-                            'backend_id': backend.id,
-                            'record_id': record.id,
-                            'lang_id': lang_id.id})
+                                'backend_id': backend.id,
+                                'record_id': record.id,
+                                'lang_id': lang_id.id})
         return True
 
     @api.multi
@@ -163,9 +163,9 @@ class LocomotiveBackend(models.Model):
     def _extract_configuration(self):
         return {}
 
-    @api.multi
-    def export_store_configuration(self):
-        self.ensure_one()
-        config = self._extract_configuration()
-        return ('test', '.csv')
-
+# TODO finish
+#    @api.multi
+#    def export_store_configuration(self):
+#        self.ensure_one()
+#        config = self._extract_configuration()
+#        return ('test', '.csv')
