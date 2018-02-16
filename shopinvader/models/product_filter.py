@@ -4,8 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo import api, fields, models
-import logging
+from odoo import fields, models
 from .tools import sanitize_attr_name
 
 

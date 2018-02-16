@@ -7,6 +7,7 @@ from odoo import api, fields, models, _
 import logging
 from odoo.exceptions import UserError
 _logger = logging.getLogger(__name__)
+
 try:
     from slugify import slugify
 except ImportError:
@@ -41,7 +42,6 @@ class AbstractUrl(models.AbstractModel):
         'res.lang',
         string='Lang',
         required=True)
-
 
     def _build_url_key(self):
         self.ensure_one()

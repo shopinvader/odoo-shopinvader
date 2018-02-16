@@ -5,7 +5,6 @@
 
 
 from odoo.http import HttpRequest, Root
-from odoo.tools import config
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import escape
 from odoo.exceptions import (

@@ -6,7 +6,7 @@
 import logging
 
 from odoo.addons.base_rest.controllers import main
-from odoo.http import request, route
+from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
