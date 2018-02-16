@@ -33,7 +33,6 @@ class CartService(Component):
                         cart, provider_params))
         return response
 
-
     def _validator_update(self):
         res = super(CartService, self)._validator_update()
         res['payment_params'] = self._get_payment_validator()
