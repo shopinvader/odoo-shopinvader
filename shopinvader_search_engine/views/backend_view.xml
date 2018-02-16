@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
 <record id="locomotive_backend_view_form" model="ir.ui.view">
     <field name="model">locomotive.backend</field>
     <field name="inherit_id"
            ref="shopinvader.locomotive_backend_view_form" />
     <field name="arch" type="xml">
-        <field name="odoo_api" position="after">
+        <field name="auth_api_key_id" position="after">
             <field name="se_backend_id"/>
         </field>
         <button name="bind_all_product" position="after">
@@ -33,5 +32,4 @@
     </field>
 </record>
 
-    </data>
-</openerp>
+</odoo>

@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data noupdate="1">
+<odoo noupdate="1">
 
-        <record id="pricelist_1" model="product.pricelist">
-            <field name="name">Business Pricelist</field>
-            <field name="type">sale</field>
-        </record>
-        <!-- TODO MIGRATE
-        <record id="item_1" model="product.pricelist.item">
-            <field name="price_version_id" ref="version_1"/>
-            <field name="base" ref="product.list_price"/>
-            <field name="sequence">1000</field>
-            <field name="price_discount" eval="-0.20"/>
-            <field name="name">Default Business Pricelist Line</field>
-        </record>
-        -->
+    <record id="pricelist_1" model="product.pricelist">
+        <field name="name">Business Pricelist</field>
+        <field name="currency_id" ref="base.USD"/>
+    </record>
 
-    </data>
-</openerp>
+    <record id="item_1" model="product.pricelist.item">
+        <field name="base">list_price</field>
+        <field name="sequence">1000</field>
+        <field name="percent_price" eval="20"/>
+        <field name="name">Default Business Pricelist Line</field>
+        <field name="pricelist_id" ref="pricelist_1"/>
+        <field name="compute_price">percentage</field>
+    </record>
+
+</odoo>

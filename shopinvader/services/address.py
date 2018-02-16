@@ -3,50 +3,41 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
-from .helper import to_int, secure_params
-from ..backend import shopinvader
 from werkzeug.exceptions import Forbidden, NotFound
 
 
-@shopinvader
 class AddressService(Component):
-    _inherit = 'shopinvader.service'
+    _inherit = 'base.shopinvader.service'
     _name = 'shopinvader.address.service'
-    _usage = 'address.service'
-    _model_name = 'locomotive.backend'
+    _usage = 'address'
 
     # The following method are 'public' and can be called from the controller.
-    # All params are untrusted so please check it by using the decorator
-    # secure params and the linked validator !
 
-    @secure_params
-    def get(self, params):
+    def search(self, domain=None):
         if not self.partner:
             return []
         else:
-            return self._list(params.pop('domain', None))
+            return self._list(domain)
 
-    @secure_params
-    def create(self, params):
+    def create(self, **params):
         params['parent_id'] = self.partner.id
         if not params.get('type'):
             params['type'] = 'other'
-        self.env['res.partner'].create(params)
+        self.env['res.partner'].create(self._prepare_params(params))
         return self._list()
 
-    @secure_params
-    def update(self, params):
-        address = self._get_address(params)
-        address.write(params)
+    def update(self, _id, **params):
+        address = self._get_address(_id)
+        address.write(self._prepare_params(params, update=True))
         res = self._list()
         if address.address_type == 'profile':
             res['store_cache'] = {'customer': self._to_json(address)[0]}
         return res
 
-    @secure_params
-    def delete(self, params):
-        address = self._get_address(params)
+    def delete(self, _id):
+        address = self._get_address(_id)
         if self.partner == address:
             raise Forbidden('Can not delete the partner account')
         address.active = False
@@ -57,7 +48,7 @@ class AddressService(Component):
     # All params are trusted as they have been checked before
 
     # Validator
-    def _validator_get(self):
+    def _validator_search(self):
         return {
             'domain': {
                 'coerce': self.to_domain,
@@ -115,7 +106,6 @@ class AddressService(Component):
         for key in res:
             if 'required' in res[key]:
                 del res[key]['required']
-        res.update({'id': {'coerce': to_int, 'required': True}})
         return res
 
     def _validator_delete(self):
@@ -130,9 +120,9 @@ class AddressService(Component):
         partners = self.env['res.partner'].search(domain)
         return {'data': self._to_json(partners)}
 
-    def _get_address(self, params):
-        domain = [('id', '=', params['id'])]
-        if self.partner.id != params['id']:
+    def _get_address(self, _id):
+        domain = [('id', '=', _id)]
+        if self.partner.id != _id:
             domain.append(('parent_id', '=', self.partner.id))
         address = self.env['res.partner'].search(domain)
         if not address:
@@ -166,3 +156,6 @@ class AddressService(Component):
 
     def _to_json(self, address):
         return address.jsonify(self._json_parser())
+
+    def _prepare_params(self, params, update=False):
+        return params

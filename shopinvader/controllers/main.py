@@ -3,89 +3,72 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.http import Controller, request, route
-# TODO migrate
-# from odoo.addons.connector.session import ConnectorSession
-# from odoo.addons.connector_locomotivecms.connector import get_environment
-from ..services.cart import CartService
-from ..services.cart_item import CartItemService
-from ..services.address import AddressService
-from ..services.customer import CustomerService
-from ..services.sale import SaleService
-from ..services.sign import SignService
-from ..services.transaction import TransactionService
-from datetime import datetime
 import logging
+
+from odoo.addons.base_rest.controllers import main
+from odoo.http import request
+
 _logger = logging.getLogger(__name__)
 
 
-class ShopinvaderController(Controller):
+class InvaderController(main.RestController):
 
-    def send_to_service(self, service_name, params):
-        with request.backend.work_on(
-                model_name='locomotive.backend',
-                partner=request.partner,
-                shopinvader_session=request.shopinvader_session) as work:
-            service = work.component(usage=service_name)
-            start = datetime.now()
-            method = request.httprequest.method
-            if method == 'GET':
-                res = service.get(params)
-            elif method == 'POST':
-                res = service.create(params)
-            elif method == 'PUT':
-                res = service.update(params)
-            elif method == 'DELETE':
-                res = service.delete(params)
-            res = request.make_response(res)
-            _logger.info('Shopinvader Response in %s', datetime.now() - start)
-            return res
+    _root_path = '/shopinvader/'
+    _collection = 'locomotive.backend'
+    _default_auth = 'api_key'
 
-    # Cart
-    @route('/shopinvader/cart', methods=['GET', 'PUT'], auth="shopinvader")
-    def cart_list(self, **params):
-        return self.send_to_service(CartService, params)
+    @classmethod
+    def _get_partner_from_headers(cls, headers):
+        partner_model = request.env['shopinvader.partner']
+        partner_email = headers.get('HTTP_PARTNER_EMAIL')
+        if partner_email:
+            partner_domain = [
+                ('partner_email', '=', partner_email),
+            ]
+            partner = partner_model.search(partner_domain)
+            if len(partner) == 1:
+                return partner
+            else:
+                _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
+                if len(partner) > 1:
+                    _logger.warning(
+                        "More than one shopinvader.partner found for domain:"
+                        " %s", partner_domain
+                    )
+        return partner_model.browse([])
 
-    # Cart Item
-    @route('/shopinvader/cart/item', methods=['POST', 'PUT', 'DELETE'],
-           auth="shopinvader")
-    def item(self, **params):
-        return self.send_to_service(CartItemService, params)
+    @classmethod
+    def _get_locomotive_backend_from_request(cls):
+        auth_api_key = getattr(request, 'auth_api_key', None)
+        backend_model = request.env['locomotive.backend']
+        if auth_api_key:
+            return backend_model.search([(
+                'auth_api_key_id', '=', auth_api_key.id
+            )])
+        return backend_model.browse([])
 
-    # Address
-    @route('/shopinvader/addresses',
-           methods=['GET', 'POST'], auth="shopinvader")
-    def address(self, **params):
-        return self.send_to_service('address.service', params)
+    @classmethod
+    def _get_shopinvader_session_from_headers(cls, headers):
+        # HTTP_SESS are data that are store in the shopinvader session
+        # and forwarded to odoo at each request
+        # it allow to access to some specific field of the user session
+        # By security always force typing
+        # Note: rails cookies store session are serveless ;)
+        return {
+            'cart_id': int(headers.get('HTTP_SESS_CART_ID', 0))
+        }
 
-    @route('/shopinvader/addresses/<id>', methods=['PUT', 'DELETE'],
-           auth="shopinvader")
-    def address_update_delete(self, **params):
-        return self.send_to_service(AddressService, params)
-
-    # Customer
-    @route('/shopinvader/customer',
-           methods=['GET'], auth="shopinvader")
-    def customer(self, **params):
-        return self.send_to_service(CustomerService, params)
-
-    # Order History
-    @route('/shopinvader/sales', methods=['GET'], auth="shopinvader")
-    def sale_list(self, **params):
-        return self.send_to_service(SaleService, params)
-
-    @route('/shopinvader/sales/<id>', methods=['GET'], auth="shopinvader")
-    def sale(self, **params):
-        return self.send_to_service(SaleService, params)
-
-    # Check Transaction
-    @route('/shopinvader/check_transaction',
-           methods=['GET'], auth="shopinvader")
-    def check_transaction(self, **params):
-        return self.send_to_service(TransactionService, params)
-
-    # Sign action
-    @route('/shopinvader/sign',
-           methods=['GET', 'PUT', 'POST'], auth="shopinvader")
-    def sign(self, **params):
-        return self.send_to_service(SignService, params)
+    def _get_component_context(self):
+        """
+        This method adds the component context:
+        * the partner
+        * the cart_id
+        * the locomotive_backend
+        """
+        res = super(main.RestController, self)._get_component_context()
+        headers = request.httprequest.environ
+        res['partner'] = self._get_partner_from_headers(headers)
+        res['shopinvader_session'] = \
+            self._get_shopinvader_session_from_headers(headers)
+        res['locomotive_backend'] = self._get_locomotive_backend_from_request()
+        return res

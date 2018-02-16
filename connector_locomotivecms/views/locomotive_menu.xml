@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-  <data>
+<!-- Copyright 2017 Akretion
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 
-<menuitem id="menu_locomotive_root"
-    parent="connector.menu_connector_root"
-    name="LocomotiveCMS"
-    sequence="10"
-    groups="connector.group_connector_manager"/>
+<odoo>
 
-<menuitem id="menu_locomotive_backend"
-    name="Backends"
-    parent="menu_locomotive_root"
-    action="action_locomotive_backend"/>
+    <menuitem id="menu_locomotive_root"
+              parent="connector.menu_connector_root"
+              name="LocomotiveCMS"
+              sequence="10"
+              groups="connector.group_connector_manager"/>
 
-  </data>
-</openerp>
+    <menuitem id="menu_locomotive_backend"
+              name="Backends"
+              parent="menu_locomotive_root"
+              action="action_locomotive_backend"/>
+
+</odoo>

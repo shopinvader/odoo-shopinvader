@@ -6,20 +6,20 @@
 {
     "name": "Shopinvader Stripe",
     "summary": "Shopinvader Stripe Payment Gateway",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    'installable': False,
+    'installable': True,
     "auto_install": True,
     "external_dependencies": {
         "python": [],
         "bin": [],
     },
     "depends": [
-        "shopinvader",
+        "shopinvader_payment",
         "payment_gateway_stripe",
     ],
     "data": [

@@ -16,13 +16,13 @@ class ShopinvaderCategory(models.Model):
         store=True,
         required=False)
 
-    @api.depends('lang_id', 'backend_id.se_backend_id')
+    @api.depends('backend_id.se_backend_id')
     def _compute_index(self):
         for record in self:
             se_backend = record.backend_id.se_backend_id
             if se_backend:
                 record.index_id = self.env['se.index'].search([
                     ('backend_id', '=', se_backend.id),
-                    ('lang_id', '=', record.lang_id.id),
                     ('model_id.model', '=', record._name),
+                    ('lang_id', '=', record.lang_id.id)
                     ])

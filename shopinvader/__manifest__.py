@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
@@ -14,13 +14,15 @@
     "application": True,
     'installable': True,
     "external_dependencies": {
-        "python": ['cerberus', 'unidecode', 'pysimplesoap'],
+        "python": ['cerberus', 'unidecode'],
         "bin": [],
     },
     "depends": [
         # "base_delivery_carrier_label",
         # "delivery_carrier_url",
-        "base_jsonify",
+        'base_rest',
+        'auth_api_key',
+        'base_jsonify',
         # "base_sparse_field",
         "base_url",
         "base_vat",
@@ -36,6 +38,9 @@
         # "sale_order_line_price_subtotal_gross",
     ],
     "data": [
+        'views/shopinvader_variant.xml',
+        'wizards/shopinvader_variant_unbinding_wizard.xml',
+        'wizards/shopinvader_variant_binding_wizard.xml',
         'views/product_view.xml',
         # 'views/payment_method_view.xml',
         'views/backend_view.xml',
@@ -48,8 +53,8 @@
         "data/ir_export_category.xml",
     ],
     "demo": [
+        "demo/auth_api_key_demo.xml",
         "demo/account_demo.xml",
-        "demo/product_demo.xml",
         "demo/pricelist_demo.xml",
         # "demo/image_resize_demo.xml",
         "demo/backend_demo.xml",

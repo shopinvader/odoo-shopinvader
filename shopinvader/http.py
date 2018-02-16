@@ -5,7 +5,6 @@
 
 
 from odoo.http import HttpRequest, Root
-from odoo.tools import config
 from werkzeug.exceptions import HTTPException
 from werkzeug.utils import escape
 from odoo.exceptions import (
@@ -139,12 +138,11 @@ class HttpJsonRequest(HttpRequest):
            to abitrary responses. Anything returned (except None) will
            be used as response."""
         _logger.debug('Shopinvader Handle exception %s', exception)
-        if config['dev_mode']:
-            raise exception
         try:
             return super(HttpRequest, self)._handle_exception(exception)
         except (UserError, ValidationError), e:
-            return WrapJsonException(BadRequest(e.message or e.value))
+            return WrapJsonException(
+                BadRequest(e.message or e.value or e.name))
         except MissingError, e:
             return WrapJsonException(NotFound(e.value))
         except AccessError, e:
@@ -154,13 +152,12 @@ class HttpJsonRequest(HttpRequest):
         except:
             return WrapJsonException(InternalServerError())
 
-    def make_response(self, data, headers=None, cookies=None):
+    def make_json_response(self, data, headers=None, cookies=None):
         data = json.dumps(data)
         if headers is None:
             headers = {}
         headers['Content-Type'] = 'application/json'
-        return super(HttpJsonRequest, self).make_response(
-            data, headers=headers, cookies=cookies)
+        return self.make_response(data, headers=headers, cookies=cookies)
 
 
 ori_get_request = Root.get_request

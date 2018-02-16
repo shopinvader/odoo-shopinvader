@@ -21,7 +21,10 @@ class PaymentService(models.Model):
     def _process_payment_params(self, cart, payment_params):
         transaction = self.generate(cart, **payment_params)
         if transaction.url:
-            return {'redirect_to': transaction.url}
+            return {
+                'redirect_to': transaction.url,
+                'action_confirm_cart': False,
+                }
         elif transaction.state in ('succeeded', 'to_capture'):
             return {'action_confirm_cart': True}
         else:
