@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
-<record id="shopinvader_notification_cart" model="shopinvader.notification">
-    <field name="backend_id" ref="backend_1"/>
-    <field name="notification_type">cart_confirmation</field>
-    <field name="model_id" ref="sale.model_sale_order"/>
-    <field name="template_id" ref="email_cart_notification"/>
-</record>
+    <record id="shopinvader_notification_cart" model="shopinvader.notification">
+        <field name="backend_id" ref="backend_1"/>
+        <field name="notification_type">cart_confirmation</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="template_id" ref="email_cart_notification"/>
+    </record>
 
-<record id="shopinvader_notification_sale" model="shopinvader.notification">
-    <field name="backend_id" ref="backend_1"/>
-    <field name="notification_type">sale_confirmation</field>
-    <field name="model_id" ref="sale.model_sale_order"/>
-    <field name="template_id" ref="email_sale_notification"/>
-</record>
+    <record id="shopinvader_notification_sale" model="shopinvader.notification">
+        <field name="backend_id" ref="backend_1"/>
+        <field name="notification_type">sale_confirmation</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="template_id" ref="email_sale_notification"/>
+    </record>
 
-    </data>
-</openerp>
+</odoo>

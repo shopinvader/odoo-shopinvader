@@ -3,11 +3,12 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from .helper import ShopinvaderService
-from .address import AddressService
+from odoo.addons.component.core import AbstractComponent
 
 
-class AbstractSaleService(ShopinvaderService):
+class AbstractSaleService(AbstractComponent):
+    _inherit = 'base.shopinvader.service'
+    _name = 'shopinvader.abstract.sale.service'
 
     def _parser_product(self):
         fields = ['name', 'object_id:id', 'url_key', 'images', 'default_code']
@@ -23,7 +24,8 @@ class AbstractSaleService(ShopinvaderService):
             'product_uom_qty',
             'price_subtotal',
             'discount',
-            'is_delivery',
+            # TODO shopinvader_delivery
+            # 'is_delivery',
             ]
         if 'sale_order_line_price_subtotal_gross' in\
                 self.env.registry._init_modules:
@@ -45,7 +47,7 @@ class AbstractSaleService(ShopinvaderService):
         ]
 
     def _parser(self):
-        address_parser = self.service_for(AddressService)._json_parser()
+        address_parser = self.component(usage='address')._json_parser()
         return [
             'id',
             'name',
@@ -62,21 +64,24 @@ class AbstractSaleService(ShopinvaderService):
             'anonymous_token',
             'shopinvader_state:state',
             'date_order',
-            ('carrier_id:carrier', self._parser_carrier()),
+            # TODO MIGRATE shopinvader_delivery
+            # ('carrier_id:carrier', self._parser_carrier()),
             ('partner_id:partner', self._parser_partner()),
             ('partner_shipping_id:partner_shipping', address_parser),
             ('partner_invoice_id:partner_invoice', address_parser),
             ('order_line', self._parser_order_line()),
-            ('payment_method_id:payment_method',
-                self._parser_payment_method()),
+            # TODO MIGRATE shopinvader_payment
+            # ('payment_method_id:payment_method',
+            #    self._parser_payment_method()),
         ]
 
     def _to_json(self, sale):
         res = sale.jsonify(self._parser())
         for order in res:
-            order['order_line'] = [
-                l for l in order['order_line']
-                if not l['is_delivery']]
+            # TODO shopinvader_delivery
+            # order['order_line'] = [
+            #    l for l in order['order_line']
+            #    if not l['is_delivery']]
             order['item_number'] = sum([
                 l['product_uom_qty']
                 for l in order['order_line']])
@@ -85,19 +90,20 @@ class AbstractSaleService(ShopinvaderService):
                 order['partner_invoice']['id'])
             for key in ['partner', 'partner_shipping', 'partner_invoice']:
                 if order[key]['id'] ==\
-                        self.backend_record.anonymous_partner_id.id:
+                        self.locomotive_backend.anonymous_partner_id.id:
                     order[key] = {}
-            trackings = []
-            sale_order = self.env['sale.order'].browse(order['id'])
-            for picking in sale_order.picking_ids:
-                for pack in picking._get_packages_from_picking():
-                    if pack.parcel_tracking:
-                        data = pack.with_context(
-                            picking=self).open_tracking_url()
-                        trackings.append({
-                            'name': picking.carrier_id.name,
-                            'url': data.get('url'),
-                            'code': pack.parcel_tracking,
-                            })
-            order['trackings'] = trackings
+            # TODO MIGRATE shopinvader_delivery
+            # trackings = []
+            # sale_order = self.env['sale.order'].browse(order['id'])
+            # for picking in sale_order.picking_ids:
+            #     for pack in picking._get_packages_from_picking():
+            #         if pack.parcel_tracking:
+            #             data = pack.with_context(
+            #                 picking=self).open_tracking_url()
+            #             trackings.append({
+            #                 'name': picking.carrier_id.name,
+            #                 'url': data.get('url'),
+            #                 'code': pack.parcel_tracking,
+            #                 })
+            # order['trackings'] = trackings
         return res

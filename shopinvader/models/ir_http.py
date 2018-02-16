@@ -3,32 +3,16 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from werkzeug.exceptions import Unauthorized
+from odoo.http import request
 
 from odoo import models
-from odoo.http import request
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
-class IrHttp(models.Model):
+class IrHttp(models.AbstractModel):
     _inherit = 'ir.http'
 
-    def _shopinvader_get_partner_from_header(self, headers):
-        partner_email = headers.get('HTTP_PARTNER_EMAIL')
-        if partner_email:
-            loco_partner = request.env['shopinvader.partner'].search([
-                ('backend_id', '=', request.backend.id),
-                ('partner_email', '=', partner_email),
-                ])
-            if loco_partner:
-                return loco_partner.record_id
-            else:
-                _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
-        return None
-
-    def _extract_shopinvader_session(self, headers):
+    @classmethod
+    def _extract_shopinvader_session(cls, headers):
         # HTTP_SESS are data that are store in the shopinvader session
         # and forwarded to odoo at each request
         # it allow to access to some specific field of the user session
@@ -38,21 +22,9 @@ class IrHttp(models.Model):
             'cart_id': int(headers.get('HTTP_SESS_CART_ID', 0))
             }
 
-    def _auth_method_shopinvader(self):
+    @classmethod
+    def _auth_method_shopinvader(cls):
+        ret = super(IrHttp, cls)._auth_method_shopinvader()
         headers = request.httprequest.environ
-        if headers.get('HTTP_API_KEY'):
-            request.uid = 1
-            backend = request.env['locomotive.backend'].search(
-                [('odoo_api', '=', headers['HTTP_API_KEY'])])
-            if len(backend) == 1:
-                request.backend = backend
-                request.partner =\
-                    self._shopinvader_get_partner_from_header(headers)
-                if headers.get('HTTP_LANG'):
-                    request.context['lang'] = headers['HTTP_LANG']
-                    request.env = request.env(context=request.context)
-                request.shopinvader_session =\
-                    self._extract_shopinvader_session(headers)
-                return True
-        _logger.error("Wrong HTTP_API_KEY, access denied")
-        raise Unauthorized("Wrong HTTP_API_KEY, access denied")
+        request.shopinvader_session = cls._extract_shopinvader_session(headers)
+        return ret

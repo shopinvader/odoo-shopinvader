@@ -3,8 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from ..services.cart_item import CartItemService
-from ..services.cart import CartService
 from .common import CommonCase
 
 
@@ -13,7 +11,7 @@ class AbstractItemCase(object):
     def setUp(self, *args, **kwargs):
         super(AbstractItemCase, self).setUp(*args, **kwargs)
         self.product_1 = self.env.ref('product.product_product_4b')
-        self.product_2 = self.env.ref('product.product_product_14')
+        self.product_2 = self.env.ref('product.product_product_13')
 
     def extract_cart(self, response):
         self.shopinvader_session['cart_id'] =\
@@ -23,21 +21,21 @@ class AbstractItemCase(object):
 
     def add_item(self, product_id, qty):
         return self.extract_cart(
-            self.service.create({
+            self.service.dispatch('add_item', params={
                 'product_id': product_id,
                 'item_qty': qty,
                 }))
 
     def update_item(self, item_id, qty):
         return self.extract_cart(
-            self.service.update({
+            self.service.dispatch('update_item', params={
                 'item_id': item_id,
                 'item_qty': qty,
                 }))
 
     def delete_item(self, item_id):
         return self.extract_cart(
-            self.service.delete({
+            self.service.dispatch('delete_item', params={
                 'item_id': item_id,
                 }))
 
@@ -56,7 +54,7 @@ class AbstractItemCase(object):
         self.check_partner(cart)
 
     def test_add_item_with_an_existing_cart(self):
-        cart = self.cart_service.get({})['data']
+        cart = self.service.search()['data']
         nbr_line = len(cart['order_line'])
 
         cart = self.add_item(self.product_1.id, 2)
@@ -73,7 +71,7 @@ class AbstractItemCase(object):
         self.check_product_and_qty(cart['order_line'][0], product_id, 5)
 
     def test_delete_item(self):
-        cart = self.cart_service.get({})['data']
+        cart = self.service.search()['data']
         nbr_line = len(cart['order_line'])
         cart = self.delete_item(cart['order_line'][0]['id'])
         self.assertEqual(len(cart['order_line']), nbr_line - 1)
@@ -100,8 +98,10 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
         self.cart = self.env.ref('shopinvader.sale_order_1')
         self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {'cart_id': self.cart.id}
-        self.service = self._get_service(CartItemService, None)
-        self.cart_service = self._get_service(CartService, None)
+        with self.work_on_services(
+                partner=None,
+                shopinvader_session=self.shopinvader_session) as work:
+            self.service = work.component(usage='cart')
 
     def check_partner(self, cart):
         self.assertEqual(cart['partner'], {})
@@ -117,8 +117,10 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
         self.cart = self.env.ref('shopinvader.sale_order_2')
         self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {'cart_id': self.cart.id}
-        self.service = self._get_service(CartItemService, self.partner)
-        self.cart_service = self._get_service(CartService, self.partner)
+        with self.work_on_services(
+                partner=self.partner,
+                shopinvader_session=self.shopinvader_session) as work:
+            self.service = work.component(usage='cart')
 
     def check_partner(self, cart):
         self.assertEqual(cart['partner']['id'], self.partner.id)

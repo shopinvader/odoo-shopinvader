@@ -104,7 +104,7 @@ def WrapJsonException(exception):
     if request:
         httprequest = request.httprequest
         headers = dict(httprequest.headers)
-        headers.pop('Api-Key')
+        headers.pop('Api-Key', None)
         message = (
             'Shopinvader call url %s method %s with params %s '
             'raise the following error %s')
@@ -141,7 +141,8 @@ class HttpJsonRequest(HttpRequest):
         try:
             return super(HttpRequest, self)._handle_exception(exception)
         except (UserError, ValidationError), e:
-            return WrapJsonException(BadRequest(e.message or e.value))
+            return WrapJsonException(
+                BadRequest(e.message or e.value or e.name))
         except MissingError, e:
             return WrapJsonException(NotFound(e.value))
         except AccessError, e:
@@ -151,13 +152,12 @@ class HttpJsonRequest(HttpRequest):
         except:
             return WrapJsonException(InternalServerError())
 
-    def make_response(self, data, headers=None, cookies=None):
+    def make_json_response(self, data, headers=None, cookies=None):
         data = json.dumps(data)
         if headers is None:
             headers = {}
         headers['Content-Type'] = 'application/json'
-        return super(HttpJsonRequest, self).make_response(
-            data, headers=headers, cookies=cookies)
+        return self.make_response(data, headers=headers, cookies=cookies)
 
 
 ori_get_request = Root.get_request

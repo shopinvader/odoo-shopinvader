@@ -3,8 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-
-from ..services.sale import SaleService
 from .common import CommonCase
 from werkzeug.exceptions import NotFound
 
@@ -15,16 +13,18 @@ class SaleCase(CommonCase):
         super(SaleCase, self).setUp(*args, **kwargs)
         self.sale = self.env.ref('shopinvader.sale_order_2')
         self.partner = self.env.ref('shopinvader.partner_1')
-        self.service = self._get_service(SaleService, self.partner)
+        with self.work_on_services(
+                partner=self.partner) as work:
+            self.service = work.component(usage='sale')
 
     def test_read_sale(self):
-        self.sale.action_button_confirm()
-        res = self.service.get({'id': self.sale.id})
+        self.sale.action_confirm()
+        res = self.service.get(self.sale.id)
         self.assertEqual(res['id'], self.sale.id)
         self.assertEqual(res['name'], self.sale.name)
 
     def test_allow_read_cart(self):
-        res = self.service.get({'id': self.sale.id})
+        res = self.service.get(self.sale.id)
         self.assertEqual(res['id'], self.sale.id)
         self.assertEqual(res['name'], self.sale.name)
 
@@ -37,4 +37,4 @@ class SaleCase(CommonCase):
         # We raise a not found error because in a point of view of the hacker
         # and his right the record does not exist
         with self.assertRaises(NotFound):
-            self.service.get({'id': sale.id})
+            self.service.get(sale.id)

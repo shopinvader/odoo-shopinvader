@@ -3,12 +3,13 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
-from odoo.addons.connector.session import ConnectorSession
-from odoo.addons.connector_locomotivecms.connector import get_environment
+from odoo.addons.component.tests.common import SavepointComponentCase
+from contextlib import contextmanager
+from odoo.addons.component.core import WorkContext
+from odoo.addons.base_rest.controllers.main import _PseudoCollection
 
 
-class CommonCase(TransactionCase):
+class CommonCase(SavepointComponentCase):
 
     def setUp(self, *args, **kwargs):
         super(CommonCase, self).setUp(*args, **kwargs)
@@ -20,12 +21,16 @@ class CommonCase(TransactionCase):
             pricelist = self.env['product.pricelist'].search([])
             pricelist.write({'visible_discount': False})
 
-    def _get_service(self, service_class, partner):
-        model_name = service_class._model_name
-        session = ConnectorSession.from_env(self.env)
-        env = get_environment(session, model_name, self.backend.id)
-        service = env.backend.get_class(service_class, session, model_name)
-        return service(env, partner, self.shopinvader_session)
+    @contextmanager
+    def work_on_services(self, **params):
+        params = params or {}
+        if 'locomotive_backend' not in params:
+            params['locomotive_backend'] = self.backend
+        if 'shopinvader_session' not in params:
+            params['shopinvader_session'] = {}
+        collection = _PseudoCollection('locomotive.backend',  self.env)
+        yield WorkContext(model_name='rest.service.registration',
+                          collection=collection, **params)
 
 
 class ProductCommonCase(CommonCase):

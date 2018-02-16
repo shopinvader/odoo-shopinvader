@@ -28,15 +28,15 @@ class ShopinvaderVariant(models.Model):
                 if len(fposition) > 0:
                     fposition = fposition[0]
                 record.price[role.code] = record._get_price(
-                    role.pricelist_id, fposition)
+                    role.pricelist_id, fposition, record.backend_id.company_id)
 
-    @api.depends('lang_id', 'backend_id.se_backend_id')
+    @api.depends('backend_id.se_backend_id')
     def _compute_index(self):
         for record in self:
             se_backend = record.backend_id.se_backend_id
             if se_backend:
                 record.index_id = self.env['se.index'].search([
                     ('backend_id', '=', se_backend.id),
-                    ('lang_id', '=', record.lang_id.id),
                     ('model_id.model', '=', record._name),
+                    ('lang_id', '=', record.lang_id.id)
                     ])

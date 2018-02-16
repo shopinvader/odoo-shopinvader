@@ -14,17 +14,18 @@ class ProductCase(ProductCommonCase):
             len(self.template.product_variant_ids),
             len(self.shopinvader_variants))
 
-    def test_categories(self):
-        self.assertEqual(
-            len(self.shopinvader_variant.shopinvader_categ_ids), 0)
-        self.backend.bind_all_category()
-        self.shopinvader_variant.invalidate_cache()
-        self.assertEqual(
-            len(self.shopinvader_variant.shopinvader_categ_ids), 2)
-        self.assertEqual(
-            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'),
-            self.template.categ_id + self.template.categ_id.parent_id)
-
+# TODO MIGRATE
+#    def test_categories(self):
+#        self.assertEqual(
+#            len(self.shopinvader_variant.shopinvader_categ_ids), 0)
+#        self.backend.bind_all_category()
+#        self.shopinvader_variant.invalidate_cache()
+#        self.assertEqual(
+#            len(self.shopinvader_variant.shopinvader_categ_ids), 2)
+#        self.assertEqual(
+#            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'),
+#            self.template.categ_id + self.template.categ_id.parent_id)
+#
     def test_attributes(self):
         attr_dict = {'color': u'Black',
                      'wi-fi': u'2.4 GHz',
@@ -48,3 +49,25 @@ class ProductCase(ProductCommonCase):
              'based_on': 'attribute',
              'attribute_id': attribute_id.id})
         self.assertEqual(filter_on_attr.display_name, 'attributes.wi-fi')
+
+    def test_price_by_qty(self):
+        expected_result = {
+            'public_tax_exc': {
+                'tax_included': False,
+                'value': 652.17},
+            'public_tax_inc': {
+                'tax_included': True,
+                'value': 750.0},
+            'pro_tax_exc': {
+                'tax_included': False,
+                'value': 521.74,
+            }}
+        product = self.shopinvader_variant
+        for role in self.backend.role_ids:
+            fposition = role.fiscal_position_ids
+            if len(fposition) > 0:
+                fposition = fposition[0]
+
+            result = product._get_price(
+                role.pricelist_id, fposition, self.backend.company_id)
+            self.assertDictEqual(expected_result[role.code], result)

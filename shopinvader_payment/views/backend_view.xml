@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+<record id="locomotive_backend_view_form" model="ir.ui.view">
+    <field name="model">locomotive.backend</field>
+    <field name="inherit_id"
+           ref="connector_locomotivecms.view_locomotive_backend_form" />
+    <field name="arch" type="xml">
+        <group name="price" position="after">
+            <group name="payment_method" colspan="4">
+                <field name="payment_method_ids"
+                       string="Payment Method"
+                       colspan="4"
+                       nolabel="True">
+                </field>
+            </group>
+        </group>
+    </field>
+</record>
+
+    </data>
+</openerp>

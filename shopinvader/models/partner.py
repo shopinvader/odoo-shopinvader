@@ -41,15 +41,12 @@ class ShopinvaderPartner(models.Model):
         'record_id.vat', 'vat',
         'record_id.property_product_pricelist', 'property_product_pricelist')
     def _compute_role(self):
-        user_company_id = self.env.user.company_id.id
         fposition_obj = self.env['account.fiscal.position']
         for binding in self:
             role = self.env['shopinvader.role']
-            company_id = binding.company_id and binding.company_id.id \
-                or user_company_id
             partner = binding.record_id
             fposition_id = fposition_obj.get_fiscal_position(
-                company_id, partner.id, delivery_id=partner.id)
+                partner.id, delivery_id=partner.id)
             if fposition_id:
                 role = self.env['shopinvader.role'].search([
                     ('fiscal_position_ids', '=', fposition_id),

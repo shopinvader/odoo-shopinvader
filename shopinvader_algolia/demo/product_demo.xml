@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
-        <record id="product.product_product_4_product_template" model="product.template">
-            <field name="description"><![CDATA[
+<odoo>
+    <record id="product.product_product_4_product_template" model="product.template">
+        <field name="description"><![CDATA[
 <h2>Fusce ac ligula ante</h2>
 <p>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales
@@ -95,7 +94,6 @@
    metus fringilla tristique. Praesent malesuada ante nec magna elementum
   dapibus eget a elit.
 </p>
-            ]]></field>
-        </record>
-    </data>
-</openerp>
+        ]]></field>
+    </record>
+</odoo>
