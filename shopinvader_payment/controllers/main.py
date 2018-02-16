@@ -14,5 +14,3 @@ class TransactionShopinvaderController(ShopinvaderController):
            methods=['GET'], auth="shopinvader")
     def check_transaction(self, **params):
         return self.send_to_service('transaction.service', params)
-
-

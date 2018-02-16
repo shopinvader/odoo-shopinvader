@@ -78,7 +78,7 @@ class AddressCase(CommonCase):
         self.assertEqual(res[0]['id'], self.address.id)
 
     def test_read_address_all(self):
-        res = self.service.dispatch('search',params={})['data']
+        res = self.service.dispatch('search', params={})['data']
         self.assertEqual(len(res), 2)
         self.assertEqual(res[0]['id'], self.partner.id)
         self.assertEqual(res[1]['id'], self.address.id)

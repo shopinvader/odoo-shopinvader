@@ -3,11 +3,9 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.tests.common import TransactionCase
-from odoo.addons.connector_algolia.tests.common import mock_api, ConnectorAlgoliaCase
-import os
-import unittest
-import time
+from odoo.addons.connector_algolia.tests.common import (
+    mock_api,
+    ConnectorAlgoliaCase)
 import logging
 from odoo import _
 from odoo.addons.queue_job.job import Job

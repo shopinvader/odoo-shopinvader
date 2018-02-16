@@ -131,8 +131,8 @@ class CartService(Component):
     # All params are trusted as they have been checked before
 
     def _update(self, params):
-        action_confirm_cart = \
-            params.get('next_step') == self.locomotive_backend.last_step_id.code
+        action_confirm_cart = params.get('next_step') ==\
+            self.locomotive_backend.last_step_id.code
         cart = self._get()
         if params.get('anonymous_email'):
             self._check_allowed_anonymous_email(cart, params)
@@ -310,4 +310,4 @@ class CartService(Component):
             'product_id': params['product_id'],
             'product_uom_qty': params['item_qty'],
             'order_id': cart.id,
-            }
+        }
