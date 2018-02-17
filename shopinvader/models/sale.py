@@ -183,7 +183,7 @@ class SaleOrder(models.Model):
         return {
             'id': carrier.id,
             'name': carrier.name,
-            'description': carrier.description,
+            'description': carrier.description or '',
             'price': carrier.price,
             }
 
@@ -193,7 +193,9 @@ class SaleOrder(models.Model):
             return []
         else:
             carriers = self.with_context(order_id=self.id)\
-                .env['delivery.carrier'].search([])
+                .env['delivery.carrier'].search([
+                    ('id', 'in',
+                        self.shopinvader_backend_id.allowed_carrier_ids.ids)])
             res = [self._prepare_available_carrier(carrier)
                    for carrier in carriers
                    if carrier.available]
@@ -251,7 +253,11 @@ class SaleOrderLine(models.Model):
         store=True)
 
     def reset_price_tax(self):
+        reset_carrier = False
         for line in self:
+            if line.is_delivery:
+                reset_carrier = True
+                continue
             res = line.product_id_change(
                 line.order_id.pricelist_id.id,
                 line.product_id.id,
@@ -272,6 +278,8 @@ class SaleOrderLine(models.Model):
                 'discount': res.get('discount'),
                 'tax_id': [(6, 0, res.get('tax_id', []))]
                 })
+        if reset_carrier:
+            self.mapped('order_id').delivery_set()
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):

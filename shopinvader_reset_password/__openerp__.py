@@ -22,8 +22,8 @@
         "shopinvader",
     ],
     "data": [
-        "views/partner_view.xml",
         "wizards/reset_password_view.xml",
+        "views/partner_view.xml",
     ],
     "demo": [
     ],
