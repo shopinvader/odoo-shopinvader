@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<odoo>
-
-    <record id="auth_api_key_locomotive" model="auth.api.key">
-        <field name="name">Locomotive Auth API KEY</field>
-        <field name="password">12345</field>
-    </record>
-
-</odoo>

@@ -1,2 +1,0 @@
-from . import shopinvader_variant_binding_wizard
-from . import shopinvader_variant_unbinding_wizard
