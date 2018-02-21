@@ -15,7 +15,3 @@ class ShopinvaderPartnerExportMapper(Component):
     direct = [
         ('email', 'email'),
     ]
-
-    @mapping
-    def role(self, record):
-        return {'role': record.role_id.code}

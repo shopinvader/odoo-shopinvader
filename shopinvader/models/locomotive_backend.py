@@ -34,10 +34,6 @@ from odoo import api, fields, models
 
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
-    role_ids = fields.One2many(
-        'shopinvader.role',
-        'backend_id',
-        'Customer Role')
     notification_ids = fields.One2many(
         'shopinvader.notification',
         'backend_id',

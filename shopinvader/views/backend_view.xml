@@ -35,19 +35,6 @@
                 <field name="anonymous_partner_id"/>
             </field>
             <group name="config" position="after">
-                <group name="price" colspan="4">
-                    <field name="role_ids"
-                           string="Roles"
-                           colspan="4"
-                           nolabel="True">
-                        <tree editable="bottom">
-                            <field name="fiscal_position_ids" widget="many2many_tags"/>
-                            <field name="pricelist_id"/>
-                            <field name="code"/>
-                            <field name="default"/>
-                        </tree>
-                    </field>
-                </group>
                 <group name="allowed_country" colspan="4">
                     <field name="allowed_country_ids" nolabel="1"/>
                 </group>

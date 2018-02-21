@@ -88,7 +88,6 @@ class SignService(Component):
                 })
         response = self._assign_cart_and_get_store_cache()
         response['data'] = {
-            'role': shop_partner.role_id.code,
             'id': self.partner.id,
         }
         return response

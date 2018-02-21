@@ -8,7 +8,6 @@ from . import product_filter
 from . import product_product
 from . import product_template
 from . import product_category
-from . import role
 from . import sale
 from . import locomotive_backend
 from . import url
