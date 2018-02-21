@@ -18,8 +18,6 @@
         "bin": [],
     },
     "depends": [
-        # "base_delivery_carrier_label",
-        # "delivery_carrier_url",
         'base_rest',
         'auth_api_key',
         'base_jsonify',
@@ -29,7 +27,6 @@
         "connector_base_product",
         "connector_locomotivecms",
         "sale",
-        # "delivery",
         # "product_multi_image",
         # "product_stock_state",
         # "sale_order_line_price_subtotal_gross",

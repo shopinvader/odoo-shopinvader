@@ -52,8 +52,6 @@ class CartService(Component):
         if existing_item:
             existing_item.product_uom_qty += params['item_qty']
             existing_item.reset_price_tax()
-            # TODO MIGRATE shopinvader delivery
-            # existing_item.order_id._update_default_carrier()
         else:
             vals = self._prepare_cart_item(params, cart)
             self.env['sale.order.line'].create(vals)
@@ -63,8 +61,6 @@ class CartService(Component):
         item = self._get_cart_item(params)
         item.product_uom_qty = params['item_qty']
         item.reset_price_tax()
-        # TODO MIGRATE shopinvader delivery
-        # item.order_id._update_default_carrier()
         cart = self._get()
         return self._to_json(cart)
 
@@ -80,7 +76,6 @@ class CartService(Component):
 
     def _validator_update(self):
         res = {
-            'carrier_id': {'coerce': to_int, 'nullable': True},
             'current_step': {'type': 'string'},
             'next_step': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
@@ -190,8 +185,6 @@ class CartService(Component):
             return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
         res.update({
-            # TODO MIGRATE in shopinvader_delivery
-            # 'available_carriers': cart._get_available_carrier(),
             'current_step': cart.current_step_id.code,
             'done_steps': cart.done_step_ids.mapped('code'),
             })
