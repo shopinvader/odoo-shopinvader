@@ -38,9 +38,6 @@ class ShopinvaderVariant(models.Model):
         comodel_name='shopinvader.category',
         compute='_compute_shopinvader_category',
         string='Shopinvader Categories')
-    images = fields.Serialized(
-        compute='_compute_image',
-        string='Shopinvader Image')
     variant_count = fields.Integer(
         related='product_variant_count')
     attributes = fields.Serialized(
@@ -81,19 +78,6 @@ class ShopinvaderVariant(models.Model):
                     ])
                 ids += parents.ids
             record.shopinvader_categ_ids = ids
-
-    def _compute_image(self):
-        for record in self:
-            pass
-            # TODO MIGRATE shopinvader_storage_image
-            # images = []
-            # for image in record.record_id.image_ids:
-            #     res = {'original': image.url}
-            #     for resize in record.backend_id.product_image_resize_ids:
-            #         res[resize.key] = \
-            #             image.get_thumbnail_from_resize(resize).url
-            #     images.append(res)
-            # record.images = images
 
     def _compute_attributes(self):
         for record in self:

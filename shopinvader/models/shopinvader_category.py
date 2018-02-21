@@ -29,9 +29,6 @@ class ShopinvaderCategory(models.Model):
     subtitle = fields.Char()
     short_description = fields.Html()
     description = fields.Html()
-    images = fields.Serialized(
-        compute='_compute_image',
-        string='Shopinvader Image')
     shopinvader_parent_id = fields.Many2one(
         'shopinvader.category',
         'Shopinvader Parent',
@@ -59,19 +56,6 @@ class ShopinvaderCategory(models.Model):
             for url in record.redirect_url_key_ids:
                 res.append(url.url_key)
             record.redirect_url_key = res
-
-    def _compute_image(self):
-        for record in self:
-            images = []
-            # TODO MIGRATE image_ids on categary must be implemented
-            # in a separated module
-            # for image in record.record_id.image_ids:
-            #    res = {'original': image.url}
-            #    for resize in record.backend_id.categ_image_resize_ids:
-            #        res[resize.key] = \
-            #            image.get_thumbnail_from_resize(resize).url
-            #    images.append(res)
-            record.images = images
 
     @api.depends('record_id')
     def _compute_object_id(self):

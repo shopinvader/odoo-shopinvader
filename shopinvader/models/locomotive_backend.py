@@ -42,15 +42,6 @@ class LocomotiveBackend(models.Model):
         'shopinvader.notification',
         'backend_id',
         'Notification')
-    # TODO move to shopinvader_image
-    # product_image_resize_ids = fields.Many2many(
-    #    comodel_name='image.resize',
-    #    relation="product_image_resize",
-    #    string='Product Image Resize')
-    # categ_image_resize_ids = fields.Many2many(
-    #    comodel_name='image.resize',
-    #    relation="category_image_resize",
-    #    string='Category Image Resize')
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_variant = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')
