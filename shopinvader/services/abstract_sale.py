@@ -41,8 +41,6 @@ class AbstractSaleService(AbstractComponent):
             'amount_total',
             'amount_untaxed',
             'amount_tax',
-            'anonymous_email',
-            'anonymous_token',
             'shopinvader_state:state',
             'date_order',
             ('partner_id:partner', self._parser_partner()),

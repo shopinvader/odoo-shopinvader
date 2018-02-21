@@ -58,9 +58,6 @@ class LocomotiveBackend(models.Model):
         'shopinvader.cart.step',
         string='Last cart step',
         required=True)
-    restrict_anonymous = fields.Boolean(
-        help=("Tic that box if yo don't want to forbid an existing customer "
-              "to create a sale order in anonymous mode"))
     allowed_country_ids = fields.Many2many(
         comodel_name='res.country',
         string='Allowed Country')

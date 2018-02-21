@@ -78,7 +78,6 @@ class CartService(Component):
         res = {
             'current_step': {'type': 'string'},
             'next_step': {'type': 'string'},
-            'anonymous_email': {'type': 'string'},
             'note': {'type': 'string'},
         }
         if self.partner:
@@ -128,42 +127,21 @@ class CartService(Component):
         action_confirm_cart = params.get('next_step') ==\
             self.locomotive_backend.last_step_id.code
         cart = self._get()
-        if params.get('anonymous_email'):
-            self._check_allowed_anonymous_email(cart, params)
 
-        if not self.partner:
-            self._set_anonymous_partner(cart, params)
-        else:
-            if 'partner_shipping' in params:
-                # By default we always set the invoice address with the
-                # shipping address, if you want a different invoice address
-                # just pass it
-                params['partner_shipping_id'] = params.pop(
-                    'partner_shipping')['id']
-                params['partner_invoice_id'] = params['partner_shipping_id']
-            if 'partner_invoice' in params:
-                params['partner_invoice_id'] = params.pop(
-                    'partner_invoice')['id']
+        if 'partner_shipping' in params:
+            # By default we always set the invoice address with the
+            # shipping address, if you want a different invoice address
+            # just pass it
+            params['partner_shipping_id'] = params.pop(
+                'partner_shipping')['id']
+            params['partner_invoice_id'] = params['partner_shipping_id']
+        if 'partner_invoice' in params:
+            params['partner_invoice_id'] = params.pop(
+                'partner_invoice')['id']
         self._update_cart_step(params)
         if params:
             cart.write_with_onchange(params)
         return {'action_confirm_cart': action_confirm_cart}
-
-    def _check_allowed_anonymous_email(self, cart, params):
-        if self.locomotive_backend.restrict_anonymous and\
-                self.env['shopinvader.partner'].search([
-                    ('backend_id', '=', self.locomotive_backend.id),
-                    ('email', '=', params['anonymous_email']),
-                    ]):
-            # In that case we want to raise an error to block the process
-            # but before we save the anonymous partner to avoid
-            # losing this important information
-            _logger.debug(
-                'An account already exist for %s, block it',
-                params['anonymous_email'])
-            cart.anonymous_email = params['anonymous_email']
-            cart._cr.commit()
-            raise UserError(_('An account already exist for this email'))
 
     def _get_step_from_code(self, code):
         step = self.env['shopinvader.cart.step'].search([('code', '=', code)])
@@ -193,32 +171,6 @@ class CartService(Component):
             'set_session': {'cart_id': res['id']},
             'store_cache': {'cart': res},
             }
-
-    def _set_anonymous_partner(self, cart, params):
-        if 'partner_shipping' in params:
-            shipping_address = params.pop('partner_shipping')
-            if params.get('anonymous_email'):
-                shipping_address['email'] = params['anonymous_email']
-            elif cart.anonymous_email:
-                shipping_address['email'] = cart.anonymous_email
-            else:
-                raise UserError(_('Anonymous Email is missing'))
-            partner = self.env['res.partner'].create(shipping_address)
-            params.update({
-                'partner_id': partner.id,
-                'partner_shipping_id': partner.id,
-                'partner_invoice_id': partner.id,
-                })
-        if 'partner_invoice' in params:
-            invoice_address = params.pop('partner_invoice')
-            if not params.get('partner_shipping_id'):
-                raise UserError(_(
-                    "Invoice address can not be set before "
-                    "the shipping address"))
-            else:
-                invoice_address['parent_id'] = params['partner_shipping_id']
-                address = self.env['res.partner'].create(invoice_address)
-                params['partner_invoice_id'] = address.id
 
     def _get(self):
         domain = [

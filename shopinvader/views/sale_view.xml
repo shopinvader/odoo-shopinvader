@@ -6,14 +6,6 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="priority" eval="20"/>
         <field name="arch" type="xml">
-            <xpath expr="//h1/field[@name='name']" position="before">
-                <i class="fa fa-eye-slash"
-                   aria-hidden="true"
-                   attrs="{'invisible': [('anonymous_email', '=', False)]}"></i>
-            </xpath>
-            <field name="partner_id" position="before">
-                <field name="anonymous_email" readonly="True" attrs="{'invisible': [('anonymous_email', '=', False)]}"/>
-            </field>
             <field name="partner_id" position="after">
                 <field name="typology" invisible="True"/>
                 <field name="current_step_id" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>

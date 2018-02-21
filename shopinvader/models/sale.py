@@ -7,7 +7,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 import odoo.addons.decimal_precision as dp
-import uuid
 import logging
 from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
@@ -39,8 +38,6 @@ class SaleOrder(models.Model):
         comodel_name='shopinvader.cart.step',
         string='Done Cart Step',
         readonly=True)
-    anonymous_email = fields.Char()
-    anonymous_token = fields.Char(copy=False)
     # TODO move this in an extra OCA module
     shopinvader_state = fields.Selection([
         ('cancel', 'Cancel'),
@@ -49,16 +46,6 @@ class SaleOrder(models.Model):
         ('shipped', 'Shipped'),
         ], compute='_compute_shopinvader_state',
         store=True)
-
-    _sql_constraints = [
-        ('token_uniq', 'unique(anonymous_token)',
-         'Token must be uniq.'),
-    ]
-
-    def is_anonymous(self):
-        self.ensure_one()
-        return self.partner_id ==\
-            self.shopinvader_backend_id.anonymous_partner_id
 
     def _get_shopinvader_state(self):
         self.ensure_one()
@@ -87,8 +74,6 @@ class SaleOrder(models.Model):
     def action_confirm_cart(self):
         for record in self:
             vals = {'typology': 'sale'}
-            if record.anonymous_email:
-                vals['anonymous_token'] = str(uuid.uuid4())
             record.write(vals)
             if record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
