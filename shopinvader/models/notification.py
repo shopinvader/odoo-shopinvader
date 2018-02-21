@@ -75,11 +75,4 @@ class ShopinvaderNotification(models.Model):
                 return {'domain': {'model_id': []}}
 
     def _send(self, record):
-        if self.notification_type in [
-                'cart_confirmation', 'sale_confirmation']:
-            if not self.env['shopinvader.payment'].search([
-                    ('notification', 'ilike', self.notification_type),
-                    ('payment_method_id', '=', record.payment_method_id.id),
-                    ]):
-                return False
         return self.template_id.send_mail(record.id)

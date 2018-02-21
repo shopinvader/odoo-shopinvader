@@ -38,14 +38,6 @@ class AbstractSaleService(AbstractComponent):
     def _parser_carrier(self):
         return ['id', 'name', 'description']
 
-    def _parser_payment_method(self):
-        return [
-            'id',
-            'name',
-            'description',
-            'show_description_after_validation',
-        ]
-
     def _parser(self):
         address_parser = self.component(usage='address')._json_parser()
         return [
@@ -70,9 +62,6 @@ class AbstractSaleService(AbstractComponent):
             ('partner_shipping_id:partner_shipping', address_parser),
             ('partner_invoice_id:partner_invoice', address_parser),
             ('order_line', self._parser_order_line()),
-            # TODO MIGRATE shopinvader_payment
-            # ('payment_method_id:payment_method',
-            #    self._parser_payment_method()),
         ]
 
     def _to_json(self, sale):

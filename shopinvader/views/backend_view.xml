@@ -53,19 +53,6 @@
                         </tree>
                     </field>
                 </group>
-                <!-- TODO MIGRATE
-                <group name="payment_method" colspan="4">
-                    <field name="payment_method_ids"
-                           string="Payment Method"
-                           colspan="4"
-                           nolabel="True">
-                        <tree editable="top">
-                            <field name="sequence"/>
-                            <field name="payment_method_id" widget="selection"/>
-                            <field name="notification"/>
-                        </tree>
-                    </field>
-                </group>-->
                 <group name="allowed_country" colspan="4">
                     <field name="allowed_country_ids" nolabel="1"/>
                 </group>

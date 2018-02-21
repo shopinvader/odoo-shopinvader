@@ -117,12 +117,6 @@ class SaleOrder(models.Model):
             if record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
                     'cart_confirmation', record)
-            # TODO TODO MIGRATE shopinvader_payment
-            # for transaction in record.transaction_ids:
-            #    # If we confirm the card this mean we come back from the
-            #    # payment provider and so transaction are ready to be captured
-            #    if transaction.state == 'pending':
-            #        transaction.state = 'to_capture'
         return True
 
     @api.depends('amount_total', 'amount_untaxed')
@@ -236,8 +230,6 @@ class SaleOrder(models.Model):
         vals.update(self._play_cart_onchange(vals))
         reset = self._need_to_reset_tax_price_on_line(vals)
         self.write(vals)
-        if 'payment_method_id' in vals:
-            self.onchange_payment_method_set_workflow()
         # TODO MIGRATE move in shopinvader_delivery
         # self._update_default_carrier()
         if 'carrier_id' in vals:

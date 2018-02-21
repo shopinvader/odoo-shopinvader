@@ -84,7 +84,6 @@ class CartService(Component):
             'current_step': {'type': 'string'},
             'next_step': {'type': 'string'},
             'anonymous_email': {'type': 'string'},
-            'payment_method_id': {'coerce': to_int},
             'note': {'type': 'string'},
         }
         if self.partner:
@@ -137,8 +136,6 @@ class CartService(Component):
         if params.get('anonymous_email'):
             self._check_allowed_anonymous_email(cart, params)
 
-        if 'payment_method_id' in params:
-            self._check_valid_payment_method(params['payment_method_id'])
         if not self.partner:
             self._set_anonymous_partner(cart, params)
         else:
@@ -261,11 +258,6 @@ class CartService(Component):
         if self.locomotive_backend.sequence_id:
             vals['name'] = self.locomotive_backend.sequence_id._next()
         return vals
-
-    def _check_valid_payment_method(self, method_id):
-        if method_id not in self.locomotive_backend.payment_method_ids.mapped(
-                'payment_method_id.id'):
-            raise UserError(_('Payment method id invalid'))
 
     def _get_onchange_trigger_fields(self):
         return ['partner_id', 'partner_shipping_id', 'partner_invoice_id']
