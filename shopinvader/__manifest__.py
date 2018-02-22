@@ -27,8 +27,6 @@
         "connector_base_product",
         "connector_locomotivecms",
         "sale",
-        # "product_stock_state",
-        # "sale_order_line_price_subtotal_gross",
     ],
     "data": [
         'views/shopinvader_variant.xml',
@@ -37,7 +35,7 @@
         'views/product_view.xml',
         'views/backend_view.xml',
         'views/partner_view.xml',
-        # 'views/product_category_view.xml',
+        'views/product_category_view.xml',
         'views/sale_view.xml',
         'security/ir.model.access.csv',
         "data/res_partner.xml",

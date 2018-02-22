@@ -5,10 +5,7 @@
 
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
-import odoo.addons.decimal_precision as dp
 import logging
-from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 

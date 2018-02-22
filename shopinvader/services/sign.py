@@ -7,8 +7,6 @@
 import logging
 
 from odoo.addons.component.core import Component
-from odoo.exceptions import UserError
-from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
@@ -80,7 +78,7 @@ class SignService(Component):
             }
 
     def _create_shopinvader_binding(self, external_id):
-        shop_partner = self.env['shopinvader.partner'].with_context(
+        self.env['shopinvader.partner'].with_context(
             connector_no_export=True).create({
                 'backend_id': self.locomotive_backend.id,
                 'external_id': external_id,
