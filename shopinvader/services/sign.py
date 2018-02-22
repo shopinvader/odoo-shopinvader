@@ -7,8 +7,6 @@
 import logging
 
 from odoo.addons.component.core import Component
-from odoo.exceptions import UserError
-from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
@@ -20,18 +18,6 @@ class SignService(Component):
 
     def search(self, **params):
         return self._assign_cart_and_get_store_cache()
-
-    def update(self, external_id, anonymous_token):
-        sale = self.env['sale.order'].search([
-            ('anonymous_token', '=', anonymous_token),
-            ])
-        if not sale:
-            raise UserError(_('invalid token'))
-        for binding in sale.partner_id.shopinvader_bind_ids:
-            if self.locomotive_backend == binding.backend_id:
-                raise UserError(_('customer already registred'))
-        self.work.partner = sale.partner_id
-        return self._create_shopinvader_binding(external_id)
 
     def create(self, **params):
         external_id = params.pop('external_id')
@@ -67,18 +53,6 @@ class SignService(Component):
             })
         return schema
 
-    def _validator_update(self):
-        return {
-            'external_id': {
-                'type': 'string',
-                'required': True,
-                },
-            'anonymous_token': {
-                'type': 'string',
-                'required': True,
-                },
-            }
-
     def _get_and_assign_cart(self):
         cart_service = self.component(usage='cart')
         cart = cart_service._get()
@@ -104,7 +78,7 @@ class SignService(Component):
             }
 
     def _create_shopinvader_binding(self, external_id):
-        shop_partner = self.env['shopinvader.partner'].with_context(
+        self.env['shopinvader.partner'].with_context(
             connector_no_export=True).create({
                 'backend_id': self.locomotive_backend.id,
                 'external_id': external_id,
@@ -112,7 +86,6 @@ class SignService(Component):
                 })
         response = self._assign_cart_and_get_store_cache()
         response['data'] = {
-            'role': shop_partner.role_id.code,
             'id': self.partner.id,
         }
         return response

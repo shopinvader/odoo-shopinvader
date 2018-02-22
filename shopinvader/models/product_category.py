@@ -8,8 +8,6 @@ from odoo import fields, models
 
 class ProductCategory(models.Model):
     _inherit = "product.category"
-    # TODO MIGRATE Should be done in a separated module
-    # _inherit = [_name, "storage.image.owner"]
 
     shopinvader_bind_ids = fields.One2many(
         'shopinvader.category',

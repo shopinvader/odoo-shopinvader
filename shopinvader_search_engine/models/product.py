@@ -16,20 +16,23 @@ class ShopinvaderVariant(models.Model):
         store=True,
         required=False)
 
-    price = fields.Serialized(
-        compute='_compute_price',
-        string='Shopinvader Price')
-
-    def _compute_price(self):
-        for record in self:
-            record.price = {}
-            for role in record.backend_id.role_ids:
-                fposition = role.fiscal_position_ids
-                if len(fposition) > 0:
-                    fposition = fposition[0]
-                record.price[role.code] = record._get_price(
-                    role.pricelist_id, fposition, record.backend_id.company_id)
-
+# TODO reimplement a simple version of price
+# just based on one pricelist on the backend
+#    price = fields.Serialized(
+#        compute='_compute_price',
+#        string='Shopinvader Price')
+#
+#    def _compute_price(self):
+#        for record in self:
+#            record.price = {}
+#            for role in record.backend_id.role_ids:
+#                fposition = role.fiscal_position_ids
+#                if len(fposition) > 0:
+#                    fposition = fposition[0]
+#                record.price[role.code] = record._get_price(
+#                    role.pricelist_id, fposition,
+#                    record.backend_id.company_id)
+#
     @api.depends('backend_id.se_backend_id')
     def _compute_index(self):
         for record in self:

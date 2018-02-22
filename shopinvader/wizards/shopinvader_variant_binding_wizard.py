@@ -77,7 +77,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
                     binded_variants = shopinvader_product.\
                         shopinvader_variant_ids
                     bind_record = binded_variants.filtered(
-                            lambda p: p.record_id.id == product.id)
+                        lambda p: p.record_id.id == product.id)
                     if not bind_record:
                         binding.create(data)
                     elif not bind_record.active:

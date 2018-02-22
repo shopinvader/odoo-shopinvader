@@ -34,23 +34,10 @@ from odoo import api, fields, models
 
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
-    role_ids = fields.One2many(
-        'shopinvader.role',
-        'backend_id',
-        'Customer Role')
     notification_ids = fields.One2many(
         'shopinvader.notification',
         'backend_id',
         'Notification')
-    # TODO move to shopinvader_image
-    # product_image_resize_ids = fields.Many2many(
-    #    comodel_name='image.resize',
-    #    relation="product_image_resize",
-    #    string='Product Image Resize')
-    # categ_image_resize_ids = fields.Many2many(
-    #    comodel_name='image.resize',
-    #    relation="category_image_resize",
-    #    string='Category Image Resize')
     nbr_product = fields.Integer(compute='_compute_nbr_content')
     nbr_variant = fields.Integer(compute='_compute_nbr_content')
     nbr_category = fields.Integer(compute='_compute_nbr_content')
@@ -58,9 +45,6 @@ class LocomotiveBackend(models.Model):
         'shopinvader.cart.step',
         string='Last cart step',
         required=True)
-    restrict_anonymous = fields.Boolean(
-        help=("Tic that box if yo don't want to forbid an existing customer "
-              "to create a sale order in anonymous mode"))
     allowed_country_ids = fields.Many2many(
         comodel_name='res.country',
         string='Allowed Country')

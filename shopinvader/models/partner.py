@@ -4,8 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, fields, models
-from odoo.tools.translate import _
-from odoo.exceptions import UserError
 
 
 class ShopinvaderPartner(models.Model):
@@ -23,11 +21,6 @@ class ShopinvaderPartner(models.Model):
         readonly=True,
         required=True,
         store=True)
-    role_id = fields.Many2one(
-        comodel_name='shopinvader.role',
-        string='Role',
-        compute='_compute_role',
-        store=True)
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, partner_email)',
@@ -35,33 +28,6 @@ class ShopinvaderPartner(models.Model):
         ('email_uniq', 'unique(backend_id, partner_email)',
          'An email must be uniq per backend.'),
     ]
-
-    @api.depends(
-        'record_id.country_id', 'country_id',
-        'record_id.vat', 'vat',
-        'record_id.property_product_pricelist', 'property_product_pricelist')
-    def _compute_role(self):
-        fposition_obj = self.env['account.fiscal.position']
-        for binding in self:
-            role = self.env['shopinvader.role']
-            partner = binding.record_id
-            fposition_id = fposition_obj.get_fiscal_position(
-                partner.id, delivery_id=partner.id)
-            if fposition_id:
-                role = self.env['shopinvader.role'].search([
-                    ('fiscal_position_ids', '=', fposition_id),
-                    ('pricelist_id', '=',
-                        partner.property_product_pricelist.id),
-                    ('backend_id', '=', binding.backend_id.id)])
-            if not role:
-                role = self.env['shopinvader.role'].search([
-                    ('default', '=', True),
-                    ('backend_id', '=', binding.backend_id.id)])
-                if not role:
-                    raise UserError(_(
-                        'No default role found for the backend '
-                        '%s' % binding.backend_id.name))
-            binding.role_id = role.id
 
     @api.model
     def create(self, vals):

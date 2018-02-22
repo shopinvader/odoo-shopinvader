@@ -5,11 +5,7 @@
 
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
-import odoo.addons.decimal_precision as dp
-import uuid
 import logging
-from odoo.tools.translate import _
 _logger = logging.getLogger(__name__)
 
 
@@ -39,33 +35,7 @@ class SaleOrder(models.Model):
         comodel_name='shopinvader.cart.step',
         string='Done Cart Step',
         readonly=True)
-    anonymous_email = fields.Char()
-    anonymous_token = fields.Char(copy=False)
     # TODO move this in an extra OCA module
-    shipping_amount_total = fields.Float(
-        compute='_compute_shipping',
-        dp=dp.get_precision('Account'),
-        store=True)
-    shipping_amount_untaxed = fields.Float(
-        compute='_compute_shipping',
-        dp=dp.get_precision('Account'),
-        store=True)
-    shipping_amount_tax = fields.Float(
-        compute='_compute_shipping',
-        dp=dp.get_precision('Account'),
-        store=True)
-    item_amount_total = fields.Float(
-        compute='_compute_shipping',
-        dp=dp.get_precision('Account'),
-        store=True)
-    item_amount_untaxed = fields.Float(
-        compute='_compute_shipping',
-        dp=dp.get_precision('Account'),
-        store=True)
-    item_amount_tax = fields.Float(
-        compute='_compute_shipping',
-        dp=dp.get_precision('Account'),
-        store=True)
     shopinvader_state = fields.Selection([
         ('cancel', 'Cancel'),
         ('pending', 'Pending'),
@@ -73,16 +43,6 @@ class SaleOrder(models.Model):
         ('shipped', 'Shipped'),
         ], compute='_compute_shopinvader_state',
         store=True)
-
-    _sql_constraints = [
-        ('token_uniq', 'unique(anonymous_token)',
-         'Token must be uniq.'),
-    ]
-
-    def is_anonymous(self):
-        self.ensure_one()
-        return self.partner_id ==\
-            self.shopinvader_backend_id.anonymous_partner_id
 
     def _get_shopinvader_state(self):
         self.ensure_one()
@@ -111,40 +71,11 @@ class SaleOrder(models.Model):
     def action_confirm_cart(self):
         for record in self:
             vals = {'typology': 'sale'}
-            if record.anonymous_email:
-                vals['anonymous_token'] = str(uuid.uuid4())
             record.write(vals)
             if record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
                     'cart_confirmation', record)
-            # TODO TODO MIGRATE shopinvader_payment
-            # for transaction in record.transaction_ids:
-            #    # If we confirm the card this mean we come back from the
-            #    # payment provider and so transaction are ready to be captured
-            #    if transaction.state == 'pending':
-            #        transaction.state = 'to_capture'
         return True
-
-    @api.depends('amount_total', 'amount_untaxed')
-    def _compute_shipping(self):
-        pass
-        # TODO MIGRATE
-        # for record in self:
-        #     record.shipping_amount_untaxed = 0
-        #     record.shipping_amount_total = 0
-        #     record.shipping_amount_tax = 0
-        #     for line in record.order_line:
-        #         if line['is_delivery']:
-        #             record.shipping_amount_untaxed = line['price_subtotal']
-        #             # TODO depends on sale order line gross subtotal module
-        #             # Need to move this code to not depend on this module
-        #             record.shipping_amount_total =\
-        #                 line['price_subtotal_gross']
-        #             record.shipping_amount_tax = \
-        #                 line['price_subtotal_gross'] - line['price_subtotal']
-        # for key in ['amount_total', 'amount_untaxed', 'amount_tax']:
-        #     record['item_%s' % key] =\
-        #         record[key] - record['shipping_%s' % key]
 
     @api.multi
     def action_button_confirm(self):
@@ -185,64 +116,12 @@ class SaleOrder(models.Model):
                 reset = True
         return reset
 
-    def _prepare_available_carrier(self, carrier):
-        return {
-            'id': carrier.id,
-            'name': carrier.name,
-            'description': carrier.description,
-            'price': carrier.price,
-            }
-
-    def _get_available_carrier(self):
-        self.ensure_one()
-        if self.is_anonymous():
-            return []
-        else:
-            carriers = self.with_context(order_id=self.id)\
-                .env['delivery.carrier'].search([])
-            res = [self._prepare_available_carrier(carrier)
-                   for carrier in carriers
-                   if carrier.available]
-            return sorted(res, key=lambda x: (x['price'], x['name']))
-
-    def _update_default_carrier(self):
-        if self.is_anonymous():
-            return
-        carrier_ids = [x['id'] for x in self._get_available_carrier()]
-        if not self.carrier_id and carrier_ids:
-            self.carrier_id = carrier_ids[0]
-        elif self.carrier_id.id not in carrier_ids:
-            _logger.debug('Update obsolet carrier for sale order %s', self.id)
-            if carrier_ids:
-                self.carrier_id = carrier_ids[0]
-            else:
-                self.carrier_id = False
-                self.env['sale.order.line'].search([
-                    ('order_id', '=', self.id),
-                    ('is_delivery', '=', True)]).unlink()
-        if self.carrier_id:
-            self.delivery_set()
-
-    def _check_allowed_carrier(self, vals):
-        carrier_ids = [x['id'] for x in self._get_available_carrier()]
-        if 'carrier_id' in vals:
-            if vals['carrier_id'] not in carrier_ids:
-                raise UserError(
-                    _('Invalid carrier delivey method for your country'))
-
     @api.multi
     def write_with_onchange(self, vals):
         self.ensure_one()
         vals.update(self._play_cart_onchange(vals))
         reset = self._need_to_reset_tax_price_on_line(vals)
         self.write(vals)
-        if 'payment_method_id' in vals:
-            self.onchange_payment_method_set_workflow()
-        # TODO MIGRATE move in shopinvader_delivery
-        # self._update_default_carrier()
-        if 'carrier_id' in vals:
-            self._check_allowed_carrier(vals)
-            self.delivery_set()
         if reset:
             self.reset_cart_lines()
         return True
