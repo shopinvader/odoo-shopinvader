@@ -49,8 +49,8 @@
         "demo/backend_demo.xml",
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",
-        # "demo/email_demo.xml",
-        # "demo/notification_demo.xml",
+        "demo/email_demo.xml",
+        "demo/notification_demo.xml",
     ],
     "qweb": [
     ]

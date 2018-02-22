@@ -53,11 +53,10 @@ class ShopinvaderNotification(models.Model):
         'ir.model',
         'Model',
         required=True)
-    # TODO Migrate
-    # template_id = fields.Many2one(
-    #    'email.template',
-    #    'Email Template',
-    #    required=True)
+    template_id = fields.Many2one(
+        'mail.template',
+        'Mail Template',
+        required=True)
 
     @api.onchange('notification_type')
     def on_notification_type_change(self):
