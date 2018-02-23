@@ -35,7 +35,7 @@ class SignService(Component):
         return {}
 
     def _validator_create(self):
-        address = self.component(usage='address')
+        address = self.component(usage='addresses')
         schema = address._validator_create()
         schema.update({
             'email': {
@@ -69,7 +69,7 @@ class SignService(Component):
             return {}
 
     def _assign_cart_and_get_store_cache(self):
-        address = self.component(usage='address')
+        address = self.component(usage='addresses')
         return {
             'store_cache': {
                 'cart': self._get_and_assign_cart(),

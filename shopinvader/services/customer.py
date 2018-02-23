@@ -14,7 +14,7 @@ class CustomerService(Component):
     # The following method are 'public' and can be called from the controller.
     def get(self):
         if self.partner:
-            address = self.component(usage='address')
+            address = self.component(usage='addresses')
             customer = address._to_json(self.partner)[0]
             return {
                 'data': customer,

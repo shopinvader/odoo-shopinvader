@@ -11,7 +11,7 @@ from werkzeug.exceptions import Forbidden, NotFound
 class AddressService(Component):
     _inherit = 'base.shopinvader.service'
     _name = 'shopinvader.address.service'
-    _usage = 'address'
+    _usage = 'addresses'
 
     # The following method are 'public' and can be called from the controller.
 

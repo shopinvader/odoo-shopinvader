@@ -34,7 +34,7 @@ class AbstractSaleService(AbstractComponent):
         return ['id', 'display_name', 'ref']
 
     def _parser(self):
-        address_parser = self.component(usage='address')._json_parser()
+        address_parser = self.component(usage='addresses')._json_parser()
         return [
             'id',
             'name',

@@ -24,7 +24,7 @@ class AddressCase(CommonCase):
             }
         with self.work_on_services(
                 partner=self.partner) as work:
-            self.service = work.component(usage='address')
+            self.service = work.component(usage='addresses')
 
     def check_data(self, address, data):
         for key in data:

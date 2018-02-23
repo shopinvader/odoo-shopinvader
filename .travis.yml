@@ -13,7 +13,7 @@ addons:
 
 env:
   global:
-  - VERSION="10.0" TESTS="1" LINT_CHECK="0"
+  - VERSION="10.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;Shopinvader call url"
 
   matrix:
   - TESTS="0" LINT_CHECK="1"
@@ -25,7 +25,7 @@ virtualenv:
   system_site_packages: true
 
 install:
-  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - git clone -b configure_line_with_error https://github.com/akretion/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
   - printf '[options]\n\nrunning_env = dev\nkeychain_key_dev = HRdthrkXp28SCHX0kmwOgIob-82N-w8zWoE_UsctE7E=' > ${HOME}/.openerp_serverrc

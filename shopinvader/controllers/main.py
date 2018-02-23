@@ -27,7 +27,7 @@ class InvaderController(main.RestController):
             ]
             partner = partner_model.search(partner_domain)
             if len(partner) == 1:
-                return partner
+                return partner.record_id
             else:
                 _logger.warning("Wrong HTTP_PARTNER_EMAIL, header ignored")
                 if len(partner) > 1:
@@ -35,7 +35,7 @@ class InvaderController(main.RestController):
                         "More than one shopinvader.partner found for domain:"
                         " %s", partner_domain
                     )
-        return partner_model.browse([])
+        return request.env['res.partner'].browse([])
 
     @classmethod
     def _get_locomotive_backend_from_request(cls):
@@ -65,7 +65,7 @@ class InvaderController(main.RestController):
         * the cart_id
         * the locomotive_backend
         """
-        res = super(main.RestController, self)._get_component_context()
+        res = super(InvaderController, self)._get_component_context()
         headers = request.httprequest.environ
         res['partner'] = self._get_partner_from_headers(headers)
         res['shopinvader_session'] = \
