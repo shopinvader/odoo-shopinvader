@@ -25,9 +25,6 @@ class AbstractSaleService(AbstractComponent):
             'price_subtotal',
             'discount',
             ]
-        if 'sale_order_line_price_subtotal_gross' in\
-                self.env.registry._init_modules:
-            parser.append('price_subtotal_gross')
         return parser
 
     def _parser_partner(self):

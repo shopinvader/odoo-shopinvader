@@ -5,7 +5,7 @@
 
 from odoo import models
 from .common import CommonCase
-from werkzeug.exceptions import Forbidden
+from odoo.exceptions import AccessError
 
 
 class AddressCase(CommonCase):
@@ -65,14 +65,14 @@ class AddressCase(CommonCase):
 
     def test_read_address_profile(self):
         res = self.service.dispatch('search', params={
-            'domain': {'address_type': 'profile'},
+            'scope': {'address_type': 'profile'},
             })['data']
         self.assertEqual(len(res), 1)
         self.assertEqual(res[0]['id'], self.partner.id)
 
     def test_read_address_address(self):
         res = self.service.dispatch('search', params={
-            'domain': {'address_type': 'address'},
+            'scope': {'address_type': 'address'},
             })['data']
         self.assertEqual(len(res), 1)
         self.assertEqual(res[0]['id'], self.address.id)
@@ -93,5 +93,5 @@ class AddressCase(CommonCase):
         self.assertEqual(len(partner), 1)
 
     def test_delete_main_address(self):
-        with self.assertRaises(Forbidden):
+        with self.assertRaises(AccessError):
             self.service.delete(self.partner.id)
