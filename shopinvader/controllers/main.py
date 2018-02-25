@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 class InvaderController(main.RestController):
 
     _root_path = '/shopinvader/'
-    _collection = 'locomotive.backend'
+    _collection_name = 'locomotive.backend'
     _default_auth = 'api_key'
 
     @classmethod
