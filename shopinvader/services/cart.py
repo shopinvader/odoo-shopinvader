@@ -92,7 +92,7 @@ class CartService(Component):
                     },
                 })
         else:
-            address_service = self.component(usage='address')
+            address_service = self.component(usage='addresses')
             res.update({
                 'partner_shipping': {
                     'type': 'dict',

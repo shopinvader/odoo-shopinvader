@@ -7,5 +7,4 @@ from . import controllers
 from . import models
 from . import components
 from . import services
-from . import http
 from . import wizards

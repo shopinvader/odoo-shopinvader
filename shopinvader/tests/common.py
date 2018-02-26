@@ -7,6 +7,7 @@ from odoo.addons.component.tests.common import SavepointComponentCase
 from contextlib import contextmanager
 from odoo.addons.component.core import WorkContext
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
+from odoo.addons.base_rest.tests.common import BaseRestCase
 
 
 class CommonCase(SavepointComponentCase):
@@ -47,3 +48,13 @@ class ProductCommonCase(CommonCase):
         self.shopinvader_variant = self.env['shopinvader.variant'].search([
             ('record_id', '=', self.variant.id),
             ('backend_id', '=', self.backend.id)])
+
+
+class ShopinvaderRestCase(BaseRestCase):
+
+    def setUp(self, *args, **kwargs):
+        super(ShopinvaderRestCase, self).setUp(*args, **kwargs)
+        self.backend = self.env.ref('shopinvader.backend_1')
+        self.api_key = self.backend.auth_api_key_id\
+            ._get_keychain_account()._get_password()
+        self.url = self.base_url + '/shopinvader/addresses'
