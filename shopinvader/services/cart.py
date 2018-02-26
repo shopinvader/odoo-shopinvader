@@ -162,10 +162,6 @@ class CartService(Component):
         if not cart:
             return {'data': {}, 'store_cache': {'cart': {}}}
         res = super(CartService, self)._to_json(cart)[0]
-        res.update({
-            'current_step': cart.current_step_id.code,
-            'done_steps': cart.done_step_ids.mapped('code'),
-            })
         return {
             'data': res,
             'set_session': {'cart_id': res['id']},

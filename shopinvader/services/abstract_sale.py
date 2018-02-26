@@ -11,52 +11,100 @@ class AbstractSaleService(AbstractComponent):
     _name = 'shopinvader.abstract.sale.service'
 
     def _parser_product(self):
-        fields = ['name', 'object_id:id', 'url_key', 'default_code']
-        if 'product_code_builder' in self.env.registry._init_modules:
-            fields.append('prefix_code')
-        return fields
+        return ['name', 'object_id:id', 'url_key', 'default_code']
 
-    def _parser_order_line(self):
-        parser = [
-            'id',
-            ('shopinvader_variant_id:product', self._parser_product()),
-            'price_unit',
-            'product_uom_qty',
-            'price_subtotal',
-            'discount',
-            ]
-        return parser
+    def _convert_one_sale(self, sale):
+        sale.ensure_one()
+        return {
+            'id': sale.id,
+            'state': sale.shopinvader_state,
+            'name': sale.name,
+            'date': sale.date_order,
+            'step': self._convert_step(sale),
+            'lines': self._convert_lines(sale),
+            'amount': self._convert_amount(sale),
+            'shipping': self._convert_shipping(sale),
+            'invoicing': self._convert_invoicing(sale),
+            }
 
-    def _parser_partner(self):
-        return ['id', 'display_name', 'ref']
+    def _convert_step(self, sale):
+        return {
+            'current': sale.current_step_id.code,
+            'done': sale.done_step_ids.mapped('code'),
+            }
 
-    def _parser(self):
-        address_parser = self.component(usage='addresses')._json_parser()
-        return [
-            'id',
-            'name',
-            'amount_total',
-            'amount_untaxed',
-            'amount_tax',
-            'shopinvader_state:state',
-            'date_order',
-            ('partner_id:partner', self._parser_partner()),
-            ('partner_shipping_id:partner_shipping', address_parser),
-            ('partner_invoice_id:partner_invoice', address_parser),
-            ('order_line', self._parser_order_line()),
-        ]
+    def _is_item(self, line):
+        return True
 
-    def _to_json(self, sale):
-        res = sale.jsonify(self._parser())
-        for order in res:
-            order['item_number'] = sum([
-                l['product_uom_qty']
-                for l in order['order_line']])
-            order['use_different_invoice_address'] = (
-                order['partner_shipping']['id'] !=
-                order['partner_invoice']['id'])
-            for key in ['partner', 'partner_shipping', 'partner_invoice']:
-                if order[key]['id'] ==\
-                        self.locomotive_backend.anonymous_partner_id.id:
-                    order[key] = {}
+    def _convert_one_line(self, line):
+        if line.shopinvader_variant_id:
+            # TODO we should reuse the parser of the index
+            product = line.shopinvader_variant_id.jsonify(
+                self._parser_product())[0]
+        else:
+            product = {}
+        return {
+            'id': line.id,
+            'product': product,
+            'amount': {
+                'price': line.price_unit,
+                'untaxed': line.price_subtotal,
+                'tax': line.price_tax,
+                'total': line.price_total,
+                },
+            'qty': line.product_uom_qty,
+            'discount': {
+                'rate': line.discount,
+                }
+            }
+
+    def _convert_lines(self, sale):
+        items = []
+        for line in sale.order_line:
+            if self._is_item(line):
+                items.append(self._convert_one_line(line))
+        return {
+            'items': items,
+            'count': sum([item['qty'] for item in items]),
+            'amount': {
+                'tax': sum([item['amount']['tax'] for item in items]),
+                'untaxed': sum([item['amount']['untaxed'] for item in items]),
+                'total': sum([item['amount']['total'] for item in items]),
+                }
+            }
+
+    def _convert_shipping(self, sale):
+        if sale.partner_shipping_id ==\
+                self.locomotive_backend.anonymous_partner_id:
+            return {'address': {}}
+        else:
+            address_service = self.component(usage='addresses')
+            return {
+                'address':
+                    address_service._to_json(sale.partner_shipping_id)[0]
+            }
+
+    def _convert_invoicing(self, sale):
+        if sale.partner_shipping_id == sale.partner_invoice_id:
+            return {
+                'address': {},
+                'use_shipping_address': True,
+                }
+        else:
+            address_service = self.component(usage='addresses')
+            return {
+                'address': address_service._to_json(sale.partner_invoice_id)[0]
+                }
+
+    def _convert_amount(self, sale):
+        return {
+            'tax': sale.amount_tax,
+            'untaxed': sale.amount_untaxed,
+            'total': sale.amount_total,
+            }
+
+    def _to_json(self, sales):
+        res = []
+        for sale in sales:
+            res.append(self._convert_one_sale(sale))
         return res
