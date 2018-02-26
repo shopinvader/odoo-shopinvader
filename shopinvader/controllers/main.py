@@ -35,7 +35,7 @@ class InvaderController(main.RestController):
                         "More than one shopinvader.partner found for domain:"
                         " %s", partner_domain
                     )
-        return request.env['res.partner'].browse([])
+        return partner_model.browse([]).record_id
 
     @classmethod
     def _get_locomotive_backend_from_request(cls):
