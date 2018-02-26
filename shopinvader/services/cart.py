@@ -198,8 +198,7 @@ class CartService(Component):
             'partner_invoice_id': partner.id,
             'shopinvader_backend_id': self.locomotive_backend.id,
             }
-        res = self.env['sale.order']._play_cart_onchange(vals)
-        vals.update(res)
+        vals.update(self.env['sale.order'].play_onchanges(vals, vals.keys()))
         if self.locomotive_backend.sequence_id:
             vals['name'] = self.locomotive_backend.sequence_id._next()
         return vals
