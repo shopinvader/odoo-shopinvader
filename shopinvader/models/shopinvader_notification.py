@@ -2,8 +2,10 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import api, fields, models
 from odoo.tools.translate import _
+from odoo.addons.queue_job.job import job
 
 
 class ShopinvaderNotification(models.Model):
@@ -28,13 +30,6 @@ class ShopinvaderNotification(models.Model):
                 'name': _('New customer Welcome'),
                 'model': 'res.partner',
                 },
-            'password_migration': {
-                'name': _('Password Migration'),
-                'model': 'res.partner',
-                },
-            'manual_message': {
-                'name': _('Manual Message'),
-                }
             }
 
     def _get_select_notification(self):
@@ -73,5 +68,6 @@ class ShopinvaderNotification(models.Model):
             else:
                 return {'domain': {'model_id': []}}
 
-    def _send(self, record):
-        return self.template_id.send_mail(record.id)
+    @job(default_channel='root.shopinvader.notification')
+    def send(self, record_id):
+        return self.template_id.send_mail(record_id)

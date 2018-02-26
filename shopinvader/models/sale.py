@@ -70,16 +70,15 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm_cart(self):
         for record in self:
-            vals = {'typology': 'sale'}
-            record.write(vals)
+            record.write({'typology': 'sale'})
             if record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
                     'cart_confirmation', record)
         return True
 
     @api.multi
-    def action_button_confirm(self):
-        res = super(SaleOrder, self).action_button_confirm()
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
         for record in self:
             if record.state != 'draft' and record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
