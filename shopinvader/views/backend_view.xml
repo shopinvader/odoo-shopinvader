@@ -33,6 +33,7 @@
                 <field name="sequence_id"/>
                 <field name="last_step_id"/>
                 <field name="anonymous_partner_id"/>
+                <field name="pricelist_id" require="1"/>
             </field>
             <group name="config" position="after">
                 <group name="allowed_country" colspan="4">

@@ -49,3 +49,9 @@ class ProductCase(ProductCommonCase):
              'based_on': 'attribute',
              'attribute_id': attribute_id.id})
         self.assertEqual(filter_on_attr.display_name, 'attributes.wi-fi')
+
+    def test_product_price(self):
+        self.assertEqual(
+            self.shopinvader_variant.price,
+            {'default': {'tax_included': True, 'value': 750.0}}
+            )
