@@ -37,8 +37,8 @@ class AnonymousCartCase(CartCase):
 
     def _sign_with(self, partner):
         self.service.work.partner = partner
-        service_sign = self.service.component('sign')
-        service_sign.search()
+        service_sign = self.service.component('customer')
+        service_sign.sign_in()
 
     def test_anonymous_cart_then_sign(self):
         cart = self.cart

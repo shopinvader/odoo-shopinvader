@@ -9,4 +9,3 @@ from . import cart
 from . import sale
 from . import address
 from . import customer
-from . import sign
