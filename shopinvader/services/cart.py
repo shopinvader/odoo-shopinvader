@@ -74,34 +74,44 @@ class CartService(Component):
     def _validator_search(self):
         return {}
 
+    def _subvalidator_shipping(self):
+        return {
+            'type': 'dict',
+            'schema': {
+                'address': {
+                    'type': 'dict',
+                    'schema': {'id': {'coerce': to_int}},
+                    }
+                }
+            }
+
+    def _subvalidator_invoicing(self):
+        return {
+            'type': 'dict',
+            'schema': {
+                'address': {
+                    'type': 'dict',
+                    'schema': {'id': {'coerce': to_int}},
+                    }
+                }
+            }
+
+    def _subvalidator_step(self):
+        return {
+            'type': 'dict',
+            'schema': {
+                'current': {'type': 'string'},
+                'next': {'type': 'string'},
+                }
+        }
+
     def _validator_update(self):
-        res = {
-            'current_step': {'type': 'string'},
-            'next_step': {'type': 'string'},
+        return {
+            'step': self._subvalidator_step(),
+            'shipping': self._subvalidator_shipping(),
+            'invoicing': self._subvalidator_invoicing(),
             'note': {'type': 'string'},
         }
-        if self.partner:
-            res.update({
-                'partner_shipping': {
-                    'type': 'dict',
-                    'schema': {'id': {'coerce': to_int}},
-                    },
-                'partner_invoice': {
-                    'type': 'dict',
-                    'schema': {'id': {'coerce': to_int}},
-                    },
-                })
-        else:
-            address_service = self.component(usage='addresses')
-            res.update({
-                'partner_shipping': {
-                    'type': 'dict',
-                    'schema': address_service._validator_create()},
-                'partner_invoice': {
-                    'type': 'dict',
-                    'schema': address_service._validator_create()},
-                })
-        return res
 
     def _validator_add_item(self):
         return {
@@ -123,22 +133,40 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _update(self, params):
-        action_confirm_cart = params.get('next_step') ==\
-            self.locomotive_backend.last_step_id.code
-        cart = self._get()
-
-        if 'partner_shipping' in params:
+    def _prepare_shipping(self, shipping, params):
+        if 'address' in shipping:
+            address = shipping['address']
             # By default we always set the invoice address with the
             # shipping address, if you want a different invoice address
             # just pass it
-            params['partner_shipping_id'] = params.pop(
-                'partner_shipping')['id']
+            params['partner_shipping_id'] = address['id']
             params['partner_invoice_id'] = params['partner_shipping_id']
-        if 'partner_invoice' in params:
-            params['partner_invoice_id'] = params.pop(
-                'partner_invoice')['id']
-        self._update_cart_step(params)
+
+    def _prepare_invoicing(self, invoicing, params):
+        if 'address' in invoicing:
+            params['partner_invoice_id'] = invoicing['address']['id']
+
+    def _prepare_step(self, step, params):
+        if 'next' in step:
+            params['current_step_id'] =\
+                self._get_step_from_code(step['next']).id
+        if 'current' in step:
+            params['done_step_ids'] =\
+                [(4, self._get_step_from_code(step['current']).id, 0)]
+
+    def _update(self, params):
+        action_confirm_cart = False
+        cart = self._get()
+
+        if 'shipping' in params:
+            self._prepare_shipping(params.pop('shipping'), params)
+        if 'invoicing' in params:
+            self._prepare_invoicing(params.pop('invoicing'), params)
+        if 'step' in params:
+            self._prepare_step(params.pop('step'), params)
+            if params.get('current_step_id') ==\
+                    self.locomotive_backend.last_step_id.id:
+                action_confirm_cart = True
         if params:
             cart.write_with_onchange(params)
         return {'action_confirm_cart': action_confirm_cart}
@@ -149,14 +177,6 @@ class CartService(Component):
             raise UserError(_('Invalid step code %s') % code)
         else:
             return step
-
-    def _update_cart_step(self, params):
-        if 'next_step' in params:
-            params['current_step_id'] = self._get_step_from_code(
-                params.pop('next_step')).id
-        if 'current_step' in params:
-            params['done_step_ids'] = [(4, self._get_step_from_code(
-                params.pop('current_step')).id, 0)]
 
     def _to_json(self, cart):
         if not cart:
