@@ -14,6 +14,7 @@
     'images': [],
     'depends': [
         'connector',
+        'keychain',
     ],
     'data': [
         'views/locomotive_view.xml',

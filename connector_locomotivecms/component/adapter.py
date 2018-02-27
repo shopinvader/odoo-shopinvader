@@ -28,7 +28,7 @@ class LocomotiveAdapter(AbstractComponent):
         backend = self.collection
         self.client = locomotivecms.LocomotiveClient(
             backend.username,
-            backend.password,
+            backend._get_keychain_account()._get_password(),
             backend.handle,
             backend.location)
 
