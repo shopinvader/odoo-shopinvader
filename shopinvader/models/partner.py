@@ -84,5 +84,6 @@ class ResPartner(models.Model):
                 # Trigger a write on cart to recompute the
                 # fiscal position if needed
                 cart.write_with_onchange({
-                    'partner_shipping_id': cart.partner_shipping_id.id})
+                    'partner_shipping_id': cart.partner_shipping_id.id,
+                    })
         return True

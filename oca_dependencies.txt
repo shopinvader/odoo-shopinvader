@@ -1,5 +1,5 @@
 connector
-server-tools
+server-tools https://github.com/akretion/server-tools 10.0-improve-onchange-helper
 e-commerce
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10-base_jsonify
 connector-search-engine https://github.com/akretion/connector-search-engine 10.0

@@ -85,44 +85,33 @@ class SaleOrder(models.Model):
                     'sale_confirmation', record)
         return res
 
-    def reset_cart_lines(self):
+    def reset_price_tax(self):
         for record in self:
             record.order_line.reset_price_tax()
 
-    def _play_cart_onchange(self, vals):
-        result = {}
-        # TODO in 10 use and improve onchange helper module
-        # TODO MIGRATE
-        # if 'partner_id' in vals:
-        #     res = self.onchange_partner_id(vals['partner_id']).get(
-        #         'value', {})
-        #     for key in ['pricelist_id', 'payment_term']:
-        #         if key in res:
-        #             result[key] = res[key]
-        # if 'partner_shipping_id' in vals:
-        #     res = self.onchange_delivery_id(
-        #         self.company_id.id,
-        #         vals.get('partner_id') or self.partner_id.id,
-        #         vals['partner_shipping_id'], None).get('value', {})
-        #     if 'fiscal_position' in res:
-        #         result['fiscal_position'] = res['fiscal_position']
-        return result
-
-    def _need_to_reset_tax_price_on_line(self, vals):
-        reset = False
-        for field in ['fiscal_position', 'pricelist_id']:
+    def _need_price_update(self, vals):
+        for field in ['fiscal_position_id', 'pricelist_id']:
             if field in vals and self[field].id != vals[field]:
-                reset = True
-        return reset
+                return True
+        return False
 
     @api.multi
     def write_with_onchange(self, vals):
         self.ensure_one()
-        vals.update(self._play_cart_onchange(vals))
-        reset = self._need_to_reset_tax_price_on_line(vals)
+        # Playing onchange on one2many is not really really clean
+        # all value are returned even if their are not modify
+        # Moreover "convert_to_onchange" in field.py add (5,) that
+        # will drop the order_line
+        # so it's better to drop the key order_line and run the onchange
+        # on line manually
+        reset_price = False
+        new_vals = self.play_onchanges(vals, vals.keys())
+        new_vals.pop('order_line', None)
+        vals.update(new_vals)
+        reset_price = self._need_price_update(vals)
         self.write(vals)
-        if reset:
-            self.reset_cart_lines()
+        if reset_price:
+            self.reset_price_tax()
         return True
 
 
@@ -136,29 +125,8 @@ class SaleOrderLine(models.Model):
         store=True)
 
     def reset_price_tax(self):
-        pass
-        # TODO MIGRATE
-        # for line in self:
-        #     res = line.product_id_change(
-        #         line.order_id.pricelist_id.id,
-        #         line.product_id.id,
-        #         qty=line.product_uom_qty,
-        #         uom=line.product_uom.id,
-        #         qty_uos=line.product_uos_qty,
-        #         uos=line.product_uos.id,
-        #         name=line.name,
-        #         partner_id=line.order_id.partner_id.id,
-        #         lang=False,
-        #         update_tax=True,
-        #         date_order=line.order_id.date_order,
-        #         packaging=False,
-        #         fiscal_position=line.order_id.fiscal_position.id,
-        #         flag=True)['value']
-        #     line.write({
-        #         'price_unit': res['price_unit'],
-        #         'discount': res.get('discount'),
-        #         'tax_id': [(6, 0, res.get('tax_id', []))]
-        #         })
+        for line in self:
+            line.product_id_change()
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):

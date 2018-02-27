@@ -27,6 +27,7 @@
         "connector_base_product",
         "connector_locomotivecms",
         "sale",
+        "onchange_helper",
     ],
     "data": [
         'views/shopinvader_variant.xml',

@@ -41,7 +41,7 @@ class AbstractItemCase(object):
 
     def check_product_and_qty(self, line, product_id, qty):
         self.assertEqual(line['product']['id'], product_id)
-        self.assertEqual(line['product_uom_qty'], qty)
+        self.assertEqual(line['qty'], qty)
 
     def test_add_item_without_cart(self):
         self.remove_cart()
@@ -49,41 +49,46 @@ class AbstractItemCase(object):
             [], limit=1, order='id desc')
         cart = self.add_item(self.product_1.id, 2)
         self.assertGreater(cart['id'], last_order.id)
-        self.assertEqual(len(cart['order_line']), 1)
-        self.check_product_and_qty(cart['order_line'][0], self.product_1.id, 2)
+        self.assertEqual(len(cart['lines']['items']), 1)
+        self.assertEqual(cart['lines']['count'], 2)
+        self.check_product_and_qty(
+            cart['lines']['items'][0], self.product_1.id, 2)
         self.check_partner(cart)
 
     def test_add_item_with_an_existing_cart(self):
         cart = self.service.search()['data']
-        nbr_line = len(cart['order_line'])
+        nbr_line = len(cart['lines']['items'])
 
         cart = self.add_item(self.product_1.id, 2)
         self.assertEqual(cart['id'], self.cart.id)
-        self.assertEqual(len(cart['order_line']), nbr_line + 1)
+        self.assertEqual(len(cart['lines']['items']), nbr_line + 1)
         self.check_product_and_qty(
-            cart['order_line'][-1], self.product_1.id, 2)
+            cart['lines']['items'][-1], self.product_1.id, 2)
         self.check_partner(cart)
 
     def test_update_item(self):
         line_id = self.cart.order_line[0].id
         product_id = self.cart.order_line[0].product_id.id
         cart = self.update_item(line_id, 5)
-        self.check_product_and_qty(cart['order_line'][0], product_id, 5)
+        self.check_product_and_qty(cart['lines']['items'][0], product_id, 5)
 
     def test_delete_item(self):
         cart = self.service.search()['data']
-        nbr_line = len(cart['order_line'])
-        cart = self.delete_item(cart['order_line'][0]['id'])
-        self.assertEqual(len(cart['order_line']), nbr_line - 1)
+        items = cart['lines']['items']
+        nbr_line = len(items)
+        cart = self.delete_item(items[0]['id'])
+        self.assertEqual(len(cart['lines']['items']), nbr_line - 1)
 
     def test_add_item_with_same_product_without_cart(self):
         self.remove_cart()
         cart = self.add_item(self.product_1.id, 1)
-        self.assertEqual(len(cart['order_line']), 1)
-        self.check_product_and_qty(cart['order_line'][0], self.product_1.id, 1)
+        self.assertEqual(len(cart['lines']['items']), 1)
+        self.check_product_and_qty(
+            cart['lines']['items'][0], self.product_1.id, 1)
         cart = self.add_item(self.product_1.id, 1)
-        self.assertEqual(len(cart['order_line']), 1)
-        self.check_product_and_qty(cart['order_line'][0], self.product_1.id, 2)
+        self.assertEqual(len(cart['lines']['items']), 1)
+        self.check_product_and_qty(
+            cart['lines']['items'][0], self.product_1.id, 2)
 
     def remove_cart(self):
         self.cart.unlink()
@@ -104,9 +109,12 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
             self.service = work.component(usage='cart')
 
     def check_partner(self, cart):
-        self.assertEqual(cart['partner'], {})
-        self.assertEqual(cart['partner_shipping'], {})
-        self.assertEqual(cart['partner_invoice'], {})
+        self.assertEqual(cart['shipping']['address'], {})
+        self.assertEqual(
+            cart['invoicing'], {
+                'use_shipping_address': True,
+                'address': {},
+            })
 
 
 class ConnectedItemCase(AbstractItemCase, CommonCase):
@@ -123,6 +131,9 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
             self.service = work.component(usage='cart')
 
     def check_partner(self, cart):
-        self.assertEqual(cart['partner']['id'], self.partner.id)
-        self.assertEqual(cart['partner_shipping']['id'], self.partner.id)
-        self.assertEqual(cart['partner_invoice']['id'], self.partner.id)
+        self.assertEqual(cart['shipping']['address']['id'], self.partner.id)
+        self.assertEqual(
+            cart['invoicing'], {
+                'use_shipping_address': True,
+                'address': {},
+            })

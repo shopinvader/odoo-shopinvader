@@ -64,7 +64,7 @@ class ConnectedCartCase(CartCase):
 
     def test_set_shipping_address(self):
         self.service.dispatch('update', params={
-            'partner_shipping': {'id': self.address.id},
+            'shipping': {'address': {'id': self.address.id}},
         })
         cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
@@ -73,13 +73,20 @@ class ConnectedCartCase(CartCase):
 
     def test_set_invoice_address(self):
         self.service.dispatch('update', params={
-            'partner_invoice': {'id': self.address.id},
+            'invoicing': {'address': {'id': self.address.id}},
         })
 
         cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
         self.assertEqual(cart.partner_invoice_id, self.address)
+
+    def test_confirm_cart(self):
+        self.assertEqual(self.cart.typology, 'cart')
+        self.service.dispatch('update', params={
+            'step': {'next': self.backend.last_step_id.code},
+            })
+        self.assertEqual(self.cart.typology, 'sale')
 
 
 class ConnectedCartNoTaxCase(CartCase):
@@ -95,37 +102,50 @@ class ConnectedCartNoTaxCase(CartCase):
                 shopinvader_session=self.shopinvader_session) as work:
             self.service = work.component(usage='cart')
 
-#    def test_set_shipping_address_with_tax(self):
-#        cart = self.cart
-#        self.service.update({
-#            'partner_shipping': {'id': self.address.id},
-#            })
-#        self.assertEqual(cart.partner_id, self.partner)
-#        self.assertEqual(cart.partner_shipping_id, self.address)
-#        self.assertEqual(cart.partner_invoice_id, self.address)
-#        self.assertEqual(cart.fiscal_position, self.default_fposition)
-#        self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
-#        self.service.update({
-#            'partner_shipping': {'id': self.partner.id},
-#            })
-#        self.assertEqual(cart.partner_id, self.partner)
-#        self.assertEqual(cart.partner_shipping_id, self.partner)
-#        self.assertEqual(cart.partner_invoice_id, self.partner)
-#        self.assertEqual(cart.fiscal_position, self.fposition)
-#        self.assertEqual(cart.amount_total, cart.amount_untaxed)
-#
-#    def test_edit_shipping_address_with_tax(self):
-#        cart = self.cart
-#        self.service.update({
-#            'partner_shipping': {'id': self.address.id},
-#            })
-#        self.assertEqual(cart.partner_id, self.partner)
-#        self.assertEqual(cart.partner_shipping_id, self.address)
-#        self.assertEqual(cart.partner_invoice_id, self.address)
-#        self.assertEqual(cart.fiscal_position, self.default_fposition)
-#        self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
-#
-#        self.address.write({'country_id': self.env.ref('base.us').id})
-#        self.assertEqual(cart.partner_id, self.partner)
-#        self.assertEqual(cart.fiscal_position, self.fposition)
-#        self.assertEqual(cart.amount_total, cart.amount_untaxed)
+    def test_set_shipping_address_with_tax(self):
+        cart = self.cart
+        # Remove taxes by setting an address without tax
+        self.service.dispatch('update', params={
+            'shipping': {'address': {'id': self.partner.id}},
+            })
+        self.assertEqual(cart.amount_total, cart.amount_untaxed)
+        # Set an address that should have taxes
+        self.service.dispatch('update', params={
+            'shipping': {'address': {'id': self.address.id}},
+            })
+        self.assertEqual(cart.partner_id, self.partner)
+        self.assertEqual(cart.partner_shipping_id, self.address)
+        self.assertEqual(cart.partner_invoice_id, self.address)
+        self.assertEqual(cart.fiscal_position_id, self.default_fposition)
+        self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
+
+    def test_set_shipping_address_without_tax(self):
+        cart = self.cart
+        self.service.dispatch('update', params={
+            'shipping': {'address': {'id': self.partner.id}},
+            })
+        self.assertEqual(cart.partner_id, self.partner)
+        self.assertEqual(cart.partner_shipping_id, self.partner)
+        self.assertEqual(cart.partner_invoice_id, self.partner)
+        self.assertEqual(cart.fiscal_position_id, self.fposition)
+        self.assertEqual(cart.amount_total, cart.amount_untaxed)
+
+    def test_edit_shipping_address_without_tax(self):
+        cart = self.cart
+        # Make an double call to reset the fiscal position with the right value
+        self.service.dispatch('update', params={
+            'shipping': {'address': {'id': self.partner.id}},
+            })
+        self.service.dispatch('update', params={
+            'shipping': {'address': {'id': self.address.id}},
+            })
+        self.assertEqual(cart.partner_id, self.partner)
+        self.assertEqual(cart.partner_shipping_id, self.address)
+        self.assertEqual(cart.partner_invoice_id, self.address)
+        self.assertEqual(cart.fiscal_position_id, self.default_fposition)
+        self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
+
+        self.address.write({'country_id': self.env.ref('base.us').id})
+        self.assertEqual(cart.partner_id, self.partner)
+        self.assertEqual(cart.fiscal_position_id, self.fposition)
+        self.assertEqual(cart.amount_total, cart.amount_untaxed)
