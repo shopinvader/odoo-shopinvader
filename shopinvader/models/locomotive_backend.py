@@ -58,6 +58,9 @@ class LocomotiveBackend(models.Model):
         'res.lang',
         string='Lang',
         required=True)
+    pricelist_id = fields.Many2one(
+        'product.pricelist',
+        string='Pricelist')
 
     _sql_constraints = [
         ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',

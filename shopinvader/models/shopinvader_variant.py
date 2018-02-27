@@ -49,6 +49,23 @@ class ShopinvaderVariant(models.Model):
         compute='_compute_redirect_url_key',
         string='Redirect Url Keys')
     active = fields.Boolean(default=True)
+    price = fields.Serialized(
+        compute='_compute_price',
+        string='Shopinvader Price')
+
+    def _compute_price(self):
+        for record in self:
+            record.price = record._get_all_price()
+
+    def _get_all_price(self):
+        self.ensure_one()
+        res = {}
+        pricelist = self.backend_id.pricelist_id
+        if pricelist:
+            res['default'] = self._get_price(
+                pricelist, None,
+                self.backend_id.company_id)
+        return res
 
     @api.depends('record_id')
     def _compute_object_id(self):
