@@ -20,7 +20,29 @@
         <field name="model_id" ref="sale.model_sale_order"/>
         <field name="auto_delete" eval="False"/>
         <field name="lang">${object.partner_id.lang}</field>
-        <field name="body_html"><![CDATA[ Thanks for your card ]]></field>
+        <field name="body_html"><![CDATA[ We are processing your sale ]]></field>
+    </record>
+
+    <record id="email_invoice_notification" model="mail.template">
+        <field name="name">Invoice notification</field>
+        <field name="email_from">${(object.user_id.email or '')|safe}</field>
+        <field name="subject">Invoice notification ${object.number}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="body_html"><![CDATA[ Your invoice have been generated ]]></field>
+    </record>
+
+    <record id="email_new_customer_welcome_notification" model="mail.template">
+        <field name="name">Welcome notification</field>
+        <field name="email_from">${(object.user_id.email or '')|safe}</field>
+        <field name="subject">Welcome notification ${object.name}</field>
+        <field name="partner_to">${object.id}</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="lang">${object.lang}</field>
+        <field name="body_html"><![CDATA[ Welcome ]]></field>
     </record>
 
 </odoo>

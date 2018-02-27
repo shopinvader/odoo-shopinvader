@@ -7,13 +7,7 @@ from odoo import api, fields, models
 
 
 # TODO TO MIGRATE
-# @job
-# def send_notification(session, model_name, notif_id, record_name, record_id):
-#     record = session.env[record_name].browse(record_id)
-#     notif = session.env[model_name].browse(notif_id)
-#     notif._send(record)
-#     return 'Notification sent'
-#
+
 #
 # @job
 # def clear_dead_content(session, model_name, backend_id):
@@ -130,19 +124,15 @@ class LocomotiveBackend(models.Model):
         self.recompute()
 
     def _send_notification(self, notification, record):
-        pass
-        # TODO Migrate
-        # self.ensure_one()
-        # record.ensure_one()
-        # notif = self.env['shopinvader.notification'].search([
-        #     ('backend_id', '=', self.id),
-        #     ('notification_type', '=', notification),
-        #     ])
-        # if notif:
-        #     session = ConnectorSession.from_env(self.env)
-        #     send_notification.delay(
-        #         session, notif._name, notif.id, record._name, record.id)
-        # return True
+        self.ensure_one()
+        record.ensure_one()
+        notif = self.env['shopinvader.notification'].search([
+            ('backend_id', '=', self.id),
+            ('notification_type', '=', notification),
+            ])
+        if notif:
+            notif.with_delay().send(record.id)
+        return True
 
     def _extract_configuration(self):
         return {}
