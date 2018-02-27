@@ -8,6 +8,7 @@ from contextlib import contextmanager
 from odoo.addons.component.core import WorkContext
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase
+from odoo.addons.queue_job.job import Job
 
 
 class CommonCase(SavepointComponentCase):
@@ -32,6 +33,20 @@ class CommonCase(SavepointComponentCase):
         collection = _PseudoCollection('locomotive.backend',  self.env)
         yield WorkContext(model_name='rest.service.registration',
                           collection=collection, **params)
+
+    def _init_job_counter(self):
+        self.existing_job = self.env['queue.job'].search([])
+
+    @property
+    def created_jobs(self):
+        return self.env['queue.job'].search([]) - self.existing_job
+
+    def _check_nbr_job_created(self, nbr):
+        self.assertEqual(len(self.created_jobs), nbr)
+
+    def _perform_created_job(self):
+        for job in self.created_jobs:
+            Job.load(self.env, job.uuid).perform()
 
 
 class ProductCommonCase(CommonCase):

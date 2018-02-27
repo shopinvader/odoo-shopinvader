@@ -26,7 +26,7 @@
     'test': [
     ],
     'external_dependencies': {
-        'python': [],
+        'python': ['locomotivecms'],
         },
     'installable': True,
     'auto_install': False,
