@@ -104,6 +104,12 @@ class ConnectedCartNoTaxCase(CartCase):
 
     def test_set_shipping_address_with_tax(self):
         cart = self.cart
+        # Remove taxes by setting an address without tax
+        self.service.dispatch('update', params={
+            'shipping': {'address': {'id': self.partner.id}},
+            })
+        self.assertEqual(cart.amount_total, cart.amount_untaxed)
+        # Set an address that should have taxes
         self.service.dispatch('update', params={
             'shipping': {'address': {'id': self.address.id}},
             })
@@ -126,6 +132,10 @@ class ConnectedCartNoTaxCase(CartCase):
 
     def test_edit_shipping_address_without_tax(self):
         cart = self.cart
+        # Make an double call to reset the fiscal position with the right value
+        self.service.dispatch('update', params={
+            'shipping': {'address': {'id': self.partner.id}},
+            })
         self.service.dispatch('update', params={
             'shipping': {'address': {'id': self.address.id}},
             })
