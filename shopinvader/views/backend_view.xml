@@ -34,6 +34,9 @@
                 <field name="last_step_id"/>
                 <field name="anonymous_partner_id"/>
                 <field name="pricelist_id" require="1"/>
+                <separator name="image" colspan="4"/>
+                <field name="shopinvader_variant_resize_ids" widget="many2many_tags"/>
+                <field name="shopinvader_category_resize_ids" widget="many2many_tags"/>
             </field>
             <group name="config" position="after">
                 <group name="allowed_country" colspan="4">

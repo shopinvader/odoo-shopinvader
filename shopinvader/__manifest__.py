@@ -44,6 +44,7 @@
         "data/ir_export_category.xml",
     ],
     "demo": [
+        "demo/shopinvader_image_resize_demo.xml",
         "demo/auth_api_key_demo.xml",
         "demo/account_demo.xml",
         "demo/pricelist_demo.xml",

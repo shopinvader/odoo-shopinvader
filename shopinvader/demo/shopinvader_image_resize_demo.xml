@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="small" model="shopinvader.image.resize">
+        <field name="name">Shop Small</field>
+        <field name="key">small</field>
+        <field name="size_x">60</field>
+        <field name="size_y">60</field>
+    </record>
+
+    <record id="medium" model="shopinvader.image.resize">
+        <field name="name">Shop Medium</field>
+        <field name="key">medium</field>
+        <field name="size_x">300</field>
+        <field name="size_y">300</field>
+    </record>
+
+    <record id="large" model="shopinvader.image.resize">
+        <field name="name">Shop Large</field>
+        <field name="key">large</field>
+        <field name="size_x">500</field>
+        <field name="size_y">500</field>
+    </record>
+
+</odoo>

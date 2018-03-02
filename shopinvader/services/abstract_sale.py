@@ -11,7 +11,7 @@ class AbstractSaleService(AbstractComponent):
     _name = 'shopinvader.abstract.sale.service'
 
     def _parser_product(self):
-        return ['name', 'object_id:id', 'url_key', 'default_code']
+        return ['name', 'object_id:id', 'images', 'url_key', 'default_code']
 
     def _convert_one_sale(self, sale):
         sale.ensure_one()
