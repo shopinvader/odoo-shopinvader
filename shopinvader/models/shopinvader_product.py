@@ -21,6 +21,8 @@ class ShopinvaderProduct(models.Model):
     seo_title = fields.Char()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
+    short_description = fields.Html()
+    description = fields.Html()
     shopinvader_variant_ids = fields.One2many(
         'shopinvader.variant',
         'shopinvader_product_id',

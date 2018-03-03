@@ -36,7 +36,8 @@ class TestExport(ConnectorAlgoliaCase):
         self.assertEqual(
             1, len(values), "Only one shopinvader variant should be exported")
         value = values[0]
-        self.assertEqual(value['model_name'], si_variant.name)
+        self.assertEqual(
+            value['model']['name'], si_variant.product_tmpl_id.name)
         self.assertEqual(value['objectID'], product.id)
         self.assertEqual(value['default_code'], si_variant.default_code)
 
