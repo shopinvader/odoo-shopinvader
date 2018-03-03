@@ -100,6 +100,7 @@
 
     <record id="ir_exp_shopinvader_variant_default_code" model="ir.exports.line">
         <field name="name">default_code</field>
+        <field name="alias">default_code:sku</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 

@@ -4,3 +4,5 @@ e-commerce
 ak-odoo-incubator-jsonify https://github.com/akretion/ak-odoo-incubator 10-base_jsonify
 ak-odoo-incubator-sparse-field https://github.com/akretion/ak-odoo-incubator 10-base_sparse_field_list
 connector-search-engine https://github.com/akretion/connector-search-engine 10.0
+product-attribute
+product-variant
