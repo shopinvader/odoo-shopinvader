@@ -15,7 +15,7 @@
             </header>
             <xpath expr="//div[@name='buttons']" position="inside">
                 <button class="oe_stat_button oe_right"
-                        name="%(shopinvader_variant_no_group_by_act_window)d" type="action"
+                        name="%(shopinvader_variant_act_window)d" type="action"
                         icon="fa-file-text-o"
                         context="{'search_default_backend_id': active_id}">
                     <div>
