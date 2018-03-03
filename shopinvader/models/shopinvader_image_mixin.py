@@ -35,4 +35,4 @@ class ShopinvaderImageMixin(models.AbstractModel):
                 'src': image_url + '/%sx%s' % (resize.size_x, resize.size_y),
                 'alt': self.name,
                 }
-        return res
+        return [res]

@@ -21,7 +21,7 @@
         'base_rest',
         'auth_api_key',
         'base_jsonify',
-        # "base_sparse_field",
+        "base_sparse_field_list_support",
         "base_url",
         "base_vat",
         "connector_base_product",
