@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="view_shopinvader_category_tree" model="ir.ui.view">
+    <field name="model">shopinvader.category</field>
+    <field name="arch" type="xml">
+        <tree string="Shopinvader Category" create="0" edit="0" delete="0">
+            <field name="name"/>
+            <field name="backend_id"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_shopinvader_category_search" model="ir.ui.view">
+    <field name="model">shopinvader.category</field>
+    <field name="arch" type="xml">
+        <search string="Shopinvader Product">
+            <field name="name"/>
+            <field name="backend_id"/>
+            <group string="Group By">
+                <filter name="group_by_backend_id" string="Backend" domain="[]" context="{'group_by':'backend_id'}"/>
+            </group>
+        </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_shopinvader_category_view">
+    <field name="name">Shopinvader Category</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">shopinvader.category</field>
+    <field name="view_mode">tree</field>
+    <field name="search_view_id" ref="view_shopinvader_category_search"/>
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<menuitem id="menu_shopinvader_category"
+    name="Category"
+    parent="connector_locomotivecms.menu_locomotive_root"
+    sequence="30"
+    action="act_open_shopinvader_category_view"/>
+
+</odoo>

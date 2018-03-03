@@ -30,7 +30,11 @@
         "onchange_helper",
     ],
     "data": [
-        'views/shopinvader_variant.xml',
+        'views/shopinvader_variant_view.xml',
+        'views/shopinvader_category_view.xml',
+        'views/shopinvader_cart_step_view.xml',
+        'views/shopinvader_image_resize_view.xml',
+        'views/shopinvader_partner_view.xml',
         'wizards/shopinvader_variant_unbinding_wizard.xml',
         'wizards/shopinvader_variant_binding_wizard.xml',
         'views/product_view.xml',

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="shopinvader_partner_view_tree" model="ir.ui.view">
+        <field name="model">shopinvader.partner</field>
+        <field name="arch" type="xml">
+            <tree string="Shopinvader Partner">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="external_id"/>
+                <field name="create_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="shopinvader_partner_view_search" model="ir.ui.view">
+        <field name="model">shopinvader.partner</field>
+        <field name="arch" type="xml">
+            <search string="Shopinvader Partner">
+                <field name="name"/>
+                <field name="email"/>
+                <field name="external_id"/>
+                <group string="Group By">
+                    <filter name="group_by_backend_id" string="Backend" domain="[]" context="{'group_by':'backend_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="act_open_shopinvader_partner_view">
+        <field name="name">Shopinvader Partner</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">shopinvader.partner</field>
+        <field name="view_mode">tree</field>
+        <field name="search_view_id" ref="shopinvader_partner_view_search"/>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="act_open_shopinvader_partner_view_tree">
+        <field name="act_window_id" ref="act_open_shopinvader_partner_view"/>
+        <field name="sequence" eval="10"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="shopinvader_partner_view_tree"/>
+    </record>
+
+    <menuitem id="menu_shopinvader_partner"
+              name="Partner"
+              parent="connector_locomotivecms.menu_locomotive_root"
+              sequence="50"
+              action="act_open_shopinvader_partner_view"/>
+
+</odoo>
