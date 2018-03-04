@@ -13,7 +13,9 @@
  'depends': [
      'shopinvader_algolia',
      'product_brand',
-     'product_variant_default_code',
+     #  This module is broken for now
+     #  https://github.com/OCA/product-variant/issues/92
+     #  'product_variant_default_code',
  ],
  'data': [
      'data/ir_export_product.xml',
