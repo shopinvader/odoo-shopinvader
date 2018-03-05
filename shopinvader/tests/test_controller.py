@@ -40,4 +40,4 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             'API_KEY': self.api_key,
             })
         self.assertEqual(result.status_code, 200)
-        self.assertEqual(result.json(), [])
+        self.assertEqual(result.json(), {'data': []})

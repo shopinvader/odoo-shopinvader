@@ -3,7 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models
 from .common import CommonCase
 from odoo.exceptions import AccessError
 
@@ -20,7 +19,7 @@ class AddressCase(CommonCase):
             'zip': '43110',
             'city': 'Aurec sur Loire',
             'phone': '0485485454',
-            'country_id': self.env.ref('base.fr').id,
+            'country': {'id': self.env.ref('base.fr').id},
             }
         with self.work_on_services(
                 partner=self.partner) as work:
@@ -30,10 +29,10 @@ class AddressCase(CommonCase):
         for key in data:
             if key == 'partner_email':
                 continue
-            value = address[key]
-            if isinstance(value, models.BaseModel):
-                value = value.id
-            self.assertEqual(value, data[key])
+            elif key == 'country':
+                self.assertEqual(address.country_id.id, data[key]['id'])
+            else:
+                self.assertEqual(address[key], data[key])
 
     def test_add_address(self):
         address_ids = [
