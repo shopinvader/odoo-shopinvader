@@ -56,6 +56,11 @@ class ShopinvaderVariant(models.Model):
     short_name = fields.Char(compute='_compute_name')
     full_name = fields.Char(compute='_compute_name')
 
+    def _get_odoo_image_url(self, base_url):
+        return base_url + '/web/image/%s/%s/image' % (
+            self.record_id._name,
+            self.record_id.id)
+
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()
         attributes = self.attribute_line_ids.filtered(

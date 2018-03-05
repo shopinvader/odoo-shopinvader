@@ -17,11 +17,14 @@ class ShopinvaderImageMixin(models.AbstractModel):
         for record in self:
             record.images = record._get_images_for_record()
 
+    def _get_odoo_image_url(self, base_url):
+        return base_url + '/web/image/%s/%s/image' % (self._name, self.id)
+
     def _get_images_for_record(self):
         self.ensure_one()
         base_url = self.env['ir.config_parameter'].sudo()\
             .get_param('web.base.url')
-        image_url = base_url + '/web/image/%s/%s/image' % (self._name, self.id)
+        image_url = self._get_odoo_image_url(base_url)
         res = {
             'original': {
                 'src': image_url,
