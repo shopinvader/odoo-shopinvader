@@ -4,7 +4,7 @@
     <record id="partner_1" model="res.partner">
         <field name="name">Osiris</field>
         <field name="customer" eval="True"/>
-        <field name="email">osiris@my.personal.address.example.com</field>
+        <field name="email">osiris@shopinvader.com</field>
         <field name="street">pré du haut</field>
         <field name="city">Aurec sur Loire</field>
         <field name="zip">43110</field>
@@ -31,7 +31,7 @@
     <record id="partner_2" model="res.partner">
         <field name="name">Anubis</field>
         <field name="customer" eval="True"/>
-        <field name="email">anubis@my.personal.address.example.com</field>
+        <field name="email">anubis@shopinvader.com</field>
         <field name="street">3841 18th St</field>
         <field name="city">San Francisco</field>
         <field name="zip">CA 94114</field>
