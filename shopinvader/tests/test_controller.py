@@ -12,7 +12,7 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
     def test_get_addresses_with_correct_api_key_and_partner(self):
         result = requests.get(self.url, headers={
             'API_KEY': self.api_key,
-            'PARTNER_EMAIL': 'osiris@my.personal.address.example.com',
+            'PARTNER_EMAIL': 'osiris@shopinvader.com',
             })
         self.assertEqual(result.status_code, 200)
         data = result.json()['data']
@@ -27,7 +27,7 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
     def test_get_addresses_with_wrong_api_key(self):
         result = requests.get(self.url, headers={
             'API_KEY': 'WRONG',
-            'PARTNER_EMAIL': 'osiris@my.personal.address.example.com',
+            'PARTNER_EMAIL': 'osiris@shopinvader.com',
             })
         self.assertEqual(result.status_code, 403)
         self.assertEqual(result.json(), {

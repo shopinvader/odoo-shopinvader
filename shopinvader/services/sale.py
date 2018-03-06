@@ -10,7 +10,7 @@ from odoo.addons.component.core import Component
 class SaleService(Component):
     _inherit = 'shopinvader.abstract.sale.service'
     _name = 'shopinvader.sale.service'
-    _usage = 'sale'
+    _usage = 'sales'
     _expose_model = 'sale.order'
 
     # The following method are 'public' and can be called from the controller.
@@ -39,7 +39,7 @@ class SaleService(Component):
                 'nullable': True,
                 },
             'scope': {
-                'type': dict,
+                'type': 'dict',
                 'nullable': True,
                 },
             }

@@ -55,7 +55,7 @@ class ShopinvaderVariant(models.Model):
         string='Shopinvader Price')
     short_name = fields.Char(compute='_computes_names')
     full_name = fields.Char(compute='_computes_names')
-
+    
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()
         attributes = self.attribute_line_ids.filtered(

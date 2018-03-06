@@ -15,7 +15,7 @@ class SaleCase(CommonCase):
         self.partner = self.env.ref('shopinvader.partner_1')
         with self.work_on_services(
                 partner=self.partner) as work:
-            self.service = work.component(usage='sale')
+            self.service = work.component(usage='sales')
 
     def test_read_sale(self):
         self.sale.action_confirm_cart()
