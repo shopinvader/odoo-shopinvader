@@ -61,6 +61,14 @@ class LocomotiveBackend(models.Model):
     pricelist_id = fields.Many2one(
         'product.pricelist',
         string='Pricelist')
+    shopinvader_variant_resize_ids = fields.Many2many(
+        comodel_name='shopinvader.image.resize',
+        relation="product_image_resize",
+        string='Product Image Resize')
+    shopinvader_category_resize_ids = fields.Many2many(
+        comodel_name='shopinvader.image.resize',
+        relation="category_image_resize",
+        string='Category Image Resize')
 
     _sql_constraints = [
         ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',

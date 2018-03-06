@@ -21,7 +21,7 @@
         'base_rest',
         'auth_api_key',
         'base_jsonify',
-        # "base_sparse_field",
+        "base_sparse_field_list_support",
         "base_url",
         "base_vat",
         "connector_base_product",
@@ -44,6 +44,7 @@
         "data/ir_export_category.xml",
     ],
     "demo": [
+        "demo/shopinvader_image_resize_demo.xml",
         "demo/auth_api_key_demo.xml",
         "demo/account_demo.xml",
         "demo/pricelist_demo.xml",
