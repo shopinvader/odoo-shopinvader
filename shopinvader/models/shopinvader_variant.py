@@ -53,8 +53,8 @@ class ShopinvaderVariant(models.Model):
     price = fields.Serialized(
         compute='_compute_price',
         string='Shopinvader Price')
-    short_name = fields.Char(compute='_compute_name')
-    full_name = fields.Char(compute='_compute_name')
+    short_name = fields.Char(compute='_computes_names')
+    full_name = fields.Char(compute='_computes_names')
 
     def _get_odoo_image_url(self, base_url):
         return base_url + '/web/image/%s/%s/image' % (
@@ -71,7 +71,7 @@ class ShopinvaderVariant(models.Model):
             full_name += " (%s)" % short_name
         return full_name, short_name
 
-    def _compute_name(self):
+    def _computes_names(self):
         for record in self:
             record.full_name, record.short_name =\
                 record._prepare_variant_name_and_short_name()
