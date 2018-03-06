@@ -26,7 +26,8 @@ class CustomerService(Component):
     def create(self, **params):
         external_id = params.pop('external_id')
         params['is_company'] = True
-        self.work.partner = self.env['res.partner'].create(params)
+        vals = self._prepare_params(params)
+        self.work.partner = self.env['res.partner'].create(vals)
         self.locomotive_backend._send_notification(
             'new_customer_welcome', self.partner)
         return self._create_shopinvader_binding(external_id)
@@ -62,6 +63,14 @@ class CustomerService(Component):
                 },
             })
         return schema
+
+    def _prepare_params(self, params):
+        for key in ['country', 'state']:
+            if key in params:
+                val = params.pop(key)
+                if val.get('id'):
+                    params["%s_id" % key] = val['id']
+        return params
 
     def _get_and_assign_cart(self):
         cart_service = self.component(usage='cart')

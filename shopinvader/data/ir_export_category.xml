@@ -62,6 +62,11 @@
         <field name="export_id" ref="ir_exp_shopinvader_category"/>
     </record>
 
+    <record id="ir_exp_shopinvader_category_images" model="ir.exports.line">
+        <field name="name">images</field>
+        <field name="export_id" ref="ir_exp_shopinvader_category"/>
+    </record>
+
     <record id="ir_exp_shopinvader_category_shopinvader_parent_id" model="ir.exports.line">
         <field name="name">shopinvader_parent_id/object_id</field>
         <field name="alias">shopinvader_parent_id:parent/object_id:id</field>

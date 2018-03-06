@@ -12,7 +12,9 @@ from . import sale
 from . import locomotive_backend
 from . import url
 from . import account_invoice
+from . import shopinvader_image_mixin
 from . import shopinvader_notification
 from . import shopinvader_category
 from . import shopinvader_product
 from . import shopinvader_variant
+from . import shopinvader_image_resize

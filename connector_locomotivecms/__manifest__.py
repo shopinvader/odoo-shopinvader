@@ -14,6 +14,7 @@
     'images': [],
     'depends': [
         'connector',
+        'keychain',
     ],
     'data': [
         'views/locomotive_view.xml',
@@ -26,7 +27,7 @@
     'test': [
     ],
     'external_dependencies': {
-        'python': [],
+        'python': ['locomotivecms'],
         },
     'installable': True,
     'auto_install': False,

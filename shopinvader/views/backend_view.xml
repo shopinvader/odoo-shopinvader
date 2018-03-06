@@ -15,7 +15,7 @@
             </header>
             <xpath expr="//div[@name='buttons']" position="inside">
                 <button class="oe_stat_button oe_right"
-                        name="%(shopinvader_variant_no_group_by_act_window)d" type="action"
+                        name="%(shopinvader_variant_act_window)d" type="action"
                         icon="fa-file-text-o"
                         context="{'search_default_backend_id': active_id}">
                     <div>
@@ -34,6 +34,9 @@
                 <field name="last_step_id"/>
                 <field name="anonymous_partner_id"/>
                 <field name="pricelist_id" require="1"/>
+                <separator name="image" colspan="4"/>
+                <field name="shopinvader_variant_resize_ids" widget="many2many_tags"/>
+                <field name="shopinvader_category_resize_ids" widget="many2many_tags"/>
             </field>
             <group name="config" position="after">
                 <group name="allowed_country" colspan="4">

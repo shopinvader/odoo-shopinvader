@@ -10,6 +10,7 @@ from .tools import sanitize_attr_name
 class ShopinvaderVariant(models.Model):
     _name = 'shopinvader.variant'
     _description = 'Shopinvader Variant'
+    _inherit = 'shopinvader.image.mixin'
     _inherits = {
         'shopinvader.product': 'shopinvader_product_id',
         'product.product': 'record_id'}
@@ -52,6 +53,23 @@ class ShopinvaderVariant(models.Model):
     price = fields.Serialized(
         compute='_compute_price',
         string='Shopinvader Price')
+    short_name = fields.Char(compute='_compute_name')
+    full_name = fields.Char(compute='_compute_name')
+
+    def _prepare_variant_name_and_short_name(self):
+        self.ensure_one()
+        attributes = self.attribute_line_ids.filtered(
+            lambda l: len(l.value_ids) > 1).mapped('attribute_id')
+        short_name = self.attribute_value_ids._variant_name(attributes)
+        full_name = self.name
+        if short_name:
+            full_name += " (%s)" % short_name
+        return full_name, short_name
+
+    def _compute_name(self):
+        for record in self:
+            record.full_name, record.short_name =\
+                record._prepare_variant_name_and_short_name()
 
     def _compute_price(self):
         for record in self:
