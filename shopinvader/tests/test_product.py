@@ -55,3 +55,41 @@ class ProductCase(ProductCommonCase):
             self.shopinvader_variant.price,
             {'default': {'tax_included': True, 'value': 750.0}}
             )
+
+    def test_category_child_with_one_lang(self):
+        self.backend.bind_all_category()
+        categ = self.env.ref('product.product_category_1')
+        shopinvader_categ = categ.shopinvader_bind_ids
+        self.assertEqual(len(shopinvader_categ), 1)
+        self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
+
+    def test_category_child_with_two_lang(self):
+        lang = self.env.ref('base.lang_fr')
+        lang.active = True
+        self.backend.lang_ids |= lang
+        self.backend.bind_all_category()
+        categ = self.env.ref('product.product_category_1')
+        self.assertEqual(len(categ.shopinvader_bind_ids), 2)
+        shopinvader_categ = categ.shopinvader_bind_ids[0]
+        self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
+        for binding in categ.shopinvader_bind_ids:
+            self.assertEqual(
+                binding.shopinvader_parent_id.lang_id, binding.lang_id)
+
+    def test_product_category_with_one_lang(self):
+        self.backend.bind_all_product()
+        product = self.env.ref('product.product_product_4')
+        self.assertEqual(len(product.shopinvader_bind_ids), 1)
+        shopinvader_product = product.shopinvader_bind_ids
+        self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
+
+    def test_product_category_with_one_lang(self):
+        lang = self.env.ref('base.lang_fr')
+        lang.active = True
+        self.backend.lang_ids |= lang
+        self.backend.bind_all_category()
+        self.backend.bind_all_product()
+        product = self.env.ref('product.product_product_4')
+        self.assertEqual(len(product.shopinvader_bind_ids), 2)
+        shopinvader_product = product.shopinvader_bind_ids[0]
+        self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)

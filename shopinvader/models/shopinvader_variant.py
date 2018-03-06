@@ -115,6 +115,7 @@ class ShopinvaderVariant(models.Model):
                     ('parent_left', '<=', categ.parent_left),
                     ('parent_right', '>=', categ.parent_right),
                     ('backend_id', '=', record.backend_id.id),
+                    ('lang_id', '=', record.lang_id.id),
                     ])
                 ids += parents.ids
             record.shopinvader_categ_ids = ids
