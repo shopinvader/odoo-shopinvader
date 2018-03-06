@@ -11,7 +11,15 @@ class AbstractSaleService(AbstractComponent):
     _name = 'shopinvader.abstract.sale.service'
 
     def _parser_product(self):
-        return ['name', 'object_id:id', 'images', 'url_key', 'default_code']
+        return [
+            'full_name:name',
+            'short_name',
+            ('shopinvader_product_id:model', ('name',)),
+            'object_id:id',
+            'images',
+            'url_key',
+            'default_code:sku',
+            ]
 
     def _convert_one_sale(self, sale):
         sale.ensure_one()
@@ -85,15 +93,14 @@ class AbstractSaleService(AbstractComponent):
             }
 
     def _convert_invoicing(self, sale):
-        if sale.partner_shipping_id == sale.partner_invoice_id:
-            return {
-                'address': {},
-                'use_shipping_address': True,
-                }
+        if sale.partner_invoice_id ==\
+                self.locomotive_backend.anonymous_partner_id:
+            return {'address': {}}
         else:
             address_service = self.component(usage='addresses')
             return {
-                'address': address_service._to_json(sale.partner_invoice_id)[0]
+                'address':
+                    address_service._to_json(sale.partner_invoice_id)[0],
                 }
 
     def _convert_amount(self, sale):

@@ -125,9 +125,7 @@ class AddressService(Component):
         return res
 
     def _validator_delete(self):
-        return {
-            'id': {'coerce': to_int, 'required': True},
-            }
+        return {}
 
     def _get_base_search_domain(self):
         return [('id', 'child_of', self.partner.id)]
@@ -146,8 +144,8 @@ class AddressService(Component):
             'opt_in',
             'opt_out',
             'vat',
-            ('state_id', ['id', 'name']),
-            ('country_id', ['id', 'name']),
+            ('state_id:state', ['id', 'name']),
+            ('country_id:country', ['id', 'name']),
             'address_type',
             'is_company',
         ]
