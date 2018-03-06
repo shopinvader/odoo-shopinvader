@@ -121,8 +121,7 @@ class SaleOrderLine(models.Model):
     shopinvader_variant_id = fields.Many2one(
         'shopinvader.variant',
         compute='_compute_shopinvader_variant',
-        string='Shopinvader Variant',
-        store=True)
+        string='Shopinvader Variant')
 
     def reset_price_tax(self):
         for line in self:
@@ -131,9 +130,16 @@ class SaleOrderLine(models.Model):
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):
         for record in self:
+            domain = [
+                ('record_id', '=', record.product_id.id),
+                ('shopinvader_product_id.backend_id', '=',
+                    record.order_id.shopinvader_backend_id.id),
+                ]
+            if self._context.get('lang'):
+                domain.append(('lang_id.code', '=', self._context['lang']))
+            else:
+                _logger.warning(
+                    'No lang specified for getting the shopinvader variant '
+                    'take the first binding')
             record.shopinvader_variant_id = self.env['shopinvader.variant']\
-                .search([
-                    ('record_id', '=', record.product_id.id),
-                    ('shopinvader_product_id.backend_id', '=',
-                        record.order_id.shopinvader_backend_id.id),
-                    ])
+                .search(domain, limit=1)
