@@ -17,11 +17,11 @@ class ShopinvaderBindingListener(Component):
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_create(self, record, fields=None):
-        record.with_delay().export_record(fields=fields)
+        record.with_delay().export_record(_fields=fields)
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_write(self, record, fields=None):
-        record.with_delay().export_record(fields=fields)
+        record.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record):
         with record.backend_id.work_on(record._name) as work:
@@ -44,7 +44,7 @@ class ShopinvaderRecordListener(Component):
         if fields == ['shopinvader_bind_ids']:
             return
         for binding in record.shopinvader_bind_ids:
-            binding.with_delay().export_record(fields=fields)
+            binding.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record, fields=None):
         """ Unlink all binding before removing the record in order to
