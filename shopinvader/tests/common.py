@@ -72,4 +72,3 @@ class ShopinvaderRestCase(BaseRestCase):
         self.backend = self.env.ref('shopinvader.backend_1')
         self.api_key = self.backend.auth_api_key_id\
             ._get_keychain_account()._get_password()
-        self.url = self.base_url + '/shopinvader/addresses'

@@ -9,6 +9,10 @@ import requests
 
 class ShopinvaderControllerCase(ShopinvaderRestCase):
 
+    def setUp(self, *args, **kwargs):
+        super(ShopinvaderControllerCase, self).setUp(*args, **kwargs)
+        self.url = self.base_url + '/shopinvader/addresses'
+
     def test_get_addresses_with_correct_api_key_and_partner(self):
         result = requests.get(self.url, headers={
             'API_KEY': self.api_key,
@@ -22,6 +26,20 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             self.env.ref('shopinvader.partner_1').id)
         self.assertEqual(
             data[1]['id'],
+            self.env.ref('shopinvader.partner_1_address_1').id)
+
+    def test_get_addresses_with_correct_api_key_and_partner_and_filter(self):
+        result = requests.get(
+            self.url + '?scope[address_type]=address',
+            headers={
+                'API_KEY': self.api_key,
+                'PARTNER_EMAIL': 'osiris@shopinvader.com',
+            })
+        self.assertEqual(result.status_code, 200)
+        data = result.json()['data']
+        self.assertEqual(len(data), 1)
+        self.assertEqual(
+            data[0]['id'],
             self.env.ref('shopinvader.partner_1_address_1').id)
 
     def test_get_addresses_with_wrong_api_key(self):
