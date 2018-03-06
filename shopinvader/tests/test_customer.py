@@ -25,7 +25,7 @@ class TestCustomer(CommonCase):
             'zip': '43110',
             'city': 'Aurec sur Loire',
             'phone': '0485485454',
-            'country_id': self.env.ref('base.fr').id,
+            'country': {'id': self.env.ref('base.fr').id},
             }
         with self.work_on_services(
                 partner=None,
@@ -43,8 +43,8 @@ class TestCustomer(CommonCase):
         for key in self.data:
             if key == 'external_id':
                 continue
-            elif key == 'country_id':
-                self.assertEqual(partner[key].id, self.data[key])
+            elif key == 'country':
+                self.assertEqual(partner.country_id.id, self.data[key]['id'])
             else:
                 self.assertEqual(partner[key], self.data[key])
 
@@ -58,14 +58,14 @@ class TestCustomer(CommonCase):
         data = {
             'email': 'address@customer.example.com',
             'name': 'Address',
-            'country_id': self.env.ref('base.fr').id,
+            'country': {'id': self.env.ref('base.fr').id},
             }
         partner = self.env['res.partner'].create(data)
         self.assertEqual(partner.address_type, 'profile')
         data = {
             'email': 'parent@customer.example.com',
             'name': 'Parent',
-            'country_id': self.env.ref('base.fr').id,
+            'country': {'id': self.env.ref('base.fr').id},
             }
         parent = self.env['res.partner'].create(data)
         partner.parent_id = parent.id

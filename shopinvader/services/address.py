@@ -21,7 +21,7 @@ class AddressService(Component):
 
     def search(self, **params):
         if not self.partner:
-            return []
+            return {'data': []}
         else:
             return self._paginate_search(**params)
 
@@ -67,11 +67,23 @@ class AddressService(Component):
             'zip': {'type': 'string', 'required': True, 'empty': False},
             'city': {'type': 'string', 'required': True, 'empty': False},
             'phone': {'type': 'string', 'nullable': True, 'empty': False},
-            'state_id': {'coerce': to_int, 'nullable': True},
-            'country_id': {
-                'coerce': to_int,
-                'required': True,
-                'nullable': False},
+            'state': {
+                'type': 'dict',
+                'schema': {
+                    'id': {
+                        'coerce': to_int,
+                        'nullable': True},
+                    }
+                },
+            'country': {
+                'type': 'dict',
+                'schema': {
+                    'id': {
+                        'coerce': to_int,
+                        'required': True,
+                        'nullable': False},
+                    }
+                },
             'is_company': {'coerce': bool},
             'opt_in': {'coerce': bool},
             'opt_out': {'coerce': bool},
@@ -149,4 +161,9 @@ class AddressService(Component):
         return address.jsonify(self._json_parser())
 
     def _prepare_params(self, params, update=False):
+        for key in ['country', 'state']:
+            if key in params:
+                val = params.pop(key)
+                if val.get('id'):
+                    params["%s_id" % key] = val['id']
         return params
