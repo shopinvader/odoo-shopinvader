@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from .common import CommonCase
-from odoo.addons.queue_job.job import Job
 
 
 class NotificationCartCase(CommonCase):
@@ -25,20 +24,6 @@ class NotificationCartCase(CommonCase):
             ('res_id', '=', record.id),
             ])
         self.assertEqual(len(message), 1)
-
-    def _init_job_counter(self):
-        self.existing_job = self.env['queue.job'].search([])
-
-    @property
-    def created_jobs(self):
-        return self.env['queue.job'].search([]) - self.existing_job
-
-    def _check_nbr_job_created(self, nbr):
-        self.assertEqual(len(self.created_jobs), nbr)
-
-    def _perform_created_job(self):
-        for job in self.created_jobs:
-            Job.load(self.env, job.uuid).perform()
 
     def test_cart_notification(self):
         self._init_job_counter()

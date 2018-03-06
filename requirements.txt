@@ -6,3 +6,5 @@ stripe
 unidecode
 pysimplesoap
 mailjet_rest
+requests_mock
+-e git://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
