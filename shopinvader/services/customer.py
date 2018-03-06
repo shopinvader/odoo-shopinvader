@@ -106,5 +106,6 @@ class CustomerService(Component):
         response = self._assign_cart_and_get_store_cache()
         response['data'] = {
             'id': self.partner.id,
+            'name': self.partner.name,
         }
         return response
