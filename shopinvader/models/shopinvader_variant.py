@@ -53,6 +53,23 @@ class ShopinvaderVariant(models.Model):
     price = fields.Serialized(
         compute='_compute_price',
         string='Shopinvader Price')
+    short_name = fields.Char(compute='_computes_names')
+    full_name = fields.Char(compute='_computes_names')
+
+    def _prepare_variant_name_and_short_name(self):
+        self.ensure_one()
+        attributes = self.attribute_line_ids.filtered(
+            lambda l: len(l.value_ids) > 1).mapped('attribute_id')
+        short_name = self.attribute_value_ids._variant_name(attributes)
+        full_name = self.name
+        if short_name:
+            full_name += " (%s)" % short_name
+        return full_name, short_name
+
+    def _computes_names(self):
+        for record in self:
+            record.full_name, record.short_name =\
+                record._prepare_variant_name_and_short_name()
 
     def _compute_price(self):
         for record in self:

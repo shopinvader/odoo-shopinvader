@@ -13,7 +13,8 @@
     </record>
 
     <record id="ir_exp_shopinvader_variant_model_name" model="ir.exports.line">
-        <field name="name">name:model_name</field>
+        <field name="name">shopinvader_product_id/name</field>
+        <field name="alias">shopinvader_product_id:model/name</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
@@ -32,8 +33,24 @@
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
-    <record id="ir_exp_shopinvader_variant_description" model="ir.exports.line">
+    <record id="ir_exp_shopinvader_short_description" model="ir.exports.line">
+        <field name="name">short_description</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+    </record>
+
+    <record id="ir_exp_shopinvader_description" model="ir.exports.line">
         <field name="name">description</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+    </record>
+
+    <record id="ir_exp_shopinvader_name" model="ir.exports.line">
+        <field name="name">full_name</field>
+        <field name="alias">full_name:name</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+    </record>
+
+    <record id="ir_exp_shopinvader_short_name" model="ir.exports.line">
+        <field name="name">short_name</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
