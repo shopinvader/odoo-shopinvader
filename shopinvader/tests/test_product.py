@@ -9,6 +9,14 @@ from .common import ProductCommonCase
 
 class ProductCase(ProductCommonCase):
 
+    def install_lang(self, lang_xml_id):
+        lang = self.env.ref(lang_xml_id)
+        wizard = self.env['base.language.install'].create({
+            'lang': lang.code,
+            })
+        wizard.lang_install()
+        return lang
+
     def test_create_shopinvader_variant(self):
         self.assertEqual(
             len(self.template.product_variant_ids),
@@ -64,8 +72,7 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
 
     def test_category_child_with_two_lang(self):
-        lang = self.env.ref('base.lang_fr')
-        lang.active = True
+        lang = self.install_lang('base.lang_fr')
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         categ = self.env.ref('product.product_category_1')
@@ -75,6 +82,10 @@ class ProductCase(ProductCommonCase):
         for binding in categ.shopinvader_bind_ids:
             self.assertEqual(
                 binding.shopinvader_parent_id.lang_id, binding.lang_id)
+            if binding.lang_id.code == 'fr_FR':
+                self.assertEqual(binding.url_key, u'tous/en-vente')
+            elif binding.lang_id.code == 'en_US':
+                self.assertEqual(binding.url_key, u'all/saleable')
 
     def test_product_category_with_one_lang(self):
         self.backend.bind_all_product()
@@ -84,8 +95,7 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
 
     def test_product_category_with_one_lang(self):
-        lang = self.env.ref('base.lang_fr')
-        lang.active = True
+        lang = self.install_lang('base.lang_fr')
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         self.backend.bind_all_product()
@@ -93,3 +103,8 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(product.shopinvader_bind_ids), 2)
         shopinvader_product = product.shopinvader_bind_ids[0]
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
+        for binding in product.shopinvader_bind_ids:
+           if binding.lang_id.code == 'fr_FR':
+               self.assertEqual(binding.url_key, u'ipad-avec-ecran-retina')
+           elif binding.lang_id.code == 'en_US':
+               self.assertEqual(binding.url_key, u'ipad-retina-display')
