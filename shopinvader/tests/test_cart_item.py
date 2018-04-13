@@ -110,11 +110,7 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
 
     def check_partner(self, cart):
         self.assertEqual(cart['shipping']['address'], {})
-        self.assertEqual(
-            cart['invoicing'], {
-                'use_shipping_address': True,
-                'address': {},
-            })
+        self.assertEqual(cart['invoicing']['address'], {})
 
 
 class ConnectedItemCase(AbstractItemCase, CommonCase):
@@ -132,8 +128,4 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
 
     def check_partner(self, cart):
         self.assertEqual(cart['shipping']['address']['id'], self.partner.id)
-        self.assertEqual(
-            cart['invoicing'], {
-                'use_shipping_address': True,
-                'address': {},
-            })
+        self.assertEqual(cart['invoicing']['address']['id'], self.partner.id)
