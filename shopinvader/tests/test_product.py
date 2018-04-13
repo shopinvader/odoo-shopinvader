@@ -104,7 +104,7 @@ class ProductCase(ProductCommonCase):
         shopinvader_product = product.shopinvader_bind_ids[0]
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
         for binding in product.shopinvader_bind_ids:
-           if binding.lang_id.code == 'fr_FR':
-               self.assertEqual(binding.url_key, u'ipad-avec-ecran-retina')
-           elif binding.lang_id.code == 'en_US':
-               self.assertEqual(binding.url_key, u'ipad-retina-display')
+            if binding.lang_id.code == 'fr_FR':
+                self.assertEqual(binding.url_key, u'ipad-avec-ecran-retina')
+            elif binding.lang_id.code == 'en_US':
+                self.assertEqual(binding.url_key, u'ipad-retina-display')
