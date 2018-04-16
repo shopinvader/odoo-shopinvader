@@ -66,13 +66,15 @@ class ShopinvaderCategory(models.Model):
     def _compute_parent_category(self):
         for record in self:
             for binding in record.parent_id.shopinvader_bind_ids:
-                if binding.backend_id == record.backend_id:
+                if binding.backend_id == record.backend_id\
+                        and binding.lang_id == record.lang_id:
                     record.shopinvader_parent_id = binding
                     break
 
     def _compute_child_category(self):
         for record in self:
             record.shopinvader_child_ids = self.search([
+                ('lang_id', '=', record.lang_id.id),
                 ('record_id.parent_id', '=', record.record_id.id),
                 ('backend_id', '=', record.backend_id.id),
             ])
