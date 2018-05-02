@@ -46,6 +46,7 @@
         "data/res_partner.xml",
         "data/ir_export_product.xml",
         "data/ir_export_category.xml",
+        "data/cart_step.xml",
     ],
     "demo": [
         "demo/shopinvader_image_resize_demo.xml",
