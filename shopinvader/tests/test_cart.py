@@ -88,6 +88,11 @@ class ConnectedCartCase(CartCase):
             })
         self.assertEqual(self.cart.typology, 'sale')
 
+    def test_confirm_cart_maually(self):
+        self.assertEqual(self.cart.typology, 'cart')
+        self.cart.action_confirm()
+        self.assertEqual(self.cart.typology, 'sale')
+
 
 class ConnectedCartNoTaxCase(CartCase):
 

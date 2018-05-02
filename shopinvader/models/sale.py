@@ -81,6 +81,9 @@ class SaleOrder(models.Model):
         res = super(SaleOrder, self).action_confirm()
         for record in self:
             if record.state != 'draft' and record.shopinvader_backend_id:
+                # If we confirm a cart directly we change the typology
+                if record.typology != 'sale':
+                    record.typology = 'sale'
                 record.shopinvader_backend_id._send_notification(
                     'sale_confirmation', record)
         return res
