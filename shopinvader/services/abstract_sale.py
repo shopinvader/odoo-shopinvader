@@ -16,7 +16,6 @@ class AbstractSaleService(AbstractComponent):
             'short_name',
             ('shopinvader_product_id:model', ('name',)),
             'object_id:id',
-            'images',
             'url_key',
             'default_code:sku',
             ]

@@ -33,7 +33,6 @@
         'views/shopinvader_variant_view.xml',
         'views/shopinvader_category_view.xml',
         'views/shopinvader_cart_step_view.xml',
-        'views/shopinvader_image_resize_view.xml',
         'views/shopinvader_partner_view.xml',
         'wizards/shopinvader_variant_unbinding_wizard.xml',
         'wizards/shopinvader_variant_binding_wizard.xml',
@@ -49,7 +48,6 @@
         "data/cart_step.xml",
     ],
     "demo": [
-        "demo/shopinvader_image_resize_demo.xml",
         "demo/auth_api_key_demo.xml",
         "demo/account_demo.xml",
         "demo/pricelist_demo.xml",
