@@ -38,7 +38,8 @@ class LocomotiveBackend(models.Model):
     last_step_id = fields.Many2one(
         'shopinvader.cart.step',
         string='Last cart step',
-        required=True)
+        required=True,
+        default=lambda self: self.env.ref('shopinvader.cart_end').id)
     allowed_country_ids = fields.Many2many(
         comodel_name='res.country',
         string='Allowed Country')
