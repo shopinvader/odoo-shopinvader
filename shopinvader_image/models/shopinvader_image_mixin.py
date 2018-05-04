@@ -34,14 +34,15 @@ class ShopinvaderImageMixin(models.AbstractModel):
             '%s_resize_ids' % self._name.replace('.', '_')]
         for image_relation in self[self._image_field]:
             url_key = self._get_image_url_key(image_relation)
+            image_data = {}
             for resize in resizes:
                 thumbnail = image_relation.image_id.get_or_create_thumbnail(
                     resize.size_x,
                     resize.size_y,
                     url_key=url_key)
-                res.append({
-                    resize.key: {
-                        'src': thumbnail.url,
-                        'alt': self.name,
-                    }})
+                image_data[resize.key] = {
+                    'src': thumbnail.url,
+                    'alt': self.name,
+                    }
+            res.append(image_data)
         return res
