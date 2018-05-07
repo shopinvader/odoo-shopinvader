@@ -10,7 +10,6 @@ from .tools import sanitize_attr_name
 class ShopinvaderVariant(models.Model):
     _name = 'shopinvader.variant'
     _description = 'Shopinvader Variant'
-    _inherit = 'shopinvader.image.mixin'
     _inherits = {
         'shopinvader.product': 'shopinvader_product_id',
         'product.product': 'record_id'}
@@ -55,11 +54,6 @@ class ShopinvaderVariant(models.Model):
         string='Shopinvader Price')
     short_name = fields.Char(compute='_computes_names')
     full_name = fields.Char(compute='_computes_names')
-
-    def _get_odoo_image_url(self, base_url):
-        return base_url + '/web/image/%s/%s/image' % (
-            self.record_id._name,
-            self.record_id.id)
 
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()

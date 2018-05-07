@@ -6,3 +6,4 @@ ak-odoo-incubator-sparse-field https://github.com/akretion/ak-odoo-incubator 10-
 connector-search-engine https://github.com/akretion/connector-search-engine 10.0
 product-attribute
 product-variant
+storage https://github.com/akretion/storage 10.0
