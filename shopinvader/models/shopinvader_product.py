@@ -38,9 +38,9 @@ class ShopinvaderProduct(models.Model):
 
     @api.multi
     def _inverse_active(self):
-        inactive = self.filtered(lambda p: not p.active)
-        inactive.shopinvader_variant_ids.write(
-            {'active': False})
+        self.filtered(
+            lambda p: not p.active).mapped('shopinvader_variant_ids').write(
+                {'active': False})
 
     def _prepare_shopinvader_variant(self, variant):
         return {
