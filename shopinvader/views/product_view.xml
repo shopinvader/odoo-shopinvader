@@ -123,6 +123,22 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.ui.view" id="product_product_form_view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <field name="shopinvader_bind_ids" position="before">
+                <group>
+                    <group>
+                        <field name="is_shopinvader_binded"/>
+                    </group>
+                    <group></group>
+                </group>
+            </field>
+        </field>
+    </record>
+
     <menuitem
             id="menu_product_filter_action"
             action="product_filter_action"
