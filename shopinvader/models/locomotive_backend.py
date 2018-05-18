@@ -121,11 +121,10 @@ class LocomotiveBackend(models.Model):
 
     @api.multi
     def bind_all_category(self):
-        self.with_context(recompute=False)._bind_all_content(
+        self._bind_all_content(
             'product.category',
             'shopinvader.category',
             [])
-        self.recompute()
 
     def _send_notification(self, notification, record):
         self.ensure_one()
