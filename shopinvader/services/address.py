@@ -6,6 +6,7 @@
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.exceptions import AccessError
+from odoo import _
 
 
 class AddressService(Component):
@@ -43,7 +44,7 @@ class AddressService(Component):
     def delete(self, _id):
         address = self._get(_id)
         if self.partner == address:
-            raise AccessError('Can not delete the partner account')
+            raise AccessError(_('Can not delete the partner account'))
         address.active = False
         return self.search()
 

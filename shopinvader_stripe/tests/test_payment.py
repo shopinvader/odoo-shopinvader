@@ -4,8 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.shopinvader.tests.common import CommonCase
-from odoo.addons.shopinvader.services.cart import CartService
-from odoo.addons.shopinvader.services.transaction import TransactionService
 from odoo.addons.payment_gateway_stripe.tests.test_payment import (
     StripeCommonCase,
     StripeScenario)
@@ -34,19 +32,23 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
             'typology': 'cart',
             'shopinvader_backend_id': self.backend.id,
             })
-        self.cart_service = self._get_service(CartService, self.partner)
-        self.transaction_service = self._get_service(
-            TransactionService, self.partner)
+        with self.work_on_services(
+                partner=self.partner,
+                shopinvader_session=self.shopinvader_session) as work:
+            self.service = work.component(usage='cart')
         self.cr.commit = Mock()  # Do not commit
 
     def _create_transaction(self, card):
         params = REDIRECT_URL.copy()
         params['source'] = self._get_source(card)['id']
-        response = self.cart_service.update({
-            'payment_method_id': self.payment_method.id,
-            'payment_params': {'stripe': params}})
+        response = self.service.dispatch('add_payment', params={
+            'payment_mode': {'id': self.account_payment_mode.id},
+            'stripe': params})
         transaction = self.sale.transaction_ids
         self.assertEqual(len(transaction), 1)
+        self.assertEqual(
+            self.sale.workflow_process_id,
+            self.account_payment_mode.workflow_process_id)
         return response, transaction, json.loads(transaction.data)
 
     def _check_captured(self, transaction, response,
@@ -58,9 +60,6 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
         self.assertEqual(charge['amount'], int(transaction.amount*100))
         self.assertEqual(transaction.risk_level, expected_risk_level)
 
-        self.env['automatic.workflow.job'].run()
-        self.assertNotEqual(self.sale.state, 'draft')
-
         self.assertIn('store_cache', response)
         self.assertIn('last_sale', response['store_cache'])
 
@@ -69,11 +68,11 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
         self.assertEqual(response['redirect_to'], transaction.url)
         self.assertEqual(transaction.state, 'pending')
 
-        self.env['automatic.workflow.job'].run()
-        self.assertEqual(self.sale.state, 'draft')
-
         self._fill_3d_secure(source, success=success)
-        response = self.transaction_service.get({'source': source['id']})
+        response = self.service.dispatch('check_payment', params={
+            'source': source['id'],
+            'provider_name': 'stripe',
+            })
         if success:
             self._check_captured(transaction, response)
             self.assertEqual(
@@ -86,9 +85,6 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
                 REDIRECT_URL['redirect_cancel_url'])
             self.assertIn('store_cache', response)
             self.assertIn('notifications', response['store_cache'])
-
-            self.env['automatic.workflow.job'].run()
-            self.assertEqual(self.sale.state, 'draft')
 
     def _test_card(self, card, **kwargs):
         response, transaction, source = self._create_transaction(card)

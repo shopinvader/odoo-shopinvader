@@ -2,6 +2,7 @@
 <openerp>
     <data>
 
+        <!--
 <record id="locomotive_backend_view_form" model="ir.ui.view">
     <field name="model">locomotive.backend</field>
     <field name="inherit_id"
@@ -18,6 +19,6 @@
         </group>
     </field>
 </record>
-
+-->
     </data>
 </openerp>

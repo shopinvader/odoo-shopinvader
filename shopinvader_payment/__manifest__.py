@@ -20,6 +20,7 @@
     "depends": [
         "shopinvader",
         "payment_gateway",
+        "sale_automatic_workflow_payment_mode",
     ],
     "data": [
         'views/shopinvader_payment_view.xml',
