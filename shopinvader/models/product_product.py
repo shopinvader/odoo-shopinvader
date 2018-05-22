@@ -30,6 +30,27 @@ class ProductProduct(models.Model):
         search=_search_locomotive_backend_ids)
     active = fields.Boolean(inverse='_inverse_active')
 
+    is_shopinvader_binded = fields.Boolean(
+        "Shopinvader binded",
+        compute="_compute_is_shopinvader_binded",
+        store=True,
+        index=True,
+        help="Technical field to know if this product is related by a"
+             "(at least one) shopinvader backend",
+    )
+
+    @api.multi
+    @api.depends('shopinvader_bind_ids', 'shopinvader_bind_ids.backend_id')
+    def _compute_is_shopinvader_binded(self):
+        """
+        Compute function to determine if the product is used in at least
+        1 backend (using backend from shopinvader.variant)
+        :return:
+        """
+        for rec in self:
+            binded = bool(rec.shopinvader_bind_ids.mapped("backend_id"))
+            rec.is_shopinvader_binded = binded
+
     @api.multi
     def _inverse_active(self):
         self.filtered(lambda p: not p.active).mapped(
