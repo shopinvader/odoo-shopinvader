@@ -7,3 +7,4 @@ connector-search-engine https://github.com/akretion/connector-search-engine 10.0
 product-attribute
 product-variant
 storage https://github.com/akretion/storage 10.0
+payment-gateway https://github.com/akretion/payment-gateway 10.0
