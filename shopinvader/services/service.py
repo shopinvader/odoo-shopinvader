@@ -6,6 +6,7 @@
 
 from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import UserError, MissingError
+from odoo import _
 
 
 class BaseShopinvaderService(AbstractComponent):
@@ -45,7 +46,7 @@ class BaseShopinvaderService(AbstractComponent):
                 domain.append((key, op, value))
             return domain
         except Exception, e:
-            raise UserError('Invalid scope %s, error : %s', scope, e)
+            raise UserError(_('Invalid scope %s, error : %s'), scope, e)
 
     def _paginate_search(
             self,  default_page=1, default_per_page=5, **params):
@@ -71,7 +72,8 @@ class BaseShopinvaderService(AbstractComponent):
         record = self.env[self._expose_model].search(domain)
         if not record:
             raise MissingError(
-                'The record %s %s does not exist' % (self._expose_model, _id))
+                _('The record %s %s does not exist') % (
+                    self._expose_model, _id))
         else:
             return record
 
