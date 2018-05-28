@@ -69,7 +69,7 @@ class CartService(Component):
             }
         for provider in self.env['gateway.transaction']._get_all_provider():
             if hasattr(provider, '_validator_add_payment'):
-                validator[provider._usage] = {
+                validator[provider._provider_name] = {
                     'type': 'dict',
                     'schema': provider._validator_add_payment()
                     }
@@ -119,10 +119,20 @@ class CartService(Component):
     def _to_json(self, cart):
         res = super(CartService, self)._to_json(cart)
         if cart:
-            res.update({
-                'available_payment_method_ids':
-                    self._get_available_payment_mode(),
-            })
+            methods = self._get_available_payment_mode()
+            selected_method = {}
+            if cart.payment_mode_id:
+                for method in methods:
+                    if method['id'] == cart.payment_mode_id.id:
+                        selected_method = method
+            res['payment'] = {
+                'available_methods': {
+                    'count': len(methods),
+                    'items': methods,
+                    },
+                'selected_method': selected_method,
+                'amount': cart.amount_total,
+                }
         return res
 
     def _prepare_payment(self, method):

@@ -23,11 +23,12 @@
         "sale_automatic_workflow_payment_mode",
     ],
     "data": [
-        'views/shopinvader_payment_view.xml',
-        'views/backend_view.xml',
+        "views/shopinvader_payment_view.xml",
+        "views/backend_view.xml",
+        "security/ir.model.access.csv",
     ],
     "demo": [
-        # "demo/payment_demo.xml",
+        "demo/payment_demo.xml",
     ],
     "qweb": [
     ]
