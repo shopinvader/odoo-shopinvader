@@ -32,8 +32,7 @@ class CartService(Component):
     def check_payment(self, provider_name=None, **params):
         with self.env['gateway.transaction']._get_provider(provider_name)\
                 as provider:
-            transaction = provider._get_transaction_from_return(params)
-            transaction.check_state()
+            transaction = provider.process_return(**params)
             if transaction.state in ['to_capture', 'succeeded']:
                 result = self.update(
                     step={'next': self.locomotive_backend.last_step_id.code},

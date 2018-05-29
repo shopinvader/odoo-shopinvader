@@ -18,8 +18,3 @@ class PaymentServiceStripe(Component):
 
     def _validator_check_payment(self):
         return {'source': {'type': 'string'}}
-
-    def _get_transaction_from_return(self, params):
-        return self.env['gateway.transaction'].search([
-            ('external_id', '=', params['source']),
-            ('state', '=', 'pending')])
