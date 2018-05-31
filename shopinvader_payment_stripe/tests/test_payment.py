@@ -56,48 +56,53 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
             self.account_payment_mode.workflow_process_id)
         return response, transaction, json.loads(transaction.data)
 
-    def _check_captured(self, transaction, response,
-                        expected_state='succeeded',
-                        expected_risk_level='normal'):
-        self.assertEqual(transaction.state, expected_state)
-        charge = json.loads(transaction.data)
-        self.assertEqual(self.sale.amount_total, transaction.amount)
-        self.assertEqual(charge['amount'], int(transaction.amount*100))
-        self.assertEqual(transaction.risk_level, expected_risk_level)
-
+    def _check_reponse(self, response, redirect=False):
         self.assertIn('store_cache', response)
         self.assertIn('last_sale', response['store_cache'])
-
-    def _test_3d(self, card, success=True):
-        response, transaction, source = self._create_transaction(card)
-        self.assertEqual(response['redirect_to'], transaction.url)
-        self.assertEqual(transaction.state, 'pending')
-
-        self._fill_3d_secure(source, success=success)
-        response = self.service.dispatch('check_payment', params={
-            'source': source['id'],
-            'provider_name': 'stripe',
-            })
-        if success:
-            self._check_captured(transaction, response)
+        if redirect:
             self.assertEqual(
                 response['redirect_to'],
                 REDIRECT_URL['redirect_success_url'])
         else:
-            self.assertEqual(transaction.state, 'failed')
-            self.assertEqual(
-                response['redirect_to'],
-                REDIRECT_URL['redirect_cancel_url'])
-            self.assertIn('store_cache', response)
-            self.assertIn('notifications', response['store_cache'])
+            self.assertNotIn('redirect_to', response)
+
+    def _simulate_return(self, transaction):
+        return self.service.dispatch('check_payment', params={
+            'source': transaction.external_id,
+            'provider_name': 'stripe',
+            })
+
+    def _test_3d(self, card, success=True, mode='return'):
+        response, transaction, source = self._create_transaction(card)
+        self.assertEqual(response['redirect_to'], transaction.url)
+        self.assertEqual(transaction.state, 'pending')
+        self._fill_3d_secure(source, success=success)
+        if mode == 'webhook':
+            self._simulate_webhook(transaction)
+            if success:
+                self._check_captured(transaction)
+            else:
+                self.assertEqual(transaction.state, 'failed')
+        else:
+            response = self._simulate_return(transaction)
+            if success:
+                self._check_captured(transaction)
+                self._check_reponse(response, redirect=True)
+            else:
+                self.assertEqual(transaction.state, 'failed')
+                self.assertEqual(
+                    response['redirect_to'],
+                    REDIRECT_URL['redirect_cancel_url'])
+                self.assertIn('store_cache', response)
+                self.assertIn('notifications', response['store_cache'])
 
     def _test_card(self, card, **kwargs):
         response, transaction, source = self._create_transaction(card)
-        self._check_captured(transaction, response, **kwargs)
-        self.assertNotIn('redirect_to', response)
+        self._check_captured(transaction, **kwargs)
+        self._check_reponse(response)
 
     def test_create_transaction_3d_not_supported(self):
         response, transaction, source =\
             self._create_transaction('378282246310005')
-        self._check_captured(transaction, response)
-        self.assertNotIn('redirect_to', response)
+        self._check_captured(transaction)
+        self._check_reponse(response)
