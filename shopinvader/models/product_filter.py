@@ -17,7 +17,7 @@ class ProductFilter(models.Model):
     based_on = fields.Selection(
         selection=[
             ('field', 'Field'),
-            ('attribute', 'Attribute')
+            ('variant_attribute', 'Variant Attribute')
         ],
         required=True
     )
@@ -44,5 +44,5 @@ class ProductFilter(models.Model):
             if pfilter.based_on == 'field':
                 pfilter.display_name = pfilter.field_id.name
             else:
-                pfilter.display_name =\
-                    'attributes.%s' % sanitize_attr_name(pfilter.attribute_id)
+                pfilter.display_name = 'variant_attributes.%s'\
+                    % sanitize_attr_name(pfilter.attribute_id)

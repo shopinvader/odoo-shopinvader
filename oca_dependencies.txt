@@ -1,9 +1,9 @@
 connector
-server-tools
+server-tools https://github.com/akretion/server-tools 10.0-pending-merge-shopinvader
 e-commerce
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10.0
 connector-search-engine https://github.com/akretion/connector-search-engine 10.0
-product-attribute
+product-attribute https://github.com/akretion/product-attribute 10-migr-custom-attributes
 product-variant
 storage https://github.com/akretion/storage 10.0
 payment-gateway https://github.com/akretion/payment-gateway 10.0
