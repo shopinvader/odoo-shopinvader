@@ -1,0 +1,425 @@
+interactions:
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$bpbIzS3ai3C8tbS+kuoyLf1T644qMp8I2qPMfec/CFEvEmJ1KCQs41iOTyzvL8+pe6Csz+rdNHkExCbJw+ZWm4eIAz/j5B2xjiXER9TOV+UY23imVQS/T75dw8nXcQR72Ab6jRhwb5kpqy5viY8HyPS5IR2intZt9+CqX0/L4qxrAmpYMYyrmd/oHu0cE/+/PB5OtBpoZYRfzqb4ibUH2WX8aeHk503FM2EV3VmhmQ5U2o6XNeRFJs5ZPNfTBRa9MrwC0Yv5q+YePIyqPn71mIwWz1H7Z3RLpal2EIam34acWNEvJJxRGCWviRJ95vT9lTT0w04sUPvjjDtkOKfUIw==$1YtJvciMNDVbNfqTtzxIZwyN3WSQywYybx0MF6lnGhMc6+as/mVvdhIuSAeAs0Q0jkmMyyQWGWO5V8+dcwuuYhfg0D2k11NYNQaK8Td2f8Hqdjgqnaowx8Y5R3qlV77nII3NSh1lwngj4mZmo28C+PGFyeuaJu4BzU+OwWQsrwptD4Kr3rfKkW7W8AY484hqAogfDuCekCFC4vHBjbfE64X+dTMcoKLEzbhydWSyHQ=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "offline",
+      "reference": "SO002|deltapc@yourcompany.example.com|742"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['802']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/plain; charset=UTF-8]
+      date: ['Fri, 01 Jun 2018 13:11:38 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      set-cookie: [JSESSIONID=DB23F84FA0E22CB0C28E74A2B7B856D0.test104e; Path=/pal;
+          Secure; HttpOnly]
+      www-authenticate: [BASIC realm="Adyen PAL Service Authentication"]
+    status: {code: 401, message: Unauthorized}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$Xk+mDDgRxy/+qLuKtv8xpq22e6Q9fe9b4k8jNn3p+CpeCXU+H275LQZJVs4JsrQiKu/KpkGHXDKT/3Erdn6P60f2dofMPX6XWzkzKw8/HtVWzpcIaGj7swuDAHd439NFpIggUggG1Prsn3IdAPW4NRkeAcKp5bIFJe0N5EkkJtnWHsjCPrxkKWIszqgUQuVcjpVWTWVwDGT1TN2c1jxZ5EW8+qaFOqWKEsZm5+0XiqhwvyKw8UIYFcGicdgmBAXIRx9kE3/x/yy1fYTsc7PNasNb8gbIXsU0ZY4VL0wLSTln4cK8mIUFvaGYqjiRmtLCFMX2eZQH46K46wAhA5gFSA==$pkkAj1ZVIcWpIcWoThw60J56PNs60/nPjyPdRh1v/YAnHzg9oLiDbNoQFfDcG3sjr6dqwhn9J1yR4jB25vc413bpTSJfrSd7hJ4/1NXrPFgFjuLABmmnNwu03ycRbD8/3HwpZDeAImrRZPqqKGBFGGTnb13AfnAX9ntMxvP2VhehdnbXmLE669rjRrvVTWOzl48Ysz2x1fT3SQ+eJk04cwyeYtcJsQr+NwCxcBfFGQ=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|756"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/plain; charset=UTF-8]
+      date: ['Fri, 01 Jun 2018 13:12:51 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      set-cookie: [JSESSIONID=432A4535EA781D3252D969522B665817.test104e; Path=/pal;
+          Secure; HttpOnly]
+      www-authenticate: [BASIC realm="Adyen PAL Service Authentication"]
+    status: {code: 401, message: Unauthorized}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$ehmhVsMblFFGesZXmZnIzhg6lIP7gsNO0qODH9i1wK5BkaI1VyLIBZG97G/ueETiiFw/OQZyp1YzHhA8HhBG1aaDrtSf2G4gwTqW0nfz9Fwefar0bJ9VVlkQZTZWfVDfnz9WsWJ376xWDpbSs7r7pSnqWBvkz2l6gFDHtl57jUeCv0zlqNAEDJGeJ5F6SWvQ5vLg5KYw3pEWucGHRrRLF2S/BcqrFZhLoudOoCmn+BKBs3KIRCvnXhSv4OgmMAZaNoPQFh1wOwZUI44FPHACaVvbjEkIdjWZPNFQceYefW/QXXPfCslC6aIbsZmvDsKRhV6o5MjikiZ7WMK6QnDEEg==$tFpIQGbDvSo0UNn+5Dd0PRLxkRixPQE0A43LbxhFLa8jmsjvbfEzmsp5yBGdxLsAeqrmFMmlGkThUjZU9moCqoVbDEq/pNKGR/NxMOqgqPkABK+1KO0bSOL0J4j5G/pCmu6Z2uFLdOFz1PaPZMaWDXnFseIhgLUEODrcBNh3KL0II5GVFXA2Mg8+/XaXZKtmPUoDbDyMu/rIMZ1iH11NtzbdxxFBsMWoJuOEP6PMsg=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|763"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/plain; charset=UTF-8]
+      date: ['Fri, 01 Jun 2018 13:13:28 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      set-cookie: [JSESSIONID=A6215871EFCA7214042DC6CEE4ECEB7B.test104e; Path=/pal;
+          Secure; HttpOnly]
+      www-authenticate: [BASIC realm="Adyen PAL Service Authentication"]
+    status: {code: 401, message: Unauthorized}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$WuC2UUcKSwGFeX9FLpmYST//NipNfECIKSb5L2XUq51aRT+xOi3gASG3/Q6SkzjQKnAUXY/hzchUfx4E1P4VyclFfDOBAUG7nk2zxPelIrf+VG8PVyOAsWmew8bxkNkwcraJXdTs/4EUy+8FPUr93TVIU5szhF4oye0jfQp4tOmfz69F4s65pp+F3AYfxOrehFEbAYJZ/pJkhoSCUQ+Df3IuoZgwnV/xYZwb/GCnGHNfWbbbrCGSDy4aUctBz41PiPX3uQ967PqvRaLJ7DLDpcxRUiWJD1ptr6xaXIk0BWssGLyc3Fo4t6Of9kkJgySB4gWS6duVfIV3OaWVugBPTA==$xF3GetHunpncnBk2rt21GiaFL6UvSqJ5XTEOPC0HzqvQHCGJeb+27yumzAiD1lg9LThsxo7nq/L0B3rdxIewQJ6LvoQlJDaiKTKbLh6d61dtcx2ibK9M+TbtLfMMp/ho/8Kyc4orStu7beUuRs3vFwPsWS4p0Mr9kOQMJXukZ6IfYhFOqOIWf6rQq+07KfUrDlfodVAEXQcHc3TJ1yibyKohvnI/7ONseqb91HXTXA=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|770"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/plain; charset=UTF-8]
+      date: ['Fri, 01 Jun 2018 14:02:59 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      set-cookie: [JSESSIONID=E8BD2B84E83306114DBFBBE97B061805.test3e; Path=/pal;
+          Secure; HttpOnly]
+      www-authenticate: [BASIC realm="Adyen PAL Service Authentication"]
+    status: {code: 401, message: Unauthorized}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$ATVgN+gj6waQ8wqpnt99jIjzLwKC/XsNGtiBJlWa9yIOrzScVt2jJ/3OaxE0SCZuaBSefAGnqupp/89YOoFatnEd9iGpbKSjDaV8WykzLruDhDt3QWY6XuuyLLVLgPqRKqDeWiYYroCsIsB+eKT45eX69j7ucqyIk7LEr27eJxvRIAAUu1D1OOqKsqoprI8+vKNZP205gDOJMzeVMkLGD8xpafga0PC9ecLgVdV93KQeUx3E+ZEetAplYwvYWekmAvHNPIAu8Grld8ge8ZO/RHSccgXUPW3G/ajJ0WwkH/Bd/gU81p9z1oGuWDdWTzWI1rE2w9koU6TuHKg1s25CDg==$9u6qyUzKsvX67NC7A39k7STkaUj6CRN5lCwopesvPB4MciOHxSlRmUYX9HAEynUc0GUKsODFdGkqEoK7XV0s+8BD9BPvpvZH03l1Y0HmsKvS/YXvPqZ8o+kCplkgeBUFNTqNXgixiBRKZcUc4xmukbcca8EzznQg6wg7S37DdHIf6ilWnyNEYQwbuPT0G898FXGtSDUZdyq1INZASrMQyxX3+Do48SEy4m6qS/iGAA=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|775"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/plain; charset=UTF-8]
+      date: ['Fri, 01 Jun 2018 14:03:17 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      set-cookie: [JSESSIONID=D4A0F7EC8E60933FC77A38D97E25EAE6.test104e; Path=/pal;
+          Secure; HttpOnly]
+      www-authenticate: [BASIC realm="Adyen PAL Service Authentication"]
+    status: {code: 401, message: Unauthorized}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$djT4rpI11GZ79meM+L3G+lGIROAN9B95jW7lYFrvF+i67LerMkvijzyM8EpImS5wm3jCQU7JcV9dPOuVGO8da7LzKsScDtRsEP0W6u8JWEvK4Rrn+YU1SQ/zOy0V2ITiFkobqUbczGEhEUDaQxlFrPp/yKRAPTQItBIqRG9APvGeRrte+ThXFpFeyv/xgvk5+Ruc0gI/bGjTikoH3bv+D1dDR+e265kOvCyIMKJ6r6t9Mru8ADY48vQJagkY12TRSRPP+ydGFkALd3BMbQOvXj5E9NO0u7wxW5sc5rG1DbO7XcklIZjZMpuCZLFcvaBwtwhFmjxfkSz8CDAnAh7Vyw==$ZyUhTWgZ05W7VyY7Fr7Aqjdzm5rfd53Zc51TfjqDZ1ZlxMSQrMRz5xpBAf56imkoN9D/mp9Vj4LRaXyzB9cpis8mP/xTUgwvFll7S38Fzy7x7YsHcq/s1aVi4VHeHY+BkMe6A0svPO6llerMc0BIbYQDHeka5uhNZwBwM1JSyjd3EGHVmUI57ootHSQ7E5jdnqS6/tI0VlazdcTP8pL6pMxhq1z1DG36UU5w3X0ZZQ=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|783"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/plain; charset=UTF-8]
+      date: ['Fri, 01 Jun 2018 14:49:04 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      set-cookie: [JSESSIONID=FCA2AFC5CA1FD0D337CDE66EF305DD4E.test103e; Path=/pal;
+          Secure; HttpOnly]
+      www-authenticate: [BASIC realm="Adyen PAL Service Authentication"]
+    status: {code: 401, message: Unauthorized}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$eul7P+CETgx4DHf6bfnOQfOl0YZG9P4jdanCZSS5KKTtLWxgQOlfmhLvjnWrTJT/8/Srd41MY3Px0/unI7fvtpAFPGEb7VanizxB5C11j2MngeSv12NYdZ5T6b90hfJDaiCthUesPWPyQ6zlD2Dhw1x0ridGXsMJiZARTvUQq3ov5zRthcXiON7pHiNPZ+SGrI/EPnND9ybsH01y76hJGFxlneuxRfaa/fwk6X718fllEkQN49vkFthDlPIrXpeF1W0JHGo2hj1iqClhDrR0PCwGNI/1eNP6zWU6oW6bgGFzHguV/K5TXc6SjmW5eqfYfwZrtADd4Zmfw5UyMJ82Eg==$3/+hukaqeZ3jzOBWjU86I+jNh0PBkl0KWkX62x6HORpxEPm9lwUM1xi0PpQkCMnpRp70XbLbrVx5XPBWt8dmJ5JgP3evMzIqmNqEPo6rRC7R8ZM8H7cTc6OpoXqfs7R2jG9gHzqqGaR4JJs4Qog+OJVyItgvFBmu15FmFEAfxXATvR+YK03CGdV726z9xtRg/9aUGj+rFjhRHus9P7QUE/x9SqD5QOL4HinznwRuHg=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|785"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      connection: [Keep-Alive]
+      content-length: ['0']
+      content-type: [text/plain; charset=UTF-8]
+      date: ['Fri, 01 Jun 2018 14:59:45 GMT']
+      keep-alive: ['timeout=15, max=100']
+      server: [Apache]
+      set-cookie: [JSESSIONID=0797F3963EC5255C81D1121A0011AFA1.test103e; Path=/pal;
+          Secure; HttpOnly]
+      www-authenticate: [BASIC realm="Adyen PAL Service Authentication"]
+    status: {code: 401, message: Unauthorized}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$kg+KZOksK/6V3le+EiZL3RcQk2lCajfotOvgRgzp/OgsVGdtKEg64NB3TgnCUaLw930dAOqTF+H3JDg8+A7zZEM/3nKSv6IG/FHcSP8gmaJI0+RQt0lJjiQAIqK2u0WC1hGFXhWigZ9jjhOtngFAFV+eb6HwDDkIjTpswhJpOyvH6qxYtPtAWrXuvklGdSwq4+kjS8vsb+PLTTiYSWKeht7HuFvzvaURSO/jw436uqP0GQLjpiazv1N+rBBrlkcwyOQkT7WddixDEvXQi0nBMThzBbVjoDRaLiekBtamFSJSjM0vM2LK9sonOw0tWBm4Q10znArwxC5bn6ZC7+uMHg==$bD1TVM7ysmcnBQlTk49Vyt1cwZXpGLq7qihobejZAKPZy07xktnzsSkkzGv51RFvhX+a1N3JR8UOC5V4Vv6cumEQeVHVk9x36GSpyVEIWhZndfGJpJdPWJ21m0Q/QQbWumGotA+MHI/uxFCp6Q+jBvcOi1uzd34Ya2fdw8rJ1rPTVRUEpdYin4ssm3RZN2r6dI9t60dATaajrqNsSeoFrb+Oj47w1tedgpV1RUE61w=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|790"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8535278652861881","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhdFQ3NkZNODl6M01PLzE4SGFZM0xHQT09If8Dup35R4o44pz3Pwtr4gYJWOOTzW1pl\/Wpi4zbXgjTulf7fxX4SIRHJpzmHoChd3aWbRSLMUe1nn27gvoX7Aixx7xDYi1HUA3bgkAtJHaD7bNuyD7c9Ju35VKcmGbUr6qCD9n6xg+pDYa\/zXEwiUOxzP1JEt9bHBDcnraVMYl1FVwEIj20F2owfbtzfpLBayieFQbW635kt97WZESlVaS522jvGFyo5Mf+nZW1yreZlq72VHa4m4XCopkW3ROZ+cJitLZvL6WRBmjIVDexqxriVUrkodnI6VyV1Q0Qw48=","paRequest":"eNpVUk1zgjAQ\/SvWH0A+IEiZNTNUDvWA2oqHnjpM3FHaghqgan99WURtc9r3XvZl8xJItxYxXqJpLGpIsKqyDQ7y9XgYBspVchT4Sga+CAIx1LCIXvGg4Rttle9KLRzuSGBX2LZbs83KWkNmDk\/TmVZCuh6wHkGBdhrrFKt6URSROTS5RQvsQkOZFahX0Xs0eQijT4t16zmZJ67HgXUamF1T1vaspWqpK4DGfultXe9Dxo7Ho5P1rY7ZFcBIBHYfbNFQVbVmp3yt5\/HqZ5ZO3Xn8JpKPjUzSjZe8RLTGwGgHrLMateQi4D4XA6FCLkLpA+t4yAqaQq+W8UA+eiOHBus52NNR0QWQSNpfDtrMLZbmrAO64g0Bnva7EqkL2K0Gdh998kwJm7pNTUmKWPmj4JFfw+4EcskpKy54Z0MAGLWy\/hlZ\/9xt9e8b\/AKAXq0M"}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:01:25 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8535278652861881']
+      server: [Apache]
+      set-cookie: [JSESSIONID=1D3307B2DF8E60FE14D6CC8D5060F6C6.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$nDxr9goSuIMvvWjcbBzim3/+BAq5GVt/IVdK38y8x5KWD/1UlaLYQ7kFCBlP50Zt87G7sUOnGXU6CIqPghp+yA9WRYUr4+uVXhj+ESYrHgN20Gnp0oDwwtdec3etfZTU7xFmD+Njl9T9X2YQ08cCGnZ0M3mekL/qcPews4QYV+vI7nZAbaBWZo8vLIW+shNRzWf1YBcTicW3kwUVPorbeGbzjYraDMBIfJAQAM8u8ZaOTc9jXLIqrde7ypRMb5C9AkgvVpxdUoJilkjJxwLZqrNN39FD501bWSXqix47OBGkBmTHJdDHF5UNZwwfSXKixxaDcS131w6XFm7UWXgs4Q==$0ZsqaqP9s5tdSncupNtFbYZxMRap+pwoMGMDlQB7gSPxBrTK02IfJxLW3wUrfve9wb5MjaE8+0cEev1UHLgR/UFqcS6FXhhRdbHbmXYilWbm2dOJDZsOZzi2j59cvIHewzd2i7Mi0NpoDl03aZLS3Ex2VGpcUXCOC1ak4cfKHWNwsO1LBzmoTQ56DrLjBGAM5P7qln4EoCE5Cbw0oVvBpmwrUaeH5d7+rcf0b0StYg=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|797"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8825278653350743","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhcGlRSEpHMjkrNllwWnZDMjRiMG10Zz09IXfoGd6JtFk4V3JKz3dTJq1OAECqQK96UcXqZcAYV1Wlf6IE9XnOnNDB4vd36os\/Pn9U2soit1I35WJ1ua3a7CtCDUc9CZ\/fE2ZJwong0iG88cB3t1s2AJ4Y3TSdNLjdpPx082TpKBTXJvKhChCxkPYY8X7NoIj1hpAtM9MdmN4ZoQRUHBHbYb9wxFK42yG0TFfP9As3QPCXJlf+zLc3+bV9tjLMet+igycLDDjpfqS6z5zM8FJlfJQ9z9b1x+Tg45P5hVe4WdOq7s4exAK2vRGtswKVfsQmXgJM9QPtmg==","paRequest":"eNpVUk1zgjAQ\/SvWH0A+IILMmhkqh3pAnVYPPXWYuKNMC2iAov31ZRG1zWnfe9mXzUtgc7CI8RuaxqKGBKsq3eMo283GYRBIJf1golxXcd9zxxrW0SueNHyjrbKy0MLhjgR2g127NYe0qDWk5vS8WGolpOsBGxDkaBex3mBVr\/M8Mqcms2iBXWko0hz1NvqI5k9h9Gmx7jznq8T1OLBeA1M2RW0vWqqOugFo7Jc+1PUxZKxtWycdWh1T5sBIBPYYbN1QVXVm52ynV\/H+stws3FX8LpKfRCSx4Ukb0ZoBox2wS2vUkouAT7gYCRVyGQoFrOchzWkKvX2LR3Lq+Q4NNnBwpKOiKyCRtL8cdJlbLMxFB3TFOwI8H8sCqQvYvQb2GH3+QgmbuktNSYpYTfxgym9h9wK5ZJQVF7y3IQCMWtnwjGx47q769w1+AYbhrRg="}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:02:15 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8825278653350743']
+      server: [Apache]
+      set-cookie: [JSESSIONID=A38BB8F7614045FA6DAA70EA77FBC50C.test103e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$MVhNQAAz846V8scTyhFQMwbSs86Z1IX0xwOEUbBqPdwaoV9c+cPGufOhXlNMHAWWMUsYjNKzY0l+GcNdgeJJPxCaCCXTIwG2dtbUxJffQhLdbXNBTz4omyoM1rwdKaZ5gBAb1nKZZWiPdmAeVR7zKH2Fh7bIqFq6RtNRsMPbwQbdER0f28YK6ujGTnRwBpJv63MAbrMwLZWJmFafUztl9zeOQXP836lNmh85scUFelwN8WLWCqnYHI0nVG7cGAYAGvRBAeP40cUaCDJvTU7GTSMmh3e34D4DNFvqcMLXLri5kWwtL8Qga8/YgWvpuj8p5vEXGADJlzjd2ttQAiRhSA==$WYEpItXARss3Oc/qj8h0WvjXBSW1oYCyv0gh5jY4JLcTeLpHaIeS7AP0pzSrYBHwqsAbedwdylvqjbzys27SWW6G2weMh9rmRDEO77+1iM3WoQsPM1hzjVWGfZK9x2bn/xxR90JPyOCgUshH/6tkFGlHrVV43viT4xFFHSVq1aYfYNb91saJdsWTXK6mHBUXMMUeyNkyly128kAJZphAgf0YoBznyc2zOYxOR81jpg=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|804"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8525278655462077","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhRVZkdzE1VWY4dC9MWUZnRDRMa2h1UT09IddfT5EOQcrtcuNF+Rz4Tr4i14j17VsqBkNBc4+qGsYleJD5KXzHlxmbQrV1kpCMzbu6g+o3vyN7TJUfv2TovWIxX7UI7pIxtjWwWh\/WPvyUARCHsIEcqlK\/5HpLUMip0Evu8it+v6DjWY4gA7Aic+TWo2R\/4P6spwxbsH2z0shewzaq8rEOgSSTdjvqDX9rhUOxKAsYuB6TepgqgNcVrKl5pFwis0cedJHi5SDFJYGHNBgHcAVPULBA1O3KsK4EBCYxU7Iu2At5NQN9f3PCEz94rTCLSt1qzlmWCa8i7g==","paRequest":"eNpVUsFygjAQ\/RXrB5AQCFBmzQyVQz2ItuKhpw4TdyptAQ1Q9O\/LImqb0773si+bl0C6N4jxBnVrUMES6zr7wEm+m03DQAop\/MCT0vUE9\/2pgnX0ikcFP2jqvCqVbXFLALvCvt3ofVY2CjJ9fFokStrCcYGNCAo0i1ilWDfrooj0sc0NGmAXGsqsQLWN3qP5Qxh9GWx6z\/lq6bgc2KCBrtqyMWclZE9dAbTmW+2b5hAy1nWdlY2tlq4KYCQCuw+2bqmqe7NTvlOreHtO0oWzit\/sJH0Ry8\/ISbqI1gwY7YBd1qAS3A64x+2JLUMuQ9cDNvCQFTSF2m7iiXh0fYsGGzk40FHRBZBI2l8O+swNlvqsArriDQGeDlWJ1AXsVgO7jz5\/poR106cmBUUsPT945NewB4FccsqK23ywIQCMWtn4jGx87r769w1+AWZXrPg="}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:05:46 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8525278655462077']
+      server: [Apache]
+      set-cookie: [JSESSIONID=F79EE4462A69D995339638ED73A24426.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$Q4mDMHN/Sgo3F5y/rAlO+l+lNglnLg6kBPj0dbfPOIq2xWrgyGo0hfv6ePGHQxeKRPPmEHgbxUgaQ2ltBvdqihTkW9Ax5/rU+7ixR+ldekB3miackCXc5at+ObXACdnsyRwqib9eWeJKOC1FZruqyp2WDlaMzuHWLAeOT6ZW0F8m8DqvOzWjVRxW0q16/wa1ujXxZ8bIPdgKqGZCcBpbA/kfcYgGLSyfEevVlnjBGpFQEiDjCfMVAgO5RQWkezk0dtOgkyM6W8wiKprapVDrnX3oUWpK+S2iv9g2hBcopGjPvilhLFZXigYzgwf5SLTlJpbjV4feHiaUjEr1tNOi6g==$XRISGjuLUE+bY9i0YJOYgsZdhScATk5F35+wZVysTyaNmXXooNSd8vyj1VCtE1Ig60FHdqknwS+iwxGs3a1VjPyuPq6AvKZfbHpWuSzVmAPov4x+ZpKwWiB1bf9qy91Iqw6mo8jd/K7oShokFqg6X1HccFeuQenYuonlO52tMiuPKkRCyU/61HCTrslypcP+fPWYv8u0mfeGkbAe2kjQvC4cAqLeDxAseT6qHegEiw=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|808"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8515278665291328","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhWm5QNUlsc2Q1d1dDaTFvNkJGZ2Q3QT09IYD0\/zib\/vB5gJeXtvzPg9va1QgqtQ5gEwUYhoxPVkNi4w1aBkieIimnkGH8BIc+3L6m3\/rEempEc7ro3WEqq0bvAC9HVgR\/5yZp5F2m7Yvd3XocgXPzl6NVCW+Dvi6o58X7hRD88ymY28CWMWNh+p3BRQRN1eXfAG57EeILQRHC1D8nK9OSZb7oA2UjcIfVxTtivxnxmyQuIaqJuebp+O4fnk67ewbDGg+qVoyYcAntY3YCzDgOshoLnXOpGFbkP\/jpZZOsPdLHFsvQgQM4NUCjbEvV68zDjzAmxDAbVyB5pAE=","paRequest":"eNpVUk1zgjAQ\/SvWH0A+MAjMmhkqh3pAnBYPPXWYuFOZFtAQqv77Joja5pJ972U3m7eBYq8R0zdUvUYJGXZd+YmTareYxqFggs\/DIBA8Yj4PpxI2ySseJfyg7qq2kcyjHgdygzZdq33ZGAmlOj6v1lIw7s+AjAhq1KtUFtiZTV0n6thXGjWQKw1NWaPcJh\/J8ilOvjQaW3OZZ\/6MAhk0UG3fGH2RXFjqBqDX33JvzCEm5HQ6eeWY6qm2BuJEII\/GNr2LOlvsXO1knm7P62Ll5+k7t7vIiuySJ8NaAHEnYFcalJyykAaUTZiIOY9pBGTgoaxdF3L7lk54NJt7rrGRg4O7KrkCJzrtLwfWc42NusjQPfGOAM+HtkGXBeQeA3m0vnxxDitjXRPcWSyCeRjRm9mD4KpUzivK6FDGASAulYxjJOO4bfTvG\/wCZNOs9w=="}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:22:09 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8515278665291328']
+      server: [Apache]
+      set-cookie: [JSESSIONID=4CF03F5E25179BD2AB4F0CE3BCDE652F.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$ihZ9mGtmnpJ0d324MPmh5vs9OANdM3e0RGi5QB2CI8jygdOSGbkbAJJV71xLW0dT/hEWLepulD+c0yJhNVI38c2zCzMxWIpB7Ncrbdcjf4IpiFJxs2/tyML59eV6boDxPGRguaHIRWUak9LZ9G0FFGoVcDzH1ZX+QtyY+Akkk7dIu+EPZa9gOF8Ro+N8HXi3WDP7Pr+WgFBA/zYEJNMo9wA1NOR0ahNF5tAn+GtvFhcNT5TJzEXjUjz0tl5yFw4r2Yzf0wxi+lwKo072rJoliL944iW6LiS8y8AW8W5QVlAi0GcmVd4ee8byqbJ75hDiXCYkxLQ5fRtbNITpnrkB8g==$KipjBS94q5VwabNONQJZO2RSzcZ0gluLBRh60OpDTpHyBUbYJ2BXeB2zed/jBUkMWTtZk0xBMWD0MJesaWLBcJQItBIc2kvmycqzoyATnIsbJIVIXai87Orf55xZWPQMfyw8fIrzDEzuuP69LQ7J2fuN/9NDg6cSd/8uDi1Lh5vYlt1G8kGDIrjVkbbHjONwJZmI/i+SzAodvpOlpYvljUU3hzgv9rZlU/Q9o8e84A=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|815"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8515278672001280","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhZGZ4UC9xdE5HR3p2eStCK2tyeFB0QT09IWpUDe2FzPUR6lcfljr\/+dekYDO\/V2GrwtTp2DIpC1HSY2cYyEkuWKt8MagZJqGjyFXAhx2QeAFQ2ctW\/k8TtdnM0GdubkuVKhboVoDIJJ3nuNordknTJzPLeVJWw2MtnQqMumQKg3fyBFXawHLPXgjhSlZXGjd50kBU8vjwQIxwbanOiW+MYQedVmbykZPjI0tMWG6a+VT8ATLBF0bFl4ACmqMRCtvm7uH44eUe2QDfdDVO8SfEntpIKnzeMO5UoLogx\/23lhjfYYOHzxL0v0sRtSzRMwuFP1IuefFcSagZmg==","paRequest":"eNpVUstygjAU\/RXrB5AHIMhcM5PKoixQp+Kiqw4T71TaAhpC0b8vQdQ2q3vOyX3k3EB20IjxFlWrUUCKTZN\/4KTYL6ZR6DOfB+Es4JQyHtKpgI18xZOAH9RNUVeCOdThQG6wT9fqkFdGQK5Oz8lK+Iy7HpARQYk6iUWGjdmUpVSnttCogVxpqPISxU6+y+VTJL80mr7mcp26HgUyaKDqtjL6IrjfUzcArf4WB2OOESFd1zn5mOqougRiRSCPwTatjZq+2LnYi3W8O6+yxF3Hb276Kbs0S7xUDmcBxN6AfW5QcMpCOqNswvzIdSPetx94yEs7hdht4wmfe4FjBxs5ONpW8gqsaLW\/HPSea6zURYT2iXcEeD7WFdosIPcYyGP05Yt1WJneNZ9bi\/1ZEM7pzexBsFUK6xVldChjARCbSsY1knHdffTvG\/wCSCOs5w=="}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:33:20 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8515278672001280']
+      server: [Apache]
+      set-cookie: [JSESSIONID=71449BB76D3C00CD7256D53F4A2ED361.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$cS4XpGmRn/eI9o4ZZbjH/lDfErSFqRtvudFoog+suDnT06hP7zUN+tDNVB/3bt07wurHA4lZkraEsGcHH+6zh1ToWe07myZjvHxWmY+FvHq4S1IuUruMP5bkwVj/G/RDQx9DZv2qPQcvQp3SPyUKD3nK3dGKQIs5SGtXNFUDCSiy356HWbROxIXorhxzM6gqh0FhBw5c2GxpTNpPyM0k/c/PF0dPT+7qn+zjjj3YofIvwnm/mmquSmnJ7mR897H2oe+SoZOx+1tNI/i5V5C4s+ueoEOY/dogdRXeO8tHwg41Ztwp80ywHspoU7GL/gx5ajttGzfPxFkDW/eQbzqiqQ==$iM7hxpbcETJCvGDLnjAyAyMul/smP2j/SBcQ0+E6xpTie9zOtDql1veKuI1EI9S48618O4nYOLGKRyvXgaKd91MG1lOm7ec8JsEVEePJgGXE/guHPvOxyhWVb0aYFr89z2sy8cuWoxLzth8UwdssP3uAPJvuQZ+LjCzVlShGFnSK7a+7/q4qFkPtyeafSZqLSWkTiR+IJJ1XMslBLBrua0vmS/BKKyvwj4G+OOtmcg=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|817"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8525278682510864","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhR1dvUkVraXErSGtRRXlIOElpWHNRUT09IUotZJXDTr4VMdbvV5CKt8oqoG1qkGicVvJQIfBzwnlcnrY+YwPdFXvqZcgNCdEU5j5VVeD9deyenDTeXEk2S8D3eDrwSGJ5ZZZWRBdVIDFhSzHJQO8NJ6xVumdURPio7Hra99MwNV\/h0p22I4Ho7Vo7AMDSXbKi7w1wh3KUYsdtGwxkgMSDzrAwNC+Dk2+no1tDeF5MRK3Qu8N9SYw9NRYOmYJvIasW1gE1CyKfE0FWT+\/ShXxyDZsnAUXFtFmKAboQPBb4aamytEy1NEu7mwDADpwp6oYN5QW08eHOreJrOiM=","paRequest":"eNpVUttygjAQ\/RXrB5CLBJFZM0PloT54mVYe+tRh4o7SFtAQqv59WURt87TnnOzJ5iSw2VvE5A1NY1HDAus62+Eg306HUaikkuMwCKUSPAz8oYZ1\/IpHDT9o67wqtfC4J4HdYNtuzT4rnYbMHJ\/nS62EHPnAegQF2nmiN1i7dVHE5tjkFi2wKw1lVqBO44949hTFXxZd6zlbLUY+B9ZpYKqmdPaipWqpG4DGfuu9c4eIsdPp5GV9q2eqAhiJwB6DrRuq6tbsnG\/1Kkkvy818tEre\/cVnel4kO7mMuzUFRjtgmznUkouQB1wMhIoUj5QA1vGQFTSFTt+SgZz4Y48G6zk40FHxFZBI2l8O2swtluaiQ7riHQGeD1WJ1AXsXgN7jD57oYSNa1NTkiJWwTic8FvYnUAuOWXFBe9sCACjVtY\/I+ufu63+fYNfjJatHQ=="}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:50:51 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8525278682510864']
+      server: [Apache]
+      set-cookie: [JSESSIONID=C99627C59C347F95412162579DA7AAEE.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$BVZPanwyqz1Kqjuf5DvJ9fmUJqXzGgOvKVVAbHem+JWRWM7HwWJJhMudIzqyf42KSKUwnuR7H6FikynrKjNRjs9N8c8+SAg/0tDoAKQs9Gt3TjZzTA353RsmXPhbnAuqQmXjJMLvj5Wz/SFidtAxDI/tqSeAfGm7SXDpUBXyX00wRMOakiMoQUI7LR+il3EzJKeYon+jcq1RTn26Yglu/nP7gCYhQzV4yYhkUVPt4lSBCODZsOgHIkXdIZ+jYuFLug0/hs+0jwqrPG4YJxIztSz9KdTzvUDgYC0aPDtoVWL0AM88ZaP30be8hrhbbqNt1rzEoOxKpqz2vSxiZF3YDQ==$yf9dMVpd2WsG3l+1C0ISt3zWEbwK7MHsDVVPtxfCkLAct4rgkoxzvMLuAwJ5HEJlfWkpxxAal0UQc/8bdxA49wEKfVnbnvmieM1CYtIFh/dS/to7lN+JwImtHlF0Qk4pgjHQb+Imow/xfsEv/2UBMNNJs+vrrDjtMgzHs4dVPWJqbfF6/Q8GWGhwWQ/qI7tp/ALb4ShaiQnKOevQ/i03lq+bFO9Gy5GApokpwwt9fQ=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|821"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8815278683145289","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhMzFLU2xDRDJ5THZYL2VkU1JBWlJDUT09IaeYe4Rn9sqvAAFLAOoeppHssxa+GSlhx8BLND6CQsDsHcNoqcvrOzvlTcm1vr4luNFJFNmufZGJCvuaUg1P9I4ezdboqhZWXaI3L1+TJ7UiCHEQsEucQK2i39k4pB8WRLXeSfWegHdMg5i3BkIJ10hGl+pXeKvYqpDxUMeoucid3kHutaHpGUiILWRZoAKRznvREx3Xq4109g7iFqr0uaNKC7J+6v8uIk+yAMc5T6m82MvK91JNu29GpO\/8i+il+8fFplFiCIj+eRtGFKI\/LjNH5b+jtrlZvpj5eEAoYTuPig==","paRequest":"eNpVUttuwjAM\/RW2D2gubaBUJlJHJ40HKBvwsKepKhZUW1tI0wH7+sVQYMuTzzmxYx8HlluDmCwwbw1qmGLTZBvsFevRYxSGQslB2A99ESgZDh81zOM33Gv4RtMUdaWFxz0J7Apdusm3WWU1ZPn+aTLTSkg\/ANYhKNFMEr3Exs7LMs73bWHQALvQUGUl6lX8EY8fovjToHU1x+nUDziwswZ53VbWnLRUjroCaM2X3lq7ixg7HA5e1qV6eV0CIxHYvbF5S1Hjih2LtU6TzXG2nPhp8h5Mf565i4P0NaYzAkY3YJ1Z1JKLkPe56AkVKREpN9OZh6ykLvRqkfTkMBh41FjHwY6eii+ARNL+cuA8N1jlJx3SiDcEeNzVFVIWsFsM7N76+IUczq1zTUmyWPUH4ZBfzT4LVKUgr7jg5zIEgFEq69bIunW76N83+AVt5Kz4"}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:51:54 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8815278683145289']
+      server: [Apache]
+      set-cookie: [JSESSIONID=9DC5685A7B2AC0DFB4B4D34B7C2301A3.test104e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$hUTmL1K0PMm1mFLav8dKrPF6LT07f5B6YgJoUFByXABnBJMX4zJ2o9CrXRG/IKD50+WRVvS34NpIZZMvdLYav9YCwNPq9jsYcVzsWpSGGV91PgDwNiVEzlqP+qvP2WZ9HJruxisEFg8kMPWwjreuqc2FBbcOZdDhnjtUTFUdeuLlKyyPJurdxzfdU0yHO1F+ITwYsgIEL8+f1l3T7+mf5Ru8z+nbTX/kkhM3bgkKiWNQ4YahFE+pFwNFyGrI2RyS6Jgp1m+MG90dUUkIa2fpFkdHo4f6xGdyXJfXO+oApdai4Z7G9NtGi+89rkZ3o/qB1wYccx9Lrp0CrWKfoG/GlQ==$oW8JXFSYBZZMwkMbwH+Aq7p81sVv/YiK+558A4+4c8o9h0Se99sHA3KeyUUD2Ddgbv4n/cskfe/JRSgc5gXfwiRN5LVUrr5LinlY3oDtSPPJ6pcAtZN7mKiNVT8WAhoQvMxtEjniQxkklpw5WAi7WIQLg5/641h3hp4eV3ybhdk2r0qCl1HcK9aebaCA+egZDOUbL/4raO8Xz/LsfP3yDSju1uc9ZkaJreD5hZ7n2A=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|828"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8535278684370224","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhbkdDM0VsL3V6bnplLzZaSEd6Ukt4Zz09IZoqqIpEZcHgr7QP0eDhYxDygjNLKSFTmj6a43talffUGgulwdkWS+4jWNXAhVeGPfIuTYBekl2ydNP8ooAgnbBmYy3r8J95OjUrZVvPenOOflDnn1qsazbdzvraz\/v0ELR1Q+fMwU5o3K6J9zre9ty9hcHKml59+1gCDykPXvdGi5tA3Phlpevt2BjAKDA1Yxvn8XLsYaKDk7FMM4eqteaGQIz0QltyYp+CDjYMoTbxBGlPA9WRDb\/TE\/CV0OuvPDYmh2cZJnXwZg8Zd8eZpCpB45WT6+zo40FFmJ8cEBY=","paRequest":"eNpVUsFygjAQ\/RXrB5AQiCCzZobKoRxQp+qhpw4TdyrTAhpC1X59WURtc9r3XvZl8xLY7A1iskbdGlSQYdPkHzgqdrNxFEpPiiCchL4XcCH8sYJV\/IpHBd9omqKulOtwRwC7wa7d6H1eWQW5Pj6nCyVd4fnABgQlmjRRG2zsqixjfWwLgwbYlYYqL1Ft4\/d4\/hTFnwZt5zlfZp7PgfUa6LqtrLkoITvqBqA1X2pv7SFi7HQ6OfnQ6ui6BEYisMdgq5aqpjM7Fzu1TLY\/i03qLZM3f5FkXpakl0Xcrxkw2gG73KIS3A35hLsjV0bSi2QArOchL2kKtV0nIzH1A4cGGzg40FHxFZBI2l8OuswNVvqiQrriHQGeD3WF1AXsXgN7jD5\/oYS17VKTgiKWkyCc8lvYvUAuBWXFXd7bEABGrWx4RjY8d1f9+wa\/Q8es2w=="}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:53:57 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8535278684370224']
+      server: [Apache]
+      set-cookie: [JSESSIONID=59D45B64DE4CBDC5E42EDB254DD38EB7.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$k/3Da5TlKT/ksz4GJhjyOt9yBwBUraem9qSPVqj3O4YXox4qGpQq28W3lJsoeh2YSSKo9lCTf+0lJbbv7zTxR9BE6ZEKrz0FfKYceQJPvasQxsLSD8WFwSeI+IFRmMuFbGzRbONMUD4de9EeI0dxBIY0KOIXmAAQZuVkzB7T5a+74duRyDJsiXZev3wDTd6WmyCL56vC4c7clXOyHNGpsrSVsynkmoLgZPG01wUXeJOKcnSETM+FsyvhI9m+ALmKpdEAavMXjjMtdGP5wp6Mn3udIn9596fDwF3jsNp0qkiQ1HxDNhKocnr/dzapiEbbtawhn4B+ZuYHzOZ1Giw9QA==$UBf2Ln9XuPlir5/sciclSvEfsNPeeCHbRFNYn/9yDolwie/NpW42wKFp7aPWy2M0S3VdIgWUk97MOenGP3oZVvYdAqb/B8Eky/03dQl6rB+Qv9uQv+nA3m9fkkp9WjYKSuOyqZqzK2wS3FpQjRge4pK7AVGxSuHVq7C2Q6qnf/Nx4cKRttxV/00+SW4p1E+eLCLFZsPe9mKIWE91Flp6CLon7YP2uugpiPVnnKXsUA=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|842"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['809']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"pspReference":"8835278687341229","resultCode":"RedirectShopper","issuerUrl":"https:\/\/test.adyen.com\/hpp\/3d\/validate.shtml","md":"djIhYkpEdUxIYXZ1YWNJcXdyeDdRZU1xdz09IaI16AVwvuD5z443RhaBRgKBJYQfUDjrQgk\/n3hOvcMPKQRxPKvzJN\/yJIk2LQgKXLj7EaNHysryDAn0uE5JjTB+Wu5XA6uaJ5UeK6M1ymfdnsdXlDZ4JxsIiseKv3UGi60\/g74a6nlsSA7kGXeqTOtS5bRF0j2iwHyehWIg+vrZgkp+6I7bIkbiwDJmaTi5oKC2d7kZFXZzkXNOn97xrl3T4cd2q11+v2lZZ2KPlLKMahqP8fJ4DeVGBqRD0\/IeGlaUMpaxwZ3FcXOGL5Bq526\/flOUFDBN5mNqEYfog04=","paRequest":"eNpVUk1zgjAQ\/Su2P4CEQASZNTNUDuWA2IqHnjoM7ijTAhpC\/fj1ZRW1zWnfe9nN7ttAttWI0RKLTqOCBNs23+CoXE+fA993pPD8se85ri3E5FnBInzHvYIf1G3Z1Mq2uCWA3WCfrottXhsFebF\/iedK2sJxgQ0IKtRxpDJszaKqwmLflRo1sCsNdV6hWoWf4ewpCL80mr7mLE0clwO7aFA0XW30SQnZUzcAnf5WW2N2AWOHw8HKh1SraCpgJAJ7NLboKGr7YsdyrdJoc55nsZNGH+78nPAki0\/pW0hnCoxuwDo3qAS3fT7m9siWgfQD2c904SGvqAu1WkYjMXE9ixobONjRU+EVkEjaXw56zzXWxUn5NOIdAR53TY2UBeweA3u0PnslhwvTuyYFWSzHnj\/hN7MvAlUpyStu80sZAsAolQ1rZMO6++jfN\/gFwJqtTA=="}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Fri, 01 Jun 2018 15:58:54 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8835278687341229']
+      server: [Apache]
+      set-cookie: [JSESSIONID=EB48E84B3E387FE6998C48DB8CD6B862.test103e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 200, message: OK}
+version: 1
