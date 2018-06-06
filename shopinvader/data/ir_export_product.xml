@@ -105,7 +105,7 @@
     </record>
 
     <record id="ir_exp_shopinvader_variant_attributes" model="ir.exports.line">
-        <field name="name">attributes</field>
+        <field name="name">variant_attributes</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 

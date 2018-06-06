@@ -1,10 +1,10 @@
 connector
-server-tools https://github.com/akretion/server-tools 10.0-improve-onchange-helper
+server-tools https://github.com/akretion/server-tools 10.0-pending-merge-shopinvader
 e-commerce
 ak-odoo-incubator-jsonify https://github.com/akretion/ak-odoo-incubator 10-base_jsonify
 ak-odoo-incubator-sparse-field https://github.com/akretion/ak-odoo-incubator 10-base_sparse_field_list
 connector-search-engine https://github.com/akretion/connector-search-engine 10.0
-product-attribute
+product-attribute https://github.com/akretion/product-attribute 10-migr-custom-attributes
 product-variant
 storage https://github.com/akretion/storage 10.0
 payment-gateway https://github.com/akretion/payment-gateway 10.0

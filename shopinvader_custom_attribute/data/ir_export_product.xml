@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="ir_exp_shopinvader_attributes" model="ir.exports.line">
+        <field name="name">attributes</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    </record>
+
+    <record id="ir_exp_shopinvader_structured" model="ir.exports.line">
+        <field name="name">structured_attributes</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    </record>
+
+    <record id="ir_exp_shopinvader_attribute_set" model="ir.exports.line">
+        <field name="name">attribute_set_id/name</field>
+        <field name="alias">attribute_set_id:attribute_set/name</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    </record>
+
+</odoo>

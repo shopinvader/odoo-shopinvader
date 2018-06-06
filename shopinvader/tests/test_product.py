@@ -34,11 +34,12 @@ class ProductCase(ProductCommonCase):
 #            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'),
 #            self.template.categ_id + self.template.categ_id.parent_id)
 #
-    def test_attributes(self):
+    def test_variant_attributes(self):
         attr_dict = {'color': u'Black',
                      'wi-fi': u'2.4 GHz',
                      'memory': u'16 GB'}
-        self.assertDictEqual(self.shopinvader_variant.attributes, attr_dict)
+        self.assertDictEqual(
+            self.shopinvader_variant.variant_attributes, attr_dict)
 
     def test_product_filter(self):
         field_id = self.env['ir.model.fields'].search([
@@ -54,9 +55,10 @@ class ProductCase(ProductCommonCase):
             ('name', '=', 'Wi-Fi')])
         filter_on_attr = self.env['product.filter'].create(
             {'name': 'Test Filter on field name',
-             'based_on': 'attribute',
+             'based_on': 'variant_attribute',
              'attribute_id': attribute_id.id})
-        self.assertEqual(filter_on_attr.display_name, 'attributes.wi-fi')
+        self.assertEqual(
+            filter_on_attr.display_name, 'variant_attributes.wi-fi')
 
     def test_product_price(self):
         self.assertEqual(
