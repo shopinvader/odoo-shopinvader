@@ -6,14 +6,13 @@
 Product Online Category
 ========================
 
-This module add a new type on the category "shop" and only this type of category can
-be used on the "categ_ids" field form the module product_m2mcategories
+This module adds a new type *shop* on product categories and only this type of category can
+be used on the field **categ_ids** (provided by the OCA module *product_multi_category*)
 
 Installation
 ============
 
 Nothing special required
-
 
 Configuration
 =============
@@ -23,9 +22,9 @@ Nothing required
 Usage
 =====
 
-Go on your category and tag them as "shop"
+Go on your product category and tag them as *shop*.
 
-Go on the product form and add "shop" category
+Go on the product form and add "shop" category.
 
 Known issues / Roadmap
 ======================

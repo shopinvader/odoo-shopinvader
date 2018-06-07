@@ -6,7 +6,7 @@
 ShopInvader Many Categories
 ===========================
 
-This module extends the functionality of categories to support your ShopInvader Shop
+This module allows to attach a product to several product categories in your ShopInvader Shop.
 
 Installation
 ============
