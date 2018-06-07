@@ -22,9 +22,12 @@ https://github.com/akretion/shopinvader-odoo/tree/10.0-to-migrate
 
 If you want to migrate it just run the following command
 
+```
 git checkout -b 10.0-mig-$MODULE origin/10.0
+
 git format-patch --keep-subject --stdout origin/10.0..origin/10.0-to-migrate -- $MODULE | git am -3 --keep
 
+```
 
 
 Documentation
