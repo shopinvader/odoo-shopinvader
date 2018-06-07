@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-# © 2017 Akretion (http://www.akretion.com)
+# © 2017-2018 Akretion (http://www.akretion.com)
 # Alexis de Lattre <alexis.delattre@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
     'name': 'Product Online Category',
-    'version': '8.0.1.0.0',
-    'category': 'tools',
+    'version': '10.0.1.0.0',
+    'category': 'Tools',
     'license': 'AGPL-3',
     'summary': 'Product categories dedicated to online shop',
     'author': 'Akretion',
     'website': 'http://www.akretion.com/fr',
-    'depends': ['product_m2mcategories'],
+    'depends': ['product_multi_category'],
     'data': [],
-    'installable': False,
+    'installable': True,
 }
