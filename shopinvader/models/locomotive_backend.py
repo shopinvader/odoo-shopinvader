@@ -28,6 +28,16 @@ from odoo import api, fields, models
 
 class LocomotiveBackend(models.Model):
     _inherit = 'locomotive.backend'
+
+    @api.model
+    def _default_last_step_id(self):
+        last_step = self.env['shopinvader.cart.step']
+        try:
+            last_step = self.env.ref('shopinvader.cart_end')
+        except:
+            pass
+        return last_step
+
     notification_ids = fields.One2many(
         'shopinvader.notification',
         'backend_id',
@@ -39,7 +49,7 @@ class LocomotiveBackend(models.Model):
         'shopinvader.cart.step',
         string='Last cart step',
         required=True,
-        default=lambda self: self.env.ref('shopinvader.cart_end').id)
+        default=lambda s: s._default_last_step_id())
     allowed_country_ids = fields.Many2many(
         comodel_name='res.country',
         string='Allowed Country')
