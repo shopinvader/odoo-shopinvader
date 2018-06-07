@@ -20,7 +20,7 @@
     },
     "depends": [
         "shopinvader_payment",
-        "payment_gateway_stripe",
+        "payment_gateway_adyen",
     ],
     "data": [
     ],
