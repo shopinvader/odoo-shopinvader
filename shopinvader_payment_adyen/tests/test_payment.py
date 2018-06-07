@@ -67,14 +67,19 @@ class ShopinvaderAdyenCase(AdyenCommonCase, CommonCase, AdyenScenario):
         self.assertIn('store_cache', response)
         self.assertIn('last_sale', response['store_cache'])
 
+    def _get_data_for_3d_secure(self, response):
+        data = response['payment']['adyen_params']
+        url = data.pop('IssuerUrl')
+        return url, data
+
     def _test_3d(self, card, success=True):
         response, transaction, source = self._create_transaction(card)
-        self.assertEqual(response['redirect_to'], transaction.url)
         self.assertEqual(transaction.state, 'pending')
-
-        self._fill_3d_secure(transaction, card, success=success)
+        url, data = self._get_data_for_3d_secure(response)
+        pares = self._fill_3d_secure(url, data, card, success=success)
         response = self.service.dispatch('check_payment', params={
-            'source': source['id'],
+            'MD': transaction.meta['MD'],
+            'PaRes': pares,
             'provider_name': 'adyen',
             })
         if success:
@@ -94,9 +99,3 @@ class ShopinvaderAdyenCase(AdyenCommonCase, CommonCase, AdyenScenario):
         response, transaction, source = self._create_transaction(card)
         self._check_captured(transaction, response, **kwargs)
         self.assertNotIn('redirect_to', response)
-
-#    def test_create_transaction_3d_not_supported(self):
-#        response, transaction, source =\
-#            self._create_transaction('378282246310005')
-#        self._check_captured(transaction, response)
-#        self.assertNotIn('redirect_to', response)

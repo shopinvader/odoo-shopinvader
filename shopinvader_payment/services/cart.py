@@ -101,13 +101,21 @@ class CartService(Component):
             cart.write(vals)
         return cart.payment_mode_id.provider
 
-    def _process_payment_provider(self, provider_name, cart, params):
-        params['return_url'] = "%s/%s/%s" % (
+    def _get_return_url(self, provider_name):
+        return "%s/%s/%s" % (
             self.shopinvader_backend.location,
             '_store/cart/check_payment',
             provider_name)
+
+    def _process_payment_provider(self, provider_name, cart, params):
+        params['return_url'] = self._get_return_url(provider_name)
         transaction = self.env['gateway.transaction'].generate(
             provider_name, cart, **params)
+        return self._execute_payment_action(
+            provider_name, transaction, cart, params)
+
+    def _execute_payment_action(
+            self, provider_name, transaction, cart, params):
         if transaction.url:
             return {'redirect_to': transaction.url}
         elif transaction.state in ('succeeded', 'to_capture'):
@@ -138,6 +146,7 @@ class CartService(Component):
         return {
             'id': method.payment_mode_id.id,
             'name': method.payment_mode_id.name,
+            'provider': method.payment_mode_id.provider,
             'code': method.code,
             'description': method.description,
             }

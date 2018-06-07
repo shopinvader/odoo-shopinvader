@@ -6,7 +6,7 @@
 from odoo.addons.component.core import Component
 
 
-class PaymentServiceStripe(Component):
+class PaymentServiceAdyen(Component):
     _inherit = 'payment.service.adyen'
 
     def _validator_add_payment(self):
@@ -14,4 +14,10 @@ class PaymentServiceStripe(Component):
             'encrypted_card': {'type': 'string'},
             'redirect_success_url': {'type': 'string'},
             'redirect_cancel_url': {'type': 'string'},
+            }
+
+    def _validator_check_payment(self):
+        return {
+            'MD': {'type': 'string'},
+            'PaRes': {'type': 'string'},
             }
