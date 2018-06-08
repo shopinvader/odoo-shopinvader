@@ -12,7 +12,7 @@
     'version': '10.0.1.0.0',
     'depends': [
         'base',
-        'connector_locomotivecms',
+        'shopinvader_locomotive',
         'shopinvader',
     ],
     'author': 'Akretion,ACSONE SA/NV',
