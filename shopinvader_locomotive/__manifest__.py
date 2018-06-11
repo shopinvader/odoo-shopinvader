@@ -4,25 +4,25 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    'name': 'Locomotive CMS Connector',
-    'version': '10.0.0.0.1',
+    'name': 'Shopinvader Locomotive CMS Connector',
+    'version': '10.0.1.0.0',
     'category': 'Connector',
-    'summary': 'Connector For Locomotive CMS',
+    'summary': 'Manage communications between Shopinvader and Locomotive CMS',
     'author': 'Akretion',
     'website': 'http://www.akretion.com',
     'license': 'AGPL-3',
     'images': [],
     'depends': [
         'connector',
+        'queue_job',
         'keychain',
+        'shopinvader'
     ],
     'data': [
-        'views/locomotive_view.xml',
-        'views/locomotive_menu.xml',
-        'security/ir.model.access.csv',
-        'security/locomotive_backend_security.xml',
+        'views/shopinvader_backend_view.xml',
     ],
     'demo': [
+        'demo/backend_demo.xml',
     ],
     'test': [
     ],

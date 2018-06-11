@@ -5,18 +5,12 @@
 
 from odoo.addons.queue_job.job import job, related_action
 
-from odoo import api, fields, models
+from odoo import api, models
 
 
 class LocomotiveBinding(models.AbstractModel):
     _name = 'locomotive.binding'
-    _inherit = 'external.binding'
-
-    backend_id = fields.Many2one(
-        'locomotive.backend',
-        string='Backend',
-        required=True)
-    external_id = fields.Char(string='ID on LocomotiveCMS')
+    # Your model must also have _inherit = 'shopinvader.binding'
 
     @job(default_channel='root.shopinvader')
     @related_action(action='related_action_unwrap_binding')

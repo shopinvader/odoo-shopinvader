@@ -13,6 +13,6 @@ class BaseLocomotiveConnectorComponent(AbstractComponent):
 
     _name = 'base.locomotive.connector'
     _inherit = 'base.connector'
-    _collection = 'locomotive.backend'
+    _collection = 'shopinvader.backend'
 
     _default_binding_fields = 'locomotive_bind_ids'
