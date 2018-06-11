@@ -12,6 +12,11 @@
                         string="Bind Products"
                         class="oe_highlight"
                         groups="connector.group_connector_manager"/>
+                <button name="%(shopinvader_category_binding_wizard_act_window)d"
+                        type="action"
+                        string="Bind Category"
+                        class="oe_highlight"
+                        groups="connector.group_connector_manager"/>
             </header>
             <xpath expr="//div[@name='buttons']" position="inside">
                 <button class="oe_stat_button oe_right"

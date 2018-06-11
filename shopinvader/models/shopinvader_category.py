@@ -44,6 +44,9 @@ class ShopinvaderCategory(models.Model):
     redirect_url_key = fields.Serialized(
         compute='_compute_redirect_url_key',
         string='Redirect Url Keys')
+    active = fields.Boolean(
+        default=True,
+    )
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',

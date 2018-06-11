@@ -64,17 +64,17 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
     @api.multi
     def bind_products(self):
         for wizard in self:
-            binded_templates = self._get_binded_templates()
+            binded_templates = wizard._get_binded_templates()
             binding = self.env['shopinvader.variant']
-            for product in self.product_ids:
-                for shopinvader_product in binded_templates[
-                        product.product_tmpl_id].values():
+            for product in wizard.product_ids:
+                binded_products = binded_templates[product.product_tmpl_id]
+                for shopinvader_product in binded_products.values():
                     data = {
                         'record_id': product.id,
                         'backend_id': wizard.backend_id.id,
                         'shopinvader_product_id': shopinvader_product.id
                     }
-                    binded_variants = shopinvader_product.\
+                    binded_variants = shopinvader_product. \
                         shopinvader_variant_ids
                     bind_record = binded_variants.filtered(
                         lambda p: p.record_id.id == product.id)

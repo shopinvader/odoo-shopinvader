@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ProductCategory(models.Model):
@@ -16,3 +16,13 @@ class ProductCategory(models.Model):
     filter_ids = fields.Many2many(
         comodel_name='product.filter',
         string='Filter')
+    active = fields.Boolean(
+        default=True,
+        inverse='_inverse_active',
+    )
+
+    @api.multi
+    def _inverse_active(self):
+        categories = self.filtered(lambda p: not p.active)
+        categories = categories.with_prefetch(self._prefetch)
+        categories.mapped('shopinvader_bind_ids').write({'active': False})
