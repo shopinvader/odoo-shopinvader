@@ -28,6 +28,17 @@
         <field name="country_id" ref="base.fr"/>
     </record>
 
+    <record id="partner_1_address_2" model="res.partner">
+        <field name="parent_id" ref="partner_1"/>
+        <field name="type">other</field>
+        <field name="name">Osiris</field>
+        <field name="customer" eval="True"/>
+        <field name="street">holliday street</field>
+        <field name="city">New York</field>
+        <field name="zip">11102</field>
+        <field name="country_id" ref="base.us"/>
+    </record>
+
     <record id="partner_2" model="res.partner">
         <field name="name">Anubis</field>
         <field name="customer" eval="True"/>

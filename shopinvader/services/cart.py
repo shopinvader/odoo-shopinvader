@@ -48,25 +48,16 @@ class CartService(Component):
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
-        existing_item = self._check_existing_cart_item(params, cart)
-        if existing_item:
-            existing_item.product_uom_qty += params['item_qty']
-            existing_item.reset_price_tax()
-        else:
-            vals = self._prepare_cart_item(params, cart)
-            self.env['sale.order.line'].create(vals)
+        self._add_item(cart, params)
         return self._to_json(cart)
 
     def update_item(self, **params):
-        item = self._get_cart_item(params)
-        item.product_uom_qty = params['item_qty']
-        item.reset_price_tax()
+        self._update_item(params)
         cart = self._get()
         return self._to_json(cart)
 
     def delete_item(self, **params):
-        item = self._get_cart_item(params)
-        item.unlink()
+        self._delete_item(params)
         cart = self._get()
         return self._to_json(cart)
 
@@ -132,6 +123,24 @@ class CartService(Component):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
+
+    def _add_item(self, cart, params):
+        existing_item = self._check_existing_cart_item(params, cart)
+        if existing_item:
+            existing_item.product_uom_qty += params['item_qty']
+            existing_item.reset_price_tax()
+        else:
+            vals = self._prepare_cart_item(params, cart)
+            self.env['sale.order.line'].create(vals)
+
+    def _update_item(self, params):
+        item = self._get_cart_item(params)
+        item.product_uom_qty = params['item_qty']
+        item.reset_price_tax()
+
+    def _delete_item(self, params):
+        item = self._get_cart_item(params)
+        item.unlink()
 
     def _prepare_shipping(self, shipping, params):
         if 'address' in shipping:

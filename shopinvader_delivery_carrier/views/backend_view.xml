@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="locomotive_backend_view_form" model="ir.ui.view">
+        <field name="model">locomotive.backend</field>
+        <field name="inherit_id"
+               ref="connector_locomotivecms.view_locomotive_backend_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="carrier" string="Carriers">
+                    <group name="carrier" colspan="4">
+                        <field name="carrier_ids"
+                               colspan="4"
+                               nolabel="True">
+                        </field>
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+</odoo>
+
