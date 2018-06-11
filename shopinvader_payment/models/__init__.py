@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from . import backend
-from . import payment_method
+from . import shopinvader_backend
+from . import shopinvader_payment

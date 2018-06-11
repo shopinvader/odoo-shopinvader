@@ -165,7 +165,7 @@ class CartService(Component):
         if 'step' in params:
             self._prepare_step(params.pop('step'), params)
             if params.get('current_step_id') ==\
-                    self.locomotive_backend.last_step_id.id:
+                    self.shopinvader_backend.last_step_id.id:
                 action_confirm_cart = True
         if params:
             cart.write_with_onchange(params)
@@ -191,7 +191,7 @@ class CartService(Component):
     def _get(self):
         domain = [
             ('typology', '=', 'cart'),
-            ('shopinvader_backend_id', '=', self.locomotive_backend.id),
+            ('shopinvader_backend_id', '=', self.shopinvader_backend.id),
             ]
         cart = self.env['sale.order'].search(
             domain + [('id', '=', self.cart_id)])
@@ -206,17 +206,17 @@ class CartService(Component):
         return self.env['sale.order'].create(vals)
 
     def _prepare_cart(self):
-        partner = self.partner or self.locomotive_backend.anonymous_partner_id
+        partner = self.partner or self.shopinvader_backend.anonymous_partner_id
         vals = {
             'typology': 'cart',
             'partner_id': partner.id,
             'partner_shipping_id': partner.id,
             'partner_invoice_id': partner.id,
-            'shopinvader_backend_id': self.locomotive_backend.id,
+            'shopinvader_backend_id': self.shopinvader_backend.id,
             }
         vals.update(self.env['sale.order'].play_onchanges(vals, vals.keys()))
-        if self.locomotive_backend.sequence_id:
-            vals['name'] = self.locomotive_backend.sequence_id._next()
+        if self.shopinvader_backend.sequence_id:
+            vals['name'] = self.shopinvader_backend.sequence_id._next()
         return vals
 
     def _get_onchange_trigger_fields(self):

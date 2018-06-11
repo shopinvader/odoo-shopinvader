@@ -26,11 +26,11 @@ class CommonCase(SavepointComponentCase):
     @contextmanager
     def work_on_services(self, **params):
         params = params or {}
-        if 'locomotive_backend' not in params:
-            params['locomotive_backend'] = self.backend
+        if 'shopinvader_backend' not in params:
+            params['shopinvader_backend'] = self.backend
         if 'shopinvader_session' not in params:
             params['shopinvader_session'] = {}
-        collection = _PseudoCollection('locomotive.backend',  self.env)
+        collection = _PseudoCollection('shopinvader.backend',  self.env)
         yield WorkContext(model_name='rest.service.registration',
                           collection=collection, **params)
 

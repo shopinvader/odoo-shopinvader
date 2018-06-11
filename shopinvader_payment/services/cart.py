@@ -35,7 +35,7 @@ class CartService(Component):
             transaction = provider.process_return(**params)
             if transaction.state in ['to_capture', 'succeeded']:
                 result = self.update(
-                    step={'next': self.locomotive_backend.last_step_id.code},
+                    step={'next': self.shopinvader_backend.last_step_id.code},
                     )
                 result['redirect_to'] = transaction.redirect_success_url
                 return result
@@ -50,7 +50,7 @@ class CartService(Component):
                     }
                 }
         _logger.error('Shopinvader: Transaction params are invalid')
-        return {'redirect_to': self.locomotive_backend.location}
+        return {'redirect_to': self.shopinvader_backend.location}
 
     # Validator
     def _validator_add_payment(self):
@@ -103,7 +103,7 @@ class CartService(Component):
 
     def _process_payment_provider(self, provider_name, cart, params):
         params['return_url'] = "%s/%s/%s" % (
-            self.locomotive_backend.location,
+            self.shopinvader_backend.location,
             '_store/cart/check_payment',
             provider_name)
         transaction = self.env['gateway.transaction'].generate(
@@ -144,6 +144,6 @@ class CartService(Component):
 
     def _get_available_payment_mode(self):
         methods = []
-        for method in self.locomotive_backend.payment_method_ids:
+        for method in self.shopinvader_backend.payment_method_ids:
             methods.append(self._prepare_payment(method))
         return methods

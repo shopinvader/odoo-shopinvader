@@ -6,8 +6,8 @@
 from odoo import api, fields, models
 
 
-class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
+class ShopinvaderBackend(models.Model):
+    _inherit = 'shopinvader.backend'
     se_backend_id = fields.Many2one(
         'se.backend',
         'Search Engine Backend')

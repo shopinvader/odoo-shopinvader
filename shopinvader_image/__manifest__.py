@@ -17,7 +17,7 @@
     ],
     "data": [
         "security/ir.model.access.csv",
-        "views/backend_view.xml",
+        "views/shopinvader_backend_view.xml",
         "views/shopinvader_image_resize_view.xml",
         "data/ir_export_product.xml",
         "data/ir_export_category.xml",

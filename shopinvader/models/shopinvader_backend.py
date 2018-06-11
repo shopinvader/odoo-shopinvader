@@ -6,38 +6,19 @@
 from odoo import api, fields, models
 
 
-# TODO TO MIGRATE
+class ShopinvaderBackend(models.Model):
+    _name = 'shopinvader.backend'
 
-#
-# @job
-# def clear_dead_content(session, model_name, backend_id):
-#     env = get_environment(session, model_name, backend_id)
-#     adapter = env.get_connector_unit(CRUDAdapter)
-#     binder = env.get_connector_unit(Binder)
-#     page = 1
-#     while True:
-#         data = adapter.search(page=page)
-#         if not data:
-#             break
-#         page += 1
-#         for content in data:
-#             if not binder.to_odoo(content['_id']):
-#                 export_delete_record.delay(
-#                     session, model_name, backend_id, content['_id'])
-
-
-class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
-
-    @api.model
-    def _default_last_step_id(self):
-        last_step = self.env['shopinvader.cart.step']
-        try:
-            last_step = self.env.ref('shopinvader.cart_end')
-        except:
-            pass
-        return last_step
-
+    name = fields.Char(
+        required=True
+    )
+    company_id = fields.Many2one(
+        'res.company',
+        'Company',
+        required=True,
+        default=lambda s: s._default_company_id()
+    )
+    location = fields.Char()
     notification_ids = fields.One2many(
         'shopinvader.notification',
         'backend_id',
@@ -78,34 +59,25 @@ class LocomotiveBackend(models.Model):
          'An authentication API Key can be used by one backend.'),
     ]
 
+    @api.model
+    def _default_company_id(self):
+        return self.env['res.company']._company_default_get(
+            'shopinvader.backend')
+
+    @api.model
+    def _default_last_step_id(self):
+        last_step = self.env['shopinvader.cart.step']
+        try:
+            last_step = self.env.ref('shopinvader.cart_end')
+        except:
+            pass
+        return last_step
+
     def _compute_nbr_content(self):
         for record in self:
             for key in ['product', 'category', 'variant']:
                 record['nbr_%s' % key] = self.env['shopinvader.%s' % key]\
                     .search_count([('backend_id', '=', record.id)])
-
-    def _export_all_content(self, model):
-        pass
-        # TODO Migrate
-        # session = ConnectorSession.from_env(self.env)
-        # for record in self:
-        #     bindings = self.env[model]\
-        #         .search([('backend_id', '=', record.id)])
-        #     for binding in bindings:
-        #         delay_export(session, model, binding.id, {})
-        # return True
-
-    def _clear_dead_locomotive_content(self, model):
-        pass
-        # TODO Migrate
-        # """This method will check the existing product on shopinvader site
-        # and delete it if it does not exist in odoo. This is really usefull
-        # in dev mode and can be usefull if you have done some mistake in your
-        # database production."""
-        # session = ConnectorSession.from_env(self.env)
-        # for record in self:
-        #     clear_dead_content.delay(session, model, record.id)
-        # return True
 
     def _bind_all_content(self, model, bind_model, domain):
         for backend in self:
@@ -149,10 +121,3 @@ class LocomotiveBackend(models.Model):
 
     def _extract_configuration(self):
         return {}
-
-# TODO finish
-#    @api.multi
-#    def export_store_configuration(self):
-#        self.ensure_one()
-#        config = self._extract_configuration()
-#        return ('test', '.csv')

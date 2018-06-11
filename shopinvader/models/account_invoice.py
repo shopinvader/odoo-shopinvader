@@ -9,7 +9,7 @@ class AccountInvoice(models.Model):
     _inherit = 'account.invoice'
 
     shopinvader_backend_id = fields.Many2one(
-        'locomotive.backend',
+        'shopinvader.backend',
         'Shopinvader Backend')
 
     @api.multi

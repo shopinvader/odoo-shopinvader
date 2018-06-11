@@ -6,8 +6,8 @@
 from odoo import fields, models
 
 
-class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
+class ShopinvaderBackend(models.Model):
+    _inherit = 'shopinvader.backend'
 
     shopinvader_variant_resize_ids = fields.Many2many(
         comodel_name='shopinvader.image.resize',

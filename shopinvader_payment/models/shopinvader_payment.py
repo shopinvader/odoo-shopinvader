@@ -17,7 +17,7 @@ class ShopinvaderPayment(models.Model):
         'Payment Mode')
     sequence = fields.Integer()
     backend_id = fields.Many2one(
-        'locomotive.backend',
+        'shopinvader.backend',
         'Backend',
         required=True,
         ondelete='cascade')

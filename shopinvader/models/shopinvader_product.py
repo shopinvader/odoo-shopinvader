@@ -9,7 +9,7 @@ from odoo import api, fields, models
 class ShopinvaderProduct(models.Model):
     _name = 'shopinvader.product'
     _description = 'Shopinvader Product'
-    _inherit = ['locomotive.binding', 'abstract.url']
+    _inherit = ['shopinvader.binding', 'abstract.url']
     _inherits = {'product.template': 'record_id'}
 
     record_id = fields.Many2one(
@@ -79,6 +79,6 @@ class ShopinvaderProduct(models.Model):
     def default_get(self, fields_list):
         res = super(ShopinvaderProduct, self).default_get(fields_list)
         if 'backend_id' in fields_list:
-            backend = self.env['locomotive.backend'].search([], limit=1)
+            backend = self.env['shopinvader.backend'].search([], limit=1)
             res['backend_id'] = backend.id
         return res

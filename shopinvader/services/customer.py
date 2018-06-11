@@ -28,7 +28,7 @@ class CustomerService(Component):
         params['is_company'] = True
         vals = self._prepare_params(params)
         self.work.partner = self.env['res.partner'].create(vals)
-        self.locomotive_backend._send_notification(
+        self.shopinvader_backend._send_notification(
             'new_customer_welcome', self.partner)
         return self._create_shopinvader_binding(external_id)
 
@@ -99,7 +99,7 @@ class CustomerService(Component):
     def _create_shopinvader_binding(self, external_id):
         self.env['shopinvader.partner'].with_context(
             connector_no_export=True).create({
-                'backend_id': self.locomotive_backend.id,
+                'backend_id': self.shopinvader_backend.id,
                 'external_id': external_id,
                 'record_id': self.partner.id,
                 })

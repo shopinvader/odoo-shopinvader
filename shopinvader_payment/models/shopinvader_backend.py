@@ -6,10 +6,14 @@
 from openerp import fields, models
 
 
-class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
+class ShopinvaderBackend(models.Model):
+    _inherit = 'shopinvader.backend'
 
     payment_method_ids = fields.One2many(
         'shopinvader.payment',
         'backend_id',
         'Payment Method')
+
+    location = fields.Char(
+        required=True
+    )

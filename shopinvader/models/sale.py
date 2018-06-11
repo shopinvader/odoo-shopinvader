@@ -25,7 +25,7 @@ class SaleOrder(models.Model):
         ('cart', 'Cart'),
         ], default='sale')
     shopinvader_backend_id = fields.Many2one(
-        'locomotive.backend',
+        'shopinvader.backend',
         'Backend')
     current_step_id = fields.Many2one(
         'shopinvader.cart.step',

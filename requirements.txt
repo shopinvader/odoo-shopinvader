@@ -11,3 +11,5 @@ requests_mock
 pyquerystring
 parse-accept-language
 slugify
+openupgradelib
+

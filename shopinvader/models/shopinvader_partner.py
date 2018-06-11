@@ -9,7 +9,7 @@ from odoo import api, fields, models
 class ShopinvaderPartner(models.Model):
     _name = 'shopinvader.partner'
     _description = 'Shopinvader Partner'
-    _inherit = 'locomotive.binding'
+    _inherit = 'shopinvader.binding'
     _inherits = {'res.partner': 'record_id'}
 
     record_id = fields.Many2one(

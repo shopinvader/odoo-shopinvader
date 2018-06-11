@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 class InvaderController(main.RestController):
 
     _root_path = '/shopinvader/'
-    _collection_name = 'locomotive.backend'
+    _collection_name = 'shopinvader.backend'
     _default_auth = 'api_key'
 
     @classmethod
@@ -38,9 +38,9 @@ class InvaderController(main.RestController):
         return partner_model.browse([]).record_id
 
     @classmethod
-    def _get_locomotive_backend_from_request(cls):
+    def _get_shopinvader_backend_from_request(cls):
         auth_api_key = getattr(request, 'auth_api_key', None)
-        backend_model = request.env['locomotive.backend']
+        backend_model = request.env['shopinvader.backend']
         if auth_api_key:
             return backend_model.search([(
                 'auth_api_key_id', '=', auth_api_key.id
@@ -63,12 +63,13 @@ class InvaderController(main.RestController):
         This method adds the component context:
         * the partner
         * the cart_id
-        * the locomotive_backend
+        * the shopinvader_backend
         """
         res = super(InvaderController, self)._get_component_context()
         headers = request.httprequest.environ
         res['partner'] = self._get_partner_from_headers(headers)
         res['shopinvader_session'] = \
             self._get_shopinvader_session_from_headers(headers)
-        res['locomotive_backend'] = self._get_locomotive_backend_from_request()
+        res['shopinvader_backend'] = \
+            self._get_shopinvader_backend_from_request()
         return res

@@ -3,9 +3,9 @@
 
     <record id="view_product_template_form" model="ir.ui.view">
         <field name="model">product.template</field>
-        <field name="inherit_id" ref="connector_base_product.product_template_common_form"/>
+         <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
-            <page name="connector" position="after">
+            <xpath expr="/form/sheet/notebook" position="inside">
                 <page name="shopinvader" string="ShopInvader">
                     <field name="shopinvader_bind_ids">
                         <tree>
@@ -62,7 +62,7 @@
                                                 <field name="id"/>
                                                 <field name="default_code"/>
                                                 <field name="record_id"/>
-                                                <field name="locomotive_backend_ids" widget="many2many_tags"/>
+                                                <field name="shopinvader_backend_ids" widget="many2many_tags"/>
                                             </tree>
                                         </field>
                                     </group>
@@ -71,6 +71,11 @@
                         </form>
                     </field>
                 </page>
+            </xpath>
+            <page name="sales" position="inside">
+                <group name="shopinvader" string="Shopinvader">
+                    <field name="shopinvader_backend_ids" widget="many2many_tags"/>
+                </group>
             </page>
         </field>
     </record>
@@ -91,19 +96,6 @@
                     <field name="help" colspan="4" nolabel="1"/>
                 </group>
             </form>
-        </field>
-    </record>
-
-    <record id="product_template_form_view" model="ir.ui.view">
-        <field name="name">product.template.common.form</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_form_view"/>
-        <field name="arch" type="xml">
-            <page name="sales" position="inside">
-                <group name="shopinvader" string="Shopinvader">
-                    <field name="locomotive_backend_ids" widget="many2many_tags"/>
-                </group>
-            </page>
         </field>
     </record>
 

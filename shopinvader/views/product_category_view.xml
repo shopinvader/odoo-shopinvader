@@ -12,8 +12,8 @@
                             <field name="filter_ids" nolabel="1"/>
                         </group>
                     </page>
-                    <page name="connector" string="Connector">
-                        <group name="Connector" colspan="4">
+                    <page name="shopinvader" string="Shopinvader">
+                        <group name="Shopinvader" colspan="4">
                             <field name="shopinvader_bind_ids" nolabel="1">
                                 <tree>
                                     <field name="backend_id"/>
