@@ -13,6 +13,7 @@ class AddressCase(CommonCase):
         super(AddressCase, self).setUp(*args, **kwargs)
         self.partner = self.env.ref('shopinvader.partner_1')
         self.address = self.env.ref('shopinvader.partner_1_address_1')
+        self.address_2 = self.env.ref('shopinvader.partner_1_address_2')
         self.address_params = {
             'name': 'Purple',
             'street': 'Rue du jardin',
@@ -74,13 +75,17 @@ class AddressCase(CommonCase):
             'scope': {'address_type': 'address'},
             })['data']
         self.assertEqual(len(res), 2)
-        self.assertEqual(res[0]['id'], self.address.id)
+        ids = [x['id'] for x in res]
+        ids.sort()
+        self.assertEqual(ids, [self.address.id, self.address_2.id])
 
     def test_read_address_all(self):
         res = self.service.dispatch('search', params={})['data']
         self.assertEqual(len(res), 3)
-        self.assertEqual(res[0]['id'], self.partner.id)
-        self.assertEqual(res[1]['id'], self.address.id)
+        ids = [x['id'] for x in res]
+        ids.sort()
+        self.assertEqual(
+            ids, [self.partner.id, self.address.id, self.address_2.id])
 
     def test_delete_address(self):
         address_id = self.address.id
