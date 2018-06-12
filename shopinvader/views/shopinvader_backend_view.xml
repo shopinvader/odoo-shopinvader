@@ -30,14 +30,14 @@
                     <notebook>
                         <page name="config" string="Configuration">
                             <group name="config" colspan="4" col="4">
-                                <field name="location" placeholder="e.g. http://ecommerce.shopinvader.com" colspan="2"/>
-                                <field name="company_id" colspan="4"/>
+                                <field name="location" placeholder="e.g. http://ecommerce.shopinvader.com"/>
+                                <field name="company_id"/>
                                 <field name="auth_api_key_id"/>
                                 <field name="lang_ids" widget="many2many_tags"/>
                                 <field name="sequence_id"/>
                                 <field name="last_step_id"/>
                                 <field name="anonymous_partner_id"/>
-                                <field name="pricelist_id" require="1"/>
+                                <field name="pricelist_id" required="1"/>
                             </group>
                             <group name="allowed_country" colspan="4">
                                 <field name="allowed_country_ids" nolabel="1"/>
