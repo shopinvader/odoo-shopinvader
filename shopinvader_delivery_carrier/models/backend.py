@@ -6,8 +6,8 @@
 from openerp import fields, models
 
 
-class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
+class ShopinvaderBackend(models.Model):
+    _inherit = 'shopinvader.backend'
 
     carrier_ids = fields.Many2many(
         comodel_name='delivery.carrier',

@@ -18,7 +18,7 @@ class CarrierCase(CommonConnectedCartCase):
             'carrier': {'id': carrier.id},
             })
         self.assertEqual(self.cart.carrier_id.id, carrier.id)
-        return response['data']['shipping']
+        return response['data']
 
     def test_available_carriers(self):
         response = self.service.dispatch('search')
@@ -27,14 +27,25 @@ class CarrierCase(CommonConnectedCartCase):
         self.assertEqual(shipping['available_carriers']['count'], 2)
 
     def test_setting_free_carrier(self):
-        shipping = self._set_carrier(self.free_carrier)
-        self.assertEqual(shipping['amount']['total'], 0)
+        cart = self._set_carrier(self.free_carrier)
+        self.assertEqual(cart['shipping']['amount']['total'], 0)
 
     def test_setting_poste_carrier(self):
-        shipping = self._set_carrier(self.poste_carrier)
-        self.assertEqual(shipping['amount']['total'], 20)
-        self.assertEqual(shipping['amount']['untaxed'], 17.39)
-        self.assertEqual(shipping['amount']['tax'], 2.61)
+        cart = self._set_carrier(self.poste_carrier)
+        # Check shipping amount
+        self.assertEqual(cart['shipping']['amount']['total'], 20)
+        self.assertEqual(cart['shipping']['amount']['untaxed'], 17.39)
+        self.assertEqual(cart['shipping']['amount']['tax'], 2.61)
+
+        # Check items amount
+        self.assertEqual(cart['lines']['amount']['total'], 8555.0)
+        self.assertEqual(cart['lines']['amount']['untaxed'], 8555.0)
+        self.assertEqual(cart['lines']['amount']['tax'], 0)
+
+        # Check total amount
+        self.assertEqual(cart['amount']['total'], 8575.0)
+        self.assertEqual(cart['amount']['untaxed'], 8572.39)
+        self.assertEqual(cart['amount']['tax'], 2.61)
 
     def test_should_only_return_matching_carrier(self):
         # change country to make first carrier method not available
@@ -50,10 +61,10 @@ class CarrierCase(CommonConnectedCartCase):
 
     def test_update_cart_update_price(self):
         self.env.ref('product.product_product_24').weight = 4
-        shipping = self._set_carrier(self.poste_carrier)
-        self.assertEqual(shipping['amount']['total'], 50)
-        self.assertEqual(shipping['amount']['untaxed'], 43.48)
-        self.assertEqual(shipping['amount']['tax'], 6.52)
+        cart = self._set_carrier(self.poste_carrier)
+        self.assertEqual(cart['shipping']['amount']['total'], 50)
+        self.assertEqual(cart['shipping']['amount']['untaxed'], 43.48)
+        self.assertEqual(cart['shipping']['amount']['tax'], 6.52)
 
         response = self.service.dispatch('update_item', params={
             'item_id': self.env.ref('shopinvader.sale_order_line_4').id,

@@ -20,7 +20,7 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             })
         self.assertEqual(result.status_code, 200)
         data = result.json()['data']
-        self.assertEqual(len(data), 2)
+        self.assertEqual(len(data), 3)
         self.assertEqual(
             data[0]['id'],
             self.env.ref('shopinvader.partner_1').id)
@@ -37,7 +37,7 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             })
         self.assertEqual(result.status_code, 200)
         data = result.json()['data']
-        self.assertEqual(len(data), 1)
+        self.assertEqual(len(data), 2)
         self.assertEqual(
             data[0]['id'],
             self.env.ref('shopinvader.partner_1_address_1').id)

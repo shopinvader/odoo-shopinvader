@@ -46,6 +46,9 @@ class CartService(Component):
         cart.write({'carrier_id': carrier_id})
         cart.delivery_set()
 
+    def _is_item(self, line):
+        return not line.is_delivery
+
     def _convert_shipping(self, cart):
         res = super(CartService, self)._convert_shipping(cart)
         carriers = self._get_available_carrier(cart)
