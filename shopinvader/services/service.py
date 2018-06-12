@@ -12,7 +12,7 @@ from odoo import _
 class BaseShopinvaderService(AbstractComponent):
     _inherit = 'base.rest.service'
     _name = 'base.shopinvader.service'
-    _collection = 'locomotive.backend'
+    _collection = 'shopinvader.backend'
     _expose_model = None
 
     @property
@@ -24,8 +24,8 @@ class BaseShopinvaderService(AbstractComponent):
         return self.work.shopinvader_session
 
     @property
-    def locomotive_backend(self):
-        return self.work.locomotive_backend
+    def shopinvader_backend(self):
+        return self.work.shopinvader_backend
 
     def _scope_to_domain(self, scope):
         # Convert the liquid scope syntax to the odoo domain

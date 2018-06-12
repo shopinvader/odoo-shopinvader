@@ -144,7 +144,7 @@ msgid "Advanced address"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,allowed_country_ids:0
+#: field:shopinvader.backend,allowed_country_ids:0
 msgid "Allowed Country"
 msgstr ""
 
@@ -234,12 +234,12 @@ msgid "Based on"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
 msgid "Bind all category"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
 msgid "Bind all product"
 msgstr ""
 
@@ -310,12 +310,12 @@ msgid "Case"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
 msgid "Category"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,categ_image_resize_ids:0
+#: field:shopinvader.backend,categ_image_resize_ids:0
 msgid "Category Image Resize"
 msgstr ""
 
@@ -537,7 +537,7 @@ msgid "Customer Payment Term"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,role_ids:0
+#: field:shopinvader.backend,role_ids:0
 msgid "Customer Role"
 msgstr ""
 
@@ -618,7 +618,7 @@ msgid "Description"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
 msgid "Developper"
 msgstr ""
 
@@ -689,7 +689,7 @@ msgid "EAN13 Barcode"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
 #: field:shopinvader.partner,email:0
 #: field:shopinvader.partner,partner_email:0
 msgid "Email"
@@ -1194,7 +1194,7 @@ msgid "Location"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model,name:shopinvader.model_locomotive_backend
+#: model:ir.model,name:shopinvader.model_shopinvader_backend
 msgid "Locomotive CMS Backend"
 msgstr ""
 
@@ -1384,17 +1384,17 @@ msgid "Name with Title"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,nbr_category:0
+#: field:shopinvader.backend,nbr_category:0
 msgid "Nbr category"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,nbr_product:0
+#: field:shopinvader.backend,nbr_product:0
 msgid "Nbr product"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,nbr_variant:0
+#: field:shopinvader.backend,nbr_variant:0
 msgid "Nbr variant"
 msgstr ""
 
@@ -1422,8 +1422,8 @@ msgid "Notes"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
-#: field:locomotive.backend,notification_ids:0
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
+#: field:shopinvader.backend,notification_ids:0
 #: field:shopinvader.payment,notification:0
 msgid "Notification"
 msgstr ""
@@ -1440,7 +1440,7 @@ msgid "Object id"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,odoo_api:0
+#: field:shopinvader.backend,odoo_api:0
 msgid "Odoo api"
 msgstr ""
 
@@ -1499,8 +1499,8 @@ msgid "Payable Limit"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
-#: field:locomotive.backend,payment_method_ids:0
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
+#: field:shopinvader.backend,payment_method_ids:0
 #: field:shopinvader.payment,payment_method_id:0
 msgid "Payment Method"
 msgstr ""
@@ -1561,7 +1561,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model,name:shopinvader.model_product_product
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
 msgid "Product"
 msgstr ""
 
@@ -1588,7 +1588,7 @@ msgid "Product Filter"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,product_image_resize_ids:0
+#: field:shopinvader.backend,product_image_resize_ids:0
 msgid "Product Image Resize"
 msgstr ""
 
@@ -1742,7 +1742,7 @@ msgid "Related Company"
 msgstr ""
 
 #. module: shopinvader
-#: field:locomotive.backend,restrict_anonymous:0
+#: field:shopinvader.backend,restrict_anonymous:0
 msgid "Restrict anonymous"
 msgstr ""
 
@@ -1763,7 +1763,7 @@ msgid "Role"
 msgstr ""
 
 #. module: shopinvader
-#: view:locomotive.backend:shopinvader.locomotive_backend_view_form
+#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
 msgid "Roles"
 msgstr ""
 
@@ -2313,7 +2313,7 @@ msgid "This is minimum quantity to purchase from Main Supplier."
 msgstr ""
 
 #. module: shopinvader
-#: help:locomotive.backend,odoo_api:0
+#: help:shopinvader.backend,odoo_api:0
 msgid "This is the API key that you need to add in your website in order to give the posibility to shopinvader to access to odoo"
 msgstr ""
 
@@ -2391,7 +2391,7 @@ msgid "Thumbnail Label"
 msgstr ""
 
 #. module: shopinvader
-#: help:locomotive.backend,restrict_anonymous:0
+#: help:shopinvader.backend,restrict_anonymous:0
 msgid "Tic that box if yo don't want to forbid an existing customer to create a sale order in anonymous mode"
 msgstr ""
 

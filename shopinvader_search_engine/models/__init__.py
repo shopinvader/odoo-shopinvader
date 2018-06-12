@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from . import backend
-from . import product
-from . import product_category
+from . import shopinvader_backend
+from . import shopinvader_variant
+from . import shopinvader_category

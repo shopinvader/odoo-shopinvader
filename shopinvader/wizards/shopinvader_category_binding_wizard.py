@@ -12,7 +12,7 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
     _description = "Wizard to bind categories to a shopinvader categories"
 
     backend_id = fields.Many2one(
-        'locomotive.backend',
+        'shopinvader.backend',
         'ShopInvader Backend',
         required=True,
         ondelete='cascade',

@@ -46,7 +46,7 @@
 
     <menuitem id="menu_shopinvader_partner"
               name="Partner"
-              parent="connector_locomotivecms.menu_locomotive_root"
+              parent="menu_shopinvader_root"
               sequence="50"
               action="act_open_shopinvader_partner_view"/>
 

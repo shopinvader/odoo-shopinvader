@@ -13,7 +13,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
 
     backend_id = fields.Many2one(
         string='ShopInvader Backend',
-        comodel_name='locomotive.backend',
+        comodel_name='shopinvader.backend',
         required=True,
         ondelete='cascade')
     product_ids = fields.Many2many(

@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <notebook position="inside">
-                <page name="connector" string="Connector">
+                <page name="shopinvader" string="Shopinvader">
                     <field name="shopinvader_bind_ids">
                         <tree editable="bottom">
                             <field name="backend_id"/>
