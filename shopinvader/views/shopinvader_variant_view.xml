@@ -41,12 +41,12 @@
         <field name="domain">[]</field>
          <field name="view_id" ref="shopinvader_variant_tree_view"/>
          <field name="context">{}</field>
-        <field name="groups_id" eval="[(4, ref('connector.group_connector_manager'))]"/>
+        <field name="groups_id" eval="[(4, ref('group_shopinvader_manager'))]"/>
     </record>
 
     <record model="ir.ui.menu" id="shopinvader_variant_menu">
         <field name="name">Variant</field>
-        <field name="parent_id" ref="connector_locomotivecms.menu_locomotive_root"/>
+        <field name="parent_id" ref="menu_shopinvader_root"/>
         <field name="action" ref="shopinvader_variant_act_window"/>
         <field name="sequence" eval="40"/>
     </record>

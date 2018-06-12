@@ -7,12 +7,6 @@ from .common import CommonCase
 import logging
 _logger = logging.getLogger(__name__)
 
-# pylint: disable=W7936
-try:
-    import requests_mock
-except (ImportError, IOError) as err:
-    _logger.debug(err)
-
 
 class TestCustomer(CommonCase):
 
@@ -70,45 +64,3 @@ class TestCustomer(CommonCase):
         parent = self.env['res.partner'].create(data)
         partner.parent_id = parent.id
         self.assertEqual(partner.address_type, 'address')
-
-    def _create_customer_in_odoo(self, data, external_id):
-        partner = self.env['res.partner'].create(data)
-        self._init_job_counter()
-        shopinvader_partner = self.env['shopinvader.partner'].create({
-            'record_id': partner.id,
-            'backend_id': self.backend.id,
-            })
-        self._check_nbr_job_created(1)
-        base_url = self.backend.location + '/locomotive/api/v3'
-        with requests_mock.mock() as m:
-            m.post(
-                base_url + '/tokens.json',
-                json={'token': u'744cfcfb3cd3'})
-            m.post(
-                base_url + '/content_types/customers/entries',
-                json={'_id': external_id})
-            self._perform_created_job()
-        return shopinvader_partner
-
-    def test_create_customer_from_odoo(self):
-        shop_partner = self._create_customer_in_odoo(
-            self.data, u'5a953d6aae1c744cfcfb3cd3')
-        self.assertEqual(
-            shop_partner.external_id, u'5a953d6aae1c744cfcfb3cd3')
-
-    def test_delete_customer_from_odoo(self):
-        shop_partner = self._create_customer_in_odoo(
-            self.data, u'5a953d6aae1c744cfcfb3cd3')
-        self._init_job_counter()
-        shop_partner.unlink()
-        self._check_nbr_job_created(1)
-        base_url = self.backend.location + '/locomotive/api/v3'
-        with requests_mock.mock() as m:
-            m.post(
-                base_url + '/tokens.json',
-                json={'token': u'744cfcfb3cd3'})
-            m.delete(
-                base_url +
-                '/content_types/customers/entries/5a953d6aae1c744cfcfb3cd3',
-                json={})
-            self._perform_created_job()

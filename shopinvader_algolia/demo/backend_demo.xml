@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-<record id="shopinvader.backend_1" model="locomotive.backend">
+<record id="shopinvader.backend_1" model="shopinvader.backend">
     <field name="se_backend_id" ref="connector_algolia.backend_1"/>
 </record>
 

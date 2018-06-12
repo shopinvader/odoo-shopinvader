@@ -51,6 +51,6 @@ class SaleService(Component):
     def _get_base_search_domain(self):
         return [
             ('partner_id', '=', self.partner.id),
-            ('shopinvader_backend_id', '=', self.locomotive_backend.id),
+            ('shopinvader_backend_id', '=', self.shopinvader_backend.id),
             ('typology', '=', 'sale'),
             ]

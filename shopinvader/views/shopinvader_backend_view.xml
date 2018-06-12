@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="shopinvader_backend_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field name="arch" type="xml">
+            <form string="Shopinvader Backend">
+                <header>
+                    <button name="%(shopinvader_variant_binding_wizard_act_window)d"
+                            type="action"
+                            string="Bind Products"
+                            class="oe_highlight"
+                            groups="shopinvader.group_shopinvader_manager"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="buttons">
+                        <button class="oe_stat_button"
+                                name="%(shopinvader_variant_act_window)d" type="action"
+                                icon="fa-file-text-o"
+                                context="{'search_default_backend_id': active_id}">
+                            <div class="o_stat_info">
+                                <field name="nbr_variant" class="o_stat_value"/>
+                                <span class="o_stat_text">Products</span>
+                            </div>
+                        </button>
+                    </div>
+                    <label for="name" class="oe_edit_only"/>
+                    <h1>
+                        <field name="name" class="oe_inline"/>
+                    </h1>
+                    <notebook>
+                        <page name="config" string="Configuration">
+                            <group name="config" colspan="4" col="4">
+                                <field name="location" placeholder="e.g. http://ecommerce.shopinvader.com"/>
+                                <field name="company_id"/>
+                                <field name="auth_api_key_id"/>
+                                <field name="lang_ids" widget="many2many_tags"/>
+                                <field name="sequence_id"/>
+                                <field name="last_step_id"/>
+                                <field name="anonymous_partner_id"/>
+                                <field name="pricelist_id" required="1"/>
+                            </group>
+                            <group name="allowed_country" colspan="4">
+                                <field name="allowed_country_ids" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page name="email" string="Email">
+                            <group name="notification" string="Notification">
+                                <field name="notification_ids" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="notification_type"/>
+                                        <field name="model_id"/>
+                                        <field name="template_id"
+                                               domain="[('model_id', '=', model_id)]"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                        <page name="developper" string="Developper">
+                            <group name="developper" colspan="4">
+                                <group name="product" string="Product" col="10" colspan="4">
+                                    <field name="nbr_product"/>
+                                    <button
+                                            name="bind_all_product"
+                                            string="Bind all product"
+                                            type="object"/>
+                                </group>
+                                <group name="category" string="Category" col="10" colspan="4">
+                                    <field name="nbr_category"/>
+                                    <button
+                                            name="bind_all_category"
+                                            string="Bind all category"
+                                            type="object"/>
+                                </group>
+                                <group name="site" string="Site Configuration" col="10" colspan="4">
+                                    <button
+                                            name="export_store_configuration"
+                                            string="Export Store Config"
+                                            type="object"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_shopinvader_backend_tree" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="location"/>
+                <field name="company_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_shopinvader_backend" model="ir.actions.act_window">
+        <field name="name">Shopinvader Backends</field>
+        <field name="res_model">shopinvader.backend</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_shopinvader_backend_tree"/>
+    </record>
+
+    <menuitem id="menu_shopinvader_backend"
+              name="Backends"
+              sequence="0"
+              parent="menu_shopinvader_root"
+              action="action_shopinvader_backend"/>
+
+</odoo>

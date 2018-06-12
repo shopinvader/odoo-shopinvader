@@ -82,7 +82,7 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_shipping(self, sale):
         if sale.partner_shipping_id ==\
-                self.locomotive_backend.anonymous_partner_id:
+                self.shopinvader_backend.anonymous_partner_id:
             return {'address': {}}
         else:
             address_service = self.component(usage='addresses')
@@ -93,7 +93,7 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_invoicing(self, sale):
         if sale.partner_invoice_id ==\
-                self.locomotive_backend.anonymous_partner_id:
+                self.shopinvader_backend.anonymous_partner_id:
             return {'address': {}}
         else:
             address_service = self.component(usage='addresses')

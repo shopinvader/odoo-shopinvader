@@ -37,7 +37,7 @@ class ShopinvaderNotification(models.Model):
         return [(key, notifications[key]['name']) for key in notifications]
 
     backend_id = fields.Many2one(
-        'locomotive.backend',
+        'shopinvader.backend',
         'Backend',
         required=True)
     notification_type = fields.Selection(
