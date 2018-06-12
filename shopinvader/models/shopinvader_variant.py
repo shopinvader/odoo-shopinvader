@@ -154,3 +154,23 @@ class ShopinvaderVariant(models.Model):
                 record.main = True
             else:
                 record.main = False
+
+    @api.multi
+    def toggle_published(self):
+        """
+        Toggle the active field
+        :return: dict
+        """
+        actual_active = self.filtered(
+            lambda s: s.active).with_prefetch(self._prefetch)
+        actual_inactive = self - actual_active
+        actual_inactive = actual_inactive.with_prefetch(self._prefetch)
+        if actual_inactive:
+            actual_inactive.write({
+                'active': True,
+            })
+        if actual_active:
+            actual_active.write({
+                'active': False,
+            })
+        return {}

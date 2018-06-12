@@ -63,8 +63,7 @@ class TestExport(ConnectorAlgoliaCase):
         count = self.env['shopinvader.product'].search_count([])
         self.assertEqual(
             _("Export %d records of %d for index 'algolia-product'") % (
-                count, count),
-            job.description)
+                count, count), job.description)
         # the last job is the one performing the export
         job = Job.load(self.env, new_job.uuid)
         with mock_api(self.env) as mocked_api:
