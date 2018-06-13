@@ -10,6 +10,11 @@
                             string="Bind Products"
                             class="oe_highlight"
                             groups="shopinvader.group_shopinvader_manager"/>
+                    <button name="%(shopinvader_category_binding_wizard_act_window)d"
+                        type="action"
+                        string="Bind Category"
+                        class="oe_highlight"
+                        groups="connector.group_connector_manager"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="buttons">

@@ -9,4 +9,5 @@ from . import test_address
 from . import test_product
 from . import test_sale
 from . import test_shopinvader_variant_binding_wizard
+from . import test_shopinvader_category_binding_wizard
 from . import test_customer

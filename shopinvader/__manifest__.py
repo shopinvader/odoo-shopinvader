@@ -38,6 +38,8 @@
         'security/shopinvader_backend_security.xml',
         'wizards/shopinvader_variant_unbinding_wizard.xml',
         'wizards/shopinvader_variant_binding_wizard.xml',
+        'wizards/shopinvader_category_binding_wizard.xml',
+        'wizards/shopinvader_category_unbinding_wizard.xml',
         'views/shopinvader_menu.xml',
         'views/shopinvader_variant_view.xml',
         'views/shopinvader_category_view.xml',
