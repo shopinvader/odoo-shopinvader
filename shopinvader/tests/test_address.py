@@ -77,15 +77,18 @@ class AddressCase(CommonCase):
         self.assertEqual(len(res), 2)
         ids = [x['id'] for x in res]
         ids.sort()
-        self.assertEqual(ids, [self.address.id, self.address_2.id])
+        expected_ids = [self.address.id, self.address_2.id]
+        expected_ids.sort()
+        self.assertEqual(ids, expected_ids)
 
     def test_read_address_all(self):
         res = self.service.dispatch('search', params={})['data']
         self.assertEqual(len(res), 3)
         ids = [x['id'] for x in res]
         ids.sort()
-        self.assertEqual(
-            ids, [self.partner.id, self.address.id, self.address_2.id])
+        expected_ids = [self.partner.id, self.address.id, self.address_2.id]
+        expected_ids.sort()
+        self.assertEqual(ids, expected_ids)
 
     def test_delete_address(self):
         address_id = self.address.id
