@@ -73,6 +73,7 @@ class AddressService(Component):
                 'schema': {
                     'id': {
                         'coerce': to_int,
+                        'type': 'integer',
                         'nullable': True},
                     }
                 },
@@ -81,13 +82,14 @@ class AddressService(Component):
                 'schema': {
                     'id': {
                         'coerce': to_int,
+                        'type': 'integer',
                         'required': True,
                         'nullable': False},
                     }
                 },
-            'is_company': {'coerce': bool},
-            'opt_in': {'coerce': bool},
-            'opt_out': {'coerce': bool},
+            'is_company': {'coerce': bool, 'type': 'boolean'},
+            'opt_in': {'coerce': bool, 'type': 'boolean'},
+            'opt_out': {'coerce': bool, 'type': 'boolean'},
             }
         if 'partner_firstname' in self.env.registry._init_modules:
             res.update({
