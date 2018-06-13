@@ -24,9 +24,10 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
         self.assertEqual(result.status_code, 200)
         data = result.json()['data']
         self.assertEqual(len(data), 3)
-        ids = [x['id'] for x in data]
-        self.assertEqual(
-            ids, [self.partner.id, self.address_1.id, self.address_2.id])
+        ids = set([x['id'] for x in data])
+        expected_ids = set([
+            self.partner.id, self.address_1.id, self.address_2.id])
+        self.assertEqual(ids, expected_ids)
 
     def test_get_addresses_with_correct_api_key_and_partner_and_filter(self):
         result = requests.get(
@@ -38,8 +39,9 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
         self.assertEqual(result.status_code, 200)
         data = result.json()['data']
         self.assertEqual(len(data), 2)
-        ids = [x['id'] for x in data]
-        self.assertEqual(ids, [self.address_1.id, self.address_2.id])
+        ids = set([x['id'] for x in data])
+        expected_ids = set([self.address_1.id, self.address_2.id])
+        self.assertEqual(ids, expected_ids)
 
     def test_get_addresses_with_wrong_api_key(self):
         result = requests.get(self.url, headers={
