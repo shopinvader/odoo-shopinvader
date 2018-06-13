@@ -22,10 +22,10 @@
         "sale_shipping_info_helper",
     ],
     "data": [
-        "demo/backend_demo.xml",
         "views/backend_view.xml",
     ],
     "demo": [
+        "demo/backend_demo.xml",
     ],
     "qweb": [
     ]
