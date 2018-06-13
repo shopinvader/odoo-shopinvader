@@ -104,7 +104,7 @@ class CartService(Component):
     def _get_return_url(self, provider_name):
         return "%s/%s/%s" % (
             self.shopinvader_backend.location,
-            '_store/cart/check_payment',
+            'invader/cart/check_payment',
             provider_name)
 
     def _process_payment_provider(self, provider_name, cart, params):
