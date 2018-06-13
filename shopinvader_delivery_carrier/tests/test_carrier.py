@@ -106,3 +106,14 @@ class CarrierCase(CommonConnectedCartCase):
         shipping = response['data']['shipping']
         self.assertEqual(
             shipping['selected_carrier']['id'], self.poste_carrier.id)
+
+    def test_add_item_without_cart_should_work(self):
+        with self.work_on_services(
+                partner=None,
+                shopinvader_session={}) as work:
+            service = work.component(usage='cart')
+            response = service.dispatch('add_item', params={
+                'product_id': self.env.ref('product.product_product_4b').id,
+                'item_qty': 1,
+                })
+            self.assertEqual(response['data']['lines']['count'], 1)

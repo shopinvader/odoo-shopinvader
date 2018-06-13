@@ -86,7 +86,9 @@ class CartService(Component):
 
     def _update_carrier(self):
         cart = self._get()
-        if cart.carrier_id in cart._get_available_carrier():
+        if not cart:
+            return
+        elif cart.carrier_id in cart._get_available_carrier():
             cart.delivery_set()
         else:
             cart._set_default_carrier()
