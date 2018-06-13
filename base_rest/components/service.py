@@ -47,6 +47,15 @@ def skip_secure_params(func):
     func.skip_secure_params = True
 
 
+def skip_secure_response(func):
+    """
+    Used to decorate methods
+    :param func:
+    :return:
+    """
+    func.skip_secure_response = True
+
+
 class BaseRestService(AbstractComponent):
     _name = 'base.rest.service'
 
@@ -80,6 +89,12 @@ class BaseRestService(AbstractComponent):
             raise NotImplementedError(validator_method)
         return getattr(self, validator_method)()
 
+    def _get_schema_output_for_method(self, method_name):
+        validator_method = '_validator_return_%s' % method_name
+        if not hasattr(self, validator_method):
+            raise NotImplementedError(validator_method)
+        return getattr(self, validator_method)()
+
     def _secure_params(self, method, params):
         """
         This internal method is used to validate and sanitize the parameters
@@ -101,6 +116,38 @@ class BaseRestService(AbstractComponent):
             return v.document
         _logger.error("BadRequest %s", v.errors)
         raise UserError(_('Invalid Form'))
+
+    def _secure_response(self, method, response):
+        """
+        Internal method used to validate the output of the given method.
+        This response is validated according to a schema defined for the
+        method, with the convention '_validator_return_{method_name}'.
+        If the method is decorated with `@skip_secure_response` checks of
+        the response are skipped.
+        :param method: str or function
+        :param response: dict/json
+        :return: dict/json
+        """
+        method_name = method
+        if callable(method):
+            method_name = method.__name__
+        if hasattr(method, 'skip_secure_response'):
+            return response
+        schema = self._get_schema_output_for_method(method_name)
+        v = Validator(schema, purge_unknown=True)
+        if v.validate(response):
+            return v.document
+        _logger.error("Invalid response %s", v.errors)
+        raise UserError(_('Invalid Response'))
+
+    def secure_response(self, method, response):
+        """
+        Check the response for the given method
+        :param method: str
+        :param response: dict
+        :return: dict
+        """
+        return self._secure_response(method, response)
 
     def dispatch(self, method_name, _id=None, params=None):
         """

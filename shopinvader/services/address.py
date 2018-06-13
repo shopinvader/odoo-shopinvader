@@ -128,6 +128,105 @@ class AddressService(Component):
     def _validator_delete(self):
         return {}
 
+    # Response validator
+    def _validator_return_search(self):
+        schema = {
+            'size': {
+                'type': 'integer',
+                'min': 0,
+            },
+            'data': {
+                'type': 'list',
+                'required': True,
+                'schema': {
+                    'type': 'dict',
+                    'schema': {
+                        'id': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                        'display_name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'ref': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'street': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'street2': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'zip': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'city': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'phone': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'opt_in': {
+                            'type': 'boolean',
+                        },
+                        'opt_out': {
+                            'type': 'boolean',
+                        },
+                        'vat': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'state': {
+                            'type': 'dict',
+                            'nullable': True,
+                            'schema': {
+                                'id': {
+                                    'type': 'integer',
+                                    'required': True,
+                                },
+                                'name': {
+                                    'type': 'string',
+                                    'required': True,
+                                },
+                            },
+                        },
+                        'country': {
+                            'type': 'dict',
+                            'nullable': True,
+                            'schema': {
+                                'id': {
+                                    'type': 'integer',
+                                    'required': True,
+                                },
+                                'name': {
+                                    'type': 'string',
+                                    'required': True,
+                                },
+                            },
+                        },
+                        'address_type': {
+                            'type': 'string',
+                        },
+                        'is_company': {
+                            'type': 'boolean',
+                        },
+                    },
+                },
+            }
+        }
+        return schema
+
     def _get_base_search_domain(self):
         return [('id', 'child_of', self.partner.id)]
 
