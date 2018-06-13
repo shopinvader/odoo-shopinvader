@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="shopinvader.backend_1" model="shopinvader.backend">
+        <field name="carrier_ids" eval="[(6, 0, [ref('delivery.delivery_carrier'), ref('delivery.free_delivery_carrier')])]"/>
+    </record>
+
+</odoo>

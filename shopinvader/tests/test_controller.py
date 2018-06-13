@@ -12,6 +12,9 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
     def setUp(self, *args, **kwargs):
         super(ShopinvaderControllerCase, self).setUp(*args, **kwargs)
         self.url = self.base_url + '/shopinvader/addresses'
+        self.partner = self.env.ref('shopinvader.partner_1')
+        self.address_1 = self.env.ref('shopinvader.partner_1_address_1')
+        self.address_2 = self.env.ref('shopinvader.partner_1_address_2')
 
     def test_get_addresses_with_correct_api_key_and_partner(self):
         result = requests.get(self.url, headers={
@@ -20,13 +23,10 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             })
         self.assertEqual(result.status_code, 200)
         data = result.json()['data']
-        self.assertEqual(len(data), 2)
+        self.assertEqual(len(data), 3)
+        ids = [x['id'] for x in data]
         self.assertEqual(
-            data[0]['id'],
-            self.env.ref('shopinvader.partner_1').id)
-        self.assertEqual(
-            data[1]['id'],
-            self.env.ref('shopinvader.partner_1_address_1').id)
+            ids, [self.partner.id, self.address_1.id, self.address_2.id])
 
     def test_get_addresses_with_correct_api_key_and_partner_and_filter(self):
         result = requests.get(
@@ -37,10 +37,9 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             })
         self.assertEqual(result.status_code, 200)
         data = result.json()['data']
-        self.assertEqual(len(data), 1)
-        self.assertEqual(
-            data[0]['id'],
-            self.env.ref('shopinvader.partner_1_address_1').id)
+        self.assertEqual(len(data), 2)
+        ids = [x['id'] for x in data]
+        self.assertEqual(ids, [self.address_1.id, self.address_2.id])
 
     def test_get_addresses_with_wrong_api_key(self):
         result = requests.get(self.url, headers={

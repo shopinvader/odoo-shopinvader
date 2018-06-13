@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 
 try:
     from unidecode import unidecode
-except:
+except ImportError:
     _logger.debug('Cannot `import unidecode`.')
 
 

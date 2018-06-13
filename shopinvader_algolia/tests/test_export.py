@@ -60,7 +60,7 @@ class TestExport(ConnectorAlgoliaCase):
         new_job = new_jobs - existing_jobs
         self.assertEqual(1, len(new_job))
         job = Job.load(self.env, new_job.uuid)
-        count = self.env['product.product'].search_count([])
+        count = self.env['shopinvader.product'].search_count([])
         self.assertEqual(
             _("Export %d records of %d for index 'algolia-product'") % (
                 count, count),
@@ -97,7 +97,7 @@ class TestExport(ConnectorAlgoliaCase):
         new_job = new_jobs - existing_jobs
         self.assertEqual(1, len(new_job))
         job = Job.load(self.env, new_job.uuid)
-        count = self.env['product.category'].search_count([])
+        count = self.env['shopinvader.category'].search_count([])
         self.assertEqual(
             _("Export %d records of %d for index 'algolia-category'") % (
                 count, count),

@@ -49,10 +49,10 @@ class AnonymousCartCase(CartCase):
         self.assertEqual(cart.partner_invoice_id, partner)
 
 
-class ConnectedCartCase(CartCase):
+class CommonConnectedCartCase(CartCase):
 
     def setUp(self, *args, **kwargs):
-        super(ConnectedCartCase, self).setUp(*args, **kwargs)
+        super(CommonConnectedCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref('shopinvader.sale_order_2')
         self.shopinvader_session = {'cart_id': self.cart.id}
         self.partner = self.env.ref('shopinvader.partner_1')
@@ -61,6 +61,9 @@ class ConnectedCartCase(CartCase):
                 partner=self.partner,
                 shopinvader_session=self.shopinvader_session) as work:
             self.service = work.component(usage='cart')
+
+
+class ConnectedCartCase(CommonConnectedCartCase):
 
     def test_set_shipping_address(self):
         self.service.dispatch('update', params={
