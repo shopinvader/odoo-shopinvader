@@ -124,6 +124,291 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
+    # Response validator
+    def _validator_return_common(self):
+        address_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'required': False,
+            'schema': {
+                'address_type': {
+                    'type': 'string',
+                },
+                'city': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'country': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'id': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                    },
+                },
+                'display_name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'id': {
+                    'type': 'integer',
+                    'nullable': True,
+                },
+                'is_company': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'opt_in': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'opt_out': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'phone': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'ref': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'state': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'street': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'street2': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'vat': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'zip': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+            },
+        }
+        amount_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'tax': {
+                    'type': 'float',
+                    'required': True,
+                },
+                'total': {
+                    'type': 'float',
+                    'required': True,
+                },
+                'untaxed': {
+                    'type': 'float',
+                    'required': True,
+                },
+            },
+        }
+        product_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'id': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'model': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                    },
+                },
+                'name': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'short_name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'sku': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'url_key': {
+                    'type': 'string',
+                    'required': True,
+                },
+            },
+        }
+        line_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'amount': amount_schema,
+                'count': {
+                    'type': 'float',
+                },
+                'items': {
+                    'type': 'list',
+                    'required': True,
+                    'schema': {
+                        'type': 'dict',
+                        'schema': {
+                            'amount': {
+                                'type': 'dict',
+                                'nullable': True,
+                                'schema': {
+                                    'price': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                    'tax': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                    'total': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                    'untaxed': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                },
+                            },
+                            'discount': {
+                                'type': 'dict',
+                                'nullable': True,
+                                'schema': {
+                                    'rate': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                },
+                            },
+                            'product': product_schema,
+                            'qty': {
+                                'type': 'float',
+                                'required': True,
+                            },
+                            'id': {
+                                'type': 'integer',
+                            },
+                        },
+                    },
+                }
+            },
+        }
+        data_schema = {
+            'type': 'dict',
+            'schema': {
+                'amount': amount_schema,
+                'date': {
+                    'type': 'string',
+                },
+                'id': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'invoicing': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'address': address_schema,
+                    },
+                },
+                'lines': line_schema,
+                'name': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'shipping': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'address': address_schema,
+                    },
+                },
+                'state': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'step': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'current': {
+                            'type': ['string', 'boolean'],
+                            'required': True,
+                        },
+                        'done': {
+                            'type': 'list',
+                            'required': True,
+                        },
+                    },
+                },
+            }
+        }
+        schema = {
+            'store_cache': {
+                'type': 'dict',
+                'nullable': True,
+                'schema': {
+                    'cart': {
+                        'type': 'dict',
+                        'nullable': True,
+                    },
+                    'last_sale': data_schema,
+                },
+            },
+            'set_session': {
+                'type': 'dict',
+                'schema': {
+                    'cart_id': {
+                        'type': 'integer',
+                        'required': True,
+                    },
+                },
+            },
+            'data': data_schema,
+        }
+        return schema
+
+    def _validator_return_create(self):
+        return self._validator_return_common()
+
+    def _validator_return_update(self):
+        return self._validator_return_common()
+
+    def _validator_return_add_item(self):
+        return self._validator_return_common()
+
+    def _validator_return_delete_item(self):
+        return self._validator_return_common()
+
+    def _validator_return_update_item(self):
+        return self._validator_return_common()
+
     def _add_item(self, cart, params):
         existing_item = self._check_existing_cart_item(params, cart)
         if existing_item:

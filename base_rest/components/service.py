@@ -140,15 +140,6 @@ class BaseRestService(AbstractComponent):
         _logger.error("Invalid response %s", v.errors)
         raise UserError(_('Invalid Response'))
 
-    def secure_response(self, method, response):
-        """
-        Check the response for the given method
-        :param method: str
-        :param response: dict
-        :return: dict
-        """
-        return self._secure_response(method, response)
-
     def dispatch(self, method_name, _id=None, params=None):
         """
         This method dispatch the call to expected method name. Before the call
@@ -170,9 +161,10 @@ class BaseRestService(AbstractComponent):
         secure_params = self._secure_params(func, params)
         if _id:
             secure_params['_id'] = _id
-        res = func(**secure_params)
-        self._log_call(func, params, secure_params, res)
-        return res
+        result = func(**secure_params)
+        self._log_call(func, params, secure_params, result)
+        secure_result = self._secure_response(func, result)
+        return secure_result
 
     def _validator_delete(self):
         """

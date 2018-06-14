@@ -129,7 +129,7 @@ class AddressService(Component):
         return {}
 
     # Response validator
-    def _validator_return_search(self):
+    def _validator_return_common(self):
         schema = {
             'size': {
                 'type': 'integer',
@@ -226,6 +226,15 @@ class AddressService(Component):
             }
         }
         return schema
+
+    def _validator_return_create(self):
+        return self._validator_return_common()
+
+    def _validator_return_update(self):
+        return self._validator_return_common()
+
+    def _validator_return_search(self):
+        return self._validator_return_common()
 
     def _get_base_search_domain(self):
         return [('id', 'child_of', self.partner.id)]
