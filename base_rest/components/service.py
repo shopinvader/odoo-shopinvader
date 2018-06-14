@@ -15,11 +15,10 @@ from odoo.http import request
 from odoo.tools.translate import _
 from werkzeug.exceptions import NotFound
 
-from ..tools import cerberus_to_json
 from ..core import _rest_services_databases
+from ..tools import cerberus_to_json
 
 _logger = logging.getLogger(__name__)
-
 
 try:
     from cerberus import Validator
@@ -204,7 +203,7 @@ class BaseRestService(AbstractComponent):
 
     def _get_openapi_info(self):
         return {
-            'title':  "%s REST services" % self._usage,
+            'title': "%s REST services" % self._usage,
             'description': self.__class__.__doc__
         }
 
@@ -279,6 +278,21 @@ class BaseRestService(AbstractComponent):
             request_schema = self._get_schema_for_method(name)
             json_request_schema = cerberus_to_json(
                 request_schema)
+            try:
+                # try / except to remove. Schema for in/out msg
+                # is becoming mandatory but still WIP
+                json_response_schema = cerberus_to_json(
+                    self._get_schema_output_for_method(name)
+                )
+                responses['200'] = {
+                    'content': {
+                        'application/json': {
+                            'schema': json_response_schema
+                        }
+                    }
+                }
+            except:
+                pass
             if name == 'get':
                 get = {'get': path_info}
                 paths['/{id}'] = get
