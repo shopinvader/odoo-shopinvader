@@ -65,13 +65,13 @@ class BaseRestService(AbstractComponent):
             message = 'Invader call url %s method %s'
             _logger.debug(message, *args, extra=extra)
 
-    def _get_schema_for_method(self, method_name):
+    def get_request_schema(self, method_name):
         validator_method = '_%s_request_schema' % method_name
         if not hasattr(self, validator_method):
             raise NotImplementedError(validator_method)
         return getattr(self, validator_method)
 
-    def _get_schema_output_for_method(self, method_name):
+    def get_response_schema(self, method_name):
         validator_method = '_%s_response_schema' % method_name
         if not hasattr(self, validator_method):
             raise NotImplementedError(validator_method)
@@ -88,7 +88,7 @@ class BaseRestService(AbstractComponent):
         :return:
         """
         method_name = method.__name__
-        schema = self._get_schema_for_method(method_name)
+        schema = self.get_request_schema(method_name)
         v = Validator(schema, purge_unknown=True)
         if v.validate(params):
             return v.document
@@ -107,7 +107,7 @@ class BaseRestService(AbstractComponent):
         method_name = method
         if callable(method):
             method_name = method.__name__
-        schema = self._get_schema_output_for_method(method_name)
+        schema = self.get_response_schema(method_name)
         v = Validator(schema)
         if v.validate(response):
             return v.document

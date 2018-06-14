@@ -265,6 +265,7 @@ class CartService(Component):
                 },
                 'short_name': {
                     'type': 'string',
+                    'nullable': True,
                 },
                 'sku': {
                     'type': 'string',

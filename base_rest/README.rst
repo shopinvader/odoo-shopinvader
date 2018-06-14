@@ -55,24 +55,29 @@ The business logic of your service must be implemented into a component
             return {'message': {'type': 'string'}}
 
         # Validator
+        @property
         def _get_request_schema(self):
             # no parameters by default
             return {}
 
-        def _update_request_schema(self):
-            return {'message': {'type': 'string'}}
-
-        def _create_request_schema(self):
-            return {'message': {'type': 'string'}}
-
-        # Response Validator (output)
+        @property
         def _get_response_schema(self):
             return {'id': {'type': 'integer'}}
 
-        def _update_response_schema(self):
+        @property
+        def _update_request_schema(self):
             return {'message': {'type': 'string'}}
 
+        @property
+        def _create_request_schema(self):
+            return {'message': {'type': 'string'}}
+
+        @property
         def _create_response_schema(self):
+            return {'message': {'type': 'string'}}
+
+        @property
+        def _update_response_schema(self):
             return {'message': {'type': 'string'}}
 
 Once your have implemented your services (ping, ...), you must tell to Odoo

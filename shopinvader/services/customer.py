@@ -50,7 +50,7 @@ class CustomerService(Component):
     @property
     def _create_request_schema(self):
         address = self.component(usage='addresses')
-        schema = address._validator_create()
+        schema = address._create_request_schema
         schema.update({
             'email': {
                 'type': 'string',
