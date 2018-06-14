@@ -30,7 +30,10 @@ class SaleService(Component):
 
     def _validator_search(self):
         return {
-            'id': {'coerce': to_int},
+            'id': {
+                'coerce': to_int,
+                'type': 'integer',
+            },
             'per_page': {
                 'coerce': to_int,
                 'type': 'integer',
