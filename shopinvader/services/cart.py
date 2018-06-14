@@ -62,7 +62,8 @@ class CartService(Component):
         return self._to_json(cart)
 
     # Validator
-    def _validator_search(self):
+    @property
+    def _search_request_schema(self):
         return {}
 
     def _subvalidator_shipping(self):
@@ -96,7 +97,8 @@ class CartService(Component):
                 }
         }
 
-    def _validator_update(self):
+    @property
+    def _update_request_schema(self):
         return {
             'step': self._subvalidator_step(),
             'shipping': self._subvalidator_shipping(),
@@ -104,19 +106,22 @@ class CartService(Component):
             'note': {'type': 'string'},
         }
 
-    def _validator_add_item(self):
+    @property
+    def _add_item_request_schema(self):
         return {
             'product_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
         }
 
-    def _validator_update_item(self):
+    @property
+    def _update_item_request_schema(self):
         return {
             'item_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
         }
 
-    def _validator_delete_item(self):
+    @property
+    def _delete_item_request_schema(self):
         return {
             'item_id': {'coerce': to_int, 'required': True},
         }
@@ -125,14 +130,14 @@ class CartService(Component):
     # All params are trusted as they have been checked before
 
     # Response validator
-    def _validator_return_common(self):
+    def _common_response_schema(self):
         address_schema = {
             'type': 'dict',
             'nullable': True,
             'required': False,
             'schema': {
                 'address_type': {
-                    'type': 'string',
+                    'type': ['boolean', 'string'],
                 },
                 'city': {
                     'type': 'string',
@@ -184,9 +189,23 @@ class CartService(Component):
                     'type': 'string',
                     'nullable': True,
                 },
+                # 'state': {
+                #     'type': 'string',
+                #     'nullable': True,
+                # },
                 'state': {
-                    'type': 'string',
+                    'type': 'dict',
                     'nullable': True,
+                    'schema': {
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'id': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                    },
                 },
                 'street': {
                     'type': 'string',
@@ -230,7 +249,6 @@ class CartService(Component):
             'schema': {
                 'id': {
                     'type': 'integer',
-                    'required': True,
                 },
                 'model': {
                     'type': 'dict',
@@ -244,19 +262,15 @@ class CartService(Component):
                 },
                 'name': {
                     'type': 'string',
-                    'required': True,
                 },
                 'short_name': {
                     'type': 'string',
-                    'nullable': True,
                 },
                 'sku': {
                     'type': 'string',
-                    'required': True,
                 },
                 'url_key': {
                     'type': 'string',
-                    'required': True,
                 },
             },
         }
@@ -394,20 +408,25 @@ class CartService(Component):
         }
         return schema
 
-    def _validator_return_create(self):
-        return self._validator_return_common()
+    @property
+    def _create_response_schema(self):
+        return self._common_response_schema()
 
-    def _validator_return_update(self):
-        return self._validator_return_common()
+    @property
+    def _update_response_schema(self):
+        return self._common_response_schema()
 
-    def _validator_return_add_item(self):
-        return self._validator_return_common()
+    @property
+    def _add_item_response_schema(self):
+        return self._common_response_schema()
 
-    def _validator_return_delete_item(self):
-        return self._validator_return_common()
+    @property
+    def _delete_item_response_schema(self):
+        return self._common_response_schema()
 
-    def _validator_return_update_item(self):
-        return self._validator_return_common()
+    @property
+    def _update_item_response_schema(self):
+        return self._common_response_schema()
 
     def _add_item(self, cart, params):
         existing_item = self._check_existing_cart_item(params, cart)

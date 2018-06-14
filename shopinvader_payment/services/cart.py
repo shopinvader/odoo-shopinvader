@@ -53,7 +53,8 @@ class CartService(Component):
         return {'redirect_to': self.shopinvader_backend.location}
 
     # Validator
-    def _validator_add_payment(self):
+    @property
+    def _add_payment_request_schema(self):
         validator = {
             'payment_mode': {
                 'type': 'dict',
@@ -74,7 +75,8 @@ class CartService(Component):
                     }
         return validator
 
-    def _validator_check_payment(self):
+    @property
+    def _check_payment_request_schema(self):
         validator = {
             'provider_name': {
                 'type': 'string',

@@ -53,7 +53,8 @@ class AddressService(Component):
     # All params are trusted as they have been checked before
 
     # Validator
-    def _validator_search(self):
+    @property
+    def _search_request_schema(self):
         return {
             'scope': {
                 'type': 'dict',
@@ -61,7 +62,8 @@ class AddressService(Component):
                 },
             }
 
-    def _validator_create(self):
+    @property
+    def _create_request_schema(self):
         res = {
             'street': {'type': 'string', 'required': True, 'empty': False},
             'street2': {'type': 'string', 'nullable': True},
@@ -118,18 +120,20 @@ class AddressService(Component):
             res.update({'company': {'type': 'string'}})
         return res
 
-    def _validator_update(self):
-        res = self._validator_create()
+    @property
+    def _update_request_schema(self):
+        res = self._create_request_schema
         for key in res:
             if 'required' in res[key]:
                 del res[key]['required']
         return res
 
-    def _validator_delete(self):
+    @property
+    def _delete_request_schema(self):
         return {}
 
     # Response validator
-    def _validator_return_common(self):
+    def _common_response_schema(self):
         schema = {
             'size': {
                 'type': 'integer',
@@ -227,14 +231,17 @@ class AddressService(Component):
         }
         return schema
 
-    def _validator_return_create(self):
-        return self._validator_return_common()
+    @property
+    def _create_response_schema(self):
+        return self._common_response_schema()
 
-    def _validator_return_update(self):
-        return self._validator_return_common()
+    @property
+    def _update_response_schema(self):
+        return self._common_response_schema()
 
-    def _validator_return_search(self):
-        return self._validator_return_common()
+    @property
+    def _search_response_schema(self):
+        return self._common_response_schema()
 
     def _get_base_search_domain(self):
         return [('id', 'child_of', self.partner.id)]

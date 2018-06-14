@@ -38,24 +38,6 @@ def to_bool(val):
     return val in ('true', 'True', '1', True)
 
 
-def skip_secure_params(func):
-    """
-    Used to decorate methods
-    :param func:
-    :return:
-    """
-    func.skip_secure_params = True
-
-
-def skip_secure_response(func):
-    """
-    Used to decorate methods
-    :param func:
-    :return:
-    """
-    func.skip_secure_response = True
-
-
 class BaseRestService(AbstractComponent):
     _name = 'base.rest.service'
 
@@ -84,32 +66,28 @@ class BaseRestService(AbstractComponent):
             _logger.debug(message, *args, extra=extra)
 
     def _get_schema_for_method(self, method_name):
-        validator_method = '_validator_%s' % method_name
+        validator_method = '_%s_request_schema' % method_name
         if not hasattr(self, validator_method):
             raise NotImplementedError(validator_method)
-        return getattr(self, validator_method)()
+        return getattr(self, validator_method)
 
     def _get_schema_output_for_method(self, method_name):
-        validator_method = '_validator_return_%s' % method_name
+        validator_method = '_%s_response_schema' % method_name
         if not hasattr(self, validator_method):
             raise NotImplementedError(validator_method)
-        return getattr(self, validator_method)()
+        return getattr(self, validator_method)
 
     def _secure_params(self, method, params):
         """
         This internal method is used to validate and sanitize the parameters
         expected by the given method.  These parameters are validated and
         sanitized according to a schema provided by a method  following the
-        naming convention: '_validator_{method_name}'. If the method is
-        decorated with `@skip_secure_params` the check and sanitize of the
-        parameters are skipped.
+        naming convention: '_{method_name}_request_schema'.
         :param method:
         :param params:
         :return:
         """
         method_name = method.__name__
-        if hasattr(method, 'skip_secure_params'):
-            return params
         schema = self._get_schema_for_method(method_name)
         v = Validator(schema, purge_unknown=True)
         if v.validate(params):
@@ -121,9 +99,7 @@ class BaseRestService(AbstractComponent):
         """
         Internal method used to validate the output of the given method.
         This response is validated according to a schema defined for the
-        method, with the convention '_validator_return_{method_name}'.
-        If the method is decorated with `@skip_secure_response` checks of
-        the response are skipped.
+        method, with the convention '_{method_name}_response_schema'.
         :param method: str or function
         :param response: dict/json
         :return: dict/json
@@ -131,10 +107,8 @@ class BaseRestService(AbstractComponent):
         method_name = method
         if callable(method):
             method_name = method.__name__
-        if hasattr(method, 'skip_secure_response'):
-            return response
         schema = self._get_schema_output_for_method(method_name)
-        v = Validator(schema, purge_unknown=True)
+        v = Validator(schema)
         if v.validate(response):
             return v.document
         _logger.error("Invalid response %s", v.errors)
@@ -166,7 +140,8 @@ class BaseRestService(AbstractComponent):
         secure_result = self._secure_response(func, result)
         return secure_result
 
-    def _validator_delete(self):
+    @property
+    def _delete_request_schema(self):
         """
         Default validator for delete method.
         By default delete should never be called with parameters.

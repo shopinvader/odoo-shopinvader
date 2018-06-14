@@ -39,13 +39,16 @@ class CustomerService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _validator_get(self):
+    @property
+    def _get_request_schema(self):
         return {}
 
-    def _validator_sign_in(self):
+    @property
+    def _sign_in_request_schema(self):
         return {}
 
-    def _validator_create(self):
+    @property
+    def _create_request_schema(self):
         address = self.component(usage='addresses')
         schema = address._validator_create()
         schema.update({
@@ -64,7 +67,8 @@ class CustomerService(Component):
             })
         return schema
 
-    def _validator_return_create(self):
+    @property
+    def _create_response_schema(self):
         data_schema = {
             'type': 'dict',
             'schema': {

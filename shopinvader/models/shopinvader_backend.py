@@ -69,7 +69,7 @@ class ShopinvaderBackend(models.Model):
         last_step = self.env['shopinvader.cart.step']
         try:
             last_step = self.env.ref('shopinvader.cart_end')
-        except:
+        except ValueError:
             pass
         return last_step
 

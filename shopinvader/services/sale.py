@@ -24,10 +24,12 @@ class SaleService(Component):
         return self._paginate_search(**params)
 
     # Validator
-    def _validator_get(self):
+    @property
+    def _get_request_schema(self):
         return {}
 
-    def _validator_search(self):
+    @property
+    def _search_request_schema(self):
         return {
             'id': {'coerce': to_int},
             'per_page': {

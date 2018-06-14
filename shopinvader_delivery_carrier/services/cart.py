@@ -24,7 +24,8 @@ class CartService(Component):
             return self._to_json(cart)
 
     # Validator
-    def _validator_add_carrier(self):
+    @property
+    def _add_carrier_request_schema(self):
         return {
             'carrier': {
                 'type': 'dict',
