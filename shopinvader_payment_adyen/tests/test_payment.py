@@ -68,7 +68,7 @@ class ShopinvaderAdyenCase(AdyenCommonCase, CommonCase, AdyenScenario):
         self.assertIn('last_sale', response['store_cache'])
 
     def _get_data_for_3d_secure(self, response):
-        data = response['payment']['adyen_params']
+        data = response['data']['payment']['adyen_params']
         url = data.pop('IssuerUrl')
         return url, data
 
@@ -76,7 +76,7 @@ class ShopinvaderAdyenCase(AdyenCommonCase, CommonCase, AdyenScenario):
         response, transaction, source = self._create_transaction(card)
         self.assertEqual(transaction.state, 'pending')
         url, data = self._get_data_for_3d_secure(response)
-        pares = self._fill_3d_secure(url, data, card, success=success)
+        pares = self._fill_3d_secure(transaction, card, success=success)
         response = self.service.dispatch('check_payment', params={
             'MD': transaction.meta['MD'],
             'PaRes': pares,
