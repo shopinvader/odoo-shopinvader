@@ -68,10 +68,10 @@ class CartService(Component):
                 },
             }
         for provider in self.env['gateway.transaction']._get_all_provider():
-            if hasattr(provider, '_validator_add_payment'):
+            if hasattr(provider, '_add_payment_request_schema'):
                 validator[provider._provider_name] = {
                     'type': 'dict',
-                    'schema': provider._validator_add_payment()
+                    'schema': provider._add_payment_request_schema,
                     }
         return validator
 
@@ -84,8 +84,8 @@ class CartService(Component):
                 }
             }
         for provider in self.env['gateway.transaction']._get_all_provider():
-            if hasattr(provider, '_validator_check_payment'):
-                validator.update(provider._validator_check_payment())
+            if hasattr(provider, '_check_payment_request_schema'):
+                validator.update(provider._check_payment_request_schema)
         return validator
 
     # Private method

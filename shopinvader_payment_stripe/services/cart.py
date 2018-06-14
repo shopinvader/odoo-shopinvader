@@ -114,8 +114,10 @@ class CartService(Component):
         })
         return schema
 
+    @property
     def _add_payment_response_schema(self):
         return self._common_response_schema()
 
+    @property
     def _check_payment_response_schema(self):
         return self._common_response_schema()
