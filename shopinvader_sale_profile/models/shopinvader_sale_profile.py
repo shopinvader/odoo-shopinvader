@@ -16,7 +16,7 @@ class ShopinvaderSaleProfile(models.Model):
     _rec_name = "code"
 
     backend_id = fields.Many2one(
-        'locomotive.backend',
+        'shopinvader.backend',
         'Backend',
         required=True,
         index=True,

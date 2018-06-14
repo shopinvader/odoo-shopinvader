@@ -3,10 +3,10 @@
      Copyright 2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record model="ir.ui.view" id="locomotive_backend_view_form">
-        <field name="name">Locomotive.backend form (in shopinvader_sale_profile)</field>
-        <field name="model">locomotive.backend</field>
-        <field name="inherit_id" ref="connector_locomotivecms.view_locomotive_backend_form"/>
+    <record model="ir.ui.view" id="shopinvader_backend_view_form">
+        <field name="name">shopinvader.backend.form (in shopinvader_sale_profile)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader_locomotive.shopinvader_backend_view_form"/>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
             <group name="allowed_country" position="before">

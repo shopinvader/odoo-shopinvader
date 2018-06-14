@@ -21,7 +21,7 @@ class ShopInvaderCustomerService(Component):
         data = response.get('data', {})
         # Get the shopinvader partner created into the super
         shop_partner = self.env['shopinvader.partner'].search([
-            ('backend_id', '=', self.locomotive_backend.id),
+            ('backend_id', '=', self.shopinvader_backend.id),
             ('external_id', '=', external_id),
             ('record_id', '=', self.partner.id),
         ], order="create_date desc", limit=1)

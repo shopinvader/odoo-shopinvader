@@ -20,7 +20,7 @@
     'license': 'AGPL-3',
     'category': 'e-commerce',
     'data': [
-        'views/locomotive_backend.xml',
+        'views/shopinvader_backend.xml',
         'views/res_partner.xml',
         'views/shopinvader_partner.xml',
         'security/shopinvader_sale_profile.xml',

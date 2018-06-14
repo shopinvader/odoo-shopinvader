@@ -6,8 +6,8 @@
 from odoo import fields, models
 
 
-class LocomotiveBackend(models.Model):
-    _inherit = 'locomotive.backend'
+class ShopInvaderBackend(models.Model):
+    _inherit = 'shopinvader.backend'
 
     use_sale_profile = fields.Boolean(
         default=False,
