@@ -27,8 +27,9 @@
     'test': [
     ],
     'external_dependencies': {
-        'python': ['locomotivecms'],
+        'python': ['locomotivecms', 'openupgradelib'],
         },
+    'pre_init_hook': 'rename_module',
     'installable': True,
     'auto_install': False,
     'application': False,
