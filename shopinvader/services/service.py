@@ -27,6 +27,10 @@ class BaseShopinvaderService(AbstractComponent):
     def shopinvader_backend(self):
         return self.work.shopinvader_backend
 
+    @property
+    def client_header(self):
+        return self.work.client_header
+
     def _scope_to_domain(self, scope):
         # Convert the liquid scope syntax to the odoo domain
         try:
