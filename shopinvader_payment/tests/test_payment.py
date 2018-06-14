@@ -12,4 +12,5 @@ class ShopinvaderPaymentCase(CommonConnectedCartCase):
         response = self.service.dispatch('search')
         self.assertIn('available_methods', response['data']['payment'])
         self.assertEqual(
-            response['data']['payment']['available_methods']['count'], 2)
+            response['data']['payment']['available_methods']['count'],
+            len(self.backend.payment_method_ids))
