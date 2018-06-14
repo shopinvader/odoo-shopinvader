@@ -22,7 +22,7 @@ class ApiDocsController(Controller):
         return request.make_response(data, headers=headers, cookies=cookies)
 
     @route(['/api-docs',
-            '/api-docs/index.html'], methods=['GET'], type='http', auth="user")
+            '/api-docs/index.html'], methods=['GET'], type='http', auth="public")
     def index(self):
         self._get_api_urls()
         values = {
@@ -31,7 +31,7 @@ class ApiDocsController(Controller):
         return request.render("base_rest.openapi", values)
 
     @route('/api-docs/<string:collection>/<string:service_name>.json',
-           auth="user")
+           auth="public")
     def api(self, collection, service_name):
         with self.service_component(collection, service_name) as service:
             return self.make_json_response(service.to_openapi())
