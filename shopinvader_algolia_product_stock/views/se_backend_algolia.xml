@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record model="ir.ui.view" id="se_backend_algolia_form_view">
-        <field name="name">SE.backend.algolia.form (in shopinvader_algolia_stock)</field>
+        <field name="name">SE.backend.algolia.form (in shopinvader_algolia_product_stock)</field>
         <field name="model">se.backend.algolia</field>
         <field name="inherit_id" ref="connector_algolia.se_backend_algolia_form_view"/>
         <field name="priority" eval="90"/>

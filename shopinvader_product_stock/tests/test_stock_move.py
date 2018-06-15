@@ -77,7 +77,7 @@ class TestStockMove(SavepointComponentCase):
             "stock.field_product_product_qty_available")
         lang_en = self.env.ref("base.lang_en")
         shopinvader_variant_model = self.env.ref(
-            "shopinvader_stock.model_shopinvader_variant")
+            "shopinvader_product_stock.model_shopinvader_variant")
         index_values = {
             'name': 'Index EN test',
             'lang_id': lang_en.id,

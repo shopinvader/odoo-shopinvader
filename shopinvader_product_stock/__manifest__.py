@@ -4,7 +4,7 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Shopinvader Stock",
+    "name": "Shopinvader Product Stock",
     "summary": "This module is used to choose a stock field during the"
                "export (by backend)",
     'description': """
@@ -25,4 +25,10 @@
     "data": [
         'views/se_backend.xml',
     ],
+    'external_dependencies': {
+        'python': [
+            'openupgradelib',
+        ],
+    },
+    'pre_init_hook': 'rename_module',
 }
