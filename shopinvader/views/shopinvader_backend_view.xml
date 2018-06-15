@@ -43,6 +43,7 @@
                                 <field name="last_step_id"/>
                                 <field name="anonymous_partner_id"/>
                                 <field name="pricelist_id" required="1"/>
+                                <field name="account_analytic_id"/>
                             </group>
                             <group name="allowed_country" colspan="4">
                                 <field name="allowed_country_ids" nolabel="1"/>

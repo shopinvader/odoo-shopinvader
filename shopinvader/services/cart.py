@@ -224,6 +224,9 @@ class CartService(Component):
             'shopinvader_backend_id': self.shopinvader_backend.id,
             }
         vals.update(self.env['sale.order'].play_onchanges(vals, vals.keys()))
+        if self.shopinvader_backend.account_analytic_id.id:
+            vals['project_id'] = self.shopinvader_backend.\
+                account_analytic_id.id
         if self.shopinvader_backend.sequence_id:
             vals['name'] = self.shopinvader_backend.sequence_id._next()
         return vals
