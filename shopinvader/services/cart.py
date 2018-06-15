@@ -207,10 +207,6 @@ class CartService(Component):
                     'type': 'string',
                     'nullable': True,
                 },
-                # 'state': {
-                #     'type': 'string',
-                #     'nullable': True,
-                # },
                 'state': {
                     'type': 'dict',
                     'nullable': True,
@@ -458,6 +454,10 @@ class CartService(Component):
 
     @property
     def _update_item_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _search_response_schema(self):
         return self._common_response_schema()
 
     def _add_item(self, cart, params):

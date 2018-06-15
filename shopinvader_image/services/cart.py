@@ -28,7 +28,3 @@ class CartService(Component):
             ('images', 'data/lines/items/product', image_schema),
         ])
         return items
-
-    @property
-    def _search_response_schema(self):
-        return self._common_response_schema()
