@@ -4,7 +4,7 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Connector Search Engine Algolia stock",
+    "name": "Connector Search Engine Algolia Product stock",
     "summary": "This module is used to apply features of shopinvader_stock"
                "with shopinvader_algolia",
     'description': """
@@ -18,10 +18,15 @@
         'stock',
         'shopinvader',
         'connector_search_engine',
-        'shopinvader_stock',
+        'shopinvader_product_stock',
         'shopinvader_algolia',
     ],
     "data": [
         'views/se_backend_algolia.xml',
     ],
+    'external_dependencies': {
+        'python': [
+            'openupgradelib',
+        ],
+    },
 }

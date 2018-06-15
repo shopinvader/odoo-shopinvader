@@ -9,7 +9,7 @@ from odoo.tools import float_compare
 from odoo import api, exceptions, models, _
 
 
-class MyModel(models.Model):
+class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     @api.model
@@ -42,7 +42,7 @@ class MyModel(models.Model):
         if not self._job_stock_can_start():
             message = _("Another related queue job is running...")
             raise exceptions.MissingError(message)
-        products = self.mapped("product_id")
+        products = self
         shopinvader_variants = self._get_shopinvader_variants_from_product(
             products)
         mapper = self._get_stock_mapper()

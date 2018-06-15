@@ -19,9 +19,13 @@ class StockMove(models.Model):
         codes = ['incoming', 'outgoing']
         moves = self.filtered(lambda m: m.picking_type_id.code in codes)
         moves = moves.with_prefetch(self._prefetch)
-        if moves:
+        products = moves.mapped("product_id")
+        # Take only binded products
+        products = products.filtered(lambda p: p.is_shopinvader_binded)
+        products = products.with_prefetch(self._prefetch)
+        if products:
             description = "Update shopinvader variants (stock update trigger)"
-            moves.with_delay(
+            products.with_delay(
                 description=description)._product_stock_update_all()
         return True
 
