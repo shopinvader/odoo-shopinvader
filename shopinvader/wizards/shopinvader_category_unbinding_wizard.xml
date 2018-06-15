@@ -24,7 +24,7 @@
         <field name="context">{}</field>
         <field name="target">new</field>
         <field name="view_id" ref="shopinvader_category_unbinding_wizard_form_view"/>
-         <field name="groups_id" eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"/>
+        <field name="groups_id" eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"/>
     </record>
 
     <record model="ir.values" id="shopinvader_category_unbinding_wizard_act_multi">

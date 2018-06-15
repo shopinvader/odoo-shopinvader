@@ -61,7 +61,7 @@ class NotificationCartCase(CommonCase):
             'zip': '43110',
             'city': 'Aurec sur Loire',
             'phone': '0485485454',
-            'country_id': self.env.ref('base.fr').id,
+            'country': {'id': self.env.ref('base.fr').id},
             }
         self._init_job_counter()
         with self.work_on_services(

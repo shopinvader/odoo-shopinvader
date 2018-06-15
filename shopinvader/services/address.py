@@ -79,6 +79,7 @@ class AddressService(Component):
                     }
                 },
             'country': {
+                'required': True,
                 'type': 'dict',
                 'schema': {
                     'id': {
