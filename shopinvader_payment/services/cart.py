@@ -88,6 +88,93 @@ class CartService(Component):
                 validator.update(provider._check_payment_request_schema)
         return validator
 
+    def _build_common_response_schema(self):
+        """
+        Inherits to add:
+        data/payment
+        store_cache/notifications
+        redirect_to
+        :return: list of tuple
+        """
+        items = super(CartService, self)._build_common_response_schema()
+        payment_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'amount': {
+                    'type': 'float',
+                },
+                'available_methods': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'count': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                        'items': {
+                            'type': 'list',
+                            'required': True,
+                            'schema': {
+                                'type': 'dict',
+                                'nullable': True,
+                                'schema': {
+                                    'code': {
+                                        'type': ['string', 'boolean'],
+                                        'required': True,
+                                    },
+                                    'description': {
+                                        'type': ['boolean', 'string'],
+                                        'required': True,
+                                    },
+                                    'id': {
+                                        'type': 'integer',
+                                        'required': True,
+                                    },
+                                    'name': {
+                                        'type': 'string',
+                                        'required': True,
+                                    },
+                                },
+                            },
+                        },
+                    },
+                },
+                'selected_method': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'anyof': [
+                        # Schema can be empty of with the second structure
+                        {'schema': {}},
+                        {
+                            'schema': {
+                                'code': {
+                                    'type': ['boolean', 'string'],
+                                    'required': True,
+                                },
+                                'description': {
+                                    'type': ['boolean', 'string'],
+                                    'required': True,
+                                },
+                                'id': {
+                                    'type': 'integer',
+                                    'required': True,
+                                },
+                                'name': {
+                                    'type': 'string',
+                                    'required': True,
+                                },
+                            }
+                        },
+                    ],
+                },
+            },
+        }
+        items.extend([
+            ('payment', 'data', payment_schema),
+        ])
+        return items
+
     # Private method
     def _set_payment_mode(self, cart, params):
         payment_mode_id = params['payment_mode']['id']

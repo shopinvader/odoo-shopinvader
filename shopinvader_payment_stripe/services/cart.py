@@ -13,76 +13,15 @@ _logger = logging.getLogger(__name__)
 class CartService(Component):
     _inherit = 'shopinvader.cart.service'
 
-    # Response validator
-    def _common_response_schema(self):
-        schema = super(CartService, self)._common_response_schema()
-        payment_schema = {
-            'type': 'dict',
-            'nullable': True,
-            'schema': {
-                'amount': {
-                    'type': 'float',
-                },
-                'available_methods': {
-                    'type': 'dict',
-                    'nullable': True,
-                    'schema': {
-                        'count': {
-                            'type': 'integer',
-                            'required': True,
-                        },
-                        'items': {
-                            'type': 'list',
-                            'required': True,
-                            'schema': {
-                                'type': 'dict',
-                                'nullable': True,
-                                'schema': {
-                                    'code': {
-                                        'type': ['string', 'boolean'],
-                                        'required': True,
-                                    },
-                                    'description': {
-                                        'type': ['boolean', 'string'],
-                                        'required': True,
-                                    },
-                                    'id': {
-                                        'type': 'integer',
-                                        'required': True,
-                                    },
-                                    'name': {
-                                        'type': 'string',
-                                        'required': True,
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-                'selected_method': {
-                    'type': 'dict',
-                    'nullable': True,
-                    'schema': {
-                        'code': {
-                            'type': ['boolean', 'string'],
-                            'required': True,
-                        },
-                        'description': {
-                            'type': ['boolean', 'string'],
-                            'required': True,
-                        },
-                        'id': {
-                            'type': 'integer',
-                            'required': True,
-                        },
-                        'name': {
-                            'type': 'string',
-                            'required': True,
-                        },
-                    },
-                },
-            },
-        }
+    def _build_common_response_schema(self):
+        """
+        Inherits to add:
+        data/payment
+        store_cache/notifications
+        redirect_to
+        :return: list of tuple
+        """
+        items = super(CartService, self)._build_common_response_schema()
         notifications_schema = {
             'type': 'list',
             'nullable': True,
@@ -99,20 +38,15 @@ class CartService(Component):
                 },
             },
         }
-        # Update schema
-        schema.get('data', {}).get('schema', {}).update({
-            'payment': payment_schema,
-        })
-        schema.get('store_cache', {}).get('schema', {}).update({
-            'notifications': notifications_schema,
-        })
-        schema.update({
-            'redirect_to': {
-                'type': 'string',
-                'nullable': True,
-            },
-        })
-        return schema
+        redirect_schema = {
+            'type': 'string',
+            'nullable': True,
+        }
+        items.extend([
+            ('notifications', 'store_cache', notifications_schema),
+            ('redirect_to', '', redirect_schema),
+        ])
+        return items
 
     @property
     def _add_payment_response_schema(self):

@@ -129,6 +129,24 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
+    def _build_common_response_schema(self):
+        """
+        It's quite long to inherit the common response schema for this
+        shopinvader cart.
+        So to automatically update the schema, just inherits this function
+        to add a new item into the list.
+        An item is a tuple: (1, 2, 3)
+        1 (string): key of the new sub-schema; ex: images
+        2 (string): where to put the new key; ex: data/lines/items/product
+        3 (dict):  dict related to the new images schema
+        The _common_response_schema will automatically detects if there is a
+        schema key and go down if necessary.
+        Ex: into your second item of the tuple, just specify
+        data/lines/items/product and not data/schema/lines/schema/schema/...
+        :return: list of tuple
+        """
+        return []
+
     # Response validator
     def _common_response_schema(self):
         address_schema = {
@@ -407,6 +425,19 @@ class CartService(Component):
             },
             'data': data_schema,
         }
+        # Instead of always inherit this function, add every items
+        # specified by inheriting the _build_common_response_schema() function.
+        for item in self._build_common_response_schema():
+            key, schema_hierarchy, new_schema = item
+            target = schema
+            if schema_hierarchy:
+                for schema_key in schema_hierarchy.split('/'):
+                    target = target.get(schema_key, {})
+                    while 'schema' in target:
+                        target = target.get('schema', {})
+            target.update({
+                key: new_schema,
+            })
         return schema
 
     @property
