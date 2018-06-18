@@ -4,7 +4,12 @@
 from openupgradelib import openupgrade
 
 
-def rename_module(cr):
+def pre_init_hook(cr):
+    """
+    Rename the module 'shopinvader_stock' into 'shopinvader_product_stock'.
+    :param cr: database cursor
+    :return:
+    """
     openupgrade.update_module_names(
         cr, [('shopinvader_stock', 'shopinvader_product_stock')],
         merge_modules=True)

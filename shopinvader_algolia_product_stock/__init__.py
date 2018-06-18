@@ -1,2 +1,2 @@
 from . import components
-from .hooks import rename_module
+from .hooks import pre_init_hook
