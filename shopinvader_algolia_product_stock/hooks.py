@@ -4,7 +4,13 @@
 from openupgradelib import openupgrade
 
 
-def rename_module(cr):
+def pre_init_hook(cr):
+    """
+    Rename the module 'shopinvader_algolia_stock' into
+    'shopinvader_algolia_product_stock'.
+    :param cr: database cursor
+    :return:
+    """
     openupgrade.update_module_names(
         cr, [('shopinvader_algolia_stock',
               'shopinvader_algolia_product_stock')],

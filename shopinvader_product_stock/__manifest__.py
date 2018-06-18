@@ -30,5 +30,5 @@
             'openupgradelib',
         ],
     },
-    'pre_init_hook': 'rename_module',
+    'pre_init_hook': 'pre_init_hook',
 }
