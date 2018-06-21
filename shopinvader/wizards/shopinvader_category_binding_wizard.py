@@ -38,11 +38,13 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
     def action_bind_categories(self):
         shopinv_categ_obj = self.env['shopinvader.category']
         for wizard in self:
+            backend = wizard.backend_id
             for lang in wizard.backend_id.lang_ids:
                 for category in wizard.product_category_ids:
                     binded_categories = category.shopinvader_bind_ids
                     bind_record = binded_categories.filtered(
-                        lambda p: p.record_id.id == category.id)
+                        lambda p: p.backend_id.id == backend.id and
+                        p.lang_id.id == lang.id)
                     bind_record = bind_record.with_prefetch(self._prefetch)
                     if not bind_record:
                         data = {
