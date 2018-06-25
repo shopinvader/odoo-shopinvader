@@ -27,6 +27,15 @@
                                 <span class="o_stat_text">Products</span>
                             </div>
                         </button>
+                        <button class="oe_stat_button"
+                                name="%(act_open_shopinvader_category_view)d" type="action"
+                                icon="fa-file-text-o"
+                                context="{'search_default_backend_id': active_id}">
+                            <div class="o_stat_info">
+                                <field name="nbr_category" class="o_stat_value"/>
+                                <span class="o_stat_text">Categories</span>
+                            </div>
+                        </button>
                     </div>
                     <label for="name" class="oe_edit_only"/>
                     <h1>
