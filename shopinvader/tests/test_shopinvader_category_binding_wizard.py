@@ -85,6 +85,84 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         bind_record = self.category_bind_model.search(domain)
         self.assertEqual(len(bind_record), 1)
 
+    def install_lang(self, lang_xml_id):
+        lang = self.env.ref(lang_xml_id)
+        wizard = self.env['base.language.install'].create({
+            'lang': lang.code,
+        })
+        wizard.lang_install()
+        return lang
+
+    def test_category_binding_multi_lang(self):
+        """
+        With more than 1 lang, select a category and
+        - bind it to a shopinvader backend
+        - unbind it
+        - bind it again
+        """
+        lang = self.install_lang('base.lang_fr')
+        self.backend.lang_ids |= lang
+        category_bind_model = self.category_bind_model
+        unbind_wizard_model = self.unbind_wizard_model
+        bind_wizard_model = self.bind_wizard_model
+        product_category = self.product_category
+        backend = self.backend
+        self.assertFalse(product_category.shopinvader_bind_ids)
+
+        # --------------------------------
+        # Bind the category to the Backend
+        # --------------------------------
+        bind_wizard = self.bind_wizard_model.create({
+            'backend_id': backend.id,
+            'product_category_ids': [(6, 0, product_category.ids)],
+        })
+        bind_wizard.action_bind_categories()
+        domain = [
+            ('record_id', '=', product_category.id),
+            ('backend_id', '=', backend.id),
+        ]
+
+        # A binding record should exists
+        bind_record = category_bind_model.search(domain)
+        # 2 (because 2 languages installed)
+        self.assertEqual(len(bind_record), 2)
+        self.assertEqual(bind_record, product_category.shopinvader_bind_ids)
+
+        # --------------------------------
+        # UnBind the category
+        # --------------------------------
+        unbind_wizard = unbind_wizard_model.create({
+            'shopinvader_category_ids': [(6, 0, bind_record.ids)],
+        })
+        unbind_wizard.action_unbind_categories()
+
+        # The binding record should be unreachable
+        bind_record = category_bind_model.search(domain)
+
+        self.assertEqual(len(bind_record), 0)
+
+        # The binding record should still exist but inactive
+        bind_record = category_bind_model.with_context(
+            active_test=False).search(domain)
+
+        self.assertEqual(len(bind_record), 2)
+
+        # --------------------------------
+        # Bind the category again
+        # --------------------------------
+        values = {
+            'backend_id': backend.id,
+            'product_category_ids': [(6, 0, product_category.ids)],
+        }
+        # Active test because product.category is active = False
+        bind_wizard = bind_wizard_model.with_context(
+            active_test=False).create(values)
+        bind_wizard.action_bind_categories()
+
+        # The binding record should be re-activated
+        bind_record = self.category_bind_model.search(domain)
+        self.assertEqual(len(bind_record), 2)
+
     def test_category_inactivation(self):
         """
         Select a category and bind it to a Lengow Catalogue
