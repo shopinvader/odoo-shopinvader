@@ -3,10 +3,14 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.exceptions import UserError
 from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.addons.payment_gateway_adyen.tests.test_payment import (
     AdyenCommonCase,
-    AdyenScenario)
+    AdyenScenario,
+    SHOPPER_IP,
+    ACCEPT_HEADER,
+    USER_AGENT)
 import json
 from mock import Mock
 from os.path import dirname
@@ -18,14 +22,10 @@ REDIRECT_URL = {
     }
 
 
-class ShopinvaderAdyenCase(AdyenCommonCase, CommonCase, AdyenScenario):
-
-    def __init__(self, *args, **kwargs):
-        super(ShopinvaderAdyenCase, self).__init__(*args, **kwargs)
-        self._decorate_test(dirname(__file__))
+class ShopinvaderAdyenCommonCase(AdyenCommonCase, CommonCase):
 
     def setUp(self, *args, **kwargs):
-        super(ShopinvaderAdyenCase, self).setUp(*args, **kwargs)
+        super(ShopinvaderAdyenCommonCase, self).setUp(*args, **kwargs)
         self.shopinvader_session = {'cart_id': self.sale.id}
         self.partner = self.sale.partner_id
         self.env['shopinvader.partner'].create({
@@ -43,9 +43,18 @@ class ShopinvaderAdyenCase(AdyenCommonCase, CommonCase, AdyenScenario):
             self.service = work.component(usage='cart')
         self.cr.commit = Mock()  # Do not commit
 
-    def _create_transaction(self, card):
+    def _prepare_transaction_params(self, card):
         params = REDIRECT_URL.copy()
-        params['encrypted_card'] = self._get_encrypted_card(card)
+        params.update({
+            'token': self._get_encrypted_card(card),
+            'accept_header': ACCEPT_HEADER,
+            'user_agent': USER_AGENT,
+            'shopper_ip': SHOPPER_IP,
+            })
+        return params
+
+    def _create_transaction(self, card):
+        params = self._prepare_transaction_params(card)
         response = self.service.dispatch('add_payment', params={
             'payment_mode': {'id': self.account_payment_mode.id},
             'adyen': params})
@@ -72,30 +81,47 @@ class ShopinvaderAdyenCase(AdyenCommonCase, CommonCase, AdyenScenario):
         url = data.pop('IssuerUrl')
         return url, data
 
+    def _prepare_transaction_return_params(self, transaction, pares):
+        return {
+            'md': transaction.meta['MD'],
+            'pares': pares,
+            'provider_name': 'adyen',
+            'accept_header': ACCEPT_HEADER,
+            'user_agent': USER_AGENT,
+            'shopper_ip': SHOPPER_IP,
+            }
+
     def _test_3d(self, card, success=True):
         response, transaction, source = self._create_transaction(card)
         self.assertEqual(transaction.state, 'pending')
         url, data = self._get_data_for_3d_secure(response)
         pares = self._fill_3d_secure(transaction, card, success=success)
-        response = self.service.dispatch('check_payment', params={
-            'MD': transaction.meta['MD'],
-            'PaRes': pares,
-            'provider_name': 'adyen',
-            })
+        params = self._prepare_transaction_return_params(transaction, pares)
         if success:
+            response = self.service.dispatch('check_payment', params=params)
             self._check_captured(transaction, response)
             self.assertEqual(
                 response['redirect_to'],
                 REDIRECT_URL['redirect_success_url'])
         else:
-            self.assertEqual(transaction.state, 'failed')
-            self.assertEqual(
-                response['redirect_to'],
-                REDIRECT_URL['redirect_cancel_url'])
-            self.assertIn('store_cache', response)
-            self.assertIn('notifications', response['store_cache'])
+            with self.assertRaises(UserError):
+                response = self.service.dispatch(
+                    'check_payment', params=params)
+                self.assertEqual(transaction.state, 'failed')
+                self.assertEqual(
+                    response['redirect_to'],
+                    REDIRECT_URL['redirect_cancel_url'])
+                self.assertIn('store_cache', response)
+                self.assertIn('notifications', response['store_cache'])
 
     def _test_card(self, card, **kwargs):
         response, transaction, source = self._create_transaction(card)
         self._check_captured(transaction, response, **kwargs)
         self.assertNotIn('redirect_to', response)
+
+
+class ShopinvaderAdyenCase(ShopinvaderAdyenCommonCase, AdyenScenario):
+
+    def __init__(self, *args, **kwargs):
+        super(ShopinvaderAdyenCase, self).__init__(*args, **kwargs)
+        self._decorate_test(dirname(__file__))

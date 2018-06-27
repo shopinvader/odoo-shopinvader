@@ -11,13 +11,19 @@ class PaymentServiceAdyen(Component):
 
     def _validator_add_payment(self):
         return {
-            'encrypted_card': {'type': 'string'},
+            'token': {'type': 'string'},
             'redirect_success_url': {'type': 'string'},
             'redirect_cancel_url': {'type': 'string'},
+            'accept_header': {'type': 'string'},
+            'user_agent': {'type': 'string'},
+            'shopper_ip': {'type': 'string'},
             }
 
     def _validator_check_payment(self):
         return {
-            'MD': {'type': 'string'},
-            'PaRes': {'type': 'string'},
+            'md': {'type': 'string', 'required': True},
+            'pares': {'type': 'string', 'required': True},
+            'accept_header': {'type': 'string'},
+            'user_agent': {'type': 'string'},
+            'shopper_ip': {'type': 'string'},
             }

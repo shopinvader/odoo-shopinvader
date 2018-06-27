@@ -1,0 +1,128 @@
+interactions:
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": "true", "card.encrypted.json":
+      "adyenan0_1_1$XQlizeMZ5xkYhisxPapQ5Qt9ol9b18hdsASuRCMHldYpb9lht0rSBDmVBC6fv6djaocU4Pop+/enkKtwrDac7zyjLG8hju5/ZMTqcF8kIIP7iqm+PxkTInKJskT3G/MiQN+eb98DBdFjctH72Sp/KeRQuhJDuM/6MsaE03Igzq682+ETOxfxUNzddtmOgRyNeDZuZIe/6EbloHa3nJADzx+PA2yc/8ngP4tBpHFYhfTS7neQUAtGjB428pmGFdw1CKXj7iCDUknHCeJI8ejCV9eajSLoyOLy2DPd7fdh5GsscP6thuenfmMVkkXBxAczkDMlPjZxvhuuah/7eF//Bg==$vKVeWK5QrYnuhjj/3k6ow/F7IWY7SK9dsgfiGUXd7kinlSXQgvCCnNomeGKnKHmJwjRCVQWINizavJhN/UgqZwibBOaSLdVw8C8ehySr1X7qsv3IxH6RCJVzBbhy7pNqX+VQzSVk2bgS5HLB3GuVcgGurQ3kqnahEV4yuCA9D1iNxL1UL9B/v6Y12d68sAF6HB1ENf+N5JlykVhUW62/xF/q63xMksCCNB10bv4j+g=="},
+      "amount": {"currency": "USD", "value": 294750}, "merchantAccount": "AkretionCOM340",
+      "reference": "SO002|deltapc@yourcompany.example.com|1067", "browserInfo": null}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['831']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"status":422,"errorCode":"000","message":"Expiry
+        month should be between 1 and 12 inclusive","errorType":"validation","pspReference":"8815283788349653"}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Thu, 07 Jun 2018 13:40:34 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8815283788349653']
+      server: [Apache]
+      set-cookie: [JSESSIONID=AB9F457AE0154215387B72C5ADB5EFD0.test104e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 422, message: Unprocessable Entity}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": true, "card.encrypted.json":
+      "adyenan0_1_1$A6jUfCBmImF05bXg4ziHezvoMrof2FjacPQ1fAw1iBeVCSi02NCDrrExR43w3Hk+xA4/o1zH72qOGfcDFQUcT9z+Loi0BTzZAY9XsbjPqkUTcG3gu+BM18AEJl4ehIFX/x2aMGaOnzk6SHHEwetMkfKQOiXaH/inuL8a3CRoadX0ZKlDqdwPkRQLdDan2zrvpAjCI5Pa84eQA58lQuduBBsDhJZ9tundJE673usz7Hix59CYS03fE/fhMZ4lgENnh5csMeErEEpE2PX/aGsYeOyeThrI2s9YjcBDeOR/inE+YRBJ3DiYBNeVReJsEdJ4UaZhvoZzGi7QTfd+TOJvDQ==$JyT2YwA0BdoyEHLoYM8cKqx9uwDeAr/d/LHlh31vkv2WVkO4pSk7fEo7tNadDyVNOlTJJOKR7lnFFnwoAXrVrkB0/9ikZfapRs7oeY2rDNC5AL1DZIBXzKRCmqS6ENgppUVWpa1zn4wFiIg34v9PxhANCInlRvK7sKDRRxMJYI5hLkQHyOMvRzzMhFSKslYTZFtO0WbS8RpeJbJqk9jbwhJzUWejzaeYTZirh+sEfA=="},
+      "amount": {"currency": "EUR", "value": 294750}, "shopperEmail": "deltapc@yourcompany.example.com",
+      "reference": "SO002|deltapc@yourcompany.example.com|539", "browserInfo": {"userAgent":
+      "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9) Gecko/2008052912 Firefox/3.0",
+      "acceptHeader": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"},
+      "shopperReference": 10, "deliveryAddress": {"city": "Fremont", "houseNumberOrName":
+      "", "country": "US", "street": "3661 Station Street", "postalCode": "94538",
+      "stateOrProvince": "California"}, "shopperIP": "42.42.42.42", "merchantAccount":
+      "AkretionCOM340"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1274']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"status":422,"errorCode":"000","message":"Expiry
+        month should be between 1 and 12 inclusive","errorType":"validation","pspReference":"8815300483697523"}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Tue, 26 Jun 2018 21:26:09 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8815300483697523']
+      server: [Apache]
+      set-cookie: [JSESSIONID=158A8A4F65A45D9E74F15D245F22D5C9.test104e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 422, message: Unprocessable Entity}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": true, "card.encrypted.json":
+      "adyenan0_1_1$FaVjxIGxn6Eerd1OgOivK1HjeCMYoeyBAT5HNG61l9YtCryUsi9Bkl2EMPM9uPqnZYM1qzoAeXfLB3ClyRQ2I6fGZDMW4WCz9kYg2CjOq3Qs0cdF/TfEdLVnp8uaquZsJlCXpDjA71V99GWWTTEznoba6LzFx+bfoOg6+q7UCxarCWlUi5Up4GKd+FkEg3t5sY2Kmpdyn9R5ekDiRi32kGvgtcDsIvM5eMbkrq1e1DdQTryrtEAm2oDIylNAYVF+7rZ+aXRGQS0Lqlz3w0lOwFfPwuIvWASQLUwpiEAgZdE78aml5eS6tof1gzAgcHI6hIGwPawOFqHxS1aVaH2k7g==$FRFGfLPYB5tgnaYxKl7u48orHaNWcwXoYbrXwAP/kRt5jLJlogevyD1lFLZ75uEA5b8FqtOG7D77rXS8UmAJfsnAtrC7OXIRW7nU8WjI+I2sqLbb66sjZD8xI5FgDDhq7+uRa0MlOynrMzX28IL9QnQaLI1F1fBOkGSMo1et0XKUv7JRaaKxRSJ4Z2O2fA04iw9hd2VCHU/poXuBEkw18lOeK1LNXxZ1VgI8mswp4w=="},
+      "amount": {"currency": "EUR", "value": 294750}, "shopperEmail": "deltapc@yourcompany.example.com",
+      "reference": "SO002|deltapc@yourcompany.example.com|549", "browserInfo": {"userAgent":
+      "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9) Gecko/2008052912 Firefox/3.0",
+      "acceptHeader": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"},
+      "shopperReference": 10, "deliveryAddress": {"city": "Fremont", "houseNumberOrName":
+      "", "country": "US", "street": "3661 Station Street", "postalCode": "94538",
+      "stateOrProvince": "California"}, "shopperIP": "42.42.42.42", "merchantAccount":
+      "AkretionCOM340"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1274']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"status":422,"errorCode":"000","message":"Expiry
+        month should be between 1 and 12 inclusive","errorType":"validation","pspReference":"8515300484212564"}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Tue, 26 Jun 2018 21:27:01 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8515300484212564']
+      server: [Apache]
+      set-cookie: [JSESSIONID=47DB00630D35E2B094B64ED9612216B9.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 422, message: Unprocessable Entity}
+- request:
+    body: !!python/unicode '{"additionalData": {"executeThreeD": true, "card.encrypted.json":
+      "adyenan0_1_1$K+oAHJkljHPKD2K9jTvHOwxb5osxbxZmUjxV2RuLKU9/dQO2IzYchCyDu9SIviFD3MXKphN2XLcJgU+S3HacMEe8ZtmDnKnwyoFonXYBnatCsKQO9sMKNQO2Xe2M4CGQB+x57oy+DKu+6XZIJTP8GVWwg4eHhMk/tmzF1mWQuZNPYWBLYMWXVo9VoOHCtzGZ+gE9Vel98cfCiGqrjuErsZrb6ldXb+y6E98H9OI4yH3BowONQsB1yQue65S50/3TeyT7PV2ey7Uu24YpFIwCYUQYWRatWxqDaATs7l72mlUDSvKIequSToOp06zU67EkNtBEh2I707W+PAoq4EHHJw==$BzF7bXKDmH2tWMoT7NICwxk8onURxB1FdBBaiQkkFqkQpbzDgSNrUfqKh6dHkjTMBeEZ0GdW46Vx9tqt6bzLBxT3OscrdVFis67CyBO2N5BF6X95wu5oW+VyYyS8UAvO0Lor4O9jx4Ws40SkgptRYIkVUra8L17QLg2cxLDdPDz1pDmqIGT2X8QgrEfaL8Q3X/39dcJwjiD+EPhSmS4cYhz9rF/EyRDbnCJPL3twog=="},
+      "amount": {"currency": "EUR", "value": 294750}, "shopperEmail": "deltapc@yourcompany.example.com",
+      "reference": "SO002|deltapc@yourcompany.example.com|597", "browserInfo": {"userAgent":
+      "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9) Gecko/2008052912 Firefox/3.0",
+      "acceptHeader": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"},
+      "shopperReference": 10, "deliveryAddress": {"city": "Fremont", "houseNumberOrName":
+      "", "country": "US", "street": "3661 Station Street", "postalCode": "94538",
+      "stateOrProvince": "California"}, "shopperIP": "42.42.42.42", "merchantAccount":
+      "AkretionCOM340"}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: ['gzip, deflate']
+      Connection: [keep-alive]
+      Content-Length: ['1274']
+      Content-Type: [application/json]
+      User-Agent: [!!python/unicode 'shopinvader adyen-python-api-library/1.2.0']
+    method: POST
+    uri: https://pal-test.adyen.com/pal/servlet/Payment/v30/authorise
+  response:
+    body: {string: !!python/unicode '{"status":422,"errorCode":"000","message":"Expiry
+        month should be between 1 and 12 inclusive","errorType":"validation","pspReference":"8515300594230928"}'}
+    headers:
+      connection: [Keep-Alive]
+      content-type: [application/json;charset=utf-8]
+      date: ['Wed, 27 Jun 2018 00:30:23 GMT']
+      keep-alive: ['timeout=15, max=100']
+      pspreference: ['8515300594230928']
+      server: [Apache]
+      set-cookie: [JSESSIONID=098944099A5FFF5ECE68A77EB78BE2C3.test3e; Path=/pal;
+          Secure; HttpOnly]
+    status: {code: 422, message: Unprocessable Entity}
+version: 1

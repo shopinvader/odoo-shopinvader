@@ -58,21 +58,12 @@ class InvaderController(main.RestController):
             'cart_id': int(headers.get('HTTP_SESS_CART_ID', 0))
         }
 
-    @classmethod
-    def _get_client_header(cls, headers):
-        res = {}
-        for key, val in headers.items():
-            if key.upper().startswith('HTTP_INVADER_CLIENT_'):
-                res[key.replace('HTTP_INVADER_CLIENT_', '')] = val
-        return res
-
     def _get_component_context(self):
         """
         This method adds the component context:
         * the partner
         * the cart_id
         * the shopinvader_backend
-        * the client_header
         """
         res = super(InvaderController, self)._get_component_context()
         headers = request.httprequest.environ
@@ -81,5 +72,4 @@ class InvaderController(main.RestController):
             self._get_shopinvader_session_from_headers(headers)
         res['shopinvader_backend'] = \
             self._get_shopinvader_backend_from_request()
-        res['client_header'] = self._get_client_header(headers)
         return res
