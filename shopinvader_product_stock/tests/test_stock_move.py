@@ -101,6 +101,7 @@ class TestStockMove(SavepointComponentCase):
 
         self.shopinvader_backend.bind_all_product()
         self.move_obj = self.env['stock.move']
+        self.product_obj = self.env['product.product']
         self.job_obj = self.env['queue.job']
         self.loc_supplier = self.env.ref('stock.stock_location_suppliers')
         self.product = self.env.ref('product.product_product_8')
@@ -250,7 +251,7 @@ class TestStockMove(SavepointComponentCase):
             ('name', 'ilike', job_name),
         ]
         nb_job_before = job_obj.search_count(domain_queue_job)
-        move._product_stock_update_all()
+        move.mapped("product_id")._product_stock_update_all()
         nb_job_after = job_obj.search_count(domain_queue_job)
         self.assertGreater(nb_job_after, nb_job_before)
         return True
@@ -263,13 +264,14 @@ class TestStockMove(SavepointComponentCase):
         :return:
         """
         move_obj = self.move_obj
+        product_obj = self.product_obj
         picking_type_in = self.picking_type_in
         loc_supplier = self.loc_supplier
         product = self.product
         qty = randint(2, 1000)
         self._add_stock_to_product(product, qty=qty)
-        shopinvader_variant = move_obj._get_shopinvader_variants_from_product(
-            product)
+        shopinvader_variant = \
+            product_obj._get_shopinvader_variants_from_product(product)
         values = {
             'name': 'Forced Move',
             'location_id': loc_supplier.id,
@@ -280,12 +282,13 @@ class TestStockMove(SavepointComponentCase):
             'picking_type_id': picking_type_in.id,
         }
         move = move_obj.create(values)
-        mapper = move_obj._get_stock_mapper()
+        mapper = product_obj._get_stock_mapper()
         spec_backend = shopinvader_variant.index_id.backend_id.specific_backend
         spec_backend.work_on = mock.MagicMock()
         expected_value = shopinvader_variant._get_se_backend_stock_value()
         with mock_work_on(spec_backend):
-            move._product_stock_update_by_index(shopinvader_variant, mapper)
+            move.mapped("product_id")._product_stock_update_by_index(
+                shopinvader_variant, mapper)
         self.assertAlmostEqual(
             shopinvader_variant.last_stock_value, expected_value)
         return True

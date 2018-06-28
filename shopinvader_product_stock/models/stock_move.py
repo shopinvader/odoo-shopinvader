@@ -36,8 +36,7 @@ class StockMove(models.Model):
         :return: bool
         """
         result = super(StockMove, self).action_cancel()
-        if result:
-            result._jobify_product_stock_update()
+        self._jobify_product_stock_update()
         return result
 
     @api.multi
@@ -58,6 +57,5 @@ class StockMove(models.Model):
         :return: bool
         """
         result = super(StockMove, self).action_done()
-        if result:
-            result._jobify_product_stock_update()
+        self._jobify_product_stock_update()
         return result
