@@ -4,27 +4,19 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Partner Company",
-    "summary": "Partner Company",
-    "version": "8.0.1.0.0",
-    "category": "Partner",
-    "website": "www.akretion.com",
-    "author": " Akretion",
-    "license": "AGPL-3",
-    "application": False,
+    'name': 'Partner Company',
+    'version': '10.0.1.0.0',
+    'author': "Akretion, "
+              "Serpent Consulting Services Pvt. Ltd.",
+    'website': 'http://www.akretion.com',
+    'license': 'AGPL-3',
+    'category': 'Partner',
+    'summary': 'Partner Company',
+    'depends': [
+        'base',
+    ],
+    'data': [
+        'views/partner_view.xml',
+    ],
     'installable': False,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
-    "depends": [
-        "base",
-    ],
-    "data": [
-        "views/partner_view.xml",
-    ],
-    "demo": [
-    ],
-    "qweb": [
-    ]
 }
