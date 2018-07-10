@@ -7,14 +7,14 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
-    """Inhance the feature of Partner."""
+    """Enhance the feature of Partner."""
 
     _inherit = 'res.partner'
 
     company = fields.Char()
 
     def _sync_company_name(self):
-        """The methos used to set company name."""
+        """The method used to set company name."""
         for record in self:
             if record.is_company:
                 for contact in record.child_ids:
