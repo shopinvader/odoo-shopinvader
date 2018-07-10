@@ -7,34 +7,39 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
+    """Inhance the feature of Partner."""
+
     _inherit = 'res.partner'
 
     company = fields.Char()
 
     def _sync_company_name(self):
+        """The methos used to set company name."""
         for record in self:
             if record.is_company:
                 for contact in record.child_ids:
-                    if contact.use_parent_address:
-                        contact.company = record.name
-            elif record.parent_id and record.use_parent_address:
+                    contact.company = record.name
+            elif record.parent_id:
                 for contact in record.child_ids:
                     contact.company = record.company
 
     @api.multi
     def write(self, vals):
+        """Override the method to set company name."""
         res = super(ResPartner, self).write(vals)
         self._sync_company_name()
         return res
 
     @api.model
     def create(self, vals):
+        """Override the method to add company name."""
         partner = super(ResPartner, self).create(vals)
         partner._sync_company_name()
         return partner
 
-    @api.onchange('parent_id', 'use_parent_address', 'is_company')
+    @api.onchange('parent_id', 'is_company')
     def onchange_company(self):
+        """The method used to set company name to it's child."""
         if self.is_company:
             self.company = None
         elif self.parent_id.is_company:
@@ -42,6 +47,7 @@ class ResPartner(models.Model):
 
     @api.multi
     def name_get(self):
+        """Override the method set name of partner."""
         res = []
         for record in self:
             record_id, name = super(ResPartner, record).name_get()[0]
@@ -56,7 +62,7 @@ class ResPartner(models.Model):
                 if ctx.get('show_address'):
                     name = name + "\n" + self._display_address(
                         record, without_company=True)
-                name = name.replace('\n\n', '\n')
-                name = name.replace('\n\n', '\n')
+                if name:
+                    name = name.replace('\n\n', '\n')
             res.append((record.id, name))
         return res
