@@ -120,7 +120,7 @@ class CartService(Component):
     def _execute_payment_action(
             self, provider_name, transaction, cart, params):
         if transaction.url:
-            return {'redirect_to': transaction.url}
+            return {'data': {'redirect_to': transaction.url}}
         elif transaction.state in ('succeeded', 'to_capture'):
             return self._confirm_cart(cart)
         else:
