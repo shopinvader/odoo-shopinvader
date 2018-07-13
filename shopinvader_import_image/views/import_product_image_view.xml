@@ -9,14 +9,14 @@
                 <form string="Import shopinvader product images">
                     <group>
                         <group>
-			    <field name="product_model"/>
+            			    <field name="product_model"/>
                             <field name="overwrite"/>
                             <field name="file_csv" filename="filename"/>
                             <field name="file_zip" filename="filename"/>
                         </group>
                     </group>
                     <footer>
-                        <button class="oe_highlight" string="Import File" name="import_file" type="object"/> or
+                        <button class="oe_highlight" string="Import File" name="import_images" type="object"/> or
                         <button class="oe_link" string="Cancel" special="cancel"/>
                     </footer>
                 </form>
@@ -32,7 +32,7 @@
             <field name="target">new</field>
         </record>
 
-    <menuitem name="Import Product Image" id="menu_import_product_image"  parent="sales_team.menu_sales"
+    <menuitem name="Import product images" id="menu_import_product_image"  parent="sales_team.menu_sales"
               action="import_image_action_form" sequence="22"/>
     </data>
 </odoo>

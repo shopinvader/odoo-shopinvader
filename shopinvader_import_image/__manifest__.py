@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-###################################################################################
+###############################################################################
 #
 #    Akretion
-#    Copyright (C) 2018-TODAY Akretion (<https://www.cybrosys.com>).
-#    Copyright (C) 2017-TODAY Cybrosys Technologies(<https://www.cybrosys.com>).
+#    Copyright (C) 2018-TODAY Akretion (<https://www.cybrosys.com>)
+#    Copyright (C) 2017-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
 #    Author: Saritha Sahadevan (<https://www.cybrosys.com>)
 #    Author: Sylvain Calador (<https://www.akretion.com>)
 #
@@ -20,19 +20,25 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
-###################################################################################
+###############################################################################
 {
-    'name': 'Import Product Image',
+    'name': 'Import Shopinvader product image',
     'version': '10.0.1.0.0',
     'summary': 'Import product images',
-    'description': 'Import product image from a csv file  with URL or ZIP File',
+    'description': '''
+        Import product image from a CVS file from URLs or ZIP file',
+    ''',
     'author': 'Sylvain Calador',
     'company': 'Akretion',
     'maintainer': 'Akretion',
-    'website': "https://www.akretion.com",
+    'website': 'https://www.akretion.com',
     'category': 'Product',
-    'depends': ['product'],
-    'data': ['views/import_product_image_view.xml'],
+    'depends': [
+        'shopinvader_image'
+    ],
+    'data': [
+        'views/import_product_image_view.xml'
+    ],
     'license': 'AGPL-3',
     'images': [''],
     'application': False,
