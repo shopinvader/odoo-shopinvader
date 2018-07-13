@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo noupdate="1">
+
+    <!-- Multi - Company Rules -->
+    <record model="ir.rule" id="shopinvader_variant_comp_rule">
+        <field name="name">Shopinvader Variant multi-company</field>
+        <field name="model_id" ref="model_shopinvader_variant"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('backend_id.company_id','=',False),('backend_id.company_id','child_of',[user.company_id.id])]</field>
+    </record>
+
+</odoo>
