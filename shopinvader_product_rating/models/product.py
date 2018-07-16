@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Akretion (http://www.akretion.com).
+# Copyright 2018 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -7,6 +7,8 @@ from odoo import fields, models
 
 
 class ShopinvaderVariant(models.Model):
+    """Enhance the object to add feature."""
+
     _inherit = 'shopinvader.variant'
 
     rating = fields.Serialized(
@@ -25,7 +27,7 @@ class ShopinvaderVariant(models.Model):
                         'comment': rating.comment,
                         'rating': rating.rating,
                         'product_code': rating.product_id.default_code,
-                        })
+                    })
                     distribution[rating.rating] += 1
             if reviews:
                 count = len(reviews)
@@ -36,6 +38,6 @@ class ShopinvaderVariant(models.Model):
                         'average': average,
                         'count': count,
                         'distribution': distribution,
-                        }}
+                    }}
             else:
                 record.rating = {}
