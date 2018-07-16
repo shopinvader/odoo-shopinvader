@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Akretion (http://www.akretion.com).
+# Copyright 2018 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -15,6 +15,8 @@ except ImportError, err:
 
 
 class ProductMediaType(models.Model):
+    """Define new object to add feature of Product Media Type."""
+
     _name = 'product.media.type'
     _description = 'Product Media Type'
 
@@ -23,6 +25,8 @@ class ProductMediaType(models.Model):
 
 
 class ProductMedia(models.Model):
+    """Define new object to add Product's Media."""
+
     _name = 'product.media'
     _description = 'Product Media'
     _inherits = {'storage.file': 'file_id'}
@@ -32,38 +36,40 @@ class ProductMedia(models.Model):
         'File',
         required=True,
         ondelete='cascade')
-    restrict_variant_ids = fields.Many2many(
-        comodel_name='product.product',
-        string='Restrict Variant')
+    restrict_variant_ids = fields.Many2many('product.product',
+                                            string='Restrict Variant')
 
     media_type_id = fields.Many2one(
         'product.media.type',
         'Media Type')
+    res_id = fields.Many2one('product.template', 'Product Template')
 
-    def read(self, cr, uid, ids,
-             fields=None, context=None, load='_classic_read'):
+    @api.multi
+    def read(self, fields=None, load='_classic_read'):
+        """Override this method to resize the data file."""
         # Hack for binary compatibility
         add_datas_size = False
-        if context.get('bin_size') and 'datas' in fields:
-            fields.remove('datas')
+        context = self.env.context
+        if context.get('bin_size') and 'data' in fields:
+            fields.remove('data')
             fields.append('human_file_size')
             add_datas_size = True
-        res = super(ProductMedia, self).read(
-            cr, uid, ids, fields=fields, context=context, load=load)
+        res = super(ProductMedia, self).read(fields=fields, load=load)
         if add_datas_size:
             for record in res:
-                record['datas'] = record['human_file_size']
+                record['data'] = record['human_file_size']
         return res
 
     @api.onchange('name')
     def onchange_name(self):
-        for record in self:
-            if record.name:
-                filename, extension = os.path.splitext(record.name)
-                record.name = "%s%s" % (slugify(filename), extension)
+        """The method to set file name with extension if change name."""
+        if self.name:
+            filename, extension = os.path.splitext(self.name)
+            self.name = "%s%s" % (slugify(filename), extension)
 
     @api.model
     def default_get(self, fields_list):
+        """The method used to set default value of backend_id and res_model."""
         res = super(ProductMedia, self).default_get(fields_list)
         if 'backend_id' in fields_list:
             res['backend_id'] = self._deduce_backend_id()
@@ -82,33 +88,36 @@ class ProductMedia(models.Model):
 
     @api.model
     def create(self, vals):
+        """Override the method to set file."""
         # ORM bug computed field are not visible
         # in write from the inherited class
         # so it's drop need to set it manuallly
-        datas = vals.pop('datas')
+        datas = False
+        if vals.get('data'):
+            datas = vals.pop('data')
         media = super(ProductMedia, self).create(vals)
-        media.file_id.datas = datas
+        media.file_id.data = datas
         return media
 
 
 class ProductTemplate(models.Model):
+    """Enhance the object to add media feature."""
+
     _inherit = 'product.template'
 
-    media_ids = fields.One2many(
-        comodel_name='product.media',
-        inverse_name='res_id',
-        string='Media',
-        domain=lambda self: [("res_model", "=", self._name)],
-        copy=True)
+    media_ids = fields.One2many('product.media', 'res_id',
+                                string='Media',
+                                copy=True)
 
 
 class ProductProduct(models.Model):
+    """Enhance the object to add media feature."""
+
     _inherit = 'product.product'
 
-    variant_media_ids = fields.Many2many(
-        comodel_name='product.media',
-        string='Media',
-        compute='_compute_media')
+    variant_media_ids = fields.Many2many('product.media',
+                                         string='Media',
+                                         compute='_compute_media')
 
     def _compute_media(self):
         for record in self:
@@ -117,4 +126,4 @@ class ProductProduct(models.Model):
                 ('restrict_variant_ids', '=', False),
                 ('restrict_variant_ids', '=', record.id),
                 ('res_id', '=', record.product_tmpl_id.id),
-                ])
+            ])
