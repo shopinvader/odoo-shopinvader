@@ -52,6 +52,7 @@ Contributors
 ------------
 
 * Sébastien BEAU <sebastien.beau@akretion.com>
+* Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
 
 Funders
 -------
