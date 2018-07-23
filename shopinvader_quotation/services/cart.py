@@ -19,3 +19,8 @@ class CartService(Component):
         else:
             raise UserError(_('Impossible to create quotation the order is in the wrong state'))
         return self._to_json(cart)
+
+    def _convert_one_sale(self, sale):
+        res = super(CartService, self)._convert_one_sale(sale)
+        res.update({'available_for_quotation': True})
+        return res
