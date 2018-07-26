@@ -34,24 +34,44 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
             })
         return result
 
+    def _bind_categories(self, backend, lang, categories, parent_ids=None):
+        """
+        This method is used to bind all categories recursively starting
+        from the higher level to the lower one
+        :param backend: backend on which we need to bind categories
+        :param lang: binding language
+        :param categories: list of categories selected by user
+        :param parent_ids: parent category ids used to filter categories subset
+        :return:
+        """
+        if not parent_ids:
+            cat_to_bind = categories.filtered(
+                lambda x: x.parent_id.id not in categories.ids)
+        else:
+            cat_to_bind = categories.filtered(
+                lambda x: x.parent_id.id in parent_ids)
+        if cat_to_bind:
+            for category in cat_to_bind:
+                binded_categories = category.shopinvader_bind_ids
+                bind_record = binded_categories.filtered(
+                    lambda p: p.backend_id.id == backend.id and
+                    p.lang_id.id == lang.id)
+                bind_record = bind_record.with_prefetch(self._prefetch)
+                if not bind_record:
+                    data = {
+                        'record_id': category.id,
+                        'backend_id': backend.id,
+                        'lang_id': lang.id,
+                    }
+                    self.env['shopinvader.category'].create(data)
+                elif not bind_record.active:
+                    bind_record.write({'active': True})
+            self._bind_categories(backend, lang, categories, cat_to_bind.ids)
+
     @api.multi
     def action_bind_categories(self):
-        shopinv_categ_obj = self.env['shopinvader.category']
         for wizard in self:
             backend = wizard.backend_id
             for lang in wizard.backend_id.lang_ids:
-                for category in wizard.product_category_ids:
-                    binded_categories = category.shopinvader_bind_ids
-                    bind_record = binded_categories.filtered(
-                        lambda p: p.backend_id.id == backend.id and
-                        p.lang_id.id == lang.id)
-                    bind_record = bind_record.with_prefetch(self._prefetch)
-                    if not bind_record:
-                        data = {
-                            'record_id': category.id,
-                            'backend_id': wizard.backend_id.id,
-                            'lang_id': lang.id,
-                        }
-                        shopinv_categ_obj.create(data)
-                    elif not bind_record.active:
-                        bind_record.write({'active': True})
+                self._bind_categories(backend, lang,
+                                      wizard.product_category_ids)
