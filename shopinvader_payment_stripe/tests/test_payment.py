@@ -45,7 +45,7 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
 
     def _create_transaction(self, card):
         params = REDIRECT_URL.copy()
-        params['source'] = self._get_source(card)['id']
+        params['token'] = self._get_source(card)['id']
         response = self.service.dispatch('add_payment', params={
             'payment_mode': {'id': self.account_payment_mode.id},
             'stripe': params})
@@ -76,7 +76,7 @@ class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
         response, transaction, source = self._create_transaction(card)
         self.assertEqual(response['redirect_to'], transaction.url)
         self.assertEqual(transaction.state, 'pending')
-        self._fill_3d_secure(source, success=success)
+        self._fill_3d_secure(transaction, success=success)
         if mode == 'webhook':
             self._simulate_webhook(transaction)
             if success:

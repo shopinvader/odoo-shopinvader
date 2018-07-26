@@ -11,7 +11,7 @@ class PaymentServiceStripe(Component):
 
     def _validator_add_payment(self):
         return {
-            'source': {'type': 'string'},
+            'token': {'type': 'string'},
             'redirect_success_url': {'type': 'string'},
             'redirect_cancel_url': {'type': 'string'},
             }
