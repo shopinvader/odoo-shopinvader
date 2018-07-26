@@ -15,10 +15,15 @@ class CartService(Component):
     def request_quotation(self, **params):
         cart = self._get()
         if cart.state == 'draft' and cart.typology == 'cart':
-            cart.tyopology = 'quotation'
+            cart.typology = 'quotation'
         else:
             raise UserError(_('Impossible to create quotation the order is in the wrong state'))
-        return self._to_json(cart)
+        res = self._to_json(cart)
+        res.update({
+            'store_cache': {'last_sale': res['data'], 'cart': {}},
+            'set_session': {'cart_id': 0},
+        })
+        return res
 
     def _convert_one_sale(self, sale):
         res = super(CartService, self)._convert_one_sale(sale)
