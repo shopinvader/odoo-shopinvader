@@ -16,5 +16,6 @@
         "shopinvader",
     ],
     "data": [
+        'views/sale_view.xml'
     ],
 }
