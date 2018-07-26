@@ -8,6 +8,7 @@
         <field name="shopinvader_backend_id" ref="shopinvader.backend_1"/>
         <field name="user_id" ref="base.user_demo"/>
         <field name="pricelist_id" ref="product.list0"/>
+        <field name="project_id" ref="account_analytic_0"/>
         <field name="typology">cart</field>
     </record>
 

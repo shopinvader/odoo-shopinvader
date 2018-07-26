@@ -54,6 +54,13 @@ class ShopinvaderBackend(models.Model):
         'product.pricelist',
         string='Pricelist')
 
+    account_analytic_id = fields.Many2one(
+        comodel_name='account.analytic.account',
+        string='Analytic account',
+        help='This analytic account will be used to fill the '
+             'field on the sale order created.'
+    )
+
     _sql_constraints = [
         ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',
          'An authentication API Key can be used by one backend.'),
