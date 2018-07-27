@@ -43,20 +43,34 @@ class ShopinvaderProduct(models.Model):
                 {'active': False})
 
     def _prepare_shopinvader_variant(self, variant):
-        return {
+        values = {
             'record_id': variant.id,
             'shopinvader_product_id': self.id,
-            }
+        }
+        # If the variant is not active, we have to force active = False
+        if not variant.active:
+            values.update({
+                'active': variant.active,
+            })
+        return values
 
     def _create_shopinvader_variant(self):
+        """
+        Create missing shopinvader.variant and return new just created
+        :return: shopinvader.variant recordset
+        """
         self.ensure_one()
-        for variant in self.product_variant_ids:
-            if not self.env['shopinvader.variant'].search([
-                    ('record_id', '=', variant.id),
-                    ('shopinvader_product_id', '=', self.id),
-                    ]):
-                vals = self._prepare_shopinvader_variant(variant)
-                self.env['shopinvader.variant'].create(vals)
+        self_ctx = self.with_context(active_test=False)
+        shopinv_variant_obj = self_ctx.env['shopinvader.variant']
+        shopinv_variants = shopinv_variant_obj.browse()
+        for variant in self_ctx.product_variant_ids:
+            if not shopinv_variant_obj.search_count([
+                ('record_id', '=', variant.id),
+                ('shopinvader_product_id', '=', self.id),
+            ]):
+                vals = self_ctx._prepare_shopinvader_variant(variant)
+                shopinv_variants |= shopinv_variant_obj.create(vals)
+        return shopinv_variants
 
     @api.model
     def create(self, vals):
@@ -82,3 +96,23 @@ class ShopinvaderProduct(models.Model):
             backend = self.env['shopinvader.backend'].search([], limit=1)
             res['backend_id'] = backend.id
         return res
+
+    @api.multi
+    def toggle_published(self):
+        """
+        Toggle the active field
+        :return: dict
+        """
+        actual_active = self.filtered(
+            lambda s: s.active).with_prefetch(self._prefetch)
+        actual_inactive = self - actual_active
+        actual_inactive = actual_inactive.with_prefetch(self._prefetch)
+        if actual_inactive:
+            actual_inactive.write({
+                'active': True,
+            })
+        if actual_active:
+            actual_active.write({
+                'active': False,
+            })
+        return {}

@@ -89,12 +89,13 @@ class ProductCase(ProductCommonCase):
 
     def test_product_category_with_one_lang(self):
         self.backend.bind_all_product()
+        self.backend.bind_all_category()
         product = self.env.ref('product.product_product_4')
         self.assertEqual(len(product.shopinvader_bind_ids), 1)
         shopinvader_product = product.shopinvader_bind_ids
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
 
-    def test_product_category_with_one_lang(self):
+    def test_product_category_with_two_lang(self):
         lang = self.install_lang('base.lang_fr')
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
@@ -108,3 +109,148 @@ class ProductCase(ProductCommonCase):
                 self.assertEqual(binding.url_key, u'ipad-avec-ecran-retina')
             elif binding.lang_id.code == 'en_US':
                 self.assertEqual(binding.url_key, u'ipad-retina-display')
+
+    def test_create_product_binding1(self):
+        """
+        Test the creation of a product.template.
+        During the creation of a new product.template, Odoo create
+        automatically a new product.product.
+        If the product.template doesn't have a shopinvader.product, we should
+        create a new shopinvader.variant (because the product is not published)
+        But if it's published, we should create a shopinvader.variant for each
+        product.product related to this product.template.
+        So each time a product.product is created, we should check if we need
+        to create a shopinvader.variant.
+        For this test, we create a product.template not published (so no
+        shopinvader.variant should be created)
+        :return: bool
+        """
+        product_tmpl_obj = self.env['product.template'].with_context(
+            active_test=False)
+        product_values = {
+            'name': 'Shopinvader t-shirt',
+        }
+        product_tmpl = product_tmpl_obj.create(product_values)
+        self.assertFalse(product_tmpl.shopinvader_bind_ids)
+        product_product = product_tmpl.product_variant_ids
+        self.assertFalse(product_product.shopinvader_bind_ids)
+        return True
+
+    def test_create_product_binding2(self):
+        """
+        Test the creation of a product.template.
+        During the creation of a new product.template, Odoo create
+        automatically a new product.product.
+        If the product.template doesn't have a shopinvader.product, we should
+        create a new shopinvader.variant (because the product is not published)
+        But if it's published, we should create a shopinvader.variant for each
+        product.product related to this product.template.
+        So each time a product.product is created, we should check if we need
+        to create a shopinvader.variant.
+        For this test, we create a product.template who is not published
+        (but with a shopinvader.product related) so the related
+        product.product should have a shopinvader.variant.
+        :return: bool
+        """
+        backend = self.backend
+        product_tmpl_obj = self.env['product.template'].with_context(
+            active_test=False)
+        lang = self.env['res.lang']._lang_get(self.env.user.lang)
+        product_values = {
+            'name': 'Shopinvader t-shirt',
+            'shopinvader_bind_ids': [(0, False, {
+                'backend_id': backend.id,
+                'lang_id': lang.id,
+                'active': False,
+            })],
+        }
+        product_tmpl = product_tmpl_obj.create(product_values)
+        self.assertTrue(product_tmpl.shopinvader_bind_ids)
+        product_product = product_tmpl.product_variant_ids
+        self.assertEqual(len(product_product.shopinvader_bind_ids), 1)
+        self.assertFalse(product_product.shopinvader_bind_ids.active)
+        return True
+
+    def test_create_product_binding3(self):
+        """
+        Test the creation of a product.template.
+        During the creation of a new product.template, Odoo create
+        automatically a new product.product.
+        If the product.template doesn't have a shopinvader.product, we should
+        create a new shopinvader.variant (because the product is not published)
+        But if it's published, we should create a shopinvader.variant for each
+        product.product related to this product.template.
+        So each time a product.product is created, we should check if we need
+        to create a shopinvader.variant.
+        For this test, we create a product.template who is published
+        (with a shopinvader.product related and active = True) so the related
+        product.product should have a shopinvader.variant.
+        :return: bool
+        """
+        backend = self.backend
+        product_tmpl_obj = self.env['product.template'].with_context(
+            active_test=False)
+        lang = self.env['res.lang']._lang_get(self.env.user.lang)
+        product_values = {
+            'name': 'Shopinvader t-shirt',
+            'shopinvader_bind_ids': [(0, False, {
+                'backend_id': backend.id,
+                'lang_id': lang.id,
+                'active': True,
+            })],
+        }
+        product_tmpl = product_tmpl_obj.create(product_values)
+        self.assertTrue(product_tmpl.shopinvader_bind_ids)
+        product_product = product_tmpl.product_variant_ids
+        self.assertEqual(len(product_product.shopinvader_bind_ids), 1)
+        self.assertFalse(product_product.shopinvader_bind_ids.active)
+        return True
+
+    def test_create_product_binding4(self):
+        """
+        Test the creation of a product.template.
+        During the creation of a new product.template, Odoo create
+        automatically a new product.product.
+        If the product.template doesn't have a shopinvader.product, we should
+        create a new shopinvader.variant (because the product is not published)
+        But if it's published, we should create a shopinvader.variant for each
+        product.product related to this product.template.
+        So each time a product.product is created, we should check if we need
+        to create a shopinvader.variant.
+        For this test, we create a product.template who is published
+        (with a shopinvader.product related and active = True) so the related
+        product.product should have a shopinvader.variant.
+        :return: bool
+        """
+        backend = self.backend
+        color_attribute = self.env.ref("product.product_attribute_2")
+        white_attr = self.env.ref("product.product_attribute_value_3")
+        black_attr = self.env.ref("product.product_attribute_value_4")
+        attr = white_attr | black_attr
+        product_tmpl_obj = self.env['product.template'].with_context(
+            active_test=False)
+        lang = self.env['res.lang']._lang_get(self.env.user.lang)
+        product_values = {
+            'name': 'Shopinvader t-shirt',
+            'shopinvader_bind_ids': [(0, False, {
+                'backend_id': backend.id,
+                'lang_id': lang.id,
+                'active': True,
+            })],
+        }
+        product_tmpl = product_tmpl_obj.create(product_values)
+        self.assertTrue(product_tmpl.shopinvader_bind_ids)
+        product_product = product_tmpl.product_variant_ids
+        self.assertEqual(len(product_product.shopinvader_bind_ids), 1)
+        self.assertFalse(product_product.shopinvader_bind_ids.active)
+        # Then we add some products attributes (to create some variants)
+        product_tmpl.write({
+            'attribute_line_ids': [(0, False, {
+                'attribute_id': color_attribute.id,
+                'value_ids': [(6, False, attr.ids)],
+            })],
+        })
+        self.assertEqual(len(attr), len(product_tmpl.product_variant_ids))
+        self.assertEqual(len(attr), len(
+            product_tmpl.shopinvader_bind_ids.shopinvader_variant_ids))
+        return True

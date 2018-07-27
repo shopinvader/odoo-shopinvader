@@ -20,7 +20,12 @@ class ProductTemplate(models.Model):
     shopinvader_bind_ids = fields.One2many(
         'shopinvader.product',
         'record_id',
-        string='Shopinvader Binding')
+        string='Shopinvader Binding',
+        context={
+            'active_test': False,
+            'map_children': True,
+        },
+    )
 
     shopinvader_backend_ids = fields.Many2many(
         string='ShopInvader Backends',

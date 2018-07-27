@@ -20,7 +20,11 @@ class ProductProduct(models.Model):
     shopinvader_bind_ids = fields.One2many(
         'shopinvader.variant',
         'record_id',
-        string='Shopinvader Binding')
+        string='Shopinvader Binding',
+        context={
+            'active_test': False,
+        },
+    )
 
     shopinvader_backend_ids = fields.Many2many(
         string='ShopInvader Backends',

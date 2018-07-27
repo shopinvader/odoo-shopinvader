@@ -73,10 +73,10 @@ class ShopinvaderBackend(models.Model):
 
     @api.model
     def _default_last_step_id(self):
-        last_step = self.env['shopinvader.cart.step']
+        last_step = self.env['shopinvader.cart.step'].browse()
         try:
             last_step = self.env.ref('shopinvader.cart_end')
-        except Exception:
+        except ValueError:
             pass
         return last_step
 
