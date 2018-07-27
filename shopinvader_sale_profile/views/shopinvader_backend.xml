@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Akretion
+     Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_backend_view_form">
+        <field name="name">shopinvader.backend.form (in shopinvader_sale_profile)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader_locomotive.shopinvader_backend_view_form"/>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <group name="allowed_country" position="before">
+                <group name="price" colspan="4" attrs="{'invisible': [('use_sale_profile', '=', False)]}">
+                    <field name="sale_profile_ids" string="Sale profiles" colspan="4" nolabel="True">
+                        <tree editable="bottom">
+                            <field name="fiscal_position_ids" widget="many2many_tags"/>
+                            <field name="pricelist_id"/>
+                            <field name="code"/>
+                            <field name="default"/>
+                        </tree>
+                    </field>
+                </group>
+            </group>
+            <field name="pricelist_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('use_sale_profile', '=', True)], 'required': [('use_sale_profile', '=', False)]}</attribute>
+                <attribute name="required">False</attribute>
+            </field>
+            <field name="pricelist_id" position="before">
+                <field name="use_sale_profile"/>
+            </field>
+        </field>
+    </record>
+</odoo>
