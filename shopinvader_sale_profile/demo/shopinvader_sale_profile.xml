@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 Akretion
+     Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="shopinvader_sale_profile_1" model="shopinvader.sale.profile">
+        <field name="backend_id" ref="shopinvader.backend_1"/>
+        <field name="pricelist_id" ref="product.list0"/>
+        <field name="default" eval="True"/>
+        <field name="code">public_tax_inc</field>
+        <field name="fiscal_position_ids" eval="[(6, 0, [ref('shopinvader.fiscal_position_0')])]"/>
+    </record>
+
+    <record id="shopinvader_sale_profile_2" model="shopinvader.sale.profile">
+        <field name="backend_id" ref="shopinvader.backend_1"/>
+        <field name="pricelist_id" ref="shopinvader.pricelist_1"/>
+        <field name="code">pro_tax_exc</field>
+        <field name="fiscal_position_ids"
+               eval="[(6, 0, [ref('shopinvader.fiscal_position_1'), ref('shopinvader.fiscal_position_2')])]"/>
+    </record>
+
+    <record id="shopinvader_sale_profile_3" model="shopinvader.sale.profile">
+        <field name="backend_id" ref="shopinvader.backend_1"/>
+        <field name="pricelist_id" ref="product.list0"/>
+        <field name="code">public_tax_exc</field>
+        <field name="fiscal_position_ids" eval="[(6, 0, [ref('shopinvader.fiscal_position_2')])]"/>
+    </record>
+</odoo>
