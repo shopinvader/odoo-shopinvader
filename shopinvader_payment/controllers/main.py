@@ -10,6 +10,6 @@ from odoo.http import route
 class TransactionShopinvaderController(InvaderController):
 
     @route('/shopinvader/cart/check_payment/<string:provider_name>',
-           methods=['GET'], auth="shopinvader")
+           methods=['GET', 'POST'], auth="api_key")
     def check_payment(self, **params):
         return self._process_method('cart', 'check_payment', params=params)
