@@ -81,6 +81,9 @@ class CartService(Component):
                 'required': True,
                 }
             }
+        # TODO the current way to retrieve the validator do not allow
+        # to make set as require some field of the validator
+        # we should found a better solution
         for provider in self.env['gateway.transaction']._get_all_provider():
             if hasattr(provider, '_validator_check_payment'):
                 validator.update(provider._validator_check_payment())

@@ -21,8 +21,8 @@ class PaymentServiceAdyen(Component):
 
     def _validator_check_payment(self):
         return {
-            'md': {'type': 'string', 'required': True},
-            'pares': {'type': 'string', 'required': True},
+            'md': {'type': 'string'},
+            'pares': {'type': 'string'},
             'accept_header': {'type': 'string'},
             'user_agent': {'type': 'string'},
             'shopper_ip': {'type': 'string'},
