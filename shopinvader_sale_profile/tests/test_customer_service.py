@@ -15,11 +15,11 @@ class TestShopInvaderCustomerService(CommonCase):
     def setUp(self, *args, **kwargs):
         super(TestShopInvaderCustomerService, self).setUp(*args, **kwargs)
         self.fposition_obj = self.env['account.fiscal.position']
-        self.default_sale_profile = self.env.ref(
+        self.profile_default_public_tax_inc = self.env.ref(
             'shopinvader_sale_profile.shopinvader_sale_profile_1')
-        self.sale_profile2 = self.env.ref(
+        self.profile_pro_tax_exc = self.env.ref(
             'shopinvader_sale_profile.shopinvader_sale_profile_2')
-        self.sale_profile3 = self.env.ref(
+        self.profile_public_tax_exc = self.env.ref(
             'shopinvader_sale_profile.shopinvader_sale_profile_3')
         # Data to create a shopinvader partner
         self.data = {
@@ -29,31 +29,22 @@ class TestShopInvaderCustomerService(CommonCase):
             'zip': '43110',
             'city': 'Aurec sur Loire',
             'phone': '0485485454',
+            'external_id': 'D5CdkqOEL',
         }
         self.backend.write({
             'use_sale_profile': True,
+            'pricelist_id': False,
         })
         session = self.shopinvader_session
         with self.work_on_services(partner=None,
                                    shopinvader_session=session) as work:
             self.service = work.component(usage='customer')
 
-    def test_create_customer(self):
-        """
-        Test to create a shopinvader.partner (should also create a res.partner)
-        Ensure that the country is correctly set on the partner and the
-        profile too
-        :return: bool
-        """
-        sale_profile = self.default_sale_profile
-        country_fr = self.env.ref('base.fr')
+    def _create_partner(self, country, extra=None):
         data = self.data
-        data.update({
-            'external_id': 'D5CdkqOEL',
-            'country': {
-                'id': country_fr.id,
-            },
-        })
+        if extra:
+            data.update(extra)
+        data['country'] = {'id': self.env.ref('base.%s' % country).id}
         result = self.service.dispatch('create', params=data)['data']
         partner = self.env['res.partner'].browse(result.get('id', False))
         self.assertEqual(partner.email, data.get('email'))
@@ -67,9 +58,21 @@ class TestShopInvaderCustomerService(CommonCase):
                     partner.country_id.id, data.get(key, {}).get('id', 't'))
             else:
                 self.assertEqual(partner[key], data.get(key))
+        binded = first(partner.shopinvader_bind_ids.filtered(
+            lambda s: s.backend_id.id == self.backend.id))
+        return binded
+
+    def test_create_customer(self):
+        """
+        Test to create a shopinvader.partner (should also create a res.partner)
+        Ensure that the country is correctly set on the partner and the
+        profile too
+        :return: bool
+        """
+        shopinvader_partner = self._create_partner('fr')
         self.assertEqual(
-            partner.shopinvader_bind_ids.sale_profile_id.id, sale_profile.id)
-        return True
+            shopinvader_partner.sale_profile_id,
+            self.profile_default_public_tax_inc)
 
     def test_create_customer_business_sale_profile(self):
         """
@@ -79,44 +82,19 @@ class TestShopInvaderCustomerService(CommonCase):
         The computation should assign the right profile.
         :return: bool
         """
-        fposition_obj = self.fposition_obj
-        shopinvader_pricelist = self.env.ref('shopinvader.pricelist_1')
-        sale_profile = self.sale_profile2
-        fiscal_positions = sale_profile.fiscal_position_ids
-        backend = self.backend
-        data = self.data
-        # Pick first country of fiscal position to ensure have a fiscal pos.
-        country = first(fiscal_positions.mapped("country_id"))
-        if not country:
-            country = first(
-                fiscal_positions.mapped("country_group_id.country_ids"))
-        data.update({
-            'email': 'business@customer.example.com',
-            'external_id': 'D5CdkqOEL',
-            'vat': 'BE0477472701',
-            'country': {
-                'id': country.id,
-            },
-        })
-        result = self.service.dispatch('create', params=data).get('data', {})
-        partner = self.env['res.partner'].browse(result.get('id', False))
-        # For this test, we need a fiscal position on the partner created to
-        # check if the sale profile is correctly assigned
-        # We use fiscal positions defined into demo data of the profile
-        fpos_id = fposition_obj.get_fiscal_position(
-            partner.id, delivery_id=partner.id)
-        self.assertIn(fpos_id, fiscal_positions.ids)
+        shopinvader_partner = self._create_partner(
+            'fr', extra={'vat': 'BE0477472701'})
         # Note for now we do not have automatic rule to
         # set a specific pricelist depending on vat number
         # so we set it manually
-        partner.write({
-            'property_product_pricelist': shopinvader_pricelist.id,
+        shopinvader_partner.write({
+            'property_product_pricelist':
+                self.env.ref('shopinvader.pricelist_1').id,
         })
-        binded = first(partner.shopinvader_bind_ids.filtered(
-            lambda s: s.backend_id.id == backend.id))
-        self.assertEqual(binded.sale_profile_id.id, sale_profile.id)
-        self.assertEqual(partner.is_company, True)
-        return True
+        self.assertEqual(
+            shopinvader_partner.sale_profile_id,
+            self.profile_pro_tax_exc)
+        self.assertEqual(shopinvader_partner.is_company, True)
 
     def test_create_customer_exclude_sale_profile(self):
         """
@@ -126,36 +104,10 @@ class TestShopInvaderCustomerService(CommonCase):
         The computation should assign the right profile.
         :return: bool
         """
-        sale_profile = self.sale_profile3
-        fiscal_positions = sale_profile.fiscal_position_ids
-        fposition_obj = self.fposition_obj
-        backend = self.backend
-        data = self.data
-        # Pick first country of fiscal position to ensure have a fiscal pos.
-        country = first(fiscal_positions.mapped("country_id"))
-        if not country:
-            country = first(fiscal_positions.mapped(
-                "country_group_id.country_ids"))
-        data.update({
-            'email': 'export@customer.example.com',
-            'external_id': 'D5CdkqOEL',
-            'phone': '0485485454',
-            'country': {
-                'id': country.id,
-            },
-        })
-        result = self.service.dispatch('create', params=data).get('data', {})
-        partner = self.env['res.partner'].browse(result.get('id', False))
-        # For this test, we need a fiscal position on the partner created to
-        # check if the sale profile is correctly assigned
-        # We use fiscal positions defined into demo data of the profile
-        fpos_id = fposition_obj.get_fiscal_position(
-            partner.id, delivery_id=partner.id)
-        self.assertIn(fpos_id, fiscal_positions.ids)
-        binded = first(partner.shopinvader_bind_ids.filtered(
-            lambda s: s.backend_id.id == backend.id))
-        self.assertEqual(binded.sale_profile_id.id, sale_profile.id)
-        return True
+        shopinvader_partner = self._create_partner('us')
+        self.assertEqual(
+            shopinvader_partner.sale_profile_id,
+            self.profile_public_tax_exc)
 
     def test_create_customer_default_sale_profile(self):
         """
@@ -165,29 +117,14 @@ class TestShopInvaderCustomerService(CommonCase):
         So we check if the default profile is assign to this new partner.
         :return: bool
         """
-        sale_profile = self.default_sale_profile
-        # Ensure this profile is the default
-        self.assertTrue(sale_profile.default)
-        fposition_obj = self.fposition_obj
-        backend = self.backend
-        data = self.data
-        data.update({
-            'email': 'export-default@customer.example.com',
-            'external_id': 'D5CdkqOEL',
-            'phone': '0485485454',
-        })
-        result = self.service.dispatch('create', params=data).get('data', {})
-        partner = self.env['res.partner'].browse(result.get('id', False))
-        # For this test, we need a fiscal position on the partner created to
-        # check if the sale profile is correctly assigned
-        # We use fiscal positions defined into demo data of the profile
-        fpos_id = fposition_obj.get_fiscal_position(
-            partner.id, delivery_id=partner.id)
-        self.assertFalse(fpos_id)
-        binded = first(partner.shopinvader_bind_ids.filtered(
-            lambda s: s.backend_id.id == backend.id))
-        self.assertEqual(binded.sale_profile_id.id, sale_profile.id)
-        return True
+        # remove the profile tax_exc and create a 'US' partner
+        # as they is no more role that match the partner should have
+        # the default one
+        self.profile_public_tax_exc.unlink()
+        shopinvader_partner = self._create_partner('us')
+        self.assertEqual(
+            shopinvader_partner.sale_profile_id,
+            self.profile_default_public_tax_inc)
 
     def test_create_customer_without_profile(self):
         """
@@ -196,35 +133,6 @@ class TestShopInvaderCustomerService(CommonCase):
         :return: bool
         """
         # Disable auto-assign profile
-        self.backend.write({
-            'use_sale_profile': False,
-        })
-        fiscal_positions = self.env.ref("shopinvader.fiscal_position_2")
-        fposition_obj = self.fposition_obj
-        backend = self.backend
-        data = self.data
-        # Pick first country of fiscal position to ensure have a fiscal pos.
-        country = first(fiscal_positions.mapped("country_id"))
-        if not country:
-            country = first(fiscal_positions.mapped(
-                "country_group_id.country_ids"))
-        data.update({
-            'email': 'export-no-profile@customer.example.com',
-            'external_id': 'D5CdkqOEL',
-            'phone': '0485485454',
-            'country': {
-                'id': country.id,
-            },
-        })
-        result = self.service.dispatch('create', params=data).get('data', {})
-        partner = self.env['res.partner'].browse(result.get('id', False))
-        # For this test, we need a fiscal position on the partner created to
-        # check if the sale profile is correctly assigned
-        # We use fiscal positions defined into demo data of the profile
-        fpos_id = fposition_obj.get_fiscal_position(
-            partner.id, delivery_id=partner.id)
-        self.assertIn(fpos_id, fiscal_positions.ids)
-        binded = first(partner.shopinvader_bind_ids.filtered(
-            lambda s: s.backend_id.id == backend.id))
-        self.assertFalse(binded.sale_profile_id.id)
-        return True
+        self.backend.use_sale_profile = False
+        shopinvader_partner = self._create_partner('fr')
+        self.assertFalse(shopinvader_partner.sale_profile_id)

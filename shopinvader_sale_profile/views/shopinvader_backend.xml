@@ -10,7 +10,7 @@
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
             <group name="allowed_country" position="before">
-                <group name="price" colspan="4">
+                <group name="price" colspan="4" attrs="{'invisible': [('use_sale_profile', '=', False)]}">
                     <field name="sale_profile_ids" string="Sale profiles" colspan="4" nolabel="True">
                         <tree editable="bottom">
                             <field name="fiscal_position_ids" widget="many2many_tags"/>
@@ -21,9 +21,12 @@
                     </field>
                 </group>
             </group>
-            <field name="pricelist_id" position="replace">
+            <field name="pricelist_id" position="attributes">
+                <attribute name="attrs">{'invisible': [('use_sale_profile', '=', True)], 'required': [('use_sale_profile', '=', False)]}</attribute>
+                <attribute name="required">False</attribute>
+            </field>
+            <field name="pricelist_id" position="before">
                 <field name="use_sale_profile"/>
-                <field name="pricelist_id" attrs="{'invisible': [('use_sale_profile', '=', True)]}"/>
             </field>
         </field>
     </record>

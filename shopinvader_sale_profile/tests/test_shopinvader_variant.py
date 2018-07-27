@@ -11,13 +11,24 @@ class TestShopinvaderVariant(ProductCommonCase):
     Tests for shopinvader.variant
     """
 
-    def test_price(self):
+    def _check_price(self, computed_price, expected_price):
+        for key, expected_dict in expected_price.items():
+            self.assertIn(key, computed_price.keys())
+            price_value = computed_price[key]
+            for value_key, expected_value in price_value.items():
+                self.assertEqual(expected_value, price_value[value_key])
+
+    def test_price_with_sale_profile(self):
         """
         Test if price field is correctly computed
         :return: bool
         """
+        self.backend.write({
+            'use_sale_profile': True,
+            'pricelist_id': False,
+        })
         # Expecting values
-        expected_results = {
+        expected_price = {
             'public_tax_exc': {
                 'tax_included': False,
                 'value': 652.17,
@@ -30,15 +41,21 @@ class TestShopinvaderVariant(ProductCommonCase):
                 'tax_included': False,
                 'value': 521.74,
             },
+        }
+        computed_price = self.shopinvader_variant.price
+        self._check_price(computed_price, expected_price)
+
+    def test_price_without_sale_profile(self):
+        """
+        Test if price field is correctly computed
+        :return: bool
+        """
+        # Expecting values
+        expected_price = {
             'default': {
                 'tax_included': True,
                 'value': 750.0,
             },
         }
-
         computed_price = self.shopinvader_variant.price
-        for key, expected_dict in expected_results.items():
-            self.assertIn(key, computed_price.keys())
-            price_value = computed_price[key]
-            for value_key, expected_value in price_value.items():
-                self.assertEqual(expected_value, price_value[value_key])
+        self._check_price(computed_price, expected_price)
