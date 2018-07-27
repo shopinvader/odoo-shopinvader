@@ -80,11 +80,36 @@ class ShopinvaderBackend(models.Model):
             pass
         return last_step
 
+    def _to_compute_nbr_content(self):
+        """
+        Get a dict to compute the number of content.
+        The dict is build like this:
+        Key = Odoo number fields string (should be Integer/Float)
+        Value = The target model string
+        :return: dict
+        """
+        values = {
+            # key => Odoo field: value => related model
+            'nbr_product': 'shopinvader.product',
+            'nbr_category': 'shopinvader.category',
+            'nbr_variant': 'shopinvader.variant',
+        }
+        return values
+
     def _compute_nbr_content(self):
-        for record in self:
-            for key in ['product', 'category', 'variant']:
-                record['nbr_%s' % key] = self.env['shopinvader.%s' % key]\
-                    .search_count([('backend_id', '=', record.id)])
+        to_count = self._to_compute_nbr_content()
+        domain = [
+            ('backend_id', 'in', self.ids)
+        ]
+        for odoo_field, odoo_model in to_count.iteritems():
+            if odoo_model in self.env and self.env[odoo_model]._table_exist():
+                target_model_obj = self.env[odoo_model]
+                result = target_model_obj.read_group(
+                    domain, ['backend_id'], ['backend_id'], lazy=False)
+                result = dict((data['backend_id'][0], data['__count'])
+                              for data in result)
+                for record in self:
+                    record[odoo_field] = result.get(record.id, 0)
 
     def _bind_all_content(self, model, bind_model, domain):
         for backend in self:
