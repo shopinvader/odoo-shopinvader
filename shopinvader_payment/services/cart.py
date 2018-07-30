@@ -9,7 +9,7 @@ from odoo.addons.component.core import Component
 
 class CartService(Component):
     _inherit = [
+        'shopinvader.abstract.payment.service',
         'shopinvader.cart.service',
-        'shopinvader.abstract.payment.service'
     ]
     _name = 'shopinvader.cart.service'

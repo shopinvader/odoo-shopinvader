@@ -128,7 +128,7 @@ class AbstractPaymentService(AbstractComponent):
             raise UserError(_('Payment failed please retry'))
 
     def _convert_one_sale(self, cart):
-        res = super(CartService, self)._convert_one_sale(cart)
+        res = super(AbstractPaymentService, self)._convert_one_sale(cart)
         if cart:
             methods = self._get_available_payment_mode()
             selected_method = {}
