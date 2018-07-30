@@ -3,7 +3,7 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-
+from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
@@ -12,7 +12,7 @@ from odoo.tools.translate import _
 class QuotationService(Component):
     _inherit = 'shopinvader.abstract.sale.service'
     _name = 'shopinvader.quotation.service'
-    _usage = 'quotation'
+    _usage = 'quotations'
     _expose_model = 'sale.order'
 
     # The following method are 'public' and can be called from the controller.
