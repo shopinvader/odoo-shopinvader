@@ -9,6 +9,13 @@ from odoo import api, models
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
+    def _get_product_to_update(self):
+        # Maybe we can be more retrictive
+        # depending of the move location and destination
+        # For now we take all move and binded products
+        return self.mapped("product_id").filtered(
+            lambda p: p.is_shopinvader_binded)
+
     @api.multi
     def _jobify_product_stock_update(self):
         """
@@ -16,13 +23,7 @@ class StockMove(models.Model):
         updated since last sync.
         :return: bool
         """
-        codes = ['incoming', 'outgoing']
-        moves = self.filtered(lambda m: m.picking_type_id.code in codes)
-        moves = moves.with_prefetch(self._prefetch)
-        products = moves.mapped("product_id")
-        # Take only binded products
-        products = products.filtered(lambda p: p.is_shopinvader_binded)
-        products = products.with_prefetch(self._prefetch)
+        products = self._get_product_to_update()
         if products:
             description = "Update shopinvader variants (stock update trigger)"
             products.with_delay(
@@ -46,7 +47,8 @@ class StockMove(models.Model):
         :return: stock.move recordset
         """
         result = super(StockMove, self).action_confirm()
-        if result:
+        # Do not generate a second job if action_done was originaly called
+        if result and not self._context.get('from_action_done'):
             result._jobify_product_stock_update()
         return result
 
@@ -56,6 +58,7 @@ class StockMove(models.Model):
 
         :return: bool
         """
-        result = super(StockMove, self).action_done()
+        result = super(StockMove, self.with_context(
+            from_action_done=True)).action_done()
         self._jobify_product_stock_update()
         return result

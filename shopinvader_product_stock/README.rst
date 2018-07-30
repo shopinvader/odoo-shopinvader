@@ -29,7 +29,6 @@ TODO
 Known issues / Roadmap
 ======================
 
-Service should use Component, but we need to wait for 10 version
 
 Bug Tracker
 ===========

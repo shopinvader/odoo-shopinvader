@@ -23,7 +23,8 @@
         'shopinvader_search_engine',
     ],
     "data": [
-        'views/se_backend.xml',
+        'views/shopinvader_backend.xml',
+        'data/ir_export_product.xml',
     ],
     'external_dependencies': {
         'python': [
