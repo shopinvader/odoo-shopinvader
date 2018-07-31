@@ -18,6 +18,6 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if self.typology == 'quotation' and self.state == 'draft':
             return 'estimating'
-        if self.typology == 'quotation' and self.state == 'draft':
+        if self.typology == 'quotation' and self.state == 'sent':
             return 'estimated'
         return super(SaleOrder, self)._get_shopinvader_state()
