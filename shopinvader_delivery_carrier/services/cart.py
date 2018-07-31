@@ -4,15 +4,15 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo.addons.component.core import Component
+from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 import logging
 _logger = logging.getLogger(__name__)
 
 
-class CartService(Component):
-    _inherit = 'shopinvader.cart.service'
+class CartService(AbstractComponent):
+    _inherit = 'shopinvader.abstract.sale.service'
 
     # Public service
     def add_carrier(self, **params):
