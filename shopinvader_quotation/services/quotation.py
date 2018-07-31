@@ -59,10 +59,9 @@ class QuotationService(Component):
 
     def _confirm_quotation(self, quotation):
         quotation.action_confirm_cart()
-        res = self._to_json(quotation)
-        res.update({
-            'store_cache': {'last_sale': res['data'], 'cart': {}},
+        res = self._to_json(quotation)[0]
+        return {
+            'data': res,
+            'store_cache': {'last_sale': res, 'cart': {}},
             'set_session': {'cart_id': 0},
-            })
-        return res
-
+            }

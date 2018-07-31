@@ -3,7 +3,7 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import models, fields
+from odoo import models, fields, api
 
 
 class SaleOrder(models.Model):
@@ -13,6 +13,10 @@ class SaleOrder(models.Model):
     shopinvader_state = fields.Selection(selection_add=[
         ('estimating', 'Estimating Quotation'),
         ('estimated', 'Estimated Quotation')])
+
+    @api.depends('state', 'typology')
+    def _compute_shopinvader_state(self):
+        super(SaleOrder, self)._compute_shopinvader_state()
 
     def _get_shopinvader_state(self):
         self.ensure_one()
