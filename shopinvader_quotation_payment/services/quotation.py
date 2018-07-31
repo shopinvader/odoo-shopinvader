@@ -10,8 +10,8 @@ from odoo.tools.translate import _
 
 class QuotationService(Component):
     _inherit = [
-        'shopinvader.quotation.service',
-        'shopinvader.abstract.payment.service'
+        'shopinvader.abstract.payment.service',
+        'shopinvader.quotation.service'
     ]
     _name = 'shopinvader.quotation.service'
 
