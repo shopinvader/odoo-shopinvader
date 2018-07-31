@@ -254,3 +254,16 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(attr), len(
             product_tmpl.shopinvader_bind_ids.shopinvader_variant_ids))
         return True
+
+    def test_editing_product_with_sale_manager_user(self):
+        # test that product can still be edited without issue
+        # when automatically generating a new url
+        self.backend.bind_all_product()
+        self.user = self.env.ref('base.user_demo')
+        self.user.write({'groups_id': [
+            (4, self.env.ref('sales_team.group_sale_manager').id)]})
+        self.env = self.env(user=self.user)
+        product = self.env['product.template'].search([
+            ('shopinvader_bind_ids', '!=', False)
+            ], limit=1)
+        product.name += ' modification'
