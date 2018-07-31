@@ -57,7 +57,7 @@ class QuotationService(Component):
             ('typology', '=', 'quotation'),
             ]
 
-    def _confirm_quotation(self, quotation):
+    def _confirm_cart(self, quotation):
         quotation.action_confirm_cart()
         res = self._to_json(quotation)[0]
         return {
