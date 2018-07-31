@@ -24,7 +24,6 @@ class ShopinvaderSaleProfile(models.Model):
     pricelist_id = fields.Many2one(
         'product.pricelist',
         'Pricelist',
-        domain=[('type', '=', 'sale')],
         help="Pricelist used for the sale profile",
     )
     fiscal_position_ids = fields.Many2many(
