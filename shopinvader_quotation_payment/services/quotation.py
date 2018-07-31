@@ -28,4 +28,4 @@ class QuotationService(Component):
                 return self._process_payment_provider(
                     provider_name, quotation, params[provider_name])
             else:
-                return self._confirm_quotation(quotation)
+                return self._confirm_cart(quotation)
