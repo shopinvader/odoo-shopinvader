@@ -11,9 +11,9 @@ class PaymentServicePaypal(Component):
 
     def _validator_add_payment(self):
         return {
-                    'cancel_url': {'type': 'string'},
-                    'return_url': {'type': 'string'}
-               }
+            'redirect_success_url': {'type': 'string'},
+            'redirect_cancel_url': {'type': 'string'}
+        }
 
-    def _validator_check_payment(self): #  TODO
-        return {'source': {'type': 'string'}}
+    def _validator_check_payment(self):
+        return {'paymentId': {'type': 'string'}}
