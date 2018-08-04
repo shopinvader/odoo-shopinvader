@@ -30,6 +30,9 @@ class ShopinvaderProduct(models.Model):
     active = fields.Boolean(
         default=True,
         inverse='_inverse_active')
+    url_key = fields.Char(
+        compute_sudo=True,
+    )
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
