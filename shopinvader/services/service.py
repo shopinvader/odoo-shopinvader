@@ -83,3 +83,41 @@ class BaseShopinvaderService(AbstractComponent):
 
     def _get_base_search_domain(self):
         return []
+
+
+    def _get_openapi_default_parameters(self):
+        defaults = super(
+            BaseShopinvaderService, self)._get_openapi_default_parameters()
+        defaults.append({
+            "name": "API_KEY",
+            "in": "header",
+            "description": "Ath API key",
+            "required": True,
+            "schema": {
+                "type": "string",
+            },
+            "style": "simple"
+        })
+        defaults.append({
+            "name": "SESS_CART_ID",
+            "in": "header",
+            "description": "Session Cart Identifier",
+            "required": False,
+            "schema": {
+                "type": "integer",
+            },
+            "style": "simple"
+
+        })
+        defaults.append({
+            "name": "PARTNER_EMAIL",
+            "in": "header",
+            "description": "Logged partner email",
+            "required": False,
+            "schema": {
+                "type": "string",
+            },
+            "style": "simple"
+
+        })
+        return defaults

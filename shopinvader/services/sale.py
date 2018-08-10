@@ -17,6 +17,7 @@ class SaleService(Component):
     # All params are untrusted so please check it !
 
     def get(self, _id):
+        """My dummy description of the get method"""
         order = self._get(_id)
         return self._to_json(order)[0]
 
@@ -29,13 +30,18 @@ class SaleService(Component):
 
     def _validator_search(self):
         return {
-            'id': {'coerce': to_int},
+            'id': {
+                'coerce': to_int,
+                'type': 'integer',
+            },
             'per_page': {
                 'coerce': to_int,
+                'type': 'integer',
                 'nullable': True,
                 },
             'page': {
                 'coerce': to_int,
+                'type': 'integer',
                 'nullable': True,
                 },
             'scope': {

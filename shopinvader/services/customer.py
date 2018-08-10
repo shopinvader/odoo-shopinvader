@@ -12,7 +12,7 @@ class CustomerService(Component):
     _usage = 'customer'
 
     # The following method are 'public' and can be called from the controller.
-    def get(self):
+    def search(self, **params):
         if self.partner:
             address = self.component(usage='addresses')
             customer = address._to_json(self.partner)[0]
@@ -39,7 +39,7 @@ class CustomerService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _validator_get(self):
+    def _validator_search(self):
         return {}
 
     def _validator_sign_in(self):

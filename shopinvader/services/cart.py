@@ -106,19 +106,39 @@ class CartService(Component):
 
     def _validator_add_item(self):
         return {
-            'product_id': {'coerce': to_int, 'required': True},
-            'item_qty': {'coerce': float, 'required': True},
+            'product_id': {
+                'coerce': to_int,
+                'type': 'integer',
+                'required': True
+            },
+            'item_qty': {
+                'coerce': float,
+                'type': 'float',
+                'required': True
+            },
         }
 
     def _validator_update_item(self):
         return {
-            'item_id': {'coerce': to_int, 'required': True},
-            'item_qty': {'coerce': float, 'required': True},
+            'item_id': {
+                'coerce': to_int,
+                'type': 'integer',
+                'required': True
+            },
+            'item_qty': {
+                'coerce': float,
+                'type': 'float',
+                'required': True
+            },
         }
 
     def _validator_delete_item(self):
         return {
-            'item_id': {'coerce': to_int, 'required': True},
+            'item_id': {
+                'coerce': to_int,
+                'type': 'integer',
+                'required': True
+            },
         }
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -166,7 +186,6 @@ class CartService(Component):
     def _update(self, params):
         action_confirm_cart = False
         cart = self._get()
-
         if 'shipping' in params:
             self._prepare_shipping(params.pop('shipping'), params)
         if 'invoicing' in params:
