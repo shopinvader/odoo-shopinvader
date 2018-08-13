@@ -9,15 +9,14 @@ from odoo.addons.component_event import skip_if
 
 class ProductProductEventListener(Component):
     _name = 'product.product.event.listener'
-    _inherit = 'base.connector.listener'
+    _inherit = 'base.event.listener'
 
     _apply_on = [
         'product.product',
     ]
 
     @skip_if(lambda self, record, **kwargs:
-             not record.product_tmpl_id.shopinvader_bind_ids or
-             self.no_connector_export(record))
+             not record.product_tmpl_id.shopinvader_bind_ids)
     def on_record_create(self, record, fields=None):
         """
         Event listener on the create of product.product.
