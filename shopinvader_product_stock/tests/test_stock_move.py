@@ -26,19 +26,6 @@ class TestStockMove(SavepointComponentCase, JobMixin):
         self.product = self.env.ref('product.product_product_8')
         self.picking_type_in = self.env.ref("stock.picking_type_in")
 
-    def _add_stock_to_product(self, product, qty=10):
-        """
-        Set the stock quantity of the product
-        :param product: product.product recordset
-        :param qty: float
-        :return: bool
-        """
-        wizard = self.env['stock.change.product.qty'].create({
-            'product_id': product.id,
-            'new_quantity': qty,
-        })
-        wizard.change_product_qty()
-
     def _create_move(self):
         return self.env['stock.move'].create({
             'name': 'Forced Move',
@@ -104,8 +91,3 @@ class TestStockMove(SavepointComponentCase, JobMixin):
         move = self._create_move()
         move.action_confirm()
         self.assertEqual(job.count_created(), 0)
-
-    def test_update_qty_from_wizard(self):
-        job = self.job_counter()
-        self._add_stock_to_product(self.product, 100)
-        self.assertEqual(job.count_created(), 1)

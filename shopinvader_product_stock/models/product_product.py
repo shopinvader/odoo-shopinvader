@@ -29,9 +29,15 @@ class ProductProduct(models.Model):
                     # on the site. The right stock qty will be exported
                     # at it's first export
                     continue
+                # I do not recommend to rename the stock key, but if you have
+                # a good reason to do it, do not worry we will use this key
+                # here
+                stock_key = binding._get_stock_key()
+                if not stock_key:
+                    continue
                 data = binding.data
-                if data['stock'] != binding.stock_data:
-                    data['stock'] = binding.stock_data
+                if data[stock_key] != binding.stock_data:
+                    data[stock_key] = binding.stock_data
                     vals = {'data': data}
                     if binding.sync_state == 'done':
                         vals['sync_state'] = 'to_update'

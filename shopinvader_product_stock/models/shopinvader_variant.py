@@ -11,6 +11,17 @@ class ShopinvaderVariant(models.Model):
 
     stock_data = fields.Serialized(compute='_compute_stock_data')
 
+    def _get_stock_key(self):
+        self.ensure_one()
+        line = self.env['ir.exports.line'].search([
+            ('export_id', '=', self.index_id.exporter_id.id),
+            ('name', '=', 'stock_data'),
+            ])
+        if line.alias:
+            return line.alias.split(':')[1]
+        else:
+            return line.name
+
     def _prepare_stock_data(self):
         stock_key = self.backend_id.product_stock_field_id.name
         return {'global': {'qty': self[stock_key]}}
