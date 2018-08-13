@@ -9,26 +9,6 @@
         <field name="auth_api_key_id" position="after">
             <field name="se_backend_id"/>
         </field>
-        <button name="bind_all_product" position="after">
-            <button
-                name="export_all_product"
-                string="Export all product"
-                type="object"/>
-            <button
-                name="clear_dead_product"
-                string="Clear dead product"
-                type="object"/>
-        </button>
-        <button name="bind_all_category" position="after">
-            <button
-                name="export_all_category"
-                string="Export all category"
-                type="object"/>
-            <button
-                name="clear_dead_category"
-                string="Clear dead category"
-                type="object"/>
-        </button>
     </field>
 </record>
 

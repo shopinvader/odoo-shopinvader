@@ -2,7 +2,7 @@ connector
 server-tools
 e-commerce
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10.0
-connector-search-engine https://github.com/akretion/connector-search-engine 10.0
+connector-search-engine https://github.com/akretion/connector-search-engine 10.0-refactor-export
 product-attribute
 product-variant
 storage https://github.com/akretion/storage 10.0
