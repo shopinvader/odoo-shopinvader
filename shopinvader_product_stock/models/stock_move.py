@@ -10,9 +10,9 @@ class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def _get_product_to_update(self):
-        # Maybe we can be more retrictive
-        # depending of the move location and destination
-        # For now we take all move and binded products
+        #  Maybe we can be more retrictive
+        #  depending of the move location and destination
+        #  For now we take all move and binded products
         return self.mapped("product_id").filtered(
             lambda p: p.is_shopinvader_binded)
 

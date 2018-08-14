@@ -3,10 +3,8 @@
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo.fields import first
 from odoo.addons.queue_job.job import job
-from odoo.tools import float_compare
-from odoo import api, exceptions, models, _
+from odoo import api, models
 
 
 class ProductProduct(models.Model):

@@ -3,9 +3,7 @@
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from random import randint
-from contextlib import contextmanager
-from odoo import api, models
+
 from .common import StockCommonCase
 
 
@@ -23,8 +21,8 @@ class TestStockMove(StockCommonCase):
         return self.env['stock.move'].create({
             'name': 'Forced Move',
             'location_id': self.loc_supplier.id,
-            'location_dest_id':\
-                self.picking_type_in.default_location_dest_id.id,
+            'location_dest_id': self.picking_type_in\
+                .default_location_dest_id.id,
             'product_id': self.product.id,
             'product_uom_qty': 2.0,
             'product_uom': self.product.uom_id.id,
@@ -38,7 +36,7 @@ class TestStockMove(StockCommonCase):
         :return:
         """
         job = self.job_counter()
-        move = self._create_move()
+        self._create_move()
         self.assertEqual(job.count_created(), 0)
 
     def test_action_cancel(self):

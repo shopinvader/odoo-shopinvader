@@ -4,7 +4,6 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models
 from .common import StockCommonCase
 
 
@@ -98,10 +97,8 @@ class TestProductProduct(StockCommonCase):
         self.assertNotIn('stock', shopinvader_product.data)
 
     def test_multi_warehouse(self):
-        self.shopinvader_backend.write({
-            'warehouse_ids': [(6, 0,
-                [self.warehouse_1.id, self.warehouse_2.id])],
-            })
+        wh_ids = [self.warehouse_1.id, self.warehouse_2.id]
+        self.shopinvader_backend.write({'warehouse_ids': [(6, 0, wh_ids)]})
         shopinvader_product = self.product.shopinvader_bind_ids
         shopinvader_product.recompute_json()
         shopinvader_product.sync_state = 'to_update'
