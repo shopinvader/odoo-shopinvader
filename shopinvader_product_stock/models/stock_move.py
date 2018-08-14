@@ -3,7 +3,8 @@
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import api, models
+
+from odoo import api, models, _
 
 
 class StockMove(models.Model):
@@ -25,7 +26,8 @@ class StockMove(models.Model):
         """
         products = self._get_product_to_update()
         if products:
-            description = "Update shopinvader variants (stock update trigger)"
+            description = _(
+                "Update shopinvader variants (stock update trigger)")
             products.with_delay(
                 description=description)._product_stock_update_all()
         return True
@@ -47,7 +49,9 @@ class StockMove(models.Model):
         :return: stock.move recordset
         """
         result = super(StockMove, self).action_confirm()
-        # Do not generate a second job if action_done was originaly called
+        # If the move is not confirm the action done will call the action
+        # confirm, to avoid the creation of a duplicated job, we do not
+        # create a job if we come from the action_done
         if result and not self._context.get('from_action_done'):
             result._jobify_product_stock_update()
         return result
