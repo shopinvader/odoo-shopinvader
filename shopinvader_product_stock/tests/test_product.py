@@ -3,55 +3,15 @@
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from uuid import uuid4
-from random import randint
-import mock
+
 from odoo import api, models
-from odoo.fields import first
-from odoo.addons.connector_search_engine.tests.common import TestSeBackendCase
-from odoo.addons.queue_job.tests.common import JobMixin
+from .common import StockCommonCase
 
 
-class TestProductProduct(TestSeBackendCase, JobMixin):
+class TestProductProduct(StockCommonCase):
     """
     Tests for product.product
     """
-
-    def setUp(self):
-        super(TestProductProduct, self).setUp()
-        self.shopinvader_backend = self.env.ref('shopinvader.backend_1')
-        self.warehouse_1 = self.env.ref('stock.warehouse0')
-        self.loc_1 = self.warehouse_1.lot_stock_id
-        self.warehouse_2 = self.env.ref('stock.stock_warehouse_shop0')
-        self.loc_2 = self.warehouse_2.lot_stock_id
-
-        self.shopinvader_backend.write({
-            'se_backend_id': self.se_backend.se_backend_id.id,
-            'warehouse_ids': [(6, 0, self.warehouse_1.ids)],
-        })
-        self.product = self.env.ref('product.product_product_4')
-        ref = self.env.ref
-        self.index = self.env['se.index'].create({
-            'name': 'test-product-index',
-            'backend_id': self.se_backend.se_backend_id.id,
-            'exporter_id': ref('shopinvader.ir_exp_shopinvader_variant').id,
-            'lang_id': ref('base.lang_en').id,
-            'model_id': ref('shopinvader.model_shopinvader_variant').id,
-            })
-        self.shopinvader_backend.bind_all_product()
-
-    def _add_stock_to_product(self, product, location, qty):
-        """
-        Set the stock quantity of the product
-        :param product: product.product recordset
-        :param qty: float
-        """
-        wizard = self.env['stock.change.product.qty'].create({
-            'product_id': product.id,
-            'new_quantity': qty,
-            'location_id': location.id,
-        })
-        wizard.change_product_qty()
 
     def test_update_qty_from_wizard(self):
         """

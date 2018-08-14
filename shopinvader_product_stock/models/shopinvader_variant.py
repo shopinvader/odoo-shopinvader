@@ -31,14 +31,14 @@ class ShopinvaderVariant(models.Model):
                 result[slugify(warehouse.code)] = [warehouse.id]
         return result
 
-    def _prepare_stock_data(self, warehouse_key):
+    def _prepare_stock_data(self):
         stock_key = self.backend_id.product_stock_field_id.name
-        return {warehouse_key: {'qty': self[stock_key]}}
+        return {'qty': self[stock_key]}
 
     def _compute_stock_data(self):
         for record in self:
             data = {}
             for wh_key, wh_ids in record._get_warehouse().items():
-                data.update(record.with_context(warehouse=wh_ids)\
-                    ._prepare_stock_data(wh_key))
+                data[wh_key] = record.with_context(warehouse=wh_ids)\
+                    ._prepare_stock_data()
             record.stock_data = data
