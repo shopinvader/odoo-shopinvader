@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="se_backend_form_view">
+        <field name="name">SE.backend.form (in shopinvader_stock)</field>
+        <field name="model">se.backend</field>
+        <field name="inherit_id" ref="connector_search_engine.se_backend_form_view"/>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <group name="se-main" position="inside">
+                <field name="export_stock_key"/>
+                <field name="product_stock_field_id" attrs="{'required': [('export_stock_key', '!=', False)]}"/>
+            </group>
+        </field>
+    </record>
+</odoo>
