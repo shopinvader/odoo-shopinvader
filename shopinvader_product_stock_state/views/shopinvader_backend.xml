@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="se_backend_form_view">
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <field name="warehouse_ids" position="after">
+                <field name="stock_level_config"/>
+            </field>
+        </field>
+    </record>
+</odoo>
