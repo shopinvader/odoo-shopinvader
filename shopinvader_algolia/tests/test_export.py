@@ -7,13 +7,12 @@ from odoo.addons.connector_algolia.tests.common import (
     mock_api,
     ConnectorAlgoliaCase)
 import logging
-from odoo import _
-from odoo.addons.queue_job.job import Job
+from odoo.addons.queue_job.tests.common import JobMixin
 
 _logger = logging.getLogger(__name__)
 
 
-class TestExport(ConnectorAlgoliaCase):
+class TestExport(ConnectorAlgoliaCase, JobMixin):
 
     @classmethod
     def setUpClass(cls):
@@ -22,12 +21,17 @@ class TestExport(ConnectorAlgoliaCase):
         cls.shopinvader_backend.bind_all_product()
         cls.shopinvader_backend.bind_all_category()
 
+    def setUp(self):
+        super(TestExport, self).setUp()
+        self.index_product = self.env.ref('shopinvader_algolia.index_1')
+        self.index_categ = self.env.ref('shopinvader_algolia.index_2')
+
     def test_10_export_one_product(self):
         product = self.env.ref('product.product_product_3_product_template')
         si_variant = product.shopinvader_bind_ids[0].shopinvader_variant_ids[0]
         with mock_api(self.env) as mocked_api:
-            si_variant._scheduler_export(
-                domain=[('id', '=', si_variant.id)], delay=False)
+            si_variant.recompute_json()
+            si_variant.export()
             self.assertTrue('algolia-product' in mocked_api.index)
         index = mocked_api.index['algolia-product']
         self.assertEqual(1, len(index._calls))
@@ -41,75 +45,40 @@ class TestExport(ConnectorAlgoliaCase):
         self.assertEqual(value['objectID'], product.id)
         self.assertEqual(value['sku'], si_variant.default_code)
 
-    def test_20_export_all_products(self):
-        queue_job = self.env['queue.job']
-        existing_jobs = queue_job.search([])
-        # a job is created to export all products
-        self.shopinvader_backend.export_all_product()
-        new_jobs = queue_job.search([])
-        new_job = new_jobs - existing_jobs
-        self.assertEqual(1, len(new_job))
-        job = Job.load(self.env, new_job.uuid)
-        self.assertEqual(
-            _('Prepare a batch export of indexes'),
-            job.description)
-        existing_jobs = new_jobs
-        # perform the job
-        job.perform()
-        new_jobs = queue_job.search([])
-        new_job = new_jobs - existing_jobs
-        self.assertEqual(1, len(new_job))
-        job = Job.load(self.env, new_job.uuid)
-        count = self.env['shopinvader.product'].search_count([])
-        self.assertEqual(
-            _("Export %d records of %d for index 'algolia-product'") % (
-                count, count), job.description)
-        # the last job is the one performing the export
-        job = Job.load(self.env, new_job.uuid)
+    def test_20_recompute_all_products(self):
+        bindings = self.env['shopinvader.variant'].search([])
+        for binding in bindings:
+            self.assertEqual(binding.data, {})
+        jobs = self.job_counter()
+        self.index_product.recompute_all_binding()
+        self.assertEqual(jobs.count_created(), len(bindings))
+        self.perform_jobs(jobs)
+        for binding in bindings:
+            self.assertEqual(binding.data['objectID'], binding.record_id.id)
+
+    def _test_export_all_binding(self, index):
+        init_jobs = self.job_counter()
+        index.recompute_all_binding()
+        self.perform_jobs(init_jobs)
+        count = self.env[index.model_id.model].search_count([])
+
+        jobs = self.job_counter()
+        index.batch_export()
+        self.assertEqual(jobs.count_created(), 1)
         with mock_api(self.env) as mocked_api:
-            job.perform()
-        self.assertTrue('algolia-product' in mocked_api.index)
-        index = mocked_api.index['algolia-product']
+            self.perform_jobs(jobs)
+        self.assertTrue(index.name in mocked_api.index)
+        index_api = mocked_api.index[index.name]
         self.assertEqual(
-            1, len(index._calls), "All variants must be exported in 1 call")
-        method, values = index._calls[0]
+            1, len(index_api._calls),
+            "All bindings must be exported in 1 call")
+        method, values = index_api._calls[0]
         self.assertEqual('add_objects', method)
         self.assertEqual(
-            count, len(values), "All variants should be exported")
+            count, len(values), "All bindings should be exported")
+
+    def test_20_export_all_products(self):
+        self._test_export_all_binding(self.index_product)
 
     def test_30_export_all_categories(self):
-        queue_job = self.env['queue.job']
-        existing_jobs = queue_job.search([])
-        # a job is created to export all products
-        self.shopinvader_backend.export_all_category()
-        new_jobs = queue_job.search([])
-        new_job = new_jobs - existing_jobs
-        self.assertEqual(1, len(new_job))
-        job = Job.load(self.env, new_job.uuid)
-        self.assertEqual(
-            _('Prepare a batch export of indexes'),
-            job.description)
-        existing_jobs = new_jobs
-        # perform the job
-        job.perform()
-        new_jobs = queue_job.search([])
-        new_job = new_jobs - existing_jobs
-        self.assertEqual(1, len(new_job))
-        job = Job.load(self.env, new_job.uuid)
-        count = self.env['shopinvader.category'].search_count([])
-        self.assertEqual(
-            _("Export %d records of %d for index 'algolia-category'") % (
-                count, count),
-            job.description)
-        # the last job is the one performing the export
-        job = Job.load(self.env, new_job.uuid)
-        with mock_api(self.env) as mocked_api:
-            job.perform()
-        self.assertTrue('algolia-category' in mocked_api.index)
-        index = mocked_api.index['algolia-category']
-        self.assertEqual(
-            1, len(index._calls), "All categories must be exported in 1 call")
-        method, values = index._calls[0]
-        self.assertEqual('add_objects', method)
-        self.assertEqual(
-            count, len(values), "All categories should be exported")
+        self._test_export_all_binding(self.index_categ)
