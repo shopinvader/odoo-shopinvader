@@ -20,8 +20,14 @@ class TestProductProduct(TestSeBackendCase, JobMixin):
     def setUp(self):
         super(TestProductProduct, self).setUp()
         self.shopinvader_backend = self.env.ref('shopinvader.backend_1')
+        self.warehouse_1 = self.env.ref('stock.warehouse0')
+        self.loc_1 = self.warehouse_1.lot_stock_id
+        self.warehouse_2 = self.env.ref('stock.stock_warehouse_shop0')
+        self.loc_2 = self.warehouse_2.lot_stock_id
+
         self.shopinvader_backend.write({
             'se_backend_id': self.se_backend.se_backend_id.id,
+            'warehouse_ids': [(6, 0, self.warehouse_1.ids)],
         })
         self.product = self.env.ref('product.product_product_4')
         ref = self.env.ref
@@ -34,7 +40,7 @@ class TestProductProduct(TestSeBackendCase, JobMixin):
             })
         self.shopinvader_backend.bind_all_product()
 
-    def _add_stock_to_product(self, product, qty=10):
+    def _add_stock_to_product(self, product, location, qty):
         """
         Set the stock quantity of the product
         :param product: product.product recordset
@@ -43,6 +49,7 @@ class TestProductProduct(TestSeBackendCase, JobMixin):
         wizard = self.env['stock.change.product.qty'].create({
             'product_id': product.id,
             'new_quantity': qty,
+            'location_id': location.id,
         })
         wizard.change_product_qty()
 
@@ -52,7 +59,8 @@ class TestProductProduct(TestSeBackendCase, JobMixin):
         new queue.job
         """
         job = self.job_counter()
-        self._add_stock_to_product(self.product, 100)
+        self._add_stock_to_product(
+            self.product, self.loc_1, 100)
         self.assertEqual(job.count_created(), 1)
 
     def test_update_stock_on_new_product(self):
@@ -72,7 +80,7 @@ class TestProductProduct(TestSeBackendCase, JobMixin):
             {u'global': {u'qty': 0.0}})
 
         jobs = self.job_counter()
-        self._add_stock_to_product(self.product, 100)
+        self._add_stock_to_product(self.product, self.loc_1, 100)
         self.assertEqual(jobs.count_created(), 1)
         self.perform_jobs(jobs)
 
@@ -124,7 +132,37 @@ class TestProductProduct(TestSeBackendCase, JobMixin):
         self.assertNotIn('stock', shopinvader_product.data)
 
         jobs = self.job_counter()
-        self._add_stock_to_product(self.product, 100)
+        self._add_stock_to_product(self.product, self.loc_1, 100)
         self.assertEqual(jobs.count_created(), 1)
         self.perform_jobs(jobs)
         self.assertNotIn('stock', shopinvader_product.data)
+
+    def test_multi_warehouse(self):
+        self.shopinvader_backend.write({
+            'warehouse_ids': [(6, 0,
+                [self.warehouse_1.id, self.warehouse_2.id])],
+            })
+        shopinvader_product = self.product.shopinvader_bind_ids
+        shopinvader_product.recompute_json()
+        shopinvader_product.sync_state = 'to_update'
+        self.assertEqual(
+            shopinvader_product.data['stock'],
+            {
+                u'chic': {u'qty': 0.0},
+                u'global': {u'qty': 0.0},
+                u'wh': {u'qty': 0.0},
+            })
+
+        jobs = self.job_counter()
+        self._add_stock_to_product(self.product, self.loc_1, 100)
+        self._add_stock_to_product(self.product, self.loc_2, 200)
+        self.assertEqual(jobs.count_created(), 2)
+        self.perform_jobs(jobs)
+
+        self.assertEqual(
+            shopinvader_product.data['stock'],
+            {
+                u'chic': {u'qty': 200.0},
+                u'global': {u'qty': 300.0},
+                u'wh': {u'qty': 100.0},
+            })

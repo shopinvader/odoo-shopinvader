@@ -9,6 +9,11 @@ from odoo import fields, models
 class ShopinvaderBackend(models.Model):
     _inherit = 'shopinvader.backend'
 
+    warehouse_ids = fields.Many2many(
+        "stock.warehouse",
+        default=lambda self: self._default_warehouse_field(),
+        required=True,
+    )
     product_stock_field_id = fields.Many2one(
         "ir.model.fields",
         "Product stock field",
@@ -23,3 +28,6 @@ class ShopinvaderBackend(models.Model):
 
     def _default_stock_field(self):
         return self.env.ref('stock.field_product_product_qty_available')
+
+    def _default_warehouse_field(self):
+        return self.env['stock.warehouse'].search([], limit=1)
