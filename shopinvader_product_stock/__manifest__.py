@@ -29,6 +29,7 @@
     'external_dependencies': {
         'python': [
             'openupgradelib',
+            'slugify',
         ],
     },
     'pre_init_hook': 'pre_init_hook',

@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import fields, models
-from slugify import slugify
+from collections import defaultdict
 
 
 class ShopinvaderVariant(models.Model):
@@ -24,22 +24,18 @@ class ShopinvaderVariant(models.Model):
         else:
             return line.name
 
-    def _get_warehouse(self):
-        result = {'global': self.backend_id.warehouse_ids.ids}
-        self.ensure_one()
-        if len(self.backend_id.warehouse_ids) > 1:
-            for warehouse in self.backend_id.warehouse_ids:
-                result[slugify(warehouse.code)] = [warehouse.id]
-        return result
-
     def _prepare_stock_data(self):
         stock_key = self.backend_id.product_stock_field_id.name
         return {'qty': self[stock_key]}
 
     def _compute_stock_data(self):
+        result = defaultdict(dict)
+        for backend in self.mapped('backend_id'):
+            for wh_key, wh_ids in backend._get_warehouse().items():
+                for loc_record in self.filtered(
+                        lambda s: s.backend_id == backend)\
+                        .with_context(warehouse=wh_ids):
+                    result[loc_record.id][wh_key] =\
+                        loc_record._prepare_stock_data()
         for record in self:
-            data = {}
-            for wh_key, wh_ids in record._get_warehouse().items():
-                data[wh_key] = record.with_context(warehouse=wh_ids)\
-                    ._prepare_stock_data()
-            record.stock_data = data
+            record.stock_data = result[record.id]

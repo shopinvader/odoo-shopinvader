@@ -4,6 +4,13 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields, models
+import logging
+_logger = logging.getLogger(__name__)
+
+try:
+    from slugify import slugify
+except (ImportError, IOError) as err:
+    _logger.debug(err)
 
 
 class ShopinvaderBackend(models.Model):
@@ -31,3 +38,11 @@ class ShopinvaderBackend(models.Model):
 
     def _default_warehouse_field(self):
         return self.env['stock.warehouse'].search([], limit=1)
+
+    def _get_warehouse(self):
+        self.ensure_one()
+        result = {'global': self.warehouse_ids.ids}
+        if len(self.warehouse_ids) > 1:
+            for warehouse in self.warehouse_ids:
+                result[slugify(warehouse.code)] = [warehouse.id]
+        return result
