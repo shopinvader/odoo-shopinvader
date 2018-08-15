@@ -113,7 +113,7 @@ class TestProductProduct(StockCommonCase):
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
         self._add_stock_to_product(self.product, self.loc_2, 200)
-        self.assertEqual(jobs.count_created(), 2)
+        self.assertEqual(jobs.count_created(), 1)
         self.perform_jobs(jobs)
 
         self.assertEqual(

@@ -32,6 +32,8 @@ class StockCommonCase(TestSeBackendCase, JobMixin):
             'product_stock_field_id':
                 ref("stock.field_product_product_qty_available").id,
         })
+        self.loc_supplier = self.env.ref('stock.stock_location_suppliers')
+        self.picking_type_in = self.env.ref("stock.picking_type_in")
 
     def _add_stock_to_product(self, product, location, qty):
         """
@@ -45,3 +47,15 @@ class StockCommonCase(TestSeBackendCase, JobMixin):
             'location_id': location.id,
         })
         wizard.change_product_qty()
+
+    def _create_incomming_move(self):
+        return self.env['stock.move'].create({
+            'name': 'Forced Move',
+            'location_id': self.loc_supplier.id,
+            'location_dest_id':
+                self.picking_type_in.default_location_dest_id.id,
+            'product_id': self.product.id,
+            'product_uom_qty': 2.0,
+            'product_uom': self.product.uom_id.id,
+            'picking_type_id': self.picking_type_in.id,
+        })

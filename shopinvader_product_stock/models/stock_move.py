@@ -5,15 +5,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo import api, models, _
+from odoo.addons.queue_job.job import identity_exact
 
 
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
     def _get_product_to_update(self):
-        #  Maybe we can be more retrictive
-        #  depending of the move location and destination
-        #  For now we take all move and binded products
+        # Maybe we can be more retrictive
+        # depending of the move location and destination
+        # For now we take all move and binded products
         return self.mapped("product_id").filtered(
             lambda p: p.is_shopinvader_binded)
 
@@ -29,7 +30,9 @@ class StockMove(models.Model):
             description = _(
                 "Update shopinvader variants (stock update trigger)")
             products.with_delay(
-                description=description)._product_stock_update_all()
+                description=description,
+                identity_key=identity_exact,
+                )._product_stock_update_all()
         return True
 
     @api.multi
@@ -49,11 +52,7 @@ class StockMove(models.Model):
         :return: stock.move recordset
         """
         result = super(StockMove, self).action_confirm()
-        # If the move is not confirm the action done will call the action
-        # confirm, to avoid the creation of a duplicated job, we do not
-        # create a job if we come from the action_done
-        if result and not self._context.get('from_action_done'):
-            result._jobify_product_stock_update()
+        self._jobify_product_stock_update()
         return result
 
     @api.multi
@@ -62,7 +61,6 @@ class StockMove(models.Model):
 
         :return: bool
         """
-        result = super(StockMove, self.with_context(
-            from_action_done=True)).action_done()
+        result = super(StockMove, self).action_done()
         self._jobify_product_stock_update()
         return result
