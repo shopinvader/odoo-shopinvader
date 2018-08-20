@@ -142,10 +142,19 @@ class ShopinvaderVariant(models.Model):
         tax_included = tax_id.price_include
         value = self.env['account.tax']._fix_tax_included_price_company(
             final_price, product.taxes_id, tax_id, company)
-        return {
+        res = {
             'value': value,
             'tax_included': tax_included
         }
+        if pricelist.discount_policy == 'without_discount':
+            new_list_price, currency_id = self.env['sale.order.line']._get_real_price_currency(product, rule_id, qty or 1.0, product.uom_id, pricelist.id)
+            discount = (new_list_price - value) / new_list_price * 100
+            res.update({
+                'original_value': value,
+                'discount': discount,
+                'value': new_list_price
+                })
+        return res
 
     def _compute_main_product(self):
         for record in self:
