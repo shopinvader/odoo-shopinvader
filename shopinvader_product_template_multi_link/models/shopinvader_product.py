@@ -29,8 +29,9 @@ class ShopinvaderProduct(models.Model):
                 lambda x: x.link_type == link_type):
             bindings = link.linked_product_template_id.shopinvader_bind_ids
             for binding in bindings:
-                # Get bindings of the correct backend
-                if binding.backend_id == current_backend:
+                # Get bindings of the correct backend and lang
+                if binding.backend_id == current_backend and \
+                        binding.lang_id == self.lang_id:
                     # Set only the "main" shopinvader variant
                     for shopinvader_variant in binding.shopinvader_variant_ids:
                         if shopinvader_variant.main:
