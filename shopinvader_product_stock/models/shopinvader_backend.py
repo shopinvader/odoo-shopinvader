@@ -18,7 +18,7 @@ class ShopinvaderBackend(models.Model):
 
     warehouse_ids = fields.Many2many(
         "stock.warehouse",
-        default=lambda self: self._default_warehouse_field(),
+        default=lambda self: self._default_warehouse_ids(),
         required=True,
     )
     product_stock_field_id = fields.Many2one(
@@ -30,16 +30,29 @@ class ShopinvaderBackend(models.Model):
             ('name', 'in', ('qty_available', 'virtual_available')),
         ],
         help="Field used to have the current stock of a product.product",
-        default=lambda self: self._default_stock_field(),
+        default=lambda self: self._default_stock_field_id(),
     )
+    synchronize_stock = fields.Selection([
+        ('immediatly', 'Immediatly'),
+        ('in_batch', 'In Batch'),
+        ], default='immediatly',
+        help=(
+            'If immediatly the stock will be exported after each '
+            'modification. If "In batch" the stock exported every X time '
+            'depending on the cron configuration')
+        )
 
-    def _default_stock_field(self):
+    def _default_stock_field_id(self):
         return self.env.ref('stock.field_product_product_qty_available')
 
-    def _default_warehouse_field(self):
+    def _default_warehouse_ids(self):
         return self.env['stock.warehouse'].search([], limit=1)
 
-    def _get_warehouse(self):
+    def _get_warehouse_list_for_export(self):
+        """Return the list of warehouse what will be used for exporting the
+        stock level. A global key "global" is added with the list of all
+        warehouse ids
+        :return: dict with warehouse code as key and warehouse_ids as value """
         self.ensure_one()
         result = {'global': self.warehouse_ids.ids}
         if len(self.warehouse_ids) > 1:

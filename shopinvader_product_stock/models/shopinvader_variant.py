@@ -13,7 +13,7 @@ class ShopinvaderVariant(models.Model):
 
     stock_data = fields.Serialized(compute='_compute_stock_data')
 
-    def _get_stock_key(self):
+    def _get_stock_export_key(self):
         self.ensure_one()
         line = self.env['ir.exports.line'].search([
             ('export_id', '=', self.index_id.exporter_id.id),
@@ -25,13 +25,14 @@ class ShopinvaderVariant(models.Model):
             return line.name
 
     def _prepare_stock_data(self):
-        stock_key = self.backend_id.product_stock_field_id.name
-        return {'qty': self[stock_key]}
+        stock_field = self.backend_id.product_stock_field_id.name
+        return {'qty': self[stock_field]}
 
     def _compute_stock_data(self):
         result = defaultdict(dict)
         for backend in self.mapped('backend_id'):
-            for wh_key, wh_ids in backend._get_warehouse().items():
+            for wh_key, wh_ids in\
+                    backend._get_warehouse_list_for_export().items():
                 for loc_record in self.filtered(
                         lambda s: s.backend_id == backend)\
                         .with_context(warehouse=wh_ids):

@@ -11,12 +11,12 @@ class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     @api.multi
-    @job(default_channel='root.search_engine.recompute_stock')
-    def _product_stock_update_all(self):
+    @job(default_channel='root.search_engine.synchronize_stock')
+    def _synchronize_all_binding_stock_level(self):
         """
         The goal of this function is to compute the new stock information
         and update them in the data field. If data have change and the binding
-        is in done state we force it to 'to_update'
+        is in done state we force it to 'to_update'.
         :return:
         """
         for record in self:
@@ -27,16 +27,20 @@ class ProductProduct(models.Model):
                     # on the site. The right stock qty will be exported
                     # at it's first export
                     continue
-                # I do not recommend to rename the stock key, but if you have
-                # a good reason to do it, do not worry we will use this key
-                # here
-                stock_key = binding._get_stock_key()
-                if not stock_key:
+                # I do not recommend to rename the stock export key, but if
+                # you have a good reason to do it, do not worry we will use
+                # this key here
+                stock_export_key = binding._get_stock_export_key()
+                if not stock_export_key:
                     continue
                 data = binding.data
-                if data[stock_key] != binding.stock_data:
-                    data[stock_key] = binding.stock_data
+                if data[stock_export_key] != binding.stock_data:
+                    data[stock_export_key] = binding.stock_data
                     vals = {'data': data}
-                    if binding.sync_state == 'done':
-                        vals['sync_state'] = 'to_update'
-                    binding.write(vals)
+                    if binding.backend_id.synchronize_stock == 'immediatly':
+                        binding.write(vals)
+                        binding.export()
+                    elif binding.backend_id.synchronize_stock == 'in_batch':
+                        if binding.sync_state == 'done':
+                            vals['sync_state'] = 'to_update'
+                        binding.write(vals)

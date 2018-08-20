@@ -27,10 +27,10 @@ class TestProductProduct(StockCommonCase):
         Recomputing binding which have been not exported yet, do nothing
         """
         self.assertEqual(self.product.shopinvader_bind_ids.sync_state, 'new')
-        self.product._product_stock_update_all()
+        self.product._synchronize_all_binding_stock_level()
         self.assertEqual(self.product.shopinvader_bind_ids.data, {})
 
-    def _test_update_stock_with_key(self, key_stock):
+    def _test_update_stock_with_key(self, key_stock, sync_immediatly=True):
         shopinvader_product = self.product.shopinvader_bind_ids
         shopinvader_product.recompute_json()
         shopinvader_product.sync_state = 'to_update'
@@ -46,12 +46,30 @@ class TestProductProduct(StockCommonCase):
         self.assertEqual(
             shopinvader_product.data[key_stock],
             {u'global': {u'qty': 100.0}})
+        called = self._adapter_called
+        if sync_immediatly:
+            self.assertEqual(len(called), 1)
+            method, datas = called[0]
+            self.assertEqual(method, 'index')
+            self.assertEqual(len(datas), 1)
+            self.assertEqual(datas[0][key_stock], {u'global': {u'qty': 100.0}})
+            self.assertEqual(shopinvader_product.sync_state, 'done')
+        else:
+            self.assertEqual(len(called), 0)
+            self.assertEqual(shopinvader_product.sync_state, 'to_update')
 
     def test_update_stock(self):
         """
-        Recomputing product should update binding
+        Recomputing product should update binding and export it
         """
         self._test_update_stock_with_key('stock')
+
+    def test_update_stock_differed(self):
+        """
+        Recomputing product should update binding and not export it
+        """
+        self.shopinvader_backend.synchronize_stock = 'in_batch'
+        self._test_update_stock_with_key('stock', sync_immediatly=False)
 
     def test_update_stock_with_special_key(self):
         """

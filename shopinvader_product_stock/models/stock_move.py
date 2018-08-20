@@ -32,7 +32,7 @@ class StockMove(models.Model):
             products.with_delay(
                 description=description,
                 identity_key=identity_exact,
-                )._product_stock_update_all()
+                )._synchronize_all_binding_stock_level()
         return True
 
     @api.multi
