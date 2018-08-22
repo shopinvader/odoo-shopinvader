@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-<record id="shopinvader_backend_view_form" model="ir.ui.view">
-    <field name="model">shopinvader.backend</field>
-    <field name="inherit_id"
-           ref="shopinvader.shopinvader_backend_view_form" />
-    <field name="arch" type="xml">
-        <field name="auth_api_key_id" position="after">
-            <field name="se_backend_id"/>
+    <record id="shopinvader_backend_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id"
+               ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="arch" type="xml">
+            <field name="auth_api_key_id" position="after">
+                <field name="se_backend_id"/>
+            </field>
+            <group name="category" position="after">
+                <group name="indexes" string="Search engined indexes" col="10" colspan="4">
+                    <button
+                            name="force_recompute_all_binding_index"
+                            string="Recompute"
+                            type="object"/>
+                    <button
+                            name="force_batch_export_index"
+                            string="Export"
+                            type="object"/>
+                    <button
+                            name="clear_index"
+                            string="Clear"
+                            type="object"/>
+                </group>
+            </group>
         </field>
-    </field>
-</record>
+    </record>
 
 </odoo>
