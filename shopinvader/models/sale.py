@@ -129,6 +129,7 @@ class SaleOrderLine(models.Model):
     def reset_price_tax(self):
         for line in self:
             line.product_id_change()
+            line._onchange_discount()
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):
