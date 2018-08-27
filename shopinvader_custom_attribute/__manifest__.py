@@ -19,12 +19,14 @@
     },
     "depends": [
         "shopinvader",
-        "product_custom_attributes",
+        "product_custom_attribute",
     ],
     "data": [
         "data/ir_export_product.xml",
+        "views/product_filter_view.xml",
     ],
     "demo": [
+        "demo/product_filter.xml",
     ],
     "qweb": [
     ]

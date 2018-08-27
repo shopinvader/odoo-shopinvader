@@ -29,7 +29,7 @@ class ProductFilter(models.Model):
             'product.product',
             'shopinvader.product',
             ))])
-    attribute_id = fields.Many2one(
+    variant_attribute_id = fields.Many2one(
         string='Attribute',
         comodel_name='product.attribute'
     )
@@ -39,10 +39,13 @@ class ProductFilter(models.Model):
         compute="_compute_display_name"
     )
 
+    def _build_display_name(self):
+        if self.based_on == 'field':
+            return self.field_id.name
+        elif self.based_on == 'variant_attribute':
+            return 'variant_attributes.%s'\
+                % sanitize_attr_name(self.variant_attribute_id)
+
     def _compute_display_name(self):
         for pfilter in self:
-            if pfilter.based_on == 'field':
-                pfilter.display_name = pfilter.field_id.name
-            else:
-                pfilter.display_name = 'variant_attributes.%s'\
-                    % sanitize_attr_name(pfilter.attribute_id)
+            pfilter.display_name = self._build_display_name()

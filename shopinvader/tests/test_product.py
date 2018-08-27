@@ -56,7 +56,7 @@ class ProductCase(ProductCommonCase):
         filter_on_attr = self.env['product.filter'].create(
             {'name': 'Test Filter on field name',
              'based_on': 'variant_attribute',
-             'attribute_id': attribute_id.id})
+             'variant_attribute_id': attribute_id.id})
         self.assertEqual(
             filter_on_attr.display_name, 'variant_attributes.wi-fi')
 

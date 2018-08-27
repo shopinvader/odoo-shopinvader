@@ -94,8 +94,8 @@
                     <field name="field_id" attrs="{'invisible': [('based_on', '!=', 'field')],
 
                                                'required': [('based_on', '=', 'field')]}"/>
-                    <field name="attribute_id" attrs="{'invisible': [('based_on', '!=', 'attribute')],
-                                                   'required': [('based_on', '=', 'attribute')]}"/>
+                    <field name="variant_attribute_id" attrs="{'invisible': [('based_on', '!=', 'variant_attribute')],
+                                                   'required': [('based_on', '=', 'variant_attribute')]}"/>
                     <separator string="Help"/>
                     <field name="help" colspan="4" nolabel="1"/>
                 </group>
