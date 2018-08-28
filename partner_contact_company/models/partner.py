@@ -7,7 +7,6 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
-    """Enhance the feature of Partner."""
 
     _inherit = 'res.partner'
 
@@ -47,7 +46,6 @@ class ResPartner(models.Model):
 
     @api.multi
     def name_get(self):
-        """Override the method set name of partner."""
         res = []
         for record in self:
             record_id, name = super(ResPartner, record).name_get()[0]
@@ -60,9 +58,10 @@ class ResPartner(models.Model):
                 if ctx.get('show_email') and record.email:
                     name = "%s <%s>" % (name, record.email)
                 if ctx.get('show_address'):
-                    name = name + "\n" + self._display_address(
-                        record, without_company=True)
+                    name = name + "\n" + record._display_address(
+                        without_company=True)
                 if name:
-                    name = name.replace('\n\n', '\n')
+                    while '\n\n' in name:
+                        name = name.replace('\n\n', '\n')
             res.append((record.id, name))
         return res

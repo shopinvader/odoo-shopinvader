@@ -6,8 +6,7 @@
 {
     'name': 'Partner Company',
     'version': '10.0.1.0.0',
-    'author': "Akretion, "
-              "Serpent Consulting Services Pvt. Ltd.",
+    'author': "Akretion",
     'website': 'http://www.akretion.com',
     'license': 'AGPL-3',
     'category': 'Partner',
@@ -18,5 +17,5 @@
     'data': [
         'views/partner_view.xml',
     ],
-    'installable': False,
+    'installable': True,
 }
