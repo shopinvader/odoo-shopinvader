@@ -1,5 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_product_media_employee,product.media employee,model_product_media,base.group_user,1,0,0,0
-access_product_media_sale_manager,product.media salemanager,model_product_media,base.group_sale_manager,1,1,1,1
-access_product_media_type_employee,product.media type employee,model_product_media_type,base.group_user,1,0,0,0
-access_product_media_type_sale_manager,product.media type salemanager,model_product_media_type,base.group_sale_manager,1,1,1,1
