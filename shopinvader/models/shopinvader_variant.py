@@ -150,9 +150,8 @@ class ShopinvaderVariant(models.Model):
             new_list_price, currency_id = self.env['sale.order.line']._get_real_price_currency(product, rule_id, qty or 1.0, product.uom_id, pricelist.id)
             discount = (new_list_price - value) / new_list_price * 100
             res.update({
-                'original_value': value,
+                'original_value': new_list_price,
                 'discount': discount,
-                'value': new_list_price
                 })
         return res
 
