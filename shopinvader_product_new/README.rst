@@ -2,32 +2,27 @@
    :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
    :alt: License: AGPL-3
 
-==============
-Shopinvader
-==============
+=======================
+Shopinvader Product New
+=======================
 
 This module adds a 'new' field to display new products in website
 
 Installation
 ============
 
-TODO
 
 Configuration
 =============
-
-TODO
 
 
 Usage
 =====
 
-TODO
 
 Known issues / Roadmap
 ======================
 
-Service should use Component, but we need to wait for 10 version
 
 Bug Tracker
 ===========
