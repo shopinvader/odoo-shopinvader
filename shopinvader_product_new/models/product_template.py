@@ -12,11 +12,14 @@ class ProductTemplate(models.Model):
     new = fields.Boolean('New product')
 
     @api.model
-    def compute_new_product(self, limit):
+    def compute_new_product(self, limit, extra_domain=None):
         new_products = self.search([('new', '=', True)])
         new_products.write({'new': False})
+        domain = [('shopinvader_bind_ids', '!=', False)]
+        if extra_domain is not None:
+            domain += extra_domain
         new_products = self.search(
-            [('shopinvader_bind_ids', '!=', False)],
+            domain,
             limit=limit,
             order='create_date desc')
         new_products.write({'new': True})
