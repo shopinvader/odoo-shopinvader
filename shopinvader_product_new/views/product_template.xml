@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="product.product_template_form_view"/>
         <field name="arch" type="xml">
             <field name="company_id" position="after">
-                <field name="new"/>
+                <field name="new_product"/>
             </field>
         </field>
     </record>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="ir_exp_shopinvader_variant_new" model="ir.exports.line">
-        <field name="name">new</field>
+    <record id="ir_exp_shopinvader_variant_new_product" model="ir.exports.line">
+        <field name="name">new_product</field>
         <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     </record>
 

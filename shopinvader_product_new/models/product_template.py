@@ -9,12 +9,12 @@ from odoo import api, fields, models
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
 
-    new = fields.Boolean('New product')
+    new_product = fields.Boolean('New product')
 
     @api.model
     def compute_new_product(self, limit, extra_domain=None):
-        new_products = self.search([('new', '=', True)])
-        new_products.write({'new': False})
+        new_products = self.search([('new_product', '=', True)])
+        new_products.write({'new_product': False})
         domain = [('shopinvader_bind_ids', '!=', False)]
         if extra_domain is not None:
             domain += extra_domain
@@ -22,4 +22,4 @@ class ProductTemplate(models.Model):
             domain,
             limit=limit,
             order='create_date desc')
-        new_products.write({'new': True})
+        new_products.write({'new_product': True})
