@@ -6,7 +6,7 @@
 ShopInvader Quotation
 =====================
 
-This module help to manag quotation in shopinvader. It adds a new typology 'quotation' on sale_order.
+This module help to manage quotation in shopinvader. It adds a new typology 'quotation' on sale_order.
 
 Usage
 =====

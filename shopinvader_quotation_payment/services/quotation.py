@@ -8,6 +8,7 @@ from odoo.addons.component.core import Component
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
+
 class QuotationService(Component):
     _inherit = [
         'shopinvader.abstract.payment.service',

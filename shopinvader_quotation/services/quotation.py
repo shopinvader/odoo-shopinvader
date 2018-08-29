@@ -5,8 +5,6 @@
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
-from odoo.exceptions import UserError
-from odoo.tools.translate import _
 
 
 class QuotationService(Component):

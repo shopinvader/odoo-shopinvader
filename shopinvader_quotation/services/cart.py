@@ -17,7 +17,8 @@ class CartService(Component):
         if cart.state == 'draft' and cart.typology == 'cart':
             cart.typology = 'quotation'
         else:
-            raise UserError(_('Impossible to create quotation the order is in the wrong state'))
+            raise UserError(_('Impossible to create quotation the'
+                              'order is in the wrong state'))
         res = self._to_json(cart)
         res.update({
             'store_cache': {'last_sale': res['data'], 'cart': {}},
