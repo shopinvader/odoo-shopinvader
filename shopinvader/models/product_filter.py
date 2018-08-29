@@ -48,4 +48,4 @@ class ProductFilter(models.Model):
 
     def _compute_display_name(self):
         for pfilter in self:
-            pfilter.display_name = self._build_display_name()
+            pfilter.display_name = pfilter._build_display_name()

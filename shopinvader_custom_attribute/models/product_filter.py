@@ -26,4 +26,4 @@ class ProductFilter(models.Model):
             return 'attributes.%s'\
                 % sanitize_attr_name(self.custom_attribute_id)[2:]
         else:
-            return super(ProductFilter, self)._build_name()
+            return super(ProductFilter, self)._build_display_name()
