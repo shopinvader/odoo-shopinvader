@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Akretion (http://www.akretion.com).
+# Copyright 2018 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -8,26 +8,30 @@ import odoo.addons.decimal_precision as dp
 
 
 class RatingMixing(models.AbstractModel):
+    """New object to calculate product rating."""
+
     _name = 'rating.mixing'
 
     rating = fields.Float(
         compute='_compute_rating',
         group_operator='avg',
-        digits_compute=dp.get_precision('Product Rating'),
+        digits=dp.get_precision('Product Rating'),
         store=True)
 
     def _compute_rating(self):
-        key = self._fields['rating_ids']._column_fields_id
+        key = self._fields['rating_ids']._description_relation_field
         res = self.env['product.rating'].read_group([
             (key, 'in', self.ids),
             ('state', '=', 'approved'),
-            ], ['rating', key], [key])
+        ], ['rating', key], [key])
         res = {x[key][0]: x['rating'] for x in res}
         for record in self:
             record.rating = res.get(record.id, 0)
 
 
 class ProductTemplate(models.Model):
+    """Enahance the module to add rating feature."""
+
     _inherit = ['product.template', 'rating.mixing']
     _name = 'product.template'
 
@@ -42,6 +46,8 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
+    """Enahance the module to add rating feature."""
+
     _inherit = ['product.product', 'rating.mixing']
     _name = 'product.product'
 

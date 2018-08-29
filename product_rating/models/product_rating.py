@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Akretion (http://www.akretion.com).
+# Copyright 2018 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -7,6 +7,8 @@ from odoo import api, fields, models
 
 
 class ProductRating(models.Model):
+    """New object for product rating and partner details."""
+
     _name = 'product.rating'
     _description = 'Product Rating'
 
@@ -17,8 +19,8 @@ class ProductRating(models.Model):
         ('pending', 'Pending'),
         ('refused', 'Refused'),
         ('approved', 'Approved'),
-        ], default='pending',
-        )
+    ], default='pending',
+    )
     partner_id = fields.Many2one(
         'res.partner',
         'Partner')
@@ -42,7 +44,7 @@ class ProductRating(models.Model):
         ('3', '3'),
         ('4', '4'),
         ('5', '5'),
-        ])
+    ])
 
     @api.depends('select_rating')
     def _compute_rating(self):
@@ -51,4 +53,5 @@ class ProductRating(models.Model):
 
     @api.onchange('partner_id')
     def change_partner(self):
+        """The method used to set nickname."""
         self.nickname = self.partner_id.name
