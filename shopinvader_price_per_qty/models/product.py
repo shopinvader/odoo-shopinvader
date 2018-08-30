@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Copyright 2017 Akretion (http://www.akretion.com).
+# Copyright 2018 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -9,8 +9,10 @@ from odoo import models
 class ShopinvaderVariant(models.Model):
     _inherit = 'shopinvader.variant'
 
-    def _get_price(self, pricelist, fposition):
-        vals = super(ShopinvaderVariant, self)._get_price(pricelist, fposition)
+    def _get_price(self, pricelist, fposition, company=None):
+        company = self.env.user.company_id
+        vals = super(ShopinvaderVariant, self)._get_price(
+            pricelist, fposition, company)
         items = self.env['product.pricelist.item'].search([
             '|', '|', '|',
             ('product_id', '=', self.record_id.id),
@@ -20,7 +22,7 @@ class ShopinvaderVariant(models.Model):
             ('product_id', '=', False),
             ('categ_id', '=', False),
             ('product_tmpl_id', '=', False),
-            ])
+        ])
         item_qty = set([item.min_quantity
                         for item in items if item.min_quantity > 1])
         vals['price_per_qty'] = {}
