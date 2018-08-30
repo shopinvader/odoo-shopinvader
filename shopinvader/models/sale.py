@@ -132,17 +132,17 @@ class SaleOrderLine(models.Model):
 
     @api.depends('order_id.shopinvader_backend_id', 'product_id')
     def _compute_shopinvader_variant(self):
+        lang = self._context.get('lang')
+        if not lang:
+            _logger.warning(
+                'No lang specified for getting the shopinvader variant '
+                'take the first binding')
         for record in self:
-            domain = [
-                ('record_id', '=', record.product_id.id),
-                ('shopinvader_product_id.backend_id', '=',
-                    record.order_id.shopinvader_backend_id.id),
-                ]
-            if self._context.get('lang'):
-                domain.append(('lang_id.code', '=', self._context['lang']))
-            else:
-                _logger.warning(
-                    'No lang specified for getting the shopinvader variant '
-                    'take the first binding')
-            record.shopinvader_variant_id = self.env['shopinvader.variant']\
-                .search(domain, limit=1)
+            bindings = record.product_id.shopinvader_bind_ids
+            for binding in bindings:
+                if binding.backend_id != \
+                        record.order_id.shopinvader_backend_id:
+                    continue
+                if lang and binding.lang_id.code != lang:
+                    continue
+                record.shopinvader_variant_id = binding
