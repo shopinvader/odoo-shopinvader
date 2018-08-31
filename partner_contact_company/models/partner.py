@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class ResPartner(models.Model):
@@ -14,9 +15,9 @@ class ResPartner(models.Model):
 
     name = fields.Char(
         compute="_compute_name",
-        inverse="_inverse_name",
         required=False,
-        store=True)
+        store=True,
+        readonly=True)
 
     @api.multi
     def copy(self, default=None):
@@ -59,8 +60,6 @@ class ResPartner(models.Model):
             if partner.company_name or partner.parent_id:
                 if not name and partner.type in ['invoice', 'delivery', 'other']:
                     name = dict(self.fields_get(['type'])['type']['selection'])[partner.type]
-                if not partner.is_company and not partner.company and partner.parent_id.is_company:
-                    name = "%s, %s" % (partner.commercial_company_name or partner.parent_id.company, name)
             if self._context.get('show_address_only'):
                 name = partner._display_address(without_company=True)
             if self._context.get('show_address'):
@@ -83,3 +82,26 @@ class ResPartner(models.Model):
         for partner in self:
             partner.display_name = names.get(partner.id)
 
+    @api.model
+    def create(self, vals):
+        if 'name' in vals:
+            if self._context.get('install_mode', False):
+                vals['contact_name'] = vals['name']
+            else:
+                raise UserError(_(
+                    "You cannot write in field 'name', use company and contact name"))
+        if not 'name' in vals:
+            vals['name'] = '/'
+        return super(ResPartner, self).create(vals)
+
+
+    @api.multi
+    def write(self, vals):
+        if 'name' in vals:
+            if self._context.get('install_mode', False):
+                vals['contact_name'] = vals['name']
+                del vals['name']
+            else:
+                raise UserError(_(
+                    "You cannot write in field 'name', use company and contact name"))
+        return super(ResPartner, self).write(vals)

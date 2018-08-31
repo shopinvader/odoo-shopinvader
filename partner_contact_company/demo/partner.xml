@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="partner_test_name" model="res.partner">
+        <field name="name">Test name</field>
+        <field name="country_id" ref="base.fr"/>
+    </record>
+
+    <record id="partner_test_company" model="res.partner">
+        <field name="company">Test company</field>
+        <field name="country_id" ref="base.fr"/>
+    </record>
+
+    <record id="partner_test_contact_name" model="res.partner">
+        <field name="contact_name">Test contact name</field>
+        <field name="country_id" ref="base.fr"/>
+    </record>
+
+    <record id="partner_test_company_contact_name" model="res.partner">
+        <field name="company">Company</field>
+        <field name="contact_name">Contact name</field>
+        <field name="country_id" ref="base.fr"/>
+    </record>
+
+</odoo>
