@@ -15,3 +15,9 @@ class ShopinvaderBackend(models.Model):
     location = fields.Char(required=True, sparse='data')
     username = fields.Char(required=True, sparse='data')
     handle = fields.Char(required=True, sparse='data')
+
+    def synchronize_metadata(self):
+        for record in self:
+            with record.work_on(record._name) as work:
+                exporter = work.component(usage='record.exporter')
+                return exporter.run()

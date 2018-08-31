@@ -69,6 +69,7 @@
         "demo/sale_demo.xml",
         "demo/email_demo.xml",
         "demo/notification_demo.xml",
+        "demo/product_filter_demo.xml",
     ],
     "qweb": [
     ]

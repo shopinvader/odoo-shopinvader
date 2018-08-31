@@ -8,6 +8,14 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    name="synchronize_metadata"
+                    type="object"
+                    string="Synchronize Metadata"
+                    class="oe_highlight"
+                    groups="shopinvader.group_shopinvader_manager"/>
+            </header>
             <field name="company_id" position="after">
                 <separator name="image" colspan="4"/>
                 <field name="username" colspan="2"/>
@@ -16,5 +24,5 @@
             </field>
         </field>
     </record>
-    
+
 </odoo>

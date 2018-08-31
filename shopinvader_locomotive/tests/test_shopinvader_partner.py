@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from .common import LocoCommonCase
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -14,7 +14,7 @@ except (ImportError, IOError) as err:
     _logger.debug(err)
 
 
-class TestShopinvaderPartner(CommonCase):
+class TestShopinvaderPartner(LocoCommonCase):
 
     def setUp(self, *args, **kwargs):
         super(TestShopinvaderPartner, self).setUp(*args, **kwargs)
@@ -38,13 +38,12 @@ class TestShopinvaderPartner(CommonCase):
         # The creation of a shopinvader partner into odoo must trigger
         # the creation of a user account into locomotive
         self._check_nbr_job_created(1)
-        base_url = self.backend.location + '/locomotive/api/v3'
         with requests_mock.mock() as m:
             m.post(
-                base_url + '/tokens.json',
+                self.base_url + '/tokens.json',
                 json={'token': u'744cfcfb3cd3'})
             m.post(
-                base_url + '/content_types/customers/entries',
+                self.base_url + '/content_types/customers/entries',
                 json={'_id': external_id})
             self._perform_created_job()
         return shopinvader_partner
@@ -63,13 +62,12 @@ class TestShopinvaderPartner(CommonCase):
         # The deletion of a shopinvader into odoo must trigger the deletion
         # of a user account into locomotive
         self._check_nbr_job_created(1)
-        base_url = self.backend.location + '/locomotive/api/v3'
         with requests_mock.mock() as m:
             m.post(
-                base_url + '/tokens.json',
+                self.base_url + '/tokens.json',
                 json={'token': u'744cfcfb3cd3'})
             m.delete(
-                base_url +
+                self.base_url +
                 '/content_types/customers/entries/5a953d6aae1c744cfcfb3cd3',
                 json={})
             self._perform_created_job()

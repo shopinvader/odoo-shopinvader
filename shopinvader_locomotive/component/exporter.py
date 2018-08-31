@@ -20,3 +20,16 @@ class LocomotiveExporter(Component):
     def _create(self, record):
         result = super(LocomotiveExporter, self)._create(record)
         return result['_id']
+
+
+class LocomotiveSiteExporter(Component):
+    _inherit = 'locomotive.exporter'
+    _name = 'locomotive.site.exporter'
+    _apply_on = 'shopinvader.backend'
+
+    def run(self):
+        self.binding = self.backend_record
+        self.external_id = self.backend_record.handle
+        map_record = self._map_data()
+        data = self._update_data(map_record)
+        self._update(data)

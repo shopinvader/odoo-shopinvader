@@ -3,11 +3,13 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 # pylint: disable=W8106
+import json
+import logging
 
-
+from odoo import _
+from odoo.exceptions import UserError
 from odoo.addons.component.core import AbstractComponent, Component
 
-import logging
 _logger = logging.getLogger(__name__)
 
 try:
@@ -68,3 +70,35 @@ class LocomotiveAssetAdapter(Component):
     def __init__(self, work_context):
         super(LocomotiveAssetAdapter, self).__init__(work_context)
         self.resource = self.client.asset()
+
+
+class LocomotiveBackendAdapter(Component):
+    _name = 'shopinvader.backend.adapter'
+    _inherit = 'locomotive.content.adapter'
+    _apply_on = 'shopinvader.backend'
+
+    def __init__(self, work_context):
+        super(LocomotiveBackendAdapter, self).__init__(work_context)
+        self.resource = self.client.site()
+
+    def _get_site(self, handle):
+        for site in self.resource.search():
+            if site['handle'] == handle:
+                return site
+        raise UserError(
+            _('No site was found for the handle %s')
+            % handle)
+
+    def write(self, handle, vals):
+        """
+            The write method will only write the "store" information of
+            the site in the field "_store" as this field is a custom field
+            it's part of the json of the field metafields.
+            To update it we need to read it, update it and push it
+        """
+        site = self._get_site(handle)
+        metafields = json.loads(site['metafields'])
+        metafields['_store'].update(vals)
+        return self.resource.write(site['_id'], {
+            'metafields': json.dumps(metafields),
+            })

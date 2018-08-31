@@ -57,6 +57,9 @@
                             <group name="allowed_country" colspan="4">
                                 <field name="allowed_country_ids" nolabel="1"/>
                             </group>
+                            <group name="filter_ids" colspan="4">
+                                <field name="filter_ids" nolabel="1"/>
+                            </group>
                         </page>
                         <page name="email" string="Email">
                             <group name="notification" string="Notification">
