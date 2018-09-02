@@ -23,13 +23,14 @@ class LocomotiveExporter(Component):
 
 
 class LocomotiveSiteExporter(Component):
-    _inherit = 'locomotive.exporter'
+    _inherit = ['generic.exporter', 'base.locomotive.connector']
     _name = 'locomotive.site.exporter'
+    _usage = 'record.exporter'
     _apply_on = 'shopinvader.backend'
 
-    def run(self):
+    def run(self, fields=None):
         self.binding = self.backend_record
         self.external_id = self.backend_record.handle
         map_record = self._map_data()
-        data = self._update_data(map_record)
+        data = self._update_data(map_record, fields=fields)
         self._update(data)

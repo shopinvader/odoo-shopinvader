@@ -21,6 +21,11 @@
                 <field name="username" colspan="2"/>
                 <field name="password" colspan="2"/>
                 <field name="handle" colspan="2"/>
+                <field
+                    name="currency_ids"
+                    widget="many2many_tags"
+                    colspan="2"
+                    groups="base.group_multi_currency"/>
             </field>
         </field>
     </record>

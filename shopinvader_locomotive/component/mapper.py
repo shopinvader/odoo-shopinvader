@@ -47,6 +47,14 @@ class ShopinvaderSiteExportMapper(Component):
                     })
         return {'all_filters': res}
 
+    @mapping
+    @changed_by('currency_ids')
+    def currencies_rate(self, record):
+        res = {}
+        for currency in record.currency_ids:
+            res[currency.name.upper()] = currency.rate
+        return {'currencies_rate': res}
+
     def finalize(self, map_record, values):
         values = super(ShopinvaderSiteExportMapper, self).finalize(
             map_record, values)
