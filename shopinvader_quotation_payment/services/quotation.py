@@ -31,8 +31,8 @@ class QuotationService(Component):
             else:
                 return self._confirm_cart(quotation)
 
-    def _get_available_payment_mode(self):
-        for line in self.order_line:
+    def _get_available_payment_mode(self, cart):
+        for line in cart.order_line:
             if line.product_id.only_quotation:
                 return []
-        return super(QuotationService, self)._get_available_payment_mode()
+        return super(QuotationService, self)._get_available_payment_mode(cart)
