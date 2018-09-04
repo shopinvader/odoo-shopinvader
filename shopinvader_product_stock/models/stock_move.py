@@ -51,8 +51,10 @@ class StockMove(models.Model):
 
         :return: stock.move recordset
         """
+        # action_confirm on stock_move method can return a new recorset in
+        # case of BOM
         result = super(StockMove, self).action_confirm()
-        self._jobify_product_stock_update()
+        result._jobify_product_stock_update()
         return result
 
     @api.multi
