@@ -94,7 +94,7 @@ class AbstractPaymentService(AbstractComponent):
     def _set_payment_mode(self, cart, params):
         payment_mode_id = params['payment_mode']['id']
         available_payment_mode_ids = [
-            x['id'] for x in self._get_available_payment_mode()]
+            x['id'] for x in self._get_available_payment_mode(cart)]
         if payment_mode_id not in available_payment_mode_ids:
             raise UserError(_('Unsupported payment mode'))
         else:
@@ -130,7 +130,7 @@ class AbstractPaymentService(AbstractComponent):
     def _convert_one_sale(self, cart):
         res = super(AbstractPaymentService, self)._convert_one_sale(cart)
         if cart:
-            methods = self._get_available_payment_mode()
+            methods = self._get_available_payment_mode(cart)
             selected_method = {}
             if cart.payment_mode_id:
                 for method in methods:
@@ -155,7 +155,7 @@ class AbstractPaymentService(AbstractComponent):
             'description': method.description,
             }
 
-    def _get_available_payment_mode(self):
+    def _get_available_payment_mode(self, cart):
         methods = []
         for method in self.shopinvader_backend.payment_method_ids:
             methods.append(self._prepare_payment(method))
