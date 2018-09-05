@@ -62,7 +62,8 @@ class CartService(Component):
         return self._to_json(cart)
 
     # Validator
-    def _validator_search(self):
+    @property
+    def _search_request_schema(self):
         return {}
 
     def _subvalidator_shipping(self):
@@ -96,7 +97,8 @@ class CartService(Component):
                 }
         }
 
-    def _validator_update(self):
+    @property
+    def _update_request_schema(self):
         return {
             'step': self._subvalidator_step(),
             'shipping': self._subvalidator_shipping(),
@@ -104,25 +106,359 @@ class CartService(Component):
             'note': {'type': 'string'},
         }
 
-    def _validator_add_item(self):
+    @property
+    def _add_item_request_schema(self):
         return {
             'product_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
         }
 
-    def _validator_update_item(self):
+    @property
+    def _update_item_request_schema(self):
         return {
             'item_id': {'coerce': to_int, 'required': True},
             'item_qty': {'coerce': float, 'required': True},
         }
 
-    def _validator_delete_item(self):
+    @property
+    def _delete_item_request_schema(self):
         return {
             'item_id': {'coerce': to_int, 'required': True},
         }
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
+
+    def _build_common_response_schema(self):
+        """
+        It's quite long to inherit the common response schema for this
+        shopinvader cart.
+        So to automatically update the schema, just inherits this function
+        to add a new item into the list.
+        An item is a tuple: (1, 2, 3)
+        1 (string): key of the new sub-schema; ex: images
+        2 (string): where to put the new key; ex: data/lines/items/product
+        3 (dict):  dict related to the new images schema
+        The _common_response_schema will automatically detects if there is a
+        schema key and go down if necessary.
+        Ex: into your second item of the tuple, just specify
+        data/lines/items/product and not data/schema/lines/schema/schema/...
+        :return: list of tuple
+        """
+        return []
+
+    # Response validator
+    def _common_response_schema(self):
+        address_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'required': False,
+            'schema': {
+                'address_type': {
+                    'type': ['boolean', 'string'],
+                },
+                'city': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'country': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'id': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                    },
+                },
+                'display_name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'id': {
+                    'type': 'integer',
+                    'nullable': True,
+                },
+                'is_company': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'opt_in': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'opt_out': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'phone': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'ref': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'state': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'id': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                    },
+                },
+                'street': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'street2': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'vat': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'zip': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+            },
+        }
+        amount_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'tax': {
+                    'type': 'float',
+                    'required': True,
+                },
+                'total': {
+                    'type': 'float',
+                    'required': True,
+                },
+                'untaxed': {
+                    'type': 'float',
+                    'required': True,
+                },
+            },
+        }
+        product_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'id': {
+                    'type': 'integer',
+                },
+                'model': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                    },
+                },
+                'name': {
+                    'type': 'string',
+                },
+                'short_name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'sku': {
+                    'type': 'string',
+                },
+                'url_key': {
+                    'type': 'string',
+                },
+            },
+        }
+        line_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'amount': amount_schema,
+                'count': {
+                    'type': 'float',
+                },
+                'items': {
+                    'type': 'list',
+                    'required': True,
+                    'schema': {
+                        'type': 'dict',
+                        'schema': {
+                            'amount': {
+                                'type': 'dict',
+                                'nullable': True,
+                                'schema': {
+                                    'price': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                    'tax': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                    'total': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                    'untaxed': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                },
+                            },
+                            'discount': {
+                                'type': 'dict',
+                                'nullable': True,
+                                'schema': {
+                                    'rate': {
+                                        'type': 'float',
+                                        'required': True,
+                                    },
+                                },
+                            },
+                            'product': product_schema,
+                            'qty': {
+                                'type': 'float',
+                                'required': True,
+                            },
+                            'id': {
+                                'type': 'integer',
+                            },
+                        },
+                    },
+                }
+            },
+        }
+        data_schema = {
+            'type': 'dict',
+            'schema': {
+                'amount': amount_schema,
+                'date': {
+                    'type': 'string',
+                },
+                'id': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'invoicing': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'address': address_schema,
+                    },
+                },
+                'lines': line_schema,
+                'name': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'shipping': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'address': address_schema,
+                    },
+                },
+                'state': {
+                    'type': 'string',
+                    'required': True,
+                },
+                'step': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'current': {
+                            'type': ['string', 'boolean'],
+                            'required': True,
+                        },
+                        'done': {
+                            'type': 'list',
+                            'required': True,
+                        },
+                    },
+                },
+            }
+        }
+        schema = {
+            'store_cache': {
+                'type': 'dict',
+                'nullable': True,
+                'schema': {
+                    'cart': {
+                        'type': 'dict',
+                        'nullable': True,
+                    },
+                    'last_sale': data_schema,
+                },
+            },
+            'set_session': {
+                'type': 'dict',
+                'schema': {
+                    'cart_id': {
+                        'type': 'integer',
+                        'required': True,
+                    },
+                },
+            },
+            'data': data_schema,
+        }
+        # Instead of always inherit this function, add every items
+        # specified by inheriting the _build_common_response_schema() function.
+        for item in self._build_common_response_schema():
+            key, schema_hierarchy, new_schema = item
+            target = schema
+            if schema_hierarchy:
+                for schema_key in schema_hierarchy.split('/'):
+                    target = target.get(schema_key, {})
+                    while 'schema' in target:
+                        target = target.get('schema', {})
+            target.update({
+                key: new_schema,
+            })
+        return schema
+
+    @property
+    def _create_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _update_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _add_item_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _delete_item_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _update_item_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _search_response_schema(self):
+        return self._common_response_schema()
 
     def _add_item(self, cart, params):
         existing_item = self._check_existing_cart_item(params, cart)

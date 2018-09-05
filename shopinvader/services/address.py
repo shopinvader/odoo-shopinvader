@@ -53,7 +53,8 @@ class AddressService(Component):
     # All params are trusted as they have been checked before
 
     # Validator
-    def _validator_search(self):
+    @property
+    def _search_request_schema(self):
         return {
             'scope': {
                 'type': 'dict',
@@ -61,7 +62,8 @@ class AddressService(Component):
                 },
             }
 
-    def _validator_create(self):
+    @property
+    def _create_request_schema(self):
         res = {
             'street': {'type': 'string', 'required': True, 'empty': False},
             'street2': {'type': 'string', 'nullable': True},
@@ -119,15 +121,128 @@ class AddressService(Component):
             res.update({'company': {'type': 'string'}})
         return res
 
-    def _validator_update(self):
-        res = self._validator_create()
+    @property
+    def _update_request_schema(self):
+        res = self._create_request_schema
         for key in res:
             if 'required' in res[key]:
                 del res[key]['required']
         return res
 
-    def _validator_delete(self):
+    @property
+    def _delete_request_schema(self):
         return {}
+
+    # Response validator
+    def _common_response_schema(self):
+        schema = {
+            'size': {
+                'type': 'integer',
+                'min': 0,
+            },
+            'data': {
+                'type': 'list',
+                'required': True,
+                'schema': {
+                    'type': 'dict',
+                    'schema': {
+                        'id': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                        'display_name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'ref': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'street': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'street2': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'zip': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'city': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'phone': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'opt_in': {
+                            'type': 'boolean',
+                        },
+                        'opt_out': {
+                            'type': 'boolean',
+                        },
+                        'vat': {
+                            'type': 'string',
+                            'nullable': True,
+                        },
+                        'state': {
+                            'type': 'dict',
+                            'nullable': True,
+                            'schema': {
+                                'id': {
+                                    'type': 'integer',
+                                    'required': True,
+                                },
+                                'name': {
+                                    'type': 'string',
+                                    'required': True,
+                                },
+                            },
+                        },
+                        'country': {
+                            'type': 'dict',
+                            'nullable': True,
+                            'schema': {
+                                'id': {
+                                    'type': 'integer',
+                                    'required': True,
+                                },
+                                'name': {
+                                    'type': 'string',
+                                    'required': True,
+                                },
+                            },
+                        },
+                        'address_type': {
+                            'type': 'string',
+                        },
+                        'is_company': {
+                            'type': 'boolean',
+                        },
+                    },
+                },
+            }
+        }
+        return schema
+
+    @property
+    def _create_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _update_response_schema(self):
+        return self._common_response_schema()
+
+    @property
+    def _search_response_schema(self):
+        return self._common_response_schema()
 
     def _get_base_search_domain(self):
         return [('id', 'child_of', self.partner.id)]

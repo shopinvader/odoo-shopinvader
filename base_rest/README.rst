@@ -50,19 +50,34 @@ The business logic of your service must be implemented into a component
         def delete(self, _id):
             return {'response': 'DELETE called with id %s ' % _id}
 
-        # Validator
-        def _validator_search(self):
+        # Validator (input)
+        def _search_request_schema(self):
             return {'message': {'type': 'string'}}
 
         # Validator
-        def _validator_get(self):
+        @property
+        def _get_request_schema(self):
             # no parameters by default
             return {}
 
-        def _validator_update(self):
+        @property
+        def _get_response_schema(self):
+            return {'id': {'type': 'integer'}}
+
+        @property
+        def _update_request_schema(self):
             return {'message': {'type': 'string'}}
 
-        def _validator_create(self):
+        @property
+        def _create_request_schema(self):
+            return {'message': {'type': 'string'}}
+
+        @property
+        def _create_response_schema(self):
+            return {'message': {'type': 'string'}}
+
+        @property
+        def _update_response_schema(self):
             return {'message': {'type': 'string'}}
 
 Once your have implemented your services (ping, ...), you must tell to Odoo
@@ -149,6 +164,7 @@ Contributors
 
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Sébastien Beau <sebastien.beau@akretion.com>
+* François Honoré <francois.honore@acsone.eu>
 
 Funders
 -------

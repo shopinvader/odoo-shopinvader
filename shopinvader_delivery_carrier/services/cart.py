@@ -24,7 +24,8 @@ class CartService(Component):
             return self._to_json(cart)
 
     # Validator
-    def _validator_add_carrier(self):
+    @property
+    def _add_carrier_request_schema(self):
         return {
             'carrier': {
                 'type': 'dict',
@@ -37,6 +38,79 @@ class CartService(Component):
                     }
                 },
             }
+
+    @property
+    def _add_carrier_response_schema(self):
+        return self._common_response_schema()
+
+    def _build_common_response_schema(self):
+        """
+        Inherit to add:
+        data/lines/items/product/images
+        :return: list
+        """
+        items = super(CartService, self)._build_common_response_schema()
+        amount_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'tax': {
+                    'type': 'float',
+                    'required': True,
+                },
+                'total': {
+                    'type': 'float',
+                    'required': True,
+                },
+                'untaxed': {
+                    'type': 'float',
+                    'required': True,
+                },
+            },
+        }
+        available_carriers = {
+            'type': 'dict',
+            'nullable': True,
+            'schema': {
+                'count': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'items': {
+                    'type': 'list',
+                    'required': True,
+                    'schema': {
+                        'type': 'dict',
+                        'schema': {
+                            'description': {
+                                'type': ['string', 'boolean'],
+                                'required': True,
+                            },
+                            'name': {
+                                'type': 'string',
+                                'required': True,
+                            },
+                            'id': {
+                                'type': 'integer',
+                            },
+                            'price': {
+                                'type': 'float',
+                            },
+                        },
+                    },
+                },
+            },
+        }
+        selected_carrier = {
+            'type': 'dict',
+            'required': True,
+        }
+        items.extend([
+            ('amount', 'data/shipping', amount_schema),
+            ('available_carriers', 'data/shipping', available_carriers),
+            ('selected_carrier', 'data/shipping', selected_carrier),
+        ])
+        return items
 
     def _set_carrier(self, cart, carrier_id):
         if carrier_id not in [

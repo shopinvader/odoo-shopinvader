@@ -23,6 +23,7 @@
     },
     "depends": [
         'base_rest',
+        'connector',
         'auth_api_key',
         'base_jsonify',
         "base_sparse_field_list_support",

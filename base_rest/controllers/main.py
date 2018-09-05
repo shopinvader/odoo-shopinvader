@@ -158,8 +158,8 @@ class RestController(Controller):
                         params=None):
         self._validate_method_name(method_name)
         with self.service_component(service_name) as service:
-            res = service.dispatch(method_name, _id, params)
-            return self.make_response(res)
+            result = service.dispatch(method_name, _id, params)
+            return self.make_response(result)
 
     @route([
         '<string:_service_name>',

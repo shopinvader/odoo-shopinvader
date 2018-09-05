@@ -16,7 +16,8 @@ class AbstractItemCase(object):
     def extract_cart(self, response):
         self.shopinvader_session['cart_id'] =\
             response['set_session']['cart_id']
-        self.assertEqual(response['store_cache'], {'cart': response['data']})
+        self.assertDictEqual(
+            response['store_cache'], {'cart': response['data']})
         return response['data']
 
     def add_item(self, product_id, qty):

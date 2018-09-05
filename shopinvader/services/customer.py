@@ -39,15 +39,18 @@ class CustomerService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _validator_get(self):
+    @property
+    def _get_request_schema(self):
         return {}
 
-    def _validator_sign_in(self):
+    @property
+    def _sign_in_request_schema(self):
         return {}
 
-    def _validator_create(self):
+    @property
+    def _create_request_schema(self):
         address = self.component(usage='addresses')
-        schema = address._validator_create()
+        schema = address._create_request_schema
         schema.update({
             'email': {
                 'type': 'string',
@@ -62,6 +65,115 @@ class CustomerService(Component):
                 'required': False,
                 },
             })
+        return schema
+
+    @property
+    def _create_response_schema(self):
+        data_schema = {
+            'type': 'dict',
+            'schema': {
+                'id': {
+                    'type': 'integer',
+                    'required': True,
+                },
+                'name': {
+                    'type': 'string',
+                },
+            }
+        }
+        customer_schema = {
+            'type': 'dict',
+            'nullable': True,
+            'required': False,
+            'schema': {
+                'address_type': {
+                    'type': 'string',
+                },
+                'city': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'country': {
+                    'type': 'dict',
+                    'nullable': True,
+                    'schema': {
+                        'name': {
+                            'type': 'string',
+                            'required': True,
+                        },
+                        'id': {
+                            'type': 'integer',
+                            'required': True,
+                        },
+                    },
+                },
+                'display_name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'id': {
+                    'type': 'integer',
+                    'nullable': True,
+                },
+                'is_company': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'name': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'opt_in': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'opt_out': {
+                    'type': 'boolean',
+                    'nullable': True,
+                },
+                'phone': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'ref': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'state': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'street': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'street2': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'vat': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+                'zip': {
+                    'type': 'string',
+                    'nullable': True,
+                },
+            },
+        }
+        store_cache_schema = {
+            'type': 'dict',
+            'schema': {
+                'cart': {
+                    'type': 'dict',
+                },
+                'customer': customer_schema,
+            }
+        }
+        schema = {
+            'store_cache': store_cache_schema,
+            'data': data_schema,
+        }
         return schema
 
     def _prepare_params(self, params):
