@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
@@ -74,8 +74,8 @@ class ResPartner(models.Model):
         return res
 
     @api.depends(
-        'is_company', 'name', 'parent_id.name', 'type', 'company_name',
-        'company', 'contact_name', 'parent_id.company')
+        'is_company', 'name', 'type', 'company_name',
+        'company', 'contact_name')
     def _compute_display_name(self):
         diff = dict(show_address=None, show_address_only=None, show_email=None)
         names = dict(self.with_context(**diff).name_get())
