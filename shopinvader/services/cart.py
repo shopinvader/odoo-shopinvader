@@ -31,8 +31,8 @@ class CartService(Component):
         return self._to_json(self._get())
 
     def update(self, **params):
-        response = self._update(params)
         cart = self._get()
+        response = self._update(cart, params)
         if response.get('action_confirm_cart'):
             # TODO improve me, it will be better to block the cart
             # confirmation if the user have set manually the end step
@@ -52,13 +52,13 @@ class CartService(Component):
         return self._to_json(cart)
 
     def update_item(self, **params):
-        self._update_item(params)
         cart = self._get()
+        self._update_item(cart, params)
         return self._to_json(cart)
 
     def delete_item(self, **params):
-        self._delete_item(params)
         cart = self._get()
+        self._delete_item(cart, params)
         return self._to_json(cart)
 
     # Validator
@@ -145,7 +145,7 @@ class CartService(Component):
     # All params are trusted as they have been checked before
 
     def _add_item(self, cart, params):
-        existing_item = self._check_existing_cart_item(params, cart)
+        existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
             existing_item.product_uom_qty += params['item_qty']
             existing_item.reset_price_tax()
@@ -154,13 +154,13 @@ class CartService(Component):
             item = self.env['sale.order.line'].create(vals)
             item.reset_price_tax()
 
-    def _update_item(self, params):
-        item = self._get_cart_item(params)
+    def _update_item(self, cart, params):
+        item = self._get_cart_item(cart, params)
         item.product_uom_qty = params['item_qty']
         item.reset_price_tax()
 
-    def _delete_item(self, params):
-        item = self._get_cart_item(params)
+    def _delete_item(self, cart, params):
+        item = self._get_cart_item(cart, params)
         item.unlink()
 
     def _prepare_shipping(self, shipping, params):
@@ -184,16 +184,20 @@ class CartService(Component):
             params['done_step_ids'] =\
                 [(4, self._get_step_from_code(step['current']).id, 0)]
 
-    def _update(self, params):
-        action_confirm_cart = False
-        cart = self._get()
-
+    def _prepare_update(self, cart, params):
         if 'shipping' in params:
             self._prepare_shipping(params.pop('shipping'), params)
         if 'invoicing' in params:
             self._prepare_invoicing(params.pop('invoicing'), params)
         if 'step' in params:
             self._prepare_step(params.pop('step'), params)
+        return params
+
+    def _update(self, cart, params):
+        action_confirm_cart = False
+        step_in_params = 'step' in params
+        params = self._prepare_update(cart, params)
+        if step_in_params:
             if params.get('current_step_id') ==\
                     self.shopinvader_backend.last_step_id.id:
                 action_confirm_cart = True
@@ -271,24 +275,21 @@ class CartService(Component):
             })
         return res
 
-    def _get_cart_item(self, params):
+    def _get_cart_item(self, cart, params):
         # We search the line based on the item id and the cart id
         # indeed the item_id information is given by the
         # end user (untrusted data) and the cart id by the
         # locomotive server (trusted data)
-        item = self.env['sale.order.line'].search([
-            ('id', '=', params['item_id']),
-            ('order_id', '=', self.cart_id),
-            ])
+        item = cart.mapped('order_line').filtered(
+            lambda l, id_=params['item_id']: l.id == id_)
         if not item:
             raise NotFound('No cart item found with id %s' % params['item_id'])
         return item
 
-    def _check_existing_cart_item(self, params, cart):
-        return self.env['sale.order.line'].search([
-            ('order_id', '=', cart.id),
-            ('product_id', '=', params['product_id'])
-            ])
+    def _check_existing_cart_item(self, cart, params):
+        product_id = params['product_id']
+        return cart.mapped('order_line').filtered(
+            lambda l, p=product_id: l.product_id.id == product_id)
 
     def _prepare_cart_item(self, params, cart):
         return {
