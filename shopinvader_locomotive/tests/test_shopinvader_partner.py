@@ -14,10 +14,10 @@ except (ImportError, IOError) as err:
     _logger.debug(err)
 
 
-class TestShopinvaderPartner(LocoCommonCase):
+class CommonShopinvaderPartner(LocoCommonCase):
 
     def setUp(self, *args, **kwargs):
-        super(TestShopinvaderPartner, self).setUp(*args, **kwargs)
+        super(CommonShopinvaderPartner, self).setUp(*args, **kwargs)
         self.data = {
             'email': 'new@customer.example.com',
             'name': 'Purple',
@@ -42,20 +42,29 @@ class TestShopinvaderPartner(LocoCommonCase):
             m.post(
                 self.base_url + '/tokens.json',
                 json={'token': u'744cfcfb3cd3'})
-            m.post(
+            res = m.post(
                 self.base_url + '/content_types/customers/entries',
                 json={'_id': external_id})
             self._perform_created_job()
-        return shopinvader_partner
+            return shopinvader_partner, res.request_history[0].json()
+
+
+class TestShopinvaderPartner(CommonShopinvaderPartner):
 
     def test_create_shopinvader_partner_from_odoo(self):
-        shop_partner = self._create_shopinvader_partner(
+        shop_partner, params = self._create_shopinvader_partner(
             self.data, u'5a953d6aae1c744cfcfb3cd3')
+        self.assertEqual(params, {
+            u'content_entry': {
+                u'role': u'default',
+                u'email': u'new@customer.example.com',
+                u'name': u'Purple'}
+            })
         self.assertEqual(
             shop_partner.external_id, u'5a953d6aae1c744cfcfb3cd3')
 
     def test_delete_shopinvader_partner_from_odoo(self):
-        shop_partner = self._create_shopinvader_partner(
+        shop_partner, params = self._create_shopinvader_partner(
             self.data, u'5a953d6aae1c744cfcfb3cd3')
         self._init_job_counter()
         shop_partner.unlink()
