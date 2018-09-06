@@ -46,6 +46,7 @@
         'wizards/shopinvader_category_binding_wizard.xml',
         'wizards/shopinvader_category_unbinding_wizard.xml',
         'views/shopinvader_menu.xml',
+        'views/shopinvader_product_view.xml',
         'views/shopinvader_variant_view.xml',
         'views/shopinvader_category_view.xml',
         'views/shopinvader_cart_step_view.xml',
