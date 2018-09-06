@@ -63,6 +63,7 @@ class AddressService(Component):
 
     def _validator_create(self):
         res = {
+            'name': {'type': 'string', 'required': True},
             'street': {'type': 'string', 'required': True, 'empty': False},
             'street2': {'type': 'string', 'nullable': True},
             'zip': {'type': 'string', 'required': True, 'empty': False},
@@ -90,33 +91,6 @@ class AddressService(Component):
             'opt_in': {'coerce': bool},
             'opt_out': {'coerce': bool},
             }
-        if 'partner_firstname' in self.env.registry._init_modules:
-            res.update({
-                'firstname': {
-                    'type': 'string',
-                    'required': True,
-                    'excludes': 'name',
-                    'empty': False
-                    },
-                'lastname': {
-                    'type': 'string',
-                    'required': True,
-                    'excludes': 'name',
-                    'empty': False
-                    },
-                'name': {
-                    'type': 'string',
-                    'required': True,
-                    'excludes': ['firstname', 'lastname'],
-                    'empty': False,
-                    },
-                })
-        else:
-            res.update({
-                'name': {'type': 'string', 'required': True},
-            })
-        if 'company' in self.env['res.partner']._fields:
-            res.update({'company': {'type': 'string'}})
         return res
 
     def _validator_update(self):
@@ -151,10 +125,6 @@ class AddressService(Component):
             'address_type',
             'is_company',
         ]
-        if 'partner_firstname' in self.env.registry._init_modules:
-            res += ['firstname', 'lastname']
-        if 'company' in self.env['res.partner']._fields:
-            res.append('company')
         return res
 
     def _to_json(self, address):
