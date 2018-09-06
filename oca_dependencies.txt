@@ -1,7 +1,7 @@
 connector
 server-tools
 e-commerce
-ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10.0
+ak-odoo-incubator https://github.com/acsone/ak-odoo-incubator 10.0-sale_promotion_rule-improved-lmi
 connector-search-engine https://github.com/akretion/connector-search-engine 10.0
 product-attribute
 product-variant
