@@ -5,6 +5,8 @@
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
@@ -34,7 +36,8 @@ class ResPartner(models.Model):
     def _compute_name(self):
         """Write the 'name' field according to splitted data."""
         for record in self:
-            name =  u", ".join((p for p in (record.company, record.contact_name) if p))
+            name = u", ".join([
+                p for p in (record.company, record.contact_name) if p])
             record.name = name
 
     @api.multi
@@ -58,12 +61,16 @@ class ResPartner(models.Model):
             name = partner.name or ''
 
             if partner.company_name or partner.parent_id:
-                if not name and partner.type in ['invoice', 'delivery', 'other']:
-                    name = dict(self.fields_get(['type'])['type']['selection'])[partner.type]
+                if not name and partner.type in [
+                        'invoice', 'delivery', 'other']:
+                    name = dict(
+                        self.fields_get(['type'])['type']['selection']
+                        )[partner.type]
             if self._context.get('show_address_only'):
                 name = partner._display_address(without_company=True)
             if self._context.get('show_address'):
-                name = name + "\n" + partner._display_address(without_company=True)
+                name = name + "\n" + partner._display_address(
+                    without_company=True)
             name = name.replace('\n\n', '\n')
             name = name.replace('\n\n', '\n')
             if self._context.get('show_email') and partner.email:
@@ -82,26 +89,31 @@ class ResPartner(models.Model):
         for partner in self:
             partner.display_name = names.get(partner.id)
 
+    def _process_name(self, vals):
+        # The aim is only to solve issue with compatibility with existing
+        # module and to resolve testing issue
+        updated_vals = vals.copy()
+        if 'contact_name' in updated_vals:
+            raise UserError(
+                _('You can not pass the contact_name and the name at the same '
+                  'time'))
+        updated_vals['contact_name'] = updated_vals['name']
+        del updated_vals['name']
+        _logger.debug(
+            'Be carefull the field name have been rename to contact_name')
+        return updated_vals
+
     @api.model
     def create(self, vals):
         if 'name' in vals:
-            if self._context.get('install_mode', False):
-                vals['contact_name'] = vals['name']
-            else:
-                raise UserError(_(
-                    "You cannot write in field 'name', use company and contact name"))
-        if not 'name' in vals:
-            vals['name'] = '/'
+            vals = self._process_name(vals)
+        # As name is required but it's a computed field
+        # we need to set a fake value that will be recomputed
+        vals['name'] = '/'
         return super(ResPartner, self).create(vals)
-
 
     @api.multi
     def write(self, vals):
         if 'name' in vals:
-            if self._context.get('install_mode', False):
-                vals['contact_name'] = vals['name']
-                del vals['name']
-            else:
-                raise UserError(_(
-                    "You cannot write in field 'name', use company and contact name"))
+            self._process_name(vals)
         return super(ResPartner, self).write(vals)

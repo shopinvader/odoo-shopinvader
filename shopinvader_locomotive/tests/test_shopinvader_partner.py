@@ -25,7 +25,7 @@ class TestShopinvaderPartner(LocoCommonCase):
             'zip': '43110',
             'city': 'Aurec sur Loire',
             'phone': '0485485454',
-            'country': {'id': self.env.ref('base.fr').id},
+            'country_id': self.env.ref('base.fr').id,
             }
 
     def _create_shopinvader_partner(self, data, external_id):
