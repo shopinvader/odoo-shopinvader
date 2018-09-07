@@ -12,6 +12,7 @@ class AbstractItemCase(object):
         super(AbstractItemCase, self).setUp(*args, **kwargs)
         self.product_1 = self.env.ref('product.product_product_4b')
         self.product_2 = self.env.ref('product.product_product_13')
+        self.product_3 = self.env.ref('product.product_product_11')
 
     def extract_cart(self, response):
         self.shopinvader_session['cart_id'] =\
@@ -93,6 +94,12 @@ class AbstractItemCase(object):
     def remove_cart(self):
         self.cart.unlink()
         self.shopinvader_session.pop('cart_id')
+
+    def test_pricelist_product(self):
+        self.remove_cart()
+        cart = self.add_item(self.product_3.id, 1)
+        self.assertEqual(self.product_3.list_price, 16.5)
+        self.assertEqual(cart['lines']['items'][0]['amount']['total'], 14.85)
 
 
 class AnonymousItemCase(AbstractItemCase, CommonCase):
