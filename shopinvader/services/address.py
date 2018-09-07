@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.base_rest.components.service import to_int, to_bool
 from odoo.addons.component.core import Component
 from odoo.exceptions import AccessError
 from odoo import _
@@ -86,9 +86,9 @@ class AddressService(Component):
                         'nullable': False},
                     }
                 },
-            'is_company': {'coerce': bool},
-            'opt_in': {'coerce': bool},
-            'opt_out': {'coerce': bool},
+            'is_company': {'coerce': to_bool},
+            'opt_in': {'coerce': to_bool},
+            'opt_out': {'coerce': to_bool},
             }
         if 'partner_firstname' in self.env.registry._init_modules:
             res.update({
