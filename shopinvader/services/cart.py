@@ -106,19 +106,39 @@ class CartService(Component):
 
     def _validator_add_item(self):
         return {
-            'product_id': {'coerce': to_int, 'required': True},
-            'item_qty': {'coerce': float, 'required': True},
+            'product_id': {
+                'coerce': to_int,
+                'required': True,
+                'type': 'integer'
+            },
+            'item_qty': {
+                'coerce': float,
+                'required': True,
+                'type': 'float',
+            },
         }
 
     def _validator_update_item(self):
         return {
-            'item_id': {'coerce': to_int, 'required': True},
-            'item_qty': {'coerce': float, 'required': True},
+            'item_id': {
+                'coerce': to_int,
+                'required': True,
+                'type': 'integer'
+            },
+            'item_qty': {
+                'coerce': float,
+                'required': True,
+                'type': 'float'
+            },
         }
 
     def _validator_delete_item(self):
         return {
-            'item_id': {'coerce': to_int, 'required': True},
+            'item_id': {
+                'coerce': to_int,
+                'required': True,
+                'type': 'integer'
+            },
         }
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -275,3 +295,18 @@ class CartService(Component):
             'product_uom_qty': params['item_qty'],
             'order_id': cart.id,
         }
+
+    def _get_openapi_default_parameters(self):
+        defaults = super(
+            CartService, self)._get_openapi_default_parameters()
+        defaults.append({
+            "name": "SESS_CART_ID",
+            "in": "header",
+            "description": "Session Cart Identifier",
+            "required": False,
+            "schema": {
+                "type": "integer",
+            },
+            "style": "simple"
+        })
+        return defaults

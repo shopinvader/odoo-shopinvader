@@ -33,6 +33,7 @@ class CartService(Component):
                         'coerce': int,
                         'nullable': True,
                         'required': True,
+                        'type': 'integer',
                         },
                     }
                 },

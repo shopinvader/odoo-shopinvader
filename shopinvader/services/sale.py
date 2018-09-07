@@ -24,19 +24,21 @@ class SaleService(Component):
         return self._paginate_search(**params)
 
     # Validator
-    def _validator_get(self):
-        return {}
-
     def _validator_search(self):
         return {
-            'id': {'coerce': to_int},
+            'id': {
+                'coerce': to_int,
+                'type': 'integer',
+            },
             'per_page': {
                 'coerce': to_int,
                 'nullable': True,
+                'type': 'integer',
                 },
             'page': {
                 'coerce': to_int,
                 'nullable': True,
+                'type': 'integer',
                 },
             'scope': {
                 'type': 'dict',

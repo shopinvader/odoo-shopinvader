@@ -38,10 +38,6 @@ class CustomerService(Component):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
-
-    def _validator_get(self):
-        return {}
-
     def _validator_sign_in(self):
         return {}
 
