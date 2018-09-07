@@ -19,10 +19,6 @@ class CommonCase(SavepointComponentCase):
         self.backend = self.env.ref('shopinvader.backend_1')
         self.backend.bind_all_product()
         self.shopinvader_session = {}
-        # Compatibility with product_visible_discount
-        if 'visible_discount' in self.env['product.pricelist']._fields:
-            pricelist = self.env['product.pricelist'].search([])
-            pricelist.write({'visible_discount': False})
 
     @contextmanager
     def work_on_services(self, **params):
