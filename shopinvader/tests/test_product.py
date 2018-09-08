@@ -267,3 +267,43 @@ class ProductCase(ProductCommonCase):
             ('shopinvader_bind_ids', '!=', False)
             ], limit=1)
         product.name += ' modification'
+
+    def test_multicompany_product(self):
+        # Test that default code change with user on company 2
+        # changes the url_key on company 1 backend
+        self.backend.bind_all_product()
+        product_12 = self.env.ref('product.product_product_12')
+        shopinvader_product_12 = self.env['shopinvader.product'].search([
+            ('record_id', '=', product_12.product_tmpl_id.id),
+            ('backend_id', '=', self.backend.id),
+        ])
+        result = shopinvader_product_12.url_key.find(product_12.default_code)
+        self.assertTrue(
+            result,
+        )
+        # If sale_stock module have been installed
+        # We need to drop the constraint as at that moment the module
+        # is not loaded (shopinvader do not depend on it)
+        sale_stock = self.env['ir.module.module'].search([
+            ('name', '=', 'sale_stock')])
+        if sale_stock.state == 'installed':
+            self.cr.execute("""ALTER TABLE res_company
+                ALTER COLUMN security_lead
+                DROP NOT NULL""")
+        # Now we can create the company
+        company_2 = self.env['res.company'].create({
+            'name': 'Company2',
+            'currency_id': self.env.ref('base.EUR').id,
+        })
+        # Set product shareable between companies
+        product_12.company_id = False
+        self.env.user.company_id = company_2
+        # Change product name to trigger compute
+        product_12.write({
+            'name': 'Wireless Mouse MultiCompany',
+            'default_code': 'product_12_mc'
+        })
+        result = shopinvader_product_12.url_key.find('product_12_mc')
+        self.assertTrue(
+            result,
+        )
