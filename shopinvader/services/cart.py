@@ -151,7 +151,8 @@ class CartService(Component):
             existing_item.reset_price_tax()
         else:
             vals = self._prepare_cart_item(params, cart)
-            self.env['sale.order.line'].create(vals)
+            item = self.env['sale.order.line'].create(vals)
+            item.reset_price_tax()
 
     def _update_item(self, params):
         item = self._get_cart_item(params)
