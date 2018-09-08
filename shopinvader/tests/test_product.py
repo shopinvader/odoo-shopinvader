@@ -281,6 +281,16 @@ class ProductCase(ProductCommonCase):
         self.assertTrue(
             result,
         )
+        # If sale_stock module have been installed
+        # We need to drop the constraint as at that moment the module
+        # is not loaded (shopinvader do not depend on it)
+        sale_stock = self.env['ir.module.module'].search([
+            ('name', '=', 'sale_stock')])
+        if sale_stock.state == 'installed':
+            self.cr.execute("""ALTER TABLE res_company
+                ALTER COLUMN security_lead
+                DROP NOT NULL""")
+        # Now we can create the company
         company_2 = self.env['res.company'].create({
             'name': 'Company2',
             'currency_id': self.env.ref('base.EUR').id,
@@ -297,4 +307,3 @@ class ProductCase(ProductCommonCase):
         self.assertTrue(
             result,
         )
-
