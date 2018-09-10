@@ -40,8 +40,8 @@ class ShopinvaderVariant(models.Model):
         string='Shopinvader Categories')
     variant_count = fields.Integer(
         related='product_variant_count')
-    attributes = fields.Serialized(
-        compute='_compute_attributes',
+    variant_attributes = fields.Serialized(
+        compute='_compute_variant_attributes',
         string='Shopinvader Attributes')
     main = fields.Boolean(
         compute='_compute_main_product')
@@ -114,13 +114,13 @@ class ShopinvaderVariant(models.Model):
                 ids += parents.ids
             record.shopinvader_categ_ids = ids
 
-    def _compute_attributes(self):
+    def _compute_variant_attributes(self):
         for record in self:
-            attributes = dict()
+            variant_attributes = dict()
             for att_value in record.attribute_value_ids:
                 sanitized_key = sanitize_attr_name(att_value.attribute_id)
-                attributes[sanitized_key] = att_value.name
-            record.attributes = attributes
+                variant_attributes[sanitized_key] = att_value.name
+            record.variant_attributes = variant_attributes
 
     def _get_price(self, pricelist, fposition, company=None):
         self.ensure_one()
