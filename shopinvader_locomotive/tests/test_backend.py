@@ -89,11 +89,11 @@ class TestBackend(LocoCommonCase):
                     'bar': 'test',
                     'all_filters': {
                         "en": [{
-                            "code": "attributes.color",
+                            "code": "variant_attributes.color",
                             "name": "Color",
                             "help": "<p>Color of the product</p>",
                             }, {
-                            "code": "attributes.memory",
+                            "code": "variant_attributes.memory",
                             "name": "Memory",
                             "help": "<p>Memory of the product</p>",
                             }]
