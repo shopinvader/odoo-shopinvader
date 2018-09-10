@@ -89,9 +89,6 @@ class CartService(Component):
         cart.write({'carrier_id': carrier_id})
         cart.delivery_set()
 
-    def _is_item(self, line):
-        return not line.is_delivery
-
     def _update_carrier(self):
         cart = self._get()
         if not cart:
