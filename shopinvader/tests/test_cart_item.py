@@ -97,8 +97,23 @@ class AbstractItemCase(object):
 
     def test_pricelist_product(self):
         self.remove_cart()
+        # we create a new pricelist for the product with a discount of 10%
+        self.env['product.pricelist.item'].create({
+            'base': 'list_price',
+            'sequence':  1000,
+            'percent_price': 10,
+            'name': 'Product discount Ipod',
+            'pricelist_id': self.env.ref("product.list0").id,
+            'compute_price': 'percentage',
+            'applied_on': '0_product_variant',
+            'product_id': self.env.ref("product.product_product_11").id
+        })
         cart = self.add_item(self.product_3.id, 1)
+        # into the cart, the list price must be the price without disount
         self.assertEqual(self.product_3.list_price, 16.5)
+
+        # but the total for the line into the cart info must be the price with
+        # discount
         self.assertEqual(cart['lines']['items'][0]['amount']['total'], 14.85)
 
 

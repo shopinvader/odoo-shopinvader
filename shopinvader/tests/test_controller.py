@@ -51,8 +51,7 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
         self.assertEqual(result.status_code, 403)
         self.assertEqual(result.json(), {
             u'code': 403,
-            u'name': u'Forbidden',
-            u'description': u'<p>Access denied</p>'})
+            u'name': u'Forbidden'})
 
     def test_get_addresses_without_partner(self):
         result = requests.get(self.url, headers={
