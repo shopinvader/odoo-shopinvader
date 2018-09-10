@@ -60,6 +60,9 @@ class ShopinvaderBackend(models.Model):
         help='This analytic account will be used to fill the '
              'field on the sale order created.'
     )
+    filter_ids = fields.Many2many(
+        comodel_name='product.filter',
+        string='Filter')
 
     _sql_constraints = [
         ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_filter_1" model="product.filter">
+        <field name="name">Memory</field>
+        <field name="based_on">attribute</field>
+        <field name="attribute_id" ref="product.product_attribute_1"/>
+        <field name="help">Memory of the product</field>
+    </record>
+
+    <record id="product_filter_2" model="product.filter">
+        <field name="name">Color</field>
+        <field name="based_on">attribute</field>
+        <field name="attribute_id" ref="product.product_attribute_2"/>
+        <field name="help">Color of the product</field>
+    </record>
+
+</odoo>
