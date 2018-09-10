@@ -3,15 +3,15 @@
 
     <record id="product_filter_1" model="product.filter">
         <field name="name">Memory</field>
-        <field name="based_on">attribute</field>
-        <field name="attribute_id" ref="product.product_attribute_1"/>
+        <field name="based_on">variant_attribute</field>
+        <field name="variant_attribute_id" ref="product.product_attribute_1"/>
         <field name="help">Memory of the product</field>
     </record>
 
     <record id="product_filter_2" model="product.filter">
         <field name="name">Color</field>
-        <field name="based_on">attribute</field>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
+        <field name="based_on">variant_attribute</field>
+        <field name="variant_attribute_id" ref="product.product_attribute_2"/>
         <field name="help">Color of the product</field>
     </record>
 
