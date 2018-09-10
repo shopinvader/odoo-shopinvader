@@ -15,15 +15,4 @@
         <field name="compute_price">percentage</field>
     </record>
 
-    <record id="item_2" model="product.pricelist.item">
-        <field name="base">list_price</field>
-        <field name="sequence">1000</field>
-        <field name="percent_price" eval="10"/>
-        <field name="name">Product discount Ipod</field>
-        <field name="pricelist_id" ref="product.list0"/>
-        <field name="compute_price">percentage</field>
-        <field name="applied_on">0_product_variant</field>
-        <field name="product_id" ref="product.product_product_11"/>
-    </record>
-
 </odoo>
