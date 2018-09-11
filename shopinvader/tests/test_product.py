@@ -66,6 +66,95 @@ class ProductCase(ProductCommonCase):
             {'default': {'tax_included': True, 'value': 750.0}}
             )
 
+    def test_product_get_price(self):
+        # base_price_list doesn't define a tax mapping. We are tax included
+        base_price_list = self.env.ref('product.list0')
+        fiscal_position_fr = self.env.ref('shopinvader.fiscal_position_0')
+        price = self.shopinvader_variant._get_price(
+            base_price_list, fiscal_position_fr)
+        self.assertDictEqual(
+            price,
+            {'tax_included': True, 'value': 750.0}
+        )
+        # promotion price list define a discount of 20% on all product
+        promotion_price_list = self.env.ref("shopinvader.pricelist_1")
+        price = self.shopinvader_variant._get_price(
+            promotion_price_list, fiscal_position_fr)
+        self.assertDictEqual(
+            price,
+            {'tax_included': True, 'value': 600.0}
+        )
+        # use a fiscal position defining a mapping from tax included to tax
+        # excluded
+        tax_exclude_fiscal_position = self.env.ref(
+            "shopinvader.fiscal_position_1")
+        price = self.shopinvader_variant._get_price(
+            base_price_list, tax_exclude_fiscal_position)
+        self.assertDictEqual(
+            price,
+            {'tax_included': False, 'value': 652.17}
+        )
+        price = self.shopinvader_variant._get_price(
+            promotion_price_list, tax_exclude_fiscal_position)
+        self.assertDictEqual(
+            price,
+            {'tax_included': False, 'value': 521.74}
+        )
+
+    def test_product_get_price_discount_policy(self):
+        # base_price_list doesn't define a tax mapping. We are tax included
+        # we modify the discount_policy
+        base_price_list = self.env.ref('product.list0')
+        base_price_list.discount_policy = 'without_discount'
+        fiscal_position_fr = self.env.ref('shopinvader.fiscal_position_0')
+        price = self.shopinvader_variant._get_price(
+            base_price_list, fiscal_position_fr)
+        self.assertDictEqual(
+            price,
+            {'tax_included': True,
+             'value': 750.0,
+             'discount': 0.0,
+             'original_value': 750.0}
+        )
+        # promotion price list define a discount of 20% on all product
+        # we modify the discount_policy
+        promotion_price_list = self.env.ref("shopinvader.pricelist_1")
+        promotion_price_list.discount_policy = 'without_discount'
+        price = self.shopinvader_variant._get_price(
+            promotion_price_list, fiscal_position_fr)
+        self.assertDictEqual(
+            price,
+            {'tax_included': True,
+             'value': 600.0,
+             'discount': 20.0,
+             'original_value': 750.0}
+        )
+        # use the fiscal position defining a mapping from tax included to tax
+        # excluded
+        # Tax mapping should not impact the computation of the discount and
+        # the original value
+        tax_exclude_fiscal_position = self.env.ref(
+            "shopinvader.fiscal_position_1")
+        price = self.shopinvader_variant._get_price(
+            base_price_list, tax_exclude_fiscal_position)
+        self.assertDictEqual(
+            price,
+            {'tax_included': False,
+             'value': 652.17,
+             'discount': 0.0,
+             'original_value': 652.17}
+        )
+        price = self.shopinvader_variant._get_price(
+            promotion_price_list, tax_exclude_fiscal_position)
+        self.assertDictEqual(
+            price,
+            {'tax_included': False,
+             'value': 521.74,
+             'discount': 20.0,
+             'original_value': 652.17,
+             }
+        )
+
     def test_category_child_with_one_lang(self):
         self.backend.bind_all_category()
         categ = self.env.ref('product.product_category_1')
