@@ -20,6 +20,7 @@ class TestCustomer(CommonCase):
             'city': 'Aurec sur Loire',
             'phone': '0485485454',
             'country': {'id': self.env.ref('base.fr').id},
+            'is_company': False,
             }
         with self.work_on_services(
                 partner=None,
