@@ -25,7 +25,6 @@ class CustomerService(Component):
 
     def create(self, **params):
         external_id = params.pop('external_id')
-        params['is_company'] = True
         vals = self._prepare_params(params)
         self.work.partner = self.env['res.partner'].create(vals)
         self.shopinvader_backend._send_notification(
