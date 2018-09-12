@@ -19,3 +19,8 @@ class ShopinvaderPartnerExportMapper(Component):
     @mapping
     def role(self, record):
         return {'role': 'default'}
+
+    @mapping
+    def name(self, record):
+        # we do not use a direct mapping to simplify the inherit
+        return {'name': record.name}

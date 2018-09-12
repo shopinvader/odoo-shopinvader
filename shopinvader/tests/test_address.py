@@ -7,10 +7,10 @@ from .common import CommonCase
 from odoo.exceptions import AccessError
 
 
-class AddressCase(CommonCase):
+class CommonAddressCase(CommonCase):
 
     def setUp(self, *args, **kwargs):
-        super(AddressCase, self).setUp(*args, **kwargs)
+        super(CommonAddressCase, self).setUp(*args, **kwargs)
         self.partner = self.env.ref('shopinvader.partner_1')
         self.address = self.env.ref('shopinvader.partner_1_address_1')
         self.address_2 = self.env.ref('shopinvader.partner_1_address_2')
@@ -34,6 +34,9 @@ class AddressCase(CommonCase):
                 self.assertEqual(address.country_id.id, data[key]['id'])
             else:
                 self.assertEqual(address[key], data[key])
+
+
+class AddressTestCase(object):
 
     def test_add_address(self):
         address_ids = [
@@ -99,3 +102,7 @@ class AddressCase(CommonCase):
     def test_delete_main_address(self):
         with self.assertRaises(AccessError):
             self.service.delete(self.partner.id)
+
+
+class AddressCase(CommonAddressCase, AddressTestCase):
+    """ Test address"""
