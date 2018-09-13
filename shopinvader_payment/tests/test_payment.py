@@ -24,7 +24,7 @@ class ShopinvaderPaymentCase(CommonConnectedCartCase):
 
     def test_check_payment_method(self):
         self.assertEqual(self.cart.typology, 'cart')
-        response = self.service.dispatch('add_payment', params={
+        self.service.dispatch('add_payment', params={
             'payment_mode': {'id': self.account_payment_mode.id}})
         self.assertEqual(
             self.cart.workflow_process_id,
@@ -35,6 +35,6 @@ class ShopinvaderPaymentCase(CommonConnectedCartCase):
         self.assertEqual(self.cart.typology, 'cart')
         self.env.ref('shopinvader_payment.shopinvader_payment_check').unlink()
         with self.assertRaises(UserError):
-            response = self.service.dispatch('add_payment', params={
+            self.service.dispatch('add_payment', params={
                 'payment_mode': {'id': self.account_payment_mode.id}})
         self.assertEqual(self.cart.typology, 'cart')
