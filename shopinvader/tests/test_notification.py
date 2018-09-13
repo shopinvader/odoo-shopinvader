@@ -6,10 +6,10 @@
 from .common import CommonCase
 
 
-class NotificationCartCase(CommonCase):
+class CommonNotificationCase(CommonCase):
 
     def setUp(self):
-        super(NotificationCartCase, self).setUp()
+        super(CommonNotificationCase, self).setUp()
         self.cart = self.env.ref('shopinvader.sale_order_2')
 
     def _check_notification(self, notif_type, record):
@@ -24,6 +24,9 @@ class NotificationCartCase(CommonCase):
             ('res_id', '=', record.id),
             ])
         self.assertEqual(len(message), 1)
+
+
+class NotificationCartCase(CommonNotificationCase):
 
     def test_cart_notification(self):
         self._init_job_counter()

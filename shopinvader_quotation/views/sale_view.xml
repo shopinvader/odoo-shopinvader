@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_quotation_request" model="ir.actions.act_window">
+        <field name="name">Quotation Requests</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="search_view_id" ref="sale.view_sales_order_filter"/>
+        <field name="context">{'default_typology': 'quotation'}</field>
+        <field name="domain">[('typology', '=', 'quotation')]</field>
+    </record>
+
+    <menuitem
+            action="action_quotation_request"
+            id="menu_sale_order"
+            parent="sales_team.menu_sales"
+            sequence="5"
+            groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
+
+</odoo>
