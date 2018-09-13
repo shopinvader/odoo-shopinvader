@@ -18,21 +18,11 @@ class QuotationService(Component):
 
     def add_payment(self, _id, **params):
         quotation = self._get(_id)
+        return self._add_payment(quotation, params)
+
+    def _add_payment(self, quotation, params):
         if not quotation:
             raise UserError(_('There is not quotation'))
         elif quotation.state != 'sent':
             raise UserError(_('The quotation is not validated'))
-        else:
-            self._set_payment_mode(quotation, params)
-            provider_name = quotation.payment_mode_id.provider
-            if provider_name:
-                return self._process_payment_provider(
-                    provider_name, quotation, params[provider_name])
-            else:
-                return self._confirm_cart(quotation)
-
-    def _get_available_payment_mode(self, cart):
-        for line in cart.order_line:
-            if line.product_id.only_quotation:
-                return []
-        return super(QuotationService, self)._get_available_payment_mode(cart)
+        return super(QuotationService, self)._add_payment(quotation, params)
