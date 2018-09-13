@@ -19,6 +19,9 @@ class AbstractPaymentService(AbstractComponent):
 
     def add_payment(self, **params):
         cart = self._get()
+        return self._add_payment(cart, params)
+
+    def _add_payment(self, cart, params):
         if not cart:
             raise UserError(_('There is not cart'))
         else:
