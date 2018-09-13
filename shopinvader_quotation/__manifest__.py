@@ -15,8 +15,13 @@
     "depends": [
         "shopinvader",
     ],
+    "demo": [
+        'demo/email_demo.xml',
+        'demo/notification_demo.xml',
+    ],
     "data": [
         'views/product_view.xml',
         'views/sale_view.xml',
+        'data/ir_export_product.xml',
     ],
 }

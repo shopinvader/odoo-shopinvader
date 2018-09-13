@@ -25,3 +25,16 @@ class SaleOrder(models.Model):
         if self.typology == 'quotation' and self.state == 'sent':
             return 'estimated'
         return super(SaleOrder, self)._get_shopinvader_state()
+
+    @api.multi
+    def action_request_quotation(self):
+        for cart in self:
+            if cart.state == 'draft' and cart.typology == 'cart':
+                cart.typology = 'quotation'
+                if cart.shopinvader_backend_id:
+                    cart.shopinvader_backend_id._send_notification(
+                        'quotation_request', cart)
+            else:
+                raise UserError(_('Impossible to create quotation the'
+                                  'order is in the wrong state'))
+        return True

@@ -14,11 +14,7 @@ class CartService(Component):
 
     def request_quotation(self, **params):
         cart = self._get()
-        if cart.state == 'draft' and cart.typology == 'cart':
-            cart.typology = 'quotation'
-        else:
-            raise UserError(_('Impossible to create quotation the'
-                              'order is in the wrong state'))
+        cart.action_request_quotation()
         res = self._to_json(cart)
         res.update({
             'store_cache': {'last_sale': res['data'], 'cart': {}},
