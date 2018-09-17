@@ -30,6 +30,7 @@
         "base_vat",
         "component_event",
         "sale",
+        "sale_stock",
         "onchange_helper",
         'queue_job',
     ],

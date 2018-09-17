@@ -42,16 +42,28 @@ class SaleOrder(models.Model):
         ('processing', 'Processing'),
         ('shipped', 'Shipped'),
         ], compute='_compute_shopinvader_state',
-        store=True)
+        store=False)
+
+    is_shipped = fields.Boolean(
+        compute='_compute_is_shipped'
+    )
+
+    @api.multi
+    @api.depends('picking_ids')
+    def _compute_is_shipped(self):
+        for order in self:
+            order.is_shipped = all([
+                p.state in ('done', 'cancel') for p in order.picking_ids
+            ])
 
     def _get_shopinvader_state(self):
         self.ensure_one()
         if self.state == 'cancel':
             return 'cancel'
-        elif self.state == 'done':
-            return 'shipped'
         elif self.state == 'draft':
             return 'pending'
+        elif self.is_shipped:
+            return 'shipped'
         else:
             return 'processing'
 

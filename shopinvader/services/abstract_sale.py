@@ -24,7 +24,7 @@ class AbstractSaleService(AbstractComponent):
         sale.ensure_one()
         return {
             'id': sale.id,
-            'state': sale.shopinvader_state,
+            'state': self._convert_state(sale.shopinvader_state),
             'name': sale.name,
             'date': sale.date_order,
             'step': self._convert_step(sale),
@@ -33,6 +33,11 @@ class AbstractSaleService(AbstractComponent):
             'shipping': self._convert_shipping(sale),
             'invoicing': self._convert_invoicing(sale),
             }
+
+    def _convert_state(self, state):
+        """Return the translated label for the given state value"""
+        state_field = self.env['sale.order']._fields['shopinvader_state']
+        return dict(state_field._description_selection(self.env)).get(state)
 
     def _convert_step(self, sale):
         return {
