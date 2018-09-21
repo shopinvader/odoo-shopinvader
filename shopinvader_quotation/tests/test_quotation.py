@@ -15,6 +15,11 @@ class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
         self.service.dispatch('request_quotation', params={})
         self.assertEqual(self.cart.typology, 'quotation')
 
+    def test_only_quotation_in_cart_info(self):
+        response = self.service.dispatch('search')
+        self.assertIn(
+            'only_quotation', response['data']['lines']['items'][0]['product'])
+
 
 class CommonConnectedQuotationCase(CartCase):
 
