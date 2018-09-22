@@ -27,6 +27,7 @@ import base64
 import StringIO
 import sys
 from zipfile import ZipFile
+import magic
 
 import validators
 from odoo import models, fields, api
@@ -41,10 +42,13 @@ class ProductImageImportWizard(models.TransientModel):
 
     _name = 'import.product_image'
 
+    storage_backend_id = fields.Many2one(
+	'storage.backend', 'Storage Backend', required=True
+    )
     product_model = fields.Selection([
         ('product.template', 'Product template'),
         ('product.product', 'Product variants')
-    ], string="Product Model")
+    ], string="Product Model", required=True)
     overwrite = fields.Boolean('Overwrite image with same name')
     file_csv = fields.Binary('CSV files descriptors', required=True)
     file_zip = fields.Binary('ZIP with images', required=False)
@@ -65,7 +69,9 @@ class ProductImageImportWizard(models.TransientModel):
             )
         csv.field_size_limit(sys.maxsize)
 
-        file_zip = StringIO.StringIO(base64.decodestring(self.file_zip))
+	file_zip = None
+	if self.file_zip:
+	    file_zip = StringIO.StringIO(base64.decodestring(self.file_zip))
 
         file_obj = self.env['storage.file']
         image_obj = self.env['storage.image']
@@ -79,7 +85,8 @@ class ProductImageImportWizard(models.TransientModel):
             elif zip_file:
                 with ZipFile(zip_file, 'r') as z:
                     binary = z.read(image_path)
-            return binary and base64.encodestring(binary)
+            mimetype = magic.from_buffer(binary, mime=True)
+            return mimetype, binary and base64.encodestring(binary)
 
         def get_tag(tag_name):
             tag_id = False
@@ -96,55 +103,61 @@ class ProductImageImportWizard(models.TransientModel):
 
             default_code, tag_name, image_path = row
             try:
-                image_base64 = get_image_base64(image_path, file_zip)
+                mimetype, image_base64 = get_image_base64(image_path, file_zip)
             except Exception:
                 errors.append('%s: impossible to retrieve file "%s"' % (
                     default_code, image_path)
                 )
                 continue
 
-        product = self.env[self.product_model].search([
-            ('default_code', '=', default_code)
-        ])
+	    product = self.env[self.product_model].search([
+		('default_code', '=', default_code)
+	    ])
+	    if not product:
+		errors.append("Could not find the product '%s'" % default_code)
+		continue
 
-        image_name = image_path[image_path.rfind("/")+1:]
-        vals = {
-            'data': image_base64,
-            'name': image_name,
-            'file_type': 'image',
-            'backend_id': 1, #TODO not hardcode the backend_id
-        }
+            image_name = default_code
+            if tag_name:
+                image_name += '_%s' % tag_name
+            if mimetype and '/' in mimetype:
+                image_name += '.' + mimetype.split('/')[1]
 
-        file_id = file_obj.create(vals)
-        tag_id = get_tag(tag_name)
-        image = image_obj.create({
-            'file_id': file_id.id,
-            'name': image_name,
-            'alt_name': image_name,
-        })
-
-        if self.overwrite:
-            domain = [
-                ('image_id.name', '=', image.name),
-                ('tag_id', '=', tag_id),
-                ('product_tmpl_id', '=', product.id),
-            ]
-            relation_obj.search(domain).unlink()
-
-        if self.product_model == 'product.template' and product:
-            relation_obj.create({
-                'image_id': image.id,
-                'tag_id': tag_id,
-                'product_tmpl_id': product.id,
+            vals = {
+                'data': image_base64,
+                'name': image_name,
+                'file_type': 'image',
+                'mimetype': mimetype,
+                'backend_id': self.storage_backend_id.id,
+            }
+            file_id = file_obj.create(vals)
+            tag_id = get_tag(tag_name)
+            image = image_obj.create({
+                'file_id': file_id.id,
+                'name': image_name,
+                'alt_name': image_name,
             })
-        elif self.product_model == 'product.product' and product:
-            relation_obj.create({
-                'image_id': image.id,
-                'tag_id': tag_id,
-                'product_tmpl_id': product.product_tmpl_id.id,
-            })
-        elif not product:
-            errors.append("Could not find the product '%s'" % default_code)
+
+            if self.overwrite:
+                domain = [
+                    ('image_id.name', '=', image.name),
+                    ('tag_id', '=', tag_id),
+                    ('product_tmpl_id', '=', product.id),
+                ]
+                relation_obj.search(domain).unlink()
+
+            if self.product_model == 'product.template' and product:
+                relation_obj.create({
+                    'image_id': image.id,
+                    'tag_id': tag_id,
+                    'product_tmpl_id': product.id,
+                })
+            elif self.product_model == 'product.product' and product:
+                relation_obj.create({
+                    'image_id': image.id,
+                    'tag_id': tag_id,
+                    'product_tmpl_id': product.product_tmpl_id.id,
+                })
 
         if errors:
             raise Warning('\n'.join(errors))
