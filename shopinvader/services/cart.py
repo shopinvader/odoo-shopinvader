@@ -301,7 +301,7 @@ class CartService(Component):
         defaults = super(
             CartService, self)._get_openapi_default_parameters()
         defaults.append({
-            "name": "SESS_CART_ID",
+            "name": "SESS-CART-ID",
             "in": "header",
             "description": "Session Cart Identifier",
             "required": False,

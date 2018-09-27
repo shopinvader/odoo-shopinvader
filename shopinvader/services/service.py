@@ -88,7 +88,7 @@ class BaseShopinvaderService(AbstractComponent):
         defaults = super(
             BaseShopinvaderService, self)._get_openapi_default_parameters()
         defaults.append({
-            "name": "API_KEY",
+            "name": "API-KEY",
             "in": "header",
             "description": "Ath API key",
             "required": True,
@@ -98,7 +98,7 @@ class BaseShopinvaderService(AbstractComponent):
             "style": "simple"
         })
         defaults.append({
-            "name": "PARTNER_EMAIL",
+            "name": "PARTNER-EMAIL",
             "in": "header",
             "description": "Logged partner email",
             "required": False,
