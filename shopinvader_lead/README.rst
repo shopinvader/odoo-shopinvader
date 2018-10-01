@@ -6,7 +6,7 @@
 Shopinvader Lead
 =================
 
-This module extends the functionality of shopinvader to add the possibility to create a lead from your website
+This module adds the possibility to create a lead from your website
 
 Installation
 ============
@@ -22,7 +22,7 @@ Create a form on your website with the controller "lead"
 Usage
 =====
 
-Lead a created in the lead menu
+It exposes an API to create a lead.
 
 Known issues / Roadmap
 ======================
@@ -44,6 +44,7 @@ Contributors
 ------------
 
 * Sebastien BEAU <sebastien.beau@akretion.com>
+* Pierrick Brun <pierrick.brun@akretion.com>
 
 Funders
 -------

@@ -3,14 +3,12 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.test_notification import CommonNotificationCase
+from odoo.addons.shopinvader.tests.test_notification import (
+    CommonNotificationCase)
 from odoo import models
 
 
 class LeadCase(CommonNotificationCase):
-
-#    def setUp(self, *args, **kwargs):
-#        super(LeadCase, self).setUp(*args, **kwargs)
 
     def test_create_lead(self):
         data = {
