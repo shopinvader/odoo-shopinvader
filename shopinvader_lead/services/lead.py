@@ -3,24 +3,24 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.services.helper import (
-    secure_params, ShopinvaderService, to_int)
-from odoo.addons.shopinvader.backend import shopinvader
+from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.component.core import Component
 
 
-@shopinvader
-class LeadService(ShopinvaderService):
-    _model_name = 'crm.lead'
+class LeadService(Component):
+    _inherit = 'base.shopinvader.service'
+    _name = 'shopinvader.lead.service'
+    _usage = 'lead'
+    _expose_model = 'crm.lead'
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator
     # secure params and the linked validator !
 
-    @secure_params
-    def create(self, params):
+    def create(self, **params):
         vals = self._prepare_lead(params)
         lead = self.env['crm.lead'].create(vals)
-        self.backend_record._send_notification('lead_confirmation', lead)
+        self.shopinvader_backend._send_notification('lead_confirmation', lead)
         return {}
 
     # The following method are 'private' and should be never never NEVER call
@@ -61,5 +61,5 @@ class LeadService(ShopinvaderService):
         for human_key, key in map_key:
             if human_key in params:
                 params[key] = params.pop(human_key)
-        params['shopinvader_backend_id'] = self.backend_record.id
+        params['shopinvader_backend_id'] = self.shopinvader_backend.id
         return params

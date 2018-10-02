@@ -5,11 +5,11 @@
 
 
 from odoo.http import route
-from odoo.addons.shopinvader.controllers.main import ShopinvaderController
+from odoo.addons.shopinvader.controllers.main import InvaderController
 from ..services.lead import LeadService
 
 
-class ShopinvaderClaimController(ShopinvaderController):
+class InvaderClaimController(InvaderController):
 
     @route('/shopinvader/lead', methods=['POST'], auth="shopinvader")
     def lead(self, **params):

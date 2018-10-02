@@ -12,8 +12,10 @@ class ShopinvaderNotification(models.Model):
 
     def _get_all_notification(self):
         res = super(ShopinvaderNotification, self)._get_all_notification()
-        res['lead_confirmation'] = {
-            'name': _('Lead Confirmation'),
-            'model': 'crm.lead',
-            }
+        res.update({
+            'lead_confirmation': {
+                'name': _('Lead Confirmation'),
+                'model': 'crm.lead',
+                },
+            })
         return res

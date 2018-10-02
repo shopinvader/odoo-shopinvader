@@ -3,16 +3,14 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from ..services.lead import LeadService
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader.tests.test_notification import CommonNotificationCase
 from odoo import models
 
 
-class LeadCase(CommonCase):
+class LeadCase(CommonNotificationCase):
 
-    def setUp(self, *args, **kwargs):
-        super(LeadCase, self).setUp(*args, **kwargs)
-        self.service = self._get_service(LeadService, None)
+#    def setUp(self, *args, **kwargs):
+#        super(LeadCase, self).setUp(*args, **kwargs)
 
     def test_create_lead(self):
         data = {
@@ -33,10 +31,18 @@ class LeadCase(CommonCase):
             'email_from': check_data.pop('email'),
             })
 
-        self.service.create(data)
+        with self.work_on_services(
+                partner=None,
+                shopinvader_session=self.shopinvader_session) as work:
+            self.service = work.component(usage='lead')
+        self._init_job_counter()
+        self.service.dispatch('create', params=data)
         lead = self.env['crm.lead'].search([], order='id desc', limit=1)[0]
         for key in check_data:
             if isinstance(lead[key], models.Model):
                 self.assertEqual(lead[key].id, check_data[key])
             else:
                 self.assertEqual(lead[key], check_data[key])
+        self._check_nbr_job_created(1)
+        self._perform_created_job()
+        self._check_notification('lead_confirmation', lead)
