@@ -16,6 +16,20 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         cls.unbind_wizard_model = cls.env[
             'shopinvader.category.unbinding.wizard']
         cls.category_bind_model = cls.env['shopinvader.category']
+        cat_obj = cls.env['product.category']
+
+        cls.cat_level1 = cat_obj.create({
+            'name': 'Category Level 1'
+        })
+        cls.cat_level2 = cat_obj.create({
+            'name': 'Category Level 2',
+            'parent_id': cls.cat_level1.id
+        })
+        cls.cat_level3 = cat_obj.create({
+            'name': 'Category Level 3',
+            'parent_id': cls.cat_level2.id
+        })
+        cls.cat_level1._parent_store_compute()
 
     def test_category_binding(self):
         """
@@ -77,8 +91,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
             'product_category_ids': [(6, 0, product_category.ids)],
         }
         # Active test because product.category is active = False
-        bind_wizard = bind_wizard_model.with_context(
-            active_test=False).create(values)
+        bind_wizard = bind_wizard_model.create(values)
         bind_wizard.action_bind_categories()
 
         # The binding record should be re-activated
@@ -155,8 +168,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
             'product_category_ids': [(6, 0, product_category.ids)],
         }
         # Active test because product.category is active = False
-        bind_wizard = bind_wizard_model.with_context(
-            active_test=False).create(values)
+        bind_wizard = bind_wizard_model.create(values)
         bind_wizard.action_bind_categories()
 
         # The binding record should be re-activated
@@ -216,3 +228,56 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # Disable the category and the binded record should be disabled too
         product_category.write({'active': False})
         self.assertFalse(bind_record.active)
+
+    def test_child_no_auto_bind(self):
+        bind_wizard_model = self.bind_wizard_model
+        category_bind_model = self.category_bind_model
+        backend = self.backend
+
+        # --------------------------------
+        # Bind the category to the Backend
+        # --------------------------------
+        bind_wizard = bind_wizard_model.create({
+            'backend_id': backend.id,
+            'product_category_ids': [(6, 0, self.cat_level1.ids)],
+        })
+        bind_wizard.action_bind_categories()
+
+        domain = [
+            ('record_id', 'in', [self.cat_level1.id,
+                                 self.cat_level2.id,
+                                 self.cat_level3.id]),
+            ('backend_id', '=', backend.id),
+        ]
+
+        # A binding record should exists
+        nb_bind_record = category_bind_model.search_count(domain)
+
+        self.assertEqual(nb_bind_record, 1)
+
+    def test_child_auto_bind(self):
+        bind_wizard_model = self.bind_wizard_model
+        category_bind_model = self.category_bind_model
+        backend = self.backend
+
+        # --------------------------------
+        # Bind the category to the Backend
+        # --------------------------------
+        bind_wizard = bind_wizard_model.create({
+            'backend_id': backend.id,
+            'child_autobinding': True,
+            'product_category_ids': [(6, 0, self.cat_level1.ids)],
+        })
+        bind_wizard.action_bind_categories()
+
+        domain = [
+            ('record_id', 'in', [self.cat_level1.id,
+                                 self.cat_level2.id,
+                                 self.cat_level3.id]),
+            ('backend_id', '=', backend.id),
+        ]
+
+        # A binding record should exists
+        nb_bind_record = category_bind_model.search_count(domain)
+
+        self.assertEqual(nb_bind_record, 3)
