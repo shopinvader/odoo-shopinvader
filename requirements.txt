@@ -11,3 +11,4 @@ requests_mock
 pyquerystring
 parse-accept-language
 openupgradelib
+magic
