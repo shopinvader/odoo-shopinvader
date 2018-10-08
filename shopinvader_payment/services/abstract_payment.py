@@ -126,6 +126,8 @@ class AbstractPaymentService(AbstractComponent):
         if transaction.url:
             return {'redirect_to': transaction.url}
         elif transaction.state in ('succeeded', 'to_capture'):
+            if transaction.external_id:
+                cart.transaction_id = transaction.external_id
             return self._confirm_cart(cart)
         else:
             raise UserError(_('Payment failed please retry'))

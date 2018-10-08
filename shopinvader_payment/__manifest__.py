@@ -18,6 +18,7 @@
         "bin": [],
     },
     "depends": [
+        "base_transaction_id",
         "shopinvader",
         "payment_gateway",
         "sale_automatic_workflow_payment_mode",
