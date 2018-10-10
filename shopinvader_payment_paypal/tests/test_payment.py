@@ -7,7 +7,6 @@ from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.addons.payment_gateway_paypal.tests.test_payment import (
     PaypalCommonCase,
     PaypalScenario)
-import json
 from mock import Mock
 from os.path import dirname
 
@@ -30,7 +29,7 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase, PaypalScenario):
         self.partner = self.sale.partner_id
         self.env['shopinvader.partner'].create({
             'record_id': self.partner.id,
-            'external_id': 'ZG9kbw==', #  TODO correct?
+            'external_id': 'ZG9kbw==',  # TODO correct?
             'backend_id': self.backend.id,
             })
         self.sale.write({
@@ -44,10 +43,10 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase, PaypalScenario):
         self.cr.commit = Mock()  # Do not commit
 
     def _create_transaction(self, card):
-        pass #  TODO
+        pass  # TODO
 
     def _check_reponse(self, response, redirect=False):
-        pass #  TODO
+        pass  # TODO
 
     def _simulate_return(self, transaction):
         return self.service.dispatch('check_payment', params={
