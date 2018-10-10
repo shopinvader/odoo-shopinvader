@@ -15,7 +15,7 @@
     'installable': True,
     "auto_install": True,
     "external_dependencies": {
-        "python": [],
+        "python": ['paypalrestsdk'],
         "bin": [],
     },
     "depends": [
@@ -23,6 +23,7 @@
         "payment_gateway_paypal",
     ],
     "data": [
+        'views/shopinvader_payment.xml',
     ],
     "demo": [
         "demo/shopinvader_payment_demo.xml",
