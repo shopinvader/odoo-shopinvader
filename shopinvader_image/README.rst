@@ -2,8 +2,8 @@
 Shopinvader Image
 =================
 
-This module allow store product (variant) and category images
-to an external system like a content delivery network (CDN).
+This module allows to store product (variant) and category images
+in an external system like a content delivery network (CDN).
 The images will be available directly to the browser by url link.
 
 This external system can be:
