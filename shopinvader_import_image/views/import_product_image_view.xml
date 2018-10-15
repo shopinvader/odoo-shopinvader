@@ -9,6 +9,7 @@
                 <form string="Import shopinvader product images">
                     <group>
                         <group>
+                            <field name="storage_backend_id"/>
                             <field name="product_model"/>
                             <field name="overwrite"/>
                             <field name="file_csv" filename="filename"/>

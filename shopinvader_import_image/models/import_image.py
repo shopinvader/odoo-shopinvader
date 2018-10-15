@@ -28,6 +28,7 @@ import StringIO
 import sys
 from zipfile import ZipFile
 import magic
+import os
 
 import validators
 from odoo import models, fields, api
@@ -117,11 +118,7 @@ class ProductImageImportWizard(models.TransientModel):
 		errors.append("Could not find the product '%s'" % default_code)
 		continue
 
-            image_name = default_code
-            if tag_name:
-                image_name += '_%s' % tag_name
-            if mimetype and '/' in mimetype:
-                image_name += '.' + mimetype.split('/')[1]
+            image_name = os.path.join(image_path)
 
             vals = {
                 'data': image_base64,
