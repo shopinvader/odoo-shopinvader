@@ -4,8 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
-from odoo.addons.shopinvader.services.helper import secure_params
-from odoo.addons.shopinvader.backend import shopinvader
+
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -15,18 +14,10 @@ except (ImportError, IOError) as err:
         _logger.debug(err)
 
 
-@shopinvader
-class CheckVatService(Component):
-    _inherit = 'shopinvader.service'
-    _name = 'shopinvader.check.vat.service'
-    _usage = 'check.vat.service'
-    _model_name = 'locomotive.backend'
+class CustomerService(Component):
+    _inherit = 'shopinvader.customer.service'
 
-    # The following method are 'public' and can be called from the controller.
-    # All params are untrusted so please check it !
-
-    @secure_params
-    def get(self, params):
+    def check_vat(self, params):
         partner_obj = self.env['res.partner']
         country_code, vat_number = partner_obj._split_vat(params['vat_number'])
         vat_number = country_code.upper() + vat_number
@@ -34,7 +25,7 @@ class CheckVatService(Component):
             'valid': partner_obj.simple_vat_check(country_code, vat_number),
             'vat_number': vat_number,
             }
-        if self.collection.company_id.vat_check_vies and\
+        if self.shopinvader_backend.company_id.vat_check_vies and\
                 self.env['res.country'].search([
                     ('code', '=ilike', country_code),
                     ('country_group_ids', '=',
@@ -55,10 +46,6 @@ class CheckVatService(Component):
                 _logger.debug('Invalid number for vies')
         return res
 
-    # The following method are 'private' and should be never never NEVER call
-    # from the controller.
-    # All params are trusted as they have been checked before
-
     # Validator
-    def _validator_get(self):
+    def _validator_check_vat(self):
         return {'vat_number': {'type': 'string'}}
