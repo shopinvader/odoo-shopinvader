@@ -34,8 +34,11 @@ class ShopinvaderPartner(models.Model):
         # As we want to have a SQL contraint on customer email
         # we have to set it manually to avoid to raise the constraint
         # at the creation of the element
-        vals['partner_email'] = self.env['res.partner'].browse(
-            vals['record_id']).email
+        if not vals.get('partner_email'):
+            vals['partner_email'] = vals.get('email')
+        if not vals.get('partner_email') and vals.get('record_id'):
+            vals['partner_email'] = self.env['res.partner'].browse(
+                vals['record_id']).email
         return super(ShopinvaderPartner, self).create(vals)
 
 
