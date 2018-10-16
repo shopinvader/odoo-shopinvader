@@ -7,7 +7,7 @@
     "name": "Shopinvader Reset Password",
     "summary": "Give the possibility to send a email to reset the"
                "password from odoo",
-    "version": "8.0.1.0.0",
+    "version": "10.0.1.0.0",
     "category": "Shopinvader",
     "website": "www.akretion.com",
     "author": " Akretion",

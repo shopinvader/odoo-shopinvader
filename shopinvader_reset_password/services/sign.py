@@ -3,16 +3,14 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp.addons.shopinvader.services.sign import SignService
-from openerp.addons.shopinvader.backend import shopinvader
+from odoo.addons.component.core import Component
 from datetime import datetime
 
 
-@shopinvader(replacing=SignService)
-class SignService(SignService):
+class Customer(Component):
 
     def _assign_cart_and_get_store_cache(self):
-        res = super(SignService, self)._assign_cart_and_get_store_cache()
+        res = super(Customer, self)._assign_cart_and_get_store_cache()
         shop_partner = self.env['shopinvader.partner'].search([
             ('backend_id', '=', self.backend_record.id),
             ('record_id', '=', self.partner.id),

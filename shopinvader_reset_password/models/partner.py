@@ -23,6 +23,7 @@ class ShopinvaderPartner(models.Model):
         return self.env['email.template'].with_context(token=token).browse(
             template_id).send_mail(self.id)
 
+    @job('root.shopinvader')
     def _reset_password(self, template_id, date_validity):
         self.ensure_one()
         self.write({
@@ -31,4 +32,10 @@ class ShopinvaderPartner(models.Model):
             })
         token = uuid.uuid4().hex
         self._send_reset_password_email(template_id, token)
-        return token
+        with self.backend_id.work_on(self._name) as work:
+            adapter = work.component(usage='record.exporter')
+            adapter.write(binding.external_id, {
+                '_auth_reset_token': token,
+                '_auth_reset_sent_at': date_validity,
+                })
+            return 'Reset Password Sent'

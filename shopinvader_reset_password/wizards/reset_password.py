@@ -4,25 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from openerp import api, fields, models
-from openerp.addons.connector.session import ConnectorSession
-from openerp.addons.connector.queue.job import job
 from datetime import datetime, timedelta
-from openerp.addons.connector_locomotivecms.connector import get_environment
-from openerp.addons.connector.unit.backend_adapter import CRUDAdapter
-
-
-@job
-def reset_password(session, model_name, binding_id, template_id,
-                   date_validity):
-    binding = session.env[model_name].browse(binding_id)
-    token = binding._reset_password(template_id, date_validity)
-    env = get_environment(session, model_name, binding.backend_id.id)
-    adapter = env.get_connector_unit(CRUDAdapter)
-    adapter.write(binding.external_id, {
-        '_auth_reset_token': token,
-        '_auth_reset_sent_at': date_validity,
-        })
-    return 'Reset Password Sent'
 
 
 class ShopinvaderResetPassword(models.TransientModel):
@@ -61,9 +43,9 @@ class ShopinvaderResetPassword(models.TransientModel):
     @api.multi
     def confirm(self):
         self.ensure_one()
-        self.env['shopinvader.partner'].write({'date_initialisation': False})
-        for partner_id in self._context['active_ids']:
-            session = ConnectorSession.from_env(self.env)
-            reset_password.delay(
-                session, 'shopinvader.partner', partner_id,
+        partners = self.env['shopinvader.partner'].browse(
+            self._context['active_ids'])
+        partner.write({'date_initialisation': False})
+        for partner in partners:
+            partner.with_delay().reset_password.delay(
                 self.template_id.id, self.date_validity)
