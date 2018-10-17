@@ -9,5 +9,9 @@
               sequence="10"
               web_icon="shopinvader,static/description/icon.png"
               groups="group_shopinvader_manager"/>
-
+    <menuitem id="menu_shopinvader_config"
+              name="Configuration"
+              sequence="100"
+              parent="menu_shopinvader_root"
+              groups="group_shopinvader_manager"/>
 </odoo>
