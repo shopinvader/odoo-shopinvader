@@ -34,7 +34,7 @@
         <field name="name">Shopinvader Config Settings</field>
         <field name="parent_id" ref="menu_shopinvader_config"/>
         <field name="action" ref="shopinvader_config_settings_act_window"/>
-        <field name="sequence" eval="16"/>
+        <field name="sequence" eval="-1"/>
     </record>
 
 </odoo>
