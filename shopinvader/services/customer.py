@@ -61,11 +61,8 @@ class CustomerService(Component):
         return schema
 
     def _prepare_params(self, params):
-        for key in ['country', 'state']:
-            if key in params:
-                val = params.pop(key)
-                if val.get('id'):
-                    params["%s_id" % key] = val['id']
+        address = self.component(usage='addresses')
+        params = address._prepare_params(params)
         params['backend_id'] = self.shopinvader_backend.id,
         return params
 
