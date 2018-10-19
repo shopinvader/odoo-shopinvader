@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_partner_search_view">
+        <field name="name">shopinvader.partner.search (in shopinvader_guest_mode)</field>
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search"/>
+        <field name="arch" type="xml">
+            <field name="external_id" position="after">
+                <separator/>
+                <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+                <filter string="Guest" name="guest" domain="[('is_guest', '=', True)]"/>
+            </field>
+
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="shopinvader_partner_tree_view">
+        <field name="name">shopinvader.partner.tree (in shopinvader_guest_mode)</field>
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="create_date" position="after">
+                <field name="expiry_dt"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -28,8 +28,7 @@ class CustomerService(Component):
         vals = self._prepare_params(params)
         binding = self.env['shopinvader.partner'].create(vals)
         self.work.partner = binding.record_id
-        self.shopinvader_backend._send_notification(
-            'new_customer_welcome', self.work.partner)
+        self._send_welcome_message(binding)
         return self._prepare_create_response(binding)
 
     def sign_in(self, **params):
@@ -65,6 +64,10 @@ class CustomerService(Component):
         params = address._prepare_params(params)
         params['backend_id'] = self.shopinvader_backend.id,
         return params
+
+    def _send_welcome_message(self, binding):
+        self.shopinvader_backend._send_notification(
+            'new_customer_welcome', binding.record_id)
 
     def _get_and_assign_cart(self):
         cart_service = self.component(usage='cart')
