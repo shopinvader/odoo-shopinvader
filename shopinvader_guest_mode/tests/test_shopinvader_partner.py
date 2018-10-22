@@ -88,3 +88,26 @@ class TestShopinvaderPartner(SavepointComponentCase):
         """, (self.shopinvader_partner.id, ))
         self.env['shopinvader.partner']._deactivate_expired()
         self.assertFalse(self.shopinvader_partner.active)
+
+    def test_guest_constrains(self):
+        self.shopinvader_partner.search([(1, '=', 1)]).write(
+            {'is_guest': False})
+        self.backend.is_guest_mode_allowed = False
+        with self.assertRaises(ValidationError), self.env.cr.savepoint():
+            self.env['shopinvader.partner'].create({
+                'email': 'email@email.com',
+                'name': 'other partner',
+                'is_guest': True,
+                'backend_id': self.backend.id,
+            })
+        self.backend.is_guest_mode_allowed = True
+        binding = self.env['shopinvader.partner'].create({
+            'email': 'email@email.com',
+            'name': 'other partner',
+            'is_guest': True,
+            'backend_id': self.backend.id,
+        })
+        with self.assertRaises(ValidationError), self.env.cr.savepoint():
+            self.backend.is_guest_mode_allowed = False
+        binding.is_guest = False
+        self.backend.is_guest_mode_allowed = False

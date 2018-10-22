@@ -78,6 +78,16 @@ class ShopinvaderPartner(models.Model):
         return res
 
     @api.multi
+    @api.constrains('is_guest', 'backend_id.is_guest_mode_allowed')
+    def _check_is_guest_mode_allowed(self):
+        recs = self.filtered(
+            lambda r: r.is_guest and not r.backend_id.is_guest_mode_allowed)
+        if recs:
+            raise ValidationError(
+                _("You can't create guest binding if the guest mode is not"
+                  "allowed on the backend."))
+
+    @api.multi
     @api.depends('backend_id.guest_account_expiry_delay',
                  'is_guest')
     def _compute_expiry_dt(self):

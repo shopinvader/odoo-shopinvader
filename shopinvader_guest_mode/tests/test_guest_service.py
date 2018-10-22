@@ -2,7 +2,7 @@
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import Forbidden, NotFound
 
 from odoo.addons.shopinvader.tests.common import CommonCase
 
@@ -25,6 +25,7 @@ class TestGuestService(CommonCase):
                 shopinvader_session=self.shopinvader_session) as work:
             self.service = work.component(usage='guest')
         self.shopinvader_config = self.env['shopinvader.config.settings']
+        self.backend.is_guest_mode_allowed = True
 
     def _create_guest(self):
         res = self.service.dispatch('create', params=self.data)['data']
@@ -67,3 +68,11 @@ class TestGuestService(CommonCase):
         self.assertTrue(binding.is_guest)
         self.service.register(email, external_id)
         self.assertFalse(binding.is_guest)
+
+    def test_guest_mode_allowed(self):
+        self.backend.is_guest_mode_allowed = False
+        with self.assertRaises(Forbidden), self.env.cr.savepoint():
+            self._create_guest()
+        self.backend.is_guest_mode_allowed = True
+        binding = self._create_guest()
+        self.assertTrue(binding.is_guest)

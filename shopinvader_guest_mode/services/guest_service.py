@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo.addons.component.core import Component
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, Forbidden
 
 
 class GuestService(Component):
@@ -12,6 +13,8 @@ class GuestService(Component):
 
     # The following method are 'public' and can be called from the controller.
     def create(self, **params):
+        if not self.shopinvader_backend.is_guest_mode_allowed:
+            raise Forbidden('Guest mode not allowed.')
         params['is_guest'] = True
         self._archive_existing_binding(params['email'])
         return super(GuestService, self).create(**params)
