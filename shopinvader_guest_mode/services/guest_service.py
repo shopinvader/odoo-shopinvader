@@ -101,3 +101,8 @@ class GuestService(Component):
         binding = self._get_binding(email)
         if binding:
             binding.active = False
+
+    def _assign_cart_and_get_store_cache(self):
+        data = super(GuestService, self)._assign_cart_and_get_store_cache()
+        data['store_cache']['customer']['email'] = self.partner.email
+        return data
