@@ -6,9 +6,9 @@
     <field name="model">res.partner</field>
     <field name="inherit_id" ref="shopinvader.res_partner_view_form"/>
     <field name="arch" type="xml">
-        <field name="role_id" position="after">
+        <field name="external_id" position="after">
             <button
-                icon="gtk-refresh"
+                string="reset password"
                 name="%(act_open_shopinvader_reset_password_view)d"
                 type="action"/>
         </field>

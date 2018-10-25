@@ -21,8 +21,8 @@ class ShopinvaderResetPassword(models.TransientModel):
         required=True,
         )
     template_id = fields.Many2one(
-        'email.template',
-        'Email Template',
+        'mail.template',
+        'Mail Template',
         required=True,
         domain=[('model_id', '=', 'shopinvader.partner')])
     date_validity = fields.Datetime('Date Validity')
@@ -45,7 +45,7 @@ class ShopinvaderResetPassword(models.TransientModel):
         self.ensure_one()
         partners = self.env['shopinvader.partner'].browse(
             self._context['active_ids'])
-        partner.write({'date_initialisation': False})
+        partners.write({'date_initialisation': False})
         for partner in partners:
-            partner.with_delay().reset_password.delay(
+            partner.with_delay()._reset_password(
                 self.template_id.id, self.date_validity)

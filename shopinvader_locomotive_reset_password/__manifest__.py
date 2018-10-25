@@ -19,7 +19,7 @@
         "bin": [],
     },
     "depends": [
-        "shopinvader",
+        "shopinvader_locomotive",
     ],
     "data": [
         "wizards/reset_password_view.xml",
