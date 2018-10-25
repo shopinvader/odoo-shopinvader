@@ -17,7 +17,7 @@ except (ImportError, IOError) as err:
 class CustomerService(Component):
     _inherit = 'shopinvader.customer.service'
 
-    def check_vat(self, params):
+    def check_vat(self, **params):
         partner_obj = self.env['res.partner']
         country_code, vat_number = partner_obj._split_vat(params['vat_number'])
         vat_number = country_code.upper() + vat_number
@@ -44,7 +44,7 @@ class CustomerService(Component):
             except Exception:
                 # TODO improve exception management
                 _logger.debug('Invalid number for vies')
-        return res
+        return {'data': res}
 
     # Validator
     def _validator_check_vat(self):
