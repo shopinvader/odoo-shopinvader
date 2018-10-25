@@ -85,12 +85,16 @@ class CustomerService(Component):
 
     def _assign_cart_and_get_store_cache(self):
         address = self.component(usage='addresses')
-        return {
+        cart = self._get_and_assign_cart()
+        result = {
             'store_cache': {
-                'cart': self._get_and_assign_cart(),
+                'cart': cart,
                 'customer': address._to_json(self.partner)[0],
-                }
+                },
             }
+        if cart:
+            result['set_session'] = {'cart_id': cart['id']}
+        return result
 
     def _create_shopinvader_binding(self, external_id):
         self.env['shopinvader.partner'].with_context(
