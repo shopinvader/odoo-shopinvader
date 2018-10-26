@@ -18,20 +18,45 @@ class AbstractPaymentService(AbstractComponent):
     # Public service
 
     def add_payment(self, **params):
-        cart = self._get()
-        return self._add_payment(cart, params)
+        target = self._load_target(params)
+        return self._add_payment(target, params)
 
-    def _add_payment(self, cart, params):
-        if not cart:
-            raise UserError(_('There is not cart'))
+    def _load_target(self, params):
+        """
+
+        :param params: dict
+        :return: exposed model recordset
+        """
+        return NotImplementedError
+
+    def _add_payment(self, target, params):
+        if not target:
+            raise UserError(_('There is not target'))
         else:
-            self._set_payment_mode(cart, params)
-            provider_name = cart.payment_mode_id.provider
+            provider_name = self._set_payment_mode(target, params)
             if provider_name:
                 return self._process_payment_provider(
-                    provider_name, cart, params[provider_name])
+                    provider_name, target, params.get(provider_name))
             else:
-                return self._confirm_cart(cart)
+                return self._action_after_payment(target)
+
+    def _action_after_payment(self, target):
+        """
+        Execute some action after the payment adding a payment
+        :param target: payment recordset
+        :return: dict
+        """
+        return {}
+
+    def _get_target_provider(self, target):
+        """
+
+        :param target: payment recordset
+        :return: str
+        """
+        if 'payment_mode_id' in target._fields:
+            return target.payment_mode_id.provider
+        return ''
 
     def check_payment(self, provider_name=None, **params):
         with self.env['gateway.transaction']._get_provider(provider_name)\
@@ -41,7 +66,9 @@ class AbstractPaymentService(AbstractComponent):
                 result = self.update(
                     step={'next': self.shopinvader_backend.last_step_id.code},
                     )
-                result['redirect_to'] = transaction.redirect_success_url
+                result.update({
+                    'redirect_to': transaction.redirect_success_url,
+                })
                 return result
             else:
                 return {
@@ -94,62 +121,119 @@ class AbstractPaymentService(AbstractComponent):
         return validator
 
     # Private method
-    def _set_payment_mode(self, cart, params):
-        payment_mode_id = params['payment_mode']['id']
+    def _set_payment_mode(self, target, params):
+        """
+
+        :param target: payment recordset
+        :param params: dict
+        :return: str
+        """
+        payment_mode_id = params.get('payment_mode', {}).get('id')
         available_payment_mode_ids = [
-            x['id'] for x in self._get_available_payment_mode(cart)]
+            x.get('id') for x in self._get_available_payment_mode(target)]
         if payment_mode_id not in available_payment_mode_ids:
             raise UserError(_('Unsupported payment mode'))
-        else:
-            vals = cart.play_onchanges({
+        elif 'payment_mode_id' in target._fields:
+            vals = target.play_onchanges({
                 'payment_mode_id': payment_mode_id,
-                }, ['payment_mode_id'],
-                )
-            cart.write(vals)
-        return cart.payment_mode_id.provider
+            },
+                ['payment_mode_id'],
+            )
+            target.write(vals)
+        return self._get_target_provider(target)
 
     def _get_return_url(self, provider_name):
         return "%s/%s/%s" % (
             self.shopinvader_backend.location,
-            'invader/cart/check_payment',
-            provider_name)
+            self._usage, provider_name)
 
-    def _process_payment_provider(self, provider_name, cart, params):
+    def _process_payment_provider(self, provider_name, target, params):
         params['return_url'] = self._get_return_url(provider_name)
         transaction = self.env['gateway.transaction'].generate(
-            provider_name, cart, **params)
+            provider_name, target, **params)
         return self._execute_payment_action(
-            provider_name, transaction, cart, params)
+            provider_name, transaction, target, params)
 
     def _execute_payment_action(
-            self, provider_name, transaction, cart, params):
+            self, provider_name, transaction, target, params):
         if transaction.url:
             return {'redirect_to': transaction.url}
         elif transaction.state in ('succeeded', 'to_capture'):
-            if transaction.external_id:
-                cart.transaction_id = transaction.external_id
-            return self._confirm_cart(cart)
+            self._update_target_with_transaction(target, transaction)
+            return self._action_after_payment(target)
         else:
             raise UserError(_('Payment failed please retry'))
 
-    def _convert_one_sale(self, cart):
-        res = super(AbstractPaymentService, self)._convert_one_sale(cart)
-        if cart:
-            methods = self._get_available_payment_mode(cart)
-            selected_method = {}
-            if cart.payment_mode_id:
-                for method in methods:
-                    if method['id'] == cart.payment_mode_id.id:
-                        selected_method = method
-            res['payment'] = {
-                'available_methods': {
-                    'count': len(methods),
-                    'items': methods,
-                    },
-                'selected_method': selected_method,
-                'amount': cart.amount_total,
-                }
-        return res
+    def _update_target_with_transaction(self, target, transaction):
+        """
+        Based on the transaction, update some values on the target:
+        - If the target has an external_id, update this field with the
+        external_id of the transaction.
+        :param target: recordset
+        :param transaction: gateway.transaction recordset
+        :return: bool
+        """
+        if 'external_id' in transaction._fields and transaction.external_id:
+            target.transaction_id = transaction.external_id
+        return True
+
+    def _convert_one_target(self, target):
+        result = {}
+        if target:
+            self._include_payment(target, result)
+        return result
+
+    def _include_payment(self, target, values):
+        """
+        Include payment details
+        :param target: recordset
+        :param values: dict
+        :return: dict
+        """
+        values.update({
+            'payment': self._get_payment_info(target),
+        })
+        return values
+
+    def _get_payment_info(self, target):
+        """
+
+        :param target: target recordset
+        :return: dict
+        """
+        methods = self._get_available_payment_mode(target)
+        selected_method = self._get_selected_method(methods, target)
+        values = {
+            'available_methods': {
+                'count': len(methods),
+                'items': methods,
+            },
+            'selected_method': selected_method,
+            'amount': self._get_target_total(target),
+        }
+        return values
+
+    def _get_target_total(self, target):
+        """
+        Get the total amount to paid
+        :param target: target recordset
+        :return: float
+        """
+        return target._get_transaction_to_capture_amount()
+
+    def _get_selected_method(self, methods, target):
+        """
+
+        :param methods: list of dict
+        :param target:
+        :return: dict
+        """
+        selected_method = {}
+        if target.payment_mode_id:
+            for method in methods:
+                if method.get('id') == target.payment_mode_id.id:
+                    selected_method = method
+        return selected_method
 
     def _prepare_payment(self, method):
         return {
@@ -158,10 +242,16 @@ class AbstractPaymentService(AbstractComponent):
             'provider': method.payment_mode_id.provider,
             'code': method.code,
             'description': method.description,
-            }
+        }
 
-    def _get_available_payment_mode(self, cart):
+    def _get_available_payment_mode(self, target):
         methods = []
         for method in self.shopinvader_backend.payment_method_ids:
             methods.append(self._prepare_payment(method))
         return methods
+
+    def _convert_one_sale(self, sale):
+        values = self._convert_one_target(sale)
+        values.update(super(AbstractPaymentService, self)._convert_one_sale(
+            sale))
+        return values

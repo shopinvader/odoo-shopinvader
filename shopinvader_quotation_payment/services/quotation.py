@@ -16,9 +16,14 @@ class QuotationService(Component):
     ]
     _name = 'shopinvader.quotation.service'
 
-    def add_payment(self, _id, **params):
-        quotation = self._get(_id)
-        return self._add_payment(quotation, params)
+    def _load_target(self, params):
+        """
+
+        :param params: dict
+        :return: exposed model recordset
+        """
+        _id = params.get('_id')
+        return self._get(_id=_id)
 
     def _add_payment(self, quotation, params):
         if not quotation:
@@ -26,3 +31,13 @@ class QuotationService(Component):
         elif quotation.state != 'sent':
             raise UserError(_('The quotation is not validated'))
         return super(QuotationService, self)._add_payment(quotation, params)
+
+    def _action_after_payment(self, target):
+        """
+        Confirm the cart after the payment
+        :param target: payment recordset
+        :return: dict
+        """
+        values = super(QuotationService, self)._action_after_payment(target)
+        values.update(self._confirm_cart(target))
+        return values
