@@ -3,18 +3,19 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.addons.component.tests.common import ComponentMixin
 from contextlib import contextmanager
 from odoo.addons.component.core import WorkContext
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase
 from odoo.addons.queue_job.job import Job
+from odoo.tests import SavepointCase
 
 
-class CommonCase(SavepointComponentCase):
+class CommonMixin(ComponentMixin):
 
-    def setUp(self, *args, **kwargs):
-        super(CommonCase, self).setUp(*args, **kwargs)
+    def setUp(self):
+        super(CommonMixin, self).setUp()
         self.env = self.env(context={'lang': 'en_US'})
         self.backend = self.env.ref('shopinvader.backend_1')
         self.backend.bind_all_product()
@@ -44,6 +45,20 @@ class CommonCase(SavepointComponentCase):
     def _perform_created_job(self):
         for job in self.created_jobs:
             Job.load(self.env, job.uuid).perform()
+
+
+class CommonCase(SavepointCase, CommonMixin):
+
+    @classmethod
+    def setUpClass(cls):
+        super(CommonCase, cls).setUpClass()
+        cls.setUpComponent()
+
+    def setUp(self):
+        # resolve an inheritance issue (common.SavepointCase does not call
+        # super)
+        SavepointCase.setUp(self)
+        CommonMixin.setUp(self)
 
 
 class ProductCommonCase(CommonCase):

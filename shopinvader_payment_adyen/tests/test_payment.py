@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader.tests.common import CommonMixin
 from odoo.addons.payment_gateway_adyen.tests.test_payment import (
     AdyenCommonCase,
     AdyenScenario,
@@ -23,10 +23,11 @@ REDIRECT_URL = {
     }
 
 
-class ShopinvaderAdyenCommonCase(AdyenCommonCase, CommonCase):
+class ShopinvaderAdyenCommonCase(AdyenCommonCase, CommonMixin):
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderAdyenCommonCase, self).setUp(*args, **kwargs)
+        CommonMixin.setUp(self)
         self.shopinvader_session = {'cart_id': self.sale.id}
         self.partner = self.sale.partner_id
         self.env['shopinvader.partner'].create({
