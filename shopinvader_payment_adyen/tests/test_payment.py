@@ -11,6 +11,7 @@ from odoo.addons.payment_gateway_adyen.tests.test_payment import (
     SHOPPER_IP,
     ACCEPT_HEADER,
     USER_AGENT)
+from odoo.addons.payment_gateway.tests.common import PaymentScenarioType
 import json
 from mock import Mock
 from os.path import dirname
@@ -121,7 +122,5 @@ class ShopinvaderAdyenCommonCase(AdyenCommonCase, CommonCase):
 
 
 class ShopinvaderAdyenCase(ShopinvaderAdyenCommonCase, AdyenScenario):
-
-    def __init__(self, *args, **kwargs):
-        super(ShopinvaderAdyenCase, self).__init__(*args, **kwargs)
-        self._decorate_test(dirname(__file__))
+    __metaclass__ = PaymentScenarioType
+    _test_path = dirname(__file__)

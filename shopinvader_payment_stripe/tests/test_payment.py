@@ -7,6 +7,8 @@ from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.addons.payment_gateway_stripe.tests.test_payment import (
     StripeCommonCase,
     StripeScenario)
+
+from odoo.addons.payment_gateway.tests.common import PaymentScenarioType
 import json
 from mock import Mock
 from os.path import dirname
@@ -19,10 +21,8 @@ REDIRECT_URL = {
 
 
 class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
-
-    def __init__(self, *args, **kwargs):
-        super(ShopinvaderStripeCase, self).__init__(*args, **kwargs)
-        self._decorate_test(dirname(__file__))
+    __metaclass__ = PaymentScenarioType
+    _test_path = dirname(__file__)
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderStripeCase, self).setUp(*args, **kwargs)
