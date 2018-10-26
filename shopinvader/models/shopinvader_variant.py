@@ -55,16 +55,13 @@ class ShopinvaderVariant(models.Model):
         string='Shopinvader Price')
     short_name = fields.Char(compute='_computes_names')
     full_name = fields.Char(compute='_computes_names')
-    shopinvader_name = fields.Char(
-        string='Name',
-        help="Name for shopinvader, if not set the product name will be used.")
 
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()
         attributes = self.attribute_line_ids.filtered(
             lambda l: len(l.value_ids) > 1).mapped('attribute_id')
         short_name = self.attribute_value_ids._variant_name(attributes)
-        full_name = self.shopinvader_name or self.name
+        full_name = self.model_name
         if short_name:
             full_name += " (%s)" % short_name
         return full_name, short_name

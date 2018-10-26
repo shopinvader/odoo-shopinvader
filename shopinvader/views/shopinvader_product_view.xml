@@ -31,6 +31,11 @@
                 </group>
                 <notebook>
                     <page name="description_and_seo" string="Description and Seo">
+                        <field name="use_product_shopinvader_name" invisible="1"/>
+                        <group name="name"
+                                attrs="{'invisible': [('use_product_shopinvader_name', '!=', True)]}">
+                            <field name="shopinvader_name"/>
+                        </group>
                         <group name="seo">
                             <field name="seo_title"/>
                             <field name="meta_keywords"/>

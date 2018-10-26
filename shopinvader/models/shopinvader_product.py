@@ -33,11 +33,26 @@ class ShopinvaderProduct(models.Model):
     url_key = fields.Char(
         compute_sudo=True,
     )
+    use_product_shopinvader_name = fields.Boolean(
+        related='backend_id.use_product_shopinvader_name',
+        store=True, readonly=True)
+    shopinvader_name = fields.Char(
+        string='Name',
+        help="Name for shopinvader, if not set the product name will be used.")
+    model_name = fields.Char(compute='_compute_name', readonly=True)
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
          'A product can only have one binding by backend and lang.'),
     ]
+
+    @api.depends('use_product_shopinvader_name', 'shopinvader_name')
+    def _compute_name(self):
+        for record in self:
+            if record.use_product_shopinvader_name and record.shopinvader_name:
+                record.model_name = record.shopinvader_name
+            else:
+                record.model_name = record.name
 
     @api.multi
     def _inverse_active(self):
