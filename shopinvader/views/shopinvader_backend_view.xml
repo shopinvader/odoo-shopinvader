@@ -14,7 +14,7 @@
                         type="action"
                         string="Bind Category"
                         class="oe_highlight"
-                        groups="connector.group_connector_manager"/>
+                        groups="shopinvader.group_shopinvader_manager"/>
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="buttons">
