@@ -10,6 +10,8 @@ from odoo.addons.shopinvader_payment_adyen.tests.test_payment import (
     SHOPPER_IP,
     ACCEPT_HEADER,
     USER_AGENT)
+
+from odoo.addons.payment_gateway.tests.common import PaymentScenarioType
 from os.path import dirname
 
 
@@ -21,10 +23,8 @@ CLIENT_HEADER = {
 
 
 class ShopinvaderLocoAdyenCase(ShopinvaderAdyenCommonCase, AdyenScenario):
-
-    def __init__(self, *args, **kwargs):
-        super(ShopinvaderAdyenCommonCase, self).__init__(*args, **kwargs)
-        self._decorate_test(dirname(__file__))
+    __metaclass__ = PaymentScenarioType
+    _test_path = dirname(__file__)
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderLocoAdyenCase, self).setUp(*args, **kwargs)

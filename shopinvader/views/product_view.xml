@@ -7,73 +7,7 @@
         <field name="arch" type="xml">
             <xpath expr="/form/sheet/notebook" position="inside">
                 <page name="shopinvader" string="ShopInvader">
-                    <field name="shopinvader_bind_ids">
-                        <tree decoration-danger="active != True" decoration-success="active == True">
-                            <field name="backend_id"/>
-                            <field name="lang_id"/>
-                            <field name="sync_date"/>
-                            <field name="active" invisible="True"/>
-                            <button name="toggle_published" type="object" help="Click to unpublish" color="green" icon="fa-close" attrs="{'invisible': [('active', '=', True)]}"/>
-                            <button name="toggle_published" type="object" help="Click to publish" color="red" icon="fa-check" attrs="{'invisible': [('active', '!=', True)]}"/>
-                        </tree>
-                        <form>
-                            <group name="backend">
-                                <field name="backend_id" widget="selection"/>
-                                <field name="lang_id" widget="selection"/>
-                                <field name="active"/>
-                            </group>
-                            <notebook>
-                                <page name="description_and_seo" string="Description and Seo">
-                                    <group name="seo">
-                                         <field name="seo_title"/>
-                                         <field name="meta_keywords"/>
-                                         <field name="meta_description"/>
-                                    </group>
-                                    <group name="description">
-                                         <separator string="Short Description" colspan="4"/>
-                                         <field name="short_description" colspan="4" nolabel="1"/>
-                                         <separator string="Description" colspan="4"/>
-                                         <field name="description" colspan="4" nolabel="1"/>
-                                    </group>
-                                </page>
-                                <page name="url" string="Url">
-                                    <group name="url">
-                                        <field name="url_builder"/>
-                                        <field
-                                                name="manual_url_key"
-                                                attrs="{
-                                            'invisible': [('url_builder', '!=', 'manual')],
-                                            'required': [('url_builder', '=', 'manual')]}"/>
-                                        <field
-                                                name="url_key"
-                                                attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
-                                    </group>
-                                    <group name="redirect_url">
-                                        <field
-                                                name="redirect_url_key_ids"
-                                                nolabel="1"
-                                                colspan="4">
-                                            <tree>
-                                                <field name="url_key" string="Redirect Url"/>
-                                            </tree>
-                                        </field>
-                                    </group>
-                                </page>
-                                <page name="variant" string="Variant">
-                                    <group name="variant">
-                                        <field name="shopinvader_variant_ids" nolabel="1" readonly="1">
-                                            <tree>
-                                                <field name="id"/>
-                                                <field name="default_code"/>
-                                                <field name="record_id"/>
-                                                <field name="shopinvader_backend_ids" widget="many2many_tags"/>
-                                            </tree>
-                                        </field>
-                                    </group>
-                                </page>
-                            </notebook>
-                        </form>
-                    </field>
+                    <field name="shopinvader_bind_ids"/>
                 </page>
             </xpath>
             <page name="sales" position="inside">
