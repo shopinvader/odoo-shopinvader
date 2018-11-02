@@ -85,13 +85,16 @@ class CustomerService(Component):
             return {}
 
     def _assign_cart_and_get_store_cache(self):
-        address = self.component(usage='addresses')
         return {
             'store_cache': {
                 'cart': self._get_and_assign_cart(),
-                'customer': address._to_json(self.partner)[0],
+                'customer': self._to_customer_info(self.partner),
                 }
             }
+
+    def _to_customer_info(self, partner):
+        address = self.component(usage='addresses')
+        return address._to_json(partner)[0]
 
     def _prepare_create_response(self, binding):
         response = self._assign_cart_and_get_store_cache()

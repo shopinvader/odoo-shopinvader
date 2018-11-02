@@ -17,7 +17,9 @@ class GuestService(Component):
             raise Forbidden('Guest mode not allowed.')
         params['is_guest'] = True
         self._archive_existing_binding(params['email'])
-        return super(GuestService, self).create(**params)
+        resp = super(GuestService, self).create(**params)
+        resp['store_cache']['customer']['is_guest'] = True
+        return resp
 
     def search(self, email):
         """
@@ -43,7 +45,7 @@ class GuestService(Component):
             'external_id': external_id
         })
         self.work.partner = binding.record_id
-        return self._assign_cart_and_get_store_cache()
+        return self._prepare_create_response(binding)
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -102,7 +104,9 @@ class GuestService(Component):
         if binding:
             binding.active = False
 
-    def _assign_cart_and_get_store_cache(self):
-        data = super(GuestService, self)._assign_cart_and_get_store_cache()
-        data['store_cache']['customer']['email'] = self.partner.email
-        return data
+    def _to_customer_info(self, partner):
+        info = super(GuestService, self)._to_customer_info(partner)
+        info.update({
+            'email': self.partner.email,
+        })
+        return info
