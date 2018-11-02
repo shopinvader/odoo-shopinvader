@@ -17,13 +17,11 @@ class ShopinvaderBindingListener(Component):
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_create(self, record, fields=None):
-        if not record.is_guest:
-            record.with_delay().export_record(_fields=fields)
+        record.with_delay().export_record(_fields=fields)
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_write(self, record, fields=None):
-        if not record.is_guest:
-            record.with_delay().export_record(_fields=fields)
+        record.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record):
         with record.backend_id.work_on(record._name) as work:
