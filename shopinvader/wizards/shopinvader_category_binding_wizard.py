@@ -22,6 +22,10 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
         string='Categories',
         ondelete='cascade',
     )
+    child_autobinding = fields.Boolean(
+        help="If this option is check, the childs of selected categories"
+             " will be automatically binded"
+    )
 
     @api.model
     def default_get(self, fields_list):
@@ -70,7 +74,15 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
 
     @api.multi
     def action_bind_categories(self):
-        for wizard in self:
+        for wizard in self.with_context(active_test=False):
+            if wizard.child_autobinding:
+                for categ_id in wizard.product_category_ids:
+                    childs_cat = self.env['product.category'].search(
+                        [('parent_left', '>=', categ_id.parent_left),
+                         ('parent_right', '<=', categ_id.parent_right)]
+                    )
+                    if childs_cat:
+                        wizard.product_category_ids += childs_cat
             backend = wizard.backend_id
             for lang in wizard.backend_id.lang_ids:
                 self._bind_categories(backend, lang,
