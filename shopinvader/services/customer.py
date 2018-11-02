@@ -23,6 +23,7 @@ class CustomerService(Component):
         else:
             return {'data': {}}
 
+    # pylint: disable=W8106
     def create(self, **params):
         params['is_company'] = True
         vals = self._prepare_params(params)

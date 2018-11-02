@@ -37,6 +37,7 @@
         'demo/product_category.xml',
         'demo/product_product.xml',
         'demo/product_category.xml',
+        'demo/res_company.xml',
     ],
     "qweb": [
     ]

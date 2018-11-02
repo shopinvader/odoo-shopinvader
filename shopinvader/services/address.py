@@ -26,6 +26,7 @@ class AddressService(Component):
         else:
             return self._paginate_search(**params)
 
+    # pylint: disable=W8106
     def create(self, **params):
         params['parent_id'] = self.partner.id
         if not params.get('type'):
