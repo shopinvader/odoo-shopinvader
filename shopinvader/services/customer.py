@@ -24,13 +24,13 @@ class CustomerService(Component):
             return {'data': {}}
 
     def create(self, **params):
-        external_id = params.pop('external_id')
         params['is_company'] = True
         vals = self._prepare_params(params)
-        self.work.partner = self.env['res.partner'].create(vals)
+        binding = self.env['shopinvader.partner'].create(vals)
+        self.work.partner = binding.record_id
         self.shopinvader_backend._send_notification(
-            'new_customer_welcome', self.partner)
-        return self._create_shopinvader_binding(external_id)
+            'new_customer_welcome', self.work.partner)
+        return self._prepare_create_response(binding)
 
     def sign_in(self, **params):
         return self._assign_cart_and_get_store_cache()
@@ -61,11 +61,9 @@ class CustomerService(Component):
         return schema
 
     def _prepare_params(self, params):
-        for key in ['country', 'state']:
-            if key in params:
-                val = params.pop(key)
-                if val.get('id'):
-                    params["%s_id" % key] = val['id']
+        address = self.component(usage='addresses')
+        params = address._prepare_params(params)
+        params['backend_id'] = self.shopinvader_backend.id,
         return params
 
     def _get_and_assign_cart(self):
@@ -92,13 +90,7 @@ class CustomerService(Component):
                 }
             }
 
-    def _create_shopinvader_binding(self, external_id):
-        self.env['shopinvader.partner'].with_context(
-            connector_no_export=True).create({
-                'backend_id': self.shopinvader_backend.id,
-                'external_id': external_id,
-                'record_id': self.partner.id,
-                })
+    def _prepare_create_response(self, binding):
         response = self._assign_cart_and_get_store_cache()
         response['data'] = {
             'id': self.partner.id,

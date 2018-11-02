@@ -7,6 +7,8 @@ from .common import ShopinvaderRestCase
 import requests
 from odoo.tools import mute_logger
 
+from odoo.tools import mute_logger
+
 
 class ShopinvaderControllerCase(ShopinvaderRestCase):
 
