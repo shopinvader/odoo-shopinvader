@@ -70,4 +70,5 @@ class ShopinvaderNotification(models.Model):
 
     @job(default_channel='root.shopinvader.notification')
     def send(self, record_id):
+        self.ensure_one()
         return self.template_id.send_mail(record_id)

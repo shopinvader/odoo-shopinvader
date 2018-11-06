@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class ShopinvaderBackend(models.Model):
@@ -146,12 +146,14 @@ class ShopinvaderBackend(models.Model):
     def _send_notification(self, notification, record):
         self.ensure_one()
         record.ensure_one()
-        notif = self.env['shopinvader.notification'].search([
+        notifs = self.env['shopinvader.notification'].search([
             ('backend_id', '=', self.id),
             ('notification_type', '=', notification),
-            ])
-        if notif:
-            notif.with_delay().send(record.id)
+        ])
+        description = _("Notify %s for %s,%s") % (
+            notification, record._name, record.id)
+        for notif in notifs:
+            notif.with_delay(description=description).send(record.id)
         return True
 
     def _extract_configuration(self):
