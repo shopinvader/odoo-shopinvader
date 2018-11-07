@@ -58,7 +58,7 @@ class ProductProduct(models.Model):
     @api.multi
     def _inverse_active(self):
         self.filtered(lambda p: not p.active).mapped(
-            'shopinvader_bind_ids').write({'active': False})
+            'shopinvader_bind_ids')._unbind()
 
     @api.multi
     def _compute_shopinvader_backend_ids(self):

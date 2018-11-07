@@ -13,7 +13,8 @@ class ShopinvaderVariant(models.Model):
     _description = 'Shopinvader Variant'
     _inherits = {
         'shopinvader.product': 'shopinvader_product_id',
-        'product.product': 'record_id'}
+        'product.product': 'record_id',
+    }
 
     default_code = fields.Char(
         related='record_id.default_code',
@@ -193,15 +194,63 @@ class ShopinvaderVariant(models.Model):
         :return: dict
         """
         actual_active = self.filtered(
-            lambda s: s.active).with_prefetch(self._prefetch)
+            lambda s: s.active)
         actual_inactive = self - actual_active
-        actual_inactive = actual_inactive.with_prefetch(self._prefetch)
         if actual_inactive:
-            actual_inactive.write({
-                'active': True,
-            })
+            actual_inactive._bind()
         if actual_active:
-            actual_active.write({
-                'active': False,
-            })
+            actual_active._unbind()
         return {}
+
+    @api.multi
+    def _bind(self):
+        """
+        When the current recordset become active True, we have to build URL.
+        :return:
+        """
+        result = self.write({
+            'active': True,
+        })
+        self._bind_url()
+        return result
+
+    @api.multi
+    def _bind_url(self):
+        """
+        After a bind, delete existing url to build new
+        :return: bool
+        """
+        self.mapped("url_url_ids").unlink()
+        self.mapped("shopinvader_product_id")._compute_url()
+        return True
+
+    @api.multi
+    def _unbind(self):
+        """
+        Action to unbind current recordset
+        :return: bool
+        """
+        result = self.write({
+            'active': False,
+        })
+        self._unbind_url()
+        return result
+
+    @api.multi
+    def _unbind_url(self):
+        """
+        During unbind, we have to redirect existing urls to the (first) related
+        shopinvader category.
+        :return: bool
+        """
+        for record in self.filtered(lambda p: p.url_url_ids):
+            # Active category without children
+            categs = record.shopinvader_categ_ids.filtered(
+                lambda c: c.active and not c.shopinvader_child_ids)
+            if categs:
+                categ = fields.first(categs)
+                record.url_url_ids.write({
+                    'redirect': True,
+                    'model_id': "%s,%s" % (categ._name, categ.id),
+                })
+        return True
