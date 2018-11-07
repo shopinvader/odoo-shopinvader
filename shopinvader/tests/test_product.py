@@ -435,3 +435,122 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             product.shopinvader_display_name, product.shopinvader_name
         )
+
+    def test_product_url1(self):
+        """
+        Test the little workflow about shopinvader variants and related URL.
+        Expected behaviour:
+        - On the unbind (active = False) => URL should be a redirect to a
+        category who doesn't have children
+        - On the bind (active = True) => Existing redirect URL should be
+        deleted and new one should be re-generated
+        For this case, we test a normal workflow: url should be related to
+        the category (during unbind) and then we re-bind this product
+        and new url should be generated
+        :return:
+        """
+        bind_variant_model = self.env['shopinvader.variant.binding.wizard']
+        bind_category_model = self.env['shopinvader.category.binding.wizard']
+        product_tmpl_obj = self.env['product.template']
+        categ = self.env.ref("product.product_category_all")
+        categ_wizard = bind_category_model.create({
+            'backend_id': self.backend.id,
+            'product_category_ids': [(6, 0, categ.ids)]
+        })
+        categ_wizard.action_bind_categories()
+        domain = [
+            ('record_id', '=', categ.id),
+            ('backend_id', '=', self.backend.id),
+        ]
+        bind_categ = self.env['shopinvader.category'].search(domain)
+        # For this case, the category should have children
+        if bind_categ.shopinvader_child_ids:
+            bind_categ.shopinvader_child_ids.unlink()
+        product_values = {
+            'name': 'Shopinvader Rocket',
+            'categ_id': categ.id,
+        }
+        product_tmpl = product_tmpl_obj.create(product_values)
+        product_product = product_tmpl.product_variant_ids
+
+        product_wizard = bind_variant_model.create({
+            'backend_id': self.backend.id,
+            'product_ids': [(6, 0, product_product.ids)]
+        })
+        product_wizard.bind_products()
+        bind_product = self.env['shopinvader.variant'].search([
+            ('record_id', '=', product_product.id),
+            ('backend_id', '=', self.backend.id),
+        ])
+        self.assertIn(bind_categ, bind_product.shopinvader_categ_ids)
+        urls = bind_product.url_url_ids
+        self.assertEqual(
+            urls.mapped("model_id"), bind_product.shopinvader_product_id)
+        bind_product._unbind()
+        self.assertEqual(urls.mapped("model_id"), bind_categ)
+        bind_product._bind()
+        self.assertFalse(bool(urls.exists()))
+        urls = bind_product.url_url_ids
+        self.assertEqual(
+            urls.mapped("model_id"), bind_product.shopinvader_product_id)
+
+    def test_product_url2(self):
+        """
+        Test the little workflow about shopinvader variants and related URL.
+        Expected behaviour:
+        - On the unbind (active = False) => URL should be a redirect to a
+        category who doesn't have children
+        - On the bind (active = True) => Existing redirect URL should be
+        deleted and new one should be re-generated
+        For this case, we simulate a normal workflow with different categories
+        :return:
+        """
+        bind_variant_model = self.env['shopinvader.variant.binding.wizard']
+        bind_category_model = self.env['shopinvader.category.binding.wizard']
+        product_tmpl_obj = self.env['product.template']
+        categ_all = self.env.ref("product.product_category_all")
+        categ2 = self.env.ref("product.product_category_2")
+        categs = categ_all | categ2
+        categ_wizard = bind_category_model.create({
+            'backend_id': self.backend.id,
+            'product_category_ids': [(6, 0, categs.ids)]
+        })
+        categ_wizard.action_bind_categories()
+        domain = [
+            ('record_id', '=', categ_all.id),
+            ('backend_id', '=', self.backend.id),
+        ]
+        bind_categ_all = self.env['shopinvader.category'].search(domain)
+        domain = [
+            ('record_id', '=', categ2.id),
+            ('backend_id', '=', self.backend.id),
+        ]
+        bind_categ2 = self.env['shopinvader.category'].search(domain)
+        product_values = {
+            'name': 'Shopinvader Rocket',
+            'categ_id': categ2.id,
+        }
+        product_tmpl = product_tmpl_obj.create(product_values)
+        product_product = product_tmpl.product_variant_ids
+
+        product_wizard = bind_variant_model.create({
+            'backend_id': self.backend.id,
+            'product_ids': [(6, 0, product_product.ids)]
+        })
+        product_wizard.bind_products()
+        bind_product = self.env['shopinvader.variant'].search([
+            ('record_id', '=', product_product.id),
+            ('backend_id', '=', self.backend.id),
+        ])
+        self.assertIn(bind_categ_all, bind_product.shopinvader_categ_ids)
+        self.assertIn(bind_categ2, bind_product.shopinvader_categ_ids)
+        urls = bind_product.url_url_ids
+        self.assertEqual(
+            urls.mapped("model_id"), bind_product.shopinvader_product_id)
+        bind_product._unbind()
+        self.assertEqual(urls.mapped("model_id"), bind_categ2)
+        bind_product._bind()
+        self.assertFalse(bool(urls.exists()))
+        urls = bind_product.url_url_ids
+        self.assertEqual(
+            urls.mapped("model_id"), bind_product.shopinvader_product_id)

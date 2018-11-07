@@ -81,4 +81,4 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
                     if not bind_record:
                         binding.create(data)
                     elif not bind_record.active:
-                        bind_record.write({'active': True})
+                        bind_record._bind()
