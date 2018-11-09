@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ShopinvaderImageMixin(models.AbstractModel):
@@ -14,19 +14,23 @@ class ShopinvaderImageMixin(models.AbstractModel):
         compute='_compute_image',
         string='Shopinvader Image')
 
+    @api.multi
     def _compute_image(self):
         # Note: this computed field depend on the lang used in the context
         # as the name of the record is used for generating the thumbnail
         for record in self:
             record.images = record._get_image_data_for_record()
 
+    @api.multi
     def _get_image_url_key(self, image_relation):
         # You can inherit this method to change the name of the image of
         # your website. By default we use the name of the product or category
         # linked to the image processed
         # Note the url will be slugify by the get_or_create_thumnail
+        self.ensure_one()
         return self.display_name
 
+    @api.multi
     def _get_image_data_for_record(self):
         self.ensure_one()
         res = []
@@ -35,18 +39,30 @@ class ShopinvaderImageMixin(models.AbstractModel):
         for image_relation in self[self._image_field]:
             url_key = self._get_image_url_key(image_relation)
             image_data = {}
-            tag = ''
-            if image_relation.tag_id:
-                tag = image_relation.tag_id.name
             for resize in resizes:
                 thumbnail = image_relation.image_id.get_or_create_thumbnail(
                     resize.size_x,
                     resize.size_y,
                     url_key=url_key)
-                image_data[resize.key] = {
-                    'src': thumbnail.url,
-                    'alt': self.name,
-                    'tag': tag,
-                    }
+                image_data[resize.key] = self._prepare_data_resize(
+                    thumbnail, image_relation)
             res.append(image_data)
         return res
+
+    @api.multi
+    def _prepare_data_resize(self, thumbnail, image_relation):
+        """
+        Prepare data to fill images serialized field
+        :param thumbnail: storage.thumbnail recordset
+        :param image_relation: product.image.relation recordset
+        :return: dict
+        """
+        self.ensure_one()
+        tag = ''
+        if image_relation.tag_id:
+            tag = image_relation.tag_id.name
+        return {
+            'src': thumbnail.url,
+            'alt': self.name,
+            'tag': tag,
+        }
