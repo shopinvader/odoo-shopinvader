@@ -256,6 +256,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         self.assertEqual(nb_bind_record, 1)
 
     def test_child_auto_bind(self):
+        unbind_wizard_model = self.unbind_wizard_model
         bind_wizard_model = self.bind_wizard_model
         category_bind_model = self.category_bind_model
         backend = self.backend
@@ -278,6 +279,21 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         ]
 
         # A binding record should exists
-        nb_bind_record = category_bind_model.search_count(domain)
+        bind_record = category_bind_model.search(domain)
 
-        self.assertEqual(nb_bind_record, 3)
+        self.assertEqual(len(bind_record), 3)
+
+        # --------------------------------
+        # UnBind the category
+        # --------------------------------
+        parent_level = bind_record.filtered(lambda x: x.record_id.id ==
+                                            self.cat_level1.id)
+        unbind_wizard = unbind_wizard_model.create({
+            'shopinvader_category_ids': [(6, 0, parent_level.ids)],
+        })
+        unbind_wizard.action_unbind_categories()
+
+        # The binding record should be unreachable
+        bind_record = category_bind_model.search(domain)
+
+        self.assertEqual(len(bind_record), 0)

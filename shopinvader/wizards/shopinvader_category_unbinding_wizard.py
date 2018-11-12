@@ -31,4 +31,4 @@ class ShopinvaderCategoryUnbindingWizard(models.TransientModel):
 
     @api.multi
     def action_unbind_categories(self):
-        self.mapped("shopinvader_category_ids").write({'active': False})
+        self.mapped("shopinvader_category_ids")._unbind()
