@@ -35,7 +35,11 @@ class ShopinvaderPayment(models.Model):
         keychain = self.env['keychain.account']
         account = keychain.sudo().retrieve([
             ('namespace', '=', 'paypal')
-        ])[0]
+        ])
+        if account:
+            account = account[0]
+        else:
+            return False
         params = account.get_data()
         params['client_secret'] = account._get_password()
         return Api(params)
@@ -51,6 +55,8 @@ class ShopinvaderPayment(models.Model):
     def _inverse_paypal_profile_info(self):
         paypal = self._get_paypal_api()
         for record in self:
+            if not record.paypal_profile_info:
+                continue
             info = json.loads(record.paypal_profile_info)
             if record.paypal_profile_id:
                 web_profile = WebProfile.find(
