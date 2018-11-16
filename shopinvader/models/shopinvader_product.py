@@ -12,7 +12,7 @@ from .tools import _build_slugified_field_by_id
 class ShopinvaderProduct(models.Model):
     _name = 'shopinvader.product'
     _description = 'Shopinvader Product'
-    _inherit = ['shopinvader.binding', 'abstract.url']
+    _inherit = ['shopinvader.binding', 'abstract.url', 'seo.title.mixin']
     _inherits = {'product.template': 'record_id'}
 
     record_id = fields.Many2one(
@@ -21,7 +21,6 @@ class ShopinvaderProduct(models.Model):
         ondelete='cascade',
         index=True,
     )
-    seo_title = fields.Char()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
     short_description = fields.Html()
@@ -62,6 +61,16 @@ class ShopinvaderProduct(models.Model):
                 record.shopinvader_display_name = record.shopinvader_name
             else:
                 record.shopinvader_display_name = record.name
+
+    @api.multi
+    def _build_seo_title(self):
+        """
+        Build the SEO product name
+        :return: str
+        """
+        self.ensure_one()
+        return u"{} | {}".format(
+            self.name or u"", self.backend_id.website_public_name or u"")
 
     @api.multi
     def _inverse_active(self):

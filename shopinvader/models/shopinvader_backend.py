@@ -90,6 +90,9 @@ class ShopinvaderBackend(models.Model):
         help="The technical user used to process calls to the services "
              "provided by the backend"
     )
+    website_public_name = fields.Char(
+        help="Public name of your backend/website.",
+    )
 
     _sql_constraints = [
         ('auth_api_key_name_uniq', 'unique(auth_api_key_name)',

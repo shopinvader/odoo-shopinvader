@@ -13,7 +13,7 @@ from .tools import _build_slugified_field_by_id
 class ShopinvaderCategory(models.Model):
     _name = 'shopinvader.category'
     _description = 'Shopinvader Category'
-    _inherit = ['shopinvader.binding', 'abstract.url']
+    _inherit = ['shopinvader.binding', 'abstract.url', 'seo.title.mixin']
     _inherits = {'product.category': 'record_id'}
 
     record_id = fields.Many2one(
@@ -27,7 +27,6 @@ class ShopinvaderCategory(models.Model):
         store=True,
         index=True,
     )
-    seo_title = fields.Char()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
     subtitle = fields.Char()
