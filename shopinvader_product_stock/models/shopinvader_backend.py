@@ -26,8 +26,7 @@ class ShopinvaderBackend(models.Model):
         "Product stock field",
         domain=[
             ('ttype', 'in', ['float', 'integer']),
-            ('model_id.model', '=', 'product.product'),
-            ('name', 'in', ('qty_available', 'virtual_available')),
+            ('model', 'in', ['product.product', 'product.template']),
         ],
         help="Field used to have the current stock of a product.product",
         default=lambda self: self._default_stock_field_id(),
