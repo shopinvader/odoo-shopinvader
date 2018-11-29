@@ -60,3 +60,10 @@ class ShopinvaderBackend(models.Model):
 
         for backend in self.search(domain):
             backend._autobind_product_from_assortment()
+
+    @api.multi
+    def force_recompute_all_binding_index(self):
+        for record in self:
+            self._autobind_product_from_assortment()
+        return super(ShopinvaderBackend,
+                     self).force_recompute_all_binding_index()

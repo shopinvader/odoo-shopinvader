@@ -86,12 +86,17 @@ class CustomerService(Component):
             return {}
 
     def _assign_cart_and_get_store_cache(self):
-        return {
+        cart = self._get_and_assign_cart()
+        customer = self._to_customer_info(self.partner)
+        result = {
             'store_cache': {
-                'cart': self._get_and_assign_cart(),
-                'customer': self._to_customer_info(self.partner),
+                'cart': cart,
+                'customer': customer,
                 }
             }
+        if cart:
+            result['set_session'] = {'cart_id': cart['id']}
+        return result
 
     def _to_customer_info(self, partner):
         address = self.component(usage='addresses')
