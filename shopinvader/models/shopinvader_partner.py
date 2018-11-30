@@ -64,7 +64,12 @@ class ShopinvaderPartner(models.Model):
             if not self._is_same_partner_value(partner, vals):
                 self._create_child_partner(partner, vals)
             return partner
-        return partner.create(vals.copy())
+        partner_values = vals.copy()
+        keys = partner_values.keys()
+        # Some fields are related to shopinvader.partner and doesn't exist
+        # in res.partner
+        [partner_values.pop(k) for k in keys if k not in partner._fields]
+        return partner.create(partner_values)
 
     @api.model
     def _get_unique_partner_domain(self, vals):
