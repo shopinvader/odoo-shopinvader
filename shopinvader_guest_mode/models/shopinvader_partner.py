@@ -40,6 +40,10 @@ class ShopinvaderPartner(models.Model):
         index=True,
     )
 
+    is_guest_mode_allowed = fields.Boolean(
+        related="backend_id.is_guest_mode_allowed",
+        readonly=True
+    )
     expiry_dt = fields.Datetime(
         'Expiry date and time',
         compute='_compute_expiry_dt',
@@ -78,7 +82,7 @@ class ShopinvaderPartner(models.Model):
         return res
 
     @api.multi
-    @api.constrains('is_guest', 'backend_id.is_guest_mode_allowed')
+    @api.constrains('is_guest', 'is_guest_mode_allowed')
     def _check_is_guest_mode_allowed(self):
         recs = self.filtered(
             lambda r: r.is_guest and not r.backend_id.is_guest_mode_allowed)
