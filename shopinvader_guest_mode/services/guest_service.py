@@ -47,6 +47,15 @@ class GuestService(Component):
         self.work.partner = binding.record_id
         return self._prepare_create_response(binding)
 
+    def stop(self, email):
+        """
+        Called to invalidate the guest mode into the current session
+        """
+        binding = self._get_binding(email)
+        if not binding:
+            raise NotFound(email)
+        return {'store_cache': {'customer': {}}}
+
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
@@ -83,6 +92,14 @@ class GuestService(Component):
                 'type': 'string',
                 'required': True,
             },
+        }
+
+    def _validator_stop(self):
+        return {
+            'email': {
+                'type': 'string',
+                'required': True,
+            }
         }
 
     def _send_welcome_message(self, binding):
