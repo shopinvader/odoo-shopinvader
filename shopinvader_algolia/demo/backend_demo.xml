@@ -7,18 +7,52 @@
 
 <record id="index_1" model="se.index">
     <field name="backend_id" ref="connector_algolia.backend_1_se_backend"/>
-    <field name="name">algolia-product</field>
+    <field name="name">demo_site_product_en_US</field>
     <field name="lang_id" ref="base.lang_en"/>
     <field name="model_id" ref="shopinvader.model_shopinvader_variant"/>
     <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    <field name="settings">{"attributesForFaceting": [
+            "attributes.color",
+            "categories.idhierarchical",
+            "Categories.lvl0hierarchical",
+            "Categories.lvl1hierarchical",
+            "Categories.lvl2",
+            "main",
+            "redirect_url_key",
+            "url_key",
+            "sku",
+            "price.default.value",
+            "variant_attributes.color"
+        ]}</field>
 </record>
 
 <record id="index_2" model="se.index">
     <field name="backend_id" ref="connector_algolia.backend_1_se_backend"/>
-    <field name="name">algolia-category</field>
+    <field name="name">demo_site_category_en_US</field>
     <field name="lang_id" ref="base.lang_en"/>
     <field name="model_id" ref="shopinvader.model_shopinvader_category"/>
     <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_category"/>
+    <field name="settings">{"attributesForFaceting": [
+            "attributes.color",
+            "attributes.diameter",
+            "attributes.height",
+            "attributes.length",
+            "attributes.weight",
+            "attributes.width",
+            "brand.name",
+            "categories.id",
+            "categories.url_key",
+            "hierarchicalCategories.lvl0",
+            "hierarchicalCategories.lvl1",
+            "hierarchicalCategories.lvl2",
+            "id",
+            "main",
+            "price.default.value",
+            "redirect_url_key",
+            "sku",
+            "url_key",
+            "variant_attributes.color"
+        ]}</field>
 </record>
 
 </odoo>
