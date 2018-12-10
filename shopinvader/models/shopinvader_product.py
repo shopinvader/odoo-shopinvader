@@ -33,8 +33,8 @@ class ShopinvaderProduct(models.Model):
     url_key = fields.Char(
         compute_sudo=True,
     )
-    use_product_shopinvader_name = fields.Boolean(
-        related='backend_id.use_product_shopinvader_name',
+    use_shopinvader_product_name = fields.Boolean(
+        related='backend_id.use_shopinvader_product_name',
         store=True, readonly=True)
     shopinvader_name = fields.Char(
         string='Name',
@@ -48,10 +48,10 @@ class ShopinvaderProduct(models.Model):
          'A product can only have one binding by backend and lang.'),
     ]
 
-    @api.depends('use_product_shopinvader_name', 'shopinvader_name')
+    @api.depends('use_shopinvader_product_name', 'shopinvader_name')
     def _compute_name(self):
         for record in self:
-            if record.use_product_shopinvader_name and record.shopinvader_name:
+            if record.use_shopinvader_product_name and record.shopinvader_name:
                 record.shopinvader_display_name = record.shopinvader_name
             else:
                 record.shopinvader_display_name = record.name
