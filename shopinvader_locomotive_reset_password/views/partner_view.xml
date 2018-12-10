@@ -20,8 +20,8 @@
     <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
     <field name="arch" type="xml">
         <field name="create_date" position="after">
-            <field name="date_initialisation"/>
-            <field name="date_last_reset"/>
+            <field name="date_last_password_reset"/>
+            <field name="date_last_reset_send"/>
             <field name="nbr_reset"/>
         </field>
     </field>
@@ -35,7 +35,7 @@
             <filter
                 name="not_initialized"
                 string="Not Initialized"
-                domain="[('date_initialisation', '=', False)]"/>
+                domain="[('date_last_password_reset', '=', False)]"/>
             <separator/>
             <filter
                 name="reset_0"

@@ -12,10 +12,10 @@ from odoo.addons.queue_job.job import job
 class ShopinvaderPartner(models.Model):
     _inherit = 'shopinvader.partner'
 
-    date_initialisation = fields.Datetime(
-        'Initialisation Date',
-        help='date of first connection of the customer')
-    date_last_reset = fields.Datetime(
+    date_last_password_reset = fields.Datetime(
+        'Last password reset date',
+        help='date of the last password reset of the customer')
+    date_last_reset_send = fields.Datetime(
         'Password reset send at',
         help='date of last password reset sent')
     nbr_reset = fields.Integer()
@@ -29,7 +29,7 @@ class ShopinvaderPartner(models.Model):
         self.ensure_one()
         self.write({
             'nbr_reset': (self.nbr_reset or 0) + 1,
-            'date_last_reset': datetime.now(),
+            'date_last_reset_send': fields.datetime.now(),
             })
         token = uuid.uuid4().hex
         self._send_reset_password_email(template_id, token)
