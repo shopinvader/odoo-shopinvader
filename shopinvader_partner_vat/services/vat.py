@@ -5,6 +5,10 @@
 
 from odoo.addons.component.core import Component
 from odoo.exceptions import ValidationError
+from odoo import _
+
+import logging
+_logger = logging.getLogger(__name__)
 
 try:
     import stdnum.eu.vat
@@ -28,23 +32,36 @@ class CustomerService(Component):
                     ('code', '=ilike', country_code),
                     ('country_group_ids', '=',
                         self.env.ref('base.europe').id)]):
-            try:
-                response = stdnum.eu.vat.check_vies(vat_number)
-                if response['valid']:
-                    res.update({
-                        'with_details': True,
-                        'name': response['name'],
-                        'address': response['address'],
-                        'valid': True,
-                        })
-                else:
-                    res['valid'] = False
-            except Exception as e:
-                raise ValidationError(
-                        'VIES server communication problem: {}'.format(e))
+            res = self._check_vat_vies(vat_number)
 
+        return res
+
+    def _check_vat_vies(self, vat_number):
+        res = {'vat_number': vat_number}
+        try:
+            response = stdnum.eu.vat.check_vies(vat_number)
+            if response['valid']:
+                res.update({
+                    'with_details': True,
+                    'name': response['name'],
+                    'address': response['address'],
+                    'valid': True,
+                    })
+            else:
+                res['valid'] = False
+        except Exception as e:
+            raise ValidationError(_(
+                'VIES server communication problem: {}'.format(e)))
         return res
 
     # Validator
     def _validator_check_vat(self):
         return {'vat_number': {'type': 'string'}}
+
+    def _validator_return_check_vat(self):
+        return {'valid': {'type': 'boolean', 'required': True},
+                'vat_number': {'type': 'string', 'required': True},
+                'name': {'type': 'string', 'required': False},
+                'address': {'type': 'string', 'required': False},
+                'with_details': {'type': 'boolean', 'required': False},
+                }
