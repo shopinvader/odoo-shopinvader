@@ -61,7 +61,7 @@ class ShopinvaderVariant(models.Model):
         attributes = self.attribute_line_ids.filtered(
             lambda l: len(l.value_ids) > 1).mapped('attribute_id')
         short_name = self.attribute_value_ids._variant_name(attributes)
-        full_name = self.model_name
+        full_name = self.shopinvader_display_name
         if short_name:
             full_name += " (%s)" % short_name
         return full_name, short_name

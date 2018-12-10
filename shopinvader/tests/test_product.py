@@ -428,6 +428,8 @@ class ProductCase(ProductCommonCase):
         self.backend.bind_all_product()
         product = self.shopinvader_variant.shopinvader_product_id
         product.shopinvader_name = 'Test shopinvader name'
-        self.assertEqual(product.model_name, product.name)
+        self.assertEqual(product.shopinvader_display_name, product.name)
         self.backend.use_product_shopinvader_name = True
-        self.assertEqual(product.model_name, product.shopinvader_name)
+        self.assertEqual(
+            product.shopinvader_display_name, product.shopinvader_name
+        )

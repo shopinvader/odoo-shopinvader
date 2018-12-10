@@ -39,7 +39,9 @@ class ShopinvaderProduct(models.Model):
     shopinvader_name = fields.Char(
         string='Name',
         help="Name for shopinvader, if not set the product name will be used.")
-    model_name = fields.Char(compute='_compute_name', readonly=True)
+    shopinvader_display_name = fields.Char(
+        compute='_compute_name', readonly=True
+    )
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
@@ -50,9 +52,9 @@ class ShopinvaderProduct(models.Model):
     def _compute_name(self):
         for record in self:
             if record.use_product_shopinvader_name and record.shopinvader_name:
-                record.model_name = record.shopinvader_name
+                record.shopinvader_display_name = record.shopinvader_name
             else:
-                record.model_name = record.name
+                record.shopinvader_display_name = record.name
 
     @api.multi
     def _inverse_active(self):
