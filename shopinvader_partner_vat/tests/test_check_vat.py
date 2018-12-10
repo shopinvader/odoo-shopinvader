@@ -16,7 +16,7 @@ class CheckVatCase(CommonCase):
     def test_check_valid_vat_with_vies(self):
         vat_number = 'FR86792377731'
         self.service.shopinvader_backend.company_id.vat_check_vies = True
-        res = self.service.check_vat({'vat_number': vat_number})
+        res = self.service.check_vat(vat_number=vat_number)
         # Address can change, we remove unstable data
         res.pop('address')
         self.assertEqual(res, {
@@ -29,15 +29,15 @@ class CheckVatCase(CommonCase):
     def test_check_invalid_vat_with_vies(self):
         vat_number = 'FR54348545954'
         self.service.shopinvader_backend.company_id.vat_check_vies = True
-        res = self.service.check_vat({'vat_number': vat_number})
+        res = self.service.check_vat(vat_number=vat_number)
         self.assertEqual(res, {'valid': False, 'vat_number': vat_number})
 
     def test_check_valid_vat_without_vies(self):
         vat_number = 'FR86792377731'
-        res = self.service.check_vat({'vat_number': vat_number})
+        res = self.service.check_vat(vat_number=vat_number)
         self.assertEqual(res, {'valid': True, 'vat_number': vat_number})
 
     def test_check_invalid_vat_without_vies(self):
         vat_number = 'FR54348545954'
-        res = self.service.check_vat({'vat_number': vat_number})
+        res = self.service.check_vat(vat_number=vat_number)
         self.assertEqual(res, {'valid': False, 'vat_number': vat_number})

@@ -12,4 +12,4 @@ class ShopinvaderPartnerExportMapper(Component):
 
     @mapping
     def sale_profile(self, record):
-        return {'role': record.sale_profile_id.code}
+        return {'sale_profile': record.sale_profile_id.code}

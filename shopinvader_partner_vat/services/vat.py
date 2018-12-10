@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
-
-import logging
-_logger = logging.getLogger(__name__)
+from odoo.exceptions import ValidationError
 
 try:
     import stdnum.eu.vat
@@ -41,10 +39,11 @@ class CustomerService(Component):
                         })
                 else:
                     res['valid'] = False
-            except Exception:
-                # TODO improve exception management
-                _logger.debug('Invalid number for vies')
-        return {'data': res}
+            except Exception as e:
+                raise ValidationError(
+                        'VIES server communication problem: {}'.format(e))
+
+        return res
 
     # Validator
     def _validator_check_vat(self):
