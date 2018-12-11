@@ -6,10 +6,19 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
+<<<<<<< HEAD
             <page name="search_eng" position="inside">
                 <field name="se_backend_id"/>
             </page>
             <page name="developper" position="inside">
+=======
+            <group name="filter_ids" position="after">
+                <group name="filter_ids" colspan="4">
+                    <field name="se_backend_id"/>
+                </group>
+            </group>
+            <group name="category" position="after">
+>>>>>>> WIP search_engine  reorganize view
                 <group name="indexes" string="Search engined indexes" col="10" colspan="4">
                     <button
                             name="force_recompute_all_binding_index"
