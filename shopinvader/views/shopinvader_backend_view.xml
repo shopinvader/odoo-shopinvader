@@ -42,9 +42,9 @@
                         <field name="name" class="oe_inline"/>
                     </h1>
                     <notebook>
-                        <page name="config" string="credentials">
+                        <page name="config" string="Credentials">
                             <group name="config" colspan="4" col="4">
-                                <field name="location" placeholder="e.g. http://ecommerce.shopinvader.com"/>
+                                <field name="location" placeholder="e.g. https://ecommerce.shopinvader.com"/>
                                 <field name="auth_api_key_id"/>
                             </group>
                         </page>
@@ -55,15 +55,27 @@
                         </page>
                         <page name="sale" string="Sale">
                             <group name="cart_conf" string="Cart configuration">
-                                <field name="company_id"/>
-                                <field name="sequence_id"/>
                                 <field name="last_step_id"/>
                                 <field name="anonymous_partner_id"/>
                                 <field name="pricelist_id" required="1"/>
-                                <field name="account_analytic_id"/>
-                                <field name="use_shopinvader_product_name"/>
                             </group>
-                            <group name="allowed_country" colspan="4">
+                            <group name="sale_conf" string="Sale configuration">
+                                <field name="company_id"/>
+                                <field name="sequence_id"/>
+                                <field name="account_analytic_id"/>
+                            </group>
+                        </page>
+                        <page name="products" string="Products">
+                            <field name="use_shopinvader_product_name"/>
+                        </page>
+                        <page name="localization" string="Localization">
+                            <group name="languages" string="Languages">
+                                <span>Languages available in the website.</span>
+                                <newline />
+                                <field name="lang_ids" nolabel="1" />
+                            </group>
+                            <group name="allowed_country" string="Countries">
+                                <span>Allowed countries in delivery addresses</span><newline />
                                 <field name="allowed_country_ids" nolabel="1"/>
                             </group>
                         </page>
