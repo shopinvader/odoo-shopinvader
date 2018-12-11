@@ -1,0 +1,1 @@
+Implements Stripe payment
