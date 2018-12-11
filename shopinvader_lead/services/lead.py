@@ -13,7 +13,7 @@ class LeadService(Component):
     _usage = 'lead'
     _expose_model = 'crm.lead'
 
-    # The following method are 'public' and can be called from the controller.
+    # The following methods are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator
     # secure params and the linked validator !
 
@@ -23,7 +23,7 @@ class LeadService(Component):
         self.shopinvader_backend._send_notification('lead_confirmation', lead)
         return {}
 
-    # The following method are 'private' and should be never never NEVER call
+    # The following methods are 'private' and should be never never NEVER called
     # from the controller.
     # All params are trusted as they have been checked before
 
