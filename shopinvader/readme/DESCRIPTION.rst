@@ -1,0 +1,1 @@
+This is shopinvader the odoo module for the new generation of e-commerce
