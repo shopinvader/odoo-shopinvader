@@ -44,6 +44,7 @@ class TestCustomer(CommonCase):
                 self.assertEqual(partner[key], self.data[key])
 
     def test_create_customer_business(self):
+        self.data['external_id'] = 'D5CdkqOEL'
         self.data['vat'] = 'BE0477472701'
         res = self.service.dispatch('create', params=self.data)['data']
         partner = self.env['res.partner'].browse(res['id'])
