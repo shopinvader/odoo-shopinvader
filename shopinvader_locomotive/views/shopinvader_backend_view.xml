@@ -16,11 +16,12 @@
                     class="oe_highlight"
                     groups="shopinvader.group_shopinvader_manager"/>
             </header>
-            <field name="company_id" position="after">
-                <separator name="image" colspan="4"/>
-                <field name="username" colspan="2"/>
+            <field name="location" position="after">
+                <field name="username" string="Email" colspan="2"/>
                 <field name="password" colspan="2"/>
                 <field name="handle" colspan="2"/>
+            </field>
+            <field name="pricelist_id" position="after">
                 <field
                     name="currency_ids"
                     widget="many2many_tags"
