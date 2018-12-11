@@ -43,6 +43,12 @@ class TestCustomer(CommonCase):
             else:
                 self.assertEqual(partner[key], self.data[key])
 
+    def test_create_customer_business(self):
+        self.data['vat'] = 'BE0477472701'
+        res = self.service.dispatch('create', params=self.data)['data']
+        partner = self.env['res.partner'].browse(res['id'])
+        self.assertEqual(partner.is_company, True)
+
     def test_address_type(self):
         partner = self.env.ref('shopinvader.partner_1')
         self.assertEqual(partner.address_type, 'profile')

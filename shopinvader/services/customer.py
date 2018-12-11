@@ -63,6 +63,8 @@ class CustomerService(Component):
         address = self.component(usage='addresses')
         params = address._prepare_params(params)
         params['backend_id'] = self.shopinvader_backend.id
+        if params.get('vat'):
+            params['is_company'] = True
         return params
 
     def _get_and_assign_cart(self):
