@@ -1,0 +1,2 @@
+* Akretion R&D
+* Adaptoo

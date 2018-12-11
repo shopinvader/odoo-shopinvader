@@ -1,1 +1,1 @@
-Allows to create leads from shopinvader, in a 'contact us' form for example.
+Allows to create leads from your website, in a 'contact us' form for example.

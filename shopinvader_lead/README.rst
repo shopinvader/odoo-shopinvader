@@ -19,7 +19,7 @@ Shopinvader Lead
 
 |badge1| |badge2| |badge3| 
 
-Allows to create leads from shopinvader, in a 'contact us' form for example.
+Allows to create leads from your website, in a 'contact us' form for example.
 
 **Table of contents**
 
@@ -43,6 +43,18 @@ Authors
 ~~~~~~~
 
 * Akretion
+
+Contributors
+~~~~~~~~~~~~
+
+* Sebastien BEAU <sebastien.beau@akretion.com>
+* Pierrick Brun <pierrick.brun@akretion.com>
+
+Other credits
+~~~~~~~~~~~~~
+
+* Akretion R&D
+* Adaptoo
 
 Maintainers
 ~~~~~~~~~~~
