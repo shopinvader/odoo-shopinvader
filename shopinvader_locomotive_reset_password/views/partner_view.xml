@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openerp>
-    <data>
+<odoo>
 
 <record id="res_partner_view_form" model="ir.ui.view">
     <field name="model">res.partner</field>
@@ -20,8 +19,8 @@
     <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
     <field name="arch" type="xml">
         <field name="create_date" position="after">
-            <field name="date_last_password_reset"/>
-            <field name="date_last_reset_send"/>
+            <field name="last_pwd_reset_datetime"/>
+            <field name="last_reset_send_datetime"/>
             <field name="nbr_reset"/>
         </field>
     </field>
@@ -35,7 +34,7 @@
             <filter
                 name="not_initialized"
                 string="Not Initialized"
-                domain="[('date_last_password_reset', '=', False)]"/>
+                domain="[('last_pwd_reset_datetime', '=', False)]"/>
             <separator/>
             <filter
                 name="reset_0"
@@ -57,5 +56,4 @@
     </field>
 </record>
 
-    </data>
-</openerp>
+</odoo>

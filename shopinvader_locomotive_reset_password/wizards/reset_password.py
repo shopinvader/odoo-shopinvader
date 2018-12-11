@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from openerp import api, fields, models
+from odoo import api, fields, models
 from datetime import datetime, timedelta
 
 
@@ -45,7 +45,7 @@ class ShopinvaderResetPassword(models.TransientModel):
         self.ensure_one()
         partners = self.env['shopinvader.partner'].browse(
             self._context['active_ids'])
-        partners.write({'date_last_password_reset': False})
+        partners.write({'last_pwd_reset_datetime': False})
         for partner in partners:
             partner.with_delay()._reset_password(
                 self.template_id.id, self.date_validity)

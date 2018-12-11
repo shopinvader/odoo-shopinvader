@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 class Customer(Component):
-    _inherit='shopinvader.customer.service'
+    _inherit = 'shopinvader.customer.service'
 
     def _assign_cart_and_get_store_cache(self):
         res = super(Customer, self)._assign_cart_and_get_store_cache()
@@ -16,6 +16,6 @@ class Customer(Component):
             ('backend_id', '=', self.shopinvader_backend.id),
             ('record_id', '=', self.partner.id),
             ])
-        if not shop_partner.date_initialisation:
-            shop_partner.date_initialisation = datetime.now()
+        if not shop_partner.last_pwd_reset_datetime:
+            shop_partner.last_pwd_reset_datetime = datetime.now()
         return res
