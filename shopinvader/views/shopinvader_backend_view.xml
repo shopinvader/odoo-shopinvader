@@ -91,6 +91,7 @@
                                 </field>
                             </group>
                         </page>
+                        <page name="delivery" string="Delivery" />
                         <page name="developper" string="Developper">
                             <group name="developper" colspan="4">
                                 <group name="product" string="Product" col="10" colspan="4">
