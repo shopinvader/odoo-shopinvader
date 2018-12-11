@@ -27,12 +27,16 @@ import base64
 import StringIO
 import sys
 from zipfile import ZipFile
-import magic
 import os
+from odoo import models, fields, api, _, exceptions
+import logging
+_logger = logging.getLogger(__name__)
 
-import validators
-from odoo import models, fields, api
-from odoo.exceptions import Warning
+try:
+    import validators
+    import magic
+except (ImportError, IOError) as err:
+    _logger.debug(err)
 
 
 HEADERS = 'default_code,tag,path'
@@ -44,7 +48,7 @@ class ProductImageImportWizard(models.TransientModel):
     _name = 'import.product_image'
 
     storage_backend_id = fields.Many2one(
-	'storage.backend', 'Storage Backend', required=True
+        'storage.backend', 'Storage Backend', required=True
     )
     product_model = fields.Selection([
         ('product.template', 'Product template'),
@@ -65,14 +69,14 @@ class ProductImageImportWizard(models.TransientModel):
         headers = next(reader, None)
 
         if headers != HEADERS.split(DELIMITER):
-            raise Warning(
+            raise exceptions.UserError(_(
                 'Invalid CSV file headers found! Expected: %s' % HEADERS
-            )
+            ))
         csv.field_size_limit(sys.maxsize)
 
-	file_zip = None
-	if self.file_zip:
-	    file_zip = StringIO.StringIO(base64.decodestring(self.file_zip))
+        file_zip = None
+        if self.file_zip:
+            file_zip = StringIO.StringIO(base64.decodestring(self.file_zip))
 
         file_obj = self.env['storage.file']
         image_obj = self.env['storage.image']
@@ -111,12 +115,12 @@ class ProductImageImportWizard(models.TransientModel):
                 )
                 continue
 
-	    product = self.env[self.product_model].search([
-		('default_code', '=', default_code)
-	    ])
-	    if not product:
-		errors.append("Could not find the product '%s'" % default_code)
-		continue
+            product = self.env[self.product_model].search([
+                ('default_code', '=', default_code)
+            ])
+            if not product:
+                errors.append("Could not find the product '%s'" % default_code)
+                continue
 
             image_name = os.path.join(image_path)
 
@@ -157,4 +161,4 @@ class ProductImageImportWizard(models.TransientModel):
                 })
 
         if errors:
-            raise Warning('\n'.join(errors))
+            raise exceptions.UserError(_('\n'.join(errors)))

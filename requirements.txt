@@ -12,3 +12,4 @@ pyquerystring
 parse-accept-language
 openupgradelib
 python-magic
+validators

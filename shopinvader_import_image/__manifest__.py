@@ -25,9 +25,6 @@
     'name': 'Import Shopinvader product image',
     'version': '10.0.1.0.0',
     'summary': 'Import product images',
-    'description': '''
-        Import product image from a CVS file from URLs or ZIP file',
-    ''',
     'author': 'Sylvain Calador',
     'company': 'Akretion',
     'maintainer': 'Akretion',
@@ -36,12 +33,15 @@
     'depends': [
         'shopinvader_image'
     ],
+    'external_dependencies': {
+        'python': [
+            'python-magic',
+            'validators',
+        ],
+    },
     'data': [
         'views/import_product_image_view.xml'
     ],
     'license': 'AGPL-3',
-    'images': [''],
-    'application': False,
     'installable': True,
-    'auto_install': False,
 }
