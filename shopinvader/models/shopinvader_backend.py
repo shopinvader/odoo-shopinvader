@@ -63,6 +63,11 @@ class ShopinvaderBackend(models.Model):
     filter_ids = fields.Many2many(
         comodel_name='product.filter',
         string='Filter')
+    use_shopinvader_product_name = fields.Boolean(
+        string="Use Shopinvader product display name",
+        help="If checked, use the specific shopinvader display name for "
+             "products instead of the original product name."
+    )
 
     _sql_constraints = [
         ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',

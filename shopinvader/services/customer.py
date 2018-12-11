@@ -63,7 +63,7 @@ class CustomerService(Component):
     def _prepare_params(self, params):
         address = self.component(usage='addresses')
         params = address._prepare_params(params)
-        params['backend_id'] = self.shopinvader_backend.id,
+        params['backend_id'] = self.shopinvader_backend.id
         return params
 
     def _get_and_assign_cart(self):
