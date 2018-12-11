@@ -3,7 +3,7 @@
     <record id="shopinvader_backend_view_form" model="ir.ui.view">
         <field name="model">shopinvader.backend</field>
         <field name="arch" type="xml">
-            <form string="Shopinvader Backend">
+            <form string="Shopinvader Website">
                 <header>
                     <button name="%(shopinvader_variant_binding_wizard_act_window)d"
                             type="action"
@@ -120,7 +120,7 @@
     </record>
 
     <record id="action_shopinvader_backend" model="ir.actions.act_window">
-        <field name="name">Shopinvader Backends</field>
+        <field name="name">Shopinvader Website</field>
         <field name="res_model">shopinvader.backend</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
@@ -128,7 +128,7 @@
     </record>
 
     <menuitem id="menu_shopinvader_backend"
-              name="Backends"
+              name="Websites"
               sequence="0"
               parent="menu_shopinvader_root"
               action="action_shopinvader_backend"/>
