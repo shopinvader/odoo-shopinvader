@@ -13,8 +13,8 @@
     </record>
 
     <record id="ir_exp_shopinvader_variant_model_name" model="ir.exports.line">
-        <field name="name">shopinvader_product_id/name</field>
-        <field name="alias">shopinvader_product_id:model/name</field>
+        <field name="name">shopinvader_product_id/shopinvader_display_name</field>
+        <field name="alias">shopinvader_product_id:model/shopinvader_display_name:name</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 

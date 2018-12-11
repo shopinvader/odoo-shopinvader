@@ -53,6 +53,7 @@
                                 <field name="anonymous_partner_id"/>
                                 <field name="pricelist_id" required="1"/>
                                 <field name="account_analytic_id"/>
+                                <field name="use_shopinvader_product_name"/>
                             </group>
                             <group name="allowed_country" colspan="4">
                                 <field name="allowed_country_ids" nolabel="1"/>

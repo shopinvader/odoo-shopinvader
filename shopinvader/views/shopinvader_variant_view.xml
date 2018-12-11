@@ -9,7 +9,7 @@
         <field name="model">shopinvader.variant</field>
         <field name="arch" type="xml">
             <search string="Products">
-                <field name="name" string="Product"/>
+                <field name="name" string="Product" domain="['|','|','|',('default_code','ilike',self),('name','ilike',self),('barcode','ilike',self),('shopinvader_name', 'ilike', self)]"/>
                 <field name="backend_id" string="Shopinvader Backend"/>
                 <field name="lang_id" string="Lang"/>
                 <separator/>
