@@ -66,7 +66,9 @@
                             </group>
                         </page>
                         <page name="products" string="Products">
-                            <field name="use_shopinvader_product_name"/>
+                            <group>
+                                <field name="use_shopinvader_product_name"/>
+                            </group>
                         </page>
                         <page name="localization" string="Localization">
                             <group name="languages" string="Languages">
