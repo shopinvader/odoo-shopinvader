@@ -35,7 +35,7 @@
     ],
     'external_dependencies': {
         'python': [
-            'python-magic',
+            'magic',
             'validators',
         ],
     },
