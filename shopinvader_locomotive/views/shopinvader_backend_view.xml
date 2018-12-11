@@ -8,14 +8,16 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
-            <header position="inside">
-                <button
-                    name="synchronize_metadata"
-                    type="object"
-                    string="Synchronize Metadata"
-                    class="oe_highlight"
-                    groups="shopinvader.group_shopinvader_manager"/>
-            </header>
+            <page name="developper" position="inside">
+                <group name="locomotive" string="LocomotiveCMS">
+                    <button
+                        name="synchronize_metadata"
+                        type="object"
+                        string="Synchronize Metadata"
+                        class="oe_highlight"
+                        groups="shopinvader.group_shopinvader_manager"/>
+                </group>
+            </page>
             <field name="location" position="after">
                 <field name="username" string="Email" colspan="2"/>
                 <field name="password" colspan="2"/>
