@@ -10,6 +10,8 @@
         <field name="arch" type="xml">
             <page name="developper" position="inside">
                 <group name="locomotive" string="LocomotiveCMS">
+                    <span>Synchronize metadata push this configuration to locomotive.
+                        For ex: countries, currencies, indexes (TODO), credentials (TODO)</span>
                     <button
                         name="synchronize_metadata"
                         type="object"
