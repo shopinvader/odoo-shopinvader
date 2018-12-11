@@ -6,17 +6,15 @@
     <field name="inherit_id"
            ref="shopinvader.shopinvader_backend_view_form"/>
     <field name="arch" type="xml">
-        <notebook position="inside">
-            <page name="payment" string="Payment">
-                <group name="payment_method" colspan="4">
-                    <field name="payment_method_ids"
-                           string="Payment Method"
-                           colspan="4"
-                           nolabel="True">
-                    </field>
-                </group>
-            </page>
-        </notebook>
+        <page name="sale" position="inside">
+            <group name="payment_method" string="Payment" colspan="4">
+                <field name="payment_method_ids"
+                       string="Payment Method"
+                       colspan="4"
+                       nolabel="True">
+                </field>
+            </group>
+        </page>
     </field>
 </record>
 
