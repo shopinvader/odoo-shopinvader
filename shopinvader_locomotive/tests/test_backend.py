@@ -57,7 +57,7 @@ class TestBackend(LocoCommonCase):
         # simplified version of site data
         self.site = {
             'name': 'My site',
-            'handle': 'spacediscount',
+            'handle': 'shopinvader',
             '_id': 'space_id',
             'metafields': json.dumps({
                 'foo': 'test',
