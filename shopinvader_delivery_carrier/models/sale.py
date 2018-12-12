@@ -13,9 +13,3 @@ class SaleOrder(models.Model):
         self.ensure_one()
         return self.shopinvader_backend_id.with_context(
             order_id=self.id).carrier_ids.filtered('available').sorted('price')
-
-    def _set_default_carrier(self):
-        carriers = self._get_available_carrier()
-        if carriers:
-            self.carrier_id = carriers[0]
-            self.delivery_set()
