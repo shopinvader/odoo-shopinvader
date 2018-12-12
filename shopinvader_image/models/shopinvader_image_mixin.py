@@ -35,6 +35,9 @@ class ShopinvaderImageMixin(models.AbstractModel):
         for image_relation in self[self._image_field]:
             url_key = self._get_image_url_key(image_relation)
             image_data = {}
+            tag = ''
+            if image_relation.tag_id:
+                tag = image_relation.tag_id.name
             for resize in resizes:
                 thumbnail = image_relation.image_id.get_or_create_thumbnail(
                     resize.size_x,
@@ -43,6 +46,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
                 image_data[resize.key] = {
                     'src': thumbnail.url,
                     'alt': self.name,
+                    'tag': tag,
                     }
             res.append(image_data)
         return res
