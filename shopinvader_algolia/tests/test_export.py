@@ -32,8 +32,13 @@ class TestExport(ConnectorAlgoliaCase, JobMixin):
         with mock_api(self.env) as mocked_api:
             si_variant.recompute_json()
             si_variant.export()
-            self.assertTrue('algolia-product' in mocked_api.index)
-        index = mocked_api.index['algolia-product']
+            self.assertTrue(
+                'demo_algolia_backend_shopinvader_variant_en_US'
+                in mocked_api.index
+            )
+        index = mocked_api.index[
+            'demo_algolia_backend_shopinvader_variant_en_US'
+        ]
         self.assertEqual(1, len(index._calls))
         method, values = index._calls[0]
         self.assertEqual('add_objects', method)

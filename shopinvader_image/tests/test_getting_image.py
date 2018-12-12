@@ -9,10 +9,13 @@ from odoo.addons.storage_image_product.tests.common import (
     ProductImageCommonCase)
 
 
-class ShopinvaderImageCase(ProductImageCommonCase, ProductCommonCase):
+class ShopinvaderImageCase(ProductCommonCase, ProductImageCommonCase):
 
     def setUp(self):
         super(ShopinvaderImageCase, self).setUp()
+        self.env.ref('base.user_demo').write({'groups_id': [
+            (4, self.env.ref('shopinvader.group_shopinvader_manager').id)]})
+        ProductImageCommonCase.setUp(self)
         self.logo = self.env['product.image.relation'].create({
             'product_tmpl_id': self.template.id,
             'image_id': self.logo_image.id,

@@ -4,13 +4,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader.tests.common import CommonMixin
 from odoo.addons.payment_gateway_adyen.tests.test_payment import (
     AdyenCommonCase,
     AdyenScenario,
     SHOPPER_IP,
     ACCEPT_HEADER,
     USER_AGENT)
+from odoo.addons.payment_gateway.tests.common import PaymentScenarioType
 import json
 from mock import Mock
 from os.path import dirname
@@ -22,10 +23,11 @@ REDIRECT_URL = {
     }
 
 
-class ShopinvaderAdyenCommonCase(AdyenCommonCase, CommonCase):
+class ShopinvaderAdyenCommonCase(AdyenCommonCase, CommonMixin):
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderAdyenCommonCase, self).setUp(*args, **kwargs)
+        CommonMixin.setUp(self)
         self.shopinvader_session = {'cart_id': self.sale.id}
         self.partner = self.sale.partner_id
         self.env['shopinvader.partner'].create({
@@ -121,7 +123,5 @@ class ShopinvaderAdyenCommonCase(AdyenCommonCase, CommonCase):
 
 
 class ShopinvaderAdyenCase(ShopinvaderAdyenCommonCase, AdyenScenario):
-
-    def __init__(self, *args, **kwargs):
-        super(ShopinvaderAdyenCase, self).__init__(*args, **kwargs)
-        self._decorate_test(dirname(__file__))
+    __metaclass__ = PaymentScenarioType
+    _test_path = dirname(__file__)

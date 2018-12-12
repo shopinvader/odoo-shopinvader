@@ -3,10 +3,12 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader.tests.common import CommonMixin
 from odoo.addons.payment_gateway_stripe.tests.test_payment import (
     StripeCommonCase,
     StripeScenario)
+
+from odoo.addons.payment_gateway.tests.common import PaymentScenarioType
 import json
 from mock import Mock
 from os.path import dirname
@@ -18,14 +20,13 @@ REDIRECT_URL = {
     }
 
 
-class ShopinvaderStripeCase(StripeCommonCase, CommonCase, StripeScenario):
-
-    def __init__(self, *args, **kwargs):
-        super(ShopinvaderStripeCase, self).__init__(*args, **kwargs)
-        self._decorate_test(dirname(__file__))
+class ShopinvaderStripeCase(StripeCommonCase, CommonMixin, StripeScenario):
+    __metaclass__ = PaymentScenarioType
+    _test_path = dirname(__file__)
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderStripeCase, self).setUp(*args, **kwargs)
+        CommonMixin.setUp(self)
         self.shopinvader_session = {'cart_id': self.sale.id}
         self.partner = self.sale.partner_id
         self.env['shopinvader.partner'].create({

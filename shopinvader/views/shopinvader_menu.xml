@@ -9,5 +9,23 @@
               sequence="10"
               web_icon="shopinvader,static/description/icon.png"
               groups="group_shopinvader_manager"/>
+    <menuitem id="menu_shopinvader_config"
+              name="Configuration"
+              sequence="100"
+              parent="menu_shopinvader_root"
+              groups="group_shopinvader_manager"/>
+
+    <record model="ir.ui.menu" id="auth_api_key_menu">
+        <field name="name">Auth Api Key</field>
+        <field name="parent_id" ref="menu_shopinvader_config"/>
+        <field name="action" ref="auth_api_key.auth_api_key_act_window"/>
+        <field name="sequence" eval="10"/>
+    </record>
+    <record model="ir.ui.menu" id="keychain_menu">
+        <field name="name">Keychain</field>
+        <field name="parent_id" ref="menu_shopinvader_config"/>
+        <field name="action" ref="keychain.keychain_list_action"/>
+        <field name="sequence" eval="11"/>
+    </record>
 
 </odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 Akretion
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.menu" id="account_payment_mode_menu">
+        <field name="name">Payment Modes</field>
+        <field name="parent_id" ref="shopinvader.menu_shopinvader_config"/>
+        <field name="action" ref="account_payment_mode.account_payment_mode_action"/>
+        <field name="sequence" eval="20"/>
+    </record>
+
+</odoo>

@@ -22,8 +22,10 @@
         "shopinvader",
         "payment_gateway",
         "sale_automatic_workflow_payment_mode",
+        "onchange_helper",
     ],
     "data": [
+        "views/shopinvader_menu.xml",
         "views/shopinvader_payment_view.xml",
         "views/backend_view.xml",
         "security/ir.model.access.csv",
