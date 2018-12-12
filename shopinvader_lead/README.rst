@@ -26,6 +26,11 @@ Allows to create leads from your website, in a 'contact us' form for example.
 .. contents::
    :local:
 
+Known issues / Roadmap
+======================
+
+Full renaming of the module (and models) to Webinvader_lead in 12.0 version
+
 Bug Tracker
 ===========
 
