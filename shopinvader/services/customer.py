@@ -24,7 +24,6 @@ class CustomerService(Component):
             return {'data': {}}
 
     def create(self, **params):
-        params['is_company'] = True
         vals = self._prepare_params(params)
         binding = self.env['shopinvader.partner'].create(vals)
         self.work.partner = binding.record_id
@@ -64,6 +63,8 @@ class CustomerService(Component):
         address = self.component(usage='addresses')
         params = address._prepare_params(params)
         params['backend_id'] = self.shopinvader_backend.id
+        if params.get('vat'):
+            params['is_company'] = True
         return params
 
     def _get_and_assign_cart(self):

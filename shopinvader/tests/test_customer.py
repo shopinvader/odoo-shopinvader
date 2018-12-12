@@ -20,6 +20,7 @@ class TestCustomer(CommonCase):
             'city': 'Aurec sur Loire',
             'phone': '0485485454',
             'country': {'id': self.env.ref('base.fr').id},
+            'is_company': False,
             }
         with self.work_on_services(
                 partner=None,
@@ -41,6 +42,13 @@ class TestCustomer(CommonCase):
                 self.assertEqual(partner.country_id.id, self.data[key]['id'])
             else:
                 self.assertEqual(partner[key], self.data[key])
+
+    def test_create_customer_business(self):
+        self.data['external_id'] = 'D5CdkqOEL'
+        self.data['vat'] = 'BE0477472701'
+        res = self.service.dispatch('create', params=self.data)['data']
+        partner = self.env['res.partner'].browse(res['id'])
+        self.assertEqual(partner.is_company, True)
 
     def test_address_type(self):
         partner = self.env.ref('shopinvader.partner_1')
