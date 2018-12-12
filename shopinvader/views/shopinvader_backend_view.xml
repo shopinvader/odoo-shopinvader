@@ -49,7 +49,7 @@
                             </group>
                         </page>
                         <page name="search_eng" string="Search engine">
-                            <group name="filter_ids" colspan="4">
+                            <group name="search_filters" colspan="4">
                                 <field name="filter_ids" nolabel="1"/>
                             </group>
                         </page>
@@ -72,7 +72,7 @@
                         </page>
                         <page name="localization" string="Localization">
                             <group name="languages" string="Languages">
-                                <span>Languages available in the website.</span>
+                                <span>Available languages in the website.</span>
                                 <newline />
                                 <field name="lang_ids" nolabel="1" />
                             </group>
