@@ -63,7 +63,12 @@ class ProductCase(ProductCommonCase):
     def test_product_price(self):
         self.assertEqual(
             self.shopinvader_variant.price,
-            {'default': {'tax_included': True, 'value': 750.0}}
+            {'default': {
+                'discount': 0.0,
+                'original_value': 750.0,
+                'tax_included': True,
+                'value': 750.0,
+                }}
             )
 
     def test_product_get_price(self):
@@ -74,7 +79,12 @@ class ProductCase(ProductCommonCase):
             base_price_list, fiscal_position_fr)
         self.assertDictEqual(
             price,
-            {'tax_included': True, 'value': 750.0}
+            {
+                'discount': 0.0,
+                'original_value': 750.0,
+                'tax_included': True,
+                'value': 750.0,
+            }
         )
         # promotion price list define a discount of 20% on all product
         promotion_price_list = self.env.ref("shopinvader.pricelist_1")
@@ -82,7 +92,12 @@ class ProductCase(ProductCommonCase):
             promotion_price_list, fiscal_position_fr)
         self.assertDictEqual(
             price,
-            {'tax_included': True, 'value': 600.0}
+            {
+                'discount': 0.0,
+                'original_value': 600.0,
+                'tax_included': True,
+                'value': 600.0,
+            }
         )
         # use a fiscal position defining a mapping from tax included to tax
         # excluded
@@ -92,13 +107,23 @@ class ProductCase(ProductCommonCase):
             base_price_list, tax_exclude_fiscal_position)
         self.assertDictEqual(
             price,
-            {'tax_included': False, 'value': 652.17}
+            {
+                'discount': 0.0,
+                'original_value': 652.17,
+                'tax_included': False,
+                'value': 652.17,
+            }
         )
         price = self.shopinvader_variant._get_price(
             promotion_price_list, tax_exclude_fiscal_position)
         self.assertDictEqual(
             price,
-            {'tax_included': False, 'value': 521.74}
+            {
+                'discount': 0.0,
+                'original_value': 521.74,
+                'tax_included': False,
+                'value': 521.74,
+            }
         )
 
     def test_product_get_price_discount_policy(self):
@@ -397,4 +422,14 @@ class ProductCase(ProductCommonCase):
         result = shopinvader_product_12.url_key.find('product_12_mc')
         self.assertTrue(
             result,
+        )
+
+    def test_product_shopinvader_name(self):
+        self.backend.bind_all_product()
+        product = self.shopinvader_variant.shopinvader_product_id
+        product.shopinvader_name = 'Test shopinvader name'
+        self.assertEqual(product.shopinvader_display_name, product.name)
+        self.backend.use_shopinvader_product_name = True
+        self.assertEqual(
+            product.shopinvader_display_name, product.shopinvader_name
         )

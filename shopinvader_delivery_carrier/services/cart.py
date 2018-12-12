@@ -89,8 +89,7 @@ class CartService(Component):
         cart.write({'carrier_id': carrier_id})
         cart.delivery_set()
 
-    def _update_carrier(self):
-        cart = self._get()
+    def _update_carrier(self, cart):
         if not cart:
             return
         elif cart.carrier_id in cart._get_available_carrier():
@@ -98,23 +97,23 @@ class CartService(Component):
         else:
             cart._set_default_carrier()
 
-    def _update(self, params):
+    def _update(self, cart, params):
         update_carrier = False
         if 'shipping' in params:
             update_carrier = True
-        result = super(CartService, self)._update(params)
+        result = super(CartService, self)._update(cart, params)
         if update_carrier:
-            self._update_carrier()
+            self._update_carrier(cart)
         return result
 
     def _add_item(self, cart, params):
         super(CartService, self)._add_item(cart, params)
-        self._update_carrier()
+        self._update_carrier(cart)
 
-    def _update_item(self, params):
-        super(CartService, self)._update_item(params)
-        self._update_carrier()
+    def _update_item(self, cart, params):
+        super(CartService, self)._update_item(cart, params)
+        self._update_carrier(cart)
 
-    def _delete_item(self, params):
-        super(CartService, self)._delete_item(params)
-        self._update_carrier()
+    def _delete_item(self, cart, params):
+        super(CartService, self)._delete_item(cart, params)
+        self._update_carrier(cart)

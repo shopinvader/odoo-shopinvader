@@ -6,6 +6,8 @@
 from .common import ShopinvaderRestCase
 import requests
 
+from odoo.tools import mute_logger
+
 
 class ShopinvaderControllerCase(ShopinvaderRestCase):
 
@@ -43,6 +45,8 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
         expected_ids = set([self.address_1.id, self.address_2.id])
         self.assertEqual(ids, expected_ids)
 
+    @mute_logger('odoo.addons.auth_api_key.models.ir_http',
+                 'odoo.addons.base_rest.http')
     def test_get_addresses_with_wrong_api_key(self):
         result = requests.get(self.url, headers={
             'API_KEY': 'WRONG',

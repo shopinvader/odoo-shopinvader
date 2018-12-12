@@ -35,7 +35,7 @@ class AddressService(Component):
 
     def update(self, _id, **params):
         address = self._get(_id)
-        address.write(self._prepare_params(params, update=True))
+        address.write(self._prepare_params(params))
         res = self.search()
         if address.address_type == 'profile':
             res['store_cache'] = {'customer': self._to_json(address)[0]}
@@ -132,7 +132,7 @@ class AddressService(Component):
     def _to_json(self, address):
         return address.jsonify(self._json_parser())
 
-    def _prepare_params(self, params, update=False):
+    def _prepare_params(self, params):
         for key in ['country', 'state']:
             if key in params:
                 val = params.pop(key)

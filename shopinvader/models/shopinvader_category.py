@@ -108,3 +108,16 @@ class ShopinvaderCategory(models.Model):
             while parent:
                 record.level += 1
                 parent = parent.shopinvader_parent_id
+
+    def _unbind(self):
+        shopinvader_child_cat = self.browse()
+        for shopinvader_cat in self:
+            categ_id = shopinvader_cat.record_id
+            childs_cat = self.env['product.category'].search(
+                [('parent_left', '>=', categ_id.parent_left),
+                 ('parent_right', '<=', categ_id.parent_right)]
+            )
+            shopinvader_child_cat = self.search([('record_id', 'in',
+                                                  childs_cat.ids)])
+        categories = self | shopinvader_child_cat
+        categories.write({'active': False})

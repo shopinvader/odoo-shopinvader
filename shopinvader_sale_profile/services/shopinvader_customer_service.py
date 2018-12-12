@@ -9,23 +9,17 @@ from odoo.addons.component.core import Component
 class ShopInvaderCustomerService(Component):
     _inherit = 'shopinvader.customer.service'
 
-    def _create_shopinvader_binding(self, external_id):
+    def _prepare_create_response(self, binding):
         """
-        Inherit the creation of shopinvader binding to add the sale profile
+        Inherit the creation of create responseto add the sale profile
         code of the shopinvader partner
-        :param external_id: int
+        :param binding: instance of shopinvader.binding
         :return: dict
         """
         response = super(ShopInvaderCustomerService, self)\
-            ._create_shopinvader_binding(external_id=external_id)
+            ._prepare_create_response(binding=binding)
         data = response.get('data', {})
-        # Get the shopinvader partner created into the super
-        shop_partner = self.env['shopinvader.partner'].search([
-            ('backend_id', '=', self.shopinvader_backend.id),
-            ('external_id', '=', external_id),
-            ('record_id', '=', self.partner.id),
-        ], order="create_date desc", limit=1)
         data.update({
-            'sale_profile': shop_partner.sale_profile_id.code,
+            'sale_profile': binding.sale_profile_id.code,
         })
         return response

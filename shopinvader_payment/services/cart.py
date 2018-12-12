@@ -13,3 +13,21 @@ class CartService(Component):
         'shopinvader.cart.service',
     ]
     _name = 'shopinvader.cart.service'
+
+    def _load_target(self, params):
+        """
+
+        :param params: dict
+        :return: exposed model recordset
+        """
+        return self._get()
+
+    def _action_after_payment(self, target):
+        """
+        Confirm the cart after the payment
+        :param target: payment recordset
+        :return: dict
+        """
+        values = super(CartService, self)._action_after_payment(target)
+        values.update(self._confirm_cart(target))
+        return values

@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.tools import float_round
+from odoo.tools import float_round, float_compare
 from .tools import sanitize_attr_name
 
 
@@ -61,7 +61,7 @@ class ShopinvaderVariant(models.Model):
         attributes = self.attribute_line_ids.filtered(
             lambda l: len(l.value_ids) > 1).mapped('attribute_id')
         short_name = self.attribute_value_ids._variant_name(attributes)
-        full_name = self.name
+        full_name = self.shopinvader_display_name
         if short_name:
             full_name += " (%s)" % short_name
         return full_name, short_name
@@ -148,7 +148,9 @@ class ShopinvaderVariant(models.Model):
             final_price, product.taxes_id, tax_id, company)
         res = {
             'value': value,
-            'tax_included': tax_included
+            'tax_included': tax_included,
+            'original_value': value,
+            'discount': 0.0,
         }
         if pricelist.discount_policy == 'without_discount':
             sol = self.env['sale.order.line']
@@ -157,11 +159,19 @@ class ShopinvaderVariant(models.Model):
             # fix tax on the real price
             new_list_price = account_tax_obj._fix_tax_included_price_company(
                 new_list_price, product.taxes_id, tax_id, company)
-
+            product_precision = self.env['decimal.precision'].precision_get(
+                'Product Price')
+            if float_compare(
+                    new_list_price, value,
+                    precision_digits=product_precision) == 0:
+                # Both prices are equals. Product is wihout discount, avoid
+                # divide by 0 exception
+                return res
             discount = (new_list_price - value) / new_list_price * 100
             # apply the right precision on discount
-            precision = self.env['decimal.precision'].precision_get('Discount')
-            discount = float_round(discount, precision)
+            dicount_precision = self.env['decimal.precision'].precision_get(
+                'Discount')
+            discount = float_round(discount, dicount_precision)
             res.update({
                 'original_value': new_list_price,
                 'discount': discount,
