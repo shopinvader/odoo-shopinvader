@@ -3,34 +3,13 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
 
-        <!-- change password wizard -->
-        <record id="change_password_wizard_view" model="ir.ui.view">
-            <field name="name">Change Password</field>
-            <field name="model">invader.change.password.wizard</field>
-            <field name="arch" type="xml">
-                <form string="Change Password">
-                    <group>
-                        <field name="username"/>
-                        <field name="password"/>
-                    </group>
-                    <footer>
-                        <button string="Change Password" name="change_password_button" type="object" class="btn-primary"/>
-                        <button string="Cancel" class="btn-default" special="cancel" />
-                    </footer>
-                </form>
-            </field>
-        </record>
-
-
-
-        <act_window id="change_password_wizard_action"
-            name="Change Password"
-            src_model="shopinvader.backend"
-            res_model="invader.change.password.wizard"
-            view_type="form" view_mode="form"
-            key2="client_action_multi" target="new"
-            groups="base.group_erp_manager"/>
-
+    <act_window id="change_password_wizard_action"
+        name="Change Password"
+        src_model="shopinvader.backend"
+        res_model="invader.change.password.wizard"
+        view_type="form" view_mode="form"
+        key2="client_action_multi" target="new"
+        groups="base.group_erp_manager"/>
 
     <record id="shopinvader_backend_view_form" model="ir.ui.view">
         <field name="model">shopinvader.backend</field>
@@ -52,10 +31,8 @@
             <field name="location" position="after">
                 <field name="username" string="Email" colspan="2"/>
                 <field name="handle" colspan="2"/>
-                <label></label>
-                <button string="Change Password" type="action" name="%(change_password_wizard_action)d" help="Change the user password."
-                class="oe_edit_only" />
-
+                <button string="Change Password" type="action" name="%(change_password_wizard_action)d" help="Change the user password."  class="oe_edit_only" />
+                <newline/>
             </field>
             <field name="pricelist_id" position="after">
                 <field
@@ -66,7 +43,4 @@
             </field>
         </field>
     </record>
-
-
-
 </odoo>

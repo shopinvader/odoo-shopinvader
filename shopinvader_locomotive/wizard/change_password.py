@@ -32,5 +32,5 @@ class ChangePasswordWizard(models.TransientModel):
         """Persist new password."""
         self.ensure_one()
         if self.password:
-            self._get_backend() = self.password
+            self._get_backend().password = self.password
         self.password = ""
