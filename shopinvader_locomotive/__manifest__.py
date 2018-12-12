@@ -20,6 +20,7 @@
     ],
     'data': [
         'views/shopinvader_backend_view.xml',
+        'wizard/change_password.xml',
         'data/ir_cron.xml',
     ],
     'demo': [

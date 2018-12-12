@@ -37,3 +37,29 @@ class ShopinvaderBackend(models.Model):
                 exporter = work.component(usage='record.exporter')
                 exporter.run(fields=fields)
         return True
+
+
+class ChangePasswordWizard(models.TransientModel):
+    """ A wizard to manage the change of users' passwords. """
+    _name = "invader.change.password.wizard"
+    _description = "Change Password Wizard"
+
+    password = fields.Char(string='Password')
+
+    def _get_backend(self):
+        model = 'shopinvader.backend'
+        if self._context.get('active_model') == model:
+            backend = self.env[model].browse(self._context.get('active_ids'))
+            return backend
+
+    @api.multi
+    def change_password_button(self):
+        backend = self._get_backend()
+        backend.password = self.password
+
+    def _default_username(self):
+        return self._get_backend().username
+
+    username = fields.Char(
+        string='User Login', readonly=True, default=_default_username)
+
