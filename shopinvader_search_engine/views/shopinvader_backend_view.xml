@@ -6,10 +6,10 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
-            <field name="auth_api_key_id" position="after">
+            <page name="search_eng" position="inside">
                 <field name="se_backend_id"/>
-            </field>
-            <group name="category" position="after">
+            </page>
+            <page name="developper" position="inside">
                 <group name="indexes" string="Search engined indexes" col="10" colspan="4">
                     <button
                             name="force_recompute_all_binding_index"
@@ -24,7 +24,7 @@
                             string="Clear"
                             type="object"/>
                 </group>
-            </group>
+            </page>
         </field>
     </record>
 
