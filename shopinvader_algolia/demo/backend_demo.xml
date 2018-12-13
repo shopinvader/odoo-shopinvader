@@ -11,17 +11,15 @@
     <field name="model_id" ref="shopinvader.model_shopinvader_variant"/>
     <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     <field name="settings">{"attributesForFaceting": [
-            "attributes.color",
-            "categories.idhierarchical",
+            "categories.id",
             "Categories.lvl0hierarchical",
             "Categories.lvl1hierarchical",
-            "Categories.lvl2",
+            "Categories.lvl2hierarchical",
             "main",
             "redirect_url_key",
             "url_key",
             "sku",
             "price.default.value",
-            "variant_attributes.color"
         ]}</field>
 </record>
 
@@ -31,25 +29,11 @@
     <field name="model_id" ref="shopinvader.model_shopinvader_category"/>
     <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_category"/>
     <field name="settings">{"attributesForFaceting": [
-            "attributes.color",
-            "attributes.diameter",
-            "attributes.height",
-            "attributes.length",
-            "attributes.weight",
-            "attributes.width",
-            "brand.name",
-            "categories.id",
-            "categories.url_key",
-            "hierarchicalCategories.lvl0",
-            "hierarchicalCategories.lvl1",
-            "hierarchicalCategories.lvl2",
             "id",
-            "main",
-            "price.default.value",
+            "level",
+            "parent.id",
             "redirect_url_key",
-            "sku",
-            "url_key",
-            "variant_attributes.color"
+            "url_key"
         ]}</field>
 </record>
 
