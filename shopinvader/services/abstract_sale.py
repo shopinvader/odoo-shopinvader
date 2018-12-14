@@ -58,10 +58,12 @@ class AbstractSaleService(AbstractComponent):
                 'untaxed': line.price_subtotal,
                 'tax': line.price_tax,
                 'total': line.price_total,
+                'total_without_discount': line.price_total_no_discount
                 },
             'qty': line.product_uom_qty,
             'discount': {
                 'rate': line.discount,
+                'value': line.discount_total
                 }
             }
 
@@ -107,6 +109,8 @@ class AbstractSaleService(AbstractComponent):
             'tax': sale.amount_tax,
             'untaxed': sale.amount_untaxed,
             'total': sale.amount_total,
+            'discount_total': sale.discount_total,
+            'total_without_discount': sale.price_total_no_discount
             }
 
     def _to_json(self, sales):
