@@ -12,8 +12,8 @@ class ShopinvaderBackend(models.Model):
     shopinvader_variant_resize_ids = fields.Many2many(
         comodel_name='shopinvader.image.resize',
         relation="product_image_resize",
-        string='Product Image Resize')
+        string='Product Image Size')
     shopinvader_category_resize_ids = fields.Many2many(
         comodel_name='shopinvader.image.resize',
         relation="category_image_resize",
-        string='Category Image Resize')
+        string='Category Image Size')

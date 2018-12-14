@@ -9,7 +9,7 @@
         This ShopInvader submodule give the possibility to specify some
         sale profiles (with pricelist per profile) per backend to apply on
         your customers""",
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.0.1',
     'depends': [
         'base',
         'shopinvader_locomotive',

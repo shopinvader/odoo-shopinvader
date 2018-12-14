@@ -3,7 +3,7 @@
     <record id="shopinvader_backend_view_form" model="ir.ui.view">
         <field name="model">shopinvader.backend</field>
         <field name="arch" type="xml">
-            <form string="Shopinvader Backend">
+            <form string="Shopinvader Website">
                 <header>
                     <button name="%(shopinvader_variant_binding_wizard_act_window)d"
                             type="action"
@@ -42,27 +42,46 @@
                         <field name="name" class="oe_inline"/>
                     </h1>
                     <notebook>
-                        <page name="config" string="Configuration">
+                        <page name="config" string="Credentials">
                             <group name="config" colspan="4" col="4">
-                                <field name="location" placeholder="e.g. http://ecommerce.shopinvader.com"/>
-                                <field name="company_id"/>
+                                <field name="location" placeholder="e.g. https://ecommerce.shopinvader.com"/>
                                 <field name="auth_api_key_id"/>
-                                <field name="lang_ids" widget="many2many_tags"/>
-                                <field name="sequence_id"/>
-                                <field name="last_step_id"/>
-                                <field name="anonymous_partner_id"/>
-                                <field name="pricelist_id" required="1"/>
-                                <field name="account_analytic_id"/>
-                                <field name="use_shopinvader_product_name"/>
                             </group>
-                            <group name="allowed_country" colspan="4">
-                                <field name="allowed_country_ids" nolabel="1"/>
-                            </group>
-                            <group name="filter_ids" colspan="4">
+                        </page>
+                        <page name="search_eng" string="Search engine">
+                            <group name="search_filters" colspan="4">
                                 <field name="filter_ids" nolabel="1"/>
                             </group>
                         </page>
-                        <page name="email" string="Email">
+                        <page name="sale" string="Sale">
+                            <group name="cart_conf" string="Cart configuration">
+                                <field name="last_step_id"/>
+                                <field name="anonymous_partner_id"/>
+                                <field name="pricelist_id" required="1"/>
+                            </group>
+                            <group name="sale_conf" string="Sale configuration">
+                                <field name="company_id"/>
+                                <field name="sequence_id"/>
+                                <field name="account_analytic_id"/>
+                            </group>
+                        </page>
+                        <page name="products" string="Products">
+                            <group>
+                                <field name="use_shopinvader_product_name"/>
+                            </group>
+                        </page>
+                        <page name="localization" string="Localization">
+                            <group name="languages" string="Languages">
+                                <span>Available languages in the website.</span>
+                                <newline />
+                                <field name="lang_ids" nolabel="1" />
+                            </group>
+                            <group name="allowed_country" string="Countries">
+                                <span>Allowed countries in delivery addresses</span><newline />
+                                <field name="allowed_country_ids" nolabel="1"/>
+                            </group>
+                        </page>
+                        <page name="email" string="Notifications">
                             <group name="notification" string="Notification">
                                 <field name="notification_ids" nolabel="1">
                                     <tree editable="bottom">
@@ -74,6 +93,7 @@
                                 </field>
                             </group>
                         </page>
+                        <page name="delivery" string="Delivery" />
                         <page name="developper" string="Developper">
                             <group name="developper" colspan="4">
                                 <group name="product" string="Product" col="10" colspan="4">
@@ -87,12 +107,6 @@
                                     <button
                                             name="bind_all_category"
                                             string="Bind all category"
-                                            type="object"/>
-                                </group>
-                                <group name="site" string="Site Configuration" col="10" colspan="4">
-                                    <button
-                                            name="export_store_configuration"
-                                            string="Export Store Config"
                                             type="object"/>
                                 </group>
                             </group>
@@ -115,7 +129,7 @@
     </record>
 
     <record id="action_shopinvader_backend" model="ir.actions.act_window">
-        <field name="name">Shopinvader Backends</field>
+        <field name="name">Shopinvader Website</field>
         <field name="res_model">shopinvader.backend</field>
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
@@ -123,7 +137,7 @@
     </record>
 
     <menuitem id="menu_shopinvader_backend"
-              name="Backends"
+              name="Websites"
               sequence="0"
               parent="menu_shopinvader_root"
               action="action_shopinvader_backend"/>

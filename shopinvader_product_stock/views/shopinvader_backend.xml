@@ -5,11 +5,13 @@
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <field name="pricelist_id" position="after">
-                <field name="product_stock_field_id" widget="selection"/>
-                <field name="synchronize_stock" widget="selection"/>
-                <field name="warehouse_ids" widget="many2many_tags"/>
-            </field>
+            <page name="products" position="inside">
+                <group name="stock" string="Stock">
+                    <field name="product_stock_field_id" widget="selection"/>
+                    <field name="synchronize_stock" widget="selection"/>
+                    <field name="warehouse_ids" widget="many2many_tags"/>
+                </group>
+            </page>
         </field>
     </record>
 </odoo>
