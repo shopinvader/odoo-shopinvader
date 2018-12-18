@@ -9,3 +9,6 @@ product-variant
 storage https://github.com/akretion/storage 10.0
 payment-gateway https://github.com/akretion/payment-gateway 10.0
 base_rest https://github.com/oca/rest-framework 10.0
+
+# TODO remove me when the PR is merged https://github.com/OCA/sale-workflow/pull/729
+sale-workflow https://github.com/acsone/sale-workflow 10.0-add-sale_promotion_rule-lmi
