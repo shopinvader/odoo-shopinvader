@@ -13,7 +13,7 @@ class ShopinvaderPartner(models.Model):
 
     last_pwd_reset_datetime = fields.Datetime(
         'Last password reset date',
-        help='date of the last password reset of the customer')
+        help='date of the last password reset of the customer from odoo')
     last_reset_send_datetime = fields.Datetime(
         'Password reset send at',
         help='date of last password reset sent')
