@@ -143,7 +143,10 @@ class AbstractPaymentService(AbstractComponent):
         return self._get_target_provider(target)
 
     def _get_return_url(self, provider_name):
-        return "%s/%s/%s" % (
+        # TODO on locomotive side we expose the base path "invader"
+        # On Odoo side we still use "shopinvader"
+        # for next version we should use "invader" on both side
+        return "%s/invader/%s/check_payment/%s" % (
             self.shopinvader_backend.location,
             self._usage, provider_name)
 

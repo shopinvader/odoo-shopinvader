@@ -37,7 +37,8 @@ class ShopinvaderBackend(models.Model):
     anonymous_partner_id = fields.Many2one(
         'res.partner',
         'Anonymous Partner',
-        help='Provide partner settings for unlogged users (i.e. fiscal position)',
+        help=('Provide partner settings for unlogged users '
+              '(i.e. fiscal position)'),
         required=True,
         default=lambda self: self.env.ref('shopinvader.anonymous'))
     sequence_id = fields.Many2one(

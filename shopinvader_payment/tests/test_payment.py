@@ -38,3 +38,9 @@ class ShopinvaderPaymentCase(CommonConnectedCartCase):
             self.service.dispatch('add_payment', params={
                 'payment_mode': {'id': self.account_payment_mode.id}})
         self.assertEqual(self.cart.typology, 'cart')
+
+    def test_return_url(self):
+        url = self.service._get_return_url('my-provider')
+        self.assertEqual(
+            url,
+            u'http://locomotive:3000/invader/cart/check_payment/my-provider')
