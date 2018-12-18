@@ -3,33 +3,23 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader.tests.common import CommonMixin
 from odoo.addons.payment_gateway_paypal.tests.test_payment import (
     PaypalCommonCase,
     PaypalScenario)
 from mock import Mock
-from os.path import dirname
 
 
-REDIRECT_URL = {
-    'redirect_cancel_url': 'https://IamGoingToKickYourAssIfYouDoNotPaid.com',
-    'redirect_success_url': 'https://ThanksYou.com',
-    }
-
-
-class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase, PaypalScenario):
-
-    def __init__(self, *args, **kwargs):
-        super(ShopinvaderPaypalCase, self).__init__(*args, **kwargs)
-        self._decorate_test(dirname(__file__))
+class ShopinvaderPaypalCase(PaypalCommonCase, CommonMixin, PaypalScenario):
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderPaypalCase, self).setUp(*args, **kwargs)
+        CommonMixin.setUp(self)
         self.shopinvader_session = {'cart_id': self.sale.id}
         self.partner = self.sale.partner_id
         self.env['shopinvader.partner'].create({
             'record_id': self.partner.id,
-            'external_id': 'ZG9kbw==',  # TODO correct?
+            'external_id': 'ZG9kbw==',
             'backend_id': self.backend.id,
             })
         self.sale.write({
@@ -42,28 +32,37 @@ class ShopinvaderPaypalCase(PaypalCommonCase, CommonCase, PaypalScenario):
             self.service = work.component(usage='cart')
         self.cr.commit = Mock()  # Do not commit
 
-    def _create_transaction(self, card):
-        pass  # TODO
+    def _expected_return_url(self):
+        # based on the backend information odoo will generate the
+        # return url
+        return self.backend.location + '/invader/cart/check_payment/paypal'
 
-    def _check_reponse(self, response, redirect=False):
-        pass  # TODO
+    def _create_transaction(self, **REDIRECT_URL):
+        params = REDIRECT_URL.copy()
+        params['action'] = 'create'
+        response = self.service.dispatch('add_payment', params={
+            'payment_mode': {'id': self.account_payment_mode.id},
+            'paypal': params})
+        self.assertEqual(response, {'redirect_to': 'https://redirect'})
+        transaction = self.sale.transaction_ids
+        self.assertEqual(len(transaction), 1)
+        return transaction
 
-    def _simulate_return(self, transaction):
-        return self.service.dispatch('check_payment', params={
-            'source': transaction.external_id,
+    def _simulate_return(self, transaction_id):
+        response = self.service.dispatch('check_payment', params={
+            'paymentId': transaction_id,
             'provider_name': 'paypal',
             })
+        return response
 
-    def _test_3d(self, card, success=True, mode='return'):
-        pass  # TODO
+    def _check_successfull_return(self, transaction, result):
+        super(ShopinvaderPaypalCase, self)._check_successfull_return(
+            transaction, result)
+        self.assertEqual(result['redirect_to'], 'https://ThanksYou.com')
 
-    def _test_card(self, card, **kwargs):
-        response, transaction, source = self._create_transaction(card)
-        self._check_captured(transaction, **kwargs)
-        self._check_reponse(response)
-
-    def test_create_transaction_3d_not_supported(self):
-        response, transaction, source =\
-            self._create_transaction('378282246310005')
-        self._check_captured(transaction)
-        self._check_reponse(response)
+    def _check_failing_return(self, transaction, result):
+        super(ShopinvaderPaypalCase, self)._check_failing_return(
+            transaction, result)
+        self.assertEqual(
+            result['redirect_to'],
+            'https://IamGoingToKickYourAssIfYouDoNotPaid.com')
