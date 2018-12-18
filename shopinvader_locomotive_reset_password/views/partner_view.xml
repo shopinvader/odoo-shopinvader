@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="res_partner_view_form" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="shopinvader.res_partner_view_form"/>
+    <field name="arch" type="xml">
+        <field name="external_id" position="after">
+            <button
+                string="reset password"
+                name="%(act_open_shopinvader_reset_password_view)d"
+                type="action"/>
+        </field>
+    </field>
+</record>
+
+<record id="shopinvader_partner_view_tree" model="ir.ui.view">
+    <field name="model">shopinvader.partner</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
+    <field name="arch" type="xml">
+        <field name="create_date" position="after">
+            <field name="last_pwd_reset_datetime"/>
+            <field name="last_reset_send_datetime"/>
+            <field name="nbr_reset"/>
+        </field>
+    </field>
+</record>
+
+<record id="shopinvader_partner_view_search" model="ir.ui.view">
+    <field name="model">shopinvader.partner</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search"/>
+    <field name="arch" type="xml">
+        <field name="external_id" position="after">
+            <filter
+                name="not_initialized"
+                string="Not Initialized"
+                domain="[('last_pwd_reset_datetime', '=', False)]"/>
+            <separator/>
+            <filter
+                name="reset_0"
+                string="Never Reset"
+                domain="[('nbr_reset', '=', 0)]"/>
+            <filter
+                name="reset_1"
+                string="Reset Once"
+                domain="[('nbr_reset', '=', 1)]"/>
+            <filter
+                name="reset_2"
+                string="Reset Twice"
+                domain="[('nbr_reset', '=', 2)]"/>
+            <filter
+                name="reset_more_then_2"
+                string="Reset More then Twice"
+                domain="[('nbr_reset', '>', 2)]"/>
+        </field>
+    </field>
+</record>
+
+</odoo>
