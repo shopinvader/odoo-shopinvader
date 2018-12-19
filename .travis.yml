@@ -19,7 +19,11 @@ env:
   - TESTS="0" LINT_CHECK="1"
   - ODOO_REPO="odoo/odoo"
   - ALGOLIA_TEST="1" ODOO_REPO="OCA/OCB"
-  - UNIT_TEST="1" ODOO_REPO="Tecnativa/odoo" ODOO_BRANCH="10.0-test-in-update-same-as-in-install"
+  # for speed reason all dependency are preinstalled in OCA script,
+  # stock module add specific required field that can make failed
+  # the test of module that do not depend of stock module
+  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" EXCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier"
+  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier"
 
 virtualenv:
   system_site_packages: true
