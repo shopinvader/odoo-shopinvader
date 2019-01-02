@@ -64,10 +64,18 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
             'code': 'ELDONGHUT',
             'name': u'Best Promo',
             'discount_amount': 20.0}, promotion_rule_coupon)
-
-        # if we remove the coupon, the coupon rule is removed but the default
-        # rules are applied
+        # if we update the cart without specifying a coupon into the message
+        # the coupon is preserved
         res = self.service.dispatch('update', params={})
+        for line in self.cart.order_line:
+            self.check_discount_rule_set(
+                line, self.promotion_rule_coupon
+            )
+
+        # if we update the cart with an empty coupon,
+        # the coupon rule is removed but the default
+        # rules are applied
+        res = self.service.dispatch('update', params={'coupon_code': None})
         for line in self.cart.order_line:
             self.check_discount_rule_set(
                 line, self.promotion_rule_auto

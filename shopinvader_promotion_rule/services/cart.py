@@ -16,20 +16,23 @@ class CartService(Component):
     _inherit = 'shopinvader.cart.service'
 
     def _update(self, cart, params):
+        is_coupon_code_specified = "coupon_code" in params
         coupon_code = params.pop('coupon_code', None)
-        if coupon_code is not None:
-            if 'payment_params' in params:
-                raise UserError(
-                    _("Appling discount and paying can "
-                      "not be done in the same call"))
+        if is_coupon_code_specified:
+            if coupon_code is not None:
+                if 'payment_params' in params:
+                    raise UserError(
+                        _("Appling discount and paying can "
+                          "not be done in the same call"))
         res = super(CartService, self)._update(cart, params)
-        if coupon_code:
-            cart.add_coupon(coupon_code)
-        else:
-            if cart.coupon_code:
-                # the promotion has been removed:
-                # * clear the promotion
-                cart.clear_promotions()
+        if is_coupon_code_specified:
+            if coupon_code:
+                cart.add_coupon(coupon_code)
+            else:
+                if cart.coupon_code:
+                    # the promotion has been removed:
+                    # * clear the promotion
+                    cart.clear_promotions()
         # apply default promotion
         cart.apply_promotions()
         return res
@@ -52,7 +55,7 @@ class CartService(Component):
     # Validator
     def _validator_update(self):
         res = super(CartService, self)._validator_update()
-        res['coupon_code'] = {'type': 'string'}
+        res['coupon_code'] = {'type': 'string', 'nullable': True}
         return res
 
     # converter
