@@ -13,9 +13,6 @@ class TestShopinvaderBackendTest(ProductCommonCase, ProductImageCommonCase):
 
     def setUp(self):
         super(TestShopinvaderBackendTest, self).setUp()
-        self.backend.write({
-            'image_proxy_url': 'https://custom.website.dev',
-        })
         self.env.ref('base.user_demo').write({
             'groups_id': [
                 (4, self.env.ref('shopinvader.group_shopinvader_manager').id)]
@@ -33,60 +30,47 @@ class TestShopinvaderBackendTest(ProductCommonCase, ProductImageCommonCase):
             'attribute_value_ids': [(6, 0, product_attr.ids)]
         })
 
+    def _test_url(self, input, output, proxy):
+        if proxy:
+            self.backend.image_proxy_url = proxy
+        self.assertEqual(output, self.backend._replace_by_proxy(input))
+
     def test_replace_url(self):
-        """
-        Test if the url is correctly replaced
-        :return:
-        """
-        # Test normal url
-        image_proxy_url = self.backend.image_proxy_url
-        # Normal url with final /
-        test_url = "https://aaaaaaaa.bbbbbbbb.dev/img.png"
-        expected_url = "%s/img.png" % image_proxy_url
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(expected_url, result_url)
-        # Normal url without final /
-        test_url = "https://aaaaaaaa.bbbbbbbb.dev/titi/toto/dddd.png"
-        expected_url = "%s/dddd.png" % image_proxy_url
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(expected_url, result_url)
-        # Test url with arguments
-        test_url = "https://aaaaaaaa.xxxx.dev/uu/tt.png?a=5698zzzz"
-        expected_url = "%s/tt.png?a=5698zzzz" % image_proxy_url
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(expected_url, result_url)
-        # Test url without subdomain
-        test_url = "https://xxxx.dev/get?a=5698zzzzea"
-        expected_url = "%s/get?a=5698zzzzea" % image_proxy_url
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(expected_url, result_url)
-        # image_proxy_url with another directory/url path
-        image_proxy_url = 'http://custom.website.dev/force_directory/titi'
-        self.backend.write({
-            'image_proxy_url': image_proxy_url,
-        })
-        test_url = "ftp://xxxx.dev/toto.png?a=5698zzzzqqq"
-        expected_url = "%s/toto.png?a=5698zzzzqqq" % image_proxy_url
-        # Test url with another protocol
-        image_proxy_url = 'ftp://custom.website.dev'
-        self.backend.write({
-            'image_proxy_url': image_proxy_url,
-        })
-        test_url = "ftp://xxxx.dev/get?a=5698zzzzqqq"
-        expected_url = "%s/get?a=5698zzzzqqq" % image_proxy_url
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(expected_url, result_url)
-        # Now remove the image_proxy_url on the backend
-        # So the given url shouldn't be updated
-        self.backend.write({
-            'image_proxy_url': False,
-        })
-        test_url = "https://aaaaaaaa.bbbbbbbb.dev/"
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(test_url, result_url)
-        test_url = "https://xxxx.dev/get?a=5698zzzzea"
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(test_url, result_url)
-        test_url = "https://aaaa.xxxx.dev/get?a=5698zzzzea"
-        result_url = self.backend._replace_by_proxy(test_url)
-        self.assertEqual(test_url, result_url)
+        self._test_url(
+            input="https://example.com/img.png",
+            output="https://test.com/img.png",
+            proxy="https://test.com"
+        )
+
+    def test_replace_url_with_params(self):
+        self._test_url(
+            input="https://example.com/img.png?foo=bar",
+            output="https://test.com/img.png?foo=bar",
+            proxy="https://test.com"
+            )
+
+    def test_replace_url_with_subdomain(self):
+        self._test_url(
+            input="https://sub.example.com/abc/img.png",
+            output="https://test.com/img.png",
+            proxy="https://test.com"
+        )
+        self._test_url(
+            input="https://example.com/img.png",
+            output="https://sub.test.com/abc/img.png",
+            proxy="https://sub.test.com/abc"
+        )
+
+    def test_replace_url_scheme(self):
+        self._test_url(
+            input="http://example.com/img.png",
+            output="https://test.com/img.png",
+            proxy="https://test.com"
+        )
+
+    def test_do_not_replace_url(self):
+        self._test_url(
+            input="https://example.com/img.png",
+            output="https://example.com/img.png",
+            proxy=None
+            )

@@ -22,9 +22,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
         url_key = "src"
         url = values.get(url_key)
         if url and 'backend_id' in self._fields:
-            new_url = self.backend_id._replace_by_proxy(url)
-            if url != new_url:
-                values.update({
-                    url_key: new_url,
-                })
+            values.update({
+                url_key: self.backend_id._replace_by_proxy(url),
+            })
         return values
