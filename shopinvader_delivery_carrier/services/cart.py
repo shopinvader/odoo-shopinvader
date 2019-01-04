@@ -95,6 +95,22 @@ class CartService(Component):
     def _validator_get_delivery_methods(self):
         return {}
 
+    # internal methods
+    def _add_item(self, cart, params):
+        res = super(CartService, self)._add_item(cart, params)
+        self._unset_carrier(cart)
+        return res
+
+    def _update_item(self, cart, params, item=False):
+        res = super(CartService, self)._update_item(cart, params, item)
+        self._unset_carrier(cart)
+        return res
+
+    def _delete_item(self, cart, params):
+        res = super(CartService, self)._delete_item(cart, params)
+        self._unset_carrier(cart)
+        return res
+
     def _set_carrier(self, cart, carrier_id):
         if carrier_id not in [
                 x['id'] for x in self._get_available_carrier(cart)]:
@@ -102,3 +118,6 @@ class CartService(Component):
                 _('This delivery method is not available for you order'))
         cart.write({'carrier_id': carrier_id})
         cart.delivery_set()
+
+    def _unset_carrier(self, cart):
+        cart._delivery_unset()
