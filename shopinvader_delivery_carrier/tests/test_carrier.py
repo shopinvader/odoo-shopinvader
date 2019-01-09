@@ -12,6 +12,33 @@ class CarrierCase(CommonConnectedCartCase):
         super(CarrierCase, self).setUp()
         self.free_carrier = self.env.ref('delivery.free_delivery_carrier')
         self.poste_carrier = self.env.ref('delivery.delivery_carrier')
+        self.product_1 = self.env.ref('product.product_product_4b')
+
+    def extract_cart(self, response):
+        self.shopinvader_session['cart_id'] =\
+            response['set_session']['cart_id']
+        self.assertEqual(response['store_cache'], {'cart': response['data']})
+        return response['data']
+
+    def add_item(self, product_id, qty):
+        return self.extract_cart(
+            self.service.dispatch('add_item', params={
+                'product_id': product_id,
+                'item_qty': qty,
+                }))
+
+    def update_item(self, item_id, qty):
+        return self.extract_cart(
+            self.service.dispatch('update_item', params={
+                'item_id': item_id,
+                'item_qty': qty,
+                }))
+
+    def delete_item(self, item_id):
+        return self.extract_cart(
+            self.service.dispatch('delete_item', params={
+                'item_id': item_id,
+                }))
 
     def _set_carrier(self, carrier):
         response = self.service.dispatch('apply_delivery_method', params={
@@ -19,6 +46,11 @@ class CarrierCase(CommonConnectedCartCase):
             })
         self.assertEqual(self.cart.carrier_id.id, carrier.id)
         return response['data']
+
+    def _apply_carrier_and_assert_set(self):
+        cart = self._set_carrier(self.poste_carrier)
+        self.assertEqual(cart['shipping']['amount']['total'], 20)
+        return cart
 
     def test_available_carriers(self):
         response = self.service.dispatch('get_delivery_methods')
@@ -44,3 +76,20 @@ class CarrierCase(CommonConnectedCartCase):
         self.assertEqual(cart['amount']['total'], 8575.0)
         self.assertEqual(cart['amount']['untaxed'], 8572.39)
         self.assertEqual(cart['amount']['tax'], 2.61)
+
+    def test_reset_carrier_on_add_item(self):
+        self._apply_carrier_and_assert_set()
+        cart = self.add_item(self.product_1.id, 2)
+        self.assertEqual(cart['shipping']['amount']['total'], 0)
+
+    def test_reset_carrier_on_update_item(self):
+        cart = self._apply_carrier_and_assert_set()
+        items = cart['lines']['items']
+        cart = self.update_item(items[0]['id'], 1)
+        self.assertEqual(cart['shipping']['amount']['total'], 0)
+
+    def test_reset_carrier_on_delte_item(self):
+        cart = self._apply_carrier_and_assert_set()
+        items = cart['lines']['items']
+        cart = self.delete_item(items[0]['id'])
+        self.assertEqual(cart['shipping']['amount']['total'], 0)

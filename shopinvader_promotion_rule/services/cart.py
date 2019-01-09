@@ -42,8 +42,8 @@ class CartService(Component):
         cart.apply_promotions()
         return res
 
-    def _update_item(self, cart, params):
-        res = super(CartService, self)._update_item(cart, params)
+    def _update_item(self, cart, params, item=False):
+        res = super(CartService, self)._update_item(cart, params, item)
         cart.apply_promotions()
         return res
 
