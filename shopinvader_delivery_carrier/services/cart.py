@@ -120,4 +120,5 @@ class CartService(Component):
         cart.delivery_set()
 
     def _unset_carrier(self, cart):
+        cart.write({'carrier_id': False})
         cart._delivery_unset()
