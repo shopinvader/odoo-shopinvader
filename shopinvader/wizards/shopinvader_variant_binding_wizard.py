@@ -69,16 +69,17 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
             for product in wizard.product_ids:
                 binded_products = binded_templates[product.product_tmpl_id]
                 for shopinvader_product in binded_products.values():
-                    data = {
-                        'record_id': product.id,
-                        'backend_id': wizard.backend_id.id,
-                        'shopinvader_product_id': shopinvader_product.id
-                    }
                     binded_variants = shopinvader_product. \
                         shopinvader_variant_ids
                     bind_record = binded_variants.filtered(
-                        lambda p: p.record_id.id == product.id)
+                        lambda p: p.record_id == product)
                     if not bind_record:
+                        data = {
+                            'record_id': product.id,
+                            'backend_id': wizard.backend_id.id,
+                            'shopinvader_product_id': shopinvader_product.id
+                        }
                         binding.create(data)
                     elif not bind_record.active:
                         bind_record.write({'active': True})
+            wizard.backend_id.auto_bind_categories()

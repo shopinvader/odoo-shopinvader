@@ -435,3 +435,141 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             product.shopinvader_display_name, product.shopinvader_name
         )
+
+    def test_product_category_auto_bind(self):
+        """
+        Test if after a product binding, the category is automatically binded
+        too (depending on the configuration).
+        :return:
+        """
+        product = self.env.ref('product.product_product_4').copy()
+        # To avoid others products to be binded
+        self.env['product.template'].search([
+            ('sale_ok', '=', True),
+            ('id', 'not in', product.ids),
+        ]).write({'sale_ok': False})
+        product.write({
+            'sale_ok': True,
+        })
+        categ_obj = self.env['product.category']
+        shopinv_categ_obj = self.env['shopinvader.category']
+        existing_binded_categs = shopinv_categ_obj.search([])
+        categ_grand_parent = categ_obj.create({
+            'name': 'Cool grand-parent'
+        })
+        categ_parent = categ_obj.create({
+            'name': 'Strict parent',
+            'parent_id': categ_grand_parent.id,
+        })
+        categ_child = categ_obj.create({
+            'name': 'normal child',
+            'parent_id': categ_parent.id,
+        })
+        categs = categ_grand_parent | categ_parent | categ_child
+        product.write({
+            'categ_id': categ_child.id,
+        })
+        # New categories shouldn't be binded yet
+        self.assertFalse(shopinv_categ_obj.search([
+            ('record_id', 'in', categs.ids),
+        ]))
+        self.backend.write({
+            'category_binding_level': 0,
+        })
+        self.backend.bind_all_product()
+        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        # New categories shouldn't be binded due to binded level set to 0
+        self.assertFalse(shopinv_categ_obj.search([
+            ('record_id', 'in', categs.ids),
+        ]))
+        self.backend.write({
+            'category_binding_level': 2,
+        })
+        self.backend.bind_all_product()
+        categ_level2 = categ_child
+        categ_level2 |= categ_child.mapped("parent_id")
+        shopinv_products = self.env['shopinvader.variant'].search([
+            ('backend_id', '=', self.backend.id),
+        ])
+        categs_binded = shopinv_products.mapped("categ_id")
+        categs_binded |= categs_binded.mapped("parent_id")
+        existing_binded_categs |= shopinv_categ_obj.search([
+            ('record_id', 'in', categs_binded.ids),
+        ])
+        # Ensure no others categories are binded
+        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        # categ_child and categ_parent should be binded but not the categ
+        # grand_parent due to binding_level defined on 2
+        binded_categs = shopinv_categ_obj.search([
+            ('record_id', 'in', categs.ids),
+        ]).mapped("record_id")
+        self.assertIn(categ_parent, binded_categs)
+        self.assertIn(categ_child, binded_categs)
+        self.assertNotIn(categ_grand_parent, binded_categs)
+
+    def test_product_category_auto_bind_wizard(self):
+        """
+        Test if after a product binding, the category is automatically binded
+        too (depending on the configuration) using the wizard.
+        :return:
+        """
+        wizard_obj = self.env['shopinvader.variant.binding.wizard']
+        product = self.env.ref('product.product_product_4').copy()
+        wizard_values = {
+            'backend_id': self.backend.id,
+            'product_ids': [(6, False, product.ids)],
+        }
+        categ_obj = self.env['product.category']
+        shopinv_categ_obj = self.env['shopinvader.category']
+        existing_binded_categs = shopinv_categ_obj.search([])
+        categ_grand_parent = categ_obj.create({
+            'name': 'Cool grand-parent'
+        })
+        categ_parent = categ_obj.create({
+            'name': 'Strict parent',
+            'parent_id': categ_grand_parent.id,
+        })
+        categ_child = categ_obj.create({
+            'name': 'normal child',
+            'parent_id': categ_parent.id,
+        })
+        categs = categ_grand_parent | categ_parent | categ_child
+        product.write({
+            'categ_id': categ_child.id,
+        })
+        wizard = wizard_obj.create(wizard_values)
+        # New categories shouldn't be binded yet
+        self.assertFalse(shopinv_categ_obj.search([
+            ('record_id', 'in', categs.ids),
+        ]))
+        self.backend.write({
+            'category_binding_level': 0,
+        })
+        wizard.bind_products()
+        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        # New categories shouldn't be binded due to binded level set to 0
+        self.assertFalse(shopinv_categ_obj.search([
+            ('record_id', 'in', categs.ids),
+        ]))
+        self.backend.write({
+            'category_binding_level': 2,
+        })
+        wizard.bind_products()
+        shopinv_products = self.env['shopinvader.variant'].search([
+            ('backend_id', '=', self.backend.id),
+        ])
+        categs_binded = shopinv_products.mapped("categ_id")
+        categs_binded |= categs_binded.mapped("parent_id")
+        existing_binded_categs |= shopinv_categ_obj.search([
+            ('record_id', 'in', categs_binded.ids),
+        ])
+        # Ensure no others categories are binded
+        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        # categ_child and categ_parent should be binded but not the categ
+        # grand_parent due to binding_level defined on 2
+        binded_categs = shopinv_categ_obj.search([
+            ('record_id', 'in', categs.ids),
+        ]).mapped("record_id")
+        self.assertIn(categ_parent, binded_categs)
+        self.assertIn(categ_child, binded_categs)
+        self.assertNotIn(categ_grand_parent, binded_categs)

@@ -104,6 +104,7 @@
                                             type="object"/>
                                 </group>
                                 <group name="category" string="Category" col="10" colspan="4">
+                                    <field name="category_binding_level"/>
                                     <button
                                             name="bind_all_category"
                                             string="Bind all category"
