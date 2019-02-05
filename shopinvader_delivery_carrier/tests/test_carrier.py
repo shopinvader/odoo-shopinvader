@@ -63,9 +63,10 @@ class CarrierCase(CommonConnectedCartCase):
     def test_setting_poste_carrier(self):
         cart = self._set_carrier(self.poste_carrier)
         # Check shipping amount
-        self.assertEqual(cart['shipping']['amount']['total'], 20)
-        self.assertEqual(cart['shipping']['amount']['untaxed'], 17.39)
-        self.assertEqual(cart['shipping']['amount']['tax'], 2.61)
+        cart_ship = cart.get('shipping')
+        self.assertEqual(cart_ship['amount']['total'], 20)
+        self.assertEqual(cart_ship['amount']['untaxed'], 17.39)
+        self.assertEqual(cart_ship['amount']['tax'], 2.61)
 
         # Check items amount
         self.assertEqual(cart['lines']['amount']['total'], 8555.0)
@@ -76,6 +77,21 @@ class CarrierCase(CommonConnectedCartCase):
         self.assertEqual(cart['amount']['total'], 8575.0)
         self.assertEqual(cart['amount']['untaxed'], 8572.39)
         self.assertEqual(cart['amount']['tax'], 2.61)
+
+        # Check totals without shipping prices
+        cart_amount = cart.get('amount')
+        total_without_shipping = cart_amount['total'] - \
+            cart_ship['amount']['total']
+        untaxed_without_shipping = cart_amount['untaxed'] - \
+            cart_ship['amount']['untaxed']
+        tax_without_shipping = cart_amount['tax'] - \
+            cart_ship['amount']['tax']
+        self.assertEqual(
+            cart_amount['total_without_shipping'], total_without_shipping)
+        self.assertEqual(
+            cart_amount['untaxed_without_shipping'], untaxed_without_shipping)
+        self.assertEqual(
+            cart_amount['tax_without_shipping'], tax_without_shipping)
 
     def test_reset_carrier_on_add_item(self):
         self._apply_carrier_and_assert_set()

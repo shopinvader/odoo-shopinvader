@@ -7,6 +7,7 @@
 from odoo.addons.component.core import AbstractComponent, Component
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
+from odoo.tools import float_round
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -33,6 +34,26 @@ class AbstractSaleService(AbstractComponent):
             'selected_carrier': selected_carrier,
             })
         return res
+
+    def _convert_amount(self, sale):
+        """
+        Inherit to add amounts without shipping prices included
+        :param sale: sale.order recordset
+        :return: dict
+        """
+        result = super(AbstractSaleService, self)._convert_amount(sale)
+        # Remove the shipping amounts for originals amounts
+        shipping_amounts = self._convert_shipping(sale).get('amount', {})
+        tax = result.get('tax', 0) - shipping_amounts.get('tax', 0)
+        untaxed = result.get('untaxed', 0) - shipping_amounts.get('untaxed', 0)
+        total = result.get('total', 0) - shipping_amounts.get('total', 0)
+        precision = sale.currency_id.decimal_places
+        result.update({
+            'tax_without_shipping': float_round(tax, precision),
+            'untaxed_without_shipping': float_round(untaxed, precision),
+            'total_without_shipping': float_round(total, precision),
+        })
+        return result
 
     def _prepare_carrier(self, carrier):
         return {
