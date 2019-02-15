@@ -1,6 +1,6 @@
 account-reconcile
 connector
-server-tools
+server-tools https://github.com/acsone/server-tools 10.0-improve_onchange_helper-lmi
 e-commerce
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10.0
 connector-search-engine https://github.com/akretion/connector-search-engine 10.0
