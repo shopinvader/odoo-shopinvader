@@ -73,10 +73,18 @@ class CarrierCase(CommonCarrierCase):
         self.assertEqual(cart["shipping"]["amount"]["total"], 0)
         self.assertFalse(cart["shipping"]["selected_carrier"])
 
-    def test_reset_carrier_on_delte_item(self):
+    def test_reset_carrier_on_delete_item(self):
         cart = self._apply_carrier_and_assert_set()
         items = cart["lines"]["items"]
         cart = self.delete_item(items[0]["id"])
+        self.assertEqual(cart["shipping"]["amount"]["total"], 0)
+        self.assertFalse(cart["shipping"]["selected_carrier"])
+
+    def test_reset_carrier_on_changing_delivery_address(self):
+        self._apply_carrier_and_assert_set()
+        cart = self.service.dispatch(
+            "update", params={"shipping": {"address": {"id": self.address.id}}}
+        )["data"]
         self.assertEqual(cart["shipping"]["amount"]["total"], 0)
         self.assertFalse(cart["shipping"]["selected_carrier"])
 
