@@ -6,9 +6,9 @@
 from odoo import models
 
 
-class ShopinvaderVariant(models.Model):
-    _inherit = 'shopinvader.variant'
+class ShopinvaderProduct(models.Model):
+    _inherit = 'shopinvader.product'
 
     def _get_categories(self):
         return self.categ_ids +\
-            super(ShopinvaderVariant, self)._get_categories()
+            super(ShopinvaderProduct, self)._get_categories()
