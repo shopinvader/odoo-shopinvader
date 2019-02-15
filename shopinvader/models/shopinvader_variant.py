@@ -36,10 +36,6 @@ class ShopinvaderVariant(models.Model):
         store=True,
         index=True,
     )
-    shopinvader_categ_ids = fields.Many2many(
-        comodel_name='shopinvader.category',
-        compute='_compute_shopinvader_category',
-        string='Shopinvader Categories')
     variant_count = fields.Integer(
         related='product_variant_count')
     variant_attributes = fields.Serialized(
@@ -97,24 +93,6 @@ class ShopinvaderVariant(models.Model):
             for url in record.redirect_url_key_ids:
                 res.append(url.url_key)
             record.redirect_url_key = res
-
-    def _get_categories(self):
-        self.ensure_one()
-        return self.categ_id
-
-    def _compute_shopinvader_category(self):
-        for record in self:
-            ids = []
-            categs = record._get_categories()
-            for categ in categs:
-                parents = self.env['shopinvader.category'].search([
-                    ('parent_left', '<=', categ.parent_left),
-                    ('parent_right', '>=', categ.parent_right),
-                    ('backend_id', '=', record.backend_id.id),
-                    ('lang_id', '=', record.lang_id.id),
-                    ])
-                ids += parents.ids
-            record.shopinvader_categ_ids = ids
 
     def _compute_variant_attributes(self):
         for record in self:
@@ -186,71 +164,3 @@ class ShopinvaderVariant(models.Model):
                 record.main = True
             else:
                 record.main = False
-
-    @api.multi
-    def toggle_published(self):
-        """
-        Toggle the active field
-        :return: dict
-        """
-        actual_active = self.filtered(
-            lambda s: s.active)
-        actual_inactive = self - actual_active
-        if actual_inactive:
-            actual_inactive._bind()
-        if actual_active:
-            actual_active._unbind()
-        return {}
-
-    @api.multi
-    def _bind(self):
-        """
-        When the current recordset become active True, we have to build URL.
-        :return:
-        """
-        result = self.write({
-            'active': True,
-        })
-        self._bind_url()
-        return result
-
-    @api.multi
-    def _bind_url(self):
-        """
-        After a bind, delete existing url to build new
-        :return: bool
-        """
-        self.mapped("url_url_ids").unlink()
-        self.mapped("shopinvader_product_id")._compute_url()
-        return True
-
-    @api.multi
-    def _unbind(self):
-        """
-        Action to unbind current recordset
-        :return: bool
-        """
-        result = self.write({
-            'active': False,
-        })
-        self._unbind_url()
-        return result
-
-    @api.multi
-    def _unbind_url(self):
-        """
-        During unbind, we have to redirect existing urls to the (first) related
-        shopinvader category.
-        :return: bool
-        """
-        for record in self.filtered(lambda p: p.url_url_ids):
-            # Active category without children
-            categs = record.shopinvader_categ_ids.filtered(
-                lambda c: c.active and not c.shopinvader_child_ids)
-            if categs:
-                categ = fields.first(categs)
-                record.url_url_ids.write({
-                    'redirect': True,
-                    'model_id': "%s,%s" % (categ._name, categ.id),
-                })
-        return True

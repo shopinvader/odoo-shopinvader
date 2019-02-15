@@ -6,15 +6,15 @@
 from odoo import api, fields, models
 
 
-class ShopinvaderVariant(models.Model):
-    _inherit = 'shopinvader.variant'
+class ShopinvaderProduct(models.Model):
+    _inherit = 'shopinvader.product'
 
     hierarchical_categories = fields.Serialized(
         compute='_compute_shopinvader_category',
         string='Hierarchical Categories')
 
     def _compute_shopinvader_category(self):
-        super(ShopinvaderVariant, self)._compute_shopinvader_category()
+        super(ShopinvaderProduct, self)._compute_shopinvader_category()
 
         def get_full_name(categ):
             result = []
@@ -28,25 +28,3 @@ class ShopinvaderVariant(models.Model):
             for categ in record.shopinvader_categ_ids:
                 record.hierarchical_categories['lvl%s' % categ.level] =\
                     get_full_name(categ.record_id)
-
-    @api.multi
-    def _unbind(self):
-        """
-        Action to unbind current recordset
-        :return: bool
-        """
-        result = super(ShopinvaderVariant, self)._unbind()
-        for record in self:
-            record.with_delay().unsynchronize()
-        return result
-
-    @api.multi
-    def _bind(self):
-        """
-        Action to bind current recordset
-        :return:
-        """
-        result = super(ShopinvaderVariant, self)._bind()
-        for record in self:
-            record.with_delay().export()
-        return result

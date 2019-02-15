@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+from odoo.addons.base_url.models.abstract_url import get_model_ref
 
 
 class ShopinvaderCategory(models.Model):
@@ -122,3 +123,13 @@ class ShopinvaderCategory(models.Model):
                                                   childs_cat.ids)])
         categories = self | shopinvader_child_cat
         categories.write({'active': False})
+
+    def _redirect_existing_url(self):
+        for record in self.filtered(lambda c: c.url_url_ids):
+            categ = record.shopinvader_parent_id
+            if categ:
+                record.url_url_ids.write({
+                    'redirect': True,
+                    'model_id': get_model_ref(categ),
+                })
+        return True
