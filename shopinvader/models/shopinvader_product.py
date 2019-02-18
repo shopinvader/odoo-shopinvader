@@ -66,6 +66,10 @@ class ShopinvaderProduct(models.Model):
         self.filtered(
             lambda p: not p.active).mapped('shopinvader_variant_ids').write(
                 {'active': False})
+        self.filtered(
+            lambda p: p.active).mapped('shopinvader_variant_ids').write(
+                {'active': True})
+
 
     def _get_categories(self):
         self.ensure_one()
