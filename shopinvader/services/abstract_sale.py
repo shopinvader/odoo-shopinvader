@@ -7,7 +7,7 @@ from odoo.addons.component.core import AbstractComponent
 
 
 class AbstractSaleService(AbstractComponent):
-    _inherit = 'base.shopinvader.service'
+    _inherit = 'shopinvader.abstract.mail.service'
     _name = 'shopinvader.abstract.sale.service'
 
     def _parser_product(self):
