@@ -248,6 +248,10 @@ class CartService(Component):
             }
 
     def _get(self):
+        """
+
+        :return: sale.order recordset (cart)
+        """
         domain = [
             ('typology', '=', 'cart'),
             ('shopinvader_backend_id', '=', self.shopinvader_backend.id),
@@ -261,6 +265,7 @@ class CartService(Component):
         elif self.partner:
             domain.append(('partner_id', '=', self.partner.id))
             return self.env['sale.order'].search(domain, limit=1)
+        return cart
 
     def _create_empty_cart(self):
         vals = self._prepare_cart()
