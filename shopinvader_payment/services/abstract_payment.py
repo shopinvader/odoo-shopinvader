@@ -134,11 +134,14 @@ class AbstractPaymentService(AbstractComponent):
         if payment_mode_id not in available_payment_mode_ids:
             raise UserError(_('Unsupported payment mode'))
         elif 'payment_mode_id' in target._fields:
-            vals = target.play_onchanges({
+            vals = {
                 'payment_mode_id': payment_mode_id,
-            },
+            }
+            newvals = target.play_onchanges(
+                vals,
                 ['payment_mode_id'],
             )
+            vals.update(newvals)
             target.write(vals)
         return self._get_target_provider(target)
 
