@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+# Copyright 2019 Akretion (http://www.akretion.com).
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from odoo.addons.shopinvader.tests.test_notification import (
+    CommonNotificationCase
+)
+
+
+class NotificationPickingCase(CommonNotificationCase):
+
+    def setUp(self):
+        super(NotificationPickingCase, self).setUp()
+        self.cart.action_confirm()
+        self.picking = self.cart.picking_ids
+
+    def test_picking_notification1(self):
+        """
+        Check notification on outgoing picking.
+        For this case, we should have a notification
+        :return:
+        """
+        self._init_job_counter()
+        self.picking.do_transfer()
+        self._check_nbr_job_created(1)
+        self._perform_created_job()
+        self._check_notification(
+            'stock_picking_outgoing_validated', self.picking)
+
+    def test_picking_notification2(self):
+        """
+        Check notification on outgoing picking.
+        For this case, the picking is outgoing but is not related to a sale
+        (with backend) so it shouldn't notify anything
+        :return:
+        """
+        picking = self.picking.copy()
+        # Remove the link with procurement/sales
+        picking.move_lines.write({
+            'procurement_id': False,
+        })
+        self._init_job_counter()
+        picking.do_transfer()
+        self._check_nbr_job_created(0)
+
+    def test_picking_notification3(self):
+        """
+        Check notification on outgoing picking.
+        For this case, we change the picking type. So it shouldn't notify
+        anything.
+        :return:
+        """
+        self.picking.picking_type_id.write({
+            'code': 'internal',
+        })
+        self._init_job_counter()
+        self.picking.do_transfer()
+        self._check_nbr_job_created(0)

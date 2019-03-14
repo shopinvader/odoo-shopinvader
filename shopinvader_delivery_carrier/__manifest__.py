@@ -26,6 +26,8 @@
     ],
     "demo": [
         "demo/backend_demo.xml",
+        "demo/mail_template.xml",
+        "demo/shopinvader_notification.xml",
     ],
     "qweb": [
     ]
