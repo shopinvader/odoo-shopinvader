@@ -20,6 +20,9 @@ class ResPartner(models.Model):
         string='Address Type',
         compute='_compute_address_type',
         store=True)
+    opt_out = fields.Boolean(
+        default=True,
+    )
     # In europe we use more the opt_in
     opt_in = fields.Boolean(
         compute='_compute_opt_in',
