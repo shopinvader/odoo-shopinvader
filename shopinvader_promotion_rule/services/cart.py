@@ -5,11 +5,19 @@
 
 import logging
 
-from odoo.addons.component.core import Component
+from odoo.addons.component.core import AbstractComponent, Component
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
+
+
+class AbstractSaleService(AbstractComponent):
+    _inherit = 'shopinvader.abstract.sale.service'
+
+    def _is_item(self, line):
+        res = super(AbstractSaleService, self)._is_item(line)
+        return res and not line.is_promotion_line
 
 
 class CartService(Component):

@@ -47,7 +47,8 @@ class AbstractSaleService(AbstractComponent):
                 for carrier in cart._get_available_carrier()]
 
     def _is_item(self, line):
-        return not line.is_delivery
+        res = super(AbstractSaleService, self)._is_item(line)
+        return res and not line.is_delivery
 
 
 class CartService(Component):
