@@ -13,6 +13,7 @@ class AbstractItemCase(object):
         self.product_1 = self.env.ref('product.product_product_4b')
         self.product_2 = self.env.ref('product.product_product_13')
         self.product_3 = self.env.ref('product.product_product_11')
+        self.pricelist = self.env.ref("product.list0")
 
     def extract_cart(self, response):
         self.shopinvader_session['cart_id'] =\
@@ -95,26 +96,46 @@ class AbstractItemCase(object):
         self.cart.unlink()
         self.shopinvader_session.pop('cart_id')
 
-    def test_pricelist_product(self):
+    def _test_pricelist_product(self):
         self.remove_cart()
+        # be sure that discount group is active for user
+        self.env.user.write({
+            'groups_id': [
+                (4, self.ref('sale.group_discount_per_so_line'), 0)
+                ]
+            })
         # we create a new pricelist for the product with a discount of 10%
         self.env['product.pricelist.item'].create({
             'base': 'list_price',
             'sequence':  1000,
             'percent_price': 10,
             'name': 'Product discount Ipod',
-            'pricelist_id': self.env.ref("product.list0").id,
+            'pricelist_id': self.pricelist.id,
             'compute_price': 'percentage',
             'applied_on': '0_product_variant',
-            'product_id': self.env.ref("product.product_product_11").id
+            'product_id': self.product_3.id,
         })
-        cart = self.add_item(self.product_3.id, 1)
-        # into the cart, the list price must be the price without disount
-        self.assertEqual(self.product_3.list_price, 16.5)
+        cart_data = self.add_item(self.product_3.id, 1)
+        cart = self.env['sale.order'].browse(cart_data['id'])
+        self.assertEqual(cart.pricelist_id, self.pricelist)
+        return cart_data['lines']['items'][0]['amount']
 
+    def test_pricelist_product_price_unit_without_discount(self):
+        self.pricelist.discount_policy = 'without_discount'
+        amount = self._test_pricelist_product()
+        # into the cart, the price must be the price without discount
+        self.assertEqual(amount['price'], 16.5)
         # but the total for the line into the cart info must be the price with
         # discount
-        self.assertEqual(cart['lines']['items'][0]['amount']['total'], 14.85)
+        self.assertEqual(amount['total'], 14.85)
+
+    def test_pricelist_product_price_unit_with_discount(self):
+        self.pricelist.discount_policy = 'with_discount'
+        amount = self._test_pricelist_product()
+        # into the cart, the price must be the price with discount
+        self.assertEqual(amount['price'], 14.85)
+        # same for the total
+        self.assertEqual(amount['total'], 14.85)
 
 
 class AnonymousItemCase(AbstractItemCase, CommonCase):

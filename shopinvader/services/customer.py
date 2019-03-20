@@ -62,7 +62,11 @@ class CustomerService(Component):
     def _prepare_params(self, params):
         address = self.component(usage='addresses')
         params = address._prepare_params(params)
-        params['backend_id'] = self.shopinvader_backend.id
+        params.update({
+            'backend_id': self.shopinvader_backend.id,
+            'property_product_pricelist':\
+                self.shopinvader_backend.pricelist_id.id,
+            })
         if params.get('vat'):
             params['is_company'] = True
         return params
