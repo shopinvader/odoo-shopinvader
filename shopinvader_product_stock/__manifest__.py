@@ -7,8 +7,6 @@
     "name": "Shopinvader Product Stock",
     "summary": "This module is used to choose a stock field during the"
                "export (by backend)",
-    'description': """
-        Connector search engine for Stock""",
     "version": "10.0.1.0.1",
     "category": "e-commerce",
     "website": "https://akretion.com",
