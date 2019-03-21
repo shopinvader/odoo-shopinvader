@@ -6,8 +6,6 @@
     "name": "Shopinvader Product Stock State",
     "summary": "This module is used to choose a stock state during the"
                "export (by backend)",
-    'description': """
-        Shopinvader Connector search engine for Stock State""",
     "version": "10.0.1.0.0",
     "category": "e-commerce",
     "website": "https://akretion.com",

@@ -2,6 +2,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# pylint: disable=consider-merging-classes-inherited,method-required-super
 
 from odoo.addons.component.core import Component
 
@@ -64,7 +65,7 @@ class CustomerService(Component):
         params = address._prepare_params(params)
         params.update({
             'backend_id': self.shopinvader_backend.id,
-            'property_product_pricelist':\
+            'property_product_pricelist':
                 self.shopinvader_backend.pricelist_id.id,
             })
         if params.get('vat'):

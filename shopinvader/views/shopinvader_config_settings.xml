@@ -23,10 +23,9 @@
     <record model="ir.actions.act_window" id="shopinvader_config_settings_act_window">
         <field name="name">Configure Shopinvader</field>
         <field name="res_model">shopinvader.config.settings</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">form</field>
         <field name="domain">[]</field>
         <field name="context">{}</field>
-        <field name="view_mode">form</field>
         <field name="target">inline</field>
     </record>
 

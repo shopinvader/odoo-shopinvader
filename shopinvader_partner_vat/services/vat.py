@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 try:
     import stdnum.eu.vat
 except (ImportError, IOError) as err:
-        _logger.debug(err)
+    _logger.debug(err)
 
 
 class CustomerService(Component):

@@ -5,10 +5,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': 'ShopInvader - Sale profile',
-    'description': """
-        This ShopInvader submodule give the possibility to specify some
-        sale profiles (with pricelist per profile) per backend to apply on
-        your customers""",
     'version': '10.0.1.0.1',
     'depends': [
         'base',
