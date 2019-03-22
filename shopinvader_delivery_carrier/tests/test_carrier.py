@@ -81,15 +81,18 @@ class CarrierCase(CommonConnectedCartCase):
         self._apply_carrier_and_assert_set()
         cart = self.add_item(self.product_1.id, 2)
         self.assertEqual(cart['shipping']['amount']['total'], 0)
+        self.assertFalse(cart['shipping']['selected_carrier'])
 
     def test_reset_carrier_on_update_item(self):
         cart = self._apply_carrier_and_assert_set()
         items = cart['lines']['items']
         cart = self.update_item(items[0]['id'], 1)
         self.assertEqual(cart['shipping']['amount']['total'], 0)
+        self.assertFalse(cart['shipping']['selected_carrier'])
 
     def test_reset_carrier_on_delte_item(self):
         cart = self._apply_carrier_and_assert_set()
         items = cart['lines']['items']
         cart = self.delete_item(items[0]['id'])
         self.assertEqual(cart['shipping']['amount']['total'], 0)
+        self.assertFalse(cart['shipping']['selected_carrier'])
