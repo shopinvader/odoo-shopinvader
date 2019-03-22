@@ -36,7 +36,7 @@ class AuthApiKey(models.Model):
     @tools.ormcache('self.env.uid', 'self._backend_name', 'self._name')
     def retrieve_id_by_api_key(self):
         keychain_account = self.env['keychain.account']
-        keychain_accounts = keychain_account.search([
+        keychain_accounts = keychain_account.retrieve([
             ('namespace', '=', self._backend_name),
             ('technical_name', 'like', self._name)
         ])
