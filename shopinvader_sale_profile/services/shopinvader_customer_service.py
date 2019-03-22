@@ -9,6 +9,15 @@ from odoo.addons.component.core import Component
 class ShopInvaderCustomerService(Component):
     _inherit = 'shopinvader.customer.service'
 
+    def _prepare_params(self, params):
+        params = super(ShopInvaderCustomerService, self).\
+            _prepare_params(params)
+        backend = self.shopinvader_backend
+        if backend.use_sale_profile:
+            params['property_product_pricelist'] =\
+                backend.sale_profile_ids.filtered('default').id
+        return params
+
     def _prepare_create_response(self, binding):
         """
         Inherit the creation of create responseto add the sale profile

@@ -57,7 +57,7 @@ class TestBackend(LocoCommonCase):
         # simplified version of site data
         self.site = {
             'name': 'My site',
-            'handle': 'spacediscount',
+            'handle': 'shopinvader',
             '_id': 'space_id',
             'metafields': json.dumps({
                 'foo': 'test',
@@ -79,6 +79,7 @@ class TestBackend(LocoCommonCase):
         return metafields
 
     def test_synchronize_metadata(self):
+        ref = self.env.ref
         with mock_site_api(self.base_url, self.site) as mock:
             self.backend.synchronize_metadata()
             metafields = self._extract_metafields(
@@ -100,16 +101,26 @@ class TestBackend(LocoCommonCase):
                     },
                     'available_countries': {
                         "en": [
-                            {"name": "France", "id": 76},
-                            {"name": "United States", "id": 235},
+                            {
+                                "name": "France",
+                                "id": ref('base.fr').id
+                            },
+                            {
+                                "name": "United States",
+                                "id": ref('base.us').id
+                            },
                         ]
                     },
-                    'currencies_rate': {"USD": 1.5289, "EUR": 1.0}
+                    'currencies_rate': {
+                        "USD": ref('base.USD').rate,
+                        "EUR": ref('base.EUR').rate
+                    }
                 }
             }
             self.assertEqual(metafields, expected_metafields)
 
     def test_synchronize_currency(self):
+        ref = self.env.ref
         with mock_site_api(self.base_url, self.site) as mock:
             self.backend.synchronize_currency()
             metafields = self._extract_metafields(
@@ -120,7 +131,10 @@ class TestBackend(LocoCommonCase):
                     'bar': 'test',
                     'all_filters': {},
                     'available_countries': {},
-                    'currencies_rate': {"USD": 1.5289, "EUR": 1.0}
+                    'currencies_rate': {
+                        "USD": ref('base.USD').rate,
+                        "EUR": ref('base.EUR').rate
+                    }
                 }
             }
             self.assertEqual(metafields, expected_metafields)

@@ -63,7 +63,9 @@ class ShopinvaderBackend(models.Model):
 
     @api.multi
     def force_recompute_all_binding_index(self):
-        for record in self:
-            self._autobind_product_from_assortment()
+        records = self.filtered(
+            lambda r: not r.product_manual_binding and r.product_assortment_id)
+        for record in records:
+            record._autobind_product_from_assortment()
         return super(ShopinvaderBackend,
                      self).force_recompute_all_binding_index()

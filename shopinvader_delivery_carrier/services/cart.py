@@ -16,22 +16,19 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_shipping(self, cart):
         res = super(AbstractSaleService, self)._convert_shipping(cart)
-        carriers = self._get_available_carrier(cart)
         selected_carrier = {}
         if cart.carrier_id:
-            for carrier in carriers:
-                if carrier['id'] == cart.carrier_id.id:
-                    selected_carrier = carrier
-                    break
+            carrier = cart.carrier_id
+            selected_carrier = {
+                'id': carrier.id,
+                'name': carrier.name,
+                'description': carrier.description,
+            }
         res.update({
             'amount': {
                 'tax': cart.shipping_amount_tax,
                 'untaxed': cart.shipping_amount_untaxed,
                 'total': cart.shipping_amount_total,
-                },
-            'available_carriers': {
-                'count': len(carriers),
-                'items': carriers,
                 },
             'selected_carrier': selected_carrier,
             })
@@ -50,14 +47,29 @@ class AbstractSaleService(AbstractComponent):
                 for carrier in cart._get_available_carrier()]
 
     def _is_item(self, line):
-        return not line.is_delivery
+        res = super(AbstractSaleService, self)._is_item(line)
+        return res and not line.is_delivery
 
 
 class CartService(Component):
     _inherit = 'shopinvader.cart.service'
 
-    # Public service
-    def add_carrier(self, **params):
+    def get_delivery_methods(self):
+        """
+            This service will return all possible delivery methods for the
+            current cart
+        :return:
+        """
+        cart = self._get()
+        return self._get_available_carrier(cart)
+
+    def apply_delivery_method(self, **params):
+        """
+            This service will apply the given delivery method to the current
+            cart
+        :param params: Dict containing delivery method to apply
+        :return:
+        """
         cart = self._get()
         if not cart:
             raise UserError(_('There is not cart'))
@@ -66,7 +78,7 @@ class CartService(Component):
             return self._to_json(cart)
 
     # Validator
-    def _validator_add_carrier(self):
+    def _validator_apply_delivery_method(self):
         return {
             'carrier': {
                 'type': 'dict',
@@ -81,6 +93,25 @@ class CartService(Component):
                 },
             }
 
+    def _validator_get_delivery_methods(self):
+        return {}
+
+    # internal methods
+    def _add_item(self, cart, params):
+        res = super(CartService, self)._add_item(cart, params)
+        self._unset_carrier(cart)
+        return res
+
+    def _update_item(self, cart, params, item=False):
+        res = super(CartService, self)._update_item(cart, params, item)
+        self._unset_carrier(cart)
+        return res
+
+    def _delete_item(self, cart, params):
+        res = super(CartService, self)._delete_item(cart, params)
+        self._unset_carrier(cart)
+        return res
+
     def _set_carrier(self, cart, carrier_id):
         if carrier_id not in [
                 x['id'] for x in self._get_available_carrier(cart)]:
@@ -89,31 +120,5 @@ class CartService(Component):
         cart.write({'carrier_id': carrier_id})
         cart.delivery_set()
 
-    def _update_carrier(self, cart):
-        if not cart:
-            return
-        elif cart.carrier_id in cart._get_available_carrier():
-            cart.delivery_set()
-        else:
-            cart._set_default_carrier()
-
-    def _update(self, cart, params):
-        update_carrier = False
-        if 'shipping' in params:
-            update_carrier = True
-        result = super(CartService, self)._update(cart, params)
-        if update_carrier:
-            self._update_carrier(cart)
-        return result
-
-    def _add_item(self, cart, params):
-        super(CartService, self)._add_item(cart, params)
-        self._update_carrier(cart)
-
-    def _update_item(self, cart, params):
-        super(CartService, self)._update_item(cart, params)
-        self._update_carrier(cart)
-
-    def _delete_item(self, cart, params):
-        super(CartService, self)._delete_item(cart, params)
-        self._update_carrier(cart)
+    def _unset_carrier(self, cart):
+        cart._delivery_unset()

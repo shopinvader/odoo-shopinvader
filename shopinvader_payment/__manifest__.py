@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Payment",
     "summary": "Payment integration for Shopinvader",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
@@ -22,6 +22,7 @@
         "shopinvader",
         "payment_gateway",
         "sale_automatic_workflow_payment_mode",
+        "onchange_helper",
     ],
     "data": [
         "views/shopinvader_menu.xml",

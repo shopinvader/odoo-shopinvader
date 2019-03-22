@@ -2,6 +2,7 @@
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# pylint: disable=consider-merging-classes-inherited
 
 import logging
 
@@ -144,20 +145,44 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
+    def _upgrade_cart_item_quantity(self, cart, item, product_qty):
+        with self.env.norecompute():
+            vals = {'product_uom_qty': product_qty}
+            new_values = item.play_onchanges(vals, vals.keys())
+            # clear cache after play onchange
+            real_line_ids = [line.id for line in cart.order_line if line.id]
+            cart._cache['order_line'] = tuple(real_line_ids)
+            vals.update(new_values)
+            item.write(vals)
+        cart.recompute()
+
     def _add_item(self, cart, params):
         existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
-            existing_item.product_uom_qty += params['item_qty']
-            existing_item.reset_price_tax()
+            qty = existing_item.product_uom_qty + params['item_qty']
+            self._upgrade_cart_item_quantity(
+                cart, existing_item, qty)
         else:
-            vals = self._prepare_cart_item(params, cart)
-            item = self.env['sale.order.line'].create(vals)
-            item.reset_price_tax()
+            with self.env.norecompute():
+                vals = self._prepare_cart_item(params, cart)
+                # the next statement is done with suspending the security for
+                #  performance reasons. It is safe only if both 3 following
+                # fields are filled on the sale order:
+                # - company_id
+                # - fiscal_position_id
+                # - pricelist_id
+                new_values = self.env[
+                    'sale.order.line'].suspend_security().play_onchanges(
+                        vals, vals.keys())
+                vals.update(new_values)
+                self.env['sale.order.line'].create(vals)
+            cart.recompute()
 
-    def _update_item(self, cart, params):
-        item = self._get_cart_item(cart, params)
-        item.product_uom_qty = params['item_qty']
-        item.reset_price_tax()
+    def _update_item(self, cart, params, item=False):
+        if not item:
+            item = self._get_cart_item(cart, params)
+        self._upgrade_cart_item_quantity(
+            cart, item, params['item_qty'])
 
     def _delete_item(self, cart, params):
         item = self._get_cart_item(cart, params)
@@ -227,9 +252,11 @@ class CartService(Component):
             ('typology', '=', 'cart'),
             ('shopinvader_backend_id', '=', self.shopinvader_backend.id),
             ]
-        cart = self.env['sale.order'].search(
-            domain + [('id', '=', self.cart_id)])
-        if cart:
+        cart = self.env['sale.order'].browse()
+        if self.cart_id:
+            cart = self.env['sale.order'].browse(self.cart_id)
+        if cart.shopinvader_backend_id == \
+                self.shopinvader_backend and cart.typology == 'cart':
             return cart
         elif self.partner:
             domain.append(('partner_id', '=', self.partner.id))
@@ -288,7 +315,8 @@ class CartService(Component):
 
     def _check_existing_cart_item(self, cart, params):
         product_id = params['product_id']
-        return cart.mapped('order_line').filtered(
+        order_lines = cart.order_line
+        return order_lines.filtered(
             lambda l, p=product_id: l.product_id.id == product_id)
 
     def _prepare_cart_item(self, params, cart):

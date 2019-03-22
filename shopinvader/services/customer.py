@@ -2,6 +2,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# pylint: disable=consider-merging-classes-inherited,method-required-super
 
 from odoo.addons.component.core import Component
 
@@ -25,7 +26,6 @@ class CustomerService(Component):
 
     # pylint: disable=W8106
     def create(self, **params):
-        params['is_company'] = True
         vals = self._prepare_params(params)
         binding = self.env['shopinvader.partner'].create(vals)
         self.work.partner = binding.record_id
@@ -63,7 +63,13 @@ class CustomerService(Component):
     def _prepare_params(self, params):
         address = self.component(usage='addresses')
         params = address._prepare_params(params)
-        params['backend_id'] = self.shopinvader_backend.id,
+        params.update({
+            'backend_id': self.shopinvader_backend.id,
+            'property_product_pricelist':
+                self.shopinvader_backend.pricelist_id.id,
+            })
+        if params.get('vat'):
+            params['is_company'] = True
         return params
 
     def _send_welcome_message(self, binding):

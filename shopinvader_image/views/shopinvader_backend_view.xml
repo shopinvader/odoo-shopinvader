@@ -6,11 +6,12 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
-            <field name="pricelist_id" position="after">
-                <separator name="image" colspan="4"/>
-                <field name="shopinvader_variant_resize_ids" widget="many2many_tags"/>
-                <field name="shopinvader_category_resize_ids" widget="many2many_tags"/>
-            </field>
+            <page name="products" position="inside">
+                <group name="image" string="Images" colspan="4">
+                    <field name="shopinvader_variant_resize_ids" widget="many2many_tags"/>
+                    <field name="shopinvader_category_resize_ids" widget="many2many_tags"/>
+                </group>
+            </page>
         </field>
     </record>
 

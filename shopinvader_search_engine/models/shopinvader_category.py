@@ -16,7 +16,8 @@ class ShopinvaderCategory(models.Model):
         store=True,
         required=False)
 
-    @api.depends('backend_id.se_backend_id')
+    @api.depends('backend_id.se_backend_id',
+                 'backend_id.se_backend_id.index_ids')
     def _compute_index(self):
         for record in self:
             se_backend = record.backend_id.se_backend_id

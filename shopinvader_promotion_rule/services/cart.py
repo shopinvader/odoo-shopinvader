@@ -5,31 +5,42 @@
 
 import logging
 
-from odoo.addons.component.core import Component
+from odoo.addons.component.core import AbstractComponent, Component
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
 _logger = logging.getLogger(__name__)
 
 
+class AbstractSaleService(AbstractComponent):
+    _inherit = 'shopinvader.abstract.sale.service'
+
+    def _is_item(self, line):
+        res = super(AbstractSaleService, self)._is_item(line)
+        return res and not line.is_promotion_line
+
+
 class CartService(Component):
     _inherit = 'shopinvader.cart.service'
 
     def _update(self, cart, params):
+        is_coupon_code_specified = "coupon_code" in params
         coupon_code = params.pop('coupon_code', None)
-        if coupon_code is not None:
-            if 'payment_params' in params:
-                raise UserError(
-                    _("Appling discount and paying can "
-                      "not be done in the same call"))
+        if is_coupon_code_specified:
+            if coupon_code is not None:
+                if 'payment_params' in params:
+                    raise UserError(
+                        _("Appling discount and paying can "
+                          "not be done in the same call"))
         res = super(CartService, self)._update(cart, params)
-        if coupon_code:
-            cart.add_coupon(coupon_code)
-        else:
-            if cart.coupon_code:
-                # the promotion has been removed:
-                # * clear the promotion
-                cart.clear_promotions()
+        if is_coupon_code_specified:
+            if coupon_code:
+                cart.add_coupon(coupon_code)
+            else:
+                if cart.coupon_code:
+                    # the promotion has been removed:
+                    # * clear the promotion
+                    cart.clear_promotions()
         # apply default promotion
         cart.apply_promotions()
         return res
@@ -39,8 +50,8 @@ class CartService(Component):
         cart.apply_promotions()
         return res
 
-    def _update_item(self, cart, params):
-        res = super(CartService, self)._update_item(cart, params)
+    def _update_item(self, cart, params, item=False):
+        res = super(CartService, self)._update_item(cart, params, item)
         cart.apply_promotions()
         return res
 
@@ -52,7 +63,7 @@ class CartService(Component):
     # Validator
     def _validator_update(self):
         res = super(CartService, self)._validator_update()
-        res['coupon_code'] = {'type': 'string'}
+        res['coupon_code'] = {'type': 'string', 'nullable': True}
         return res
 
     # converter

@@ -37,11 +37,14 @@ class ShopinvaderBackend(models.Model):
     anonymous_partner_id = fields.Many2one(
         'res.partner',
         'Anonymous Partner',
+        help=('Provide partner settings for unlogged users '
+              '(i.e. fiscal position)'),
         required=True,
         default=lambda self: self.env.ref('shopinvader.anonymous'))
     sequence_id = fields.Many2one(
         'ir.sequence',
-        'Sequence')
+        'Sequence',
+        help='Naming policy for orders and carts')
     auth_api_key_id = fields.Many2one(
         'auth.api.key',
         required=True,
@@ -63,6 +66,11 @@ class ShopinvaderBackend(models.Model):
     filter_ids = fields.Many2many(
         comodel_name='product.filter',
         string='Filter')
+    use_shopinvader_product_name = fields.Boolean(
+        string="Use Shopinvader product display name",
+        help="If checked, use the specific shopinvader display name for "
+             "products instead of the original product name."
+    )
 
     _sql_constraints = [
         ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',

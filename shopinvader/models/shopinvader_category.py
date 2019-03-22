@@ -35,6 +35,7 @@ class ShopinvaderCategory(models.Model):
         compute='_compute_parent_category',
         store=True,
         index=True,
+        compute_sudo=True,
     )
     shopinvader_child_ids = fields.Many2many(
         'shopinvader.category',

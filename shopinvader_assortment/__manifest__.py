@@ -4,11 +4,7 @@
 
 {
     'name': 'Shopinvader Assortment',
-    'description': """
-        This addon allows to assign an assortment to a shopinvader
-        backend and get products auto-binded while exported
-        to search engine""",
-    'version': '10.0.1.0.0',
+    'version': '10.0.1.0.1',
     'license': 'AGPL-3',
     'author': 'ACSONE SA/NV',
     'website': 'http://acsone.eu',

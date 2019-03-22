@@ -6,16 +6,14 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
-            <notebook position="inside">
-                <page name="carrier" string="Carriers">
-                    <group name="carrier" colspan="4">
-                        <field name="carrier_ids"
-                               colspan="4"
-                               nolabel="True">
-                        </field>
-                    </group>
-                </page>
-            </notebook>
+            <page name="delivery" position="inside">
+                <group name="carrier" colspan="4">
+                    <field name="carrier_ids"
+                           colspan="4"
+                           nolabel="True">
+                    </field>
+                </group>
+            </page>
         </field>
     </record>
 

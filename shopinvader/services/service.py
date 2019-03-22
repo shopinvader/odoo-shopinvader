@@ -49,7 +49,7 @@ class BaseShopinvaderService(AbstractComponent):
                     op = '='
                 domain.append((key, op, value))
             return domain
-        except Exception, e:
+        except Exception as e:
             raise UserError(_('Invalid scope %s, error : %s'), scope, e)
 
     def _paginate_search(
