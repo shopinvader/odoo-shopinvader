@@ -127,6 +127,8 @@ class ProductCase(ProductCommonCase):
         )
 
     def test_product_get_price_discount_policy(self):
+        # Ensure that discount is with 2 digits
+        self.env.ref('product.decimal_discount').digits = 2
         # base_price_list doesn't define a tax mapping. We are tax included
         # we modify the discount_policy
         base_price_list = self.env.ref('product.list0')

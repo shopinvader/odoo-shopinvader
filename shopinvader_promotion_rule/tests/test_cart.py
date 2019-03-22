@@ -17,8 +17,8 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         })
 
     def setUp(self, *args, **kwargs):
-        self.set_up('shopinvader.sale_order_2')
         super(TestCart, self).setUp(*args, **kwargs)
+        self.set_up('shopinvader.sale_order_2')
         self.product_1 = self.env.ref('product.product_product_4b')
 
     def test_add_coupon(self):
