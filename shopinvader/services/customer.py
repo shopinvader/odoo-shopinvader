@@ -24,12 +24,12 @@ class CustomerService(Component):
         else:
             return {'data': {}}
 
+    # pylint: disable=W8106
     def create(self, **params):
         vals = self._prepare_params(params)
         binding = self.env['shopinvader.partner'].create(vals)
         self.work.partner = binding.record_id
-        self.shopinvader_backend._send_notification(
-            'new_customer_welcome', self.work.partner)
+        self._send_welcome_message(binding)
         return self._prepare_create_response(binding)
 
     def sign_in(self, **params):
@@ -72,6 +72,10 @@ class CustomerService(Component):
             params['is_company'] = True
         return params
 
+    def _send_welcome_message(self, binding):
+        self.shopinvader_backend._send_notification(
+            'new_customer_welcome', binding.record_id)
+
     def _get_and_assign_cart(self):
         cart_service = self.component(usage='cart')
         cart = cart_service._get()
@@ -88,17 +92,21 @@ class CustomerService(Component):
             return {}
 
     def _assign_cart_and_get_store_cache(self):
-        address = self.component(usage='addresses')
         cart = self._get_and_assign_cart()
+        customer = self._to_customer_info(self.partner)
         result = {
             'store_cache': {
                 'cart': cart,
-                'customer': address._to_json(self.partner)[0],
-                },
+                'customer': customer,
+                }
             }
         if cart:
             result['set_session'] = {'cart_id': cart['id']}
         return result
+
+    def _to_customer_info(self, partner):
+        address = self.component(usage='addresses')
+        return address._to_json(partner)[0]
 
     def _prepare_create_response(self, binding):
         response = self._assign_cart_and_get_store_cache()
