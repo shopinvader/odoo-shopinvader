@@ -47,7 +47,6 @@ class ShopinvaderProduct(models.Model):
         compute='_compute_shopinvader_category',
         string='Shopinvader Categories')
 
-
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
          'A product can only have one binding by backend and lang.'),
@@ -69,7 +68,6 @@ class ShopinvaderProduct(models.Model):
         self.filtered(
             lambda p: p.active).mapped('shopinvader_variant_ids').write(
                 {'active': True})
-
 
     def _get_categories(self):
         self.ensure_one()
