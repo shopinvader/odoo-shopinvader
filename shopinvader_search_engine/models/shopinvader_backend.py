@@ -63,4 +63,3 @@ class ShopinvaderBackend(models.Model):
     @api.multi
     def force_resynchronize_index(self):
         self.mapped('se_backend_id.index_ids').resynchronize_all_bindings()
-
