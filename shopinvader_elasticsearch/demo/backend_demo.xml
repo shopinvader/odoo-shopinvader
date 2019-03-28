@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="shopinvader.backend_1" model="shopinvader.backend">
+        <field name="se_backend_id" ref="connector_elasticsearch.backend_1_se_backend"/>
+    </record>
+
+    <record id="index_1" model="se.index">
+        <field name="backend_id" ref="connector_elasticsearch.backend_1_se_backend"/>
+        <field name="name">elastic-product</field>
+        <field name="config_id" ref="index_config_1"/>
+        <field name="lang_id" ref="base.lang_en"/>
+        <field name="model_id" ref="shopinvader.model_shopinvader_variant"/>
+        <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    </record>
+
+    <record id="index_2" model="se.index">
+        <field name="backend_id" ref="connector_elasticsearch.backend_1_se_backend"/>
+        <field name="name">elastic-category</field>
+        <field name="config_id" ref="index_config_2"/>
+        <field name="lang_id" ref="base.lang_en"/>
+        <field name="model_id" ref="shopinvader.model_shopinvader_category"/>
+        <field name="exporter_id" ref="shopinvader.ir_exp_shopinvader_category"/>
+    </record>
+
+</odoo>

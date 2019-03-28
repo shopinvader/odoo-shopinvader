@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="index_config_1" model="se.index.config">
+        <field name="name">variant_config</field>
+        <field name="doc_type">odoo</field>
+        <field name="body">{}</field>
+        <field name="body_str">
+            {
+              "mappings": {
+                "odoo": {
+                  "properties": {
+                    "hierarchicalCategories": {
+                      "type": "nested",
+                      "properties": {
+                        "ancestors": {
+                          "type": "text",
+                          "fielddata": true,
+                          "analyzer": "keyword"
+                        },
+                        "order": {
+                          "type": "integer"
+                        },
+                        "value": {
+                          "type": "text",
+                          "fielddata": true,
+                          "analyzer": "keyword"
+                        },
+                        "level": {
+                          "type": "integer"
+                        }
+                      }
+                    },
+                    "url_key": {
+                      "type": "text",
+                      "analyzer": "keyword"
+                    },
+                    "variant_attributes": {
+                      "properties": {
+                        "color": {
+                          "type": "text",
+                          "fielddata": true
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+        </field>
+    </record>
+
+    <record id="index_config_2" model="se.index.config">
+        <field name="name">category_config</field>
+        <field name="doc_type">odoo</field>
+        <field name="body">{}</field>
+        <field name="body_str">
+            {
+              "mappings": {
+                "odoo": {
+                  "properties": {
+                    "url_key": {
+                      "type": "text",
+                      "analyzer": "keyword"
+                    }
+                  }
+                }
+              }
+            }
+        </field>
+    </record>
+</odoo>
