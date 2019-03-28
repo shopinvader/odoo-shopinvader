@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="ir_exp_shopinvader_hierarchical_categories" model="ir.exports.line">
+    <field name="name">hierarchical_categories</field>
+    <field name="alias">hierarchical_categories:hierarchicalCategories</field>
+    <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+</record>
+
+</odoo>
