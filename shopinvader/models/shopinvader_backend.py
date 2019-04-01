@@ -207,8 +207,10 @@ class ShopinvaderBackend(models.Model):
         level = self.category_binding_level - 1
         categories = products.mapped("categ_id")
         # pull up until the correct level
+        parent_categories = categories
         while level > 0:
-            categories |= categories.mapped("parent_id")
+            parent_categories = parent_categories.mapped("parent_id")
+            categories |= parent_categories
             level -= 1
         return categories
 
