@@ -5,6 +5,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from .common import StockCommonCase
+from odoo.addons.connector_search_engine.tests.models import (
+    SeAdapterFake,
+)
 
 
 class TestProductProduct(StockCommonCase):
@@ -41,21 +44,23 @@ class TestProductProduct(StockCommonCase):
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
         self.assertEqual(jobs.count_created(), 1)
-        self.perform_jobs(jobs)
+
+        with SeAdapterFake.mocked_calls() as calls:
+            self.perform_jobs(jobs)
 
         self.assertEqual(
             shopinvader_product.data[key_stock],
             {u'global': {u'qty': 100.0}})
-        called = self._adapter_called
         if sync_immediatly:
-            self.assertEqual(len(called), 1)
-            method, datas = called[0]
-            self.assertEqual(method, 'index')
-            self.assertEqual(len(datas), 1)
-            self.assertEqual(datas[0][key_stock], {u'global': {u'qty': 100.0}})
+            self.assertEqual(len(calls), 1)
+            call = calls[0]
+            self.assertEqual(call['method'], 'index')
+            self.assertEqual(len(call['args']), 1)
+            self.assertEqual(
+                call['args'][0][key_stock], {u'global': {u'qty': 100.0}})
             self.assertEqual(shopinvader_product.sync_state, 'done')
         else:
-            self.assertEqual(len(called), 0)
+            self.assertEqual(len(calls), 0)
             self.assertEqual(shopinvader_product.sync_state, 'to_update')
 
     def test_update_stock(self):
@@ -132,7 +137,8 @@ class TestProductProduct(StockCommonCase):
         self._add_stock_to_product(self.product, self.loc_1, 100)
         self._add_stock_to_product(self.product, self.loc_2, 200)
         self.assertEqual(jobs.count_created(), 1)
-        self.perform_jobs(jobs)
+        with SeAdapterFake.mocked_calls():
+            self.perform_jobs(jobs)
 
         self.assertEqual(
             shopinvader_product.data['stock'],
