@@ -1,0 +1,373 @@
+interactions:
+- request:
+    body: !!python/unicode '{"requests": [{"action": "addObject", "body": {"sku":
+      "E-COM08", "meta_description": null, "meta_keywords": null, "description": null,
+      "objectID": 17, "variant_attributes": {}, "price": {"default": {"discount":
+      0.0, "value": 79.0, "tax_included": false, "original_value": 79.0}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Apple In-Ear Headphones"},
+      "main": true, "url_key": "apple-in-ear-headphones-E-COM08", "id": 2936, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Apple In-Ear Headphones"}}, {"action":
+      "addObject", "body": {"sku": "E-COM10", "meta_description": null, "meta_keywords":
+      null, "description": null, "objectID": 19, "variant_attributes": {}, "price":
+      {"default": {"discount": 0.0, "value": 47.0, "tax_included": false, "original_value":
+      47.0}}, "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Apple Wireless
+      Keyboard"}, "main": true, "url_key": "apple-wireless-keyboard-E-COM10", "id":
+      2937, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Apple Wireless Keyboard"}}, {"action": "addObject", "body": {"sku": "CONS_DEL03",
+      "meta_description": null, "meta_keywords": null, "description": null, "objectID":
+      32, "variant_attributes": {}, "price": {"default": {"discount": 0.0, "value":
+      23500.0, "tax_included": false, "original_value": 23500.0}}, "short_name": "",
+      "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Basic Computer"}, "main": true,
+      "url_key": "basic-computer-CONS_DEL03", "id": 2938, "categories": [{"level":
+      0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Basic Computer"}}, {"action": "addObject",
+      "body": {"sku": "E-COM05", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 14, "variant_attributes": {}, "price": {"default":
+      {"discount": 0.0, "value": 247.0, "tax_included": false, "original_value": 247.0}},
+      "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Bose Mini
+      Bluetooth Speaker"}, "main": true, "url_key": "bose-mini-bluetooth-speaker-E-COM05",
+      "id": 2940, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Bose Mini Bluetooth Speaker"}}, {"action": "addObject", "body": {"sku": "C-Case",
+      "meta_description": null, "meta_keywords": null, "description": null, "objectID":
+      25, "variant_attributes": {}, "price": {"default": {"discount": 0.0, "value":
+      25.0, "tax_included": false, "original_value": 25.0}}, "short_name": "", "seo_title":
+      null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2": "All > Saleable
+      > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description":
+      null, "model": {"name": "Computer Case"}, "main": true, "url_key": "computer-case-C-Case",
+      "id": 2941, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Computer Case"}}, {"action": "addObject", "body": {"sku": "PCSC234", "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 9, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 450.0, "tax_included": false,
+      "original_value": 450.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "Computer SC234"}, "main": true, "url_key": "computer-sc234-PCSC234",
+      "id": 2942, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Computer SC234"}}, {"action": "addObject", "body": {"sku": "SERV_DEL", "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 2, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 180.0, "tax_included": false,
+      "original_value": 180.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "Cost-plus Contract"}, "main": true, "url_key": "cost-plus-contract-SERV_DEL",
+      "id": 2943, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Cost-plus Contract"}}, {"action": "addObject", "body": {"sku": "E-COM06", "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 15, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 147.0, "tax_included": false,
+      "original_value": 147.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "Custom Computer (kit)"}, "main": true, "url_key": "custom-computer-kit-E-COM06",
+      "id": 2944, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Custom Computer (kit)"}}, {"action": "addObject", "body": {"sku": "PROD_DEL02",
+      "meta_description": null, "meta_keywords": null, "description": null, "objectID":
+      5, "variant_attributes": {}, "price": {"default": {"discount": 0.0, "value":
+      40.0, "tax_included": false, "original_value": 40.0}}, "short_name": "", "seo_title":
+      null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2": "All > Saleable
+      > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description":
+      null, "model": {"name": "Datacard"}, "main": true, "url_key": "datacard-PROD_DEL02",
+      "id": 2945, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Datacard"}}, {"action": "addObject", "body": {"sku": null, "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 38, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 150.0, "tax_included": false,
+      "original_value": 150.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Deposit"}, "main": true, "url_key":
+      "deposit", "id": 2946, "categories": [{"level": 0, "url_key": "all", "id": 1,
+      "name": "All"}, {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}],
+      "name": "Deposit"}}, {"action": "addObject", "body": {"sku": "SERV_COST", "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 3, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 180.0, "tax_included": false,
+      "original_value": 180.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Services", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "External Audit"}, "main": true, "url_key": "external-audit-SERV_COST",
+      "id": 2947, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/services", "id": 4, "name": "Services"}], "name":
+      "External Audit"}}, {"action": "addObject", "body": {"sku": null, "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 7, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 30.75, "tax_included": false,
+      "original_value": 30.75}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Services", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "GAP Analysis Service"}, "main": true, "url_key": "gap-analysis-service",
+      "id": 2948, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/services", "id": 4, "name": "Services"}], "name":
+      "GAP Analysis Service"}}, {"action": "addObject", "body": {"sku": "CARD", "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 29, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 885.0, "tax_included": false,
+      "original_value": 885.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "Graphics Card"}, "main": true, "url_key": "graphics-card-CARD",
+      "id": 2950, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "Graphics Card"}}, {"action": "addObject", "body": {"sku": "HDD-SH1", "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 26, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 975.0, "tax_included": false,
+      "original_value": 975.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "HDD SH-1"}, "main": true, "url_key": "hdd-sh-1-HDD-SH1",
+      "id": 2951, "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"},
+      {"level": 1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level":
+      2, "url_key": "all/saleable/physical", "id": 6, "name": "Physical"}], "name":
+      "HDD SH-1"}}, {"action": "addObject", "body": {"sku": "E-COM09", "meta_description":
+      null, "meta_keywords": null, "description": null, "objectID": 18, "variant_attributes":
+      {}, "price": {"default": {"discount": 0.0, "value": 1799.0, "tax_included":
+      false, "original_value": 1799.0}}, "short_name": "", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 1, "short_description": null,
+      "model": {"name": "iMac"}, "main": true, "url_key": "imac-E-COM09", "id": 2952,
+      "categories": [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level":
+      1, "url_key": "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key":
+      "all/saleable/physical", "id": 6, "name": "Physical"}], "name": "iMac"}}, {"action":
+      "addObject", "body": {"sku": "E-COM07", "meta_description": null, "meta_keywords":
+      null, "description": null, "objectID": 16, "variant_attributes": {}, "price":
+      {"default": {"discount": 0.0, "value": 320.0, "tax_included": false, "original_value":
+      320.0}}, "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "iPad Mini"},
+      "main": true, "url_key": "ipad-mini-E-COM07", "id": 2953, "categories": [{"level":
+      0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "iPad Mini"}}, {"action": "addObject",
+      "body": {"sku": "E-COM01", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 10, "variant_attributes": {"color": "White",
+      "wi-fi": "2.4 GHz", "memory": "16 GB"}, "price": {"default": {"discount": 0.0,
+      "value": 750.0, "tax_included": false, "original_value": 750.0}}, "short_name":
+      "White, 16 GB", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 3, "short_description": null, "model": {"name": "iPad Retina
+      Display"}, "main": true, "url_key": "ipad-retina-display", "id": 2954, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "iPad Retina Display (White, 16 GB)"}},
+      {"action": "addObject", "body": {"sku": "E-COM02", "meta_description": null,
+      "meta_keywords": null, "description": null, "objectID": 11, "variant_attributes":
+      {"color": "Black", "wi-fi": "2.4 GHz", "memory": "16 GB"}, "price": {"default":
+      {"discount": 0.0, "value": 750.0, "tax_included": false, "original_value": 750.0}},
+      "short_name": "Black, 16 GB", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 3, "short_description": null, "model": {"name": "iPad Retina
+      Display"}, "main": false, "url_key": "ipad-retina-display", "id": 2955, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "iPad Retina Display (Black, 16 GB)"}},
+      {"action": "addObject", "body": {"sku": "E-COM03", "meta_description": null,
+      "meta_keywords": null, "description": null, "objectID": 12, "variant_attributes":
+      {"color": "White", "wi-fi": "2.4 GHz", "memory": "32 GB"}, "price": {"default":
+      {"discount": 0.0, "value": 800.4, "tax_included": false, "original_value": 800.4}},
+      "short_name": "White, 32 GB", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 3, "short_description": null, "model": {"name": "iPad Retina
+      Display"}, "main": false, "url_key": "ipad-retina-display", "id": 2956, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "iPad Retina Display (White, 32 GB)"}},
+      {"action": "addObject", "body": {"sku": "E-COM12", "meta_description": null,
+      "meta_keywords": null, "description": null, "objectID": 21, "variant_attributes":
+      {"memory": "16 GB"}, "price": {"default": {"discount": 0.0, "value": 16.5, "tax_included":
+      false, "original_value": 16.5}}, "short_name": "16 GB", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 2, "short_description": null,
+      "model": {"name": "iPod"}, "main": true, "url_key": "ipod", "id": 2958, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "iPod (16 GB)"}}, {"action": "addObject",
+      "body": {"sku": "E-COM13", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 22, "variant_attributes": {"memory": "32 GB"},
+      "price": {"default": {"discount": 0.0, "value": 22.9, "tax_included": false,
+      "original_value": 22.9}}, "short_name": "32 GB", "seo_title": null, "redirect_url_key":
+      {}, "hierarchicalCategories": {"lvl2": "All > Saleable > Physical", "lvl0":
+      "All", "lvl1": "All > Saleable"}, "variant_count": 2, "short_description": null,
+      "model": {"name": "iPod"}, "main": false, "url_key": "ipod", "id": 2959, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "iPod (32 GB)"}}, {"action": "addObject",
+      "body": {"sku": "LAP-CUS", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 31, "variant_attributes": {}, "price": {"default":
+      {"discount": 0.0, "value": 3645.0, "tax_included": false, "original_value":
+      3645.0}}, "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Laptop Customized"},
+      "main": true, "url_key": "laptop-customized-LAP-CUS", "id": 2960, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Laptop Customized"}}, {"action": "addObject",
+      "body": {"sku": "LAP-E5", "meta_description": null, "meta_keywords": null, "description":
+      null, "objectID": 30, "variant_attributes": {}, "price": {"default": {"discount":
+      0.0, "value": 2950.0, "tax_included": false, "original_value": 2950.0}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Laptop E5023"}, "main": true,
+      "url_key": "laptop-e5023-LAP-E5", "id": 2961, "categories": [{"level": 0, "url_key":
+      "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable", "id":
+      2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical", "id":
+      6, "name": "Physical"}], "name": "Laptop E5023"}}, {"action": "addObject", "body":
+      {"sku": "CONS_DEL02", "meta_description": null, "meta_keywords": null, "description":
+      null, "objectID": 33, "variant_attributes": {}, "price": {"default": {"discount":
+      0.0, "value": 40000.0, "tax_included": false, "original_value": 40000.0}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Little server"}, "main": true,
+      "url_key": "little-server-CONS_DEL02", "id": 2962, "categories": [{"level":
+      0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Little server"}}, {"action": "addObject",
+      "body": {"sku": "MBi9", "meta_description": null, "meta_keywords": null, "description":
+      null, "objectID": 27, "variant_attributes": {}, "price": {"default": {"discount":
+      0.0, "value": 1950.0, "tax_included": false, "original_value": 1950.0}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Motherboard I9P57"}, "main":
+      true, "url_key": "motherboard-i9p57-MBi9", "id": 2963, "categories": [{"level":
+      0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Motherboard I9P57"}}, {"action": "addObject",
+      "body": {"sku": "E-COM11", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 20, "variant_attributes": {}, "price": {"default":
+      {"discount": 0.0, "value": 14.0, "tax_included": false, "original_value": 14.0}},
+      "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Mouse, Optical"},
+      "main": true, "url_key": "mouse-optical-E-COM11", "id": 2964, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Mouse, Optical"}}, {"action": "addObject",
+      "body": {"sku": "M-Wir", "meta_description": null, "meta_keywords": null, "description":
+      null, "objectID": 23, "variant_attributes": {}, "price": {"default": {"discount":
+      0.0, "value": 12.5, "tax_included": false, "original_value": 12.5}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Mouse, Wireless"}, "main":
+      true, "url_key": "mouse-wireless-M-Wir", "id": 2965, "categories": [{"level":
+      0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Mouse, Wireless"}}, {"action": "addObject",
+      "body": {"sku": "SERV_ORDER", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 1, "variant_attributes": {}, "price": {"default":
+      {"discount": 0.0, "value": 90.0, "tax_included": false, "original_value": 90.0}},
+      "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Services", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Prepaid Consulting"},
+      "main": true, "url_key": "prepaid-consulting-SERV_ORDER", "id": 2966, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/services",
+      "id": 4, "name": "Services"}], "name": "Prepaid Consulting"}}, {"action": "addObject",
+      "body": {"sku": "CPUi5", "meta_description": null, "meta_keywords": null, "description":
+      null, "objectID": 28, "variant_attributes": {}, "price": {"default": {"discount":
+      0.0, "value": 2100.0, "tax_included": false, "original_value": 2100.0}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Processor Core i5 2.70 Ghz"},
+      "main": true, "url_key": "processor-core-i5-270-ghz-CPUi5", "id": 2967, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Processor Core i5 2.70 Ghz"}}, {"action":
+      "addObject", "body": {"sku": "RAM-SR5", "meta_description": null, "meta_keywords":
+      null, "description": null, "objectID": 24, "variant_attributes": {}, "price":
+      {"default": {"discount": 0.0, "value": 85.0, "tax_included": false, "original_value":
+      85.0}}, "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "RAM SR5"},
+      "main": true, "url_key": "ram-sr5-RAM-SR5", "id": 2968, "categories": [{"level":
+      0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "RAM SR5"}}, {"action": "addObject",
+      "body": {"sku": "CONS_DEL01", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 34, "variant_attributes": {}, "price": {"default":
+      {"discount": 0.0, "value": 60000.0, "tax_included": false, "original_value":
+      60000.0}}, "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Server"},
+      "main": true, "url_key": "server-CONS_DEL01", "id": 2969, "categories": [{"level":
+      0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Server"}}, {"action": "addObject", "body":
+      {"sku": null, "meta_description": null, "meta_keywords": null, "description":
+      null, "objectID": 8, "variant_attributes": {}, "price": {"default": {"discount":
+      0.0, "value": 38.25, "tax_included": false, "original_value": 38.25}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Services", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Support Services"}, "main":
+      true, "url_key": "support-services", "id": 2971, "categories": [{"level": 0,
+      "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/services",
+      "id": 4, "name": "Services"}], "name": "Support Services"}}, {"action": "addObject",
+      "body": {"sku": "PROD_DEL", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 4, "variant_attributes": {}, "price": {"default":
+      {"discount": 0.0, "value": 70.0, "tax_included": false, "original_value": 70.0}},
+      "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Switch, 24
+      ports"}, "main": true, "url_key": "switch-24-ports-PROD_DEL", "id": 2972, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Switch, 24 ports"}}, {"action": "addObject",
+      "body": {"sku": "PROD_ORDER", "meta_description": null, "meta_keywords": null,
+      "description": null, "objectID": 6, "variant_attributes": {}, "price": {"default":
+      {"discount": 0.0, "value": 280.0, "tax_included": false, "original_value": 280.0}},
+      "short_name": "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories":
+      {"lvl2": "All > Saleable > Software", "lvl0": "All", "lvl1": "All > Saleable"},
+      "variant_count": 1, "short_description": null, "model": {"name": "Zed+ Antivirus"},
+      "main": true, "url_key": "zed-antivirus-PROD_ORDER", "id": 2973, "categories":
+      [{"level": 0, "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key":
+      "all/saleable", "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/software",
+      "id": 5, "name": "Software"}], "name": "Zed+ Antivirus"}}]}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: [gzip]
+      Connection: [keep-alive]
+      Content-Length: ['28434']
+      Content-Type: [gzip]
+      User-Agent: [Algolia for Python (1.17.0); Python (2.7.9)]
+      X-Algolia-API-Key: [!!python/unicode '856fbe3fbd5f6cc3b9d765c92e80de83']
+      X-Algolia-Application-Id: [!!python/unicode 'GH41KF783Z']
+    method: POST
+    uri: https://gh41kf783z.algolia.net/1/indexes/demo_algolia_backend_shopinvader_variant_en_US/batch
+  response:
+    body: {string: !!python/unicode '{"objectIDs":["17","19","32","14","25","9","2","15","5","38","3","7","29","26","18","16","10","11","12","21","22","31","30","33","27","20","23","1","28","24","34","8","4","6"],"taskID":10866150890}
+
+        '}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-disposition: [inline; filename=a.txt]
+      content-length: ['198']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Mon, 01 Apr 2019 19:31:06 GMT']
+      server: [nginx]
+      timing-allow-origin: ['*']
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+version: 1

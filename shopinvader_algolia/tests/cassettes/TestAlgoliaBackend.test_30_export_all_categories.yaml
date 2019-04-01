@@ -1,0 +1,68 @@
+interactions:
+- request:
+    body: !!python/unicode '{"requests": [{"action": "addObject", "body": {"meta_description":
+      null, "meta_keywords": null, "subtitle": null, "name": "Internal", "objectID":
+      3, "level": 1, "seo_title": null, "redirect_url_key": {}, "childs": [], "parent":
+      {"url_key": "all", "name": "All", "parent": null, "id": 1}, "filters": [], "short_description":
+      null, "url_key": "all/internal", "id": 149, "description": null}}, {"action":
+      "addObject", "body": {"meta_description": null, "meta_keywords": null, "subtitle":
+      null, "name": "Physical", "objectID": 6, "level": 2, "seo_title": null, "redirect_url_key":
+      {}, "childs": [], "parent": {"url_key": "all/saleable", "name": "Saleable",
+      "parent": {"url_key": "all", "name": "All", "parent": null, "id": 1}, "id":
+      2}, "filters": [], "short_description": null, "url_key": "all/saleable/physical",
+      "id": 151, "description": null}}, {"action": "addObject", "body": {"meta_description":
+      null, "meta_keywords": null, "subtitle": null, "name": "Services", "objectID":
+      4, "level": 2, "seo_title": null, "redirect_url_key": {}, "childs": [], "parent":
+      {"url_key": "all/saleable", "name": "Saleable", "parent": {"url_key": "all",
+      "name": "All", "parent": null, "id": 1}, "id": 2}, "filters": [], "short_description":
+      null, "url_key": "all/saleable/services", "id": 152, "description": null}},
+      {"action": "addObject", "body": {"meta_description": null, "meta_keywords":
+      null, "subtitle": null, "name": "Software", "objectID": 5, "level": 2, "seo_title":
+      null, "redirect_url_key": {}, "childs": [], "parent": {"url_key": "all/saleable",
+      "name": "Saleable", "parent": {"url_key": "all", "name": "All", "parent": null,
+      "id": 1}, "id": 2}, "filters": [], "short_description": null, "url_key": "all/saleable/software",
+      "id": 153, "description": null}}, {"action": "addObject", "body": {"meta_description":
+      null, "meta_keywords": null, "subtitle": null, "name": "All", "objectID": 1,
+      "level": 0, "seo_title": null, "redirect_url_key": {}, "childs": [{"childs":
+      [], "url_key": "all/internal", "name": "Internal", "id": 3}, {"childs": [{"childs":
+      [], "url_key": "all/saleable/physical", "name": "Physical", "id": 6}, {"childs":
+      [], "url_key": "all/saleable/services", "name": "Services", "id": 4}, {"childs":
+      [], "url_key": "all/saleable/software", "name": "Software", "id": 5}], "url_key":
+      "all/saleable", "name": "Saleable", "id": 2}], "parent": null, "filters": [],
+      "short_description": null, "url_key": "all", "id": 148, "description": null}},
+      {"action": "addObject", "body": {"meta_description": null, "meta_keywords":
+      null, "subtitle": null, "name": "Saleable", "objectID": 2, "level": 1, "seo_title":
+      null, "redirect_url_key": {}, "childs": [{"childs": [], "url_key": "all/saleable/physical",
+      "name": "Physical", "id": 6}, {"childs": [], "url_key": "all/saleable/services",
+      "name": "Services", "id": 4}, {"childs": [], "url_key": "all/saleable/software",
+      "name": "Software", "id": 5}], "parent": {"url_key": "all", "name": "All", "parent":
+      null, "id": 1}, "filters": [], "short_description": null, "url_key": "all/saleable",
+      "id": 150, "description": null}}]}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: [gzip]
+      Connection: [keep-alive]
+      Content-Length: ['3063']
+      Content-Type: [gzip]
+      User-Agent: [Algolia for Python (1.17.0); Python (2.7.9)]
+      X-Algolia-API-Key: [!!python/unicode '856fbe3fbd5f6cc3b9d765c92e80de83']
+      X-Algolia-Application-Id: [!!python/unicode 'GH41KF783Z']
+    method: POST
+    uri: https://gh41kf783z.algolia.net/1/indexes/demo_algolia_backend_shopinvader_category_en_US/batch
+  response:
+    body: {string: !!python/unicode '{"objectIDs":["3","6","4","5","1","2"],"taskID":2105620951}
+
+        '}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-disposition: [inline; filename=a.txt]
+      content-length: ['60']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Mon, 01 Apr 2019 19:33:51 GMT']
+      server: [nginx]
+      timing-allow-origin: ['*']
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+version: 1
