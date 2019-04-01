@@ -40,13 +40,32 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
             "decode_compressed_response": True,
         }
 
+    def setUp(self):
+        super(TestAlgoliaBackend, self).setUp()
+        if self.vcr_enabled:
+            # TODO we should discuss about this
+            # @laurent @simone @guewen
+            # testing what we have in self.cassette.request
+            # is maybe not a good idea as the contain tested is the
+            # recorded contain and not the request done
+            # this hack give store the real request in requests
+            # maybe we should propose such helper in vcr-unitest?
+            self.requests = []
+            original = self.cassette.play_response
+
+            def play_response(request):
+                self.requests.append(request)
+                return original(request)
+
+            self.cassette.play_response = play_response
+
     def test_10_export_one_product(self):
         product = self.env.ref('product.product_product_3_product_template')
         si_variant = product.shopinvader_bind_ids[0].shopinvader_variant_ids[0]
         si_variant.recompute_json()
         si_variant.synchronize()
-        self.assertEqual(len(self.cassette.requests), 1)
-        request = self.cassette.requests[0]
+        self.assertEqual(len(self.requests), 1)
+        request = self.requests[0]
         self.assertEqual(request.method, "POST")
         self.assertEqual(
             self.parse_path(request.uri),
@@ -55,7 +74,7 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         request_data = json.loads(request.body.decode("utf-8"))["requests"]
         self.assertEqual(len(request_data), 1)
         self.assertEqual(request_data[0]["action"], "addObject")
-        self.assertEqual(request_data[0]["body"]['sku'], 'PCSC234')
+        self.assertEqual(request_data[0]["body"], si_variant.data)
 
     def test_20_recompute_all_products(self):
         bindings = self.env['shopinvader.variant'].search([])
@@ -69,8 +88,8 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         index.batch_export()
         binding_nbr = self.env[index.model_id.model].search_count([])
 
-        self.assertEqual(len(self.cassette.requests), 1)
-        request = self.cassette.requests[0]
+        self.assertEqual(len(self.requests), 1)
+        request = self.requests[0]
         self.assertEqual(request.method, "POST")
         self.assertEqual(
             self.parse_path(request.uri),
