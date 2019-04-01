@@ -19,8 +19,16 @@ class ProductProduct(models.Model):
         is in done state we force it to 'to_update'.
         :return:
         """
-        for record in self:
-            for binding in record.shopinvader_bind_ids:
+        all_bindinds = self.mapped("shopinvader_bind_ids")
+        backends = all_bindinds.mapped("backend_id")
+        for backend in backends:
+            bindings = all_bindinds.filtered(
+                lambda r, b=backend: r.backend_id == b)
+            # To avoid access rights issues, execute the job with the user
+            # related to the backend (if defined)
+            if backend.auth_api_key_id.user_id:
+                bindings = bindings.sudo(backend.auth_api_key_id.user_id.id)
+            for binding in bindings:
                 if binding.sync_state == 'new':
                     # this binding have been not yet computed
                     # so we do not care to update it as it's not yet
