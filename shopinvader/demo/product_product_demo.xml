@@ -4,6 +4,7 @@
     <record id="product_product_39" model="product.product">
         <field name="name">Vortex Side Chair</field>
         <field name="shopinvader_bind_ids/name">Vortex Side Chair</field>
+        <field name="categ_id" ref="product_category_27"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_11')])]"></field>
         <field name="product_brand_id" ref="product_brand_2"/>
         <field name="list_price">50.99</field>
