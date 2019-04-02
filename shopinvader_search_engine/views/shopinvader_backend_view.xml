@@ -20,6 +20,10 @@
                             string="Export"
                             type="object"/>
                     <button
+                            name="force_resynchronize_index"
+                            string="Re-synchronize"
+                            type="object"/>
+                    <button
                             name="clear_index"
                             string="Clear"
                             type="object"/>

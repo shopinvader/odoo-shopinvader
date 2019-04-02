@@ -5,12 +5,9 @@
 
 from odoo import api, fields, models
 import logging
+from .abstract_url import get_model_ref
 
 _logger = logging.getLogger(__name__)
-
-
-def get_model_ref(record):
-    return "%s,%s" % (record._name, record.id)
 
 
 class UrlUrl(models.Model):

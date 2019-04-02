@@ -13,7 +13,8 @@ class ShopinvaderVariant(models.Model):
     _description = 'Shopinvader Variant'
     _inherits = {
         'shopinvader.product': 'shopinvader_product_id',
-        'product.product': 'record_id'}
+        'product.product': 'record_id',
+    }
 
     default_code = fields.Char(
         related='record_id.default_code',
@@ -35,10 +36,6 @@ class ShopinvaderVariant(models.Model):
         store=True,
         index=True,
     )
-    shopinvader_categ_ids = fields.Many2many(
-        comodel_name='shopinvader.category',
-        compute='_compute_shopinvader_category',
-        string='Shopinvader Categories')
     variant_count = fields.Integer(
         related='product_variant_count')
     variant_attributes = fields.Serialized(
@@ -96,24 +93,6 @@ class ShopinvaderVariant(models.Model):
             for url in record.redirect_url_key_ids:
                 res.append(url.url_key)
             record.redirect_url_key = res
-
-    def _get_categories(self):
-        self.ensure_one()
-        return self.categ_id
-
-    def _compute_shopinvader_category(self):
-        for record in self:
-            ids = []
-            categs = record._get_categories()
-            for categ in categs:
-                parents = self.env['shopinvader.category'].search([
-                    ('parent_left', '<=', categ.parent_left),
-                    ('parent_right', '>=', categ.parent_right),
-                    ('backend_id', '=', record.backend_id.id),
-                    ('lang_id', '=', record.lang_id.id),
-                    ])
-                ids += parents.ids
-            record.shopinvader_categ_ids = ids
 
     def _compute_variant_attributes(self):
         for record in self:
@@ -185,23 +164,3 @@ class ShopinvaderVariant(models.Model):
                 record.main = True
             else:
                 record.main = False
-
-    @api.multi
-    def toggle_published(self):
-        """
-        Toggle the active field
-        :return: dict
-        """
-        actual_active = self.filtered(
-            lambda s: s.active).with_prefetch(self._prefetch)
-        actual_inactive = self - actual_active
-        actual_inactive = actual_inactive.with_prefetch(self._prefetch)
-        if actual_inactive:
-            actual_inactive.write({
-                'active': True,
-            })
-        if actual_active:
-            actual_active.write({
-                'active': False,
-            })
-        return {}

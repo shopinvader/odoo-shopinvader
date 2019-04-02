@@ -6,15 +6,15 @@
 from odoo import fields, models
 
 
-class ShopinvaderVariant(models.Model):
-    _inherit = 'shopinvader.variant'
+class ShopinvaderProduct(models.Model):
+    _inherit = 'shopinvader.product'
 
     hierarchical_categories = fields.Serialized(
         compute='_compute_shopinvader_category',
         string='Hierarchical Categories')
 
     def _compute_shopinvader_category(self):
-        super(ShopinvaderVariant, self)._compute_shopinvader_category()
+        super(ShopinvaderProduct, self)._compute_shopinvader_category()
 
         def get_full_name(categ):
             result = []

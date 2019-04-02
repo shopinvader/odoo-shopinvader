@@ -28,4 +28,4 @@ class ShopinvaderVariantUnbindingWizard(models.TransientModel):
     @api.multi
     def unbind_products(self):
         for wizard in self:
-            wizard.shopinvader_variant_ids.write({'active': False})
+            wizard.shopinvader_variant_ids.write({'active': True})
