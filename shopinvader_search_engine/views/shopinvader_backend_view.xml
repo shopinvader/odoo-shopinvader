@@ -6,11 +6,11 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
-            <page name="search_eng" position="inside">
+             <page name="search_eng" position="inside">
                 <field name="se_backend_id"/>
             </page>
             <page name="developper" position="inside">
-                <group name="indexes" string="Search engined indexes" col="10" colspan="4">
+                <group name="indexes" string="Search engine indexes" col="10" colspan="4">
                     <button
                             name="force_recompute_all_binding_index"
                             string="Recompute"
@@ -23,6 +23,23 @@
                             name="clear_index"
                             string="Clear"
                             type="object"/>
+                </group>
+                <group name="index_ids" colspan="4" string="Indexes">
+                    <group colspan="4">
+                        <button
+                                name="add_misssing_index"
+                                string="Add missing index"
+                                type="object"/>
+                    </group>
+                    <field name="index_ids" nolabel="1" context="{'shopinvader_backend_id': active_id}">
+                        <tree colors="red:not is_valid" create="0" delete="0">
+                            <field name="name"/>
+                            <field name="lang_id"/>
+                            <field name="model_id"/>
+                            <field name="exporter_id"/>
+                            <field name="is_valid"/>
+                        </tree>
+                    </field>
                 </group>
             </page>
         </field>
