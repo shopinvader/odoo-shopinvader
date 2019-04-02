@@ -10,10 +10,12 @@ from odoo.addons.component.core import WorkContext
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase
 from odoo.addons.queue_job.job import Job
+from odoo.addons.server_environment import serv_config
 from odoo.tests import SavepointCase
 
 
 class CommonMixin(ComponentMixin):
+    AUTH_API_KEY_NAME = "api_key_shopinvader_test"
 
     def setUp(self):
         super(CommonMixin, self).setUp()
@@ -21,6 +23,13 @@ class CommonMixin(ComponentMixin):
         self.backend = self.env.ref('shopinvader.backend_1')
         self.backend.bind_all_product()
         self.shopinvader_session = {}
+        self.api_key = "myApiKey"
+        self.auth_api_key_name = self.AUTH_API_KEY_NAME
+        if self.auth_api_key_name not in serv_config.sections():
+            serv_config.add_section(self.auth_api_key_name)
+            serv_config.set(self.auth_api_key_name, "user", "admin")
+            serv_config.set(self.auth_api_key_name, "key", self.api_key)
+        self.backend.auth_api_key_name = self.auth_api_key_name
 
     @contextmanager
     def work_on_services(self, **params):
@@ -79,9 +88,15 @@ class ProductCommonCase(CommonCase):
 
 
 class ShopinvaderRestCase(BaseRestCase):
+    AUTH_API_KEY_NAME = "api_key_shopinvader_test"
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderRestCase, self).setUp(*args, **kwargs)
         self.backend = self.env.ref('shopinvader.backend_1')
-        self.api_key = self.backend.auth_api_key_id\
-            ._get_keychain_account()._get_password()
+        self.api_key = "myApiKey"
+        self.auth_api_key_name = self.AUTH_API_KEY_NAME
+        if self.auth_api_key_name not in serv_config.sections():
+            serv_config.add_section(self.auth_api_key_name)
+            serv_config.set(self.auth_api_key_name, "user", "admin")
+            serv_config.set(self.auth_api_key_name, "key", self.api_key)
+        self.backend.auth_api_key_name = self.auth_api_key_name

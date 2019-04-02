@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models, _
+from odoo.addons.server_environment import serv_config
 
 
 class ShopinvaderBackend(models.Model):
@@ -45,9 +46,11 @@ class ShopinvaderBackend(models.Model):
         'ir.sequence',
         'Sequence',
         help='Naming policy for orders and carts')
-    auth_api_key_id = fields.Many2one(
-        'auth.api.key',
-        required=True,
+    auth_api_key_name = fields.Selection(
+        required=False,  # required into the UI to allow demo data
+        help="The name of the api_key section used for the authentication of"
+             "calls to services dedicated to this backend",
+        selection=lambda a: a._get_auth_api_key_name_selection()
     )
     lang_ids = fields.Many2many(
         'res.lang',
@@ -80,11 +83,35 @@ class ShopinvaderBackend(models.Model):
              "Set 2 to auto-bind the direct category and his parent.\n"
              "etc.",
     )
+    user_id = fields.Many2one(
+        comodel_name="res.users",
+        compute="_compute_user_id",
+        help="The technical user used to process calls to the services "
+             "provided by the backend"
+    )
 
     _sql_constraints = [
-        ('auth_api_key_id_uniq', 'unique(auth_api_key_id)',
-         'An authentication API Key can be used by one backend.'),
+        ('auth_api_key_name_uniq', 'unique(auth_api_key_name)',
+         'An authentication API Key can be used by only one backend.'),
     ]
+
+    @api.model
+    def _get_auth_api_key_name_selection(self):
+        selection = []
+        for section in serv_config.sections():
+            if section.startswith("api_key_") and serv_config.has_option(
+                    section, "key"
+            ):
+                selection.append((section, section))
+        return selection
+
+    @api.depends("auth_api_key_name")
+    @api.multi
+    def _compute_user_id(self):
+        for rec in self:
+            login_name = serv_config.get(rec.auth_api_key_name, "user")
+            rec.user_id = self.env["res.users"].search(
+                [("login", "=", login_name)])
 
     @api.model
     def _default_company_id(self):

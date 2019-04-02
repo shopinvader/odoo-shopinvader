@@ -43,7 +43,7 @@ class InvaderController(main.RestController):
         backend_model = request.env['shopinvader.backend']
         if auth_api_key:
             return backend_model.search([(
-                'auth_api_key_id', '=', auth_api_key.id
+                'auth_api_key_name', '=', auth_api_key
             )])
         return backend_model.browse([])
 

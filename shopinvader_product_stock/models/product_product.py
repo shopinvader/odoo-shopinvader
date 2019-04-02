@@ -25,9 +25,8 @@ class ProductProduct(models.Model):
             bindings = all_bindinds.filtered(
                 lambda r, b=backend: r.backend_id == b)
             # To avoid access rights issues, execute the job with the user
-            # related to the backend (if defined)
-            if backend.auth_api_key_id.user_id:
-                bindings = bindings.sudo(backend.auth_api_key_id.user_id.id)
+            # related to the backend
+            bindings = bindings.sudo(backend.user_id.id)
             for binding in bindings:
                 if binding.sync_state == 'new':
                     # this binding have been not yet computed
