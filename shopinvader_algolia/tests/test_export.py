@@ -3,84 +3,102 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.connector_algolia.tests.common import (
-    mock_api,
-    ConnectorAlgoliaCase)
-import logging
-from odoo.addons.queue_job.tests.common import JobMixin
+import json
+import os
+from odoo.addons.connector_search_engine.tests.test_all import (
+    TestBindingIndexBase,
+)
+from odoo.addons.connector_algolia.components.adapter import AlgoliaAdapter
+from vcr_unittest import VCRMixin
 
-_logger = logging.getLogger(__name__)
 
-
-class TestExport(ConnectorAlgoliaCase, JobMixin):
+class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
 
     @classmethod
     def setUpClass(cls):
-        super(TestExport, cls).setUpClass()
+        super(TestAlgoliaBackend, cls).setUpClass()
+        AlgoliaAdapter._build_component(cls._components_registry)
+        cls.backend_specific = cls.env.ref("connector_algolia.se_algolia_demo")
+        cls.backend = cls.backend_specific.se_backend_id
+        cls.backend_specific.algolia_app_id = os.environ.get(
+            "ALGOLIA_APP_ID", "FAKE_APP"
+        )
+        cls.backend_specific.algolia_api_key = os.environ.get(
+            "ALGOLIA_API_KEY", "FAKE_KEY"
+        )
         cls.shopinvader_backend = cls.env.ref('shopinvader.backend_1')
         cls.shopinvader_backend.bind_all_product()
         cls.shopinvader_backend.bind_all_category()
+        cls.index_product = cls.env.ref('shopinvader_algolia.index_1')
+        cls.index_categ = cls.env.ref('shopinvader_algolia.index_2')
+
+    def _get_vcr_kwargs(self, **kwargs):
+        return {
+            "record_mode": "once",
+            "match_on": ["method", "path", "query"],
+            "filter_headers": ["Authorization"],
+            "decode_compressed_response": True,
+        }
 
     def setUp(self):
-        super(TestExport, self).setUp()
-        self.index_product = self.env.ref('shopinvader_algolia.index_1')
-        self.index_categ = self.env.ref('shopinvader_algolia.index_2')
+        super(TestAlgoliaBackend, self).setUp()
+        if self.vcr_enabled:
+            # TODO we should discuss about this
+            # @laurent @simone @guewen
+            # testing what we have in self.cassette.request
+            # is maybe not a good idea as the contain tested is the
+            # recorded contain and not the request done
+            # this hack give store the real request in requests
+            # maybe we should propose such helper in vcr-unitest?
+            self.requests = []
+            original = self.cassette.play_response
+
+            def play_response(request):
+                self.requests.append(request)
+                return original(request)
+
+            self.cassette.play_response = play_response
 
     def test_10_export_one_product(self):
         product = self.env.ref('product.product_product_3_product_template')
         si_variant = product.shopinvader_bind_ids[0].shopinvader_variant_ids[0]
-        with mock_api(self.env) as mocked_api:
-            si_variant.recompute_json()
-            si_variant.export()
-            self.assertTrue(
-                'demo_algolia_backend_shopinvader_variant_en_US'
-                in mocked_api.index
-            )
-        index = mocked_api.index[
-            'demo_algolia_backend_shopinvader_variant_en_US'
-        ]
-        self.assertEqual(1, len(index._calls))
-        method, values = index._calls[0]
-        self.assertEqual('add_objects', method)
+        si_variant.recompute_json()
+        si_variant.synchronize()
+        self.assertEqual(len(self.requests), 1)
+        request = self.requests[0]
+        self.assertEqual(request.method, "POST")
         self.assertEqual(
-            1, len(values), "Only one shopinvader variant should be exported")
-        value = values[0]
-        self.assertEqual(
-            value['model']['name'], si_variant.product_tmpl_id.name)
-        self.assertEqual(value['objectID'], product.id)
-        self.assertEqual(value['sku'], si_variant.default_code)
+            self.parse_path(request.uri),
+            "/1/indexes/demo_algolia_backend_shopinvader_variant_en_US/batch",
+        )
+        request_data = json.loads(request.body.decode("utf-8"))["requests"]
+        self.assertEqual(len(request_data), 1)
+        self.assertEqual(request_data[0]["action"], "addObject")
+        self.assertEqual(request_data[0]["body"], si_variant.data)
 
     def test_20_recompute_all_products(self):
         bindings = self.env['shopinvader.variant'].search([])
-        for binding in bindings:
-            self.assertEqual(binding.data, {})
-        jobs = self.job_counter()
+        bindings.write({'data': {}})
         self.index_product.recompute_all_binding()
-        self.assertEqual(jobs.count_created(), len(bindings))
-        self.perform_jobs(jobs)
         for binding in bindings:
             self.assertEqual(binding.data['objectID'], binding.record_id.id)
 
     def _test_export_all_binding(self, index):
-        init_jobs = self.job_counter()
         index.recompute_all_binding()
-        self.perform_jobs(init_jobs)
-        count = self.env[index.model_id.model].search_count([])
-
-        jobs = self.job_counter()
         index.batch_export()
-        self.assertEqual(jobs.count_created(), 1)
-        with mock_api(self.env) as mocked_api:
-            self.perform_jobs(jobs)
-        self.assertTrue(index.name in mocked_api.index)
-        index_api = mocked_api.index[index.name]
+        binding_nbr = self.env[index.model_id.model].search_count([])
+
+        self.assertEqual(len(self.requests), 1)
+        request = self.requests[0]
+        self.assertEqual(request.method, "POST")
         self.assertEqual(
-            1, len(index_api._calls),
-            "All bindings must be exported in 1 call")
-        method, values = index_api._calls[0]
-        self.assertEqual('add_objects', method)
+            self.parse_path(request.uri),
+            "/1/indexes/%s/batch" % index.name,
+        )
+        request_data = json.loads(request.body.decode("utf-8"))["requests"]
         self.assertEqual(
-            count, len(values), "All bindings should be exported")
+            len(request_data), binding_nbr, 'All bindings should be exported')
+        self.assertEqual(request_data[0]["action"], "addObject")
 
     def test_20_export_all_products(self):
         self._test_export_all_binding(self.index_product)

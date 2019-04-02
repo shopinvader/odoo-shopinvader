@@ -47,7 +47,7 @@ class ProductProduct(models.Model):
                     vals = {'data': data}
                     if binding.backend_id.synchronize_stock == 'immediatly':
                         binding.write(vals)
-                        binding.export()
+                        binding.synchronize()
                     elif binding.backend_id.synchronize_stock == 'in_batch':
                         if binding.sync_state == 'done':
                             vals['sync_state'] = 'to_update'

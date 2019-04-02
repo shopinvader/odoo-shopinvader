@@ -1,0 +1,41 @@
+interactions:
+- request:
+    body: !!python/unicode '{"requests": [{"action": "addObject", "body": {"sku":
+      "PCSC234", "meta_description": null, "meta_keywords": null, "description": null,
+      "objectID": 9, "variant_attributes": {}, "price": {"default": {"discount": 0.0,
+      "value": 450.0, "tax_included": false, "original_value": 450.0}}, "short_name":
+      "", "seo_title": null, "redirect_url_key": {}, "hierarchicalCategories": {"lvl2":
+      "All > Saleable > Physical", "lvl0": "All", "lvl1": "All > Saleable"}, "variant_count":
+      1, "short_description": null, "model": {"name": "Computer SC234"}, "main": true,
+      "url_key": "computer-sc234-PCSC234", "id": 2638, "categories": [{"level": 0,
+      "url_key": "all", "id": 1, "name": "All"}, {"level": 1, "url_key": "all/saleable",
+      "id": 2, "name": "Saleable"}, {"level": 2, "url_key": "all/saleable/physical",
+      "id": 6, "name": "Physical"}], "name": "Computer SC234"}}]}'
+    headers:
+      Accept: ['*/*']
+      Accept-Encoding: [gzip]
+      Connection: [keep-alive]
+      Content-Length: ['844']
+      Content-Type: [gzip]
+      User-Agent: [Algolia for Python (1.17.0); Python (2.7.9)]
+      X-Algolia-API-Key: [!!python/unicode '856fbe3fbd5f6cc3b9d765c92e80de83']
+      X-Algolia-Application-Id: [!!python/unicode 'GH41KF783Z']
+    method: POST
+    uri: https://gh41kf783z.algolia.net/1/indexes/demo_algolia_backend_shopinvader_variant_en_US/batch
+  response:
+    body: {string: !!python/unicode '{"objectIDs":["9"],"taskID":2105567201}
+
+        '}
+    headers:
+      access-control-allow-origin: ['*']
+      cache-control: [no-cache]
+      connection: [keep-alive]
+      content-disposition: [inline; filename=a.txt]
+      content-length: ['40']
+      content-type: [application/json; charset=UTF-8]
+      date: ['Mon, 01 Apr 2019 19:15:41 GMT']
+      server: [nginx]
+      timing-allow-origin: ['*']
+      x-content-type-options: [nosniff]
+    status: {code: 200, message: OK}
+version: 1
