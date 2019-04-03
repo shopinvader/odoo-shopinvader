@@ -3,12 +3,18 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import unittest
 from .common import ShopinvaderRestCase
 import requests
 
+from odoo.addons.server_environment import serv_config
 from odoo.tools import mute_logger
 
 
+@unittest.skipIf(
+    ShopinvaderRestCase.AUTH_API_KEY_NAME not in serv_config.sections(),
+    "You must define an auth_api_key section '%s' into your configuration "
+    "to run controller tests" % ShopinvaderRestCase.AUTH_API_KEY_NAME)
 class ShopinvaderControllerCase(ShopinvaderRestCase):
 
     def setUp(self, *args, **kwargs):
