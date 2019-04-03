@@ -1,6 +1,7 @@
 account-reconcile
 connector
 server-tools
+server-auth
 e-commerce
 ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10.0
 search-engine
