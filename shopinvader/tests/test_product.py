@@ -616,21 +616,19 @@ class ProductCase(ProductCommonCase):
             'product_ids': [(6, 0, product_product.ids)]
         })
         product_wizard.bind_products()
-        bind_product = self.env['shopinvader.variant'].search([
-            ('record_id', '=', product_product.id),
+        bind_product = self.env['shopinvader.product'].search([
+            ('record_id', '=', product_tmpl.id),
             ('backend_id', '=', self.backend.id),
         ])
         self.assertIn(bind_categ, bind_product.shopinvader_categ_ids)
         urls = bind_product.url_url_ids
         self.assertEqual(
-            urls.mapped("model_id"), bind_product.shopinvader_product_id)
-        bind_product._unbind()
+            urls.mapped("model_id"), bind_product)
+        bind_product.write({'active': False})
         self.assertEqual(urls.mapped("model_id"), bind_categ)
-        bind_product._bind()
-        self.assertFalse(bool(urls.exists()))
-        urls = bind_product.url_url_ids
+        bind_product.write({'active': True})
         self.assertEqual(
-            urls.mapped("model_id"), bind_product.shopinvader_product_id)
+            urls.mapped("model_id"), bind_product)
 
     def test_product_url2(self):
         """
@@ -676,19 +674,17 @@ class ProductCase(ProductCommonCase):
             'product_ids': [(6, 0, product_product.ids)]
         })
         product_wizard.bind_products()
-        bind_product = self.env['shopinvader.variant'].search([
-            ('record_id', '=', product_product.id),
+        bind_product = self.env['shopinvader.product'].search([
+            ('record_id', '=', product_tmpl.id),
             ('backend_id', '=', self.backend.id),
         ])
         self.assertIn(bind_categ_all, bind_product.shopinvader_categ_ids)
         self.assertIn(bind_categ2, bind_product.shopinvader_categ_ids)
         urls = bind_product.url_url_ids
         self.assertEqual(
-            urls.mapped("model_id"), bind_product.shopinvader_product_id)
-        bind_product._unbind()
+            urls.mapped("model_id"), bind_product)
+        bind_product.write({'active': False})
         self.assertEqual(urls.mapped("model_id"), bind_categ2)
-        bind_product._bind()
-        self.assertFalse(bool(urls.exists()))
-        urls = bind_product.url_url_ids
+        bind_product.write({'active': True})
         self.assertEqual(
-            urls.mapped("model_id"), bind_product.shopinvader_product_id)
+            urls.mapped("model_id"), bind_product)
