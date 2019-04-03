@@ -74,7 +74,6 @@
         "demo/notification_demo.xml",
         "demo/product_filter_demo.xml",
         "demo/product_category_demo.xml",
-        "demo/product_brand_demo.xml",
         "demo/product_attribute_value_demo.xml",
         "demo/product_product_demo.xml",
     ],

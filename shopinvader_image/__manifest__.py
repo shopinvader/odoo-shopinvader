@@ -25,10 +25,7 @@
     "demo": [
         "demo/shopinvader_image_resize_demo.xml",
         "demo/backend_demo.xml",
-        "demo/storage_file_demo.xml",
-        "demo/storage_image_demo.xml",
-        "demo/storage_image_product_image_tag_demo.xml",
-        "demo/product_image_relation_demo.xml",
-        "demo/product_product_image_relation_demo.xml",
     ],
+
+    'post_init_hook': 'post_init_hook',
 }

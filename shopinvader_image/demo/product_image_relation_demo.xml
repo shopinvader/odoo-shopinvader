@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="product_image_relation_1" model="product.image.relation">
         <field name="image_name">71c62lnhnxl_sx522_.jpg</field>

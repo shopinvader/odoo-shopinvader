@@ -1,12 +1,10 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
     <record id="product_product_39" model="product.product">
         <field name="name">Vortex Side Chair</field>
-        <field name="shopinvader_bind_ids/name">Vortex Side Chair</field>
         <field name="categ_id" ref="product_category_27"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_11')])]"></field>
-        <field name="product_brand_id" ref="product_brand_2"/>
         <field name="list_price">50.99</field>
         <field name="standard_price">50.99</field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
@@ -19,19 +17,16 @@
         <field name="name">Vortex Side Chair</field>
         <field name="product_tmpl_id" ref="product_product_39_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_6')])]"></field>
-        <field name="product_brand_id" ref="product_brand_2"/>
         <field name="list_price">50.99</field>
         <field name="default_code">VORCHAIR-002</field>
     </record>
 
     <record id="product_product_42" model="product.product">
-        <field name="shopinvader_bind_ids/name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="categ_id" ref="product_category_27"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_6')])]"></field>
-        <field name="product_brand_id" ref="product_brand_4"/>
         <field name="list_price">333.0</field>
         <field name="standard_price">333.0</field>
         <field name="default_code">B00RX-001</field>
@@ -42,7 +37,6 @@
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="product_tmpl_id" ref="product_product_42_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_12')])]"></field>
-        <field name="product_brand_id" ref="product_brand_4"/>
         <field name="list_price">333.0</field>
         <field name="default_code">B00RX-002</field>
     </record>
@@ -51,7 +45,6 @@
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="product_tmpl_id" ref="product_product_42_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_13')])]"></field>
-        <field name="product_brand_id" ref="product_brand_4"/>
         <field name="list_price">333.0</field>
         <field name="default_code">B00RX-003</field>
     </record>
@@ -60,7 +53,6 @@
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="product_tmpl_id" ref="product_product_42_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_14')])]"></field>
-        <field name="product_brand_id" ref="product_brand_4"/>
         <field name="list_price">333.0</field>
         <field name="default_code">B00RX-004</field>
     </record>
@@ -69,13 +61,9 @@
     <record id="product_product_44" model="product.product">
         <field name="name">Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture
         </field>
-        <field name="shopinvader_bind_ids/name">Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs
-            Living Room Furniture
-        </field>
         <field name="categ_id" ref="product_category_28"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
-        <field name="product_brand_id" ref="product_brand_5"/>
         <field name="list_price">79.99</field>
         <field name="standard_price">79.99</field>
         <field name="default_code"></field>
@@ -84,14 +72,12 @@
 
     <record id="product_product_45" model="product.product">
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
-        <field name="shopinvader_bind_ids/name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="categ_id" ref="product_category_27"></field>
         <field name="list_price">54.0</field>
         <field name="standard_price">54.0</field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_6')])]"></field>
-        <field name="product_brand_id" ref="product_brand_6"/>
         <field name="default_code">MIDCHAIR-001</field>
         <field name="type">consu</field>
     </record>
@@ -100,7 +86,6 @@
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="product_tmpl_id" ref="product_product_45_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_11')])]"></field>
-        <field name="product_brand_id" ref="product_brand_6"/>
         <field name="list_price">54.0</field>
         <field name="default_code">B01E4IL4TY</field>
     </record>
@@ -110,7 +95,6 @@
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="product_tmpl_id" ref="product_product_45_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_attribute_value_4')])]"></field>
-        <field name="product_brand_id" ref="product_brand_6"/>
         <field name="list_price">54.0</field>
         <field name="default_code">MIDCHAIR-002</field>
     </record>
@@ -119,21 +103,17 @@
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="product_tmpl_id" ref="product_product_45_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_14')])]"></field>
-        <field name="product_brand_id" ref="product_brand_6"/>
         <field name="list_price">54.0</field>
         <field name="default_code">re</field>
     </record>
 
     <record id="product_product_49" model="product.product">
         <field name="name">Convenience Concepts Designs2Go Oslo - meuble TV</field>
-        <field name="shopinvader_bind_ids/name">Convenience Concepts Designs2Go Oslo - meuble TV</field>
         <field name="categ_id" ref="product_category_29"></field>
-        <field name="list_price">156.4</field>
         <field name="standard_price">156.4</field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_11')])]"></field>
-        <field name="product_brand_id" ref="product_brand_7"/>
         <field name="list_price">156.4</field>
         <field name="default_code">B011RACHQ6</field>
         <field name="type">consu</field>
@@ -141,13 +121,10 @@
 
     <record id="product_product_50" model="product.product">
         <field name="name">Sauder 420011 Coffee Table, Furniture, Craftsman Oak</field>
-        <field name="shopinvader_bind_ids/name">Sauder 420011 Coffee Table, Furniture, Craftsman Oak</field>
         <field name="categ_id" ref="product_category_29"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
-        <field name="name">Sauder 420011 Coffee Table, Furniture, Craftsman Oak</field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_7')])]"></field>
-        <field name="product_brand_id" ref="product_brand_8"/>
         <field name="list_price">143.99</field>
         <field name="standard_price">143.99</field>
         <field name="default_code">SAUDERTABLE-001</field>
@@ -156,11 +133,9 @@
 
     <record id="product_product_51" model="product.product">
         <field name="name">Ameriwood Home 1783213COM - Meuble TV</field>
-        <field name="shopinvader_bind_ids/name">Ameriwood Home 1783213COM - Meuble TV</field>
         <field name="categ_id" ref="product_category_29"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
-        <field name="product_brand_id" ref="product_brand_9"/>
         <field name="list_price">311.39</field>
         <field name="standard_price">311.39</field>
         <field name="default_code">B077VY7G5S-G</field>
@@ -169,12 +144,10 @@
 
     <record id="product_product_52" model="product.product">
         <field name="name">ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70&quot;</field>
-        <field name="shopinvader_bind_ids/name">ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70&quot;</field>
         <field name="categ_id" ref="product_category_29"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_11')])]"></field>
-        <field name="product_brand_id" ref="product_brand_10"/>
         <field name="list_price">849.95</field>
         <field name="standard_price">849.95</field>
         <field name="default_code">C</field>
@@ -183,11 +156,9 @@
 
     <record id="product_product_53" model="product.product">
         <field name="name">Sauder Harvey Park Entertainment Credenza, chêne clair</field>
-        <field name="shopinvader_bind_ids/name">Sauder Harvey Park Entertainment Credenza, chêne clair</field>
         <field name="categ_id" ref="product_category_29"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
-        <field name="product_brand_id" ref="product_brand_8"/>
         <field name="list_price">1.0</field>
         <field name="standard_price">0</field>
         <field name="default_code"></field>
@@ -196,12 +167,10 @@
 
     <record id="product_product_54" model="product.product">
         <field name="name">Meuble TV 40 cmHARPER</field>
-        <field name="shopinvader_bind_ids/name">Meuble TV 40 cmHARPER</field>
         <field name="categ_id" ref="product_category_29"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_7')])]"></field>
-        <field name="product_brand_id" ref="product_brand_11"/>
         <field name="list_price">600.0</field>
         <field name="standard_price">600.0</field>
         <field name="default_code">HARPTV-001</field>
@@ -210,12 +179,10 @@
 
     <record id="product_product_55" model="product.product">
         <field name="name">Meuble TV Warm Shaker bois massif 183cm</field>
-        <field name="shopinvader_bind_ids/name">Meuble TV Warm Shaker bois massif 183cm</field>
         <field name="categ_id" ref="product_category_22"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_7')])]"></field>
-        <field name="product_brand_id" ref="product_brand_11"/>
         <field name="list_price">789.99</field>
         <field name="standard_price">789.99</field>
         <field name="default_code">CDAPMAK9-B</field>
@@ -226,19 +193,16 @@
         <field name="name">Meuble TV Warm Shaker bois massif 183cm</field>
         <field name="product_tmpl_id" ref="product_product_55_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_12')])]"></field>
-        <field name="product_brand_id" ref="product_brand_11"/>
         <field name="list_price">789.99</field>
         <field name="default_code">CDAPMAK9-G</field>
     </record>
 
     <record id="product_product_57" model="product.product">
         <field name="name">Table style Mid-Century Modern Chêne</field>
-        <field name="shopinvader_bind_ids/name">Table style Mid-Century Modern Chêne</field>
         <field name="categ_id" ref="product_category_23"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_7')])]"></field>
-        <field name="product_brand_id" ref="product_brand_12"/>
         <field name="list_price">149.99</field>
         <field name="standard_price">149.99</field>
         <field name="default_code">TABLEMID-001</field>
@@ -247,12 +211,10 @@
 
     <record id="product_product_58" model="product.product">
         <field name="name">Table ronde style mid-century plateau laqué</field>
-        <field name="shopinvader_bind_ids/name">Table ronde style mid-century plateau laqué</field>
         <field name="categ_id" ref="product_category_23"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_11')])]"></field>
-        <field name="product_brand_id" ref="product_brand_13"/>
         <field name="list_price">99.72</field>
         <field name="standard_price">99.72</field>
         <field name="default_code">/</field>
@@ -261,12 +223,10 @@
 
     <record id="product_product_95" model="product.product">
         <field name="name">Thelma</field>
-        <field name="shopinvader_bind_ids/name">Thelma</field>
         <field name="categ_id" ref="product_category_27"></field>
         <field name="uom_id" ref="product.product_uom_unit"></field>
         <field name="uom_po_id" ref="product.product_uom_unit"></field>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_attribute_value_4')])]"></field>
-        <field name="product_brand_id" ref=""/>
         <field name="list_price">149.0</field>
         <field name="standard_price">149.0</field>
         <field name="default_code">THELMA-BLACK</field>
@@ -277,7 +237,6 @@
         <field name="name">Thelma</field>
         <field name="product_tmpl_id" ref="product_product_95_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_12')])]"></field>
-        <field name="product_brand_id" ref=""/>
         <field name="list_price">149.0</field>
         <field name="default_code">THELMA-GREY</field>
     </record>
@@ -286,7 +245,6 @@
         <field name="name">Thelma</field>
         <field name="product_tmpl_id" ref="product_product_95_product_template"/>
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_14')])]"></field>
-        <field name="product_brand_id" ref=""/>
         <field name="list_price">149.0</field>
         <field name="default_code">THELMA-RED</field>
     </record>

@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="storage_file_310" model="storage.file">
         <field name="name">71fudutmpl_sl1500_.jpg</field>

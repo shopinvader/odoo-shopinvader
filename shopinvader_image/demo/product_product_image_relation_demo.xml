@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <record id="shopinvader.product_product_94" model="product.product">
         <field name="name">Thelma</field>
