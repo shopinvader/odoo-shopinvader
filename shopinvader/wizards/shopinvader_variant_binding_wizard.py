@@ -81,5 +81,5 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
                         }
                         binding.create(data)
                     elif not bind_record.active:
-                        bind_record._bind()
+                        bind_record.write({'active': True})
             wizard.backend_id.auto_bind_categories()
