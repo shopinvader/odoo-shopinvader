@@ -107,7 +107,6 @@ class AbstractItemCase(object):
         # we create a new pricelist for the product with a discount of 10%
         self.env['product.pricelist.item'].create({
             'base': 'list_price',
-            'sequence':  1000,
             'percent_price': 10,
             'name': 'Product discount Ipod',
             'pricelist_id': self.pricelist.id,
