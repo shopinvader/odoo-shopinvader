@@ -116,8 +116,7 @@ class ShopinvaderCategory(models.Model):
         for shopinvader_cat in self:
             categ_id = shopinvader_cat.record_id
             childs_cat = self.env['product.category'].search(
-                [('parent_left', '>=', categ_id.parent_left),
-                 ('parent_right', '<=', categ_id.parent_right)]
+                [('id', 'child_of', categ_id.id)]
             )
             shopinvader_child_cat = self.search([('record_id', 'in',
                                                   childs_cat.ids)])

@@ -688,3 +688,4 @@ class ProductCase(ProductCommonCase):
         bind_product.write({'active': True})
         self.assertEqual(
             urls.mapped("model_id"), bind_product)
+        self.assertFalse(bind_product.is_urls_sync_required)
