@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="shopinvader.product_product_39" model="product.product">
+        <field name="product_brand_id" ref="product_brand_2"/>
+    </record>
+
+    <record id="shopinvader.product_product_41" model="product.product">
+        <field name="product_brand_id" ref="product_brand_2"/>
+    </record>
+
+    <record id="shopinvader.product_product_42" model="product.product">
+        <field name="product_brand_id" ref="product_brand_4"/>
+    </record>
+
+    <record id="shopinvader.product_product_69" model="product.product">
+        <field name="product_brand_id" ref="product_brand_4"/>
+    </record>
+
+    <record id="shopinvader.product_product_70" model="product.product">
+        <field name="product_brand_id" ref="product_brand_4"/>
+    </record>
+
+    <record id="shopinvader.product_product_71" model="product.product">
+        <field name="product_brand_id" ref="product_brand_4"/>
+    </record>
+
+    <record id="shopinvader.product_product_44" model="product.product">
+        <field name="product_brand_id" ref="product_brand_5"/>
+    </record>
+
+    <record id="shopinvader.product_product_45" model="product.product">
+        <field name="product_brand_id" ref="product_brand_6"/>
+    </record>
+
+    <record id="shopinvader.product_product_48" model="product.product">
+        <field name="product_brand_id" ref="product_brand_6"/>
+    </record>
+
+
+    <record id="shopinvader.product_product_47" model="product.product">
+        <field name="product_brand_id" ref="product_brand_6"/>
+    </record>
+
+    <record id="shopinvader.product_product_46" model="product.product">
+        <field name="product_brand_id" ref="product_brand_6"/>
+    </record>
+
+    <record id="shopinvader.product_product_49" model="product.product">
+        <field name="product_brand_id" ref="product_brand_7"/>
+    </record>
+
+    <record id="shopinvader.product_product_50" model="product.product">
+        <field name="product_brand_id" ref="product_brand_8"/>
+    </record>
+
+    <record id="shopinvader.product_product_51" model="product.product">
+        <field name="product_brand_id" ref="product_brand_9"/>
+    </record>
+
+    <record id="shopinvader.product_product_52" model="product.product">
+        <field name="product_brand_id" ref="product_brand_10"/>
+    </record>
+
+    <record id="shopinvader.product_product_53" model="product.product">
+        <field name="product_brand_id" ref="product_brand_8"/>
+    </record>
+
+    <record id="shopinvader.product_product_54" model="product.product">
+        <field name="product_brand_id" ref="product_brand_11"/></record>
+
+    <record id="shopinvader.product_product_55" model="product.product">
+        <field name="product_brand_id" ref="product_brand_11"/>
+    </record>
+
+    <record id="shopinvader.product_product_56" model="product.product">
+        <field name="product_brand_id" ref="product_brand_11"/>
+    </record>
+
+    <record id="shopinvader.product_product_57" model="product.product">
+        <field name="product_brand_id" ref="product_brand_12"/>
+    </record>
+
+    <record id="shopinvader.product_product_58" model="product.product">
+        <field name="product_brand_id" ref="product_brand_13"/>
+    </record>
+
+    <record id="shopinvader.product_product_95" model="product.product">
+        <field name="product_brand_id" ref=""/>
+    </record>
+
+    <record id="shopinvader.product_product_94" model="product.product">
+        <field name="product_brand_id" ref=""/>
+    </record>
+
+    <record id="shopinvader.product_product_96" model="product.product">
+        <field name="product_brand_id" ref=""/>
+    </record>
+
+</odoo>

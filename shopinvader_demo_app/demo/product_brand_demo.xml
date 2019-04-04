@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_brand_2" model="product.brand">
+        <field name="name">Poly and Bark</field>
+    </record>
+
+    <record id="product_brand_4" model="product.brand">
+        <field name="name">Modway</field>
+    </record>
+
+    <record id="product_brand_5" model="product.brand">
+        <field name="name">Yaheetech</field>
+    </record>
+
+    <record id="product_brand_6" model="product.brand">
+        <field name="name">DHP</field>
+    </record>
+
+    <record id="product_brand_7" model="product.brand">
+        <field name="name">Convenience Concepts</field>
+    </record>
+
+    <record id="product_brand_8" model="product.brand">
+        <field name="name">Sauder</field>
+    </record>
+
+    <record id="product_brand_9" model="product.brand">
+        <field name="name">Ameriwood Home</field>
+    </record>
+
+    <record id="product_brand_10" model="product.brand">
+        <field name="name">SONOROUS</field>
+    </record>
+
+    <record id="product_brand_11" model="product.brand">
+        <field name="name">Simpli Home</field>
+    </record>
+
+    <record id="product_brand_12" model="product.brand">
+        <field name="name">Zinus</field>
+    </record>
+
+    <record id="product_brand_13" model="product.brand">
+        <field name="name">Vogue Carpenter</field>
+    </record>
+
+    <record id="product_brand_15" model="product.brand">
+        <field name="name">Viacaritatis</field>
+    </record>
+
+</odoo>

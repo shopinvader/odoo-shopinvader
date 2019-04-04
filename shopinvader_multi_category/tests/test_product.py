@@ -9,6 +9,10 @@ from odoo.addons.shopinvader.tests.common import ProductCommonCase
 
 class ProductCase(ProductCommonCase):
 
+    def setUp(self):
+        super(ProductCase, self).setUp()
+        self.env["product.category"]._parent_store_compute()
+
     def test_one_categories(self):
         self.backend.bind_all_category()
         categ = self.template.categ_id

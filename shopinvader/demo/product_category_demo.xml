@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="product_category_226" model="product.category">
+        <field name="name">Electronique et informatique</field>
+        <field name="parent_id" ref="product.product_category_all"></field>
+    </record>
+
+    <record id="product_category_227" model="product.category">
+        <field name="name">Ordinateur, Tablettes &amp; Accessoires</field>
+        <field name="parent_id" ref="product_category_226"></field>
+    </record>
+
+    <record id="product_category_228" model="product.category">
+        <field name="name">PC Portable</field>
+        <field name="parent_id" ref="product_category_227"></field>
+    </record>
+
+    <record id="product_category_21" model="product.category">
+        <field name="name">Meuble</field>
+        <field name="parent_id" ref=""></field>
+    </record>
+
+    <record id="product_category_25" model="product.category">
+        <field name="name">Salle de bain</field>
+        <field name="parent_id" ref="product_category_21"></field>
+    </record>
+
+    <record id="product_category_24" model="product.category">
+        <field name="name">Chambre</field>
+        <field name="parent_id" ref="product_category_21"></field>
+    </record>
+
+    <record id="product_category_23" model="product.category">
+        <field name="name">Salle à manger</field>
+        <field name="parent_id" ref="product_category_21"></field>
+    </record>
+
+    <record id="product_category_30" model="product.category">
+        <field name="name">Cuisine</field>
+        <field name="parent_id" ref="product_category_21"></field>
+    </record>
+
+    <record id="product_category_31" model="product.category">
+        <field name="name">Appliances</field>
+        <field name="parent_id" ref="product_category_30"></field>
+    </record>
+
+    <record id="product_category_22" model="product.category">
+        <field name="name">Salon</field>
+        <field name="parent_id" ref="product_category_21"></field>
+    </record>
+
+    <record id="product_category_27" model="product.category">
+        <field name="name">Chaise</field>
+        <field name="parent_id" ref="product_category_22"></field>
+    </record>
+
+    <record id="product_category_26" model="product.category">
+        <field name="name">Rangement</field>
+        <field name="parent_id" ref="product_category_22"></field>
+    </record>
+
+    <record id="product_category_28" model="product.category">
+        <field name="name">Tables</field>
+        <field name="parent_id" ref="product_category_22"></field>
+    </record>
+
+    <record id="product_category_29" model="product.category">
+        <field name="name">Meuble TV</field>
+        <field name="parent_id" ref="product_category_22"></field>
+    </record>
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="product_attribute_value_6" model="product.attribute.value">
+        <field name="name">blue</field>
+        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="price_extra">0.0</field>
+    </record>
+
+    <record id="product_attribute_value_7" model="product.attribute.value">
+        <field name="name">brown</field>
+        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="price_extra">0.0</field>
+    </record>
+
+    <record id="product_attribute_value_12" model="product.attribute.value">
+        <field name="name">Grey</field>
+        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="price_extra">0.0</field>
+    </record>
+
+    <record id="product_attribute_value_13" model="product.attribute.value">
+        <field name="name">yellow</field>
+        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="price_extra">0.0</field>
+    </record>
+
+    <record id="product_attribute_value_14" model="product.attribute.value">
+        <field name="name">red</field>
+        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="price_extra">0.0</field>
+    </record>
+
+    <record id="product_attribute_value_11" model="product.attribute.value">
+        <field name="name">white</field>
+        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="price_extra">0.0</field>
+    </record>
+
+</odoo>
