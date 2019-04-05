@@ -3,7 +3,10 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
 from odoo import api, fields, models
+
+from .tools import _build_slugified_field_by_id
 
 
 class ShopinvaderProduct(models.Model):
@@ -124,15 +127,23 @@ class ShopinvaderProduct(models.Model):
             binding._create_shopinvader_variant()
         return binding
 
-    def _build_url_key(self):
-        key = super(ShopinvaderProduct, self)._build_url_key()
-        if self.default_code:
-            key = '-'.join([key, self.default_code])
-        return key
-
-    @api.depends('url_builder', 'record_id.name')
-    def _compute_url(self):
-        return super(ShopinvaderProduct, self)._compute_url()
+    @api.multi
+    @api.depends("lang_id", "record_id.name")
+    def _compute_automatic_url_key(self):
+        records_by_lang = defaultdict(self.browse)
+        for record in self:
+            records_by_lang[record.lang_id] |= record
+        key_by_id = {}
+        for lang_id, records in records_by_lang.items():
+            key_by_id.update(_build_slugified_field_by_id(
+                records.with_context(lang=lang_id.code),
+                "name"
+            ))
+        for record in self:
+            key = key_by_id[record.id]
+            if record.default_code:
+                key = '-'.join([key, record.default_code])
+            record.automatic_url_key = key
 
     @api.model
     def default_get(self, fields_list):

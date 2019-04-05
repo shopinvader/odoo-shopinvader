@@ -62,7 +62,7 @@
                         </group>
                         <group name="redirect_url">
                             <field
-                                    name="redirect_url_key_ids"
+                                    name="redirect_url_url_ids"
                                     nolabel="1"
                                     colspan="4">
                                 <tree>

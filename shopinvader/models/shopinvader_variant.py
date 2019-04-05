@@ -90,7 +90,7 @@ class ShopinvaderVariant(models.Model):
     def _compute_redirect_url_key(self):
         for record in self:
             res = []
-            for url in record.redirect_url_key_ids:
+            for url in record.redirect_url_url_ids:
                 res.append(url.url_key)
             record.redirect_url_key = res
 
