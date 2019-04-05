@@ -57,9 +57,7 @@
     </record>
 
     <record id="storage_file_554" model="storage.file">
-        <field name="name">
-            c47c477bc85febd3f99aa3f9c651c02cfa071958_chathm005red_uk_2xthelma_dining_chairs_red_walnut_lb01jpg.png
-        </field>
+        <field name="name">c47c477bc85febd3f99aa3f9c651c02cfa071958_chathm005red_uk_2xthelma_dining_chairs_red_walnut_lb01jpg.png</field>
         <field name="backend_id" ref="storage_backend.default_storage_backend"/>
         <field name="file_type">image</field>
         <field name="data" type="base64"
@@ -155,9 +153,7 @@
     </record>
 
     <record id="storage_file_524" model="storage.file">
-        <field name="name">
-            2be1238822f7edbc3b3c5f64c6e12f36ec84c861_chathm001gry_uk_thelma_dining_chairs_oak_grey07.jpg
-        </field>
+        <field name="name">2be1238822f7edbc3b3c5f64c6e12f36ec84c861_chathm001gry_uk_thelma_dining_chairs_oak_grey07.jpg</field>
         <field name="backend_id" ref="storage_backend.default_storage_backend"/>
         <field name="file_type">image</field>
         <field name="data" type="base64"
@@ -173,9 +169,7 @@
     </record>
 
     <record id="storage_file_551" model="storage.file">
-        <field name="name">
-            73e214f2ec8bbe6b0687bcc7e53a55b2f70a2a38_chathm006bla_uk_2xthelma_dining_chairs_black_walnut_lb01.jpg
-        </field>
+        <field name="name">73e214f2ec8bbe6b0687bcc7e53a55b2f70a2a38_chathm006bla_uk_2xthelma_dining_chairs_black_walnut_lb01.jpg</field>
         <field name="backend_id" ref="storage_backend.default_storage_backend"/>
         <field name="file_type">image</field>
         <field name="data" type="base64"
@@ -263,9 +257,7 @@
     </record>
 
     <record id="storage_file_215" model="storage.file">
-        <field name="name">
-            kitchen-dining-table-white-round-coffee-table-modern-leisure-wooden-tea-table-office-conference-pedestal-desk.jpg
-        </field>
+        <field name="name">kitchen-dining-table-white-round-coffee-table-modern-leisure-wooden-tea-table-office-conference-pedestal-desk.jpg</field>
         <field name="backend_id" ref="storage_backend.default_storage_backend"/>
         <field name="file_type">image</field>
         <field name="data" type="base64"
@@ -313,9 +305,7 @@
     </record>
 
     <record id="storage_file_515" model="storage.file">
-        <field name="name">
-            5c7f91a29eb6294768ad59bbce80ed04fcaff33d_chathm001gry_uk_thelma_dining_chairs_oak_grey02.jpg
-        </field>
+        <field name="name">5c7f91a29eb6294768ad59bbce80ed04fcaff33d_chathm001gry_uk_thelma_dining_chairs_oak_grey02.jpg</field>
         <field name="backend_id" ref="storage_backend.default_storage_backend"/>
         <field name="file_type">image</field>
         <field name="data" type="base64"
@@ -323,9 +313,7 @@
     </record>
 
     <record id="storage_file_518" model="storage.file">
-        <field name="name">
-            9affc871da0e733ee523fd6f78fa8d597b4dd25c_chathm001gry_uk_thelma_dining_chairs_oak_grey03.jpg
-        </field>
+        <field name="name">9affc871da0e733ee523fd6f78fa8d597b4dd25c_chathm001gry_uk_thelma_dining_chairs_oak_grey03.jpg</field>
         <field name="backend_id" ref="storage_backend.default_storage_backend"/>
         <field name="file_type">image</field>
         <field name="data" type="base64"
