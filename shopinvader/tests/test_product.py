@@ -436,6 +436,21 @@ class ProductCase(ProductCommonCase):
             product.shopinvader_display_name, product.shopinvader_name
         )
 
+    def _check_category_level(self, shopinv_categs):
+        """
+        Check if category level of given shopinvader categories
+        :param shopinv_categs: shopinvader.category recordset
+        :return: bool
+        """
+        for shopinv_categ in shopinv_categs:
+            level = 0
+            parent = shopinv_categ.shopinvader_parent_id
+            while parent and parent.active:
+                level += 1
+                parent = parent.shopinvader_parent_id
+            self.assertEquals(shopinv_categ.level, level)
+        return True
+
     def test_product_category_auto_bind(self):
         """
         Test if after a product binding, the category is automatically binded
@@ -496,6 +511,7 @@ class ProductCase(ProductCommonCase):
         existing_binded_categs |= shopinv_categ_obj.search([
             ('record_id', 'in', categs_binded.ids),
         ])
+        self._check_category_level(existing_binded_categs)
         # Ensure no others categories are binded
         self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
         # categ_child and categ_parent should be binded but not the categ
@@ -563,6 +579,7 @@ class ProductCase(ProductCommonCase):
         existing_binded_categs |= shopinv_categ_obj.search([
             ('record_id', 'in', categs_binded.ids),
         ])
+        self._check_category_level(existing_binded_categs)
         # Ensure no others categories are binded
         self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
         # categ_child and categ_parent should be binded but not the categ

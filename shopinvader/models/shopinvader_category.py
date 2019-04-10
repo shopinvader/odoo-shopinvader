@@ -106,7 +106,7 @@ class ShopinvaderCategory(models.Model):
         for record in self:
             record.level = 0
             parent = record.shopinvader_parent_id
-            while parent:
+            while parent and parent.active:
                 record.level += 1
                 parent = parent.shopinvader_parent_id
 
