@@ -10,6 +10,9 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
     def setUpClass(cls):
         super(TestShopinvaderCategoryBindingWizard, cls).setUpClass()
         cls.backend = cls.env.ref('shopinvader.backend_1')
+        cls.backend2 = cls.backend.copy({
+            'name': 'Awesome Invader',
+        })
         cls.product_category = cls.env.ref('product.product_category_4')
         cls.bind_wizard_model = cls.env[
             'shopinvader.category.binding.wizard']
@@ -64,6 +67,23 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         self.assertEqual(len(bind_record), 1)
         self.assertEqual(bind_record, product_category.shopinvader_bind_ids)
 
+        # Do the same for the second backend
+        bind_wizard2 = self.bind_wizard_model.create({
+            'backend_id': self.backend2.id,
+            'product_category_ids': [(6, 0, product_category.ids)],
+        })
+
+        bind_wizard2.action_bind_categories()
+        domain_bk2 = [
+            ('record_id', '=', product_category.id),
+            ('backend_id', '=', self.backend2.id),
+        ]
+
+        # A binding record should exists
+        bind_record_bk2 = category_bind_model.search(domain_bk2)
+        self.assertEqual(len(bind_record_bk2), 1)
+        self.assertIn(bind_record_bk2, product_category.shopinvader_bind_ids)
+
         # --------------------------------
         # UnBind the category
         # --------------------------------
@@ -76,6 +96,8 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         bind_record = category_bind_model.search(domain)
 
         self.assertEqual(len(bind_record), 0)
+        # Still exists
+        self.assertTrue(bind_record_bk2.exists())
 
         # The binding record should still exist but inactive
         bind_record = category_bind_model.with_context(
@@ -115,6 +137,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         """
         lang = self.install_lang('base.lang_fr')
         self.backend.lang_ids |= lang
+        self.backend2.lang_ids |= lang
         category_bind_model = self.category_bind_model
         unbind_wizard_model = self.unbind_wizard_model
         bind_wizard_model = self.bind_wizard_model
@@ -141,6 +164,24 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         self.assertEqual(len(bind_record), 2)
         self.assertEqual(bind_record, product_category.shopinvader_bind_ids)
 
+        # Do the same for the second backend
+        bind_wizard2 = self.bind_wizard_model.create({
+            'backend_id': self.backend2.id,
+            'product_category_ids': [(6, 0, product_category.ids)],
+        })
+        bind_wizard2.action_bind_categories()
+        domain_bk2 = [
+            ('record_id', '=', product_category.id),
+            ('backend_id', '=', self.backend2.id),
+        ]
+
+        # A binding record should exists
+        bind_record_bk2 = category_bind_model.search(domain_bk2)
+        # 2 (because 2 languages installed)
+        self.assertEqual(len(bind_record_bk2), 2)
+        for shopinv_categ in bind_record_bk2:
+            self.assertIn(shopinv_categ, product_category.shopinvader_bind_ids)
+
         # --------------------------------
         # UnBind the category
         # --------------------------------
@@ -153,7 +194,9 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         bind_record = category_bind_model.search(domain)
 
         self.assertEqual(len(bind_record), 0)
-
+        for shopinv_categ in bind_record_bk2:
+            # Still exists
+            self.assertTrue(shopinv_categ.exists())
         # The binding record should still exist but inactive
         bind_record = category_bind_model.with_context(
             active_test=False).search(domain)

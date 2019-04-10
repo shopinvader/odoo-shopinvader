@@ -101,7 +101,11 @@ class ShopinvaderCategory(models.Model):
     def _compute_url(self):
         return super(ShopinvaderCategory, self)._compute_url()
 
-    @api.depends('shopinvader_parent_id.level')
+    @api.depends(
+        'shopinvader_parent_id',
+        'shopinvader_parent_id.level',
+        'shopinvader_parent_id.active',
+    )
     def _compute_level(self):
         for record in self:
             record.level = 0
@@ -118,7 +122,9 @@ class ShopinvaderCategory(models.Model):
                 [('parent_left', '>=', categ_id.parent_left),
                  ('parent_right', '<=', categ_id.parent_right)]
             )
-            shopinvader_child_cat = self.search([('record_id', 'in',
-                                                  childs_cat.ids)])
+            shopinvader_child_cat = self.search([
+                ('record_id', 'in', childs_cat.ids),
+                ('backend_id', '=', shopinvader_cat.backend_id.id),
+            ])
         categories = self | shopinvader_child_cat
         categories.write({'active': False})
