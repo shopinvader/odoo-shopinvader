@@ -59,6 +59,10 @@ class ShopinvaderCategory(models.Model):
          'A category can only have one binding by backend.'),
     ]
 
+    @api.multi
+    def name_get(self):
+        return [(cat.id, cat.record_id.display_name) for cat in self]
+
     def _compute_redirect_url_key(self):
         for record in self:
             res = []

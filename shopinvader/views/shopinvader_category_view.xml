@@ -6,8 +6,7 @@
     <field name="arch" type="xml">
         <tree string="Shopinvader Category" create="0" edit="0" delete="0">
             <field name="sequence" widget="handle"/>
-            <field name="sequence"/>
-            <field name="name"/>
+            <field name="display_name"/>
             <field name="backend_id"/>
         </tree>
     </field>
