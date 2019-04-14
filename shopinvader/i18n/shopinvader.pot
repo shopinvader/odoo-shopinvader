@@ -1725,9 +1725,9 @@ msgid "Redirect Url"
 msgstr ""
 
 #. module: shopinvader
-#: field:shopinvader.category,redirect_url_key_ids:0
-#: field:shopinvader.product,redirect_url_key_ids:0
-#: field:shopinvader.variant,redirect_url_key_ids:0
+#: field:shopinvader.category,redirect_url_url_ids:0
+#: field:shopinvader.product,redirect_url_url_ids:0
+#: field:shopinvader.variant,redirect_url_url_ids:0
 msgid "Redirect url key ids"
 msgstr ""
 

@@ -12,7 +12,9 @@ class ProductCategory(models.Model):
     shopinvader_bind_ids = fields.One2many(
         'shopinvader.category',
         'record_id',
-        string='Shopinvader Binding')
+        string='Shopinvader Binding',
+        context={'active_test': False},
+    )
     filter_ids = fields.Many2many(
         comodel_name='product.filter',
         string='Filter')

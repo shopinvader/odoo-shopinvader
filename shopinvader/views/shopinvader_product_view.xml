@@ -13,8 +13,8 @@
                 <field name="lang_id"/>
                 <field name="sync_date"/>
                 <field name="active" invisible="True"/>
-                <button name="toggle_published" type="object" help="Click to unpublish" color="green" icon="fa-close" attrs="{'invisible': [('active', '=', True)]}"/>
-                <button name="toggle_published" type="object" help="Click to publish" color="red" icon="fa-check" attrs="{'invisible': [('active', '!=', True)]}"/>
+                <button name="toggle_published" type="object" help="Click to publish" color="green" icon="fa-close" attrs="{'invisible': [('active', '=', True)]}"/>
+                <button name="toggle_published" type="object" help="Click to unpublish" color="red" icon="fa-check" attrs="{'invisible': [('active', '!=', True)]}"/>
             </tree>
         </field>
     </record>
@@ -62,7 +62,7 @@
                         </group>
                         <group name="redirect_url">
                             <field
-                                    name="redirect_url_key_ids"
+                                    name="redirect_url_url_ids"
                                     nolabel="1"
                                     colspan="4">
                                 <tree>

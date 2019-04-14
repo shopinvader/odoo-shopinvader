@@ -3,7 +3,10 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
 from odoo import api, fields, models
+
+from .tools import _build_slugified_field_by_id
 
 
 class ShopinvaderProduct(models.Model):
@@ -42,6 +45,10 @@ class ShopinvaderProduct(models.Model):
     shopinvader_display_name = fields.Char(
         compute='_compute_name', readonly=True
     )
+    shopinvader_categ_ids = fields.Many2many(
+        comodel_name='shopinvader.category',
+        compute='_compute_shopinvader_category',
+        string='Shopinvader Categories')
 
     _sql_constraints = [
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
@@ -61,6 +68,27 @@ class ShopinvaderProduct(models.Model):
         self.filtered(
             lambda p: not p.active).mapped('shopinvader_variant_ids').write(
                 {'active': False})
+        self.filtered(
+            lambda p: p.active).mapped('shopinvader_variant_ids').write(
+                {'active': True})
+
+    def _get_categories(self):
+        self.ensure_one()
+        return self.categ_id
+
+    def _compute_shopinvader_category(self):
+        for record in self:
+            ids = []
+            categs = record._get_categories()
+            for categ in categs:
+                parents = self.env['shopinvader.category'].search([
+                    ('parent_left', '<=', categ.parent_left),
+                    ('parent_right', '>=', categ.parent_right),
+                    ('backend_id', '=', record.backend_id.id),
+                    ('lang_id', '=', record.lang_id.id),
+                    ])
+                ids += parents.ids
+            record.shopinvader_categ_ids = ids
 
     def _prepare_shopinvader_variant(self, variant):
         values = {
@@ -99,15 +127,23 @@ class ShopinvaderProduct(models.Model):
             binding._create_shopinvader_variant()
         return binding
 
-    def _build_url_key(self):
-        key = super(ShopinvaderProduct, self)._build_url_key()
-        if self.default_code:
-            key = '-'.join([key, self.default_code])
-        return key
-
-    @api.depends('url_builder', 'record_id.name')
-    def _compute_url(self):
-        return super(ShopinvaderProduct, self)._compute_url()
+    @api.multi
+    @api.depends("lang_id", "record_id.name")
+    def _compute_automatic_url_key(self):
+        records_by_lang = defaultdict(self.browse)
+        for record in self:
+            records_by_lang[record.lang_id] |= record
+        key_by_id = {}
+        for lang_id, records in records_by_lang.items():
+            key_by_id.update(_build_slugified_field_by_id(
+                records.with_context(lang=lang_id.code),
+                "name"
+            ))
+        for record in self:
+            key = key_by_id[record.id]
+            if record.default_code:
+                key = '-'.join([key, record.default_code])
+            record.automatic_url_key = key
 
     @api.model
     def default_get(self, fields_list):
@@ -136,3 +172,21 @@ class ShopinvaderProduct(models.Model):
                 'active': False,
             })
         return {}
+
+    def _redirect_existing_url(self):
+        """
+        During unbind, we have to redirect existing urls to the (first) related
+        shopinvader category.
+        :return: bool
+        """
+        for record in self.filtered(lambda p: p.url_url_ids):
+            # Active category without children
+            categs = record.shopinvader_categ_ids.filtered(
+                lambda c: c.active and not c.shopinvader_child_ids)
+            if categs:
+                categ = fields.first(categs)
+                record.url_url_ids.write({
+                    'redirect': True,
+                    'model_id': "%s,%s" % (categ._name, categ.id),
+                })
+        return True

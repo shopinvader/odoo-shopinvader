@@ -25,6 +25,7 @@
                                     <group colspan="4" col="4">
                                         <field name="backend_id"/>
                                         <field name="lang_id"/>
+                                        <field name="active"/>
                                     </group>
                                     <notebook>
                                         <page name="description" string="Description">
@@ -38,26 +39,32 @@
                                         </page>
                                         <page name="seo" string="SEO">
                                             <group name="backend">
-                                                <field name="seo_title"/>
-                                                <field name="meta_keywords"/>
-                                                <field name="meta_description"/>
-                                                <field name="url_builder"/>
-                                                <field
-                                                        name="manual_url_key"
-                                                        attrs="{
-                                                    'invisible': [('url_builder', '!=', 'manual')],
-                                                    'required': [('url_builder', '=', 'manual')]}"/>
-                                                <field
-                                                        name="url_key"
-                                                        attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
-                                                <field
-                                                        name="redirect_url_key_ids"
-                                                        nolabel="1"
-                                                        colspan="4">
-                                                    <tree>
-                                                        <field name="url_key" string="Redirect Url"/>
-                                                    </tree>
-                                                </field>
+                                                <group colspan="4">
+                                                    <field name="seo_title"/>
+                                                    <field name="meta_keywords"/>
+                                                    <field name="meta_description"/>
+                                                </group>
+                                                <group colspan="4">
+                                                    <field name="url_builder"/>
+                                                    <field
+                                                            name="manual_url_key"
+                                                            attrs="{
+                                                        'invisible': [('url_builder', '!=', 'manual')],
+                                                        'required': [('url_builder', '=', 'manual')]}"/>
+                                                    <field
+                                                            name="url_key"
+                                                            attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
+                                                </group>
+                                                <group colspan="4" string="Redirect Url">
+                                                     <field
+                                                            name="redirect_url_url_ids"
+                                                            nolabel="1"
+                                                            colspan="4">
+                                                        <tree>
+                                                            <field name="url_key"/>
+                                                        </tree>
+                                                    </field>
+                                                </group>
                                             </group>
                                         </page>
                                     </notebook>
