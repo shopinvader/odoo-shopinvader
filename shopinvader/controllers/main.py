@@ -7,9 +7,7 @@ import logging
 
 from odoo.addons.base_rest.controllers import main
 from odoo.http import request
-from odoo.addons.server_environment import serv_config
 from odoo.exceptions import MissingError
-from odoo.tools import consteq
 
 _logger = logging.getLogger(__name__)
 
@@ -44,26 +42,9 @@ class InvaderController(main.RestController):
         return partner_model.browse([]).record_id
 
     @classmethod
-    def _get_api_key_name(cls):
-        for section in serv_config.sections():
-            if section.startswith("api_key_") and serv_config.has_option(
-                    section, "key"
-            ):
-                if consteq(
-                        request.auth_api_key, serv_config.get(section, "key")):
-                    return section
-        return None
-
-    @classmethod
     def _get_shopinvader_backend_from_request(cls):
-        auth_api_key_name = cls._get_api_key_name()
-
         backend_model = request.env['shopinvader.backend']
-        if auth_api_key_name:
-            return backend_model.search([(
-                'auth_api_key_name', '=', auth_api_key_name
-            )])
-        return backend_model.browse([])
+        return backend_model._get_from_http_request()
 
     @classmethod
     def _get_shopinvader_session_from_headers(cls, headers):

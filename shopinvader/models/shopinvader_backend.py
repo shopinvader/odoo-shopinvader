@@ -3,7 +3,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, tools, _
+from odoo.http import request
 from odoo.addons.server_environment import serv_config
 
 
@@ -263,3 +264,29 @@ class ShopinvaderBackend(models.Model):
 
     def _extract_configuration(self):
         return {}
+
+    @classmethod
+    def _get_api_key_name(cls, auth_api_key):
+        for section in serv_config.sections():
+            if section.startswith("api_key_") and serv_config.has_option(
+                    section, "key"
+            ):
+                if tools.consteq(
+                        auth_api_key, serv_config.get(section, "key")):
+                    return section
+        return None
+
+    @api.model
+    @tools.ormcache("self._uid", "auth_api_key")
+    def _get_id_from_auth_api_key(self, auth_api_key):
+        auth_api_key_name = self._get_api_key_name(auth_api_key)
+        if auth_api_key_name:
+            return self.search([(
+                'auth_api_key_name', '=', auth_api_key_name
+            )]).id
+        return False
+
+    @api.model
+    def _get_from_http_request(self):
+        auth_api_key = getattr(request, 'auth_api_key', None)
+        return self.browse(self._get_id_from_auth_api_key(auth_api_key))
