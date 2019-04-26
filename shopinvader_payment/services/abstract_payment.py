@@ -58,9 +58,25 @@ class AbstractPaymentService(AbstractComponent):
             return target.payment_mode_id.provider
         return ''
 
+    def _get_payment_mode(self, provider):
+        payment_modes = self.shopinvader_backend.\
+            payment_method_ids.mapped('payment_mode_id')
+        provider_payment_mode = payment_modes.filtered(
+            lambda x: x.provider == provider)
+        return provider_payment_mode
+
     def check_payment(self, provider_name=None, **params):
-        with self.env['gateway.transaction']._get_provider(provider_name)\
-                as provider:
+        # in case of check_payment we do not have any context information
+        # about the target so we need to determine the correct account to use
+        # thanks to the payment mode available on the backend
+        provider_payment_mode = self._get_payment_mode(provider_name)
+        transaction = self.env['gateway.transaction']
+        if provider_payment_mode:
+            vals = {'payment_mode_id': provider_payment_mode.id}
+            # create a fake recorset just to trigger the use of the right
+            # provider_account set on the payment method
+            transaction = self.env['gateway.transaction'].new(vals)
+        with transaction._get_provider(provider_name) as provider:
             transaction = provider.process_return(**params)
             if transaction.state in ['to_capture', 'succeeded']:
                 result = self.update(
