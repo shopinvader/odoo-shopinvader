@@ -7,6 +7,7 @@ import logging
 
 from odoo.addons.base_rest.controllers import main
 from odoo.http import request
+from odoo.exceptions import MissingError
 
 _logger = logging.getLogger(__name__)
 
@@ -35,6 +36,9 @@ class InvaderController(main.RestController):
                         "More than one shopinvader.partner found for domain:"
                         " %s", partner_domain
                     )
+                # Could be because the email is not related to a partner or
+                # because the partner is inactive
+                raise MissingError("The given partner is not found!")
         return partner_model.browse([]).record_id
 
     @classmethod

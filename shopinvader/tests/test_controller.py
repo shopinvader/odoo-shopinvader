@@ -2,13 +2,14 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+from uuid import uuid4
 import unittest
 from .common import ShopinvaderRestCase
 import requests
 
 from odoo.addons.server_environment import serv_config
 from odoo.tools import mute_logger
+from odoo.exceptions import MissingError
 
 
 @unittest.skipIf(
@@ -69,3 +70,57 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             })
         self.assertEqual(result.status_code, 200)
         self.assertEqual(result.json(), {'data': []})
+
+    def test_email_not_exists(self):
+        """
+        Test the behaviour when the email from header is not found.
+        For this case, we use an email who shouldn't exist in the database.
+        So it should raise an exception.
+        :return:
+        """
+        # This email shouldn't exist
+        email = "%s@random.com" % uuid4()
+        headers = {
+            'API_KEY': self.api_key,
+            'PARTNER_EMAIL': email,
+        }
+        expected_msg = "The given partner is not found!"
+        with self.assertRaises(MissingError) as e:
+            requests.get(self.url, headers=headers)
+        self.assertIn(expected_msg, e.exception.name)
+        return
+
+    def test_email_inactive(self):
+        """
+        Test the behaviour when the email from header is not found.
+        For this case, the email address should exist but the related partner
+        is inactive. So it should raise an exception.
+        :return:
+        """
+        # This email should exist
+        self.partner.write({
+            'active': False,
+        })
+        headers = {
+            'API_KEY': self.api_key,
+            'PARTNER_EMAIL': self.partner.email,
+        }
+        expected_msg = "The given partner is not found!"
+        with self.assertRaises(MissingError) as e:
+            requests.get(self.url, headers=headers)
+        self.assertIn(expected_msg, e.exception.name)
+        return
+
+    def test_email_not_provided(self):
+        """
+        Test the behaviour when the email from header is not found.
+        For this case, we don't fill the PARTNER_EMAIL so it shouldn't
+        have any exception
+        :return:
+        """
+        # Do not provide PARTNER_EMAIL key
+        headers = {
+            'API_KEY': self.api_key,
+        }
+        requests.get(self.url, headers=headers)
+        return
