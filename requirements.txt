@@ -1,6 +1,6 @@
 slugify
 cerberus
-algoliasearch
+algoliasearch<2.0.0
 paypalrestsdk
 stripe
 unidecode
