@@ -43,13 +43,8 @@ class InvaderController(main.RestController):
 
     @classmethod
     def _get_shopinvader_backend_from_request(cls):
-        auth_api_key = getattr(request, 'auth_api_key', None)
         backend_model = request.env['shopinvader.backend']
-        if auth_api_key:
-            return backend_model.search([(
-                'auth_api_key_name', '=', auth_api_key
-            )])
-        return backend_model.browse([])
+        return backend_model._get_from_http_request()
 
     @classmethod
     def _get_shopinvader_session_from_headers(cls, headers):
