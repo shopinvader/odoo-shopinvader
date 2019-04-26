@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from .common import CommonCase
+from odoo import fields
 
 
 class CartCase(CommonCase):
@@ -17,6 +18,19 @@ class CartCase(CommonCase):
         templates = self.env['product.template'].search([])
         templates.write({
             'taxes_id': [(6, 0, [self.env.ref('shopinvader.tax_1').id])]})
+
+    def _create_notification_config(self):
+        template = self.env.ref("account.email_template_edi_invoice")
+        values = {
+            'model_id': self.env.ref("sale.model_sale_order").id,
+            'notification_type': 'cart_send_email',
+            'template_id': template.id,
+        }
+        self.service.shopinvader_backend.write({
+            'notification_ids': [
+                (0, 0, values),
+            ],
+        })
 
     def tearDown(self):
         self.registry.leave_test_mode()
@@ -47,6 +61,25 @@ class AnonymousCartCase(CartCase):
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id, partner)
         self.assertEqual(cart.partner_invoice_id, partner)
+
+    def test_ask_email(self):
+        """
+        Test the ask_email when not logged.
+        As the user is not logged, no email should be created
+        :return:
+        """
+        self._create_notification_config()
+        now = fields.Date.today()
+        self.service.dispatch('ask_email', _id=self.cart.id)
+        notif = "cart_send_email"
+        description = "Notify %s for %s,%s" % (
+            notif, self.cart._name, self.cart.id)
+        domain = [
+            ('name', '=', description),
+            ('date_created', '>=', now),
+        ]
+        # It should not create any queue job because the user is not logged
+        self.assertEquals(self.env['queue.job'].search_count(domain), 0)
 
 
 class CommonConnectedCartCase(CartCase):
@@ -95,6 +128,67 @@ class ConnectedCartCase(CommonConnectedCartCase):
         self.assertEqual(self.cart.typology, 'cart')
         self.cart.action_confirm()
         self.assertEqual(self.cart.typology, 'sale')
+
+    def test_ask_email1(self):
+        """
+        Test the ask_email when a user is logged
+        As the user logged (and owner of this cart for this case), a new
+        queue job should be created to send an email
+        :return:
+        """
+        self._create_notification_config()
+        now = fields.Datetime.now()
+        self.service.dispatch('ask_email', _id=self.cart.id)
+        notif = "cart_send_email"
+        description = "Notify %s for %s,%s" % (
+            notif, self.cart._name, self.cart.id)
+        domain = [
+            ('name', '=', description),
+            ('date_created', '>=', now),
+        ]
+        self.assertEquals(self.env['queue.job'].search_count(domain), 1)
+
+    def test_ask_email2(self):
+        """
+        Test the ask_email when a user is logged
+        As the user logged (and owner of this cart for this case), a new
+        queue job should be created to send an email.
+        But for this case we don't add the notification ("event") so nothing
+        should happens
+        :return:
+        """
+        now = fields.Datetime.now()
+        self.service.dispatch('ask_email', _id=self.cart.id)
+        notif = "cart_send_email"
+        description = "Notify %s for %s,%s" % (
+            notif, self.cart._name, self.cart.id)
+        domain = [
+            ('name', '=', description),
+            ('date_created', '>=', now),
+        ]
+        self.assertEquals(self.env['queue.job'].search_count(domain), 0)
+
+    def test_ask_email3(self):
+        """
+        Test the ask_email when a user is logged
+        As the user logged (and NOT owner of this cart for this case), any
+        new queue job should be created.
+        :return:
+        """
+        self._create_notification_config()
+        now = fields.Datetime.now()
+        self.cart.write({
+            'partner_id': self.partner.copy({}).id,
+        })
+        self.service.dispatch('ask_email', _id=self.cart.id)
+        notif = "cart_send_email"
+        description = "Notify %s for %s,%s" % (
+            notif, self.cart._name, self.cart.id)
+        domain = [
+            ('name', '=', description),
+            ('date_created', '>=', now),
+        ]
+        self.assertEquals(self.env['queue.job'].search_count(domain), 0)
 
 
 class ConnectedCartNoTaxCase(CartCase):

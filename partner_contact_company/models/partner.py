@@ -13,7 +13,12 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     company = fields.Char("Company", index=True)
-    contact_name = fields.Char("Contact name", index=True)
+    contact_name = fields.Char(
+        "Contact name",
+        index=True,
+        # We don't have to copy it to avoid issue
+        copy=False,
+    )
 
     name = fields.Char(
         compute="_compute_name",

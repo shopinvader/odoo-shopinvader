@@ -18,12 +18,24 @@ class ShopinvaderNotification(models.Model):
                 'name': _('Cart Confirmation'),
                 'model': 'sale.order',
                 },
+            'cart_send_email': {
+                'name': _('Cart ask by email'),
+                'model': 'sale.order',
+                },
+            'sale_send_email': {
+                'name': _('Sale ask by email'),
+                'model': 'sale.order',
+                },
             'sale_confirmation': {
                 'name': _('Sale Confirmation'),
                 'model': 'sale.order',
                 },
             'invoice_open': {
                 'name': _('Invoice Validated'),
+                'model': 'account.invoice',
+                },
+            'invoice_send_email': {
+                'name': _('Invoice send email'),
                 'model': 'account.invoice',
                 },
             'new_customer_welcome': {

@@ -23,6 +23,15 @@ class SaleService(Component):
     def search(self, **params):
         return self._paginate_search(**params)
 
+    def ask_email_invoice(self, _id):
+        """
+        Ask to receive invoices related to sale ID by email
+        :param _id: int
+        :return:
+        """
+        self._ask_email_invoice = True
+        return self.ask_email(_id)
+
     # Validator
     def _validator_search(self):
         return {
@@ -46,6 +55,9 @@ class SaleService(Component):
                 },
             }
 
+    def _validator_ask_email_invoice(self):
+        return self._validator_ask_email()
+
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
@@ -56,3 +68,27 @@ class SaleService(Component):
             ('shopinvader_backend_id', '=', self.shopinvader_backend.id),
             ('typology', '=', 'sale'),
             ]
+
+    def _get_email_notification_type(self, record):
+        """
+        Inherit to add the notification type for invoices related to this SO
+        :param record: target record
+        :return: str
+        """
+        result = super(SaleService, self)._get_email_notification_type(record)
+        if getattr(self, '_ask_email_invoice', False):
+            result = 'invoice_send_email'
+        return result
+
+    def _launch_notification(self, target, notif_type):
+        """
+        Action to launch the notification (on the current backend) for the
+        given record
+        :param target: record
+        :param notif_type: str
+        :return: bool
+        """
+        if notif_type == 'invoice_send_email':
+            target = target.invoice_ids
+        return super(SaleService, self)._launch_notification(
+            target, notif_type)

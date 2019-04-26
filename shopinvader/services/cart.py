@@ -141,6 +141,7 @@ class CartService(Component):
                 'type': 'integer'
             },
         }
+
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
@@ -330,6 +331,14 @@ class CartService(Component):
             'product_uom_qty': params['item_qty'],
             'order_id': cart.id,
         }
+
+    def _load_target_email(self, record_id):
+        """
+        As this service doesn't have a _expose_model, we have to do it manually
+        :param record_id: int
+        :return: record or None
+        """
+        return self.env['sale.order'].browse(record_id)
 
     def _get_openapi_default_parameters(self):
         defaults = super(
