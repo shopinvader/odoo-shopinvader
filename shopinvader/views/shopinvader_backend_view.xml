@@ -49,6 +49,12 @@
                             </group>
                         </page>
                         <page name="search_eng" string="Search engine">
+                            <group>
+                                <group>
+                                    <field name="website_public_name"/>
+                                </group>
+                                <group></group>
+                            </group>
                             <group name="search_filters" colspan="4">
                                 <field name="filter_ids" nolabel="1"/>
                             </group>
