@@ -173,6 +173,7 @@ class AbstractPaymentService(AbstractComponent):
         params['return_url'] = self._get_return_url(provider_name)
         transaction = self.env['gateway.transaction'].generate(
             provider_name, target, **params)
+        self._update_target_with_transaction(target, transaction)
         return self._execute_payment_action(
             provider_name, transaction, target, params)
 
@@ -181,7 +182,6 @@ class AbstractPaymentService(AbstractComponent):
         if transaction.url:
             return {'redirect_to': transaction.url}
         elif transaction.state in ('succeeded', 'to_capture'):
-            self._update_target_with_transaction(target, transaction)
             return self._action_after_payment(target)
         else:
             raise UserError(_('Payment failed please retry'))
