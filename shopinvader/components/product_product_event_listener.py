@@ -8,15 +8,17 @@ from odoo.addons.component_event import skip_if
 
 
 class ProductProductEventListener(Component):
-    _name = 'product.product.event.listener'
-    _inherit = 'base.event.listener'
+    _name = "product.product.event.listener"
+    _inherit = "base.event.listener"
 
-    _apply_on = [
-        'product.product',
-    ]
+    _apply_on = ["product.product"]
 
-    @skip_if(lambda self, record, **kwargs:
-             not record.product_tmpl_id.shopinvader_bind_ids)
+    # fmt: off
+    @skip_if(
+        lambda self, record, **kwargs: not record.product_tmpl_id.
+        shopinvader_bind_ids
+    )
+    # fmt: on
     def on_record_create(self, record, fields=None):
         """
         Event listener on the create of product.product.
@@ -28,14 +30,14 @@ class ProductProductEventListener(Component):
         :return:
         """
         shopinv_products = record.mapped(
-            "product_tmpl_id.shopinvader_bind_ids")
+            "product_tmpl_id.shopinvader_bind_ids"
+        )
         shopinv_variants = self._launch_shopinvader_variant_creation(
-            shopinv_products)
+            shopinv_products
+        )
         # If at least 1 is True, force False
         if any(shopinv_variants.mapped("active")):
-            shopinv_variants.write({
-                'active': False,
-            })
+            shopinv_variants.write({"active": False})
 
     def _launch_shopinvader_variant_creation(self, shopinvader_products):
         """
@@ -44,7 +46,7 @@ class ProductProductEventListener(Component):
         :param shopinvader_products: shopinvader.product recordset
         :return: shopinvader.variant recordset
         """
-        shopinv_variants = self.env['shopinvader.variant'].browse()
+        shopinv_variants = self.env["shopinvader.variant"].browse()
         for shopinv_product in shopinvader_products:
             shopinv_variants |= shopinv_product._create_shopinvader_variant()
         return shopinv_variants

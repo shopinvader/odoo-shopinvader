@@ -8,7 +8,6 @@ from odoo.addons.shopinvader.tests.common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):
-
     def setUp(self):
         super(ProductCase, self).setUp()
         self.env["product.category"]._parent_store_compute()
@@ -19,13 +18,16 @@ class ProductCase(ProductCommonCase):
         categs = categ + categ.parent_id + categ.parent_id.parent_id
         self.assertEqual(
             categs,
-            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'))
+            self.shopinvader_variant.shopinvader_categ_ids.mapped("record_id"),
+        )
 
     def test_multi_categories(self):
         self.backend.bind_all_category()
-        categs = self.env['product.category'].search(
-            [('id', '!=', self.template.categ_id.id)])
+        categs = self.env["product.category"].search(
+            [("id", "!=", self.template.categ_id.id)]
+        )
         self.template.categ_ids = categs
         self.assertEqual(
             self.template.categ_id + categs,
-            self.shopinvader_variant.shopinvader_categ_ids.mapped('record_id'))
+            self.shopinvader_variant.shopinvader_categ_ids.mapped("record_id"),
+        )

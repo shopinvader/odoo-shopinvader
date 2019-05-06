@@ -3,8 +3,10 @@
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import fields, models
 import logging
+
+from odoo import fields, models
+
 _logger = logging.getLogger(__name__)
 
 try:
@@ -14,7 +16,7 @@ except (ImportError, IOError) as err:
 
 
 class ShopinvaderBackend(models.Model):
-    _inherit = 'shopinvader.backend'
+    _inherit = "shopinvader.backend"
 
     warehouse_ids = fields.Many2many(
         "stock.warehouse",
@@ -25,27 +27,27 @@ class ShopinvaderBackend(models.Model):
         "ir.model.fields",
         "Product stock field",
         domain=[
-            ('ttype', 'in', ['float', 'integer']),
-            ('model', 'in', ['product.product', 'product.template']),
+            ("ttype", "in", ["float", "integer"]),
+            ("model", "in", ["product.product", "product.template"]),
         ],
         help="Field used to have the current stock of a product.product",
         default=lambda self: self._default_stock_field_id(),
     )
-    synchronize_stock = fields.Selection([
-        ('immediatly', 'Immediatly'),
-        ('in_batch', 'In Batch'),
-        ], default='immediatly',
+    synchronize_stock = fields.Selection(
+        [("immediatly", "Immediatly"), ("in_batch", "In Batch")],
+        default="immediatly",
         help=(
-            'If immediatly the stock will be exported after each '
+            "If immediatly the stock will be exported after each "
             'modification. If "In batch" the stock exported every X time '
-            'depending on the cron configuration')
-        )
+            "depending on the cron configuration"
+        ),
+    )
 
     def _default_stock_field_id(self):
-        return self.env.ref('stock.field_product_product_qty_available')
+        return self.env.ref("stock.field_product_product_qty_available")
 
     def _default_warehouse_ids(self):
-        return self.env['stock.warehouse'].search([], limit=1)
+        return self.env["stock.warehouse"].search([], limit=1)
 
     def _get_warehouse_list_for_export(self):
         """Return the list of warehouse what will be used for exporting the
@@ -53,7 +55,7 @@ class ShopinvaderBackend(models.Model):
         warehouse ids
         :return: dict with warehouse code as key and warehouse_ids as value """
         self.ensure_one()
-        result = {'global': self.warehouse_ids.ids}
+        result = {"global": self.warehouse_ids.ids}
         if len(self.warehouse_ids) > 1:
             for warehouse in self.warehouse_ids:
                 result[slugify(warehouse.code)] = [warehouse.id]

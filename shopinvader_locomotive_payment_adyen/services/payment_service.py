@@ -11,10 +11,10 @@ from odoo.addons.component.core import Component
 
 
 class PaymentServiceAdyen(Component):
-    _inherit = 'payment.service.adyen'
+    _inherit = "payment.service.adyen"
 
     def _remove_header_params(self, schema):
-        for key in ['accept_header', 'user_agent', 'shopper_ip']:
+        for key in ["accept_header", "user_agent", "shopper_ip"]:
             schema.pop(key)
 
     def _validator_add_payment(self):
@@ -25,6 +25,6 @@ class PaymentServiceAdyen(Component):
     def _validator_check_payment(self):
         schema = super(PaymentServiceAdyen, self)._validator_check_payment()
         self._remove_header_params(schema)
-        for key in ['MD', 'PaRes']:
+        for key in ["MD", "PaRes"]:
             schema[key] = schema.pop(key.lower())
         return schema

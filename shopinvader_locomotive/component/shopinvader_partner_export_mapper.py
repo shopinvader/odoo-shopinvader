@@ -8,19 +8,17 @@ from odoo.addons.connector.components.mapper import mapping
 
 
 class ShopinvaderPartnerExportMapper(Component):
-    _name = 'shopinvader.partner.export.mapper'
-    _inherit = ['locomotive.export.mapper']
-    _usage = 'export.mapper'
+    _name = "shopinvader.partner.export.mapper"
+    _inherit = ["locomotive.export.mapper"]
+    _usage = "export.mapper"
 
-    direct = [
-        ('email', 'email'),
-    ]
+    direct = [("email", "email")]
 
     @mapping
     def role(self, record):
-        return {'role': 'default'}
+        return {"role": "default"}
 
     @mapping
     def name(self, record):
         # we do not use a direct mapping to simplify the inherit
-        return {'name': record.name}
+        return {"name": record.name}

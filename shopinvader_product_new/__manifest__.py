@@ -12,19 +12,14 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    'installable': True,
-    "external_dependencies": {
-    },
-    "depends": [
-        'shopinvader',
-    ],
+    "installable": True,
+    "external_dependencies": {},
+    "depends": ["shopinvader"],
     "data": [
-        'views/product_template.xml',
+        "views/product_template.xml",
         "data/ir_export_product.xml",
         "data/ir_cron.xml",
     ],
-    "demo": [
-    ],
-    "qweb": [
-    ]
+    "demo": [],
+    "qweb": [],
 }

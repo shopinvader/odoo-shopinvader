@@ -7,8 +7,8 @@ import json
 import logging
 
 from odoo import _
-from odoo.exceptions import UserError
 from odoo.addons.component.core import AbstractComponent, Component
+from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
 
@@ -22,8 +22,8 @@ _logger = logging.getLogger(__name__)
 
 
 class LocomotiveAdapter(AbstractComponent):
-    _name = 'locomotive.abstract.adapter'
-    _inherit = ['base.backend.adapter', 'base.locomotive.connector']
+    _name = "locomotive.abstract.adapter"
+    _inherit = ["base.backend.adapter", "base.locomotive.connector"]
 
     def __init__(self, work_context):
         super(LocomotiveAdapter, self).__init__(work_context)
@@ -32,7 +32,8 @@ class LocomotiveAdapter(AbstractComponent):
             backend.username,
             backend._get_keychain_account()._get_password(),
             backend.handle,
-            backend.location)
+            backend.location,
+        )
 
     def create(self, vals):
         return self.resource.create(vals)
@@ -51,8 +52,8 @@ class LocomotiveAdapter(AbstractComponent):
 
 
 class LocomotiveContentAdapter(Component):
-    _name = 'locomotive.content.adapter'
-    _inherit = 'locomotive.abstract.adapter'
+    _name = "locomotive.content.adapter"
+    _inherit = "locomotive.abstract.adapter"
     _content_type = None
     _apply_on = []
 
@@ -62,8 +63,8 @@ class LocomotiveContentAdapter(Component):
 
 
 class LocomotiveAssetAdapter(Component):
-    _name = 'locomotive.asset.adapter'
-    _inherit = 'locomotive.abstract.adapter'
+    _name = "locomotive.asset.adapter"
+    _inherit = "locomotive.abstract.adapter"
     _content_type = None
     _apply_on = []
 
@@ -73,9 +74,9 @@ class LocomotiveAssetAdapter(Component):
 
 
 class LocomotiveBackendAdapter(Component):
-    _name = 'shopinvader.backend.adapter'
-    _inherit = 'locomotive.content.adapter'
-    _apply_on = 'shopinvader.backend'
+    _name = "shopinvader.backend.adapter"
+    _inherit = "locomotive.content.adapter"
+    _apply_on = "shopinvader.backend"
 
     def __init__(self, work_context):
         super(LocomotiveBackendAdapter, self).__init__(work_context)
@@ -83,11 +84,9 @@ class LocomotiveBackendAdapter(Component):
 
     def _get_site(self, handle):
         for site in self.resource.search():
-            if site['handle'] == handle:
+            if site["handle"] == handle:
                 return site
-        raise UserError(
-            _('No site was found for the handle %s')
-            % handle)
+        raise UserError(_("No site was found for the handle %s") % handle)
 
     def write(self, handle, vals):
         """
@@ -97,8 +96,8 @@ class LocomotiveBackendAdapter(Component):
             To update it we need to read it, update it and push it
         """
         site = self._get_site(handle)
-        metafields = json.loads(site['metafields'])
-        metafields['_store'].update(vals)
-        return self.resource.write(site['_id'], {
-            'metafields': json.dumps(metafields),
-            })
+        metafields = json.loads(site["metafields"])
+        metafields["_store"].update(vals)
+        return self.resource.write(
+            site["_id"], {"metafields": json.dumps(metafields)}
+        )

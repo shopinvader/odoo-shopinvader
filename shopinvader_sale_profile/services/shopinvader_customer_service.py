@@ -7,15 +7,17 @@ from odoo.addons.component.core import Component
 
 
 class ShopInvaderCustomerService(Component):
-    _inherit = 'shopinvader.customer.service'
+    _inherit = "shopinvader.customer.service"
 
     def _prepare_params(self, params):
-        params = super(ShopInvaderCustomerService, self).\
-            _prepare_params(params)
+        params = super(ShopInvaderCustomerService, self)._prepare_params(
+            params
+        )
         backend = self.shopinvader_backend
         if backend.use_sale_profile:
-            params['property_product_pricelist'] =\
-                backend.sale_profile_ids.filtered('default').id
+            params[
+                "property_product_pricelist"
+            ] = backend.sale_profile_ids.filtered("default").id
         return params
 
     def _prepare_create_response(self, binding):
@@ -25,10 +27,9 @@ class ShopInvaderCustomerService(Component):
         :param binding: instance of shopinvader.binding
         :return: dict
         """
-        response = super(ShopInvaderCustomerService, self)\
-            ._prepare_create_response(binding=binding)
-        data = response.get('data', {})
-        data.update({
-            'sale_profile': binding.sale_profile_id.code,
-        })
+        response = super(
+            ShopInvaderCustomerService, self
+        )._prepare_create_response(binding=binding)
+        data = response.get("data", {})
+        data.update({"sale_profile": binding.sale_profile_id.code})
         return response

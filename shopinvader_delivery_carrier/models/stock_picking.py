@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = "stock.picking"
 
     @api.multi
     def _notify_backend(self, notification):
@@ -14,7 +14,7 @@ class StockPicking(models.Model):
         :param notification: str
         :return: bool
         """
-        if notification == 'stock_picking_outgoing_validated':
+        if notification == "stock_picking_outgoing_validated":
             self._notify_backend_outgoing(notification)
         return True
 
@@ -26,14 +26,21 @@ class StockPicking(models.Model):
         :return: bool
         """
         picking_outgoing = self.filtered(
-            lambda p: p.picking_type_id.code == 'outgoing')
+            lambda p: p.picking_type_id.code == "outgoing"
+        )
         all_move_lines = picking_outgoing.mapped("move_lines")
         backends = picking_outgoing._get_related_backends()
+
+        def filter_line(l, b):
+            lbackend = (
+                l.procurement_id.sale_line_id.order_id.shopinvader_backend_id
+            )
+            return lbackend == b
+
         for backend in backends:
             move_lines = all_move_lines.filtered(
-                lambda l, b=backend:
-                l.procurement_id.sale_line_id.order_id.
-                    shopinvader_backend_id == b)
+                lambda l, b=backend: filter_line(l, b)
+            )
             pickings = move_lines.mapped("picking_id")
             for picking in pickings:
                 backend._send_notification(notification, picking)
@@ -48,7 +55,8 @@ class StockPicking(models.Model):
         move_lines = self.mapped("move_lines")
         # Load backend from related sale order lines
         backends = move_lines.mapped(
-            "procurement_id.sale_line_id.order_id.shopinvader_backend_id")
+            "procurement_id.sale_line_id.order_id.shopinvader_backend_id"
+        )
         return backends
 
     @api.multi

@@ -7,9 +7,12 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = "sale.order"
 
     def _get_available_carrier(self):
         self.ensure_one()
-        return self.shopinvader_backend_id.with_context(
-            order_id=self.id).carrier_ids.filtered('available').sorted('price')
+        return (
+            self.shopinvader_backend_id.with_context(order_id=self.id)
+            .carrier_ids.filtered("available")
+            .sorted("price")
+        )

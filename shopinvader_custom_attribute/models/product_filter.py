@@ -9,21 +9,20 @@ from odoo.addons.shopinvader.models.tools import sanitize_attr_name
 
 
 class ProductFilter(models.Model):
-    _inherit = 'product.filter'
+    _inherit = "product.filter"
 
     based_on = fields.Selection(
-        selection_add=[
-            ('custom_attribute', 'Custom Attribute'),
-        ],
+        selection_add=[("custom_attribute", "Custom Attribute")]
     )
     custom_attribute_id = fields.Many2one(
-        string='Attribute',
-        comodel_name='attribute.attribute'
+        string="Attribute", comodel_name="attribute.attribute"
     )
 
     def _build_display_name(self):
-        if self.based_on == 'custom_attribute':
-            return 'attributes.%s'\
+        if self.based_on == "custom_attribute":
+            return (
+                "attributes.%s"
                 % sanitize_attr_name(self.custom_attribute_id)[2:]
+            )
         else:
             return super(ProductFilter, self)._build_display_name()

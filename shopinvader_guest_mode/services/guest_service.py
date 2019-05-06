@@ -3,22 +3,22 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
-from werkzeug.exceptions import NotFound, Forbidden
+from werkzeug.exceptions import Forbidden, NotFound
 
 
 class GuestService(Component):
-    _name = 'shopinvader.guest.service'
-    _inherit = 'shopinvader.customer.service'
-    _usage = 'guest'
+    _name = "shopinvader.guest.service"
+    _inherit = "shopinvader.customer.service"
+    _usage = "guest"
 
     # The following method are 'public' and can be called from the controller.
     def create(self, **params):
         if not self.shopinvader_backend.is_guest_mode_allowed:
-            raise Forbidden('Guest mode not allowed.')
-        params['is_guest'] = True
-        self._archive_existing_binding(params['email'])
+            raise Forbidden("Guest mode not allowed.")
+        params["is_guest"] = True
+        self._archive_existing_binding(params["email"])
         resp = super(GuestService, self).create(**params)
-        resp['store_cache']['customer']['is_guest'] = True
+        resp["store_cache"]["customer"]["is_guest"] = True
         return resp
 
     def search(self, email):
@@ -27,9 +27,7 @@ class GuestService(Component):
         :param email:
         """
         res = self._get_binding(email)
-        return {
-            'found': len(res) > 0
-        }
+        return {"found": len(res) > 0}
 
     def register(self, email, external_id):
         """
@@ -40,10 +38,7 @@ class GuestService(Component):
         binding = self._get_binding(email)
         if not binding:
             raise NotFound(email)
-        binding.write({
-            'is_guest': False,
-            'external_id': external_id
-        })
+        binding.write({"is_guest": False, "external_id": external_id})
         self.work.partner = binding.record_id
         return self._prepare_create_response(binding)
 
@@ -54,7 +49,7 @@ class GuestService(Component):
         binding = self._get_binding(email)
         if not binding:
             raise NotFound(email)
-        return {'store_cache': {'customer': {}}}
+        return {"store_cache": {"customer": {}}}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -62,56 +57,37 @@ class GuestService(Component):
 
     def _validator_create(self):
         schema = super(GuestService, self)._validator_create()
-        if 'external_id' in schema:
-            schema.pop('external_id')
+        if "external_id" in schema:
+            schema.pop("external_id")
         return schema
 
     def _validator_search(self):
-        return {
-            'email': {
-                'type': 'string',
-                'required': True,
-            },
-        }
+        return {"email": {"type": "string", "required": True}}
 
     def _validator_return_search(self):
-        return {
-            'found': {
-                'type': 'boolean',
-                'required': True,
-            }
-        }
+        return {"found": {"type": "boolean", "required": True}}
 
     def _validator_register(self):
         return {
-            'email': {
-                'type': 'string',
-                'required': True,
-            },
-            'external_id': {
-                'type': 'string',
-                'required': True,
-            },
+            "email": {"type": "string", "required": True},
+            "external_id": {"type": "string", "required": True},
         }
 
     def _validator_stop(self):
-        return {
-            'email': {
-                'type': 'string',
-                'required': True,
-            }
-        }
+        return {"email": {"type": "string", "required": True}}
 
     def _send_welcome_message(self, binding):
         if binding.is_guest:
             self.shopinvader_backend._send_notification(
-                'guest_customer_welcome', binding.record_id)
+                "guest_customer_welcome", binding.record_id
+            )
         else:
             super(GuestService, self)._send_welcome_message(binding)
 
     def _get_binding(self, email):
-        return self.env['shopinvader.partner'].search([
-            ('email', '=', email), ('is_guest', '=', True)])
+        return self.env["shopinvader.partner"].search(
+            [("email", "=", email), ("is_guest", "=", True)]
+        )
 
     def _archive_existing_binding(self, email):
         """
@@ -123,7 +99,5 @@ class GuestService(Component):
 
     def _to_customer_info(self, partner):
         info = super(GuestService, self)._to_customer_info(partner)
-        info.update({
-            'email': self.partner.email,
-        })
+        info.update({"email": self.partner.email})
         return info

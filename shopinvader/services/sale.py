@@ -8,10 +8,10 @@ from odoo.addons.component.core import Component
 
 
 class SaleService(Component):
-    _inherit = 'shopinvader.abstract.sale.service'
-    _name = 'shopinvader.sale.service'
-    _usage = 'sales'
-    _expose_model = 'sale.order'
+    _inherit = "shopinvader.abstract.sale.service"
+    _name = "shopinvader.sale.service"
+    _usage = "sales"
+    _expose_model = "sale.order"
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
@@ -35,25 +35,15 @@ class SaleService(Component):
     # Validator
     def _validator_search(self):
         return {
-            'id': {
-                'coerce': to_int,
-                'type': 'integer',
+            "id": {"coerce": to_int, "type": "integer"},
+            "per_page": {
+                "coerce": to_int,
+                "nullable": True,
+                "type": "integer",
             },
-            'per_page': {
-                'coerce': to_int,
-                'nullable': True,
-                'type': 'integer',
-                },
-            'page': {
-                'coerce': to_int,
-                'nullable': True,
-                'type': 'integer',
-                },
-            'scope': {
-                'type': 'dict',
-                'nullable': True,
-                },
-            }
+            "page": {"coerce": to_int, "nullable": True, "type": "integer"},
+            "scope": {"type": "dict", "nullable": True},
+        }
 
     def _validator_ask_email_invoice(self):
         return self._validator_ask_email()
@@ -64,10 +54,10 @@ class SaleService(Component):
 
     def _get_base_search_domain(self):
         return [
-            ('partner_id', '=', self.partner.id),
-            ('shopinvader_backend_id', '=', self.shopinvader_backend.id),
-            ('typology', '=', 'sale'),
-            ]
+            ("partner_id", "=", self.partner.id),
+            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+            ("typology", "=", "sale"),
+        ]
 
     def _get_email_notification_type(self, record):
         """
@@ -76,8 +66,8 @@ class SaleService(Component):
         :return: str
         """
         result = super(SaleService, self)._get_email_notification_type(record)
-        if getattr(self, '_ask_email_invoice', False):
-            result = 'invoice_send_email'
+        if getattr(self, "_ask_email_invoice", False):
+            result = "invoice_send_email"
         return result
 
     def _launch_notification(self, target, notif_type):
@@ -88,7 +78,8 @@ class SaleService(Component):
         :param notif_type: str
         :return: bool
         """
-        if notif_type == 'invoice_send_email':
+        if notif_type == "invoice_send_email":
             target = target.invoice_ids
         return super(SaleService, self)._launch_notification(
-            target, notif_type)
+            target, notif_type
+        )

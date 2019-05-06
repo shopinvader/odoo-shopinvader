@@ -11,10 +11,7 @@
     "website": "https://shopinvader.com/",
     "author": "Akretion",
     "license": "AGPL-3",
-    "depends": [
-        "shopinvader",
-        "product_multi_category",
-    ],
-    'installable': True,
+    "depends": ["shopinvader", "product_multi_category"],
+    "installable": True,
     "auto_install": True,
 }

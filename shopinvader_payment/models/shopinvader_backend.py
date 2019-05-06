@@ -7,13 +7,10 @@ from odoo import fields, models
 
 
 class ShopinvaderBackend(models.Model):
-    _inherit = 'shopinvader.backend'
+    _inherit = "shopinvader.backend"
 
     payment_method_ids = fields.One2many(
-        'shopinvader.payment',
-        'backend_id',
-        'Payment Method')
-
-    location = fields.Char(
-        required=True
+        "shopinvader.payment", "backend_id", "Payment Method"
     )
+
+    location = fields.Char(required=True)

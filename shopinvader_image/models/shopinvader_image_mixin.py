@@ -7,12 +7,12 @@ from odoo import api, fields, models
 
 
 class ShopinvaderImageMixin(models.AbstractModel):
-    _name = 'shopinvader.image.mixin'
+    _name = "shopinvader.image.mixin"
     _image_field = None
 
     images = fields.Serialized(
-        compute='_compute_image',
-        string='Shopinvader Image')
+        compute="_compute_image", string="Shopinvader Image"
+    )
 
     @api.multi
     def _compute_image(self):
@@ -35,17 +35,18 @@ class ShopinvaderImageMixin(models.AbstractModel):
         self.ensure_one()
         res = []
         resizes = self.backend_id[
-            '%s_resize_ids' % self._name.replace('.', '_')]
+            "%s_resize_ids" % self._name.replace(".", "_")
+        ]
         for image_relation in self[self._image_field]:
             url_key = self._get_image_url_key(image_relation)
             image_data = {}
             for resize in resizes:
                 thumbnail = image_relation.image_id.get_or_create_thumbnail(
-                    resize.size_x,
-                    resize.size_y,
-                    url_key=url_key)
+                    resize.size_x, resize.size_y, url_key=url_key
+                )
                 image_data[resize.key] = self._prepare_data_resize(
-                    thumbnail, image_relation)
+                    thumbnail, image_relation
+                )
             res.append(image_data)
         return res
 
@@ -58,11 +59,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
         :return: dict
         """
         self.ensure_one()
-        tag = ''
+        tag = ""
         if image_relation.tag_id:
             tag = image_relation.tag_id.name
-        return {
-            'src': thumbnail.url,
-            'alt': self.name,
-            'tag': tag,
-        }
+        return {"src": thumbnail.url, "alt": self.name, "tag": tag}

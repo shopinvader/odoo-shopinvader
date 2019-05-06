@@ -5,33 +5,26 @@ from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
-
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderCategoryBindingWizard, cls).setUpClass()
-        cls.backend = cls.env.ref('shopinvader.backend_1')
-        cls.backend2 = cls.backend.copy({
-            'name': 'Awesome Invader',
-        })
-        cls.product_category = cls.env.ref('product.product_category_4')
-        cls.bind_wizard_model = cls.env[
-            'shopinvader.category.binding.wizard']
+        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend2 = cls.backend.copy({"name": "Awesome Invader"})
+        cls.product_category = cls.env.ref("product.product_category_4")
+        cls.bind_wizard_model = cls.env["shopinvader.category.binding.wizard"]
         cls.unbind_wizard_model = cls.env[
-            'shopinvader.category.unbinding.wizard']
-        cls.category_bind_model = cls.env['shopinvader.category']
-        cat_obj = cls.env['product.category']
+            "shopinvader.category.unbinding.wizard"
+        ]
+        cls.category_bind_model = cls.env["shopinvader.category"]
+        cat_obj = cls.env["product.category"]
 
-        cls.cat_level1 = cat_obj.create({
-            'name': 'Category Level 1'
-        })
-        cls.cat_level2 = cat_obj.create({
-            'name': 'Category Level 2',
-            'parent_id': cls.cat_level1.id
-        })
-        cls.cat_level3 = cat_obj.create({
-            'name': 'Category Level 3',
-            'parent_id': cls.cat_level2.id
-        })
+        cls.cat_level1 = cat_obj.create({"name": "Category Level 1"})
+        cls.cat_level2 = cat_obj.create(
+            {"name": "Category Level 2", "parent_id": cls.cat_level1.id}
+        )
+        cls.cat_level3 = cat_obj.create(
+            {"name": "Category Level 3", "parent_id": cls.cat_level2.id}
+        )
         cls.cat_level1._parent_store_compute()
 
     def test_category_binding(self):
@@ -51,15 +44,17 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # Bind the category to the Backend
         # --------------------------------
-        bind_wizard = self.bind_wizard_model.create({
-            'backend_id': backend.id,
-            'product_category_ids': [(6, 0, product_category.ids)],
-        })
+        bind_wizard = self.bind_wizard_model.create(
+            {
+                "backend_id": backend.id,
+                "product_category_ids": [(6, 0, product_category.ids)],
+            }
+        )
 
         bind_wizard.action_bind_categories()
         domain = [
-            ('record_id', '=', product_category.id),
-            ('backend_id', '=', backend.id),
+            ("record_id", "=", product_category.id),
+            ("backend_id", "=", backend.id),
         ]
 
         # A binding record should exists
@@ -68,15 +63,17 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         self.assertEqual(bind_record, product_category.shopinvader_bind_ids)
 
         # Do the same for the second backend
-        bind_wizard2 = self.bind_wizard_model.create({
-            'backend_id': self.backend2.id,
-            'product_category_ids': [(6, 0, product_category.ids)],
-        })
+        bind_wizard2 = self.bind_wizard_model.create(
+            {
+                "backend_id": self.backend2.id,
+                "product_category_ids": [(6, 0, product_category.ids)],
+            }
+        )
 
         bind_wizard2.action_bind_categories()
         domain_bk2 = [
-            ('record_id', '=', product_category.id),
-            ('backend_id', '=', self.backend2.id),
+            ("record_id", "=", product_category.id),
+            ("backend_id", "=", self.backend2.id),
         ]
 
         # A binding record should exists
@@ -87,9 +84,9 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # UnBind the category
         # --------------------------------
-        unbind_wizard = unbind_wizard_model.create({
-            'shopinvader_category_ids': [(6, 0, bind_record.ids)],
-        })
+        unbind_wizard = unbind_wizard_model.create(
+            {"shopinvader_category_ids": [(6, 0, bind_record.ids)]}
+        )
         unbind_wizard.action_unbind_categories()
 
         # The binding record should be unreachable
@@ -101,7 +98,8 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
 
         # The binding record should still exist but inactive
         bind_record = category_bind_model.with_context(
-            active_test=False).search(domain)
+            active_test=False
+        ).search(domain)
 
         self.assertEqual(len(bind_record), 1)
 
@@ -109,8 +107,8 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # Bind the category again
         # --------------------------------
         values = {
-            'backend_id': backend.id,
-            'product_category_ids': [(6, 0, product_category.ids)],
+            "backend_id": backend.id,
+            "product_category_ids": [(6, 0, product_category.ids)],
         }
         # Active test because product.category is active = False
         bind_wizard = bind_wizard_model.create(values)
@@ -122,9 +120,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
 
     def install_lang(self, lang_xml_id):
         lang = self.env.ref(lang_xml_id)
-        wizard = self.env['base.language.install'].create({
-            'lang': lang.code,
-        })
+        wizard = self.env["base.language.install"].create({"lang": lang.code})
         wizard.lang_install()
         return lang
 
@@ -135,7 +131,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         - unbind it
         - bind it again
         """
-        lang = self.install_lang('base.lang_fr')
+        lang = self.install_lang("base.lang_fr")
         self.backend.lang_ids |= lang
         self.backend2.lang_ids |= lang
         category_bind_model = self.category_bind_model
@@ -148,14 +144,16 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # Bind the category to the Backend
         # --------------------------------
-        bind_wizard = self.bind_wizard_model.create({
-            'backend_id': backend.id,
-            'product_category_ids': [(6, 0, product_category.ids)],
-        })
+        bind_wizard = self.bind_wizard_model.create(
+            {
+                "backend_id": backend.id,
+                "product_category_ids": [(6, 0, product_category.ids)],
+            }
+        )
         bind_wizard.action_bind_categories()
         domain = [
-            ('record_id', '=', product_category.id),
-            ('backend_id', '=', backend.id),
+            ("record_id", "=", product_category.id),
+            ("backend_id", "=", backend.id),
         ]
 
         # A binding record should exists
@@ -165,14 +163,16 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         self.assertEqual(bind_record, product_category.shopinvader_bind_ids)
 
         # Do the same for the second backend
-        bind_wizard2 = self.bind_wizard_model.create({
-            'backend_id': self.backend2.id,
-            'product_category_ids': [(6, 0, product_category.ids)],
-        })
+        bind_wizard2 = self.bind_wizard_model.create(
+            {
+                "backend_id": self.backend2.id,
+                "product_category_ids": [(6, 0, product_category.ids)],
+            }
+        )
         bind_wizard2.action_bind_categories()
         domain_bk2 = [
-            ('record_id', '=', product_category.id),
-            ('backend_id', '=', self.backend2.id),
+            ("record_id", "=", product_category.id),
+            ("backend_id", "=", self.backend2.id),
         ]
 
         # A binding record should exists
@@ -185,9 +185,9 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # UnBind the category
         # --------------------------------
-        unbind_wizard = unbind_wizard_model.create({
-            'shopinvader_category_ids': [(6, 0, bind_record.ids)],
-        })
+        unbind_wizard = unbind_wizard_model.create(
+            {"shopinvader_category_ids": [(6, 0, bind_record.ids)]}
+        )
         unbind_wizard.action_unbind_categories()
 
         # The binding record should be unreachable
@@ -199,7 +199,8 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
             self.assertTrue(shopinv_categ.exists())
         # The binding record should still exist but inactive
         bind_record = category_bind_model.with_context(
-            active_test=False).search(domain)
+            active_test=False
+        ).search(domain)
 
         self.assertEqual(len(bind_record), 2)
 
@@ -207,8 +208,8 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # Bind the category again
         # --------------------------------
         values = {
-            'backend_id': backend.id,
-            'product_category_ids': [(6, 0, product_category.ids)],
+            "backend_id": backend.id,
+            "product_category_ids": [(6, 0, product_category.ids)],
         }
         # Active test because product.category is active = False
         bind_wizard = bind_wizard_model.create(values)
@@ -230,15 +231,17 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # Bind the category to the Backend
         # --------------------------------
-        bind_wizard = bind_wizard_model.create({
-            'backend_id': backend.id,
-            'product_category_ids': [(6, 0, product_category.ids)],
-        })
+        bind_wizard = bind_wizard_model.create(
+            {
+                "backend_id": backend.id,
+                "product_category_ids": [(6, 0, product_category.ids)],
+            }
+        )
         bind_wizard.action_bind_categories()
 
         domain = [
-            ('record_id', '=', product_category.id),
-            ('backend_id', '=', backend.id),
+            ("record_id", "=", product_category.id),
+            ("backend_id", "=", backend.id),
         ]
         # A binding record should exists
         nb_bind_record = category_bind_model.search_count(domain)
@@ -248,7 +251,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # Inactivate the category
         # --------------------------------
-        product_category.write({'active': False})
+        product_category.write({"active": False})
 
         # The binding record should be unreachable
         nb_bind_record = category_bind_model.search_count(domain)
@@ -258,7 +261,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # Re-activate the category
         # --------------------------------
-        product_category.write({'active': True})
+        product_category.write({"active": True})
 
         # The binding record should be still unreachable
         nb_bind_record = category_bind_model.search_count(domain)
@@ -269,7 +272,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         bind_record = category_bind_model.search(domain)
         self.assertTrue(bind_record)
         # Disable the category and the binded record should be disabled too
-        product_category.write({'active': False})
+        product_category.write({"active": False})
         self.assertFalse(bind_record.active)
 
     def test_child_no_auto_bind(self):
@@ -280,17 +283,21 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # Bind the category to the Backend
         # --------------------------------
-        bind_wizard = bind_wizard_model.create({
-            'backend_id': backend.id,
-            'product_category_ids': [(6, 0, self.cat_level1.ids)],
-        })
+        bind_wizard = bind_wizard_model.create(
+            {
+                "backend_id": backend.id,
+                "product_category_ids": [(6, 0, self.cat_level1.ids)],
+            }
+        )
         bind_wizard.action_bind_categories()
 
         domain = [
-            ('record_id', 'in', [self.cat_level1.id,
-                                 self.cat_level2.id,
-                                 self.cat_level3.id]),
-            ('backend_id', '=', backend.id),
+            (
+                "record_id",
+                "in",
+                [self.cat_level1.id, self.cat_level2.id, self.cat_level3.id],
+            ),
+            ("backend_id", "=", backend.id),
         ]
 
         # A binding record should exists
@@ -307,18 +314,22 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # Bind the category to the Backend
         # --------------------------------
-        bind_wizard = bind_wizard_model.create({
-            'backend_id': backend.id,
-            'child_autobinding': True,
-            'product_category_ids': [(6, 0, self.cat_level1.ids)],
-        })
+        bind_wizard = bind_wizard_model.create(
+            {
+                "backend_id": backend.id,
+                "child_autobinding": True,
+                "product_category_ids": [(6, 0, self.cat_level1.ids)],
+            }
+        )
         bind_wizard.action_bind_categories()
 
         domain = [
-            ('record_id', 'in', [self.cat_level1.id,
-                                 self.cat_level2.id,
-                                 self.cat_level3.id]),
-            ('backend_id', '=', backend.id),
+            (
+                "record_id",
+                "in",
+                [self.cat_level1.id, self.cat_level2.id, self.cat_level3.id],
+            ),
+            ("backend_id", "=", backend.id),
         ]
 
         # A binding record should exists
@@ -329,11 +340,12 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
         # --------------------------------
         # UnBind the category
         # --------------------------------
-        parent_level = bind_record.filtered(lambda x: x.record_id.id ==
-                                            self.cat_level1.id)
-        unbind_wizard = unbind_wizard_model.create({
-            'shopinvader_category_ids': [(6, 0, parent_level.ids)],
-        })
+        parent_level = bind_record.filtered(
+            lambda x: x.record_id.id == self.cat_level1.id
+        )
+        unbind_wizard = unbind_wizard_model.create(
+            {"shopinvader_category_ids": [(6, 0, parent_level.ids)]}
+        )
         unbind_wizard.action_unbind_categories()
 
         # The binding record should be unreachable

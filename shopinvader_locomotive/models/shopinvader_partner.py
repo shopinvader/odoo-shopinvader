@@ -6,5 +6,5 @@ from odoo import models
 
 
 class ShopinvaderPartner(models.Model):
-    _name = 'shopinvader.partner'
-    _inherit = ['shopinvader.partner', 'locomotive.binding']
+    _name = "shopinvader.partner"
+    _inherit = ["shopinvader.partner", "locomotive.binding"]

@@ -2,11 +2,9 @@
 # Copyright 2019 ACSONE SA/NV (http://acsone.eu)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import SUPERUSER_ID
-from odoo import tools
+from odoo import SUPERUSER_ID, tools
 from odoo.api import Environment
 from odoo.modules.module import get_resource_path
-
 
 DEMO_POST_INIT = [
     "demo/storage_file_demo.xml",

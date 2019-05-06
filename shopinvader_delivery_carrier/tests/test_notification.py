@@ -3,12 +3,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.shopinvader.tests.test_notification import (
-    CommonNotificationCase
+    CommonNotificationCase,
 )
 
 
 class NotificationPickingCase(CommonNotificationCase):
-
     def setUp(self):
         super(NotificationPickingCase, self).setUp()
         self.cart.action_confirm()
@@ -25,7 +24,8 @@ class NotificationPickingCase(CommonNotificationCase):
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification(
-            'stock_picking_outgoing_validated', self.picking)
+            "stock_picking_outgoing_validated", self.picking
+        )
 
     def test_picking_notification2(self):
         """
@@ -36,9 +36,7 @@ class NotificationPickingCase(CommonNotificationCase):
         """
         picking = self.picking.copy()
         # Remove the link with procurement/sales
-        picking.move_lines.write({
-            'procurement_id': False,
-        })
+        picking.move_lines.write({"procurement_id": False})
         self._init_job_counter()
         picking.do_transfer()
         self._check_nbr_job_created(0)
@@ -50,9 +48,7 @@ class NotificationPickingCase(CommonNotificationCase):
         anything.
         :return:
         """
-        self.picking.picking_type_id.write({
-            'code': 'internal',
-        })
+        self.picking.picking_type_id.write({"code": "internal"})
         self._init_job_counter()
         self.picking.do_transfer()
         self._check_nbr_job_created(0)

@@ -8,7 +8,7 @@ from odoo.addons.component_event import skip_if
 
 
 class ShopinvaderBindingListener(Component):
-    _inherit = 'shopinvader.binding.event.listener'
+    _inherit = "shopinvader.binding.event.listener"
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_create(self, record, fields=None):

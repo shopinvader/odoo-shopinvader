@@ -7,11 +7,12 @@ from odoo import fields, models
 
 
 class ShopinvaderProduct(models.Model):
-    _inherit = 'shopinvader.product'
+    _inherit = "shopinvader.product"
 
     hierarchical_categories = fields.Serialized(
-        compute='_compute_shopinvader_category',
-        string='Hierarchical Categories')
+        compute="_compute_shopinvader_category",
+        string="Hierarchical Categories",
+    )
 
     def _compute_shopinvader_category(self):
         super(ShopinvaderProduct, self)._compute_shopinvader_category()
@@ -21,10 +22,11 @@ class ShopinvaderProduct(models.Model):
             while categ:
                 result.insert(0, categ.name)
                 categ = categ.parent_id
-            return ' > '.join(result)
+            return " > ".join(result)
 
         for record in self:
             record.hierarchical_categories = {}
             for categ in record.shopinvader_categ_ids:
-                record.hierarchical_categories['lvl%s' % categ.level] =\
-                    get_full_name(categ.record_id)
+                record.hierarchical_categories[
+                    "lvl%s" % categ.level
+                ] = get_full_name(categ.record_id)

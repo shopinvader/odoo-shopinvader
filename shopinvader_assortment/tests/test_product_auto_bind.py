@@ -6,17 +6,17 @@ from odoo.tests.common import TransactionCase
 
 
 class TestProductAutoBind(TransactionCase):
-
     def setUp(self):
         super(TestProductAutoBind, self).setUp()
-        self.backend = self.env.ref('shopinvader.backend_1')
-        self.variant_obj = self.env['shopinvader.variant']
-        self.product_obj = self.env['product.product']
+        self.backend = self.env.ref("shopinvader.backend_1")
+        self.variant_obj = self.env["shopinvader.variant"]
+        self.product_obj = self.env["product.product"]
 
     def test_shopinvader_auto_product_auto_bind(self):
         # Test bind all products from assortment domain
         variants = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id)])
+            [("backend_id", "=", self.backend.id)]
+        )
         self.assertFalse(variants)
         domain = self.backend.product_assortment_id._get_eval_domain()
         products_to_bind = self.product_obj.search(domain)
@@ -24,43 +24,56 @@ class TestProductAutoBind(TransactionCase):
         self.backend.autobind_product_from_assortment()
 
         variants = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id)])
+            [("backend_id", "=", self.backend.id)]
+        )
 
-        self.assertEqual(products_to_bind.ids,
-                         variants.mapped('record_id').ids)
+        self.assertEqual(
+            products_to_bind.ids, variants.mapped("record_id").ids
+        )
 
         # Exclude one product, related binding should be inactivated
-        excluded_product = self.env.ref('product.product_product_7')
-        self.backend.product_assortment_id.write({
-            'blacklist_product_ids': [(4, excluded_product.id)]})
+        excluded_product = self.env.ref("product.product_product_7")
+        self.backend.product_assortment_id.write(
+            {"blacklist_product_ids": [(4, excluded_product.id)]}
+        )
 
         self.backend.autobind_product_from_assortment()
 
         excluded_variant = self.variant_obj.with_context(
-            active_test=False).search(
-                [('backend_id', '=', self.backend.id),
-                 ('record_id', '=', excluded_product.id)])
+            active_test=False
+        ).search(
+            [
+                ("backend_id", "=", self.backend.id),
+                ("record_id", "=", excluded_product.id),
+            ]
+        )
         self.assertTrue(excluded_variant)
         self.assertFalse(excluded_variant.active)
         variants = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id)])
+            [("backend_id", "=", self.backend.id)]
+        )
         self.assertEqual(len(variants), len(products_to_bind) - 1)
 
         # remove product from blacklist, related binding should reactivated
-        self.backend.product_assortment_id.write({
-            'blacklist_product_ids': [(5, False, False)]})
+        self.backend.product_assortment_id.write(
+            {"blacklist_product_ids": [(5, False, False)]}
+        )
 
         self.backend.autobind_product_from_assortment()
 
         excluded_variant = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id),
-             ('record_id', '=', excluded_product.id)])
+            [
+                ("backend_id", "=", self.backend.id),
+                ("record_id", "=", excluded_product.id),
+            ]
+        )
         self.assertTrue(excluded_variant)
 
     def test_shopinvader_force_product_auto_bind(self):
         # Test bind all products from assortment domain
         variants = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id)])
+            [("backend_id", "=", self.backend.id)]
+        )
         self.assertFalse(variants)
         domain = self.backend.product_assortment_id._get_eval_domain()
         products_to_bind = self.product_obj.search(domain)
@@ -68,35 +81,47 @@ class TestProductAutoBind(TransactionCase):
         self.backend.force_recompute_all_binding_index()
 
         variants = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id)])
+            [("backend_id", "=", self.backend.id)]
+        )
 
-        self.assertEqual(products_to_bind.ids,
-                         variants.mapped('record_id').ids)
+        self.assertEqual(
+            products_to_bind.ids, variants.mapped("record_id").ids
+        )
 
         # Exclude one product, related binding should be inactivated
-        excluded_product = self.env.ref('product.product_product_7')
-        self.backend.product_assortment_id.write({
-            'blacklist_product_ids': [(4, excluded_product.id)]})
+        excluded_product = self.env.ref("product.product_product_7")
+        self.backend.product_assortment_id.write(
+            {"blacklist_product_ids": [(4, excluded_product.id)]}
+        )
 
         self.backend.force_recompute_all_binding_index()
 
         excluded_variant = self.variant_obj.with_context(
-            active_test=False).search(
-                [('backend_id', '=', self.backend.id),
-                 ('record_id', '=', excluded_product.id)])
+            active_test=False
+        ).search(
+            [
+                ("backend_id", "=", self.backend.id),
+                ("record_id", "=", excluded_product.id),
+            ]
+        )
         self.assertTrue(excluded_variant)
         self.assertFalse(excluded_variant.active)
         variants = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id)])
+            [("backend_id", "=", self.backend.id)]
+        )
         self.assertEqual(len(variants), len(products_to_bind) - 1)
 
         # remove product from blacklist, related binding should reactivated
-        self.backend.product_assortment_id.write({
-            'blacklist_product_ids': [(5, False, False)]})
+        self.backend.product_assortment_id.write(
+            {"blacklist_product_ids": [(5, False, False)]}
+        )
 
         self.backend.force_recompute_all_binding_index()
 
         excluded_variant = self.variant_obj.search(
-            [('backend_id', '=', self.backend.id),
-             ('record_id', '=', excluded_product.id)])
+            [
+                ("backend_id", "=", self.backend.id),
+                ("record_id", "=", excluded_product.id),
+            ]
+        )
         self.assertTrue(excluded_variant)

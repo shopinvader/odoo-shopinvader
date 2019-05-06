@@ -7,8 +7,8 @@ from odoo import fields, models
 
 
 class ShopinvaderBackend(models.Model):
-    _inherit = 'shopinvader.backend'
+    _inherit = "shopinvader.backend"
 
     carrier_ids = fields.Many2many(
-        comodel_name='delivery.carrier',
-        string='Delivery Carrier')
+        comodel_name="delivery.carrier", string="Delivery Carrier"
+    )

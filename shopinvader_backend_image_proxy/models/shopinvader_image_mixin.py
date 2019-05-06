@@ -6,7 +6,7 @@ from odoo import api, models
 
 
 class ShopinvaderImageMixin(models.AbstractModel):
-    _inherit = 'shopinvader.image.mixin'
+    _inherit = "shopinvader.image.mixin"
 
     @api.multi
     def _prepare_data_resize(self, thumbnail, image_relation):
@@ -18,11 +18,10 @@ class ShopinvaderImageMixin(models.AbstractModel):
         """
         self.ensure_one()
         values = super(ShopinvaderImageMixin, self)._prepare_data_resize(
-            thumbnail=thumbnail, image_relation=image_relation)
+            thumbnail=thumbnail, image_relation=image_relation
+        )
         url_key = "src"
         url = values.get(url_key)
-        if url and 'backend_id' in self._fields:
-            values.update({
-                url_key: self.backend_id._replace_by_proxy(url),
-            })
+        if url and "backend_id" in self._fields:
+            values.update({url_key: self.backend_id._replace_by_proxy(url)})
         return values

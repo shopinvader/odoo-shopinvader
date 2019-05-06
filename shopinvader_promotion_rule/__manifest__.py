@@ -8,14 +8,9 @@
     "version": "10.0.1.0.0",
     "category": "Sale",
     "website": "https://akretion.com",
-    "author": "Akretion, "
-              "ACSONE SA / NV",
+    "author": "Akretion, " "ACSONE SA / NV",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "depends": [
-        "shopinvader",
-        "component",
-        "sale_promotion_rule",
-    ],
+    "depends": ["shopinvader", "component", "sale_promotion_rule"],
 }

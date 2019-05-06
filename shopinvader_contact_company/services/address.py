@@ -7,24 +7,21 @@ from odoo.addons.component.core import Component
 
 
 class AddressService(Component):
-    _inherit = 'shopinvader.address.service'
+    _inherit = "shopinvader.address.service"
 
     def _validator_create(self):
         res = super(AddressService, self)._validator_create()
-        res['company'] = {'type': 'string'}
+        res["company"] = {"type": "string"}
         return res
 
     def _json_parser(self):
         res = super(AddressService, self)._json_parser()
-        res.remove('name')
-        res += [
-            'contact_name:name',
-            'company',
-            ]
+        res.remove("name")
+        res += ["contact_name:name", "company"]
         return res
 
     def _prepare_params(self, params):
         params = super(AddressService, self)._prepare_params(params)
-        if 'name' in params:
-            params['contact_name'] = params.pop('name')
+        if "name" in params:
+            params["contact_name"] = params.pop("name")
         return params

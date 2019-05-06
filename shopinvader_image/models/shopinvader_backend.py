@@ -7,13 +7,15 @@ from odoo import fields, models
 
 
 class ShopinvaderBackend(models.Model):
-    _inherit = 'shopinvader.backend'
+    _inherit = "shopinvader.backend"
 
     shopinvader_variant_resize_ids = fields.Many2many(
-        comodel_name='shopinvader.image.resize',
+        comodel_name="shopinvader.image.resize",
         relation="product_image_resize",
-        string='Product Image Size')
+        string="Product Image Size",
+    )
     shopinvader_category_resize_ids = fields.Many2many(
-        comodel_name='shopinvader.image.resize',
+        comodel_name="shopinvader.image.resize",
         relation="category_image_resize",
-        string='Category Image Size')
+        string="Category Image Size",
+    )

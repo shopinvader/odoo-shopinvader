@@ -9,10 +9,10 @@ from odoo.addons.component.core import Component
 
 
 class LeadService(Component):
-    _inherit = 'base.shopinvader.service'
-    _name = 'shopinvader.lead.service'
-    _usage = 'lead'
-    _expose_model = 'crm.lead'
+    _inherit = "base.shopinvader.service"
+    _name = "shopinvader.lead.service"
+    _usage = "lead"
+    _expose_model = "crm.lead"
 
     # The following methods are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator
@@ -20,8 +20,8 @@ class LeadService(Component):
 
     def create(self, **params):
         vals = self._prepare_lead(params)
-        lead = self.env['crm.lead'].create(vals)
-        self.shopinvader_backend._send_notification('lead_confirmation', lead)
+        lead = self.env["crm.lead"].create(vals)
+        self.shopinvader_backend._send_notification("lead_confirmation", lead)
         return {}
 
     # The following methods are 'private' and should be never NEVER be called
@@ -30,37 +30,39 @@ class LeadService(Component):
 
     def _validator_create(self):
         res = {
-            'email': {'type': 'string', 'required': True},
-            'name': {'type': 'string', 'required': True},
-            'description': {'type': 'string', 'required': True},
-            'company': {'type': 'string', 'required': True},
-            'street': {'type': 'string', 'required': False},
-            'street2': {'type': 'string', 'nullable': True},
-            'zip': {'type': 'string', 'required': True},
-            'city': {'type': 'string', 'required': True},
-            'phone': {'type': 'string', 'nullable': True},
-            'mobile': {'type': 'string', 'nullable': True},
-            'state_id': {'coerce': to_int, 'nullable': True},
-            'country_id': {'coerce': to_int, 'required': True},
-            }
+            "email": {"type": "string", "required": True},
+            "name": {"type": "string", "required": True},
+            "description": {"type": "string", "required": True},
+            "company": {"type": "string", "required": True},
+            "street": {"type": "string", "required": False},
+            "street2": {"type": "string", "nullable": True},
+            "zip": {"type": "string", "required": True},
+            "city": {"type": "string", "required": True},
+            "phone": {"type": "string", "nullable": True},
+            "mobile": {"type": "string", "nullable": True},
+            "state_id": {"coerce": to_int, "nullable": True},
+            "country_id": {"coerce": to_int, "required": True},
+        }
 
-        if 'crm_lead_firstname' in self.env.registry._init_modules:
-            res.update({
-                'contact_firstname': {'type': 'string', 'required': True},
-                'contact_lastname': {'type': 'string', 'required': True},
-                })
+        if "crm_lead_firstname" in self.env.registry._init_modules:
+            res.update(
+                {
+                    "contact_firstname": {"type": "string", "required": True},
+                    "contact_lastname": {"type": "string", "required": True},
+                }
+            )
         else:
-            res['contact_name'] = {'type': 'string', 'required': True}
+            res["contact_name"] = {"type": "string", "required": True}
         return res
 
     def _prepare_lead(self, params):
         map_key = [
-            ('contact_firstname', 'contact_name'),
-            ('company', 'partner_name'),
-            ('email', 'email_from'),
+            ("contact_firstname", "contact_name"),
+            ("company", "partner_name"),
+            ("email", "email_from"),
         ]
         for human_key, key in map_key:
             if human_key in params:
                 params[key] = params.pop(human_key)
-        params['shopinvader_backend_id'] = self.shopinvader_backend.id
+        params["shopinvader_backend_id"] = self.shopinvader_backend.id
         return params

@@ -12,20 +12,11 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    'installable': True,
-    'auto_install': True,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
-    "depends": [
-        "shopinvader",
-        "partner_contact_company",
-    ],
-    "data": [
-    ],
-    "demo": [
-    ],
-    "qweb": [
-    ]
+    "installable": True,
+    "auto_install": True,
+    "external_dependencies": {"python": [], "bin": []},
+    "depends": ["shopinvader", "partner_contact_company"],
+    "data": [],
+    "demo": [],
+    "qweb": [],
 }

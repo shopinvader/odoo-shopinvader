@@ -3,15 +3,15 @@
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo.addons.queue_job.job import job
 from odoo import api, models
+from odoo.addons.queue_job.job import job
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = "product.product"
 
     @api.multi
-    @job(default_channel='root.search_engine.synchronize_stock')
+    @job(default_channel="root.search_engine.synchronize_stock")
     def _synchronize_all_binding_stock_level(self):
         """
         The goal of this function is to compute the new stock information
@@ -23,12 +23,13 @@ class ProductProduct(models.Model):
         backends = all_bindinds.mapped("backend_id")
         for backend in backends:
             bindings = all_bindinds.filtered(
-                lambda r, b=backend: r.backend_id == b)
+                lambda r, b=backend: r.backend_id == b
+            )
             # To avoid access rights issues, execute the job with the user
             # related to the backend
             bindings = bindings.sudo(backend.user_id.id)
             for binding in bindings:
-                if binding.sync_state == 'new':
+                if binding.sync_state == "new":
                     # this binding have been not yet computed
                     # so we do not care to update it as it's not yet
                     # on the site. The right stock qty will be exported
@@ -43,11 +44,11 @@ class ProductProduct(models.Model):
                 data = binding.data
                 if data[stock_export_key] != binding.stock_data:
                     data[stock_export_key] = binding.stock_data
-                    vals = {'data': data}
-                    if binding.backend_id.synchronize_stock == 'immediatly':
+                    vals = {"data": data}
+                    if binding.backend_id.synchronize_stock == "immediatly":
                         binding.write(vals)
                         binding.synchronize()
-                    elif binding.backend_id.synchronize_stock == 'in_batch':
-                        if binding.sync_state == 'done':
-                            vals['sync_state'] = 'to_update'
+                    elif binding.backend_id.synchronize_stock == "in_batch":
+                        if binding.sync_state == "done":
+                            vals["sync_state"] = "to_update"
                         binding.write(vals)

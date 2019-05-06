@@ -6,8 +6,6 @@ from odoo.addons.component.core import Component
 
 
 class ShopinvaderSiteExportMapper(Component):
-    _inherit = 'shopinvader.site.export.mapper'
+    _inherit = "shopinvader.site.export.mapper"
 
-    direct = [
-        ('is_guest_mode_allowed', 'is_guest_mode_allowed')
-    ]
+    direct = [("is_guest_mode_allowed", "is_guest_mode_allowed")]

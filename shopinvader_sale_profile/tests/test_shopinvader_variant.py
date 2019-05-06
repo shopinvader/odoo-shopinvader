@@ -23,24 +23,12 @@ class TestShopinvaderVariant(ProductCommonCase):
         Test if price field is correctly computed
         :return: bool
         """
-        self.backend.write({
-            'use_sale_profile': True,
-            'pricelist_id': False,
-        })
+        self.backend.write({"use_sale_profile": True, "pricelist_id": False})
         # Expecting values
         expected_price = {
-            'public_tax_exc': {
-                'tax_included': False,
-                'value': 652.17,
-            },
-            'public_tax_inc': {
-                'tax_included': True,
-                'value': 750.0,
-            },
-            'pro_tax_exc': {
-                'tax_included': False,
-                'value': 521.74,
-            },
+            "public_tax_exc": {"tax_included": False, "value": 652.17},
+            "public_tax_inc": {"tax_included": True, "value": 750.0},
+            "pro_tax_exc": {"tax_included": False, "value": 521.74},
         }
         computed_price = self.shopinvader_variant.price
         self._check_price(computed_price, expected_price)
@@ -51,11 +39,6 @@ class TestShopinvaderVariant(ProductCommonCase):
         :return: bool
         """
         # Expecting values
-        expected_price = {
-            'default': {
-                'tax_included': True,
-                'value': 750.0,
-            },
-        }
+        expected_price = {"default": {"tax_included": True, "value": 750.0}}
         computed_price = self.shopinvader_variant.price
         self._check_price(computed_price, expected_price)

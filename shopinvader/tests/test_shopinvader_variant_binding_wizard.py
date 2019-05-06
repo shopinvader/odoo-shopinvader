@@ -5,19 +5,19 @@ from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
-
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderVariantBindingWizard, cls).setUpClass()
-        cls.backend = cls.env.ref('shopinvader.backend_1')
+        cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.template = cls.env.ref(
-            'product.product_product_4_product_template')
-        cls.variant = cls.env.ref('product.product_product_4b')
-        cls.bind_wizard_model = cls.env[
-            'shopinvader.variant.binding.wizard']
+            "product.product_product_4_product_template"
+        )
+        cls.variant = cls.env.ref("product.product_product_4b")
+        cls.bind_wizard_model = cls.env["shopinvader.variant.binding.wizard"]
         cls.unbind_wizard_model = cls.env[
-            'shopinvader.variant.unbinding.wizard']
-        cls.product_bind_model = cls.env['shopinvader.variant']
+            "shopinvader.variant.unbinding.wizard"
+        ]
+        cls.product_bind_model = cls.env["shopinvader.variant"]
 
     def test_product_binding(self):
         """
@@ -31,21 +31,28 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
         """
         self.assertFalse(self.template.shopinvader_bind_ids)
         self.assertFalse(
-            self.template.mapped('product_variant_ids.shopinvader_bind_ids'))
+            self.template.mapped("product_variant_ids.shopinvader_bind_ids")
+        )
 
         # --------------------------------
         # Bind the product to the Backend
         # --------------------------------
         bind_wizard = self.bind_wizard_model.create(
-            {'backend_id': self.backend.id,
-             'product_ids': [(6, 0, [self.variant.id])]})
+            {
+                "backend_id": self.backend.id,
+                "product_ids": [(6, 0, [self.variant.id])],
+            }
+        )
 
         bind_wizard.bind_products()
 
         # A binding record should exists
         bind_record = self.product_bind_model.search(
-            [('record_id', '=', self.variant.id),
-             ('backend_id', '=', self.backend.id)])
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertEqual(len(bind_record), 1)
         self.assertEqual(bind_record, self.variant.shopinvader_bind_ids)
@@ -56,47 +63,60 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
         # only one variant must be binded
         self.assertEqual(
             1,
-            len(self.template.mapped(
-                'product_variant_ids.shopinvader_bind_ids'))
-
+            len(
+                self.template.mapped(
+                    "product_variant_ids.shopinvader_bind_ids"
+                )
+            ),
         )
 
         # ------------------------
         # Bind the others variants
         # ------------------------
         variants = self.template.product_variant_ids - self.variant
-        self.assertFalse(variants.mapped('shopinvader_bind_ids'))
+        self.assertFalse(variants.mapped("shopinvader_bind_ids"))
         bind_wizard = self.bind_wizard_model.create(
-            {'backend_id': self.backend.id,
-             'product_ids': [(6, 0, variants.ids)]})
+            {
+                "backend_id": self.backend.id,
+                "product_ids": [(6, 0, variants.ids)],
+            }
+        )
         bind_wizard.bind_products()
 
         # now all the variants are binded
-        self.assertTrue(variants.mapped('shopinvader_bind_ids'))
+        self.assertTrue(variants.mapped("shopinvader_bind_ids"))
         self.assertEqual(
             len(self.template.product_variant_ids),
-            len(self.template.shopinvader_bind_ids.shopinvader_variant_ids)
+            len(self.template.shopinvader_bind_ids.shopinvader_variant_ids),
         )
 
         # --------------------------------
         # UnBind the product
         # --------------------------------
         unbind_wizard = self.unbind_wizard_model.create(
-            {'shopinvader_variant_ids': [(6, 0, [bind_record.id])]})
+            {"shopinvader_variant_ids": [(6, 0, [bind_record.id])]}
+        )
         unbind_wizard.unbind_products()
 
         # The binding record should be unreachable
         bind_record = self.product_bind_model.search(
-            [('record_id', '=', self.variant.id),
-             ('backend_id', '=', self.backend.id)])
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertEqual(len(bind_record), 0)
 
         # The binding record should still exist but inactive
         bind_record = self.product_bind_model.with_context(
-            active_test=False).search(
-                [('record_id', '=', self.variant.id),
-                 ('backend_id', '=', self.backend.id)])
+            active_test=False
+        ).search(
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertEqual(len(bind_record), 1)
 
@@ -104,14 +124,20 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
         # Bind the product again
         # --------------------------------
         bind_wizard = self.bind_wizard_model.create(
-            {'backend_id': self.backend.id,
-             'product_ids': [(6, 0, [self.variant.id])]})
+            {
+                "backend_id": self.backend.id,
+                "product_ids": [(6, 0, [self.variant.id])],
+            }
+        )
         bind_wizard.bind_products()
 
         # The binding record should be re-activated
         bind_record = self.product_bind_model.search(
-            [('record_id', '=', self.variant.id),
-             ('backend_id', '=', self.backend.id)])
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertEqual(len(bind_record), 1)
 
@@ -124,38 +150,50 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
         # Bind the product to the Backend
         # --------------------------------
         bind_wizard = self.bind_wizard_model.create(
-            {'backend_id': self.backend.id,
-             'product_ids': [(6, 0, [self.variant.id])]})
+            {
+                "backend_id": self.backend.id,
+                "product_ids": [(6, 0, [self.variant.id])],
+            }
+        )
         bind_wizard.bind_products()
 
         # A binding record should exists
         bind_record = self.product_bind_model.search(
-            [('record_id', '=', self.variant.id),
-             ('backend_id', '=', self.backend.id)])
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertEqual(len(bind_record), 1)
 
         # --------------------------------
         # Inactivate the product
         # --------------------------------
-        self.variant.write({'active': False})
+        self.variant.write({"active": False})
 
         # The binding record should be unreachable
         bind_record = self.product_bind_model.search(
-            [('record_id', '=', self.variant.id),
-             ('backend_id', '=', self.backend.id)])
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertEqual(len(bind_record), 0)
 
         # --------------------------------
         # Activate the product
         # --------------------------------
-        self.variant.write({'active': True})
+        self.variant.write({"active": True})
 
         # The binding record should be still unreachable
         bind_record = self.product_bind_model.search(
-            [('record_id', '=', self.variant.id),
-             ('backend_id', '=', self.backend.id)])
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertEqual(len(bind_record), 0)
 
@@ -166,12 +204,15 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
 
         # A binding record should exists
         bind_record = self.product_bind_model.search(
-            [('record_id', '=', self.variant.id),
-             ('backend_id', '=', self.backend.id)])
+            [
+                ("record_id", "=", self.variant.id),
+                ("backend_id", "=", self.backend.id),
+            ]
+        )
 
         self.assertTrue(bind_record)
 
         # deactivate the template
-        self.template.write({'active': False})
+        self.template.write({"active": False})
 
         self.assertFalse(bind_record.active)
