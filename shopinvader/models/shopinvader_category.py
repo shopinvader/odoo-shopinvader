@@ -15,6 +15,7 @@ class ShopinvaderCategory(models.Model):
     _description = 'Shopinvader Category'
     _inherit = ['shopinvader.binding', 'abstract.url', 'seo.title.mixin']
     _inherits = {'product.category': 'record_id'}
+    _order = 'sequence'
 
     record_id = fields.Many2one(
         'product.category',
@@ -27,6 +28,7 @@ class ShopinvaderCategory(models.Model):
         store=True,
         index=True,
     )
+    sequence = fields.Integer()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
     subtitle = fields.Char()
@@ -56,6 +58,10 @@ class ShopinvaderCategory(models.Model):
         ('record_uniq', 'unique(backend_id, record_id, lang_id)',
          'A category can only have one binding by backend.'),
     ]
+
+    @api.multi
+    def name_get(self):
+        return [(cat.id, cat.record_id.display_name) for cat in self]
 
     def _compute_redirect_url_key(self):
         for record in self:

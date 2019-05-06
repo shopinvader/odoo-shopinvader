@@ -24,6 +24,7 @@ class ShopinvaderProduct(models.Model):
             "level": categ.level + 1,
             "value": categ.name,
             "ancestors": parent_names,
+            "order": categ.sequence,
         }
 
     def _compute_shopinvader_category(self):
