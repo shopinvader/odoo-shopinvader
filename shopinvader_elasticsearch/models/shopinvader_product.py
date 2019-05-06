@@ -5,8 +5,8 @@
 from odoo import fields, models
 
 
-class ShopinvaderVariant(models.Model):
-    _inherit = "shopinvader.variant"
+class ShopinvaderProduct(models.Model):
+    _inherit = "shopinvader.product"
 
     hierarchical_categories = fields.Serialized(
         compute="_compute_shopinvader_category",
@@ -27,7 +27,7 @@ class ShopinvaderVariant(models.Model):
         }
 
     def _compute_shopinvader_category(self):
-        super(ShopinvaderVariant, self)._compute_shopinvader_category()
+        super(ShopinvaderProduct, self)._compute_shopinvader_category()
         for record in self:
             values = []
             for categ in record.shopinvader_categ_ids:
