@@ -1,0 +1,72 @@
+interactions:
+- request:
+    body: null
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json]
+    method: HEAD
+    uri: http://127.0.0.1:9200/
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['493']
+      content-type: [application/json; charset=UTF-8]
+    status: {code: 200, message: OK}
+- request:
+    body: null
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json]
+    method: HEAD
+    uri: http://127.0.0.1:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
+  response:
+    body: {string: !!python/unicode ''}
+    headers:
+      content-length: ['531']
+      content-type: [application/json; charset=UTF-8]
+      warning: ['299 Elasticsearch-6.7.0-8453f77 "[types removal] The parameter include_type_name
+          should be explicitly specified in get indices requests to prepare for 7.0.
+          In 7.0 include_type_name will default to ''false'', which means responses
+          will omit the type name in mapping definitions."']
+    status: {code: 404, message: Not Found}
+- request:
+    body: !!python/unicode '{"mappings":{"odoo":{"properties":{"hierarchicalCategories":{"type":"nested","properties":{"ancestors":{"type":"text","fielddata":true,"analyzer":"keyword"},"order":{"type":"integer"},"value":{"type":"text","fielddata":true,"analyzer":"keyword"},"level":{"type":"integer"}}},"url_key":{"type":"text","analyzer":"keyword"},"variant_attributes":{"properties":{"color":{"type":"text","fielddata":true}}}}}}}'
+    headers:
+      connection: [keep-alive]
+      content-type: [application/json]
+    method: PUT
+    uri: http://127.0.0.1:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
+  response:
+    body: {string: !!python/unicode '{"acknowledged":true,"shards_acknowledged":true,"index":"demo_elasticsearch_backend_shopinvader_variant_en_us"}'}
+    headers:
+      content-length: ['111']
+      content-type: [application/json; charset=UTF-8]
+      warning: ['299 Elasticsearch-6.7.0-8453f77 "the default number of shards will
+          change from [5] to [1] in 7.0.0; if you wish to continue using the default
+          of [5] shards, you must manage this on the create index request or with
+          an index template"', '299 Elasticsearch-6.7.0-8453f77 "[types removal] The
+          parameter include_type_name should be explicitly specified in create index
+          requests to prepare for 7.0. In 7.0 include_type_name will default to ''false'',
+          and requests are expected to omit the type name in mapping definitions."']
+    status: {code: 200, message: OK}
+- request:
+    body: !!python/unicode '{"index":{"_type":"odoo","_id":9,"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us"}}
+
+      {"sku":"PCSC234","meta_description":null,"meta_keywords":null,"description":null,"objectID":9,"variant_attributes":{},"price":{"default":{"discount":0.0,"value":450.0,"tax_included":false,"original_value":450.0}},"short_name":"","seo_title":"Computer
+      SC234 | ","redirect_url_key":{},"hierarchicalCategories":[{"ancestors":[],"value":"All","level":1},{"ancestors":["All"],"value":"Saleable","level":2},{"ancestors":["Saleable","All"],"value":"Physical","level":3}],"variant_count":1,"short_description":null,"model":{"name":"Computer
+      SC234"},"main":true,"url_key":"computer-sc234-PCSC234","id":8,"categories":[{"level":0,"url_key":"all","id":1,"name":"All"},{"level":1,"url_key":"all/saleable","id":2,"name":"Saleable"},{"level":2,"url_key":"all/saleable/physical","id":6,"name":"Physical"}],"name":"Computer
+      SC234"}
+
+      '
+    headers:
+      connection: [keep-alive]
+      content-type: [!!python/unicode 'application/x-ndjson']
+    method: POST
+    uri: http://127.0.0.1:9200/_bulk
+  response:
+    body: {string: !!python/unicode '{"took":138,"errors":false,"items":[{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"9","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}}]}'}
+    headers:
+      content-length: ['261']
+      content-type: [application/json; charset=UTF-8]
+    status: {code: 200, message: OK}
+version: 1
