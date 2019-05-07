@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_shopinvader_payment_edit,shopinvader_payment edit,model_shopinvader_payment,shopinvader.group_shopinvader_manager,1,1,1,1
-access_shopinvader_payment_read,shopinvader_payment read,model_shopinvader_payment,base.group_user,1,0,0,0

@@ -1,8 +1,6 @@
 slugify
 cerberus
 algoliasearch<2.0.0
-paypalrestsdk
-stripe
 unidecode
 pysimplesoap
 mailjet_rest
