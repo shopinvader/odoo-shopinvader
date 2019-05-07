@@ -5,11 +5,10 @@ from odoo import api, fields, models
 
 
 class SaleReport(models.Model):
-    _inherit = 'sale.report'
+    _inherit = "sale.report"
 
     shopinvader_backend_id = fields.Many2one(
-        comodel_name="shopinvader.backend",
-        string="Shopinvader backend",
+        comodel_name="shopinvader.backend", string="Shopinvader backend"
     )
 
     @api.model

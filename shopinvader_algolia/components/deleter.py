@@ -7,8 +7,6 @@ from odoo.addons.component.core import Component
 
 
 class AlgoliaDeleter(Component):
-    _name = 'algolia.se.deleter'
-    _inherit = ['se.deleter', 'algolia.se.connector']
-    _apply_on = [
-        'shopinvader.variant',
-        ]
+    _name = "algolia.se.deleter"
+    _inherit = ["se.deleter", "algolia.se.connector"]
+    _apply_on = ["shopinvader.variant"]

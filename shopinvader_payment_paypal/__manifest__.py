@@ -12,22 +12,11 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    'installable': True,
+    "installable": True,
     "auto_install": True,
-    "external_dependencies": {
-        "python": ['paypalrestsdk'],
-        "bin": [],
-    },
-    "depends": [
-        "shopinvader_payment",
-        "payment_gateway_paypal",
-    ],
-    "data": [
-        'views/shopinvader_payment.xml',
-    ],
-    "demo": [
-        "demo/shopinvader_payment_demo.xml",
-    ],
-    "qweb": [
-    ]
+    "external_dependencies": {"python": ["paypalrestsdk"], "bin": []},
+    "depends": ["shopinvader_payment", "payment_gateway_paypal"],
+    "data": ["views/shopinvader_payment.xml"],
+    "demo": ["demo/shopinvader_payment_demo.xml"],
+    "qweb": [],
 }

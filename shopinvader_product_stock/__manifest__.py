@@ -6,30 +6,22 @@
 {
     "name": "Shopinvader Product Stock",
     "summary": "This module is used to choose a stock field during the"
-               "export (by backend)",
+    "export (by backend)",
     "version": "10.0.1.0.1",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion,ACSONE SA/NV",
     "license": "AGPL-3",
-    'installable': True,
+    "installable": True,
     "depends": [
-        'stock',
-        'shopinvader',
-        'queue_job',
-        'connector_search_engine',
-        'shopinvader_search_engine',
+        "stock",
+        "shopinvader",
+        "queue_job",
+        "connector_search_engine",
+        "shopinvader_search_engine",
     ],
-    "data": [
-        'views/shopinvader_backend.xml',
-        'data/ir_export_product.xml',
-    ],
-    'external_dependencies': {
-        'python': [
-            'openupgradelib',
-            'slugify',
-        ],
-    },
-    'pre_init_hook': 'pre_init_hook',
-    'post_init_hook': 'post_init_hook',
+    "data": ["views/shopinvader_backend.xml", "data/ir_export_product.xml"],
+    "external_dependencies": {"python": ["openupgradelib", "slugify"]},
+    "pre_init_hook": "pre_init_hook",
+    "post_init_hook": "post_init_hook",
 }

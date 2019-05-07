@@ -9,24 +9,24 @@ class ShopinvaderCategoryUnbindingWizard(models.TransientModel):
     Wizard used to unbind a shopinvader.category (a product.category on a
     specific backend)
     """
-    _name = 'shopinvader.category.unbinding.wizard'
+
+    _name = "shopinvader.category.unbinding.wizard"
     _description = "Wizard to unbind categories from a shopinvader backend"
 
     shopinvader_category_ids = fields.Many2many(
-        'shopinvader.category',
-        string='Categories',
-        ondelete='cascade',
+        "shopinvader.category", string="Categories", ondelete="cascade"
     )
 
     @api.model
     def default_get(self, fields_list):
         result = super(ShopinvaderCategoryUnbindingWizard, self).default_get(
-            fields_list)
-        shopinvader_variant_ids = self.env.context.get('active_ids')
+            fields_list
+        )
+        shopinvader_variant_ids = self.env.context.get("active_ids")
         if shopinvader_variant_ids:
-            result.update({
-                'shopinvader_category_ids': shopinvader_variant_ids,
-            })
+            result.update(
+                {"shopinvader_category_ids": shopinvader_variant_ids}
+            )
         return result
 
     @api.multi

@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Reset Password",
     "summary": "Give the possibility to send a email to reset the"
-               "password from odoo",
+    "password from odoo",
     "version": "10.0.1.0.0",
     "category": "Shopinvader",
     "website": "www.akretion.com",
@@ -14,19 +14,9 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
-    "depends": [
-        "shopinvader_locomotive",
-    ],
-    "data": [
-        "wizards/reset_password_view.xml",
-        "views/partner_view.xml",
-    ],
-    "demo": [
-    ],
-    "qweb": [
-    ]
+    "external_dependencies": {"python": [], "bin": []},
+    "depends": ["shopinvader_locomotive"],
+    "data": ["wizards/reset_password_view.xml", "views/partner_view.xml"],
+    "demo": [],
+    "qweb": [],
 }

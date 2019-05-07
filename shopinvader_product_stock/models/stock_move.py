@@ -4,19 +4,20 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo import api, models, _
+from odoo import _, api, models
 from odoo.addons.queue_job.job import identity_exact
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = "stock.move"
 
     def _get_product_to_update(self):
         # Maybe we can be more retrictive
         # depending of the move location and destination
         # For now we take all move and binded products
         return self.mapped("product_id").filtered(
-            lambda p: p.is_shopinvader_binded)
+            lambda p: p.is_shopinvader_binded
+        )
 
     @api.multi
     def _jobify_product_stock_update(self):
@@ -28,11 +29,11 @@ class StockMove(models.Model):
         products = self._get_product_to_update()
         if products:
             description = _(
-                "Update shopinvader variants (stock update trigger)")
+                "Update shopinvader variants (stock update trigger)"
+            )
             products.with_delay(
-                description=description,
-                identity_key=identity_exact,
-                )._synchronize_all_binding_stock_level()
+                description=description, identity_key=identity_exact
+            )._synchronize_all_binding_stock_level()
         return True
 
     @api.multi

@@ -4,13 +4,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo.http import route
 from odoo.addons.shopinvader.controllers.main import InvaderController
+from odoo.http import route
+
 from ..services.lead import LeadService
 
 
 class InvaderClaimController(InvaderController):
-
-    @route('/shopinvader/lead', methods=['POST'], auth="shopinvader")
+    @route("/shopinvader/lead", methods=["POST"], auth="shopinvader")
     def lead(self, **params):
         return self.send_to_service(LeadService, params)

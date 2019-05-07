@@ -7,9 +7,6 @@ from odoo.addons.component.core import Component
 
 
 class AlgoliaExporter(Component):
-    _name = 'algolia.se.exporter'
-    _inherit = ['se.exporter', 'algolia.se.connector']
-    _apply_on = [
-        'shopinvader.variant',
-        'shopinvader.category',
-        ]
+    _name = "algolia.se.exporter"
+    _inherit = ["se.exporter", "algolia.se.connector"]
+    _apply_on = ["shopinvader.variant", "shopinvader.category"]

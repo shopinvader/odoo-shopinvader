@@ -8,6 +8,6 @@ from odoo import models
 
 
 class ShopinvaderCategory(models.Model):
-    _name = 'shopinvader.category'
-    _inherit = ['shopinvader.category', 'shopinvader.image.mixin']
-    _image_field = 'image_ids'
+    _name = "shopinvader.category"
+    _inherit = ["shopinvader.category", "shopinvader.image.mixin"]
+    _image_field = "image_ids"

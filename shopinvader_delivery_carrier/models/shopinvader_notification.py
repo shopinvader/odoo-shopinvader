@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import api, models, _
+from odoo import _, api, models
 
 
 class ShopinvaderNotification(models.Model):
-    _inherit = 'shopinvader.notification'
+    _inherit = "shopinvader.notification"
 
     @api.model
     def _get_picking_notification(self):
@@ -14,10 +14,10 @@ class ShopinvaderNotification(models.Model):
         :return: dict
         """
         return {
-            'stock_picking_outgoing_validated': {
-                'name': _("Delivery order validated"),
-                'model': 'stock.picking',
-            },
+            "stock_picking_outgoing_validated": {
+                "name": _("Delivery order validated"),
+                "model": "stock.picking",
+            }
         }
 
     def _get_all_notification(self):

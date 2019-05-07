@@ -12,23 +12,14 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,
-    'installable': True,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
-    "depends": [
-        "shopinvader",
-        "sale_shipping_info_helper",
-    ],
-    "data": [
-        "views/backend_view.xml",
-    ],
+    "installable": True,
+    "external_dependencies": {"python": [], "bin": []},
+    "depends": ["shopinvader", "sale_shipping_info_helper"],
+    "data": ["views/backend_view.xml"],
     "demo": [
         "demo/backend_demo.xml",
         "demo/mail_template.xml",
         "demo/shopinvader_notification.xml",
     ],
-    "qweb": [
-    ]
+    "qweb": [],
 }

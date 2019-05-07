@@ -7,20 +7,22 @@ from odoo.addons.component.core import Component
 
 
 class CartService(Component):
-    _inherit = 'shopinvader.cart.service'
+    _inherit = "shopinvader.cart.service"
 
     def _execute_payment_action(
-            self, provider_name, transaction, cart, params):
-        if provider_name == 'adyen' and transaction.url:
+        self, provider_name, transaction, cart, params
+    ):
+        if provider_name == "adyen" and transaction.url:
             cart = self._get()
             res = self._to_json(cart)
-            res['data']['payment']['adyen_params'] = {
-                'MD': transaction.meta['MD'],
-                'PaReq': transaction.meta['paRequest'],
-                'TermUrl': params['return_url'],
-                'IssuerUrl': transaction.url,
-                }
+            res["data"]["payment"]["adyen_params"] = {
+                "MD": transaction.meta["MD"],
+                "PaReq": transaction.meta["paRequest"],
+                "TermUrl": params["return_url"],
+                "IssuerUrl": transaction.url,
+            }
             return res
         else:
             return super(CartService, self)._execute_payment_action(
-                provider_name, transaction, cart, params)
+                provider_name, transaction, cart, params
+            )

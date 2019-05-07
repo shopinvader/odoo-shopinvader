@@ -12,7 +12,6 @@ _logger = logging.getLogger(__name__)
 
 
 class InvaderController(main.InvaderController):
-
-    @route(['/shopinvader/cart/get_delivery_methods'], methods=['GET'])
+    @route(["/shopinvader/cart/get_delivery_methods"], methods=["GET"])
     def get_delivery_methods(self, **params):
-        return self._process_method('cart', 'get_delivery_methods', params)
+        return self._process_method("cart", "get_delivery_methods", params)

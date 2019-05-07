@@ -11,6 +11,7 @@ class UrlUrl(models.Model):
 
     model_id = fields.Reference(
         selection_add=[
-            ('shopinvader.product', 'ShopInvader Product'),
-            ('shopinvader.category', 'ShopInvader Category'),
-            ])
+            ("shopinvader.product", "ShopInvader Product"),
+            ("shopinvader.category", "ShopInvader Category"),
+        ]
+    )

@@ -15,11 +15,6 @@
     "license": "AGPL-3",
     "installable": True,
     "auto_install": True,
-    "depends": [
-        "shopinvader",
-        "product_template_multi_link",
-    ],
-    "data": [
-        "data/ir_exports_line.xml",
-    ],
+    "depends": ["shopinvader", "product_template_multi_link"],
+    "data": ["data/ir_exports_line.xml"],
 }

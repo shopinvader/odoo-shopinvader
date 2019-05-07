@@ -7,14 +7,14 @@ from odoo.addons.component.core import Component
 
 
 class CustomerService(Component):
-    _inherit = 'shopinvader.customer.service'
+    _inherit = "shopinvader.customer.service"
 
     def search(self, **params):
         """
         This method is called by locomotive if no account is found into the
         cache when accessing to store.customer into a template
         """
-        return {'data': {}}
+        return {"data": {}}
 
     def _validator_search(self):
         return {}

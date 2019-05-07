@@ -8,9 +8,9 @@ from odoo.addons.component.core import Component
 
 
 class LocomotiveExporter(Component):
-    _name = 'locomotive.exporter'
-    _inherit = ['generic.exporter', 'base.locomotive.connector']
-    _usage = 'record.exporter'
+    _name = "locomotive.exporter"
+    _inherit = ["generic.exporter", "base.locomotive.connector"]
+    _usage = "record.exporter"
 
     def _update_data(self, map_record, fields=None, **kwargs):
         """ Get the data to pass to :py:meth:`_update` """
@@ -19,14 +19,14 @@ class LocomotiveExporter(Component):
 
     def _create(self, record):
         result = super(LocomotiveExporter, self)._create(record)
-        return result['_id']
+        return result["_id"]
 
 
 class LocomotiveSiteExporter(Component):
-    _inherit = ['generic.exporter', 'base.locomotive.connector']
-    _name = 'locomotive.site.exporter'
-    _usage = 'record.exporter'
-    _apply_on = 'shopinvader.backend'
+    _inherit = ["generic.exporter", "base.locomotive.connector"]
+    _name = "locomotive.site.exporter"
+    _usage = "record.exporter"
+    _apply_on = "shopinvader.backend"
 
     def run(self, fields=None):
         self.binding = self.backend_record

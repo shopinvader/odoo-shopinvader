@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AbstractSaleService(AbstractComponent):
-    _inherit = 'shopinvader.abstract.sale.service'
+    _inherit = "shopinvader.abstract.sale.service"
 
     def _is_item(self, line):
         res = super(AbstractSaleService, self)._is_item(line)
@@ -21,17 +21,20 @@ class AbstractSaleService(AbstractComponent):
 
 
 class CartService(Component):
-    _inherit = 'shopinvader.cart.service'
+    _inherit = "shopinvader.cart.service"
 
     def _update(self, cart, params):
         is_coupon_code_specified = "coupon_code" in params
-        coupon_code = params.pop('coupon_code', None)
+        coupon_code = params.pop("coupon_code", None)
         if is_coupon_code_specified:
             if coupon_code is not None:
-                if 'payment_params' in params:
+                if "payment_params" in params:
                     raise UserError(
-                        _("Appling discount and paying can "
-                          "not be done in the same call"))
+                        _(
+                            "Appling discount and paying can "
+                            "not be done in the same call"
+                        )
+                    )
         res = super(CartService, self)._update(cart, params)
         if is_coupon_code_specified:
             if coupon_code:
@@ -63,7 +66,7 @@ class CartService(Component):
     # Validator
     def _validator_update(self):
         res = super(CartService, self)._validator_update()
-        res['coupon_code'] = {'type': 'string', 'nullable': True}
+        res["coupon_code"] = {"type": "string", "nullable": True}
         return res
 
     # converter
@@ -79,20 +82,21 @@ class CartService(Component):
 
     def _get_promotions_info(self, o):
         return {
-            'promotion_rule_coupon':
-                self._convert_promotion_rule(
-                    o.coupon_promotion_rule_id),
-            'promotion_rules_auto': [
-                self._convert_promotion_rule(r) for r in o.promotion_rule_ids]
+            "promotion_rule_coupon": self._convert_promotion_rule(
+                o.coupon_promotion_rule_id
+            ),
+            "promotion_rules_auto": [
+                self._convert_promotion_rule(r) for r in o.promotion_rule_ids
+            ],
         }
 
     def _convert_promotion_rule(self, sale_promotion_rule):
         if not sale_promotion_rule:
             return {}
         return {
-            'name': sale_promotion_rule.name or None,
-            'code': sale_promotion_rule.code or None,
-            'discount_amount': sale_promotion_rule.discount_amount or None,
-            'discount_type': sale_promotion_rule.discount_type or None,
-            'rule_type': sale_promotion_rule.rule_type
+            "name": sale_promotion_rule.name or None,
+            "code": sale_promotion_rule.code or None,
+            "discount_amount": sale_promotion_rule.discount_amount or None,
+            "discount_type": sale_promotion_rule.discount_type or None,
+            "rule_type": sale_promotion_rule.rule_type,
         }

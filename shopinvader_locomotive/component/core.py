@@ -11,8 +11,8 @@ class BaseLocomotiveConnectorComponent(AbstractComponent):
     All components of this connector should inherit from it.
     """
 
-    _name = 'base.locomotive.connector'
-    _inherit = 'base.connector'
-    _collection = 'shopinvader.backend'
+    _name = "base.locomotive.connector"
+    _inherit = "base.connector"
+    _collection = "shopinvader.backend"
 
-    _default_binding_fields = 'locomotive_bind_ids'
+    _default_binding_fields = "locomotive_bind_ids"

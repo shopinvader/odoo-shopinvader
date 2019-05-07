@@ -7,8 +7,9 @@ from odoo import models
 
 
 class ShopinvaderProduct(models.Model):
-    _inherit = 'shopinvader.product'
+    _inherit = "shopinvader.product"
 
     def _get_categories(self):
-        return self.categ_ids +\
-            super(ShopinvaderProduct, self)._get_categories()
+        return (
+            self.categ_ids + super(ShopinvaderProduct, self)._get_categories()
+        )

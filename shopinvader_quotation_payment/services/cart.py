@@ -8,7 +8,7 @@ from odoo.addons.component.core import Component
 
 
 class CartService(Component):
-    _inherit = 'shopinvader.cart.service'
+    _inherit = "shopinvader.cart.service"
 
     def _get_available_payment_mode(self, cart):
         for line in cart.order_line:

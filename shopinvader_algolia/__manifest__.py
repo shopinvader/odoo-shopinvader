@@ -4,24 +4,17 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-{'name': 'Shopinvader Algolia Connector',
- 'version': '10.0.1.0.0',
- 'author': 'Akretion',
- 'website': 'www.akretion.com',
- 'license': 'AGPL-3',
- 'category': 'Generic Modules',
- 'post_init_hook': 'post_init_hook',
- 'depends': [
-     'shopinvader_search_engine',
-     'connector_algolia',
- ],
- 'data': [
-     'data/ir_export_product.xml',
- ],
- 'demo': [
-     'demo/backend_demo.xml',
-     'demo/product_demo.xml',
- ],
- 'installable': True,
- 'application': True,
- }
+{
+    "name": "Shopinvader Algolia Connector",
+    "version": "10.0.1.0.0",
+    "author": "Akretion",
+    "website": "www.akretion.com",
+    "license": "AGPL-3",
+    "category": "Generic Modules",
+    "post_init_hook": "post_init_hook",
+    "depends": ["shopinvader_search_engine", "connector_algolia"],
+    "data": ["data/ir_export_product.xml"],
+    "demo": ["demo/backend_demo.xml", "demo/product_demo.xml"],
+    "installable": True,
+    "application": True,
+}

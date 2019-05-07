@@ -6,26 +6,24 @@
 import logging
 
 from odoo.addons.base_rest.controllers import main
-from odoo.http import request
 from odoo.exceptions import MissingError
+from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
 
 class InvaderController(main.RestController):
 
-    _root_path = '/shopinvader/'
-    _collection_name = 'shopinvader.backend'
-    _default_auth = 'api_key'
+    _root_path = "/shopinvader/"
+    _collection_name = "shopinvader.backend"
+    _default_auth = "api_key"
 
     @classmethod
     def _get_partner_from_headers(cls, headers):
-        partner_model = request.env['shopinvader.partner']
-        partner_email = headers.get('HTTP_PARTNER_EMAIL')
+        partner_model = request.env["shopinvader.partner"]
+        partner_email = headers.get("HTTP_PARTNER_EMAIL")
         if partner_email:
-            partner_domain = [
-                ('partner_email', '=', partner_email),
-            ]
+            partner_domain = [("partner_email", "=", partner_email)]
             partner = partner_model.search(partner_domain)
             if len(partner) == 1:
                 return partner.record_id
@@ -34,7 +32,8 @@ class InvaderController(main.RestController):
                 if len(partner) > 1:
                     _logger.warning(
                         "More than one shopinvader.partner found for domain:"
-                        " %s", partner_domain
+                        " %s",
+                        partner_domain,
                     )
                 # Could be because the email is not related to a partner or
                 # because the partner is inactive
@@ -43,7 +42,7 @@ class InvaderController(main.RestController):
 
     @classmethod
     def _get_shopinvader_backend_from_request(cls):
-        backend_model = request.env['shopinvader.backend']
+        backend_model = request.env["shopinvader.backend"]
         return backend_model._get_from_http_request()
 
     @classmethod
@@ -53,9 +52,7 @@ class InvaderController(main.RestController):
         # it allow to access to some specific field of the user session
         # By security always force typing
         # Note: rails cookies store session are serveless ;)
-        return {
-            'cart_id': int(headers.get('HTTP_SESS_CART_ID', 0))
-        }
+        return {"cart_id": int(headers.get("HTTP_SESS_CART_ID", 0))}
 
     def _get_component_context(self):
         """
@@ -66,9 +63,11 @@ class InvaderController(main.RestController):
         """
         res = super(InvaderController, self)._get_component_context()
         headers = request.httprequest.environ
-        res['partner'] = self._get_partner_from_headers(headers)
-        res['shopinvader_session'] = \
-            self._get_shopinvader_session_from_headers(headers)
-        res['shopinvader_backend'] = \
-            self._get_shopinvader_backend_from_request()
+        res["partner"] = self._get_partner_from_headers(headers)
+        res[
+            "shopinvader_session"
+        ] = self._get_shopinvader_session_from_headers(headers)
+        res[
+            "shopinvader_backend"
+        ] = self._get_shopinvader_backend_from_request()
         return res

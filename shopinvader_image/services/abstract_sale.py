@@ -7,9 +7,9 @@ from odoo.addons.component.core import AbstractComponent
 
 
 class AbstractSaleService(AbstractComponent):
-    _inherit = 'shopinvader.abstract.sale.service'
+    _inherit = "shopinvader.abstract.sale.service"
 
     def _parser_product(self):
         res = super(AbstractSaleService, self)._parser_product()
-        res.append('images')
+        res.append("images")
         return res

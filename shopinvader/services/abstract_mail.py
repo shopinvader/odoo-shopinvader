@@ -5,8 +5,8 @@ from odoo.addons.component.core import AbstractComponent
 
 
 class AbstractMailService(AbstractComponent):
-    _inherit = 'base.shopinvader.service'
-    _name = 'shopinvader.abstract.mail.service'
+    _inherit = "base.shopinvader.service"
+    _name = "shopinvader.abstract.mail.service"
 
     def ask_email(self, _id):
         """
@@ -27,8 +27,10 @@ class AbstractMailService(AbstractComponent):
         :return: bool
         """
         logged = False
-        if self.partner and \
-                self.partner != self.shopinvader_backend.anonymous_partner_id:
+        if (
+            self.partner
+            and self.partner != self.shopinvader_backend.anonymous_partner_id
+        ):
             logged = True
         return logged
 
@@ -40,9 +42,9 @@ class AbstractMailService(AbstractComponent):
         :param record: target record
         :return: str
         """
-        if hasattr(self, '_usage') and self._usage:
-            return '%s_send_email' % self._usage
-        return ''
+        if hasattr(self, "_usage") and self._usage:
+            return "%s_send_email" % self._usage
+        return ""
 
     def _load_target_email(self, record_id):
         """
@@ -50,7 +52,7 @@ class AbstractMailService(AbstractComponent):
         :param record_id: int
         :return: record or None
         """
-        if not getattr(self, '_expose_model', False):
+        if not getattr(self, "_expose_model", False):
             return None
         return self.env[self._expose_model].browse(record_id)
 
@@ -61,8 +63,8 @@ class AbstractMailService(AbstractComponent):
         :param notif_type: str
         :return: res.partner recordset
         """
-        partner = self.env['res.partner'].browse()
-        if record and hasattr(record, 'partner_id') and record.partner_id:
+        partner = self.env["res.partner"].browse()
+        if record and hasattr(record, "partner_id") and record.partner_id:
             partner = record.partner_id
         return partner
 
@@ -94,7 +96,8 @@ class AbstractMailService(AbstractComponent):
             return {}
         notif_type = self._get_email_notification_type(target)
         allow = self._allow_email_notification(
-            self.partner, target, notif_type)
+            self.partner, target, notif_type
+        )
         if notif_type and allow:
             self._launch_notification(target, notif_type)
         return {}

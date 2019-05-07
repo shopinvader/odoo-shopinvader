@@ -2,19 +2,19 @@
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from urlparse import urlparse, urljoin, ParseResult
 from odoo import api, fields, models
+from urlparse import ParseResult, urljoin, urlparse
 
 
 class ShopinvaderBackend(models.Model):
-    _inherit = 'shopinvader.backend'
+    _inherit = "shopinvader.backend"
 
     image_proxy_url = fields.Char(
         help="Replace the original url (base part) by this proxy url during "
-             "export of images serialized field.\n"
-             "Fill without specifying the protocol or anything else than the "
-             "complete website name (with subdomain if any).\n"
-             "Example: my.website.com",
+        "export of images serialized field.\n"
+        "Fill without specifying the protocol or anything else than the "
+        "complete website name (with subdomain if any).\n"
+        "Example: my.website.com"
     )
 
     @api.multi
@@ -35,10 +35,10 @@ class ShopinvaderBackend(models.Model):
         self.ensure_one()
         proxy_url = self.image_proxy_url
         if proxy_url and url:
-            if not proxy_url.endswith('/'):
-                proxy_url = proxy_url + '/'
+            if not proxy_url.endswith("/"):
+                proxy_url = proxy_url + "/"
             parts = urlparse(url)
-            path = parts.path.split('/')[-1]
-            path = ParseResult('', '', path, *parts[3:]).geturl()
+            path = parts.path.split("/")[-1]
+            path = ParseResult("", "", path, *parts[3:]).geturl()
             return urljoin(proxy_url, path)
         return url

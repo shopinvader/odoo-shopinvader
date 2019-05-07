@@ -3,20 +3,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'Shopinvader Guest Mode',
-    'summary': """
+    "name": "Shopinvader Guest Mode",
+    "summary": """
         Guest mode for Shopinvader""",
-    'version': '10.0.1.0.0',
-    'license': 'AGPL-3',
-    'author': 'ACSONE SA/NV,Odoo Community Association (OCA)',
-    'website': 'https://acsone.eu/',
-    'depends': [
-        'shopinvader'
-    ],
-    'data': [
-        'views/shopinvader_backend.xml',
-        'views/shopinvader_partner.xml',
-    ],
-    'demo': [
-    ],
+    "version": "10.0.1.0.0",
+    "license": "AGPL-3",
+    "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
+    "website": "https://acsone.eu/",
+    "depends": ["shopinvader"],
+    "data": ["views/shopinvader_backend.xml", "views/shopinvader_partner.xml"],
+    "demo": [],
 }

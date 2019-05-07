@@ -12,11 +12,8 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,
-    'installable': True,
-    "external_dependencies": {
-        "python": ['cerberus', 'unidecode'],
-        "bin": [],
-    },
+    "installable": True,
+    "external_dependencies": {"python": ["cerberus", "unidecode"], "bin": []},
     "depends": [
         "base_transaction_id",
         "shopinvader",
@@ -30,9 +27,6 @@
         "views/backend_view.xml",
         "security/ir.model.access.csv",
     ],
-    "demo": [
-        "demo/payment_demo.xml",
-    ],
-    "qweb": [
-    ]
+    "demo": ["demo/payment_demo.xml"],
+    "qweb": [],
 }

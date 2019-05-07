@@ -9,10 +9,10 @@ from odoo.addons.component.core import Component
 
 class CartService(Component):
     _inherit = [
-        'shopinvader.abstract.payment.service',
-        'shopinvader.cart.service',
+        "shopinvader.abstract.payment.service",
+        "shopinvader.cart.service",
     ]
-    _name = 'shopinvader.cart.service'
+    _name = "shopinvader.cart.service"
 
     def _load_target(self, params):
         """

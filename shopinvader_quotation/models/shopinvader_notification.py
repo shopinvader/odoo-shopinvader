@@ -8,14 +8,16 @@ from odoo.tools.translate import _
 
 
 class ShopinvaderNotification(models.Model):
-    _inherit = 'shopinvader.notification'
+    _inherit = "shopinvader.notification"
 
     def _get_all_notification(self):
         res = super(ShopinvaderNotification, self)._get_all_notification()
-        res.update({
-            'quotation_request': {
-                'name': _('Quotation request'),
-                'model': 'sale.order',
-                },
-            })
+        res.update(
+            {
+                "quotation_request": {
+                    "name": _("Quotation request"),
+                    "model": "sale.order",
+                }
+            }
+        )
         return res

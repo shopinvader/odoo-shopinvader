@@ -7,23 +7,23 @@ from odoo.addons.component.core import Component
 
 
 class PaymentServiceAdyen(Component):
-    _inherit = 'payment.service.adyen'
+    _inherit = "payment.service.adyen"
 
     def _validator_add_payment(self):
         return {
-            'token': {'type': 'string'},
-            'redirect_success_url': {'type': 'string'},
-            'redirect_cancel_url': {'type': 'string'},
-            'accept_header': {'type': 'string'},
-            'user_agent': {'type': 'string'},
-            'shopper_ip': {'type': 'string'},
-            }
+            "token": {"type": "string"},
+            "redirect_success_url": {"type": "string"},
+            "redirect_cancel_url": {"type": "string"},
+            "accept_header": {"type": "string"},
+            "user_agent": {"type": "string"},
+            "shopper_ip": {"type": "string"},
+        }
 
     def _validator_check_payment(self):
         return {
-            'md': {'type': 'string'},
-            'pares': {'type': 'string'},
-            'accept_header': {'type': 'string'},
-            'user_agent': {'type': 'string'},
-            'shopper_ip': {'type': 'string'},
-            }
+            "md": {"type": "string"},
+            "pares": {"type": "string"},
+            "accept_header": {"type": "string"},
+            "user_agent": {"type": "string"},
+            "shopper_ip": {"type": "string"},
+        }

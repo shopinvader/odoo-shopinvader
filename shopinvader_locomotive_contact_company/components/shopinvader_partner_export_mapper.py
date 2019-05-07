@@ -8,8 +8,8 @@ from odoo.addons.connector.components.mapper import mapping
 
 
 class ShopinvaderPartnerExportMapper(Component):
-    _inherit = 'shopinvader.partner.export.mapper'
+    _inherit = "shopinvader.partner.export.mapper"
 
     @mapping
     def name(self, record):
-        return {'name': record.contact_name}
+        return {"name": record.contact_name}

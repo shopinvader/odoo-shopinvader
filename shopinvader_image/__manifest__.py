@@ -11,10 +11,7 @@
     "website": "https://akretion.com",
     "author": "Akretion",
     "license": "AGPL-3",
-    "depends": [
-        'shopinvader',
-        'storage_image_product',
-    ],
+    "depends": ["shopinvader", "storage_image_product"],
     "data": [
         "security/ir.model.access.csv",
         "views/shopinvader_backend_view.xml",
@@ -26,6 +23,5 @@
         "demo/shopinvader_image_resize_demo.xml",
         "demo/backend_demo.xml",
     ],
-
-    'post_init_hook': 'post_init_hook',
+    "post_init_hook": "post_init_hook",
 }

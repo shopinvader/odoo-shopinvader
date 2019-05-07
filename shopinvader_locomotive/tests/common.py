@@ -7,7 +7,6 @@ from odoo.addons.shopinvader.tests.common import CommonCase
 
 
 class LocoCommonCase(CommonCase):
-
     def setUp(self, *args, **kwargs):
         super(LocoCommonCase, self).setUp(*args, **kwargs)
-        self.base_url = self.backend.location + '/locomotive/api/v3'
+        self.base_url = self.backend.location + "/locomotive/api/v3"

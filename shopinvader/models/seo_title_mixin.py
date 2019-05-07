@@ -8,19 +8,18 @@ class SEOTitleMixin(models.AbstractModel):
     """
     Abstract model used to define the seo_title and manual_seo_title fields.
     """
-    _name = 'seo.title.mixin'
-    _description = 'SEO Title Mixin'
+
+    _name = "seo.title.mixin"
+    _description = "SEO Title Mixin"
 
     seo_title = fields.Char(
         string="SEO Title",
         compute="_compute_seo_title",
         inverse="_inverse_seo_title",
         help="If you specify a custom value and you want to rollback to the "
-             "default value, just let the field blank.",
+        "default value, just let the field blank.",
     )
-    manual_seo_title = fields.Char(
-        string="SEO Title",
-    )
+    manual_seo_title = fields.Char(string="SEO Title")
 
     @api.multi
     def _build_seo_title(self):
@@ -42,7 +41,7 @@ class SEOTitleMixin(models.AbstractModel):
             record.manual_seo_title = record.seo_title
 
     @api.multi
-    @api.depends('manual_seo_title')
+    @api.depends("manual_seo_title")
     def _compute_seo_title(self):
         """
         Compute the value of the seo_title field

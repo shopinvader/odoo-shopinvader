@@ -8,25 +8,25 @@ from odoo import fields, models
 
 
 class ShopinvaderPayment(models.Model):
-    _name = 'shopinvader.payment'
-    _description = 'Shopinvader Payment'
-    _order = 'sequence'
+    _name = "shopinvader.payment"
+    _description = "Shopinvader Payment"
+    _order = "sequence"
 
-    payment_mode_id = fields.Many2one(
-        'account.payment.mode',
-        'Payment Mode')
+    payment_mode_id = fields.Many2one("account.payment.mode", "Payment Mode")
     sequence = fields.Integer()
     backend_id = fields.Many2one(
-        'shopinvader.backend',
-        'Backend',
-        required=True,
-        ondelete='cascade')
-    notification = fields.Selection([
-        ('cart_confirmation', 'Cart Validation'),
-        ('sale_confirmation', 'Sale Confirmation'),
-        ('cart_confirmation_and_sale_confirmation',
-         'Cart and Sale Confirmation'),
-        ])
+        "shopinvader.backend", "Backend", required=True, ondelete="cascade"
+    )
+    notification = fields.Selection(
+        [
+            ("cart_confirmation", "Cart Validation"),
+            ("sale_confirmation", "Sale Confirmation"),
+            (
+                "cart_confirmation_and_sale_confirmation",
+                "Cart and Sale Confirmation",
+            ),
+        ]
+    )
     manual = fields.Boolean()
     code = fields.Char()
     description = fields.Html()

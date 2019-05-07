@@ -12,21 +12,11 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    'installable': True,
+    "installable": True,
     "auto_install": True,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
-    "depends": [
-        "shopinvader_payment",
-        "payment_gateway_stripe",
-    ],
-    "data": [
-    ],
-    "demo": [
-        "demo/shopinvader_payment_demo.xml",
-    ],
-    "qweb": [
-    ]
+    "external_dependencies": {"python": [], "bin": []},
+    "depends": ["shopinvader_payment", "payment_gateway_stripe"],
+    "data": [],
+    "demo": ["demo/shopinvader_payment_demo.xml"],
+    "qweb": [],
 }

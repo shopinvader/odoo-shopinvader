@@ -3,11 +3,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import json
-from odoo.addons.connector_search_engine.tests.test_all import (
-    TestBindingIndexBase,
-)
+
 from odoo.addons.connector_elasticsearch.components.adapter import (
     ElasticsearchAdapter,
+)
+from odoo.addons.connector_search_engine.tests.test_all import (
+    TestBindingIndexBase,
 )
 from vcr_unittest import VCRMixin
 

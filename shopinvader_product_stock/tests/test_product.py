@@ -4,10 +4,9 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.addons.connector_search_engine.tests.models import SeAdapterFake
+
 from .common import StockCommonCase
-from odoo.addons.connector_search_engine.tests.models import (
-    SeAdapterFake,
-)
 
 
 class TestProductProduct(StockCommonCase):
@@ -21,25 +20,24 @@ class TestProductProduct(StockCommonCase):
         new queue.job
         """
         job = self.job_counter()
-        self._add_stock_to_product(
-            self.product, self.loc_1, 100)
+        self._add_stock_to_product(self.product, self.loc_1, 100)
         self.assertEqual(job.count_created(), 1)
 
     def test_update_stock_on_new_product(self):
         """
         Recomputing binding which have been not exported yet, do nothing
         """
-        self.assertEqual(self.product.shopinvader_bind_ids.sync_state, 'new')
+        self.assertEqual(self.product.shopinvader_bind_ids.sync_state, "new")
         self.product._synchronize_all_binding_stock_level()
         self.assertEqual(self.product.shopinvader_bind_ids.data, {})
 
     def _test_update_stock_with_key(self, key_stock, sync_immediatly=True):
         shopinvader_product = self.product.shopinvader_bind_ids
         shopinvader_product.recompute_json()
-        shopinvader_product.sync_state = 'to_update'
+        shopinvader_product.sync_state = "to_update"
         self.assertEqual(
-            shopinvader_product.data[key_stock],
-            {u'global': {u'qty': 0.0}})
+            shopinvader_product.data[key_stock], {u"global": {u"qty": 0.0}}
+        )
 
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
@@ -49,32 +47,33 @@ class TestProductProduct(StockCommonCase):
             self.perform_jobs(jobs)
 
         self.assertEqual(
-            shopinvader_product.data[key_stock],
-            {u'global': {u'qty': 100.0}})
+            shopinvader_product.data[key_stock], {u"global": {u"qty": 100.0}}
+        )
         if sync_immediatly:
             self.assertEqual(len(calls), 1)
             call = calls[0]
-            self.assertEqual(call['method'], 'index')
-            self.assertEqual(len(call['args']), 1)
+            self.assertEqual(call["method"], "index")
+            self.assertEqual(len(call["args"]), 1)
             self.assertEqual(
-                call['args'][0][key_stock], {u'global': {u'qty': 100.0}})
-            self.assertEqual(shopinvader_product.sync_state, 'done')
+                call["args"][0][key_stock], {u"global": {u"qty": 100.0}}
+            )
+            self.assertEqual(shopinvader_product.sync_state, "done")
         else:
             self.assertEqual(len(calls), 0)
-            self.assertEqual(shopinvader_product.sync_state, 'to_update')
+            self.assertEqual(shopinvader_product.sync_state, "to_update")
 
     def test_update_stock(self):
         """
         Recomputing product should update binding and export it
         """
-        self._test_update_stock_with_key('stock')
+        self._test_update_stock_with_key("stock")
 
     def test_update_stock_differed(self):
         """
         Recomputing product should update binding and not export it
         """
-        self.shopinvader_backend.synchronize_stock = 'in_batch'
-        self._test_update_stock_with_key('stock', sync_immediatly=False)
+        self.shopinvader_backend.synchronize_stock = "in_batch"
+        self._test_update_stock_with_key("stock", sync_immediatly=False)
 
     def test_update_stock_with_special_key(self):
         """
@@ -82,10 +81,11 @@ class TestProductProduct(StockCommonCase):
         using the custom key defined by the user
         """
         export_line = self.env.ref(
-            'shopinvader_product_stock.'
-            'ir_exp_shopinvader_variant_stock_data')
-        export_line.alias = 'stock_data:custom_stock'
-        self._test_update_stock_with_key('custom_stock')
+            "shopinvader_product_stock."
+            "ir_exp_shopinvader_variant_stock_data"
+        )
+        export_line.alias = "stock_data:custom_stock"
+        self._test_update_stock_with_key("custom_stock")
 
     def test_update_stock_without_alias(self):
         """
@@ -93,10 +93,11 @@ class TestProductProduct(StockCommonCase):
         Using the name as key
         """
         export_line = self.env.ref(
-            'shopinvader_product_stock.'
-            'ir_exp_shopinvader_variant_stock_data')
+            "shopinvader_product_stock."
+            "ir_exp_shopinvader_variant_stock_data"
+        )
         export_line.alias = None
-        self._test_update_stock_with_key('stock_data')
+        self._test_update_stock_with_key("stock_data")
 
     def test_update_stock_without_key(self):
         """
@@ -104,34 +105,36 @@ class TestProductProduct(StockCommonCase):
         Without export line
         """
         export_line = self.env.ref(
-            'shopinvader_product_stock.'
-            'ir_exp_shopinvader_variant_stock_data')
+            "shopinvader_product_stock."
+            "ir_exp_shopinvader_variant_stock_data"
+        )
         export_line.unlink()
 
         shopinvader_product = self.product.shopinvader_bind_ids
         shopinvader_product.recompute_json()
-        shopinvader_product.sync_state = 'to_update'
-        self.assertNotIn('stock', shopinvader_product.data)
+        shopinvader_product.sync_state = "to_update"
+        self.assertNotIn("stock", shopinvader_product.data)
 
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
         self.assertEqual(jobs.count_created(), 1)
         self.perform_jobs(jobs)
-        self.assertNotIn('stock', shopinvader_product.data)
+        self.assertNotIn("stock", shopinvader_product.data)
 
     def test_multi_warehouse(self):
         wh_ids = [self.warehouse_1.id, self.warehouse_2.id]
-        self.shopinvader_backend.write({'warehouse_ids': [(6, 0, wh_ids)]})
+        self.shopinvader_backend.write({"warehouse_ids": [(6, 0, wh_ids)]})
         shopinvader_product = self.product.shopinvader_bind_ids
         shopinvader_product.recompute_json()
-        shopinvader_product.sync_state = 'to_update'
+        shopinvader_product.sync_state = "to_update"
         self.assertEqual(
-            shopinvader_product.data['stock'],
+            shopinvader_product.data["stock"],
             {
-                u'chic': {u'qty': 0.0},
-                u'global': {u'qty': 0.0},
-                u'wh': {u'qty': 0.0},
-            })
+                u"chic": {u"qty": 0.0},
+                u"global": {u"qty": 0.0},
+                u"wh": {u"qty": 0.0},
+            },
+        )
 
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
@@ -141,9 +144,10 @@ class TestProductProduct(StockCommonCase):
             self.perform_jobs(jobs)
 
         self.assertEqual(
-            shopinvader_product.data['stock'],
+            shopinvader_product.data["stock"],
             {
-                u'chic': {u'qty': 200.0},
-                u'global': {u'qty': 300.0},
-                u'wh': {u'qty': 100.0},
-            })
+                u"chic": {u"qty": 200.0},
+                u"global": {u"qty": 300.0},
+                u"wh": {u"qty": 100.0},
+            },
+        )
