@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/odoo-shopinvader/odoo-shopinvader.svg?branch=10.0)](https://travis-ci.org/akretion/odoo-shopinvader)
-[![codecov](https://codecov.io/gh/odoo-shopinvader/odoo-shopinvader/branch/10.0/graph/badge.svg)](https://codecov.io/gh/akretion/odoo-shopinvader/branch/10.0)
-[![Code Climate](https://codeclimate.com/github/odoo-shopinvader/odoo-shopinvader/badges/gpa.svg)](https://codeclimate.com/github/akretion/odoo-shopinvader)
+[![Build Status](https://travis-ci.org/shopinvader/odoo-shopinvader.svg?branch=10.0)](https://travis-ci.org/shopinvader/odoo-shopinvader)
+[![codecov](https://codecov.io/gh/shopinvader/odoo-shopinvader/branch/10.0/graph/badge.svg)](https://codecov.io/gh/shopinvader/odoo-shopinvader/branch/10.0)
+[![Code Climate](https://codeclimate.com/github/shopinvader/odoo-shopinvader/badges/gpa.svg)](https://codeclimate.com/github/shopinvader/odoo-shopinvader)
 
 
 ShopInvader
