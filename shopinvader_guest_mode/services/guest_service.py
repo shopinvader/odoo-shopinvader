@@ -85,9 +85,12 @@ class GuestService(Component):
             super(GuestService, self)._send_welcome_message(binding)
 
     def _get_binding(self, email):
-        return self.env["shopinvader.partner"].search(
-            [("email", "=", email), ("is_guest", "=", True)]
-        )
+        domain = [
+            ("email", "=", email),
+            ("is_guest", "=", True),
+            ("backend_id", "=", self.shopinvader_backend.id),
+        ]
+        return self.env["shopinvader.partner"].search(domain, limit=1)
 
     def _archive_existing_binding(self, email):
         """

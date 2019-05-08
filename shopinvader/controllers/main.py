@@ -22,8 +22,12 @@ class InvaderController(main.RestController):
     def _get_partner_from_headers(cls, headers):
         partner_model = request.env["shopinvader.partner"]
         partner_email = headers.get("HTTP_PARTNER_EMAIL")
+        backend = cls._get_shopinvader_backend_from_request()
         if partner_email:
-            partner_domain = [("partner_email", "=", partner_email)]
+            partner_domain = [
+                ("partner_email", "=", partner_email),
+                ("backend_id", "=", backend.id),
+            ]
             partner = partner_model.search(partner_domain)
             if len(partner) == 1:
                 return partner.record_id
