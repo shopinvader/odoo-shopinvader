@@ -3,12 +3,13 @@ connector
 server-tools
 server-auth
 e-commerce
-ak-odoo-incubator https://github.com/akretion/ak-odoo-incubator 10.0
 search-engine
 product-attribute
 product-variant
 storage https://github.com/akretion/storage 10.0
 base_rest https://github.com/oca/rest-framework 10.0
+odoo-pim https://github.com/shopinvader/odoo-pim 10.0
+odoo-misc https://github.com/shopinvader/odoo-misc 10.0
 
 # TODO remove me when the PR is merged https://github.com/OCA/sale-workflow/pull/755
 sale-workflow https://github.com/acsone/sale-workflow 10.0-sale_promotion_rule_discount_amount-lmi
