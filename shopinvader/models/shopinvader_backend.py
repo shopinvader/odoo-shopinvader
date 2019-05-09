@@ -111,10 +111,16 @@ class ShopinvaderBackend(models.Model):
     @api.multi
     def _compute_user_id(self):
         for rec in self:
-            login_name = serv_config.get(rec.auth_api_key_name, "user")
-            rec.user_id = self.env["res.users"].search(
-                [("login", "=", login_name)]
-            )
+            section = rec.auth_api_key_name
+            login_name = serv_config.get(section, "user")
+            user_model = self.env["res.users"]
+            if serv_config.has_option(section, "allow_inactive_user"):
+                allow_inactive_user = serv_config.getboolean(
+                    section, "allow_inactive_user"
+                )
+                if allow_inactive_user:
+                    user_model = user_model.with_context(active_test=False)
+            rec.user_id = user_model.search([("login", "=", login_name)])
 
     @api.model
     def _default_company_id(self):
