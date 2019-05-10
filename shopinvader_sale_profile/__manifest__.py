@@ -21,5 +21,5 @@
         "demo/shopinvader_sale_profile.xml",
         "demo/account_fiscal_position.xml",
     ],
-    "installable": True,
+    "installable": False,
 }

@@ -12,7 +12,7 @@
     "website": "https://akretion.com",
     "author": "Akretion,ACSONE SA/NV",
     "license": "AGPL-3",
-    "installable": True,
+    "installable": False,
     "depends": [
         "stock",
         "shopinvader",

@@ -9,7 +9,7 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "depends": ["shopinvader", "crm"],
     "demo": ["demo/email_demo.xml", "demo/notification_demo.xml"],
 }

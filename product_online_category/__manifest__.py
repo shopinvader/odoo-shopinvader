@@ -13,5 +13,5 @@
     "website": "http://www.akretion.com/fr",
     "depends": ["product_multi_category"],
     "data": [],
-    "installable": True,
+    "installable": False,
 }

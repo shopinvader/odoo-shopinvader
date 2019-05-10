@@ -20,6 +20,6 @@
     ],
     "data": ["data/ir_export_product.xml"],
     "demo": ["demo/product_brand_demo.xml", "demo/product_product_demo.xml"],
-    "installable": True,
+    "installable": False,
     "application": True,
 }

@@ -12,7 +12,7 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "external_dependencies": {"python": [], "bin": []},
     "depends": ["shopinvader_locomotive", "shopinvader_contact_company"],

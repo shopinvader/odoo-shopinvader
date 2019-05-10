@@ -14,5 +14,5 @@
     "depends": ["base"],
     "data": ["views/partner_view.xml", "views/users_view.xml"],
     "demo": ["demo/partner.xml"],
-    "installable": True,
+    "installable": False,
 }

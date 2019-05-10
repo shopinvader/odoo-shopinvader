@@ -19,6 +19,6 @@
         "data/ir_export_product.xml",
     ],
     "demo": [],
-    "installable": True,
+    "installable": False,
     "application": True,
 }

@@ -34,5 +34,5 @@
     "external_dependencies": {"python": ["magic", "validators"]},
     "data": ["views/import_product_image_view.xml"],
     "license": "AGPL-3",
-    "installable": True,
+    "installable": False,
 }

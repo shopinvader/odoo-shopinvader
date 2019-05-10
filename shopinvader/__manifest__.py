@@ -12,7 +12,7 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,
-    "installable": True,
+    "installable": False,
     "external_dependencies": {
         "python": ["cerberus", "unidecode", "openupgradelib"],
         "bin": [],
