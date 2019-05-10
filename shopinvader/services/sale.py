@@ -5,6 +5,7 @@
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+from odoo.osv import expression
 
 
 class SaleService(Component):
@@ -53,11 +54,13 @@ class SaleService(Component):
     # All params are trusted as they have been checked before
 
     def _get_base_search_domain(self):
-        return [
-            ("partner_id", "=", self.partner.id),
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-            ("typology", "=", "sale"),
-        ]
+        return expression.normalize_domain(
+            [
+                ("partner_id", "=", self.partner.id),
+                ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+                ("typology", "=", "sale"),
+            ]
+        )
 
     def _get_email_notification_type(self, record):
         """
