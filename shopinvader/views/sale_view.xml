@@ -34,7 +34,7 @@
     <menuitem
             action="action_cart"
             id="menu_sale_order"
-            parent="sales_team.menu_sales"
+            parent="sale.sale_menu_root"
             sequence="4"
             groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"/>
 

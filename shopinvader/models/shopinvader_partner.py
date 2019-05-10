@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -17,7 +16,7 @@ class ShopinvaderPartner(models.Model):
         "res.partner", required=True, ondelete="cascade"
     )
     partner_email = fields.Char(
-        related="record_id.email", readonly=True, required=True, store=True
+        related="record_id.email", required=True, store=True
     )
 
     _sql_constraints = [

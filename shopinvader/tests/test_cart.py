@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -11,7 +10,7 @@ from .common import CommonCase
 class CartCase(CommonCase):
     def setUp(self):
         super(CartCase, self).setUp()
-        self.registry.enter_test_mode()
+        self.registry.enter_test_mode(self.env.cr)
         self.address = self.env.ref("shopinvader.partner_1_address_1")
         self.fposition = self.env.ref("shopinvader.fiscal_position_2")
         self.default_fposition = self.env.ref("shopinvader.fiscal_position_0")

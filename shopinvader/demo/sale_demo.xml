@@ -8,7 +8,6 @@
         <field name="shopinvader_backend_id" ref="shopinvader.backend_1"/>
         <field name="user_id" ref="base.user_demo"/>
         <field name="pricelist_id" ref="product.list0"/>
-        <field name="project_id" ref="account_analytic_0"/>
         <field name="typology">cart</field>
     </record>
 
@@ -17,7 +16,7 @@
         <field name="name">Laptop E5023</field>
         <field name="product_id" ref="product.product_product_25"/>
         <field name="product_uom_qty">3</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">2950.00</field>
     </record>
 
@@ -26,7 +25,7 @@
         <field name="name">Motherboard I9P57</field>
         <field name="product_id" ref="product.product_product_20"/>
         <field name="product_uom_qty">5</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">145.00</field>
     </record>
 
@@ -35,7 +34,7 @@
         <field name="name">Processor Core i5 2.70 Ghz</field>
         <field name="product_id" ref="product.product_product_22"/>
         <field name="product_uom_qty">2</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">65.00</field>
     </record>
 
@@ -54,7 +53,7 @@
         <field name="name">Graphics Card</field>
         <field name="product_id" ref="product.product_product_24"/>
         <field name="product_uom_qty">3</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">885.0</field>
     </record>
 
@@ -63,7 +62,7 @@
         <field name="name">Laptop E5023</field>
         <field name="product_id" ref="product.product_product_25"/>
         <field name="product_uom_qty">2</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">2950.0</field>
     </record>
 
@@ -82,16 +81,16 @@
         <field name="name">Computer Case</field>
         <field name="product_id" ref="product.product_product_16"/>
         <field name="product_uom_qty">3</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">25.00</field>
     </record>
 
     <record id="sale_order_line_7" model="sale.order.line">
         <field name="order_id" ref="sale_order_3"/>
         <field name="name">HDD SH-1</field>
-        <field name="product_id" ref="product.product_product_17"/>
+        <field name="product_id" ref="product.product_product_16"/>
         <field name="product_uom_qty">2</field>
-        <field name="product_uom" ref="product.product_uom_unit"/>
+        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="price_unit">975.0</field>
     </record>
 

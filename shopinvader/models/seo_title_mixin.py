@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import api, fields, models
@@ -19,7 +18,7 @@ class SEOTitleMixin(models.AbstractModel):
         help="If you specify a custom value and you want to rollback to the "
         "default value, just let the field blank.",
     )
-    manual_seo_title = fields.Char(string="SEO Title")
+    manual_seo_title = fields.Char(string="Manual SEO Title")
 
     @api.multi
     def _build_seo_title(self):
