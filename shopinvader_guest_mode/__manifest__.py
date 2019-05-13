@@ -13,4 +13,5 @@
     "depends": ["shopinvader"],
     "data": ["views/shopinvader_backend.xml", "views/shopinvader_partner.xml"],
     "demo": [],
+    "installable": False,
 }

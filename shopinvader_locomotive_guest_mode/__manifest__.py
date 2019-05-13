@@ -13,4 +13,5 @@
     "depends": ["shopinvader_guest_mode", "shopinvader_locomotive"],
     "data": [],
     "demo": [],
+    "installable": False,
 }

@@ -23,5 +23,6 @@
         "demo/shopinvader_image_resize_demo.xml",
         "demo/backend_demo.xml",
     ],
+    "installable": False,
     "post_init_hook": "post_init_hook",
 }
