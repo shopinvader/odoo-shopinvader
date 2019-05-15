@@ -14,7 +14,12 @@
     "application": True,
     "installable": True,
     "external_dependencies": {"python": [], "bin": []},
-    "depends": ["shopinvader", "sale_shipping_info_helper"],
+    "depends": [
+        "shopinvader",
+        "sale_shipping_info_helper",
+        "sale_stock",
+        "delivery",
+    ],
     "data": ["views/backend_view.xml"],
     "demo": [
         "demo/backend_demo.xml",
