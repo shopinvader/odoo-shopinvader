@@ -4,6 +4,7 @@ from uuid import uuid4
 
 from dateutil import parser
 from odoo import fields
+
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
@@ -26,6 +27,7 @@ class TestDeliveryService(CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(TestDeliveryService, self).setUp(*args, **kwargs)
+
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="delivery")
         with self.work_on_services(
