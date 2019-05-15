@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_partner_binding_form_view">
+        <field name="name">shopinvader.partner.binding.form (in shopinvader)</field>
+        <field name="model">shopinvader.partner.binding</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="shopinvader_backend_id" widget="selection"/>
+                    </group>
+                    <group></group>
+                </group>
+                <div>
+                    Select which partners should belong to the Shopinvader backend in the list below.
+                    The email address of each selected contact must be valid and unique.
+                    Partners already binded are ignored.
+                </div>
+                <group>
+                    <field name="binding_lines" colspan="2" nolabel="1">
+                        <tree editable="bottom" create="false" delete="false">
+                            <field name="partner_id"/>
+                            <field name="email"/>
+                            <field name="bind"/>
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button string="Apply" name="action_apply" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="partner_binding_action"
+                name="Bind to a website"
+                src_model="res.partner"
+                res_model="shopinvader.partner.binding"
+                view_type="form" view_mode="form"
+                key2="client_action_multi" target="new"
+                groups="group_shopinvader_manager"
+    />
+</odoo>
