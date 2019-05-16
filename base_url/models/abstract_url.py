@@ -27,7 +27,7 @@ class AbstractUrl(models.AbstractModel):
         selection=[("auto", "Automatic"), ("manual", "Manual")], default="auto"
     )
     automatic_url_key = fields.Char(
-        compute="_compute_automatic_url_key", store=True
+        compute="_compute_automatic_url_key", store=True, compute_sudo=True
     )
     manual_url_key = fields.Char()
     url_key = fields.Char(
