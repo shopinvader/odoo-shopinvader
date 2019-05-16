@@ -8,9 +8,13 @@
         <field name="arch" type="xml">
             <page name="delivery" position="inside">
                 <group name="carrier" colspan="4">
-                    <field name="carrier_ids"
-                           colspan="4"
-                           nolabel="True">
+                    <field name="carrier_ids" colspan="4" nolabel="True">
+                        <tree string="Carrier">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="country_ids"/>
+                            <field name="delivery_type"/>
+                        </tree>
                     </field>
                 </group>
             </page>
