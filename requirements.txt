@@ -1,4 +1,4 @@
-slugify
+python-slugify>=3.0.2
 cerberus
 algoliasearch<2.0.0
 unidecode
