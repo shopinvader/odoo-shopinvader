@@ -9,12 +9,13 @@
         <field name="model">shopinvader.product</field>
         <field name="arch" type="xml">
             <tree decoration-danger="active != True" decoration-success="active == True">
+
                 <field name="backend_id"/>
                 <field name="lang_id"/>
                 <field name="sync_date"/>
                 <field name="active" invisible="True"/>
-                <button name="toggle_published" type="object" help="Click to publish" color="green" icon="fa-close" attrs="{'invisible': [('active', '=', True)]}"/>
-                <button name="toggle_published" type="object" help="Click to unpublish" color="red" icon="fa-check" attrs="{'invisible': [('active', '!=', True)]}"/>
+                <button name="toggle_published" type="object" help="Click to publish" title="" icon="fa-close" aria-label="Publish" attrs="{'invisible': [('active', '=', True)]}"/>
+                <button name="toggle_published" type="object" help="Click to unpublish" title="" icon="fa-check" aria-label="Unpublish" attrs="{'invisible': [('active', '!=', True)]}"/>
             </tree>
         </field>
     </record>
