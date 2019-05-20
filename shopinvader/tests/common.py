@@ -93,6 +93,12 @@ class ProductCommonCase(CommonCase):
                 ("backend_id", "=", self.backend.id),
             ]
         )
+        self.env.user.company_id.currency_id = self.env.ref("base.USD")
+        base_price_list = self.env.ref("product.list0")
+        base_price_list.currency_id = self.env.ref("base.USD")
+        self.shopinvader_variant.record_id.currency_id = self.env.ref(
+            "base.USD"
+        )
 
 
 class ShopinvaderRestCase(BaseRestCase):
