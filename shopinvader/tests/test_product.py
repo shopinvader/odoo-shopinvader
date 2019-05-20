@@ -32,11 +32,7 @@ class ProductCase(ProductCommonCase):
     #            self.template.categ_id + self.template.categ_id.parent_id)
     #
     def test_variant_attributes(self):
-        attr_dict = {
-            "color": u"Black",
-            "wi-fi": u"2.4 GHz",
-            "memory": u"16 GB",
-        }
+        attr_dict = {"legs": u"Steel", "color": u"Black"}
         self.assertDictEqual(
             self.shopinvader_variant.variant_attributes, attr_dict
         )
@@ -55,7 +51,7 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(filter_on_field.display_name, "name")
 
         attribute_id = self.env["product.attribute"].search(
-            [("name", "=", "Wi-Fi")]
+            [("name", "=", "Legs")]
         )
         filter_on_attr = self.env["product.filter"].create(
             {
@@ -65,7 +61,7 @@ class ProductCase(ProductCommonCase):
             }
         )
         self.assertEqual(
-            filter_on_attr.display_name, "variant_attributes.wi-fi"
+            filter_on_attr.display_name, "variant_attributes.legs"
         )
 
     def test_product_price(self):
@@ -243,18 +239,19 @@ class ProductCase(ProductCommonCase):
 
     def test_product_category_with_two_lang(self):
         lang = self.install_lang("base.lang_fr")
+        product = self.env.ref("product.product_product_4")
+        product.with_context(lang="fr_FR").name = "Bureau Personnalisable"
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         self.backend.bind_all_product()
-        product = self.env.ref("product.product_product_4")
         self.assertEqual(len(product.shopinvader_bind_ids), 2)
         shopinvader_product = product.shopinvader_bind_ids[0]
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
         for binding in product.shopinvader_bind_ids:
             if binding.lang_id.code == "fr_FR":
-                self.assertEqual(binding.url_key, u"ipad-avec-ecran-retina")
+                self.assertEqual(binding.url_key, u"bureau-personnalisable")
             elif binding.lang_id.code == "en_US":
-                self.assertEqual(binding.url_key, u"ipad-retina-display")
+                self.assertEqual(binding.url_key, u"customizable-desk")
 
     def test_create_product_binding1(self):
         """
