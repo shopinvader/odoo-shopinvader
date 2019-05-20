@@ -71,8 +71,11 @@ class ShopinvaderPartner(models.Model):
         keys = partner_values.keys()
         # Some fields are related to shopinvader.partner and doesn't exist
         # in res.partner
-        [partner_values.pop(k) for k in keys if k not in partner._fields]
-        return partner.create(partner_values)
+        values = {}
+        for k in keys:
+            if k in partner._fields:
+                values.update({k: partner_values[k]})
+        return partner.create(values)
 
     @api.model
     def _get_unique_partner_domain(self, vals):

@@ -118,7 +118,7 @@ class AddressService(Component):
             "city",
             "phone",
             "opt_in",
-            "opt_out",
+            "is_blacklisted:opt_out",
             "vat",
             ("state_id:state", ["id", "name"]),
             ("country_id:country", ["id", "name"]),
