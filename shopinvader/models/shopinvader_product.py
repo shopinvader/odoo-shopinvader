@@ -83,21 +83,23 @@ class ShopinvaderProduct(models.Model):
         self.ensure_one()
         return self.categ_id
 
+    def _get_parent_category_domain(self, categ):
+        self.ensure_one()
+        return [
+            ("record_id", "parent_of", categ.ids),
+            ("backend_id", "=", self.backend_id.id),
+            ("lang_id", "=", self.lang_id.id),
+        ]
+
     def _compute_shopinvader_category(self):
         for record in self:
-            ids = []
-            categs = record._get_categories()
-            for categ in categs:
-                parents = self.env["shopinvader.category"].search(
-                    [
-                        ("parent_left", "<=", categ.parent_left),
-                        ("parent_right", ">=", categ.parent_right),
-                        ("backend_id", "=", record.backend_id.id),
-                        ("lang_id", "=", record.lang_id.id),
-                    ]
-                )
-                ids += parents.ids
-            record.shopinvader_categ_ids = ids
+            categories = self.env["shopinvader.category"]
+            product_categories = record._get_categories()
+            for product_category in product_categories:
+                domain = record._get_parent_category_domain(product_category)
+                parents = self.env["shopinvader.category"].search(domain)
+                categories |= parents
+            record.shopinvader_categ_ids = parents
 
     def _prepare_shopinvader_variant(self, variant):
         values = {"record_id": variant.id, "shopinvader_product_id": self.id}
