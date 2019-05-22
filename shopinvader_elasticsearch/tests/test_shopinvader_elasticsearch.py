@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -10,11 +9,13 @@ from odoo.addons.connector_elasticsearch.components.adapter import (
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBase,
 )
+from odoo.tools import mute_logger
 from vcr_unittest import VCRMixin
 
 
 class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
     @classmethod
+    @mute_logger("odoo.addons.product.models.product")
     def setUpClass(cls):
         super(TestElasticsearchBackend, cls).setUpClass()
         ElasticsearchAdapter._build_component(cls._components_registry)
@@ -65,7 +66,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         # it's a bulk operation....
         # the first line should the reference to the elastic objetct (index)
         # the next line is for product info
-        lines = filter(None, request.body.split("\n"))
+        lines = list(filter(None, request.body.split(b"\n")))
         self.assertEqual(len(lines), 2)
         index_data = json.loads(lines[0].decode("utf-8"))
         product_data = json.loads(lines[1].decode("utf-8"))
@@ -76,6 +77,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         self.assertEqual(index_data["index"]["_id"], si_variant.object_id)
         self.assertEqual(product_data, si_variant.data)
 
+    @mute_logger("odoo.addons.product.models.product")
     def test_20_recompute_all_products(self):
         bindings = self.env["shopinvader.variant"].search([])
         bindings.write({"data": {}})
@@ -95,7 +97,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         # For eash operation we have:
         # a first line for the reference to the elastic object (index)
         # a second line for binding info
-        lines = filter(None, request.body.split("\n"))
+        lines = list(filter(None, request.body.split(b"\n")))
         self.assertEqual(len(lines), binding_nbr * 2)
         cpt = 0
         for line in lines:
@@ -108,6 +110,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
             self.assertIn("index", index_data)
             self.assertEqual(index_data["index"]["_index"], index.name.lower())
 
+    @mute_logger("odoo.addons.product.models.product")
     def test_20_export_all_products(self):
         self._test_export_all_binding(self.index_product)
 
