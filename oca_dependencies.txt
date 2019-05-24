@@ -11,3 +11,5 @@ sale-workflow
 storage https://github.com/akretion/storage 12.0
 base_rest https://github.com/oca/rest-framework 12.0
 odoo-misc https://github.com/shopinvader/odoo-misc 12.0
+
+queue https://github.com/acsone/queue 12.0-imp-queue_job_test_mixin-dro

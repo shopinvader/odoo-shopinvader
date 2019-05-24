@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com)
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
@@ -44,7 +43,7 @@ class ShopinvaderBackend(models.Model):
     )
 
     def _default_stock_field_id(self):
-        return self.env.ref("stock.field_product_product_qty_available")
+        return self.env.ref("stock.field_product_product__qty_available")
 
     def _default_warehouse_ids(self):
         return self.env["stock.warehouse"].search([], limit=1)

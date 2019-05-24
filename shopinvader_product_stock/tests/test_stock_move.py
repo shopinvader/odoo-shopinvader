@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com)
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
@@ -30,7 +29,7 @@ class TestStockMove(StockCommonCase):
         """
         job = self.job_counter()
         move = self._create_incomming_move()
-        move.action_cancel()
+        move._action_cancel()
         self.assertEqual(job.count_created(), 1)
 
     def test_action_confirm(self):
@@ -41,7 +40,7 @@ class TestStockMove(StockCommonCase):
         """
         job = self.job_counter()
         move = self._create_incomming_move()
-        move.action_confirm()
+        move._action_confirm()
         self.assertEqual(job.count_created(), 1)
 
     def test_action_done(self):
@@ -52,7 +51,7 @@ class TestStockMove(StockCommonCase):
         """
         job = self.job_counter()
         move = self._create_incomming_move()
-        move.action_done()
+        move._action_done()
         self.assertEqual(job.count_created(), 1)
 
     def test_action_confirm_not_binded(self):
@@ -64,7 +63,7 @@ class TestStockMove(StockCommonCase):
         job = self.job_counter()
         self.product.shopinvader_bind_ids.unlink()
         move = self._create_incomming_move()
-        move.action_confirm()
+        move._action_confirm()
         self.assertEqual(job.count_created(), 0)
 
     def test_duplicated_action_done(self):
@@ -75,7 +74,7 @@ class TestStockMove(StockCommonCase):
         """
         job = self.job_counter()
         move = self._create_incomming_move()
-        move.action_done()
+        move._action_done()
         move = self._create_incomming_move()
-        move.action_done()
+        move._action_done()
         self.assertEqual(job.count_created(), 1)
