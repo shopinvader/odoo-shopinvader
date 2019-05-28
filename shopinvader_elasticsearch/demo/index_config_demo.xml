@@ -5,42 +5,52 @@
         <field name="body">{}</field>
         <field name="body_str">
             {
+              "settings": {
+                "index": {
+                  "sort.order": ["desc", "asc"],
+                  "sort.field": ["main", "id"]
+                }
+              },
               "mappings": {
-                "odoo": {
-                  "properties": {
-                    "hierarchicalCategories": {
-                      "type": "nested",
-                      "properties": {
-                        "ancestors": {
-                          "type": "text",
-                          "fielddata": true,
-                          "analyzer": "keyword"
-                        },
-                        "order": {
-                          "type": "integer"
-                        },
-                        "value": {
-                          "type": "text",
-                          "fielddata": true,
-                          "analyzer": "keyword"
-                        },
-                        "level": {
-                          "type": "integer"
-                        }
-                      }
-                    },
-                    "url_key": {
-                      "type": "text",
-                      "analyzer": "keyword"
-                    },
-                    "variant_attributes": {
-                      "properties": {
-                        "color": {
-                          "type": "text",
-                          "fielddata": true
-                        }
+                "properties": {
+                  "hierarchicalCategories": {
+                    "type": "nested",
+                    "properties": {
+                      "ancestors": {
+                        "type": "keyword",
+                        "fielddata": true
+                      },
+                      "order": {
+                        "type": "integer"
+                      },
+                      "value": {
+                        "type": "keyword",
+                        "fielddata": true
+                      },
+                      "level": {
+                        "type": "integer"
                       }
                     }
+                  },
+                  "url_key": {
+                    "type": "keyword"
+                  },
+                  "variant_attributes": {
+                    "properties": {
+                      "color": {
+                        "type": "text",
+                        "fielddata": true
+                      }
+                    }
+                  },
+                  "main": {
+                    "type": "boolean"
+                  },
+                  "id": {
+                    "type": "integer"
+                  },
+                  "redirect_url_key": {
+                    "type": "keyword"
                   }
                 }
               }
@@ -53,13 +63,22 @@
         <field name="body">{}</field>
         <field name="body_str">
             {
+              "settings" : {
+                "index" : {
+                  "sort.field" : ["id"],
+                  "sort.order" : ["asc"]
+                }
+              },
               "mappings": {
-                "odoo": {
-                  "properties": {
-                    "url_key": {
-                      "type": "text",
-                      "analyzer": "keyword"
-                    }
+                "properties": {
+                  "url_key": {
+                    "type":  "keyword"
+                  },
+                  "redirect_url_key": {
+                    "type":  "keyword"
+                  },
+                  "id": {
+                    "type":  "integer"
                   }
                 }
               }
