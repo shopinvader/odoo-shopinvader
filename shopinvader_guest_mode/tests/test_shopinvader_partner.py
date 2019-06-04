@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2018 ACSONE SA/NV
+# Copyright 2018-2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import timedelta
@@ -71,18 +70,12 @@ class TestShopinvaderPartner(SavepointComponentCase):
         create_date = fields.Datetime.from_string(create_date)
         delay = self.backend.guest_account_expiry_delay
         expiry_dt = create_date + timedelta(days=delay)
-        expected_expiry_dt = fields.Datetime.to_string(expiry_dt)
-        self.assertEqual(
-            self.shopinvader_partner.expiry_dt, expected_expiry_dt
-        )
+        self.assertEqual(self.shopinvader_partner.expiry_dt, expiry_dt)
         # if we change the delay on the backend expiry_dt is recomputed
         delay = delay + 20
         self.backend.guest_account_expiry_delay = delay
         expiry_dt = create_date + timedelta(days=delay)
-        expected_expiry_dt = fields.Datetime.to_string(expiry_dt)
-        self.assertEqual(
-            self.shopinvader_partner.expiry_dt, expected_expiry_dt
-        )
+        self.assertEqual(self.shopinvader_partner.expiry_dt, expiry_dt)
 
     def test_deactivate_expired(self):
         self.assertTrue(self.shopinvader_partner.active)
