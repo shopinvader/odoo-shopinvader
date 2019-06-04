@@ -16,7 +16,7 @@ def wrap_integrity_error(method):
             r = method(*args, **kwargs)
         except psycopg2.IntegrityError as inst:
             constrains = {
-                "unique_shopinvader_partner_email": _(
+                "shopinvader_partner_unique_shopinvader_partner_email": _(
                     "Only one active binding with the same email is "
                     "allowed by backend."
                 )
@@ -51,31 +51,18 @@ class ShopinvaderPartner(models.Model):
     active = fields.Boolean(default=True, index=True)
 
     _sql_constraints = [
-        # Replaced by an unique index on active binding
+        # Replaced by an exclude constraint on active binding
         ("record_uniq", "CHECK(1=1)", ""),
-        # Replaced by an unique index on active binding
+        # Replaced by an exclude constraint on active binding
         ("email_uniq", "CHECK(1=1)", ""),
+        (
+            "unique_shopinvader_partner_email",
+            "EXCLUDE (backend_id WITH =, partner_email WITH =)"
+            " WHERE (active=True)",
+            "Only one active binding with the same email is "
+            "allowed by backend.",
+        ),
     ]
-
-    @api.model_cr
-    def init(self):
-        """
-        Create unique index only for active records
-        """
-        res = super().init()
-        self._cr.execute(
-            "SELECT indexname FROM pg_indexes WHERE indexname = %s",
-            ("unique_shopinvader_partner_email",),
-        )
-        if not self._cr.fetchone():
-            self._cr.execute(
-                """
-            CREATE UNIQUE INDEX unique_shopinvader_partner_email
-            ON shopinvader_partner (backend_id, partner_email)
-            WHERE active;
-            """
-            )
-        return res
 
     @api.multi
     @api.constrains("is_guest")

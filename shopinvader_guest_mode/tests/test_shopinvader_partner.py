@@ -6,6 +6,7 @@ from datetime import timedelta
 from odoo import fields
 from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.exceptions import ValidationError
+from odoo.tools import mute_logger
 
 
 class TestShopinvaderPartner(SavepointComponentCase):
@@ -23,6 +24,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             }
         )
 
+    @mute_logger("odoo.sql_db")
     def test_unique_active(self):
         with self.assertRaises(ValidationError), self.cr.savepoint():
             # try to create a second active partner with same email..
