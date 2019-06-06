@@ -9,11 +9,6 @@ from .models_mixin import TestMixin
 
 _logger = logging.getLogger(__name__)
 
-try:
-    from slugify import slugify
-except ImportError:
-    _logger.debug("Cannot `import slugify`.")
-
 
 class UrlBackendFake(models.Model, TestMixin):
 
@@ -34,8 +29,4 @@ class ResPartnerAddressableFake(models.Model, TestMixin):
     @api.multi
     @api.depends("lang_id", "record_id.name")
     def _compute_automatic_url_key(self):
-        key_by_id = {}
-        for record in self.with_context(lang=self.lang_id.code):
-            key_by_id[record.id] = slugify(record.name)
-        for record in self:
-            record.automatic_url_key = key_by_id[record.id]
+        self._generic_compute_automatic_url_key()
