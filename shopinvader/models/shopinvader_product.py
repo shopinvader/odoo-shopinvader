@@ -105,6 +105,9 @@ class ShopinvaderProduct(models.Model):
             values.update({"active": variant.active})
         return values
 
+    def _get_variants(self):
+        return self.product_variant_ids
+
     def _create_shopinvader_variant(self):
         """
         Create missing shopinvader.variant and return new just created
@@ -114,7 +117,7 @@ class ShopinvaderProduct(models.Model):
         self_ctx = self.with_context(active_test=False)
         shopinv_variant_obj = self_ctx.env["shopinvader.variant"]
         shopinv_variants = shopinv_variant_obj.browse()
-        for variant in self_ctx.product_variant_ids:
+        for variant in self_ctx._get_variants():
             if not shopinv_variant_obj.search_count(
                 [
                     ("record_id", "=", variant.id),
