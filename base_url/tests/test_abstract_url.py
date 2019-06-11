@@ -118,3 +118,10 @@ class TestAbstractUrl(SavepointCase):
         ) as mocked_redirect:
             my_partner.active = False
             mocked_redirect.assert_called_once()
+
+    def test_onchange_do_nothing(self):
+        # calling onchange should not fail and should not return an url
+        result = self.ResPartnerAddressable.onchange(
+            {}, ["automatic_url_key"], {}
+        )
+        self.assertEqual(result, {"value": {}})
