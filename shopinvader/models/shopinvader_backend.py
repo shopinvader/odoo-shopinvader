@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -10,6 +9,7 @@ from odoo.http import request
 
 class ShopinvaderBackend(models.Model):
     _name = "shopinvader.backend"
+    _description = "Shopinvader Backend"
 
     name = fields.Char(required=True)
     company_id = fields.Many2one(

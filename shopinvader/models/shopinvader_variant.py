@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -17,7 +16,7 @@ class ShopinvaderVariant(models.Model):
         "product.product": "record_id",
     }
 
-    default_code = fields.Char(related="record_id.default_code", readonly=True)
+    default_code = fields.Char(related="record_id.default_code")
     shopinvader_product_id = fields.Many2one(
         "shopinvader.product", required=True, ondelete="cascade", index=True
     )

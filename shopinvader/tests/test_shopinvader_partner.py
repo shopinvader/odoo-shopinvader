@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
 
 from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.tools import mute_logger
 from psycopg2 import IntegrityError
 
 
@@ -16,6 +16,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         cls.shopinvader_config = cls.env["shopinvader.config.settings"]
         cls.unique_email = datetime.now().isoformat() + "@test.com"
 
+    @mute_logger("odoo.sql_db")
     def test_unique_binding(self):
         self.env["shopinvader.partner"].create(
             {

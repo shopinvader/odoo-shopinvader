@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -17,7 +16,7 @@ class ShopinvaderPartner(models.Model):
         "res.partner", required=True, ondelete="cascade"
     )
     partner_email = fields.Char(
-        related="record_id.email", readonly=True, required=True, store=True
+        related="record_id.email", required=True, store=True
     )
 
     _sql_constraints = [
@@ -72,8 +71,11 @@ class ShopinvaderPartner(models.Model):
         keys = partner_values.keys()
         # Some fields are related to shopinvader.partner and doesn't exist
         # in res.partner
-        [partner_values.pop(k) for k in keys if k not in partner._fields]
-        return partner.create(partner_values)
+        values = {}
+        for k in keys:
+            if k in partner._fields:
+                values.update({k: partner_values[k]})
+        return partner.create(values)
 
     @api.model
     def _get_unique_partner_domain(self, vals):

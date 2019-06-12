@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -60,14 +59,18 @@ class ResPartner(models.Model):
                 % ", ".join(invalid_emails)
             )
 
-    @api.depends("opt_out")
+    @api.depends("is_blacklisted")
     def _compute_opt_in(self):
         for record in self:
-            record.opt_in = not record.opt_out
+            record.opt_in = not record.is_blacklisted
 
     def _inverse_opt_in(self):
+        blacklist_model = self.env["mail.blacklist"]
         for record in self:
-            record.opt_out = not record.opt_in
+            if record.opt_in:
+                blacklist_model._remove(record.email)
+            else:
+                blacklist_model._add(record.email)
 
     @api.depends("parent_id")
     def _compute_address_type(self):

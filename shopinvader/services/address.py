@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -119,7 +118,7 @@ class AddressService(Component):
             "city",
             "phone",
             "opt_in",
-            "opt_out",
+            "is_blacklisted:opt_out",
             "vat",
             ("state_id:state", ["id", "name"]),
             ("country_id:country", ["id", "name"]),

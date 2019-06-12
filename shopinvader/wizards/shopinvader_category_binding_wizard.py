@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import api, fields, models
@@ -79,10 +78,7 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
             if wizard.child_autobinding:
                 for categ_id in wizard.product_category_ids:
                     childs_cat = self.env["product.category"].search(
-                        [
-                            ("parent_left", ">=", categ_id.parent_left),
-                            ("parent_right", "<=", categ_id.parent_right),
-                        ]
+                        [("id", "child_of", categ_id.id)]
                     )
                     if childs_cat:
                         wizard.product_category_ids += childs_cat

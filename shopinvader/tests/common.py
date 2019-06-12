@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -93,6 +92,12 @@ class ProductCommonCase(CommonCase):
                 ("record_id", "=", self.variant.id),
                 ("backend_id", "=", self.backend.id),
             ]
+        )
+        self.env.user.company_id.currency_id = self.env.ref("base.USD")
+        base_price_list = self.env.ref("product.list0")
+        base_price_list.currency_id = self.env.ref("base.USD")
+        self.shopinvader_variant.record_id.currency_id = self.env.ref(
+            "base.USD"
         )
 
 
