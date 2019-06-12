@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2018 ACSONE SA/NV
+# Copyright 2018-2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
@@ -17,7 +16,7 @@ class GuestService(Component):
             raise Forbidden("Guest mode not allowed.")
         params["is_guest"] = True
         self._archive_existing_binding(params["email"])
-        resp = super(GuestService, self).create(**params)
+        resp = super().create(**params)
         resp["store_cache"]["customer"]["is_guest"] = True
         return resp
 
@@ -56,7 +55,7 @@ class GuestService(Component):
     # All params are trusted as they have been checked before
 
     def _validator_create(self):
-        schema = super(GuestService, self)._validator_create()
+        schema = super()._validator_create()
         if "external_id" in schema:
             schema.pop("external_id")
         return schema
@@ -82,7 +81,7 @@ class GuestService(Component):
                 "guest_customer_welcome", binding.record_id
             )
         else:
-            super(GuestService, self)._send_welcome_message(binding)
+            super()._send_welcome_message(binding)
 
     def _get_binding(self, email):
         domain = [
@@ -101,6 +100,6 @@ class GuestService(Component):
             binding.active = False
 
     def _to_customer_info(self, partner):
-        info = super(GuestService, self)._to_customer_info(partner)
+        info = super()._to_customer_info(partner)
         info.update({"email": self.partner.email})
         return info

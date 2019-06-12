@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2018 ACSONE SA/NV
+# Copyright 2018-2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import timedelta
@@ -17,13 +16,13 @@ def wrap_integrity_error(method):
             r = method(*args, **kwargs)
         except psycopg2.IntegrityError as inst:
             constrains = {
-                "unique_shopinvader_partner_email": _(
-                    "Only one active binging with the same email is "
+                "shopinvader_partner_unique_shopinvader_partner_email": _(
+                    "Only one active binding with the same email is "
                     "allowed by backend."
                 )
             }
             for key in constrains:
-                if key in inst[0]:
+                if key == inst.diag.constraint_name:
                     raise ValidationError(constrains[key])
             raise
         return r
@@ -52,31 +51,18 @@ class ShopinvaderPartner(models.Model):
     active = fields.Boolean(default=True, index=True)
 
     _sql_constraints = [
-        # Replaced by an unique index on active binding
+        # Replaced by an exclude constraint on active binding
         ("record_uniq", "CHECK(1=1)", ""),
-        # Replaced by an unique index on active binding
+        # Replaced by an exclude constraint on active binding
         ("email_uniq", "CHECK(1=1)", ""),
+        (
+            "unique_shopinvader_partner_email",
+            "EXCLUDE (backend_id WITH =, partner_email WITH =)"
+            " WHERE (active=True)",
+            "Only one active binding with the same email is "
+            "allowed by backend.",
+        ),
     ]
-
-    @api.model_cr
-    def init(self):
-        """
-        Create unique index only for active records
-        """
-        res = super(ShopinvaderPartner, self).init()
-        self._cr.execute(
-            "SELECT indexname FROM pg_indexes WHERE indexname = %s",
-            ("unique_shopinvader_partner_email",),
-        )
-        if not self._cr.fetchone():
-            self._cr.execute(
-                """
-            CREATE UNIQUE INDEX unique_shopinvader_partner_email
-            ON shopinvader_partner (backend_id, partner_email)
-            WHERE active;
-            """
-            )
-        return res
 
     @api.multi
     @api.constrains("is_guest")
@@ -102,7 +88,7 @@ class ShopinvaderPartner(models.Model):
             create_date = fields.Datetime.from_string(record.create_date)
             delay = record.backend_id.guest_account_expiry_delay
             expiry_dt = create_date + timedelta(days=delay)
-            record.expiry_dt = fields.Datetime.to_string(expiry_dt)
+            record.expiry_dt = expiry_dt
 
     @api.model
     def _deactivate_expired(self):
@@ -117,9 +103,9 @@ class ShopinvaderPartner(models.Model):
     @wrap_integrity_error
     @api.model
     def create(self, vals):
-        return super(ShopinvaderPartner, self).create(vals)
+        return super().create(vals)
 
     @wrap_integrity_error
     @api.multi
     def write(self, vals):
-        return super(ShopinvaderPartner, self).write(vals)
+        return super().write(vals)

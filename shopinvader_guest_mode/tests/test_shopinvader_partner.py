@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# Copyright 2018 ACSONE SA/NV
+# Copyright 2018-2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import timedelta
@@ -7,6 +6,7 @@ from datetime import timedelta
 from odoo import fields
 from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.exceptions import ValidationError
+from odoo.tools import mute_logger
 
 
 class TestShopinvaderPartner(SavepointComponentCase):
@@ -24,6 +24,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             }
         )
 
+    @mute_logger("odoo.sql_db")
     def test_unique_active(self):
         with self.assertRaises(ValidationError), self.cr.savepoint():
             # try to create a second active partner with same email..
@@ -71,18 +72,12 @@ class TestShopinvaderPartner(SavepointComponentCase):
         create_date = fields.Datetime.from_string(create_date)
         delay = self.backend.guest_account_expiry_delay
         expiry_dt = create_date + timedelta(days=delay)
-        expected_expiry_dt = fields.Datetime.to_string(expiry_dt)
-        self.assertEqual(
-            self.shopinvader_partner.expiry_dt, expected_expiry_dt
-        )
+        self.assertEqual(self.shopinvader_partner.expiry_dt, expiry_dt)
         # if we change the delay on the backend expiry_dt is recomputed
         delay = delay + 20
         self.backend.guest_account_expiry_delay = delay
         expiry_dt = create_date + timedelta(days=delay)
-        expected_expiry_dt = fields.Datetime.to_string(expiry_dt)
-        self.assertEqual(
-            self.shopinvader_partner.expiry_dt, expected_expiry_dt
-        )
+        self.assertEqual(self.shopinvader_partner.expiry_dt, expiry_dt)
 
     def test_deactivate_expired(self):
         self.assertTrue(self.shopinvader_partner.active)
