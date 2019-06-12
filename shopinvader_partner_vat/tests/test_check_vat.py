@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -14,7 +13,7 @@ vcr = VCR(cassette_library_dir=join(dirname(__file__), "cassettes"))
 
 class CheckVatCase(CommonCase):
     def setUp(self, *args, **kwargs):
-        super(CheckVatCase, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         with self.work_on_services(partner=None) as work:
             self.service = work.component(usage="customer")
 
