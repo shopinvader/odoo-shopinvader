@@ -31,5 +31,5 @@ class ShopInvaderCustomerService(Component):
             ShopInvaderCustomerService, self
         )._prepare_create_response(binding=binding)
         data = response.get("data", {})
-        data.update({"sale_profile": binding.sale_profile_id.code})
+        data.update({"role": binding.sale_profile_id.code})
         return response
