@@ -167,10 +167,4 @@ class ShopinvaderVariant(models.Model):
 
     def _compute_main_product(self):
         for record in self:
-            if (
-                record.record_id
-                == record.product_tmpl_id.product_variant_ids[0]
-            ):
-                record.main = True
-            else:
-                record.main = False
+            record.main = record == record.shopinvader_variant_ids[0]
