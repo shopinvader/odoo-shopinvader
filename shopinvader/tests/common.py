@@ -15,22 +15,24 @@ from odoo.addons.server_environment import serv_config
 from odoo.tests import SavepointCase
 
 
-class CommonMixin(ComponentMixin):
+class CommonCase(SavepointCase, ComponentMixin):
     AUTH_API_KEY_NAME = "api_key_shopinvader_test"
 
-    def setUp(self):
-        super(CommonMixin, self).setUp()
-        self.env = self.env(context={"lang": "en_US"})
-        self.backend = self.env.ref("shopinvader.backend_1")
-        self.backend.bind_all_product()
-        self.shopinvader_session = {}
-        self.api_key = "myApiKey"
-        self.auth_api_key_name = self.AUTH_API_KEY_NAME
-        if self.auth_api_key_name not in serv_config.sections():
-            serv_config.add_section(self.auth_api_key_name)
-            serv_config.set(self.auth_api_key_name, "user", "admin")
-            serv_config.set(self.auth_api_key_name, "key", self.api_key)
-        self.backend.auth_api_key_name = self.auth_api_key_name
+    @classmethod
+    def setUpClass(cls):
+        super(CommonCase, cls).setUpClass()
+        cls.setUpComponent()
+        cls.env = cls.env(context={"lang": "en_US"})
+        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend.bind_all_product()
+        cls.shopinvader_session = {}
+        cls.api_key = "myApiKey"
+        cls.auth_api_key_name = cls.AUTH_API_KEY_NAME
+        if cls.auth_api_key_name not in serv_config.sections():
+            serv_config.add_section(cls.auth_api_key_name)
+            serv_config.set(cls.auth_api_key_name, "user", "admin")
+            serv_config.set(cls.auth_api_key_name, "key", cls.api_key)
+        cls.backend.auth_api_key_name = cls.auth_api_key_name
 
     @contextmanager
     def work_on_services(self, **params):
@@ -60,18 +62,11 @@ class CommonMixin(ComponentMixin):
         for job in self.created_jobs:
             Job.load(self.env, job.uuid).perform()
 
-
-class CommonCase(SavepointCase, CommonMixin):
-    @classmethod
-    def setUpClass(cls):
-        super(CommonCase, cls).setUpClass()
-        cls.setUpComponent()
-
     def setUp(self):
         # resolve an inheritance issue (common.SavepointCase does not call
         # super)
         SavepointCase.setUp(self)
-        CommonMixin.setUp(self)
+        ComponentMixin.setUp(self)
 
 
 class ProductCommonCase(CommonCase):
