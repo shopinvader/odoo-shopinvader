@@ -6,9 +6,9 @@
 from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
 
-class CarrierCase(CommonConnectedCartCase):
+class CommonCarrierCase(CommonConnectedCartCase):
     def setUp(self):
-        super(CarrierCase, self).setUp()
+        super(CommonCarrierCase, self).setUp()
         self.free_carrier = self.env.ref("delivery.free_delivery_carrier")
         self.poste_carrier = self.env.ref("delivery.delivery_carrier")
         self.product_1 = self.env.ref("product.product_product_4b")
@@ -51,6 +51,8 @@ class CarrierCase(CommonConnectedCartCase):
         self.assertEqual(cart["shipping"]["amount"]["total"], 20)
         return cart
 
+
+class CarrierCase(CommonCarrierCase):
     def test_available_carriers(self):
         response = self.service.dispatch("get_delivery_methods")
         self.assertEqual(len(response), 2)
