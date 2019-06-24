@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com)
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
@@ -37,33 +36,33 @@ class StockMove(models.Model):
         return True
 
     @api.multi
-    def action_cancel(self):
+    def _action_cancel(self):
         """
 
         :return: bool
         """
-        result = super(StockMove, self).action_cancel()
+        result = super()._action_cancel()
         self._jobify_product_stock_update()
         return result
 
     @api.multi
-    def action_confirm(self):
+    def _action_confirm(self):
         """
 
         :return: stock.move recordset
         """
         # action_confirm on stock_move method can return a new recorset in
         # case of BOM
-        result = super(StockMove, self).action_confirm()
+        result = super()._action_confirm()
         result._jobify_product_stock_update()
         return result
 
     @api.multi
-    def action_done(self):
+    def _action_done(self):
         """
 
         :return: bool
         """
-        result = super(StockMove, self).action_done()
-        self._jobify_product_stock_update()
+        result = super()._action_done()
+        result._jobify_product_stock_update()
         return result

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com)
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
@@ -6,7 +5,7 @@
 
 from collections import defaultdict
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ShopinvaderVariant(models.Model):
@@ -31,16 +30,17 @@ class ShopinvaderVariant(models.Model):
         stock_field = self.backend_id.product_stock_field_id.name
         return {"qty": self[stock_field]}
 
+    @api.multi
     def _compute_stock_data(self):
         result = defaultdict(dict)
         for backend in self.mapped("backend_id"):
+            loc_records = self.filtered(lambda s: s.backend_id == backend)
             for (
                 wh_key,
                 wh_ids,
             ) in backend._get_warehouse_list_for_export().items():
-                for loc_record in self.filtered(
-                    lambda s: s.backend_id == backend
-                ).with_context(warehouse=wh_ids):
+
+                for loc_record in loc_records.with_context(warehouse=wh_ids):
                     result[loc_record.id][
                         wh_key
                     ] = loc_record._prepare_stock_data()

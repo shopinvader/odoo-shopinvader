@@ -1,8 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.addons.connector_search_engine.tests.models import SeBackendFake
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBaseFake,
 )
@@ -40,7 +40,7 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
                 "se_backend_id": self.backend_specific.se_backend_id.id,
                 "warehouse_ids": [(6, 0, self.warehouse_1.ids)],
                 "product_stock_field_id": ref(
-                    "stock.field_product_product_qty_available"
+                    "stock.field_product_product__qty_available"
                 ).id,
             }
         )
@@ -57,14 +57,21 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
     @classmethod
     def setUpClass(cls):
         super(StockCommonCase, cls).setUpClass()
+        SeBackendFake._test_setup_model(cls.env)
+        cls._create_se_backend_fake_acl()
         cls.env = cls.env(
             context=dict(
                 cls.env.context,
                 tracking_disable=True,  # speed up tests
-                # TODO: requires https://github.com/OCA/queue/pull/114
                 test_queue_job_no_delay=False,  # we want the jobs
             )
         )
+
+    @classmethod
+    def tearDownClass(cls):
+        # Seems not necessary
+        # SeBackendFake._test_teardown_model(cls.env)
+        super().tearDownClass()
 
     def _add_stock_to_product(self, product, location, qty):
         """
@@ -94,3 +101,23 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
                 "picking_type_id": self.picking_type_in.id,
             }
         )
+
+    @classmethod
+    def _create_se_backend_fake_acl(cls):
+        model_id = cls._test_get_model_id(SeBackendFake._name)
+        values = {
+            "name": "Fake ACL for %s" % SeBackendFake._name,
+            "model_id": model_id,
+            "perm_read": 1,
+            "perm_create": 1,
+            "perm_write": 1,
+            "perm_unlink": 1,
+            "active": True,
+        }
+        cls.env["ir.model.access"].create(values)
+
+    @classmethod
+    def _test_get_model_id(cls, name):
+        cls.env.cr.execute("SELECT id FROM ir_model WHERE model = %s", (name,))
+        res = cls.env.cr.fetchone()
+        return res[0] if res else None

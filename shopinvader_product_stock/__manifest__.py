@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com)
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
@@ -7,12 +6,13 @@
     "name": "Shopinvader Product Stock",
     "summary": "This module is used to choose a stock field during the"
     "export (by backend)",
-    "version": "10.0.1.0.1",
+    "version": "12.0.1.0.0",
+    "development_status": "Production/Stable",
     "category": "e-commerce",
-    "website": "https://akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,ACSONE SA/NV",
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
     "depends": [
         "stock",
         "shopinvader",
