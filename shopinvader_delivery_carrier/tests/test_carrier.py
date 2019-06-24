@@ -5,11 +5,53 @@
 from .common import CommonCarrierCase
 
 
-class CarrierCase(CommonCarrierCase):
+class CommonCarrierCase(CommonConnectedCartCase):
     def setUp(self):
-        super(CarrierCase, self).setUp()
-        self.carrier_service = self.service.component("delivery_carrier")
+        super(CommonCarrierCase, self).setUp()
+        self.free_carrier = self.env.ref("delivery.free_delivery_carrier")
+        self.poste_carrier = self.env.ref("delivery.delivery_carrier")
+        self.product_1 = self.env.ref("product.product_product_4b")
 
+    def extract_cart(self, response):
+        self.shopinvader_session["cart_id"] = response["set_session"][
+            "cart_id"
+        ]
+        self.assertEqual(response["store_cache"], {"cart": response["data"]})
+        return response["data"]
+
+    def add_item(self, product_id, qty):
+        return self.extract_cart(
+            self.service.dispatch(
+                "add_item", params={"product_id": product_id, "item_qty": qty}
+            )
+        )
+
+    def update_item(self, item_id, qty):
+        return self.extract_cart(
+            self.service.dispatch(
+                "update_item", params={"item_id": item_id, "item_qty": qty}
+            )
+        )
+
+    def delete_item(self, item_id):
+        return self.extract_cart(
+            self.service.dispatch("delete_item", params={"item_id": item_id})
+        )
+
+    def _set_carrier(self, carrier):
+        response = self.service.dispatch(
+            "apply_delivery_method", params={"carrier": {"id": carrier.id}}
+        )
+        self.assertEqual(self.cart.carrier_id.id, carrier.id)
+        return response["data"]
+
+    def _apply_carrier_and_assert_set(self):
+        cart = self._set_carrier(self.poste_carrier)
+        self.assertEqual(cart["shipping"]["amount"]["total"], 20)
+        return cart
+
+
+class CarrierCase(CommonCarrierCase):
     def test_available_carriers(self):
         response = self.service.dispatch("get_delivery_methods")
         self.assertEqual(len(response), 2)
