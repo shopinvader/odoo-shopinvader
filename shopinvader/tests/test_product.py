@@ -873,3 +873,23 @@ class ProductCase(ProductCommonCase):
         # Disable only 1 variant
         with self._check_correct_unbind_active(self.shopinvader_variants):
             fields.first(self.shopinvader_variants).write({"active": False})
+
+    def test_create_shopinvader_category_from_product_category(self):
+        categ = self.env["product.category"].search([])[0]
+        lang = self.env["res.lang"]._lang_get(self.env.user.lang)
+        categ.write(
+            {
+                "shopinvader_bind_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "backend_id": self.backend.id,
+                            "lang_id": lang.id,
+                            "seo_title": False,
+                            "active": True,
+                        },
+                    )
+                ]
+            }
+        )
