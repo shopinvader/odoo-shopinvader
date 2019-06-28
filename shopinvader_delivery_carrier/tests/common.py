@@ -6,6 +6,7 @@ from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
 
 class CommonCarrierCase(CommonConnectedCartCase):
+
     @classmethod
     def setUpClass(cls):
         super(CommonCarrierCase, cls).setUpClass()
