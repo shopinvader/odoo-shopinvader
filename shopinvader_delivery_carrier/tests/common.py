@@ -11,6 +11,7 @@ class CommonCarrierCase(CommonConnectedCartCase):
         self.free_carrier = self.env.ref("delivery.free_delivery_carrier")
         self.poste_carrier = self.env.ref("delivery.delivery_carrier")
         self.product_1 = self.env.ref("product.product_product_4b")
+        self.precision = 2
 
     def extract_cart(self, response):
         self.shopinvader_session["cart_id"] = response["set_session"][
