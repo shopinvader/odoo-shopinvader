@@ -239,6 +239,10 @@ class AbstractUrl(models.AbstractModel):
 
     @api.model
     def create(self, value):
+        # Creating a binding from the main record set the recompute env to
+        # False and broke the implementation of url sync
+        # need to force it to True
+        self.env.all.recompute = True
         res = super(AbstractUrl, self).create(value)
         synced = res._sync_urls()
         super(AbstractUrl, synced).write({"is_urls_sync_required": False})
