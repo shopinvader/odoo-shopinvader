@@ -31,7 +31,7 @@ class ShopinvaderProduct(models.Model):
         related="backend_id.use_shopinvader_product_name", store=True
     )
     shopinvader_name = fields.Char(
-        string="Name",
+        string="Shopinvader Name",
         help="Name for shopinvader, if not set the product name will be used.",
     )
     shopinvader_display_name = fields.Char(

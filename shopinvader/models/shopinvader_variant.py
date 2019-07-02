@@ -26,7 +26,9 @@ class ShopinvaderVariant(models.Model):
     object_id = fields.Integer(
         compute="_compute_object_id", store=True, index=True
     )
-    variant_count = fields.Integer(related="product_variant_count")
+    variant_count = fields.Integer(
+        related="product_variant_count", string="Shopinvader Variant Count"
+    )
     variant_attributes = fields.Serialized(
         compute="_compute_variant_attributes", string="Shopinvader Attributes"
     )

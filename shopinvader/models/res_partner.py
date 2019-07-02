@@ -15,7 +15,7 @@ class ResPartner(models.Model):
     )
     address_type = fields.Selection(
         selection=[("profile", "Profile"), ("address", "Address")],
-        string="Address Type",
+        string="Shopinvader Address Type",
         compute="_compute_address_type",
         store=True,
     )
