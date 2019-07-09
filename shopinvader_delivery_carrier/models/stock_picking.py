@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import api, models
@@ -32,9 +31,7 @@ class StockPicking(models.Model):
         backends = picking_outgoing._get_related_backends()
 
         def filter_line(l, b):
-            lbackend = (
-                l.procurement_id.sale_line_id.order_id.shopinvader_backend_id
-            )
+            lbackend = l.sale_line_id.order_id.shopinvader_backend_id
             return lbackend == b
 
         for backend in backends:
@@ -55,16 +52,16 @@ class StockPicking(models.Model):
         move_lines = self.mapped("move_lines")
         # Load backend from related sale order lines
         backends = move_lines.mapped(
-            "procurement_id.sale_line_id.order_id.shopinvader_backend_id"
+            "sale_line_id.order_id.shopinvader_backend_id"
         )
         return backends
 
     @api.multi
-    def do_transfer(self):
+    def action_done(self):
         """
         Inherit to update the invoice state if necessary
         :return:
         """
-        result = super(StockPicking, self).do_transfer()
+        result = super(StockPicking, self).action_done()
         self._notify_backend("stock_picking_outgoing_validated")
         return result
