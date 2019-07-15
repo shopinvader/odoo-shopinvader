@@ -2,6 +2,9 @@
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from contextlib import contextmanager
+
+from odoo import fields
 
 from .common import ProductCommonCase
 
@@ -747,3 +750,78 @@ class ProductCase(ProductCommonCase):
         bind_product.write({"active": True})
         self.assertEqual(urls.mapped("model_id"), bind_product)
         self.assertFalse(bind_product.is_urls_sync_required)
+
+    @contextmanager
+    def _check_correct_unbind_active(self, variants):
+        """
+        During the execution of some cases, check the value of
+        shopinvader products depending on related variants.
+        :param variants: shopinvader.variant recordset
+        :return:
+        """
+        variants = variants.with_context(active_test=False)
+        # Save if the shopinvader product is active or not
+        product_active_dict = {
+            p: p.active for p in variants.mapped("shopinvader_product_id")
+        }
+        yield
+        for variant in variants:
+            shopinv_product = variant.shopinvader_product_id
+            product_active = product_active_dict.get(shopinv_product)
+            all_variants = shopinv_product.shopinvader_variant_ids
+            # If all variants are disabled, the product should be disabled too.
+            if all([not a.active for a in all_variants]):
+                self.assertFalse(shopinv_product.active)
+                self._check_category_after_unbind(shopinv_product)
+            # But if at least 1 is active, the product should stay into his
+            # previous state.
+            elif product_active:
+                self.assertTrue(shopinv_product.active)
+            else:
+                self.assertFalse(shopinv_product.active)
+
+    def _check_category_after_unbind(self, shopinv_product):
+        """
+        When the product has been disabled, existing url should be
+        a redirect to the category.
+        :param shopinv_product: shopinvader.product recordset
+        :return: bool
+        """
+        category = fields.first(
+            shopinv_product.shopinvader_categ_ids.filtered(
+                lambda c: c.active and not c.shopinvader_child_ids
+            )
+        )
+        if category:
+            for url in shopinv_product.url_url_ids:
+                self.assertTrue(url.redirect)
+                self.assertEquals(url.model_id, category)
+        return True
+
+    def test_unbind_variant(self):
+        """
+        For this test, we check the behavior during unbind of a
+        shopinvader.variant.
+        If every variants of a shopinvader.product are disabled (active False),
+        we have to also disable the product.
+        :return:
+        """
+        shopinv_product = self.shopinvader_variants.mapped(
+            "shopinvader_product_id"
+        )
+        self.assertEquals(len(shopinv_product), 1)
+        self.assertGreaterEqual(len(self.shopinvader_variants), 1)
+        # Init: every variants and shopinv product are active True
+        self.shopinvader_variants.write({"active": True})
+        shopinv_product.write({"active": True})
+        # Disable every variants
+        with self._check_correct_unbind_active(self.shopinvader_variants):
+            self.shopinvader_variants.write({"active": False})
+        # Re-enable variants
+        with self._check_correct_unbind_active(self.shopinvader_variants):
+            self.shopinvader_variants.write({"active": True})
+        # Re-enable also the shopinvader product
+        shopinv_product.write({"active": True})
+        # Disable only 1 variant
+        with self._check_correct_unbind_active(self.shopinvader_variants):
+            fields.first(self.shopinvader_variants).write({"active": False})
