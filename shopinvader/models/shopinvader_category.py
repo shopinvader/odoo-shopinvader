@@ -36,8 +36,10 @@ class ShopinvaderCategory(models.Model):
         index=True,
         compute_sudo=True,
     )
-    shopinvader_child_ids = fields.One2many(
-        "shopinvader.category", inverse_name="shopinvader_parent_id"
+    shopinvader_child_ids = fields.Many2many(
+        "shopinvader.category",
+        "Shopinvader Childs",
+        compute="_compute_child_category",
     )
     level = fields.Integer(compute="_compute_level")
     redirect_url_key = fields.Serialized(
@@ -69,20 +71,26 @@ class ShopinvaderCategory(models.Model):
         for record in self:
             record.object_id = record.record_id.id
 
-    @api.depends(
-        "parent_id.shopinvader_bind_ids.shopinvader_parent_id",
-        "shopinvader_parent_id.active",
-    )
+    @api.depends("parent_id.shopinvader_bind_ids")
     def _compute_parent_category(self):
         for record in self:
             for binding in record.parent_id.shopinvader_bind_ids:
                 if (
                     binding.backend_id == record.backend_id
                     and binding.lang_id == record.lang_id
-                    and binding.active
                 ):
                     record.shopinvader_parent_id = binding
                     break
+
+    def _compute_child_category(self):
+        for record in self:
+            record.shopinvader_child_ids = self.search(
+                [
+                    ("lang_id", "=", record.lang_id.id),
+                    ("record_id.parent_id", "=", record.record_id.id),
+                    ("backend_id", "=", record.backend_id.id),
+                ]
+            )
 
     @api.multi
     @api.depends(
@@ -101,9 +109,7 @@ class ShopinvaderCategory(models.Model):
             )
         for record in self:
             key = key_by_id[record.id]
-            if record.parent_id and record.shopinvader_parent_id.active:
-                if not record.shopinvader_parent_id.automatic_url_key:
-                    record.shopinvader_parent_id._compute_automatic_url_key()
+            if record.parent_id and record.shopinvader_parent_id:
                 parent_url = record.shopinvader_parent_id.automatic_url_key
                 key = "/".join([parent_url, key])
             record.automatic_url_key = key

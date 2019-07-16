@@ -103,7 +103,9 @@ class ShopinvaderBackend(models.Model):
         "- Delete: delete the cart (and items);\n"
         "- Clear: keep the cart but remove items;\n"
         "- Cancel: The cart is canceled but kept into the database.\n"
-        "It could be useful if you want to keep cart for "
+        "When a quotation is not validated, habitually it's not removed "
+        "but cancelled. "
+        "It could be also useful if you want to keep cart for "
         "statistics reasons. A new cart is created automatically when the "
         "customer will add a new item.",
     )
