@@ -14,6 +14,7 @@ class CartCase(CommonCase):
         self.address = self.env.ref("shopinvader.partner_1_address_1")
         self.fposition = self.env.ref("shopinvader.fiscal_position_2")
         self.default_fposition = self.env.ref("shopinvader.fiscal_position_0")
+        self.product_1 = self.env.ref("product.product_product_4b")
         templates = self.env["product.template"].search([])
         templates.write(
             {"taxes_id": [(6, 0, [self.env.ref("shopinvader.tax_1").id])]}
@@ -35,7 +36,61 @@ class CartCase(CommonCase):
         super(CartCase, self).tearDown()
 
 
-class AnonymousCartCase(CartCase):
+class CartClearTest(object):
+    """
+    Test class who implements checks to ensure the clear cart service
+    is working correctly.
+    """
+
+    def _check_clear_cart_result(self, cart):
+        """
+        Check the cart clear.
+        :param cart: sale.order recordset
+        :return: bool
+        """
+        cart_id = cart.id
+        existing_carts = cart.search([])
+        self.service.shopinvader_session.update({"cart_id": cart.id})
+        result = self.service.dispatch("clear")
+        session = result.get("set_session")
+        new_carts = cart.search([("id", "not in", existing_carts.ids)])
+        clear_option = self.backend.clear_cart_options
+        if clear_option == "clear":
+            self.assertFalse(new_carts)
+            self.assertEquals(cart_id, cart.exists().id)
+            self.assertIsInstance(session, dict)
+            self.assertEquals(session.get("cart_id"), cart_id)
+            self.assertFalse(cart.order_line)
+        elif clear_option == "delete":
+            self.assertFalse(cart.exists())
+            self.assertIsInstance(session, dict)
+            self.assertEquals(session.get("cart_id"), 0)
+        elif clear_option == "cancel":
+            # We only check that the previous cart is cancelled.
+            # The new cart will be created if the customer add a new item.
+            # Test the creation of new cart is not the goal of this test.
+            self.assertEquals(len(new_carts), 0)
+            self.assertIsInstance(session, dict)
+            self.assertFalse(session.get("cart_id"))
+            # The previous should exists
+            self.assertEquals(cart_id, cart.exists().id)
+            self.assertEquals(cart.state, "cancel")
+        return True
+
+    def test_cart_clear(self):
+        self.backend.write({"clear_cart_options": "clear"})
+        self._check_clear_cart_result(self.cart)
+
+    def test_cart_delete(self):
+        self.backend.write({"clear_cart_options": "delete"})
+        self._check_clear_cart_result(self.cart)
+
+    def test_cart_cancel(self):
+        self.backend.write({"clear_cart_options": "cancel"})
+        self._check_clear_cart_result(self.cart)
+
+
+class AnonymousCartCase(CartCase, CartClearTest):
     def setUp(self, *args, **kwargs):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref("shopinvader.sale_order_1")
@@ -237,7 +292,7 @@ class CommonConnectedCartCase(CartCase):
             self.service = work.component(usage="cart")
 
 
-class ConnectedCartCase(CommonConnectedCartCase):
+class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
     def test_set_shipping_address(self):
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
