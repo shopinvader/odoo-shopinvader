@@ -228,3 +228,74 @@ class ShopinvaderVariantCase(TransactionCase):
                 },
             ],
         )
+
+    def test_selector_with_three_dimension_inactive_specific_variant(self):
+        value = self.env["product.attribute.value"].create(
+            {
+                "attribute_id": self.ref("product.product_attribute_3"),
+                "name": "42 GHz",
+            }
+        )
+        self.env.ref("product.product_attribute_line_3").write(
+            {"value_ids": [(4, value.id)]}
+        )
+        variant = self._configure_and_get_variant("White-32 GB-42 GHz")
+        self._inactive_variant(
+            ["White-32 GB-2.4 GHz", "White-16 GB-42 GHz", "Black-32 GB-42 GHz"]
+        )
+        self.assertEqual(
+            variant.variant_selector,
+            [
+                {
+                    "name": "Color",
+                    "values": [
+                        {
+                            "name": "White",
+                            "sku": "White-32 GB-42 GHz",
+                            "selected": True,
+                            "available": True,
+                        },
+                        {
+                            "name": "Black",
+                            "sku": "Black-16 GB-2.4 GHz",
+                            "selected": False,
+                            "available": True,
+                        },
+                    ],
+                },
+                {
+                    "name": "Memory",
+                    "values": [
+                        {
+                            "name": "16 GB",
+                            "sku": "White-16 GB-2.4 GHz",
+                            "selected": False,
+                            "available": True,
+                        },
+                        {
+                            "name": "32 GB",
+                            "sku": "White-32 GB-42 GHz",
+                            "selected": True,
+                            "available": True,
+                        },
+                    ],
+                },
+                {
+                    "name": "Wi-Fi",
+                    "values": [
+                        {
+                            "name": "2.4 GHz",
+                            "sku": "",
+                            "selected": False,
+                            "available": False,
+                        },
+                        {
+                            "name": "42 GHz",
+                            "sku": "White-32 GB-42 GHz",
+                            "selected": True,
+                            "available": True,
+                        },
+                    ],
+                },
+            ],
+        )

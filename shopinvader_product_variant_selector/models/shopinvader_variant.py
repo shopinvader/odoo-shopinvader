@@ -33,31 +33,44 @@ class ShopinvaderVariant(models.Model):
                 return variant
         return self.env["shopinvader.variant"].browse(False)
 
-    def _get_selector_for_attribute(self, attribute, restrict_values=None):
-        if restrict_values is None:
-            restrict_values = self.env["product.attribute.value"].browse()
+    def _get_selector_for_attribute(
+        self, attribute, restrict_values, prefered_values
+    ):
         res = {"name": attribute.name, "values": []}
         for value in self._get_available_attribute_value(attribute):
-            variant = self._get_matching_variant(value + restrict_values)
+            variant = self._get_matching_variant(
+                value + restrict_values + prefered_values
+            )
+            if not variant:
+                variant = self._get_matching_variant(value + restrict_values)
             res["values"].append(self._prepare_selector_value(variant, value))
         return res
+
+    def _filter_values(self, attribute):
+        attribute_value = self.env["product.attribute.value"].browse(False)
+        other_values = self.env["product.attribute.value"].browse(False)
+        for value in self.attribute_value_ids:
+            if value.attribute_id == attribute:
+                attribute_value = value
+            else:
+                other_values += value
+        return attribute_value, other_values
 
     def _compute_variant_selector(self):
         attributes = self.env["product.attribute"].search([])
         for record in self:
             data = []
-            p_values = record.attribute_value_ids
-            p_attrs = p_values.mapped("attribute_id")
+            p_attrs = record.mapped("attribute_value_ids.attribute_id")
             restrict_values = self.env["product.attribute.value"].browse(False)
             for attribute in attributes:
                 if attribute in p_attrs:
+                    attribute_value, other_values = record._filter_values(
+                        attribute
+                    )
                     data.append(
                         record._get_selector_for_attribute(
-                            attribute, restrict_values
+                            attribute, restrict_values, other_values
                         )
                     )
-                    for value in p_values:
-                        if value.attribute_id == attribute:
-                            restrict_values += value
-                            break
+                    restrict_values += attribute_value
             record.variant_selector = data
