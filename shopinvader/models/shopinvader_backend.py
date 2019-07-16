@@ -157,7 +157,10 @@ class ShopinvaderBackend(models.Model):
         to_count = self._to_compute_nbr_content()
         domain = [("backend_id", "in", self.ids)]
         for odoo_field, odoo_model in to_count.items():
-            if odoo_model in self.env and self.env[odoo_model]._table_exist():
+            if (
+                odoo_model in self.env
+                and self.env[odoo_model]._is_an_ordinary_table()
+            ):
                 target_model_obj = self.env[odoo_model]
                 result = target_model_obj.read_group(
                     domain, ["backend_id"], ["backend_id"], lazy=False
