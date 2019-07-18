@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from contextlib import contextmanager
+from uuid import uuid4
 
 from odoo import fields
 
@@ -79,6 +80,47 @@ class ProductCase(ProductCommonCase):
                 }
             },
         )
+
+    @contextmanager
+    def _check_url(self, shopinvader_variants):
+        """
+        Check url if name has been updated
+        :param shopinvader_variants: shopinvader.variant recordset
+        :return:
+        """
+        shopinv_variant_names = {r: r.name for r in shopinvader_variants}
+        shopinv_variant_urls = {r: r.url_url_ids for r in shopinvader_variants}
+        yield
+        shopinvader_variants.refresh()
+        for shopinv_variant in shopinvader_variants:
+            existing_urls = shopinv_variant_urls.get(shopinv_variant)
+            new_url = shopinv_variant.url_url_ids.filtered(
+                lambda u: u not in existing_urls
+            )
+            if (
+                shopinv_variant_names.get(shopinv_variant)
+                != shopinv_variant.name
+            ):
+                self.assertEquals(len(new_url), 1)
+            else:
+                self.assertEquals(len(new_url), 0)
+
+    def test_product_name_url(self):
+        """
+        Check the case where the product template has a new name.
+        Do the write directly on the product template to check if a new url
+        is automatically created (as the inherit from abstract url is done
+        on shopinvader.product and not on product.template).
+        :return:
+        """
+        product_product = self.shopinvader_variant.record_id
+        # The name updated
+        with self._check_url(self.shopinvader_variant):
+            product_product.write({"name": str(uuid4())})
+        # The name is not really updated
+        with self._check_url(self.shopinvader_variant):
+            product_product.write({"name": product_product.name})
+        return
 
     def test_product_get_price(self):
         # base_price_list doesn't define a tax mapping. We are tax included
@@ -439,7 +481,13 @@ class ProductCase(ProductCommonCase):
         self.user.write(
             {
                 "groups_id": [
-                    (4, self.env.ref("sales_team.group_sale_manager").id)
+                    (4, self.env.ref("sales_team.group_sale_manager").id),
+                    (
+                        4,
+                        self.env.ref(
+                            "shopinvader.group_shopinvader_manager"
+                        ).id,
+                    ),
                 ]
             }
         )
