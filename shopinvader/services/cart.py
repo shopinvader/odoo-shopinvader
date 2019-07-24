@@ -278,6 +278,7 @@ class CartService(Component):
             ] = self.shopinvader_backend.account_analytic_id.id
         if self.shopinvader_backend.sequence_id:
             vals["name"] = self.shopinvader_backend.sequence_id._next()
+        vals.update({"pricelist_id": self.shopinvader_backend.pricelist_id.id})
         return vals
 
     def _get_onchange_trigger_fields(self):
