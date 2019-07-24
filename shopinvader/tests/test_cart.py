@@ -41,6 +41,8 @@ class AnonymousCartCase(CartCase):
         self.cart = self.env.ref("shopinvader.sale_order_1")
         self.shopinvader_session = {"cart_id": self.cart.id}
         self.partner = self.backend.anonymous_partner_id
+        self.product_1 = self.env.ref("product.product_product_4b")
+        self.sale_obj = self.env["sale.order"]
         with self.work_on_services(
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
@@ -58,6 +60,9 @@ class AnonymousCartCase(CartCase):
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id, partner)
         self.assertEqual(cart.partner_invoice_id, partner)
+        self.assertEqual(
+            cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id
+        )
 
     def test_ask_email(self):
         """
@@ -75,6 +80,112 @@ class AnonymousCartCase(CartCase):
         domain = [("name", "=", description), ("date_created", ">=", now)]
         # It should not create any queue job because the user is not logged
         self.assertEquals(self.env["queue.job"].search_count(domain), 0)
+
+    def test_cart_pricelist_apply(self):
+        """
+        Ensure the pricelist set on the backend is correctly used and applied.
+        1) Create a SO manually (using same pricelist as backend) and save the
+        amount.
+        2) Create a Cart/SO using shopinvader. The pricelist used should be
+        the one defined and the price should match with the SO created manually
+        just before.
+        :return:
+        """
+        # User must be in this group to fill discount field on SO lines.
+        self.env.ref("sale.group_discount_per_so_line").write(
+            {"users": [(4, self.env.user.id, False)]}
+        )
+        # Create 2 pricelists
+        pricelist_values = {
+            "name": "Custom pricelist 1",
+            "discount_policy": "without_discount",
+            "item_ids": [
+                (
+                    0,
+                    0,
+                    {
+                        "applied_on": "1_product",
+                        "product_tmpl_id": self.product_1.product_tmpl_id.id,
+                        "compute_price": "fixed",
+                        "fixed_price": 650,
+                    },
+                )
+            ],
+        }
+        first_pricelist = self.env["product.pricelist"].create(
+            pricelist_values
+        )
+        pricelist_values = {
+            "name": "Custom pricelist 2",
+            "discount_policy": "without_discount",
+            "item_ids": [
+                (
+                    0,
+                    0,
+                    {
+                        "applied_on": "1_product",
+                        "product_tmpl_id": self.product_1.product_tmpl_id.id,
+                        "compute_price": "formula",
+                        "base": "pricelist",
+                        "price_surcharge": -100,
+                        "base_pricelist_id": first_pricelist.id,
+                        "date_start": fields.Date.today(),
+                        "date_end": fields.Date.today(),
+                    },
+                )
+            ],
+        }
+        second_pricelist = self.env["product.pricelist"].create(
+            pricelist_values
+        )
+        # First, create the SO manually
+        sale = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "partner_shipping_id": self.partner.id,
+                "partner_invoice_id": self.partner.id,
+                "pricelist_id": second_pricelist.id,
+                "typology": "cart",
+                "shopinvader_backend_id": self.backend.id,
+                "date_order": fields.Datetime.now(),
+                "project_id": self.backend.account_analytic_id.id,
+            }
+        )
+        so_line_obj = self.env["sale.order.line"]
+        line_values = {
+            "order_id": sale.id,
+            "product_id": self.product_1.id,
+            "product_uom_qty": 1,
+            "shopinvader_variant_id": self.product_1.shopinvader_bind_ids.id,
+        }
+        new_line_values = so_line_obj.play_onchanges(
+            line_values, line_values.keys()
+        )
+        new_line_values.update(line_values)
+        line = so_line_obj.create(new_line_values)
+        expected_price = line.price_total
+        # Then create a new SO/Cart by shopinvader services
+        # Force to use this pricelist for the backend
+        self.backend.write({"pricelist_id": second_pricelist.id})
+        params = {"product_id": self.product_1.id, "item_qty": 1}
+        self.service.shopinvader_session.clear()
+        response = self.service.dispatch("add_item", params=params)
+        data = response.get("data")
+        sale_id = response.get("set_session", {}).get("cart_id")
+        sale_order = self.sale_obj.browse(sale_id)
+        so_line = fields.first(
+            sale_order.order_line.filtered(
+                lambda l, p=self.product_1: l.product_id == p
+            )
+        )
+        self.assertEqual(sale_order.pricelist_id, second_pricelist)
+        self.assertAlmostEqual(so_line.price_total, expected_price)
+        self.assertAlmostEqual(sale_order.amount_total, expected_price)
+        self.assertAlmostEqual(
+            data.get("lines").get("items")[0].get("amount").get("total"),
+            expected_price,
+        )
+        return
 
 
 class CommonConnectedCartCase(CartCase):
@@ -110,6 +221,9 @@ class ConnectedCartCase(CommonConnectedCartCase):
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
         self.assertEqual(cart.partner_invoice_id, self.address)
+        self.assertEqual(
+            cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id
+        )
 
     def test_confirm_cart(self):
         self.assertEqual(self.cart.typology, "cart")
