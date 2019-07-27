@@ -41,6 +41,7 @@ class LeadService(Component):
             "mobile": {"type": "string"},
             "state_id": {"coerce": to_int},
             "country_id": {"coerce": to_int},
+            "team_id": {"coerce": to_int},
         }
 
         if "crm_lead_firstname" in self.env.registry._init_modules:
