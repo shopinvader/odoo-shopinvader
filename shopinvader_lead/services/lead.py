@@ -29,29 +29,29 @@ class LeadService(Component):
 
     def _validator_create(self):
         res = {
-            "email": {"type": "string", "required": True},
-            "name": {"type": "string", "required": True},
-            "description": {"type": "string", "required": True},
-            "company": {"type": "string", "required": True},
-            "street": {"type": "string", "required": False},
-            "street2": {"type": "string", "nullable": True},
-            "zip": {"type": "string", "required": True},
-            "city": {"type": "string", "required": True},
-            "phone": {"type": "string", "nullable": True},
-            "mobile": {"type": "string", "nullable": True},
-            "state_id": {"coerce": to_int, "nullable": True},
-            "country_id": {"coerce": to_int, "required": True},
+            "email": {"type": "string"},
+            "name": {"type": "string"},
+            "description": {"type": "string"},
+            "company": {"type": "string"},
+            "street": {"type": "string"},
+            "street2": {"type": "string"},
+            "zip": {"type": "string"},
+            "city": {"type": "string"},
+            "phone": {"type": "string"},
+            "mobile": {"type": "string"},
+            "state_id": {"coerce": to_int},
+            "country_id": {"coerce": to_int},
         }
 
         if "crm_lead_firstname" in self.env.registry._init_modules:
             res.update(
                 {
-                    "contact_firstname": {"type": "string", "required": True},
-                    "contact_lastname": {"type": "string", "required": True},
+                    "contact_firstname": {"type": "string"},
+                    "contact_lastname": {"type": "string"},
                 }
             )
         else:
-            res["contact_name"] = {"type": "string", "required": True}
+            res["contact_name"] = {"type": "string"}
         return res
 
     def _prepare_lead(self, params):
