@@ -46,14 +46,14 @@ class StockMove(models.Model):
         return result
 
     @api.multi
-    def _action_confirm(self):
+    def _action_confirm(self, merge=True, merge_into=False):
         """
 
         :return: stock.move recordset
         """
         # action_confirm on stock_move method can return a new recorset in
         # case of BOM
-        result = super()._action_confirm()
+        result = super()._action_confirm(merge=merge, merge_into=merge_into)
         result._jobify_product_stock_update()
         return result
 
