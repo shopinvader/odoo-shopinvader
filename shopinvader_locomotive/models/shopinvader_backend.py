@@ -11,10 +11,21 @@ class ShopinvaderBackend(models.Model):
     _inherit = ["shopinvader.backend", "connector.backend"]
     _backend_name = "locomotivecms"
 
-    location = fields.Char()
-    username = fields.Char()
-    password = fields.Text()
-    handle = fields.Char()
+    location = fields.Char(
+        help="Locomotive URL (see Developers section Locomotive site)"
+    )
+    username = fields.Char(
+        help="Locomotive user email (see Developers section in "
+        "Locomotive site)"
+    )
+    password = fields.Text(
+        help="Locomotive user API key (see Developers section in "
+        "Locomotive site)"
+    )
+    handle = fields.Char(
+        help="Locomotive site handle (see Developers section in "
+        "Locomotive site)"
+    )
     currency_ids = fields.Many2many(
         comodel_name="res.currency", string="Currency"
     )
