@@ -210,6 +210,8 @@ class CartService(Component):
     @contextmanager
     def _ensure_ctx_lang(self, values):
         """
+        Todo: concurrent update still possible. We should find an improvement
+        (env.do_in_draft do SQL write so it's not a solution!)
         Simulate the anonymous partner lang using the lang from the context.
         To avoid to fill sale.order.line name/description with the anonymous
         lang if the lang of the context is different.
@@ -233,22 +235,11 @@ class CartService(Component):
             and partner == anonymous_partner
             and partner.lang != ctx_lang
         ):
-            # We can update (in cache only) the partner's lang without
-            # doing a real write (sql; to avoid concurrent update).
-            # Also, as we can have multi-env, we have to update the value
-            # for each env.
-            # (about the draft mode: if 1 environment is in draft mode,
-            # every others are also in this state. So don't need to do
-            # it for each of them).
-            with self.env.do_in_draft():
-                # We have to save envs because the set en Env could change
-                # during iteration
-                envs = [e for e in self.env.envs]
-                for env in envs:
-                    env[partner._name].browse(partner.ids).lang = ctx_lang
+            try:
+                partner.lang = ctx_lang
                 yield
-                for env in envs:
-                    env[partner._name].browse(partner.ids).lang = original_lang
+            finally:
+                partner.lang = original_lang
         else:
             yield
 
