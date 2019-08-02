@@ -11,6 +11,10 @@ class CarrierCase(CommonCarrierCase):
         response = self.service.dispatch("get_delivery_methods")
         self.assertEqual(len(response), 2)
 
+    def test_deprecated_apply_delivery_method(self):
+        cart = self._apply_delivery_method(self.free_carrier)
+        self.assertEqual(cart["shipping"]["amount"]["total"], 0)
+
     def test_setting_free_carrier(self):
         cart = self._set_carrier(self.free_carrier)
         self.assertEqual(cart["shipping"]["amount"]["total"], 0)
