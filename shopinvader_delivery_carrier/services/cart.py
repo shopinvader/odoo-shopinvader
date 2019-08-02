@@ -11,28 +11,44 @@ from odoo.tools.translate import _
 class CartService(Component):
     _inherit = "shopinvader.cart.service"
 
+    def set_carrier(self, **params):
+        """
+           This service will set the given delivery method to the current
+           cart
+       :param params: The carrier_id to set
+       :return:
+       """
+        cart = self._get()
+        if not cart:
+            raise UserError(_("There is not cart"))
+        else:
+            self._set_carrier(cart, params["carrier_id"])
+            return self._to_json(cart)
+
+    # DEPRECATED METHODS #
     def get_delivery_methods(self):
         """
+            !!!!DEPRECATED!!!!! Uses delivery_carrier.search
+
             This service will return all possible delivery methods for the
             current cart
+
         :return:
         """
-        cart = self._get()
-        return self._get_available_carrier(cart)
+        return self.component("delivery_carrier").search(
+            target="current_cart"
+        )["rows"]
 
     def apply_delivery_method(self, **params):
         """
+            !!!!DEPRECATED!!!!! Uses set_carrier
+
             This service will apply the given delivery method to the current
             cart
         :param params: Dict containing delivery method to apply
         :return:
         """
-        cart = self._get()
-        if not cart:
-            raise UserError(_("There is not cart"))
-        else:
-            self._set_carrier(cart, params["carrier"]["id"])
-            return self._to_json(cart)
+        return self.set_carrier(carrier_id=params["carrier"]["id"])
 
     # Validator
     def _validator_apply_delivery_method(self):
@@ -53,6 +69,16 @@ class CartService(Component):
     def _validator_get_delivery_methods(self):
         return {}
 
+    def _validator_set_carrier(self):
+        return {
+            "carrier_id": {
+                "coerce": int,
+                "nullable": True,
+                "required": True,
+                "type": "integer",
+            }
+        }
+
     # internal methods
     def _add_item(self, cart, params):
         res = super(CartService, self)._add_item(cart, params)
@@ -70,9 +96,7 @@ class CartService(Component):
         return res
 
     def _set_carrier(self, cart, carrier_id):
-        if carrier_id not in [
-            x["id"] for x in self._get_available_carrier(cart)
-        ]:
+        if carrier_id not in [x["id"] for x in cart._get_available_carrier()]:
             raise UserError(
                 _("This delivery method is not available for you order")
             )
