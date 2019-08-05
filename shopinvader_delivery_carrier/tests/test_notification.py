@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 Akretion (http://www.akretion.com).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -20,7 +19,7 @@ class NotificationPickingCase(CommonNotificationCase):
         :return:
         """
         self._init_job_counter()
-        self.picking.do_transfer()
+        self.picking.action_done()
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification(
@@ -36,9 +35,9 @@ class NotificationPickingCase(CommonNotificationCase):
         """
         picking = self.picking.copy()
         # Remove the link with procurement/sales
-        picking.move_lines.write({"procurement_id": False})
+        picking.move_lines.write({"sale_line_id": False})
         self._init_job_counter()
-        picking.do_transfer()
+        picking.action_done()
         self._check_nbr_job_created(0)
 
     def test_picking_notification3(self):
@@ -50,5 +49,5 @@ class NotificationPickingCase(CommonNotificationCase):
         """
         self.picking.picking_type_id.write({"code": "internal"})
         self._init_job_counter()
-        self.picking.do_transfer()
+        self.picking.action_done()
         self._check_nbr_job_created(0)

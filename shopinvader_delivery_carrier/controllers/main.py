@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE Sa/ (http://www.acsone.eu)
 # Cédric Pigeon <cedric.pigeon@acsone.eu>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).

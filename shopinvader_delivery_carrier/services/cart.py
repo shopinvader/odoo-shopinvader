@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -18,14 +17,14 @@ class AbstractSaleService(AbstractComponent):
     _inherit = "shopinvader.abstract.sale.service"
 
     def _convert_shipping(self, cart):
-        res = super(AbstractSaleService, self)._convert_shipping(cart)
+        res = super()._convert_shipping(cart)
         selected_carrier = {}
         if cart.carrier_id:
             carrier = cart.carrier_id
             selected_carrier = {
                 "id": carrier.id,
                 "name": carrier.name,
-                "description": carrier.description,
+                "description": carrier.name,
             }
         res.update(
             {
@@ -45,7 +44,7 @@ class AbstractSaleService(AbstractComponent):
         :param sale: sale.order recordset
         :return: dict
         """
-        result = super(AbstractSaleService, self)._convert_amount(sale)
+        result = super()._convert_amount(sale)
         # Remove the shipping amounts for originals amounts
         shipping_amounts = self._convert_shipping(sale).get("amount", {})
         tax = result.get("tax", 0) - shipping_amounts.get("tax", 0)
@@ -61,22 +60,22 @@ class AbstractSaleService(AbstractComponent):
         )
         return result
 
-    def _prepare_carrier(self, carrier):
+    def _prepare_carrier(self, cart, carrier):
         return {
             "id": carrier.id,
             "name": carrier.name,
-            "description": carrier.description,
-            "price": carrier.price,
+            "description": carrier.name,
+            "price": carrier.rate_shipment(cart).get("price", 0.0),
         }
 
     def _get_available_carrier(self, cart):
         return [
-            self._prepare_carrier(carrier)
+            self._prepare_carrier(cart, carrier)
             for carrier in cart._get_available_carrier()
         ]
 
     def _is_item(self, line):
-        res = super(AbstractSaleService, self)._is_item(line)
+        res = super()._is_item(line)
         return res and not line.is_delivery
 
 
@@ -127,17 +126,17 @@ class CartService(Component):
 
     # internal methods
     def _add_item(self, cart, params):
-        res = super(CartService, self)._add_item(cart, params)
+        res = super()._add_item(cart, params)
         self._unset_carrier(cart)
         return res
 
     def _update_item(self, cart, params, item=False):
-        res = super(CartService, self)._update_item(cart, params, item)
+        res = super()._update_item(cart, params, item)
         self._unset_carrier(cart)
         return res
 
     def _delete_item(self, cart, params):
-        res = super(CartService, self)._delete_item(cart, params)
+        res = super()._delete_item(cart, params)
         self._unset_carrier(cart)
         return res
 
@@ -149,8 +148,9 @@ class CartService(Component):
                 _("This delivery method is not available for you order")
             )
         cart.write({"carrier_id": carrier_id})
-        cart.delivery_set()
+        cart.get_delivery_price()
+        cart.set_delivery_line()
 
     def _unset_carrier(self, cart):
         cart.write({"carrier_id": False})
-        cart._delivery_unset()
+        cart._remove_delivery_line()
