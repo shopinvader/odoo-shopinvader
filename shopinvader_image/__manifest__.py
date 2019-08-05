@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com)
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # Sébastien BEAU <sebastien.beau@akretion.com>
@@ -6,9 +5,9 @@
 {
     "name": "Shopinvader image",
     "summary": "Add the export of Image for Shopinvader",
-    "version": "10.0.1.0.1",
+    "version": "12.0.1.0.0",
     "category": "e-commerce",
-    "website": "https://akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "depends": ["shopinvader", "storage_image_product"],
@@ -23,6 +22,6 @@
         "demo/shopinvader_image_resize_demo.xml",
         "demo/backend_demo.xml",
     ],
-    "installable": False,
+    "installable": True,
     "post_init_hook": "post_init_hook",
 }

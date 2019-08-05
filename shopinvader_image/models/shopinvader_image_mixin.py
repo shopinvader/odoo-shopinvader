@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -8,6 +7,7 @@ from odoo import api, fields, models
 
 class ShopinvaderImageMixin(models.AbstractModel):
     _name = "shopinvader.image.mixin"
+    _description = "Shopinvader Image Mixin"
     _image_field = None
 
     images = fields.Serialized(
