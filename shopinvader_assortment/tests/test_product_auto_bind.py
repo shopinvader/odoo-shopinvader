@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -7,7 +6,7 @@ from odoo.tests.common import TransactionCase
 
 class TestProductAutoBind(TransactionCase):
     def setUp(self):
-        super(TestProductAutoBind, self).setUp()
+        super().setUp()
         self.backend = self.env.ref("shopinvader.backend_1")
         self.variant_obj = self.env["shopinvader.variant"]
         self.product_obj = self.env["product.product"]

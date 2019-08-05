@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -72,6 +71,4 @@ class ShopinvaderBackend(models.Model):
         )
         for record in records:
             record._autobind_product_from_assortment()
-        return super(
-            ShopinvaderBackend, self
-        ).force_recompute_all_binding_index()
+        return super().force_recompute_all_binding_index()

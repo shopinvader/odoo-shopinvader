@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -12,4 +11,4 @@ class SeIndex(models.Model):
     @api.model
     def recompute_all_index(self, domain=None):
         self.env["shopinvader.backend"].autobind_product_from_assortment()
-        return super(SeIndex, self).recompute_all_index(domain=domain)
+        return super().recompute_all_index(domain=domain)
