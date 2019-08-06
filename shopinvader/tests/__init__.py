@@ -11,6 +11,8 @@ from . import test_shopinvader_variant_binding_wizard
 from . import test_shopinvader_category_binding_wizard
 from . import test_customer
 from . import test_shopinvader_partner
-from . import test_res_partner
 from . import test_shopinvader_variant_seo_title
 from . import test_shopinvader_partner_binding
+from . import test_res_partner
+from . import test_invoice
+

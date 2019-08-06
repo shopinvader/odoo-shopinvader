@@ -17,6 +17,14 @@ class SaleCase(CommonCase):
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="sales")
 
+    def _confirm_and_invoice_sale(self):
+        self.sale.action_confirm()
+        for line in self.sale.order_line:
+            line.write({"qty_delivered": line.product_uom_qty})
+        invoice_id = self.sale.action_invoice_create()
+        self.invoice = self.env["account.invoice"].browse(invoice_id)
+        self.invoice.action_move_create()
+
     def test_read_sale(self):
         self.sale.action_confirm_cart()
         res = self.service.get(self.sale.id)
@@ -75,3 +83,42 @@ class SaleCase(CommonCase):
         domain = [("name", "=", description), ("date_created", ">=", now)]
         self.service.dispatch("ask_email_invoice", _id=self.sale.id)
         self.assertEquals(self.env["queue.job"].search_count(domain), 1)
+
+    def test_invoice_01(self):
+        """
+        Data
+            * A confirmed sale order with an invoice not yet paid
+        Case:
+            * Load data
+        Expected result:
+            * No invoice information returned
+        """
+        self._confirm_and_invoice_sale()
+        self.assertNotEqual(self.invoice.state, "paid")
+        res = self.service.get(self.sale.id)
+        self.assertFalse(res["invoices"])
+
+    def test_invoice_02(self):
+        """
+        Data
+            * A confirmed sale order with a paid invoice
+        Case:
+            * Load data
+        Expected result:
+            * Invoice information must be filled
+        """
+        self._confirm_and_invoice_sale()
+        self.invoice.confirm_paid()
+        self.assertEqual(self.invoice.state, "paid")
+        res = self.service.get(self.sale.id)
+        self.assertTrue(res)
+        self.assertEqual(
+            res["invoices"],
+            [
+                {
+                    "id": self.invoice.id,
+                    "name": self.invoice.number,
+                    "date": self.invoice.date_invoice,
+                }
+            ],
+        )

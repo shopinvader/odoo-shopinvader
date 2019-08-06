@@ -86,3 +86,21 @@ class SaleService(Component):
         return super(SaleService, self)._launch_notification(
             target, notif_type
         )
+
+    def _convert_one_sale(self, sale):
+        res = super(SaleService, self)._convert_one_sale(sale)
+        res["invoices"] = self._convert_invoices(sale.sudo())
+        return res
+
+    def _convert_invoices(self, sale):
+        res = []
+        for invoice in sale.invoice_ids.filtered(lambda i: i.state == "paid"):
+            res.append(self._convert_one_invoice(invoice))
+        return res
+
+    def _convert_one_invoice(self, invoice):
+        return {
+            "id": invoice.id,
+            "name": invoice.number,
+            "date": invoice.date_invoice or None,
+        }
