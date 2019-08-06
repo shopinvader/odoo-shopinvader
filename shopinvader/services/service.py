@@ -123,6 +123,20 @@ class BaseShopinvaderService(AbstractComponent):
         )
         return defaults
 
+    def _is_logged(self):
+        """
+        Check if the current partner is a real partner (not the anonymous one
+        and not empty)
+        :return: bool
+        """
+        logged = False
+        if (
+            self.partner
+            and self.partner != self.shopinvader_backend.anonymous_partner_id
+        ):
+            logged = True
+        return logged
+
     @property
     def shopinvader_response(self):
         """
