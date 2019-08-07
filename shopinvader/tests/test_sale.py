@@ -22,6 +22,7 @@ class SaleCase(CommonCase):
             line.write({"qty_delivered": line.product_uom_qty})
         invoice_id = self.sale.action_invoice_create()
         self.invoice = self.env["account.invoice"].browse(invoice_id)
+        self.invoice.action_invoice_open()
         self.invoice.action_move_create()
 
     def test_read_sale(self):
@@ -107,7 +108,7 @@ class SaleCase(CommonCase):
             * Invoice information must be filled
         """
         self._confirm_and_invoice_sale()
-        self.invoice.confirm_paid()
+        self.invoice.action_invoice_paid()
         self.assertEqual(self.invoice.state, "paid")
         res = self.service.get(self.sale.id)
         self.assertTrue(res)
