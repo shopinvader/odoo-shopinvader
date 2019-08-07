@@ -23,6 +23,7 @@ class TestInvoice(CommonCase):
             line.write({"qty_delivered": line.product_uom_qty})
         invoice_id = sale.action_invoice_create()
         invoice = self.env["account.invoice"].browse(invoice_id)
+        invoice.action_invoice_open()
         invoice.action_move_create()
         return invoice
 
@@ -47,7 +48,7 @@ class TestInvoice(CommonCase):
         Expected result:
             * An http response with the file to download
         """
-        self.invoice.confirm_paid()
+        self.invoice.action_invoice_paid()
         with mock.patch(
             "openerp.addons.shopinvader.services.invoice.content_disposition"
         ) as mocked_cd, mock.patch(
@@ -78,6 +79,6 @@ class TestInvoice(CommonCase):
         sale.shopinvader_backend_id = self.backend
         self.assertNotEqual(sale.partner_id, self.partner)
         invoice = self._confirm_and_invoice_sale(sale)
-        invoice.confirm_paid()
+        invoice.action_invoice_paid()
         with self.assertRaises(MissingError):
             self.invoice_service.download(invoice.id)
