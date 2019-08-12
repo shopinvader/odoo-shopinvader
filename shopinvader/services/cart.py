@@ -320,7 +320,7 @@ class CartService(Component):
     def _confirm_cart(self, cart):
         cart.action_confirm_cart()
         res = self._to_json(cart)
-        res.update(
+        self.shopinvader_session_data.update(
             {
                 "store_cache": {"last_sale": res["data"], "cart": {}},
                 "set_session": {"cart_id": 0},
