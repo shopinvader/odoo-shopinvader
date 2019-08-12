@@ -7,6 +7,7 @@
 from odoo import _
 from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
+from odoo.http import request
 from odoo.osv import expression
 
 
@@ -121,3 +122,25 @@ class BaseShopinvaderService(AbstractComponent):
             }
         )
         return defaults
+
+    @property
+    def shopinvader_session_data(self):
+        """
+        A a mutable dictionary which is injected in service responses.
+
+        Keys supported by the locomotive frontend include:
+        - store_cache
+        - set_session
+        """
+        if not hasattr(request, "_shopinvader_session_data"):
+            request._shopinvader_sessiondata = {}
+        return request._shopinvader_sessiondata
+
+    def dispatch(self, method_name, _id=None, params=None):
+        res = super(BaseShopinvaderService, self).dispatch(
+            method_name, _id=_id, params=params
+        )
+        shopinvader_session_data = self.shopinvader_session_data
+        if shopinvader_session_data:
+            res.update(shopinvader_session_data)
+        return res
