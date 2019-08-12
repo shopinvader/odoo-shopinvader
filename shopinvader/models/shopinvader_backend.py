@@ -301,9 +301,13 @@ class ShopinvaderBackend(models.Model):
     def _get_id_from_auth_api_key(self, auth_api_key):
         auth_api_key_name = self._get_api_key_name(auth_api_key)
         if auth_api_key_name:
-            return self.search(
-                [("auth_api_key_name", "=", auth_api_key_name)]
-            ).id
+            # filtered, not search because auth_api_key_name is
+            # not a searchable field
+            return (
+                self.search([])
+                .filtered(lambda r: r.auth_api_key_name == auth_api_key_name)
+                .id
+            )
         return False
 
     @api.model
