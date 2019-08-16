@@ -166,12 +166,35 @@ class CartService(Component):
 
     def _update_item(self, cart, params, item=False):
         if not item:
-            item = self._get_cart_item(cart, params)
-        self._upgrade_cart_item_quantity(cart, item, params["item_qty"])
+            item = self._get_cart_item(cart, params, raise_if_not_found=False)
+        if item:
+            self._upgrade_cart_item_quantity(cart, item, params["item_qty"])
+            return
+        # The item id is maybe the one from a previous cart.
+        line_id = params["item_id"]
+        line = self.env["sale.order.line"].search(
+            [
+                ("id", "=", line_id),
+                ("order_id.partner_id", "=", cart.partner_id.id),
+            ]
+        )
+        if line:
+            # silently create a new line on the new cart from the previous
+            # line. This case could occurs if the customer click on the add
+            # button from within an old session still open in its browser
+            add_item_params = self._prepare_add_item_params_from_line(line)
+            add_item_params["item_qty"] = params["item_qty"]
+            self._add_item(cart, add_item_params)
+            return params["item_qty"]
+        raise NotFound("No cart item found with id %s" % params["item_id"])
 
     def _delete_item(self, cart, params):
-        item = self._get_cart_item(cart, params)
-        item.unlink()
+        item = self._get_cart_item(cart, params, raise_if_not_found=False)
+        if item:
+            item.unlink()
+
+    def _prepare_add_item_params_from_line(self, sale_order_line):
+        return {"product_id": sale_order_line.product_id.id, "item_qty": 1}
 
     def _prepare_shipping(self, shipping, params):
         if "address" in shipping:
@@ -241,22 +264,21 @@ class CartService(Component):
 
         :return: sale.order recordset (cart)
         """
-        domain = [
-            ("typology", "=", "cart"),
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-        ]
         cart = self.env["sale.order"].browse()
         if self.cart_id:
+            # here we take advantage of the cache. If the cart has been
+            # already loaded, no SQL query will be issued
+            # an alternative would be to build a domain with the expected
+            # criteria on the cart but in this case, each time the _get method
+            # would have been called, a new SQL query would have been done
             cart = self.env["sale.order"].browse(self.cart_id)
         if (
             cart.shopinvader_backend_id == self.shopinvader_backend
             and cart.typology == "cart"
+            and cart.state == "draft"  # ensure that we only work on draft
         ):
             return cart
-        elif self.partner:
-            domain.append(("partner_id", "=", self.partner.id))
-            return self.env["sale.order"].search(domain, limit=1)
-        return cart
+        return self._create_empty_cart()
 
     def _create_empty_cart(self):
         vals = self._prepare_cart()
@@ -302,7 +324,7 @@ class CartService(Component):
         )
         return res
 
-    def _get_cart_item(self, cart, params):
+    def _get_cart_item(self, cart, params, raise_if_not_found=True):
         # We search the line based on the item id and the cart id
         # indeed the item_id information is given by the
         # end user (untrusted data) and the cart id by the
@@ -310,7 +332,7 @@ class CartService(Component):
         item = cart.mapped("order_line").filtered(
             lambda l, id_=params["item_id"]: l.id == id_
         )
-        if not item:
+        if not item and raise_if_not_found:
             raise NotFound("No cart item found with id %s" % params["item_id"])
         return item
 
