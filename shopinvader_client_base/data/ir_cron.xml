@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record forcecreate="True" id="ir_cron_synchronize_currency" model="ir.cron">
+        <field name="name">Shopinvader Locomotive: Synchronize currency</field>
+        <field eval="False" name="active"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="model_id" ref="model_shopinvader_backend"/>
+        <field name="code">model._scheduler_synchronize_currency()</field>
+    </record>
+
+    <record forcecreate="True" id="ir_cron_export_binding" model="ir.cron">
+        <field name="name">Search engine: Generate job for exporting binding per index</field>
+        <field eval="True" name="active"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field eval="False" name="doall"/>
+        <field name="code">model.generate_batch_export_per_index()</field>
+        <field name="model_id" ref="connector_search_engine.model_se_index"/>
+    </record>
+
+</odoo>

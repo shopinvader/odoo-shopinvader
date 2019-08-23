@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2017 Akretion (http://www.akretion.com)
+Copyright 2019 Camptocamp SA (http://www.camptocamp.com)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+
+<odoo>
+
+    <record id="shopinvader_backend_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id"
+               ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="arch" type="xml">
+            <page name="developper" position="inside">
+                <group name="client" string="Shop client">
+                    <span>Synchronize metadata push this configuration to the shop.
+                        For ex: countries, currencies, indexes (TODO), credentials (TODO)</span>
+                    <button
+                        name="synchronize_metadata"
+                        type="object"
+                        string="Synchronize Metadata"
+                        class="oe_highlight"
+                        groups="shopinvader.group_shopinvader_manager"/>
+                </group>
+            </page>
+            <field name="location" position="after">
+                <field name="handle" required="1" colspan="2"/>
+            </field>
+            <field name="location" position="attributes">
+                <attribute name="required" eval="True"/>
+            </field>
+            <field name="pricelist_id" position="after">
+                <field
+                    name="currency_ids"
+                    widget="many2many_tags"
+                    colspan="2"
+                    groups="base.group_multi_currency"/>
+            </field>
+        </field>
+    </record>
+
+</odoo>
