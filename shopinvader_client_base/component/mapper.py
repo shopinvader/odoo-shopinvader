@@ -22,7 +22,7 @@ class ShopinvaderSiteExportMapper(Component):
     _apply_on = "shopinvader.backend"
 
     @mapping
-    @changed_by("allowed_country_ids")
+    @changed_by("allowed_country_ids", "lang_ids")
     def country(self, record):
         res = {}
         for lang in record.lang_ids:
@@ -36,7 +36,7 @@ class ShopinvaderSiteExportMapper(Component):
         return {"available_countries": res}
 
     @mapping
-    @changed_by("filter_ids")
+    @changed_by("filter_ids", "lang_ids")
     def filters(self, record):
         res = {}
         for lang in record.lang_ids:
