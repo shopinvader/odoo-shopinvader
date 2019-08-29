@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -10,7 +9,7 @@ from odoo.addons.shopinvader_locomotive.tests.test_backend import mock_site_api
 
 class TestBackend(LocoCommonCase):
     def setUp(self, *args, **kwargs):
-        super(TestBackend, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         # simplified version of site data
         self.site = {
             "name": "My site",
