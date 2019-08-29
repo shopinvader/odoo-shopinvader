@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -18,7 +17,7 @@ except (ImportError, IOError) as err:
 
 class CommonShopinvaderPartner(LocoCommonCase):
     def setUp(self, *args, **kwargs):
-        super(CommonShopinvaderPartner, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         self.data = {
             "email": "new@customer.example.com",
             "name": "Purple",

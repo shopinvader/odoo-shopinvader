@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -33,7 +32,7 @@ def mock_site_api(base_url, site):
 
 class TestBackend(LocoCommonCase):
     def setUp(self, *args, **kwargs):
-        super(TestBackend, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         ref = self.env.ref
         country_ids = [ref("base.fr").id, ref("base.us").id]
         filter_ids = [
@@ -70,7 +69,7 @@ class TestBackend(LocoCommonCase):
         self.assertIn("_store", metafields)
         for key, vals in metafields["_store"].items():
             if key in ODOO_STORE_JSON_KEY:
-                self.assertIsInstance(vals, unicode)
+                self.assertIsInstance(vals, str)
                 metafields["_store"][key] = json.loads(vals)
         return metafields
 
@@ -93,7 +92,7 @@ class TestBackend(LocoCommonCase):
                                 "help": "<p>Color of the product</p>",
                             },
                             {
-                                "code": "variant_attributes.memory",
+                                "code": "variant_attributes.legs",
                                 "name": "Memory",
                                 "help": "<p>Memory of the product</p>",
                             },

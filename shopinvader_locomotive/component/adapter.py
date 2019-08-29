@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # © 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -26,11 +25,11 @@ class LocomotiveAdapter(AbstractComponent):
     _inherit = ["base.backend.adapter", "base.locomotive.connector"]
 
     def __init__(self, work_context):
-        super(LocomotiveAdapter, self).__init__(work_context)
+        super().__init__(work_context)
         backend = self.collection
         self.client = locomotivecms.LocomotiveClient(
             backend.username,
-            backend._get_keychain_account()._get_password(),
+            backend.password,
             backend.handle,
             backend.location,
         )
@@ -58,7 +57,7 @@ class LocomotiveContentAdapter(Component):
     _apply_on = []
 
     def __init__(self, work_context):
-        super(LocomotiveContentAdapter, self).__init__(work_context)
+        super().__init__(work_context)
         self.resource = self.client.content(self._content_type)
 
 
@@ -69,7 +68,7 @@ class LocomotiveAssetAdapter(Component):
     _apply_on = []
 
     def __init__(self, work_context):
-        super(LocomotiveAssetAdapter, self).__init__(work_context)
+        super().__init__(work_context)
         self.resource = self.client.asset()
 
 
@@ -79,7 +78,7 @@ class LocomotiveBackendAdapter(Component):
     _apply_on = "shopinvader.backend"
 
     def __init__(self, work_context):
-        super(LocomotiveBackendAdapter, self).__init__(work_context)
+        super().__init__(work_context)
         self.resource = self.client.site()
 
     def _get_site(self, handle):
