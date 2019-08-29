@@ -1,11 +1,9 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-2018 Akretion (http://www.akretion.com).
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools.translate import _
 
 
 class SaleOrder(models.Model):
@@ -21,7 +19,7 @@ class SaleOrder(models.Model):
 
     @api.depends("state", "typology")
     def _compute_shopinvader_state(self):
-        super(SaleOrder, self)._compute_shopinvader_state()
+        super()._compute_shopinvader_state()
 
     def _get_shopinvader_state(self):
         self.ensure_one()
@@ -29,7 +27,7 @@ class SaleOrder(models.Model):
             return "estimating"
         if self.typology == "quotation" and self.state == "sent":
             return "estimated"
-        return super(SaleOrder, self)._get_shopinvader_state()
+        return super()._get_shopinvader_state()
 
     @api.multi
     def action_request_quotation(self):
