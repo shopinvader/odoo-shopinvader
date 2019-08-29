@@ -3,7 +3,7 @@
 {
     "name": "Shopinvader Lead",
     "summary": "Shopinvader Lead Management",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "category": "e-commerce",
     "website": "https://shopinvader.com",
     "author": "Akretion",
