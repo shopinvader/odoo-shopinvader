@@ -75,13 +75,44 @@ class AbstractItemCase(object):
         product_id = self.cart.order_line[0].product_id.id
         cart = self.update_item(line_id, 5)
         self.check_product_and_qty(cart["lines"]["items"][0], product_id, 5)
+        self.assertEqual(self.cart.id, cart["id"])
+
+    def test_update_item_robustness(self):
+        """
+        In this case we update an item on confirmed cart...
+        As result, a new item will be added on a new cart with the expectd qty
+        """
+        # by changing the typology, the cart is no more available on
+        # the cart service
+        self.cart.typology = "sale"
+        line_id = self.cart.order_line[0].id
+        product_id = self.cart.order_line[0].product_id.id
+        cart = self.update_item(line_id, 5)
+        self.check_product_and_qty(cart["lines"]["items"][0], product_id, 5)
+        # A new line has been created on a new cart...
+        self.assertNotEqual(self.cart.id, cart["id"])
 
     def test_delete_item(self):
         cart = self.service.search()["data"]
+        cart_id = cart["id"]
         items = cart["lines"]["items"]
         nbr_line = len(items)
         cart = self.delete_item(items[0]["id"])
         self.assertEqual(len(cart["lines"]["items"]), nbr_line - 1)
+        self.assertEqual(cart_id, cart["id"])
+
+    def test_delete_item_robustness(self):
+        """
+        In this case we remove an item of a confirmed cart...
+        The deletion must be ignored.. and a new empty cart returned
+        """
+        # by changing the typology, the cart is no more available on
+        # the cart service
+        self.cart.typology = "sale"
+        line_id = self.cart.order_line[0].id
+        cart = self.delete_item(line_id)
+        self.assertEqual(len(cart["lines"]["items"]), 0)
+        self.assertNotEqual(self.cart.id, cart["id"])
 
     def test_add_item_with_same_product_without_cart(self):
         self.remove_cart()
