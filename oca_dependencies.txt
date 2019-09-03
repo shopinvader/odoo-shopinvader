@@ -2,7 +2,7 @@ account-reconcile
 connector
 server-backend
 server-tools
-server-auth
+server-auth https://github.com/akretion/server-auth 12_auth_api_key_serv_env
 e-commerce
 search-engine
 product-attribute
