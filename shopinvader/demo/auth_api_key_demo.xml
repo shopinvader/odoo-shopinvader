@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="auth_api_key_1" model="auth.api.key">
+        <field name="name">Api backend 1</field>
+        <field name="key">key1</field>
+        <field name="user_id" ref="base.user_root"/>
+    </record>
+
+    <record id="auth_api_key_2" model="auth.api.key">
+        <field name="name">Api backend 2</field>
+        <field name="key">key2</field>
+        <field name="user_id" ref="base.user_root"/>
+    </record>
+
+</odoo>

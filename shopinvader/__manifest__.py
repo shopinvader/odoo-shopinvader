@@ -64,6 +64,7 @@
     "demo": [
         "demo/account_demo.xml",
         "demo/pricelist_demo.xml",
+        "demo/auth_api_key_demo.xml",
         "demo/backend_demo.xml",
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",

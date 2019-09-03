@@ -45,7 +45,7 @@
                         <page name="config" string="Front-end">
                             <group name="config" colspan="4" col="4">
                                 <field name="location" placeholder="e.g. https://ecommerce.shopinvader.com"/>
-                                <field name="auth_api_key_name" required="True"/>
+                                <field name="auth_api_key_id" required="True"/>
                             </group>
                         </page>
                         <page name="search_eng" string="Search engine">
