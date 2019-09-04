@@ -43,6 +43,11 @@ class ShopinvaderVariant(models.Model):
     short_name = fields.Char(compute="_compute_names")
     full_name = fields.Char(compute="_compute_names")
 
+    # As field is defined on product.template, avoid 'inherits' bypass
+    description = fields.Html(
+        related="shopinvader_product_id.description", readonly=False
+    )
+
     @api.multi
     def _build_seo_title(self):
         """
