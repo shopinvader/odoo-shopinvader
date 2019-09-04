@@ -19,6 +19,7 @@
         "data/ir_export_category.xml",
     ],
     "demo": [
+        "demo/storage_image_product_image_tag_demo.xml",
         "demo/shopinvader_image_resize_demo.xml",
         "demo/backend_demo.xml",
     ],

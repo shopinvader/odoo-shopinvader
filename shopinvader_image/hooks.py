@@ -8,7 +8,6 @@ from odoo.modules.module import get_resource_path
 DEMO_POST_INIT = [
     "demo/storage_file_demo.xml",
     "demo/storage_image_demo.xml",
-    "demo/storage_image_product_image_tag_demo.xml",
     "demo/product_image_relation_demo.xml",
     "demo/product_product_image_relation_demo.xml",
 ]
@@ -40,3 +39,22 @@ def post_init_hook(cr, registry):
         # load data requiring components
         for demo in DEMO_POST_INIT:
             load_xml(env, "shopinvader_image", demo)
+        # prevent removal of demo data since the xml files are not declared
+        # into the demo section and therefore the xml_ids are no more found on
+        # addon update
+        cr.execute(
+            """
+            update
+                ir_model_data
+            set
+                module='__export__'
+            where
+                module='shopinvader_image'
+                and model in (
+                    'storage.file',
+                    'storage.image',
+                    'product.image.relation',
+                    'product.product'
+                )
+        """
+        )
