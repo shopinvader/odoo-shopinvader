@@ -10,7 +10,7 @@ class ShopinvaderConfigSettings(models.TransientModel):
     _name = "shopinvader.config.settings"
 
     no_partner_duplicate = fields.Boolean(
-        default=True,
+        default='True',
         config_parameter="shopinvader.no_partner_duplicate",
         help="If checked, when a binding is created for a backend, we first "
         "try to find a partner with the same email and if found we link "
