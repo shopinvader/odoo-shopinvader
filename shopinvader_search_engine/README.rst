@@ -10,14 +10,11 @@ Shopinvader Catalog Search Engine Connector
 .. |badge1| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge2| image:: https://img.shields.io/badge/github-OCA%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/OCA/odoo-shopinvader/tree/12.0/shopinvader_search_engine
-    :alt: OCA/odoo-shopinvader
-.. |badge3| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/odoo-shopinvader-12-0/odoo-shopinvader-12-0-shopinvader_search_engine
-    :alt: Translate me on Weblate
+.. |badge2| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/12.0/shopinvader_search_engine
+    :alt: shopinvader/odoo-shopinvader
 
-|badge1| |badge2| |badge3| 
+|badge1| |badge2| 
 
 This module is a technical module to implement batch export of data to external indexation services.
 The first concrete implementation allows to export data to Algolia.
@@ -93,8 +90,6 @@ The development of this module has been financially supported by:
 Maintainers
 ~~~~~~~~~~~
 
-
 This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/12.0/shopinvader_search_engine>`_ project on GitHub.
-
 
 You are welcome to contribute.
