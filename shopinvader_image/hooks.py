@@ -29,7 +29,16 @@ def post_init_hook(cr, registry):
     module_obj = env["ir.module.module"]
     module = module_obj.search([("name", "=", "shopinvader_image")])
     if module.demo:
-        #  loaded data requires that the component registry is loaded
+        # Loaded data requires that the component registry is loaded!
+        # The components registry is loaded at the end of the server
+        # initialization. By default demo data are loaded as part of the
+        # server initialization process. Unfortunately, since the way images
+        # are stored is managed by components we need that these components
+        # are available when creating an image. We must therefore delay the
+        # creation of our demo images to take place once the server is fully
+        # initialized and components are ready to be used. That's why these
+        # demo data files are loaded into a post_init_hook in place of
+        # the normal process.
         builder = env["component.builder"]
         # build the components of every installed addons
         comp_registry = builder._init_global_registry()
