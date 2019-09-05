@@ -253,6 +253,7 @@ class CartService(Component):
         if not cart:
             return {"data": {}, "store_cache": {"cart": {}}}
         res = super(CartService, self)._to_json(cart)[0]
+
         return {
             "data": res,
             "set_session": {"cart_id": res["id"]},
