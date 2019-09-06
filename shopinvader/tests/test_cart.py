@@ -327,6 +327,22 @@ class ConnectedCartCase(CommonConnectedCartCase):
         self.assertEqual(cart_bis.state, "draft")
         self.assertEqual(cart_bis.partner_id, self.partner)
 
+    def test_cart_delete_robustness(self):
+        """
+        If for some reason, the cart does not exist anymore but
+        in session, these conditions are no more met, the service
+        silently create a new cart to replace the one into the session
+        """
+        cart = self.service._get()
+        cart_bis = self.service._get()
+        self.assertEqual(cart, cart_bis)
+        cart.unlink()
+        cart_bis = self.service._get()
+        self.assertNotEqual(cart, cart_bis)
+        self.assertEqual(cart_bis.typology, "cart")
+        self.assertEqual(cart_bis.state, "draft")
+        self.assertEqual(cart_bis.partner_id, self.partner)
+
 
 class ConnectedCartNoTaxCase(CartCase):
     def setUp(self, *args, **kwargs):

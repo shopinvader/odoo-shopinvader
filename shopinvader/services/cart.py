@@ -270,7 +270,7 @@ class CartService(Component):
             # an alternative would be to build a domain with the expected
             # criteria on the cart but in this case, each time the _get method
             # would have been called, a new SQL query would have been done
-            cart = self.env["sale.order"].browse(self.cart_id)
+            cart = self.env["sale.order"].browse(self.cart_id).exists()
         if (
             cart.shopinvader_backend_id == self.shopinvader_backend
             and cart.typology == "cart"
