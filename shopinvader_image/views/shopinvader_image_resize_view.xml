@@ -17,6 +17,7 @@
              <tree string="Product" editable="bottom">
                 <field name="display_name"/>
                 <field name="name"/>
+                <field name="key"/>
                 <field name="size_x"/>
                 <field name="size_y"/>
              </tree>
