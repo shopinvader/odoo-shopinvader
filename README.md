@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 12.0.0.1.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 12.0.1.0.0 | Shopinvader
+[shopinvader](shopinvader/) | 12.0.1.0.1 | Shopinvader
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.0.0 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.1.0.1 | Carrier integration for Shopinvader
