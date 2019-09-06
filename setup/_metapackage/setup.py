@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo12-addon-base_url',
         'odoo12-addon-shopinvader',
+        'odoo12-addon-shopinvader_algolia',
         'odoo12-addon-shopinvader_assortment',
         'odoo12-addon-shopinvader_backend_image_proxy',
         'odoo12-addon-shopinvader_delivery_carrier',
