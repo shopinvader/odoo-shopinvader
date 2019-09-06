@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com)
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
@@ -8,6 +7,7 @@ from odoo.api import Environment
 
 
 def post_init_hook(cr, registry):
+    # TODO: v12 needs this?
     env = Environment(cr, SUPERUSER_ID, {})
     module_obj = env["ir.module.module"]
     product_obj = env["product.template"]
