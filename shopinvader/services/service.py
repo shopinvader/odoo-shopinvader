@@ -8,7 +8,7 @@ from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
 
-from .. import session
+from .. import shopinvader_response
 
 
 class BaseShopinvaderService(AbstractComponent):
@@ -124,16 +124,23 @@ class BaseShopinvaderService(AbstractComponent):
         return defaults
 
     @property
-    def shopinvader_session_data(self):
+    def shopinvader_response(self):
         """
-        A mutable dictionary which is injected in service responses.
+        An instance of
+        ``odoo.addons.shopinvader.shopinvader_response.ShopinvaderResponse``.
         """
-        return session.get()
+        return shopinvader_response.get()
 
     def dispatch(self, method_name, _id=None, params=None):
         res = super().dispatch(method_name, _id=_id, params=params)
-        shopinvader_session_data = self.shopinvader_session_data
-        if shopinvader_session_data:
-            res.update(shopinvader_session_data)
-            pass
+        store_cache = self.shopinvader_response.store_cache
+        if store_cache:
+            values = res.get("store_cache", {})
+            values.update(store_cache)
+            res["store_cache"] = values
+        session = self.shopinvader_response.session
+        if session:
+            values = res.get("set_session", {})
+            values.update(session)
+            res["set_session"] = values
         return res
