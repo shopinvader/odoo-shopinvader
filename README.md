@@ -21,6 +21,7 @@ addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 12.0.0.1.0 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 12.0.1.0.2 | Shopinvader
+[shopinvader_algolia](shopinvader_algolia/) | 12.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.0.0 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.1.0.1 | Carrier integration for Shopinvader
@@ -43,7 +44,6 @@ addon | version | summary
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
 [product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
-[shopinvader_algolia](shopinvader_algolia/) | 10.0.1.0.0 (unported) | Shopinvader Algolia Connector
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
 [shopinvader_demo_app](shopinvader_demo_app/) | 10.0.1.0.0 (unported) | Shopinvader Demo App
