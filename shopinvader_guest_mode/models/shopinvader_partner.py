@@ -1,12 +1,15 @@
 # Copyright 2018-2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
 from datetime import timedelta
 from functools import wraps
 
 import psycopg2
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 
 def wrap_integrity_error(method):
@@ -92,6 +95,7 @@ class ShopinvaderPartner(models.Model):
 
     @api.model
     def _deactivate_expired(self):
+        _logger.info("Deactivate expired guest partner: Start")
         expired = self.search(
             [
                 ("is_guest", "=", True),
@@ -99,6 +103,10 @@ class ShopinvaderPartner(models.Model):
             ]
         )
         expired.write({"active": False})
+        _logger.info(
+            "Deactivate expired guest partner: %d partner deactived",
+            len(expired),
+        )
 
     @wrap_integrity_error
     @api.model
