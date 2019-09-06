@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <record forcecreate="True" id="ir_cron_product_pricelist_assortment" model="ir.cron">
+        <field name="name">Shopinvader: archive expired Guest accounts</field>
+        <field eval="False" name="active"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall">-1</field>
+        <field name="doall" eval="False" />
+        <field name="model">shopinvader.partner</field>
+        <field name="function">_deactivate_expired</field>
+        <field name="nextcall" eval="(DateTime.now()).strftime('%Y-%m-%d 22:00:00')" />
+    </record>
+</odoo>

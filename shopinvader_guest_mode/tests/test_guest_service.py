@@ -74,3 +74,14 @@ class TestGuestService(CommonCase):
         self.backend.is_guest_mode_allowed = True
         binding = self._create_guest()
         self.assertTrue(binding.is_guest)
+
+    def test_create_account_after_guest(self):
+        self.service.dispatch("create", params=self.data)["data"]
+        with self.work_on_services(
+            partner=None, shopinvader_session=self.shopinvader_session
+        ) as work:
+            customer_service = work.component(usage="customer")
+        data = self.data.copy()
+        data["is_company"] = False
+        data["external_id"] = "D5CdkqOEL"
+        customer_service.dispatch("create", params=data)

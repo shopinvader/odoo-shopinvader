@@ -11,6 +11,10 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://acsone.eu/",
     "depends": ["shopinvader"],
-    "data": ["views/shopinvader_backend.xml", "views/shopinvader_partner.xml"],
+    "data": [
+        "data/ir_cron.xml",
+        "views/shopinvader_backend.xml",
+        "views/shopinvader_partner.xml",
+    ],
     "demo": [],
 }
