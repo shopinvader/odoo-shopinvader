@@ -24,14 +24,12 @@ class ShopinvaderProduct(models.Model):
             return " > ".join(result)
 
         for record in self:
-            record.hierarchical_categories = {}
+            hierarchical_categories = {}
             for categ in record.shopinvader_categ_ids:
-                record.hierarchical_categories[
-                    "lvl%s" % categ.level
-                ] = get_full_name(categ.record_id)
-                record.hierarchical_categories[
-                    'lvl%s' % categ.level
-                ] = get_full_name(categ.record_id)
+                hierarchical_categories["lvl%s" % categ.level] = get_full_name(
+                    categ.record_id
+                )
+            record.hierarchical_categories = hierarchical_categories
 
     @api.model
     def _get_facetting_values(self, se_bakend):
@@ -46,8 +44,8 @@ class ShopinvaderProduct(models.Model):
             "sku",
             "price.default.value",
         ]
-        invader_backend = self.env['shopinvader.backend'].search(
-            [('se_backend_id', '=', se_bakend.id)]
+        invader_backend = self.env["shopinvader.backend"].search(
+            [("se_backend_id", "=", se_bakend.id)]
         )
         filters = invader_backend.filter_ids
         filter_facetting_values = [f.display_name for f in filters]
