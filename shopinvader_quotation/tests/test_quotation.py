@@ -2,10 +2,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.test_cart import (
-    CartCase,
-    CommonConnectedCartCase,
-)
+from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
 
 class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
@@ -19,22 +16,3 @@ class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
         self.assertIn(
             "only_quotation", response["data"]["lines"]["items"][0]["product"]
         )
-
-
-class CommonConnectedQuotationCase(CartCase):
-    def setUp(self, *args, **kwargs):
-        super().setUp(*args, **kwargs)
-        cart = self.env.ref("shopinvader.sale_order_2")
-        self.shopinvader_session = {"cart_id": cart.id}
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.address = self.env.ref("shopinvader.partner_1_address_1")
-        with self.work_on_services(
-            partner=self.partner, shopinvader_session=self.shopinvader_session
-        ) as work:
-            self.service = work.component(usage="cart")
-        self.service.dispatch("request_quotation", params={})
-        self.quotation = cart
-        with self.work_on_services(
-            partner=self.partner, shopinvader_session=self.shopinvader_session
-        ) as work:
-            self.service = work.component(usage="quotations")
