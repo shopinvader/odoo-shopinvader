@@ -252,6 +252,7 @@ class CartService(Component):
         if not cart:
             return {"data": {}, "store_cache": {"cart": {}}}
         res = super(CartService, self)._to_json(cart)[0]
+
         return {
             "data": res,
             "set_session": {"cart_id": res["id"]},
@@ -320,12 +321,9 @@ class CartService(Component):
     def _confirm_cart(self, cart):
         cart.action_confirm_cart()
         res = self._to_json(cart)
-        res.update(
-            {
-                "store_cache": {"last_sale": res["data"], "cart": {}},
-                "set_session": {"cart_id": 0},
-            }
-        )
+        self.shopinvader_response.set_session("cart_id", 0)
+        self.shopinvader_response.set_store_cache("last_sale", res["data"])
+        self.shopinvader_response.set_store_cache("cart", {})
         return res
 
     def _get_cart_item(self, cart, params, raise_if_not_found=True):
