@@ -31,19 +31,6 @@ class TestInvoiceService(CommonCase):
         ) as work:
             self.service_guest = work.component(usage="invoice")
 
-    def _get_selection_label(self, invoice, field):
-        """
-        Get the translated label of the invoice selection field
-        :param invoice: account.invoice recordset
-        :param field: str
-        :return: str
-        """
-        technical_type = invoice[field]
-        type_dict = dict(
-            invoice._fields.get(field)._description_selection(invoice.env)
-        )
-        return type_dict.get(technical_type, technical_type)
-
     def _check_data_content(self, data, invoices):
         """
         Check data based on given invoices
@@ -63,8 +50,10 @@ class TestInvoiceService(CommonCase):
                 current_data.get("date_invoice"),
                 fields.Date.to_string(invoice.date_invoice),
             )
-            self.assertEquals(current_data.get("state"), state_label)
-            self.assertEquals(current_data.get("type"), type_label)
+            self.assertEquals(current_data.get("state"), invoice.state)
+            self.assertEquals(current_data.get("type"), invoice.type)
+            self.assertEquals(current_data.get("state_label"), state_label)
+            self.assertEquals(current_data.get("type_label"), type_label)
             self.assertEquals(
                 current_data.get("amount_total"), invoice.amount_total
             )
