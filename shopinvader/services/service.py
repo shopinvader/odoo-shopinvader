@@ -114,6 +114,20 @@ class BaseShopinvaderService(AbstractComponent):
     def _get_base_search_domain(self):
         return []
 
+    def _get_selection_label(self, record, field):
+        """
+        Get the translated label of the record selection field
+        :param record: recordset
+        :param field: str
+        :return: str
+        """
+        if field not in record._fields:
+            return ""
+        # convert_to_export(...) give the label of the selection (translated).
+        return record._fields.get(field).convert_to_export(
+            record[field], record
+        )
+
     def _get_openapi_default_parameters(self):
         defaults = super(
             BaseShopinvaderService, self

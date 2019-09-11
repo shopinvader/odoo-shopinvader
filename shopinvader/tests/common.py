@@ -97,6 +97,17 @@ class CommonCase(SavepointCase, CommonMixin):
         def cleanupShopinvaderResponseTestMode():
             shopinvader_response.set_testmode(False)
 
+    def _get_selection_label(self, record, field):
+        """
+        Get the translated label of the record selection field
+        :param record: recordset
+        :param field: str
+        :return: str
+        """
+        return record._fields.get(field).convert_to_export(
+            record[field], record
+        )
+
 
 class ProductCommonCase(CommonCase):
     def setUp(self):
