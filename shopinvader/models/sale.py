@@ -72,6 +72,9 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm_cart(self):
         for record in self:
+            if record.typology != "cart":
+                # cart is already confirmed
+                continue
             record.write({"typology": "sale"})
             if record.shopinvader_backend_id:
                 record.shopinvader_backend_id._send_notification(
