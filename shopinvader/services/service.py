@@ -9,6 +9,8 @@ from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
 
+from .. import shopinvader_response
+
 
 class BaseShopinvaderService(AbstractComponent):
     _inherit = "base.rest.service"
@@ -121,3 +123,27 @@ class BaseShopinvaderService(AbstractComponent):
             }
         )
         return defaults
+
+    @property
+    def shopinvader_response(self):
+        """
+        An instance of
+        ``odoo.addons.shopinvader.shopinvader_response.ShopinvaderResponse``.
+        """
+        return shopinvader_response.get()
+
+    def dispatch(self, method_name, _id=None, params=None):
+        res = super(BaseShopinvaderService, self).dispatch(
+            method_name, _id=_id, params=params
+        )
+        store_cache = self.shopinvader_response.store_cache
+        if store_cache:
+            values = res.get("store_cache", {})
+            values.update(store_cache)
+            res["store_cache"] = values
+        session = self.shopinvader_response.session
+        if session:
+            values = res.get("set_session", {})
+            values.update(session)
+            res["set_session"] = values
+        return res

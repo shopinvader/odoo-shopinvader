@@ -12,6 +12,7 @@ from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
 from odoo.addons.server_environment import serv_config
+from odoo.addons.shopinvader import shopinvader_response
 from odoo.tests import SavepointCase
 
 
@@ -67,6 +68,12 @@ class CommonCase(SavepointCase, ComponentMixin):
         # super)
         SavepointCase.setUp(self)
         ComponentMixin.setUp(self)
+
+        shopinvader_response.set_testmode(True)
+
+        @self.addCleanup
+        def cleanupShopinvaderResponseTestMode():
+            shopinvader_response.set_testmode(False)
 
 
 class ProductCommonCase(CommonCase):
