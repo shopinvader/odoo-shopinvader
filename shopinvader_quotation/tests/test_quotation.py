@@ -25,8 +25,8 @@ class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
 class CommonConnectedQuotationCase(CartCase):
     def setUp(self, *args, **kwargs):
         super(CommonConnectedQuotationCase, self).setUp(*args, **kwargs)
-        self.cart = self.env.ref("shopinvader.sale_order_2")
-        self.shopinvader_session = {"cart_id": self.cart.id}
+        cart = self.env.ref("shopinvader.sale_order_2")
+        self.shopinvader_session = {"cart_id": cart.id}
         self.partner = self.env.ref("shopinvader.partner_1")
         self.address = self.env.ref("shopinvader.partner_1_address_1")
         with self.work_on_services(
@@ -34,6 +34,7 @@ class CommonConnectedQuotationCase(CartCase):
         ) as work:
             self.service = work.component(usage="cart")
         self.service.dispatch("request_quotation", params={})
+        self.quotation = cart
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:
