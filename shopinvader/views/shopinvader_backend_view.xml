@@ -61,7 +61,6 @@
                         </page>
                         <page name="sale" string="Sale">
                             <group name="cart_conf" string="Cart configuration">
-                                <field name="last_step_id"/>
                                 <field name="anonymous_partner_id"/>
                                 <field name="pricelist_id" required="1"/>
                             </group>
