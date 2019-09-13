@@ -104,6 +104,13 @@ class ShopinvaderRestCase(BaseRestCase):
 
     def setUp(self, *args, **kwargs):
         super(ShopinvaderRestCase, self).setUp(*args, **kwargs)
+
+        shopinvader_response.set_testmode(True)
+
+        @self.addCleanup
+        def cleanupShopinvaderResponseTestMode():
+            shopinvader_response.set_testmode(False)
+
         self.backend = self.env.ref("shopinvader.backend_1")
         # To ensure multi-backend works correctly, we just have to create
         # a new one on the same company.
