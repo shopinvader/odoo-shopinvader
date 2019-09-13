@@ -72,7 +72,7 @@ class SaleOrder(models.Model):
     @api.multi
     def action_confirm_cart(self):
         for record in self:
-            if record.typology != "cart":
+            if record.typology == "sale":
                 # cart is already confirmed
                 continue
             record.write({"typology": "sale"})
