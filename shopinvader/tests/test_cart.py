@@ -246,13 +246,6 @@ class ConnectedCartCase(CommonConnectedCartCase):
             cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id
         )
 
-    def test_confirm_cart(self):
-        self.assertEqual(self.cart.typology, "cart")
-        self.service.dispatch(
-            "update", params={"step": {"next": self.backend.last_step_id.code}}
-        )
-        self.assertEqual(self.cart.typology, "sale")
-
     def test_confirm_cart_maually(self):
         self.assertEqual(self.cart.typology, "cart")
         self.cart.action_confirm()

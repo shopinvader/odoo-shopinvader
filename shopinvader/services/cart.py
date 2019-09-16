@@ -34,13 +34,7 @@ class CartService(Component):
     def update(self, **params):
         cart = self._get()
         response = self._update(cart, params)
-        if response.get("action_confirm_cart"):
-            # TODO improve me, it will be better to block the cart
-            # confirmation if the user have set manually the end step
-            # and the payment method do not support it
-            # the best will be to have a params on the payment method
-            return self._confirm_cart(cart)
-        elif response.get("redirect_to"):
+        if response.get("redirect_to"):
             return response
         else:
             return self._to_json(cart)
@@ -229,18 +223,10 @@ class CartService(Component):
         return params
 
     def _update(self, cart, params):
-        action_confirm_cart = False
-        step_in_params = "step" in params
         params = self._prepare_update(cart, params)
-        if step_in_params:
-            if (
-                params.get("current_step_id")
-                == self.shopinvader_backend.last_step_id.id
-            ):
-                action_confirm_cart = True
         if params:
             cart.write_with_onchange(params)
-        return {"action_confirm_cart": action_confirm_cart}
+        return {}
 
     def _get_step_from_code(self, code):
         step = self.env["shopinvader.cart.step"].search([("code", "=", code)])
@@ -318,14 +304,6 @@ class CartService(Component):
             if changed_field in onchange_fields:
                 return True
         return False
-
-    def _confirm_cart(self, cart):
-        cart.action_confirm_cart()
-        res = self._to_json(cart)
-        self.shopinvader_response.set_session("cart_id", 0)
-        self.shopinvader_response.set_store_cache("last_sale", res["data"])
-        self.shopinvader_response.set_store_cache("cart", {})
-        return res
 
     def _get_cart_item(self, cart, params, raise_if_not_found=True):
         # We search the line based on the item id and the cart id
