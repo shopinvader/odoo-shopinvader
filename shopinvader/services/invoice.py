@@ -15,7 +15,7 @@ from odoo.osv import expression
 
 
 class InvoiceService(Component):
-    _inherit = "base.shopinvader.service"
+    _inherit = "shopinvader.abstract.mail.service"
     _name = "shopinvader.invoice.service"
     _usage = "invoice"
     _expose_model = "account.invoice"
@@ -32,7 +32,7 @@ class InvoiceService(Component):
         invoice = self._get(_id)
         headers, content = self._get_binary_content(invoice)
         if not content:
-            raise MissingError(_("No image found for partner %s") % _id)
+            raise MissingError(_("No content found for invoice %s") % _id)
         response = request.make_response(content, headers)
         response.status_code = 200
         return response
@@ -89,7 +89,7 @@ class InvoiceService(Component):
             ("typology", "=", "sale"),
         ]
         # invoice_ids on sale.order is a computed field...
-        # to avoid to duplicate the logic, we search for the sale oders
+        # to avoid to duplicate the logic, we search for the sale orders
         # and check if the invoice_id is into the list of sale.invoice_ids
         sales = self.env["sale.order"].search(so_domain)
         invoice_ids = sales.mapped("invoice_ids").ids
