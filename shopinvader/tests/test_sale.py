@@ -14,6 +14,14 @@ class SaleCase(CommonCase):
         super(SaleCase, self).setUp(*args, **kwargs)
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.partner = self.env.ref("shopinvader.partner_1")
+        self.register_payments_obj = self.env["account.register.payments"]
+        self.journal_obj = self.env["account.journal"]
+        self.payment_method_manual_in = self.env.ref(
+            "account.account_payment_method_manual_in"
+        )
+        self.bank_journal_euro = self.journal_obj.create(
+            {"name": "Bank", "type": "bank", "code": "BNK6278"}
+        )
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="sales")
 
@@ -85,6 +93,23 @@ class SaleCase(CommonCase):
         self.service.dispatch("ask_email_invoice", _id=self.sale.id)
         self.assertEquals(self.env["queue.job"].search_count(domain), 1)
 
+    def _make_payment(self, invoice):
+        """
+        Make the invoice payment
+        :param invoice: account.invoice recordset
+        :return: bool
+        """
+        ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
+        wizard_obj = self.register_payments_obj.with_context(ctx)
+        register_payments = wizard_obj.create(
+            {
+                "payment_date": fields.Date.today(),
+                "journal_id": self.bank_journal_euro.id,
+                "payment_method_id": self.payment_method_manual_in.id,
+            }
+        )
+        register_payments.create_payment()
+
     def test_invoice_01(self):
         """
         Data
@@ -109,7 +134,7 @@ class SaleCase(CommonCase):
             * Invoice information must be filled
         """
         self._confirm_and_invoice_sale()
-        self.invoice.action_invoice_paid()
+        self._make_payment(self.invoice)
         self.assertEqual(self.invoice.state, "paid")
         res = self.service.get(self.sale.id)
         self.assertTrue(res)
