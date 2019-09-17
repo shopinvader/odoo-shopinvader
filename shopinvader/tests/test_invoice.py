@@ -2,6 +2,7 @@
 # Copyright 2019 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import mock
+from odoo import fields
 from odoo.exceptions import MissingError
 
 from .common import CommonCase
@@ -10,12 +11,37 @@ from .common import CommonCase
 class TestInvoice(CommonCase):
     def setUp(self, *args, **kwargs):
         super(TestInvoice, self).setUp(*args, **kwargs)
+        self.register_payments_obj = self.env["account.register.payments"]
+        self.journal_obj = self.env["account.journal"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.partner = self.env.ref("shopinvader.partner_1")
+        self.payment_method_manual_in = self.env.ref(
+            "account.account_payment_method_manual_in"
+        )
+        self.bank_journal_euro = self.journal_obj.create(
+            {"name": "Bank", "type": "bank", "code": "BNK627"}
+        )
         with self.work_on_services(partner=self.partner) as work:
             self.sale_service = work.component(usage="sales")
             self.invoice_service = work.component(usage="invoice")
         self.invoice = self._confirm_and_invoice_sale(self.sale)
+
+    def _make_payment(self, invoice):
+        """
+        Make the invoice payment
+        :param invoice: account.invoice recordset
+        :return: bool
+        """
+        ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
+        wizard_obj = self.register_payments_obj.with_context(ctx)
+        register_payments = wizard_obj.create(
+            {
+                "payment_date": fields.Date.today(),
+                "journal_id": self.bank_journal_euro.id,
+                "payment_method_id": self.payment_method_manual_in.id,
+            }
+        )
+        register_payments.create_payment()
 
     def _confirm_and_invoice_sale(self, sale):
         sale.action_confirm()
@@ -48,7 +74,7 @@ class TestInvoice(CommonCase):
         Expected result:
             * An http response with the file to download
         """
-        self.invoice.action_invoice_paid()
+        self._make_payment(self.invoice)
         with mock.patch(
             "openerp.addons.shopinvader.services.invoice.content_disposition"
         ) as mocked_cd, mock.patch(
@@ -79,6 +105,6 @@ class TestInvoice(CommonCase):
         sale.shopinvader_backend_id = self.backend
         self.assertNotEqual(sale.partner_id, self.partner)
         invoice = self._confirm_and_invoice_sale(sale)
-        invoice.action_invoice_paid()
+        self._make_payment(invoice)
         with self.assertRaises(MissingError):
             self.invoice_service.download(invoice.id)
