@@ -16,6 +16,7 @@
         "connector_search_engine",
         "queue_job",
         "shopinvader",
+        "base_suspend_security",
     ],
     "data": ["views/shopinvader_backend_view.xml", "data/ir_cron.xml"],
     "demo": ["demo/backend_demo.xml"],
