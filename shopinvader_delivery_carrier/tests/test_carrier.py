@@ -182,7 +182,6 @@ class CarrierCase(CommonCarrierCase):
                 carrier_result.get("price"),
                 places=self.precision,
             )
-
         return True
 
     def test_get_cart_price_by_country2(self):
