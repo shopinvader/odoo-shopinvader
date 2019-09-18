@@ -7,6 +7,10 @@ from .common import CommonCarrierCase
 
 
 class CarrierCase(CommonCarrierCase):
+    def setUp(self):
+        super(CarrierCase, self).setUp()
+        self.carrier_service = self.service.component("delivery_carrier")
+
     def test_available_carriers(self):
         response = self.service.dispatch("get_delivery_methods")
         self.assertEqual(len(response), 2)
@@ -101,8 +105,8 @@ class CarrierCase(CommonCarrierCase):
             lines.update({line.id: line._convert_to_write(line._cache)})
         nb_lines_before = self.env["sale.order.line"].search_count([])
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
-        params = {"country_id": belgium.id}
-        result = self.service.dispatch("get_delivery_methods", params=params)
+        params = {"country_id": belgium.id, "target": "current_cart"}
+        result = self.carrier_service.dispatch("search", params=params)
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
         nb_lines_after = self.env["sale.order.line"].search_count([])
@@ -120,8 +124,8 @@ class CarrierCase(CommonCarrierCase):
             lines.update({line.id: line._convert_to_write(line._cache)})
         nb_lines_before = self.env["sale.order.line"].search_count([])
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
-        params = {"country_id": belgium.id}
-        result = self.service.dispatch("get_delivery_methods", params=params)
+        params = {"country_id": belgium.id, "target": "current_cart"}
+        result = self.carrier_service.dispatch("search", params=params)
         self.assertEquals(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
@@ -152,6 +156,7 @@ class CarrierCase(CommonCarrierCase):
             partner=self.backend.anonymous_partner_id, shopinvader_session={}
         ) as work:
             self.service = work.component(usage="cart")
+        # Update with anonymous user
         self.test_get_cart_price_by_country1()
 
     def _check_carriers(self, result):
@@ -163,18 +168,19 @@ class CarrierCase(CommonCarrierCase):
         available_carriers = self.backend.carrier_ids.with_context(
             order_id=self.cart.id
         ).filtered(lambda c: c.available)
-        self.assertEquals(len(available_carriers), len(result))
-        for carrier_result in result:
+        carrier_rows = result.get("rows")
+        self.assertEquals(len(available_carriers), len(carrier_rows))
+        for carrier_result in carrier_rows:
             carrier = available_carriers.filtered(
                 lambda c: c.id == carrier_result.get("id")
             )
             self.assertEquals(len(carrier), 1)
+            self.assertEquals(carrier.name, carrier_result.get("name"))
             self.assertAlmostEquals(
                 carrier.price,
                 carrier_result.get("price"),
                 places=self.precision,
             )
-            self.assertEquals(carrier.name, carrier_result.get("name"))
         return True
 
     def test_get_cart_price_by_country2(self):
@@ -199,8 +205,8 @@ class CarrierCase(CommonCarrierCase):
             lines.update({line.id: line._convert_to_write(line._cache)})
         nb_lines_before = self.env["sale.order.line"].search_count([])
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
-        params = {"country_id": belgium.id}
-        result = self.service.dispatch("get_delivery_methods", params=params)
+        params = {"country_id": belgium.id, "target": "current_cart"}
+        result = self.carrier_service.dispatch("search", params=params)
         self.assertEquals(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
@@ -251,8 +257,8 @@ class CarrierCase(CommonCarrierCase):
             lines.update({line.id: line._convert_to_write(line._cache)})
         nb_lines_before = self.env["sale.order.line"].search_count([])
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
-        params = {"country_id": belgium.id}
-        result = self.service.dispatch("get_delivery_methods", params=params)
+        params = {"country_id": belgium.id, "target": "current_cart"}
+        result = self.carrier_service.dispatch("search", params=params)
         self.assertEquals(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
@@ -266,13 +272,6 @@ class CarrierCase(CommonCarrierCase):
             order_line = self.cart.order_line.filtered(
                 lambda l, lid=line_id: l.id == lid
             )
-            # Because delivery line has changed and the ID doesn't match
-            # anymore.
-            # But should still similar!
-            if not order_line:
-                order_line = self.cart.order_line.filtered(
-                    lambda l: l.is_delivery
-                )
             order_line.read()
             self.assertDictEqual(
                 order_line._convert_to_write(order_line._cache), line_values

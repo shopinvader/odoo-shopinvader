@@ -4,7 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=consider-merging-classes-inherited,method-required-super
 
-from openerp.addons.component.core import Component
+from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.component.core import Component
 
 
 class DeliveryCarrierService(Component):
@@ -43,7 +44,13 @@ class DeliveryCarrierService(Component):
                 "type": "string",
                 "required": False,
                 "allowed": ["current_cart"],
-            }
+            },
+            "country_id": {
+                "coerce": to_int,
+                "required": False,
+                "type": "integer",
+            },
+            "zip_code": {"required": False, "type": "string"},
         }
 
     def _validator_return_search(self):
@@ -82,18 +89,43 @@ class DeliveryCarrierService(Component):
 
     def _search(self, **params):
         """
-        Search for delively carriers
+        Search for delivery carriers
         :param params: see _validator_search
-        :return: a list of delivery.carriers
+        :return: delivery.carriers recordset
         """
         if params.get("target") == "current_cart":
-            return self.component(usage="cart")._get()._get_available_carrier()
+            cart = self.component(usage="cart")._get()
+            country = self._load_country(params)
+            zip_code = self._load_zip_code(params)
+            if country or zip_code:
+                cart = cart.with_context(
+                    delivery_force_country_id=country.id,
+                    delivery_force_zip_code=zip_code,
+                )
+            return cart._get_available_carrier()
         return self.shopinvader_backend.carrier_ids
 
     def _prepare_carrier(self, carrier):
         res = carrier.jsonify(self._json_parser_carrier)[0]
         res["type"] = None
         return res
+
+    def _load_country(self, params):
+        """
+        Load the country from given params
+        :param params: dict
+        :return: res.country recordset
+        """
+        country_id = params.pop("country_id", 0)
+        return self.env["res.country"].browse(country_id)
+
+    def _load_zip_code(self, params):
+        """
+        Load the country from given params
+        :param params: dict
+        :return: str
+        """
+        return params.pop("zip_code", "")
 
     @property
     def allowed_carrier_types(self):
