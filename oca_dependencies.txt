@@ -16,6 +16,3 @@ odoo-misc https://github.com/shopinvader/odoo-misc 12.0
 
 # https://github.com/OCA/queue/pull/150
 queue https://github.com/acsone/queue 12.0-imp-queue_job_test_mixin-dro
-
-# https://github.com/OCA/sale-workflow/pull/893
-sale_shipping_info_helper https://github.com/acsone/sale-workflow 12.0-mig-sale_shipping_info_helper-dro

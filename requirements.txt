@@ -10,8 +10,4 @@ parse-accept-language
 -e git+https://github.com/OCA/openupgradelib.git@master#egg=openupgradelib
 python-magic
 validators
-
-# PENDING PRS
-# https://github.com/akretion/locomotivecms-python-client/pull/1
-# -e git://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
--e git://github.com/acsone/locomotivecms-python-client.git@fix-main_import-dro#egg=locomotivecms
+-e git://github.com/shopinvader/locomotivecms-python-client.git#egg=locomotivecms
