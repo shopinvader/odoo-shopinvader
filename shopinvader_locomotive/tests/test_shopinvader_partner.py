@@ -5,6 +5,9 @@
 
 import logging
 
+from odoo import fields
+from odoo.exceptions import AccessError
+
 from .common import LocoCommonCase
 
 _logger = logging.getLogger(__name__)
@@ -85,4 +88,53 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
                 + "/content_types/customers/entries/5a953d6aae1c744cfcfb3cd3",
                 json={},
             )
+            self._perform_created_job()
+
+    def test_update_shopinvader_partner_from_odoo(self):
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, u"5a953d6aae1c744cfcfb3cd3"
+        )
+        self._init_job_counter()
+        partner = shop_partner.record_id
+        partner.write({"name": "TEST"})
+        # As we updated a field to export, a job should be created
+        self._check_nbr_job_created(1)
+
+    def test_no_update_shopinvader_partner_from_odoo(self):
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, u"5a953d6aae1c744cfcfb3cd3"
+        )
+        self._init_job_counter()
+        partner = shop_partner.record_id
+        partner.write({"city": "TEST"})
+        # As we did not updated a field to export, no job should be created
+        self._check_nbr_job_created(0)
+
+    def test_binding_access_rights(self):
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, u"5a953d6aae1c744cfcfb3cd3"
+        )
+        demo_user_id = self.ref("base.user_demo")
+        self._init_job_counter()
+        partner = shop_partner.record_id.sudo(demo_user_id)
+        # demo user has no write access on shopinvader_partner model
+        with self.assertRaises(AccessError):
+            shop_partner.sudo(demo_user_id).write(
+                {"sync_date": fields.Datetime.now()}
+            )
+
+        # demo user triggers an export to Locomotive
+        partner.write({"name": "TEST"})
+        # As we updated a field to export, a job should be created
+        self._check_nbr_job_created(1)
+        with requests_mock.mock() as m:
+            m.post(
+                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
+            )
+            m.put(
+                self.base_url
+                + "/content_types/customers/entries/5a953d6aae1c744cfcfb3cd3",
+                json={},
+            )
+            # export ran as demo user even if no access on shopinvader_partner
             self._perform_created_job()

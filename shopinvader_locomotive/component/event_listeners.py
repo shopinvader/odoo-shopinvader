@@ -36,9 +36,13 @@ class ShopinvaderRecordListener(Component):
 
     _apply_on = ["res.partner"]
 
+    def _get_fields_to_export(self):
+        return ["name", "email"]
+
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_write(self, record, fields=None):
-        if fields == ["shopinvader_bind_ids"]:
+        fields_to_export = self._get_fields_to_export()
+        if not set(fields_to_export).intersection(set(fields)):
             return
         if "shopinvader_bind_ids" not in record._fields:
             return
