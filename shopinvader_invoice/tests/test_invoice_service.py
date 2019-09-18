@@ -13,18 +13,17 @@ class TestInvoiceService(CommonCase):
     def setUp(self, *args, **kwargs):
         super(TestInvoiceService, self).setUp(*args, **kwargs)
         self.invoice_obj = self.env["account.invoice"]
-        self.journal_obj = self.env['account.journal']
-        self.register_payments_obj = self.env['account.register.payments']
+        self.journal_obj = self.env["account.journal"]
+        self.register_payments_obj = self.env["account.register.payments"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.partner = self.env.ref("shopinvader.partner_1")
         self.product = self.env.ref("product.product_product_4")
-        self.bank_journal_euro = self.journal_obj.create({
-            'name': 'Bank',
-            'type': 'bank',
-            'code': 'BNK67',
-        })
+        self.bank_journal_euro = self.journal_obj.create(
+            {"name": "Bank", "type": "bank", "code": "BNK67"}
+        )
         self.payment_method_manual_in = self.env.ref(
-            "account.account_payment_method_manual_in")
+            "account.account_payment_method_manual_in"
+        )
         self.precision = 2
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="invoice")
@@ -104,24 +103,19 @@ class TestInvoiceService(CommonCase):
         :param amount: float
         :return: bool
         """
-        ctx = {
-            'active_model': invoice._name,
-            'active_ids': invoice.ids,
-        }
+        ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
         wizard_obj = self.register_payments_obj.with_context(ctx)
-        register_payments = wizard_obj.create({
-            'payment_date': fields.Date.today(),
-            'journal_id': self.bank_journal_euro.id,
-            'payment_method_id': self.payment_method_manual_in.id,
-        })
+        register_payments = wizard_obj.create(
+            {
+                "payment_date": fields.Date.today(),
+                "journal_id": self.bank_journal_euro.id,
+                "payment_method_id": self.payment_method_manual_in.id,
+            }
+        )
         if journal:
-            register_payments.write({
-                'journal_id': journal.id,
-            })
+            register_payments.write({"journal_id": journal.id})
         if amount:
-            register_payments.write({
-                'amount': amount,
-            })
+            register_payments.write({"amount": amount})
         register_payments.create_payment()
 
     def test_get_invoice_logged(self):
