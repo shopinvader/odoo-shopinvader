@@ -17,7 +17,7 @@ class DeliveryCarrier(models.Model):
         :param partner: res.partner recordset
         :return:
         """
-        partner.read()
+        partner.read(["country_id", "zip"])
         partner_values = partner._convert_to_write(partner._cache)
         with partner.env.do_in_draft():
             yield
@@ -25,7 +25,7 @@ class DeliveryCarrier(models.Model):
             partner.update(partner_values)
 
     @api.model
-    def _load_country(self):
+    def _get_country_from_context(self):
         """
         Load the country from context
         :return: res.country recordset
@@ -34,7 +34,7 @@ class DeliveryCarrier(models.Model):
         return self.env["res.country"].browse(country_id)
 
     @api.model
-    def _load_zip_code(self):
+    def _get_zip_from_context(self):
         """
         Load the zip code from context
         :return: str
@@ -49,8 +49,8 @@ class DeliveryCarrier(models.Model):
         :param contact: res.partner recordset
         :return: False or self
         """
-        country = self._load_country()
-        zip_code = self._load_zip_code()
+        country = self._get_country_from_context()
+        zip_code = self._get_zip_from_context()
         if country or zip_code:
             with self._simulate_delivery_cost(contact):
                 # Edit country and zip

@@ -1,11 +1,14 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
+
+_logger = logging.getLogger(__name__)
 
 
 class CartService(Component):
@@ -25,30 +28,9 @@ class CartService(Component):
             self._set_carrier(cart, params["carrier_id"])
             return self._to_json(cart)
 
-    def get_delivery_methods(self, **params):
-    def set_carrier(self, **params):
-        """
-           This service will set the given delivery method to the current
-           cart
-       :param params: The carrier_id to set
-       :return:
-       """
-        cart = self._get()
-        if not cart:
-            raise UserError(_("There is not cart"))
-        else:
-            self._set_carrier(cart, params["carrier_id"])
-            return self._to_json(cart)
-
     # DEPRECATED METHODS #
     def get_delivery_methods(self):
         """
-        This service will return all possible delivery methods for the
-        current cart (depending on country/zip)
-        The cart is not updated with the given country/zip. The change is done
-        only in memory.
-        :param params: dict
-        :return: dict
             !!!!DEPRECATED!!!!! Uses delivery_carrier.search
 
             This service will return all possible delivery methods for the
@@ -56,16 +38,11 @@ class CartService(Component):
 
         :return:
         """
-        cart = self._get()
-        country = self._load_country(params)
-        zip_code = self._load_zip_code(params)
-        if country or zip_code:
-            cart = cart.with_context(
-                delivery_force_country_id=country.id,
-                delivery_force_zip_code=zip_code,
-            )
-        result = self._get_available_carrier(cart)
-        return result
+        _logger.warning(
+            "DEPRECATED: You should use %s in service %s",
+            "search",
+            "delivery_carrier",
+        )
         return self.component("delivery_carrier").search(
             target="current_cart"
         )["rows"]
@@ -118,22 +95,6 @@ class CartService(Component):
         }
 
     # internal methods
-    def _load_country(self, params):
-        """
-        Load the country from given params
-        :param params: dict
-        :return: res.country recordset
-        """
-        country_id = params.pop("country_id", 0)
-        return self.env["res.country"].browse(country_id)
-
-    def _load_zip_code(self, params):
-        """
-        Load the country from given params
-        :param params: dict
-        :return: str
-        """
-        return params.pop("zip_code", "")
 
     def _add_item(self, cart, params):
         res = super()._add_item(cart, params)
