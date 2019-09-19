@@ -2,9 +2,10 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Shopinvader cart reminder",
+    "name": "Shopinvader pending cart reminder",
     "description": """Shopinvader module to relaunch the customer when the
-    cart/sale is not confirmed yet""",
+    cart/sale is not confirmed yet.
+    Configure the delay and the email template on the backend.""",
     "author": "ACSONE SA/NV",
     "website": "http://www.shopinvader.com",
     "category": "e-commerce",
