@@ -13,7 +13,7 @@
                     <group>
                         <field name="reminder_start_date" groups="base.group_no_one"/>
                         <field name="pending_cart_reminder_delay"/>
-                        <field name="pending_cart_reminder_template_id" attrs="{'invisible': [('pending_cart_reminder_delay', '&lt;=', 0)], 'required': [('quotation_reminder', '&gt;', 0)]}"/>
+                        <field name="pending_cart_reminder_template_id" attrs="{'invisible': [('pending_cart_reminder_delay', '&lt;=', 0)], 'required': [('pending_cart_reminder_delay', '&gt;', 0)]}"/>
                     </group>
                     <group></group>
                 </group>
