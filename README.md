@@ -26,7 +26,7 @@ addon | version | summary
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.1.0.1 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.0 | Shopinvader Elasticsearch
-[shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.1.0.0 | Guest mode for Shopinvader
+[shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.1.0.1 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.0.2 | Add the export of Image for Shopinvader
 [shopinvader_lead](shopinvader_lead/) | 12.0.1.0.1 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.1.0.1 | Manage communications between Shopinvader and Locomotive CMS
