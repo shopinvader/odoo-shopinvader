@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
@@ -36,7 +35,9 @@ class TestShopinvaderBackend(CommonCase):
         )
         # Ensure the write is done
         self.assertEqual(self.backend.pending_cart_reminder_delay, reminder)
-        self.assertEqual(self.backend.reminder_start_date, today)
+        self.assertEqual(
+            self.backend.reminder_start_date, fields.Date.from_string(today)
+        )
         # Now enable the reminder
         today = fields.Date.today()
         reminder = 10
