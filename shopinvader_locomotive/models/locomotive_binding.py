@@ -18,7 +18,7 @@ class LocomotiveBinding(models.AbstractModel):
         self.ensure_one()
         with self.backend_id.work_on(self._name) as work:
             exporter = work.component(usage="record.exporter")
-            return exporter.run(self)
+            return exporter.run(self.suspend_security())
 
     @job(default_channel="root.shopinvader")
     @related_action(action="related_action_unwrap_binding")
