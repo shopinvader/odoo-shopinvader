@@ -17,18 +17,18 @@ class TestSaleOrder(CommonCase):
         self.sale_obj = self.env["sale.order"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.template = self.env.ref(
-            "shopinvader_cart_reminder."
+            "shopinvader_pending_cart_reminder."
             "mail_template_shopinvader_sale_reminder"
         )
         self.backend.write(
             {
-                "quotation_reminder": 1,
-                "quotation_reminder_mail_template_id": self.template.id,
+                "pending_cart_reminder_delay": 1,
+                "pending_cart_reminder_template_id": self.template.id,
             }
         )
         self.days_to_add = 0
 
-    def _patch_get_reminder_date(self):
+    def _patch_get_pending_cart_last_write_dt(self):
         """
 
         :return: function
@@ -36,30 +36,34 @@ class TestSaleOrder(CommonCase):
         days_to_add = self.days_to_add
 
         @api.model
-        def _get_reminder_date(self, backend):
+        def _get_pending_cart_last_write_dt(self, backend):
             reminder_date = fields.Datetime.from_string(fields.Datetime.now())
             if days_to_add:
                 reminder_date -= timedelta(days=days_to_add)
             return reminder_date
 
-        return _get_reminder_date
+        return _get_pending_cart_last_write_dt
 
     def _patch_sale_reminder(self):
         """
         Do the patch (and add the cleanup)
         :return: bool
         """
-        _get_reminder_date = self._patch_get_reminder_date()
-        self.sale_obj._patch_method("_get_reminder_date", _get_reminder_date)
-        self.addCleanup(self.sale_obj._revert_method, "_get_reminder_date")
+        _get_reminder_date = self._patch_get_pending_cart_last_write_dt()
+        self.sale_obj._patch_method(
+            "_get_pending_cart_last_write_dt", _get_reminder_date
+        )
+        self.addCleanup(
+            self.sale_obj._revert_method, "_get_pending_cart_last_write_dt"
+        )
         return True
 
     def _check_reminder_empty(self):
         """
-        Ensure the reminder_sent_datetime is not set
+        Ensure the pending_cart_reminder_sent_dt is not set
         :return: bool
         """
-        self.assertFalse(self.sale.reminder_sent_datetime)
+        self.assertFalse(self.sale.pending_cart_reminder_sent_dt)
         return True
 
     def _launch_and_check_no_changes(self):
@@ -69,7 +73,7 @@ class TestSaleOrder(CommonCase):
         """
         values_before = self.sale.read()[0]
         self._patch_sale_reminder()
-        self.sale_obj.launch_reminder()
+        self.sale_obj.launch_pending_cart_reminder()
         values_after = self.sale.read()[0]
         self.assertDictEqual(values_after, values_before)
         return True
@@ -83,9 +87,12 @@ class TestSaleOrder(CommonCase):
         self._check_reminder_empty()
         now = fields.Datetime.from_string(fields.Datetime.now())
         self._patch_sale_reminder()
-        self.sale_obj.launch_reminder()
+        self.sale_obj.launch_pending_cart_reminder()
         self.assertGreaterEqual(
-            fields.Datetime.from_string(self.sale.reminder_sent_datetime), now
+            fields.Datetime.from_string(
+                self.sale.pending_cart_reminder_sent_dt
+            ),
+            now,
         )
         return
 
@@ -98,7 +105,7 @@ class TestSaleOrder(CommonCase):
         self._check_reminder_empty()
         self.days_to_add = 4
         self._patch_sale_reminder()
-        self.sale_obj.launch_reminder()
+        self.sale_obj.launch_pending_cart_reminder()
         self._check_reminder_empty()
         return
 
@@ -110,10 +117,10 @@ class TestSaleOrder(CommonCase):
         :return:
         """
         now = fields.Datetime.now()
-        self.sale.write({"reminder_sent_datetime": now})
+        self.sale.write({"pending_cart_reminder_sent_dt": now})
         self._patch_sale_reminder()
-        self.sale_obj.launch_reminder()
-        self.assertEquals(self.sale.reminder_sent_datetime, now)
+        self.sale_obj.launch_pending_cart_reminder()
+        self.assertEquals(self.sale.pending_cart_reminder_sent_dt, now)
         return
 
     def test_reminder4(self):
