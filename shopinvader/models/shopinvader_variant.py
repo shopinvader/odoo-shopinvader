@@ -1,6 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from contextlib import contextmanager
 
 from odoo import api, fields, models
 from odoo.tools import float_compare, float_round
@@ -47,6 +48,44 @@ class ShopinvaderVariant(models.Model):
     description = fields.Html(
         related="shopinvader_product_id.description", readonly=False
     )
+
+    @contextmanager
+    @api.multi
+    def _action_product_disabled(self):
+        """
+        Action a deactivation of a variant, if every variants are disabled:
+        disable the product too.
+        :return:
+        """
+        product_active_dict = {
+            p: p.active for p in self.mapped("shopinvader_product_id")
+        }
+        yield
+        for variant in self:
+            if variant.active:
+                continue
+            shopinv_product = variant.shopinvader_product_id
+            # If the product is already disabled, we don't have anything to do!
+            if not product_active_dict.get(shopinv_product, True):
+                continue
+            # If every variants of the product are disabled
+            # (The product is enable; checked by previous IF).
+            if all(
+                [not v.active for v in shopinv_product.shopinvader_variant_ids]
+            ):
+                shopinv_product.write({"active": False})
+
+    @api.multi
+    def write(self, vals):
+        """
+        Inherit to manage behaviour when the variant is disabled.
+        We may habe to disable also the shopinvader.product
+        :param vals: dict
+        :return: bool
+        """
+        with self._action_product_disabled():
+            result = super(ShopinvaderVariant, self).write(vals)
+        return result
 
     @api.multi
     def _build_seo_title(self):
