@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo10-addon-shopinvader_guest_mode',
         'odoo10-addon-shopinvader_image',
         'odoo10-addon-shopinvader_import_image',
+        'odoo10-addon-shopinvader_invoice',
         'odoo10-addon-shopinvader_lead',
         'odoo10-addon-shopinvader_locomotive',
         'odoo10-addon-shopinvader_locomotive_contact_company',
