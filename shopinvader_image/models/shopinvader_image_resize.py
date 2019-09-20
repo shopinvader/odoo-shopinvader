@@ -18,6 +18,6 @@ class ShopinvaderImageResize(models.Model):
     @api.depends("size_x", "size_y")
     def _compute_display_name(self):
         for record in self:
-            record.display_name = "{} ({}x{})".format(
+            record.display_name = u"{} ({}x{})".format(
                 record.name, record.size_x, record.size_y
             )
