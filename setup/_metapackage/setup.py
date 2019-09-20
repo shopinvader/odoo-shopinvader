@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo10-addon-shopinvader_contact_company',
         'odoo10-addon-shopinvader_custom_attribute',
         'odoo10-addon-shopinvader_delivery_carrier',
+        'odoo10-addon-shopinvader_delivery_instruction',
         'odoo10-addon-shopinvader_demo_app',
         'odoo10-addon-shopinvader_elasticsearch',
         'odoo10-addon-shopinvader_guest_mode',
