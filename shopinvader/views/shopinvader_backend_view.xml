@@ -42,20 +42,17 @@
                         <field name="name" class="oe_inline"/>
                     </h1>
                     <notebook>
-                        <page name="config" string="Credentials">
+                        <page name="config" string="Front-end">
                             <group name="config" colspan="4" col="4">
                                 <field name="location" placeholder="e.g. https://ecommerce.shopinvader.com"/>
                                 <field name="auth_api_key_name" required="True"/>
                             </group>
                         </page>
                         <page name="search_eng" string="Search engine">
-                            <group>
-                                <group>
-                                    <field name="website_public_name"/>
-                                </group>
-                                <group></group>
+                            <group name="website_name">
+                                <field name="website_public_name"/>
                             </group>
-                            <group name="search_filters" colspan="4">
+                            <group name="search_filters" string="Filters" colspan="4">
                                 <field name="filter_ids" nolabel="1"/>
                             </group>
                         </page>
@@ -79,11 +76,7 @@
                             <group name="languages" string="Languages">
                                 <span>Available languages in the website.</span>
                                 <newline />
-                                <field name="lang_ids" nolabel="1" />
-                            </group>
-                            <group name="allowed_country" string="Countries">
-                                <span>Allowed countries in delivery addresses</span><newline />
-                                <field name="allowed_country_ids" nolabel="1"/>
+                                <field name="lang_ids" nolabel="1" widget="many2many_tags"/>
                             </group>
                         </page>
                         <page name="email" string="Notifications">
@@ -98,7 +91,12 @@
                                 </field>
                             </group>
                         </page>
-                        <page name="delivery" string="Delivery" />
+                        <page name="delivery" string="Delivery">
+                            <group name="allowed_country" string="Countries">
+                                <span>Allowed countries in delivery addresses</span><newline />
+                                <field name="allowed_country_ids" nolabel="1"/>
+                            </group>
+                        </page>
                         <page name="developper" string="Developper">
                             <group name="developper" colspan="4">
                                 <group name="product" string="Product" col="10" colspan="4">
@@ -109,6 +107,11 @@
                                             type="object"/>
                                 </group>
                                 <group name="category" string="Category" col="10" colspan="4">
+                                    <span>Levels of categories to automatically bind such as:</span><newline />
+                                    <span>- 0: none</span><newline />
+                                    <span>- 1: parent_caterogy1</span><newline />
+                                    <span>- 2: parent_caterogy1/child_category2</span><newline />
+                                    <span>- 3: parent_caterogy1/child_category2/child_category3</span><newline />
                                     <field name="category_binding_level"/>
                                     <button
                                             name="bind_all_category"

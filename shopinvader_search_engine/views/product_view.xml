@@ -16,6 +16,21 @@
     </field>
 </record>
 
+<record id="shopinvader_variant_form_view" model="ir.ui.view">
+    <field name="model">shopinvader.variant</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_variant_form_view"/>
+    <field name="arch" type="xml">
+        <group name="variant" position="after">
+            <group string="Search engine">
+                <field name="index_id"/>
+                <field name="sync_state"/>
+                <field name="date_modified"/>
+                <field name="date_syncronized"/>
+            </group>
+        </group>
+    </field>
+</record>
+
 <record id="shopinvader_variant_search_view" model="ir.ui.view">
     <field name="model">shopinvader.variant</field>
     <field name="inherit_id" ref="shopinvader.shopinvader_variant_search_view"/>

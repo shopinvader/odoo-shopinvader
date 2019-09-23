@@ -7,11 +7,9 @@
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
             <page name="delivery" position="inside">
-                <group name="carrier" colspan="4">
+                <group name="carrier" string="Carrier">
                     <field name="carrier_ids"
-                           colspan="4"
-                           nolabel="True">
-                    </field>
+                           nolabel="1"/>
                 </group>
             </page>
         </field>

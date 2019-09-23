@@ -17,10 +17,10 @@
         "views/shopinvader_image_resize_view.xml",
         "data/ir_export_product.xml",
         "data/ir_export_category.xml",
+        "data/shopinvader_image_resize.xml",
     ],
     "demo": [
         "demo/storage_image_product_image_tag_demo.xml",
-        "demo/shopinvader_image_resize_demo.xml",
         "demo/backend_demo.xml",
     ],
     "installable": True,

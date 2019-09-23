@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <field name="location" position="after">
+            <field name="shopinvader_variant_resize_ids" position="before">
                 <field name="image_proxy_url"/>
             </field>
         </field>

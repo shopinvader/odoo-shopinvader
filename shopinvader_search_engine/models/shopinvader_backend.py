@@ -8,7 +8,11 @@ from odoo import api, fields, models
 class ShopinvaderBackend(models.Model):
     _inherit = "shopinvader.backend"
 
-    se_backend_id = fields.Many2one("se.backend", "Search Engine Backend")
+    se_backend_id = fields.Many2one(
+        comodel_name="se.backend",
+        string="Search Engine Backend",
+        help="Search Engine backend configuration to use",
+    )
     index_ids = fields.One2many("se.index", related="se_backend_id.index_ids")
 
     @api.model
