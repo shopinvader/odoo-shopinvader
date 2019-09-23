@@ -25,6 +25,7 @@ addon | version | summary
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.0 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.1.1.0 | Carrier integration for Shopinvader
+[shopinvader_demo_app](shopinvader_demo_app/) | 12.0.1.0.0 | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.0 | Shopinvader Elasticsearch
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.1.0.1 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
@@ -47,7 +48,6 @@ addon | version | summary
 [product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
-[shopinvader_demo_app](shopinvader_demo_app/) | 10.0.1.0.0 (unported) | Shopinvader Demo App
 [shopinvader_import_image](shopinvader_import_image/) | 10.0.1.0.0 (unported) | Import product images
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
