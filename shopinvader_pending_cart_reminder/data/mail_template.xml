@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+
+    <record id="mail_template_shopinvader_sale_reminder" model="mail.template">
+        <field name="name">Shopinvader cart reminder</field>
+        <field name="email_from">${(object.shopinvader_backend_id.email or '')|safe}</field>
+        <field name="subject">Thank you for visiting our website ${object.shopinvader_backend_id.name}</field>
+        <field name="partner_to">${object.partner_id.id}</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="auto_delete" eval="False"/>
+        <field name="lang">${object.partner_id.lang}</field>
+        <field name="body_html"><![CDATA[
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Dear ${object.partner_id.name},
+        <br /><br />
+        When you visited our website you started a shopping cart. This one seems to have been open for a long time.
+        If you have encountered a technical problem or have any question, do not hesitate to contact us.
+        <br />
+        Thank you for visiting our website,
+        <br />
+        Sincerely
+    </p>
+</div>
+]]></field>
+    </record>
+
+</odoo>
