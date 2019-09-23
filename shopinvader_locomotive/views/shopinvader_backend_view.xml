@@ -20,11 +20,13 @@
                         groups="shopinvader.group_shopinvader_manager"/>
                 </group>
             </page>
-            <field name="location" position="after">
-                <field name="username" required="1" string="Email" colspan="2"/>
-                <field name="password" required="1" password="True" colspan="2"/>
-                <field name="handle" required="1" colspan="2"/>
-            </field>
+            <group name="config" position="after">
+                <group name="locomotive_credentials" string="Locomotive Credentials">
+                    <field name="username" required="1" string="Email" colspan="2"/>
+                    <field name="password" required="1" password="True" colspan="2"/>
+                    <field name="handle" required="1" colspan="2"/>
+                </group>
+            </group>
             <field name="location" position="attributes">
                 <attribute name="required" eval="True"/>
             </field>

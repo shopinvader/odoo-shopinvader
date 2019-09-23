@@ -22,7 +22,9 @@ class ShopinvaderBackend(models.Model):
     notification_ids = fields.One2many(
         "shopinvader.notification", "backend_id", "Notification"
     )
-    nbr_product = fields.Integer(compute="_compute_nbr_content")
+    nbr_product = fields.Integer(
+        compute="_compute_nbr_content", string="Number of binded products"
+    )
     nbr_variant = fields.Integer(compute="_compute_nbr_content")
     nbr_category = fields.Integer(compute="_compute_nbr_content")
     allowed_country_ids = fields.Many2many(
@@ -80,7 +82,8 @@ class ShopinvaderBackend(models.Model):
         "provided by the backend",
     )
     website_public_name = fields.Char(
-        help="Public name of your backend/website."
+        help="Public name of your backend/website.\n"
+        " Used for products name referencing."
     )
 
     _sql_constraints = [

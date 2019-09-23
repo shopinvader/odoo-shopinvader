@@ -20,7 +20,8 @@ class ShopinvaderBackend(models.Model):
     )
     password = fields.Text(
         help="Locomotive user API key (see Developers section in "
-        "Locomotive site)"
+        "Locomotive site)",
+        string="Locomotive's Api key",
     )
     handle = fields.Char(
         help="Locomotive site handle (see Developers section in "

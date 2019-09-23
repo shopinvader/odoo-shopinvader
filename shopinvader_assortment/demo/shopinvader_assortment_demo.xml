@@ -4,7 +4,7 @@
 
 <odoo>
     <record id="shopinvader_assortment1" model="ir.filters">
-        <field name="name">Demo Shopinvader Backend</field>
+        <field name="name">Demo Shopinvader Assortment</field>
         <field name="model_id">product.product</field>
         <field name="domain">[('sale_ok', '=', True)]</field>
         <field name="user_id" eval="False"/>
