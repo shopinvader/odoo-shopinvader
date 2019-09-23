@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <record forcecreate="True" id="ir_cron_shopinvader_sale_reminder" model="ir.cron">
+        <field name="name">Shopinvader carts - Reminder (not confirmed carts)</field>
+        <field eval="False" name="active"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="numbercall" eval="-1"/>
+        <field eval="False" name="doall"/>
+        <field name="model">sale.order</field>
+        <field name="function">launch_pending_cart_reminder</field>
+        <field name="args">()</field>
+    </record>
+</odoo>
