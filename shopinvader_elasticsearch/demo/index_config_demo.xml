@@ -14,18 +14,15 @@
               "mappings": {
                 "properties": {
                   "hierarchicalCategories": {
-                    "type": "nested",
                     "properties": {
                       "ancestors": {
-                        "type": "keyword",
-                        "fielddata": true
+                        "type": "keyword"
                       },
                       "order": {
                         "type": "integer"
                       },
                       "value": {
-                        "type": "keyword",
-                        "fielddata": true
+                        "type": "keyword"
                       },
                       "level": {
                         "type": "integer"
