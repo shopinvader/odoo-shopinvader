@@ -8,6 +8,11 @@ from .common import CommonCase
 
 
 class CartCase(CommonCase):
+    """
+    Common class for cart tests
+    DON'T override it with tests
+    """
+
     def setUp(self):
         super(CartCase, self).setUp()
         self.registry.enter_test_mode(self.env.cr)
@@ -280,6 +285,11 @@ class AnonymousCartCase(CartCase, CartClearTest):
 
 
 class CommonConnectedCartCase(CartCase):
+    """
+       Common class for connected cart tests
+       DON'T override it with tests
+       """
+
     def setUp(self, *args, **kwargs):
         super(CommonConnectedCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref("shopinvader.sale_order_2")
