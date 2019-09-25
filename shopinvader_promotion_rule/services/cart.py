@@ -38,11 +38,12 @@ class CartService(Component):
         if is_coupon_code_specified:
             if coupon_code:
                 cart.add_coupon(coupon_code)
-            else:
-                if cart.coupon_code:
-                    # the promotion has been removed:
-                    # * clear the promotion
-                    cart.clear_promotions()
+                return res
+
+            if cart.coupon_code:
+                # the promotion has been removed:
+                # * clear the promotion
+                cart.clear_promotions()
         # apply default promotion
         cart.apply_promotions()
         return res
