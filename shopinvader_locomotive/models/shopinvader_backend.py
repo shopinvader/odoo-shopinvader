@@ -32,7 +32,20 @@ class ShopinvaderBackend(models.Model):
     )
 
     def synchronize_metadata(self):
+        """
+        Export metadatas managed by Odoo (countries, lang, currencies) to the
+        website.
+
+        :return:
+        """
         return self._export_metafields_store()
+
+    def reset_site_settings(self):
+        """
+        Initialize/reset the locomotive site settings (odoo url and api key)
+        and synchronize metadata
+        """
+        self._export_metafields_store(force=True)
 
     @api.model
     def _scheduler_synchronize_currency(self, domain=None):
@@ -43,9 +56,9 @@ class ShopinvaderBackend(models.Model):
     def synchronize_currency(self):
         return self._export_metafields_store(fields=["currency_ids"])
 
-    def _export_metafields_store(self, fields=None):
+    def _export_metafields_store(self, fields=None, force=False):
         for record in self:
             with record.work_on(record._name) as work:
                 exporter = work.component(usage="record.exporter")
-                exporter.run(fields=fields)
+                exporter.run(fields=fields, force=force)
         return True

@@ -17,6 +17,7 @@
         "shopinvader_guest_mode",
         "shopinvader_locomotive",
         "shopinvader_locomotive_guest_mode",
+        "shopinvader_locomotive_elasticsearch",
         "shopinvader_delivery_carrier",
         "shopinvader_product_stock",
         "shopinvader_image",
