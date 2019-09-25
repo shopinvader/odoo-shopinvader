@@ -9,6 +9,11 @@ from .common import CommonCase
 
 
 class CartCase(CommonCase):
+    """
+    Common class for cart tests
+    DON'T override it with tests
+    """
+
     def setUp(self):
         super(CartCase, self).setUp()
         self.registry.enter_test_mode()
@@ -259,7 +264,12 @@ class AnonymousCartCase(CartCase, CartClearTest):
         self.assertNotEqual(cart, cart_bis)
 
 
-class CommonConnectedCartCase(CartCase, CartClearTest):
+class CommonConnectedCartCase(CartCase):
+    """
+       Common class for connected cart tests
+       DON'T override it with tests
+       """
+
     def setUp(self, *args, **kwargs):
         super(CommonConnectedCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref("shopinvader.sale_order_2")
@@ -272,7 +282,7 @@ class CommonConnectedCartCase(CartCase, CartClearTest):
             self.service = work.component(usage="cart")
 
 
-class ConnectedCartCase(CommonConnectedCartCase):
+class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
     def test_set_shipping_address(self):
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
