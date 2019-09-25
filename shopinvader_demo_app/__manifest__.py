@@ -12,7 +12,17 @@
     "license": "AGPL-3",
     "category": "Generic Modules",
     "depends": [
-        "shopinvader_algolia",
+        "shopinvader",
+        "shopinvader_assortment",
+        "shopinvader_guest_mode",
+        "shopinvader_locomotive",
+        "shopinvader_locomotive_guest_mode",
+        "shopinvader_locomotive_elasticsearch",
+        "shopinvader_delivery_carrier",
+        "shopinvader_product_stock",
+        "shopinvader_image",
+        "shopinvader_elasticsearch",
+        "shopinvader_payment_manual",
         "product_brand",
         #  This module is broken for now
         #  https://github.com/OCA/product-variant/issues/92

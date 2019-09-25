@@ -4,37 +4,19 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import json
-import logging
-from contextlib import contextmanager
 
-from .common import LocoCommonCase
-
-_logger = logging.getLogger(__name__)
-
-# pylint: disable=W7936
-try:
-    import requests_mock
-except (ImportError, IOError) as err:
-    _logger.debug(err)
+from .common import LocoCommonCase, mock_site_api
 
 ODOO_STORE_JSON_KEY = ["all_filters", "available_countries", "currencies_rate"]
-
-
-@contextmanager
-def mock_site_api(base_url, site):
-    with requests_mock.mock() as m:
-        m.post(base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
-        m.get(base_url + "/sites", json=[site])
-        yield m.put(
-            base_url + "/sites/%s" % site["_id"],
-            json={"foo": "we_do_not_care"},
-        )
 
 
 class TestBackend(LocoCommonCase):
     def setUp(self, *args, **kwargs):
         super(TestBackend, self).setUp(*args, **kwargs)
         ref = self.env.ref
+        self.odoo_url = self.env["ir.config_parameter"].get_param(
+            "web.base.url"
+        )
         country_ids = [ref("base.fr").id, ref("base.us").id]
         filter_ids = [
             ref("shopinvader.product_filter_1").id,
@@ -48,22 +30,26 @@ class TestBackend(LocoCommonCase):
                 "currency_ids": [(6, 0, currency_ids)],
             }
         )
+        self.metafields = {
+            "foo": "test",
+            "_store": {
+                "bar": "test",
+                "all_filters": "{}",
+                "available_countries": "{}",
+            },
+            "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
+        }
         # simplified version of site data
         self.site = {
             "name": "My site",
             "handle": "shopinvader",
             "_id": "space_id",
-            "metafields": json.dumps(
-                {
-                    "foo": "test",
-                    "_store": {
-                        "bar": "test",
-                        "all_filters": "{}",
-                        "available_countries": "{}",
-                    },
-                }
-            ),
+            "metafields": json.dumps(self.metafields),
         }
+
+    def _update_site_metafields(self, key, values):
+        self.metafields[key] = values
+        self.site["metafields"] = json.dumps(self.metafields)
 
     def _extract_metafields(self, metafields):
         metafields = json.loads(metafields)
@@ -110,8 +96,9 @@ class TestBackend(LocoCommonCase):
                         "EUR": ref("base.EUR").rate,
                     },
                 },
+                "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
             }
-            self.assertEqual(metafields, expected_metafields)
+            self.assertDictEqual(metafields, expected_metafields)
 
     def test_synchronize_currency(self):
         ref = self.env.ref
@@ -131,5 +118,68 @@ class TestBackend(LocoCommonCase):
                         "EUR": ref("base.EUR").rate,
                     },
                 },
+                "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
             }
-            self.assertEqual(metafields, expected_metafields)
+            self.assertDictEqual(metafields, expected_metafields)
+
+    def test_erp_synchronize_01(self):
+        """
+        Data:
+            * erp data not filled into locomotive
+        Test case:
+            * synchronize metadata
+        Expected result:
+            * erp information is filled
+        :return:
+        """
+        self._update_site_metafields("erp", {})
+        with mock_site_api(self.base_url, self.site) as mock:
+            self.backend.synchronize_metadata()
+            metafields = self._extract_metafields(
+                mock.request_history[0].json()["site"]["metafields"]
+            )
+            self.assertDictEqual(
+                metafields["erp"],
+                {"api_key": self.api_key, "api_url": self.odoo_url},
+            )
+
+    def test_erp_synchronize_02(self):
+        """
+        Data:
+            * erp data filled into locomotive
+        Test case:
+            * synchronize metadata
+        Expected result:
+            * erp data not updated into locomotive
+        :return:
+        """
+        erp_values = {"api_key": "dummy", "api_url": "https://dummy"}
+        self._update_site_metafields("erp", erp_values)
+        with mock_site_api(self.base_url, self.site) as mock:
+            self.backend.synchronize_metadata()
+            metafields = self._extract_metafields(
+                mock.request_history[0].json()["site"]["metafields"]
+            )
+            self.assertDictEqual(metafields["erp"], erp_values)
+
+    def test_erp_synchronize_03(self):
+        """
+        Data:
+            * erp data filled into locomotive
+        Test case:
+            * force reset settings
+        Expected result:
+            * erp data updated into locomotive
+        :return:
+        """
+        erp_values = {"api_key": "dummy", "api_url": "https://dummy"}
+        self._update_site_metafields("erp", erp_values)
+        with mock_site_api(self.base_url, self.site) as mock:
+            self.backend.reset_site_settings()
+            metafields = self._extract_metafields(
+                mock.request_history[0].json()["site"]["metafields"]
+            )
+            self.assertDictEqual(
+                metafields["erp"],
+                {"api_key": self.api_key, "api_url": self.odoo_url},
+            )

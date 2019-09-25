@@ -3,6 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import json
 
 from odoo.addons.component.core import Component
 
@@ -28,9 +29,18 @@ class LocomotiveSiteExporter(Component):
     _usage = "record.exporter"
     _apply_on = "shopinvader.backend"
 
-    def run(self, fields=None):
+    def _get_exising_metafields(self):
+        site_infos = self.backend_adapter._get_site(self.backend_record.handle)
+        return json.loads(site_infos["metafields"])
+
+    def run(self, fields=None, force=False):
         self.binding = self.backend_record
         self.external_id = self.backend_record.handle
         map_record = self._map_data()
-        data = self._update_data(map_record, fields=fields)
+        data = self._update_data(
+            map_record,
+            fields=fields,
+            current_values=self._get_exising_metafields(),
+            force=force,
+        )
         self._update(data)
