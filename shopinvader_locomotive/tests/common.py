@@ -2,10 +2,32 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+from contextlib import contextmanager
+
 from odoo.addons.shopinvader.tests.common import CommonCase
+
+_logger = logging.getLogger(__name__)
+
+# pylint: disable=W7936
+try:
+    import requests_mock
+except (ImportError, IOError) as err:
+    _logger.debug(err)
 
 
 class LocoCommonCase(CommonCase):
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)
         self.base_url = self.backend.location + "/locomotive/api/v3"
+
+
+@contextmanager
+def mock_site_api(base_url, site):
+    with requests_mock.mock() as m:
+        m.post(base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
+        m.get(base_url + "/sites", json=[site])
+        yield m.put(
+            base_url + "/sites/%s" % site["_id"],
+            json={"foo": "we_do_not_care"},
+        )

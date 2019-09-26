@@ -12,3 +12,4 @@ from . import mapper
 from . import event_listeners
 from . import shopinvader_partner_adapter
 from . import shopinvader_partner_export_mapper
+from . import shopinvader_site_export_mapper

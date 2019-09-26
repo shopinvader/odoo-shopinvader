@@ -88,15 +88,7 @@ class LocomotiveBackendAdapter(Component):
         raise UserError(_("No site was found for the handle %s") % handle)
 
     def write(self, handle, vals):
-        """
-            The write method will only write the "store" information of
-            the site in the field "_store" as this field is a custom field
-            it's part of the json of the field metafields.
-            To update it we need to read it, update it and push it
-        """
         site = self._get_site(handle)
-        metafields = json.loads(site["metafields"])
-        metafields["_store"].update(vals)
         return self.resource.write(
-            site["_id"], {"metafields": json.dumps(metafields)}
+            site["_id"], {"metafields": json.dumps(vals)}
         )

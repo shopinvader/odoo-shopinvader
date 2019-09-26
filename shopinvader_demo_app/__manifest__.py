@@ -17,6 +17,7 @@
         "shopinvader_guest_mode",
         "shopinvader_locomotive",
         "shopinvader_locomotive_guest_mode",
+        "shopinvader_locomotive_elasticsearch",
         "shopinvader_delivery_carrier",
         "shopinvader_product_stock",
         "shopinvader_image",
@@ -25,7 +26,12 @@
         "product_brand",
     ],
     "data": ["data/ir_export_product.xml"],
-    "demo": ["demo/product_brand_demo.xml", "demo/product_product_demo.xml"],
+    "demo": [
+        "demo/product_brand_demo.xml",
+        "demo/product_product_demo.xml",
+        "demo/se_backend_elasticsearch_demo.xml",
+    ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
     "application": True,
 }
