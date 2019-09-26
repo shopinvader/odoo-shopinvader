@@ -10,10 +10,10 @@
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
             <button name="%(shopinvader.shopinvader_variant_binding_wizard_act_window)d" position="attributes">
-                <attribute name="attrs">{'invisible': [('product_manual_binding', '=', True)]}</attribute>
+                <attribute name="attrs">{'invisible': [('product_manual_binding', '=', False)]}</attribute>
             </button>
             <button name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d" position="attributes">
-                <attribute name="attrs">{'invisible': [('product_manual_binding', '=', True)]}</attribute>
+                <attribute name="attrs">{'invisible': [('product_manual_binding', '=', False)]}</attribute>
             </button>
             <page name="products" position="inside">
                 <group name="product_assortment" string="Assortment">
