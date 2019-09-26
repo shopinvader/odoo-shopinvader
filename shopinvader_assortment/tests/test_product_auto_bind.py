@@ -10,6 +10,7 @@ class TestProductAutoBind(TransactionCase):
         self.backend = self.env.ref("shopinvader.backend_1")
         self.variant_obj = self.env["shopinvader.variant"]
         self.product_obj = self.env["product.product"]
+        self.backend.product_assortment_id.domain = "[('sale_ok', '=', True)]"
 
     def test_shopinvader_auto_product_auto_bind(self):
         # Test bind all products from assortment domain
