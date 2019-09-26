@@ -207,6 +207,22 @@ class AnonymousCartCase(CartCase):
         cart_bis = self.service._get()
         self.assertNotEqual(cart, cart_bis)
 
+    def test_cart_search_no_create(self):
+        """
+        - if search is called with a cart_id in session, cart must be returned
+        - if search is called without any cart_id in session,
+          result must be empty
+        """
+        self.assertTrue(self.service.shopinvader_session.get("cart_id"))
+        search_result = self.service.search()
+        self.assertEqual(
+            search_result["store_cache"]["cart"]["name"], self.cart.name
+        )
+        # reset cart_id parameter
+        self.service.shopinvader_session.update({"cart_id": False})
+        search_result = self.service.search()
+        self.assertDictEqual(search_result, {})
+
 
 class CommonConnectedCartCase(CartCase):
     def setUp(self, *args, **kwargs):
