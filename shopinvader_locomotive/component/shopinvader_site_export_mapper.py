@@ -54,6 +54,14 @@ class ShopinvaderSiteExportMapper(Component):
         return {"currencies_rate": res}
 
     @mapping
+    @changed_by("lang_ids")
+    def locale_mapping(self, record):
+        res = {}
+        for lang in record.lang_ids:
+            res[lang.code[0:2]] = lang.code
+        return {"locale_mapping": res}
+
+    @mapping
     def erp_config(self, record):
         api_key = None
         section_name = record.auth_api_key_name

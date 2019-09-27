@@ -6,7 +6,12 @@ import json
 
 from .common import LocoCommonCase, mock_site_api
 
-ODOO_STORE_JSON_KEY = ["all_filters", "available_countries", "currencies_rate"]
+ODOO_STORE_JSON_KEY = [
+    "all_filters",
+    "available_countries",
+    "currencies_rate",
+    "locale_mapping",
+]
 
 
 class TestBackend(LocoCommonCase):
@@ -35,6 +40,7 @@ class TestBackend(LocoCommonCase):
                 "bar": "test",
                 "all_filters": "{}",
                 "available_countries": "{}",
+                "locale_mapping": "{}",
             },
             "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
         }
@@ -94,6 +100,7 @@ class TestBackend(LocoCommonCase):
                         "USD": ref("base.USD").rate,
                         "EUR": ref("base.EUR").rate,
                     },
+                    "locale_mapping": {"en": "en_US"},
                 },
                 "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
             }
@@ -116,6 +123,7 @@ class TestBackend(LocoCommonCase):
                         "USD": ref("base.USD").rate,
                         "EUR": ref("base.EUR").rate,
                     },
+                    "locale_mapping": {},
                 },
                 "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
             }
