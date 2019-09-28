@@ -24,6 +24,13 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
         help="If this option is check, the childs of selected categories"
         " will be automatically binded"
     )
+    lang_ids = fields.Many2many(
+        string="Langs",
+        comodel_name="res.lang",
+        ondelete="cascade",
+        help="List of langs for which a binding must exists. If not "
+        "specified, the list of langs defined on the backend is used.",
+    )
 
     @api.model
     def default_get(self, fields_list):
@@ -32,8 +39,18 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
         )
         backend_id = self.env.context.get("active_id")
         if backend_id:
-            result.update({"backend_id": backend_id})
+            result.update(
+                {
+                    "backend_id": backend_id,
+                    "lang_ids": (6, None, backend_id.lang_ids.ids),
+                }
+            )
         return result
+
+    @api.multi
+    def _get_langs_to_bind(self):
+        self.ensure_one()
+        return self.lang_ids or self.backend_id.lang_ids
 
     def _bind_categories(self, backend, lang, categories, parent_ids=None):
         """
@@ -74,16 +91,47 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
 
     @api.multi
     def action_bind_categories(self):
-        for wizard in self.with_context(active_test=False):
+        for wizard in self:
             if wizard.child_autobinding:
-                for categ_id in wizard.product_category_ids:
+                categ_ids = wizard.with_context(
+                    active_test=False
+                ).product_category_ids
+                for categ_id in categ_ids:
                     childs_cat = self.env["product.category"].search(
                         [("id", "child_of", categ_id.id)]
                     )
                     if childs_cat:
                         wizard.product_category_ids += childs_cat
             backend = wizard.backend_id
-            for lang in wizard.backend_id.lang_ids:
+            for lang in wizard._get_langs_to_bind():
                 self._bind_categories(
                     backend, lang, wizard.product_category_ids
                 )
+
+    @api.model
+    def bind_langs(self, backend, lang_ids):
+        """
+        Ensure that a shopinvader.CATEGORY exists for each lang_id. If not,
+        create a new binding for the missing lang. This method is usefull
+        to ensure that when a lang is added to a backend, all the binding
+        for this lang are created for the existing binded categories
+        :param backend: backend record
+        :param lang_ids: list of lang ids we must ensure that a binding exists
+        :return:
+        """
+        binded_categories = self.env["product.category"].search(
+            [("shopinvader_bind_ids.backend_id", "=", backend.id)]
+        )
+        # use in memory record to avoid the creation of useless records into
+        # the database
+        # by default the wizard check if a product is already binded so we
+        # can use it by giving the list of product already binded in one of
+        # the specified lang and the process will create the missing one.
+        wiz = self.new(
+            {
+                "lang_ids": self.env["res.lang"].browse(lang_ids),
+                "backend_id": backend,
+                "product_category_ids": binded_categories,
+            }
+        )
+        wiz.action_bind_categories()

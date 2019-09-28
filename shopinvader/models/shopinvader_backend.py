@@ -2,6 +2,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from contextlib import contextmanager
+
 from odoo import _, api, fields, models, tools
 from odoo.addons.server_environment import serv_config
 from odoo.http import request
@@ -305,3 +307,47 @@ class ShopinvaderBackend(models.Model):
     def _get_from_http_request(self):
         auth_api_key = getattr(request, "auth_api_key", None)
         return self.browse(self._get_id_from_auth_api_key(auth_api_key))
+
+    @api.multi
+    def _bind_langs(self, lang_ids):
+        self.ensure_one()
+        self.env["shopinvader.variant.binding.wizard"].bind_langs(
+            self, lang_ids
+        )
+        self.env["shopinvader.category.binding.wizard"].bind_langs(
+            self, lang_ids
+        )
+
+    @api.multi
+    def _unbind_langs(self, lang_ids):
+        self.ensure_one()
+        self.ensure_one()
+        self.env["shopinvader.variant.unbinding.wizard"].unbind_langs(
+            self, lang_ids
+        )
+        self.env["shopinvader.category.unbinding.wizard"].unbind_langs(
+            self, lang_ids
+        )
+
+    @contextmanager
+    def _keep_binding_sync_with_langs(self):
+        lang_ids_by_record = {}
+        for record in self:
+            lang_ids_by_record[record.id] = record.lang_ids.ids
+        yield
+        for record in self:
+            old_lang_ids = set(lang_ids_by_record[record.id])
+            actual_lang_ids = set(record.lang_ids.ids)
+            if old_lang_ids == actual_lang_ids:
+                continue
+            added_lang_ids = actual_lang_ids - old_lang_ids
+            if added_lang_ids:
+                record._bind_langs(list(added_lang_ids))
+            removed_lang_ids = old_lang_ids - actual_lang_ids
+            if removed_lang_ids:
+                record._unbind_langs(list(removed_lang_ids))
+
+    @api.multi
+    def write(self, values):
+        with self._keep_binding_sync_with_langs():
+            return super(ShopinvaderBackend, self).write(values)
