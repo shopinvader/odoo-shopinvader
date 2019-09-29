@@ -21,6 +21,7 @@ class TestBackend(LocoCommonCase):
         self.odoo_url = self.env["ir.config_parameter"].get_param(
             "web.base.url"
         )
+        self.api_url = "{}/shopinvader".format(self.odoo_url)
         country_ids = [ref("base.fr").id, ref("base.us").id]
         filter_ids = [
             ref("shopinvader.product_filter_1").id,
@@ -44,7 +45,7 @@ class TestBackend(LocoCommonCase):
             },
             "erp": {
                 "api_key": self.backend.auth_api_key_id.key,
-                "api_url": self.odoo_url,
+                "api_url": self.api_url,
             },
         }
         # simplified version of site data
@@ -107,7 +108,7 @@ class TestBackend(LocoCommonCase):
                 },
                 "erp": {
                     "api_key": self.backend.auth_api_key_id.key,
-                    "api_url": self.odoo_url,
+                    "api_url": self.api_url,
                 },
             }
             self.assertDictEqual(metafields, expected_metafields)
@@ -133,7 +134,7 @@ class TestBackend(LocoCommonCase):
                 },
                 "erp": {
                     "api_key": self.backend.auth_api_key_id.key,
-                    "api_url": self.odoo_url,
+                    "api_url": self.api_url,
                 },
             }
             self.assertDictEqual(metafields, expected_metafields)
@@ -158,7 +159,7 @@ class TestBackend(LocoCommonCase):
                 metafields["erp"],
                 {
                     "api_key": self.backend.auth_api_key_id.key,
-                    "api_url": self.odoo_url,
+                    "api_url": self.api_url,
                 },
             )
 
@@ -202,6 +203,6 @@ class TestBackend(LocoCommonCase):
                 metafields["erp"],
                 {
                     "api_key": self.backend.auth_api_key_id.key,
-                    "api_url": self.odoo_url,
+                    "api_url": self.api_url,
                 },
             )
