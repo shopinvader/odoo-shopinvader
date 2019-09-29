@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="cart_delivery" model="shopinvader.cart.step">
+        <field name="name">Delivery</field>
+        <field name="code">cart_delivery</field>
+    </record>
+
+</odoo>
