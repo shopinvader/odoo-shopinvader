@@ -21,3 +21,9 @@ def post_init_hook(cr, registry):
         "demo/se_backend_elasticsearch_demo.xml",
         mode="init",
     )
+    openupgrade.load_xml(
+        cr,
+        "shopinvader_demo_app",
+        "demo/storage_backend_demo.xml",
+        mode="init",
+    )

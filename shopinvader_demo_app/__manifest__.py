@@ -30,6 +30,7 @@
         "demo/product_brand_demo.xml",
         "demo/product_product_demo.xml",
         "demo/se_backend_elasticsearch_demo.xml",
+        "demo/storage_backend_demo.xml",
     ],
     "post_init_hook": "post_init_hook",
     "installable": True,
