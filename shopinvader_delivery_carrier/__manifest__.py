@@ -19,7 +19,7 @@
         "shopinvader",
         "sale_shipping_info_helper",
     ],
-    "data": ["views/backend_view.xml"],
+    "data": ["views/backend_view.xml", "data/cart_step.xml"],
     "demo": [
         "demo/backend_demo.xml",
         "demo/mail_template.xml",
