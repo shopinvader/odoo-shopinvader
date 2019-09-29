@@ -45,11 +45,13 @@ class ShopinvaderBackend(models.Model):
     sequence_id = fields.Many2one(
         "ir.sequence", "Sequence", help="Naming policy for orders and carts"
     )
-    auth_api_key_name = fields.Selection(
-        required=False,  # required into the UI to allow demo data
-        help="The name of the api_key section used for the authentication of"
+    auth_api_key_id = fields.Many2one(
+        "auth.api.key",
+        "Api Key",
+        required=True,
+        help="Api_key section used for the authentication of"
         "calls to services dedicated to this backend",
-        selection=lambda a: a._get_auth_api_key_name_selection(),
+        copy=False,
     )
     lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
     pricelist_id = fields.Many2one("product.pricelist", string="Pricelist")
@@ -78,8 +80,8 @@ class ShopinvaderBackend(models.Model):
         "etc.",
     )
     user_id = fields.Many2one(
-        comodel_name="res.users",
-        compute="_compute_user_id",
+        related="auth_api_key_id.user_id",
+        readonly=True,
         help="The technical user used to process calls to the services "
         "provided by the backend",
     )
@@ -90,36 +92,11 @@ class ShopinvaderBackend(models.Model):
 
     _sql_constraints = [
         (
-            "auth_api_key_name_uniq",
-            "unique(auth_api_key_name)",
+            "auth_api_key_id_uniq",
+            "unique(auth_api_key_id)",
             "An authentication API Key can be used by only one backend.",
         )
     ]
-
-    @api.model
-    def _get_auth_api_key_name_selection(self):
-        selection = []
-        for section in serv_config.sections():
-            if section.startswith("api_key_") and serv_config.has_option(
-                section, "key"
-            ):
-                selection.append((section, section))
-        return selection
-
-    @api.depends("auth_api_key_name")
-    @api.multi
-    def _compute_user_id(self):
-        for rec in self:
-            section = rec.auth_api_key_name
-            login_name = serv_config.get(section, "user")
-            user_model = self.env["res.users"]
-            if serv_config.has_option(section, "allow_inactive_user"):
-                allow_inactive_user = serv_config.getboolean(
-                    section, "allow_inactive_user"
-                )
-                if allow_inactive_user:
-                    user_model = user_model.with_context(active_test=False)
-            rec.user_id = user_model.search([("login", "=", login_name)])
 
     @api.model
     def _default_company_id(self):
@@ -290,23 +267,14 @@ class ShopinvaderBackend(models.Model):
         return None
 
     @api.model
-    @tools.ormcache("self._uid", "auth_api_key")
-    def _get_id_from_auth_api_key(self, auth_api_key):
-        auth_api_key_name = self._get_api_key_name(auth_api_key)
-        if auth_api_key_name:
-            # filtered, not search because auth_api_key_name is
-            # not a searchable field
-            return (
-                self.search([])
-                .filtered(lambda r: r.auth_api_key_name == auth_api_key_name)
-                .id
-            )
-        return False
+    @tools.ormcache("self._uid", "auth_api_key_id")
+    def _get_id_from_auth_api_key(self, auth_api_key_id):
+        return self.search([("auth_api_key_id", "=", auth_api_key_id)]).id
 
     @api.model
     def _get_from_http_request(self):
-        auth_api_key = getattr(request, "auth_api_key", None)
-        return self.browse(self._get_id_from_auth_api_key(auth_api_key))
+        auth_api_key_id = getattr(request, "auth_api_key_id", None)
+        return self.browse(self._get_id_from_auth_api_key(auth_api_key_id))
 
     @api.multi
     def _bind_langs(self, lang_ids):
@@ -349,5 +317,7 @@ class ShopinvaderBackend(models.Model):
 
     @api.multi
     def write(self, values):
+        if "auth_api_key_id" in values:
+            self._get_id_from_auth_api_key.clear_cache(self.env[self._name])
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)

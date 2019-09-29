@@ -7,6 +7,7 @@
         <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]"/>
         <field name="pricelist_id" ref="product.list0"/>
         <field name="account_analytic_id" ref="account_analytic_0"/>
+        <field name="auth_api_key_id" ref="auth_api_key_1"/>
     </record>
 
     <record id="backend_2" model="shopinvader.backend">
@@ -15,6 +16,7 @@
         <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]"/>
         <field name="pricelist_id" ref="product.list0"/>
         <field name="account_analytic_id" ref="account_analytic_0"/>
+        <field name="auth_api_key_id" ref="auth_api_key_2"/>
     </record>
 
 </odoo>
