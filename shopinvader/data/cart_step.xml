@@ -16,6 +16,11 @@
         <field name="code">cart_address</field>
     </record>
 
+    <record id="cart_delivery" model="shopinvader.cart.step">
+        <field name="name">Delivery methods</field>
+        <field name="code">cart_delivery</field>
+    </record>
+
     <record id="cart_checkout" model="shopinvader.cart.step">
         <field name="name">Checkout</field>
         <field name="code">cart_checkout</field>
