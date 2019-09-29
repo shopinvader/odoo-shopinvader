@@ -23,6 +23,7 @@
         "shopinvader_image",
         "shopinvader_elasticsearch",
         "shopinvader_payment_manual",
+        "shopinvader_payment_stripe",
         "product_brand",
     ],
     "data": ["data/ir_export_product.xml"],
