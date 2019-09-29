@@ -4,7 +4,7 @@
 
 {
     "name": "Shopinvader Locomotive CMS Connector",
-    "version": "12.0.1.1.2",
+    "version": "12.0.2.0.0",
     "category": "Connector",
     "summary": "Manage communications between Shopinvader and Locomotive CMS",
     "author": "Akretion",
