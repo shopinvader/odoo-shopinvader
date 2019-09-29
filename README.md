@@ -25,12 +25,12 @@ addon | version | summary
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.1.1.1 | Carrier integration for Shopinvader
-[shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.3 | Shopinvader Demo App
+[shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.2 | Shopinvader Elasticsearch
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.1.0.1 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
 [shopinvader_lead](shopinvader_lead/) | 12.0.1.0.1 | Shopinvader Lead Management
-[shopinvader_locomotive](shopinvader_locomotive/) | 12.0.2.0.1 | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive](shopinvader_locomotive/) | 12.0.2.0.2 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.0.1 | Shopinvader Locomotive Elasticsearch
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.0 | Shopinvader guest mode for locomotive
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 | Shopinvader Check VAT with invader environnement
