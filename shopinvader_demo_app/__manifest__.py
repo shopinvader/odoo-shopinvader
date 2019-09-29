@@ -6,7 +6,7 @@
 
 {
     "name": "Shopinvader Demo App",
-    "version": "12.0.2.0.2",
+    "version": "12.0.2.0.3",
     "author": "ACSONE SA/NV",
     "website": "https://acsone.eu/",
     "license": "AGPL-3",
