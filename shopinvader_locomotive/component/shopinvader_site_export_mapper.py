@@ -66,7 +66,7 @@ class ShopinvaderSiteExportMapper(Component):
         if self.options["force"] or not erp.get("api_key"):
             erp["api_key"] = record.auth_api_key_id.key
         if self.options["force"] or not erp.get("api_url"):
-            erp["api_url"] = (
+            erp["api_url"] = "{}/shopinvader".format(
                 record.env["ir.config_parameter"]
                 .sudo()
                 .get_param("web.base.url")
