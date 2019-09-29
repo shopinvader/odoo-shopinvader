@@ -30,3 +30,20 @@ class ShopinvaderVariantUnbindingWizard(models.TransientModel):
     def unbind_products(self):
         for wizard in self:
             wizard.shopinvader_variant_ids.write({"active": False})
+
+    @api.model
+    def unbind_langs(self, backend, lang_ids):
+        """
+        Unbind the binded shopinvader.variant for the given lang
+        :param backend: backend record
+        :param lang_ids: list of lang ids we must ensure that no more binding
+                          exists
+        :return:
+        """
+        shopinvader_variant_ids = self.env["shopinvader.variant"].search(
+            [("lang_id", "in", lang_ids), ("backend_id", "=", backend.id)]
+        )
+        # use in memory record to avoid the creation of useless records into
+        # the database
+        wiz = self.new({"shopinvader_variant_ids": shopinvader_variant_ids})
+        wiz.unbind_products()

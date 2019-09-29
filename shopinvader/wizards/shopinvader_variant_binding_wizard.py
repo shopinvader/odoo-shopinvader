@@ -20,6 +20,13 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
     product_ids = fields.Many2many(
         string="Products", comodel_name="product.product", ondelete="cascade"
     )
+    lang_ids = fields.Many2many(
+        string="Langs",
+        comodel_name="res.lang",
+        ondelete="cascade",
+        help="List of langs for which a binding must exists. If not "
+        "specified, the list of langs defined on the backend is used.",
+    )
 
     @api.model
     def default_get(self, fields_list):
@@ -29,7 +36,13 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         backend_id = self.env.context.get("active_id", False)
         if backend_id:
             res["backend_id"] = backend_id
+            res["lang_ids"] = (6, None, backend_id.lang_ids.ids)
         return res
+
+    @api.multi
+    def _get_langs_to_bind(self):
+        self.ensure_one()
+        return self.lang_ids or self.backend_id.lang_ids
 
     @api.multi
     def _get_binded_templates(self):
@@ -44,6 +57,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
             [
                 ("record_id", "in", product_template_ids.ids),
                 ("backend_id", "=", self.backend_id.id),
+                ("lang_id", "in", self._get_langs_to_bind().ids),
             ]
         )
         ret = defaultdict(dict)
@@ -52,7 +66,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         for product in self.mapped("product_ids.product_tmpl_id"):
             product_tmpl_id = product
             bind_records = ret.get(product_tmpl_id)
-            for lang_id in self.backend_id.lang_ids:
+            for lang_id in self._get_langs_to_bind():
                 bind_record = bind_records and bind_records.get(lang_id)
                 if not bind_record:
                     data = {
@@ -72,20 +86,52 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
             binding = self.env["shopinvader.variant"]
             for product in wizard.product_ids:
                 binded_products = binded_templates[product.product_tmpl_id]
-                for shopinvader_product in binded_products.values():
-                    binded_variants = (
-                        shopinvader_product.shopinvader_variant_ids
-                    )
-                    bind_record = binded_variants.filtered(
-                        lambda p: p.record_id == product
-                    )
-                    if not bind_record:
-                        data = {
-                            "record_id": product.id,
-                            "backend_id": wizard.backend_id.id,
-                            "shopinvader_product_id": shopinvader_product.id,
-                        }
-                        binding.create(data)
-                    elif not bind_record.active:
-                        bind_record.write({"active": True})
+                for lang_id in self._get_langs_to_bind():
+                    for shopinvader_product in binded_products[lang_id]:
+                        binded_variants = (
+                            shopinvader_product.shopinvader_variant_ids
+                        )
+                        bind_record = binded_variants.filtered(
+                            lambda p: p.record_id == product
+                        )
+                        if not bind_record:
+                            # fmt: off
+                            data = {
+                                "record_id": product.id,
+                                "backend_id": wizard.backend_id.id,
+                                "shopinvader_product_id":
+                                    shopinvader_product.id,
+                            }
+                            # fmt: on
+                            binding.create(data)
+                        elif not bind_record.active:
+                            bind_record.write({"active": True})
             wizard.backend_id.auto_bind_categories()
+
+    @api.model
+    def bind_langs(self, backend, lang_ids):
+        """
+        Ensure that a shopinvader.variant exists for each lang_id. If not,
+        create a new binding for the missing lang. This method is usefull
+        to ensure that when a lang is added to a backend, all the binding
+        for this lang are created for the existing binded products
+        :param backend: backend record
+        :param lang_ids: list of lang ids we must ensure that a binding exists
+        :return:
+        """
+        binded_products = self.env["product.product"].search(
+            [("shopinvader_bind_ids.backend_id", "=", backend.id)]
+        )
+        # use in memory record to avoid the creation of useless records into
+        # the database
+        # by default the wizard check if a product is already binded so we
+        # can use it by giving the list of product already binded in one of
+        # the specified lang and the process will create the missing one.
+        wiz = self.new(
+            {
+                "lang_ids": self.env["res.lang"].browse(lang_ids),
+                "backend_id": backend,
+                "product_ids": binded_products,
+            }
+        )
+        wiz.bind_products()

@@ -21,13 +21,30 @@ class ShopinvaderCategoryUnbindingWizard(models.TransientModel):
         result = super(ShopinvaderCategoryUnbindingWizard, self).default_get(
             fields_list
         )
-        shopinvader_variant_ids = self.env.context.get("active_ids")
-        if shopinvader_variant_ids:
+        shopinvader_category_ids = self.env.context.get("active_ids")
+        if shopinvader_category_ids:
             result.update(
-                {"shopinvader_category_ids": shopinvader_variant_ids}
+                {"shopinvader_category_ids": shopinvader_category_ids}
             )
         return result
 
     @api.multi
     def action_unbind_categories(self):
         self.mapped("shopinvader_category_ids")._unbind()
+
+    @api.model
+    def unbind_langs(self, backend, lang_ids):
+        """
+        Unbind the binded shopinvader.category for the given lang
+        :param backend: backend record
+        :param lang_ids: list of lang ids we must ensure that no more binding
+                          exists
+        :return:
+        """
+        shopinvader_category_ids = self.env["shopinvader.category"].search(
+            [("lang_id", "in", lang_ids), ("backend_id", "=", backend.id)]
+        )
+        # use in memory record to avoid the creation of useless records into
+        # the database
+        wiz = self.new({"shopinvader_category_ids": shopinvader_category_ids})
+        wiz.action_unbind_categories()
