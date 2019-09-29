@@ -2,13 +2,13 @@
 <odoo>
 
     <record id="shopinvader.backend_1" model="shopinvader.backend">
-        <field name="location">http://locomotive:3000</field>
+        <field name="location">http://locomotive.localtest.me:3000</field>
          <field name="username">demo@shopinvader.com</field>
         <field name="handle">shopinvader</field>
         <field name="password">d49cd50f6f0d2b163f48fc73cb249f0244c37074</field>
     </record>
     <record id="shopinvader.backend_2" model="shopinvader.backend">
-        <field name="location">http://locomotive:3000</field>
+        <field name="location">http://locomotive.localtest.me:3000</field>
          <field name="username">demo2@shopinvader.com</field>
         <field name="handle">shopinvader</field>
         <field name="password">d49cd50f6f0d2b163f48fc73cb249f0244c37074</field>
