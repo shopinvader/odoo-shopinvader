@@ -7,13 +7,9 @@ from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBaseFake,
 )
 from odoo.addons.queue_job.tests.common import JobMixin
-from odoo.addons.server_environment import serv_config
 
 
 class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
-
-    AUTH_API_KEY_NAME = "api_key_shopinvader_test"
-
     def setUp(self):
         super(StockCommonCase, self).setUp()
         ref = self.env.ref
@@ -46,13 +42,6 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
         )
         self.loc_supplier = self.env.ref("stock.stock_location_suppliers")
         self.picking_type_in = self.env.ref("stock.picking_type_in")
-        self.auth_api_key_name = self.AUTH_API_KEY_NAME
-        self.api_key = "myApiKey"
-        if self.auth_api_key_name not in serv_config.sections():
-            serv_config.add_section(self.auth_api_key_name)
-            serv_config.set(self.auth_api_key_name, "user", "admin")
-            serv_config.set(self.auth_api_key_name, "key", self.api_key)
-        self.shopinvader_backend.auth_api_key_name = self.auth_api_key_name
 
     @classmethod
     def setUpClass(cls):

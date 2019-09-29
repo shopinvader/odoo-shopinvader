@@ -42,7 +42,10 @@ class TestBackend(LocoCommonCase):
                 "available_countries": "{}",
                 "locale_mapping": "{}",
             },
-            "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
+            "erp": {
+                "api_key": self.backend.auth_api_key_id.key,
+                "api_url": self.odoo_url,
+            },
         }
         # simplified version of site data
         self.site = {
@@ -102,7 +105,10 @@ class TestBackend(LocoCommonCase):
                     },
                     "locale_mapping": {"en": "en_US"},
                 },
-                "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
+                "erp": {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.odoo_url,
+                },
             }
             self.assertDictEqual(metafields, expected_metafields)
 
@@ -125,7 +131,10 @@ class TestBackend(LocoCommonCase):
                     },
                     "locale_mapping": {},
                 },
-                "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
+                "erp": {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.odoo_url,
+                },
             }
             self.assertDictEqual(metafields, expected_metafields)
 
@@ -147,7 +156,10 @@ class TestBackend(LocoCommonCase):
             )
             self.assertDictEqual(
                 metafields["erp"],
-                {"api_key": self.api_key, "api_url": self.odoo_url},
+                {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.odoo_url,
+                },
             )
 
     def test_erp_synchronize_02(self):
@@ -188,5 +200,8 @@ class TestBackend(LocoCommonCase):
             )
             self.assertDictEqual(
                 metafields["erp"],
-                {"api_key": self.api_key, "api_url": self.odoo_url},
+                {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.odoo_url,
+                },
             )

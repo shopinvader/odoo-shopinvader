@@ -8,7 +8,7 @@ class TestShopinvaderCategoryBindingWizard(SavepointComponentCase):
     def setUpClass(cls):
         super(TestShopinvaderCategoryBindingWizard, cls).setUpClass()
         cls.backend = cls.env.ref("shopinvader.backend_1")
-        cls.backend2 = cls.backend.copy({"name": "Awesome Invader"})
+        cls.backend2 = cls.env.ref("shopinvader.backend_2")
         cls.product_category = cls.env.ref("product.product_category_4")
         cls.bind_wizard_model = cls.env["shopinvader.category.binding.wizard"]
         cls.unbind_wizard_model = cls.env[

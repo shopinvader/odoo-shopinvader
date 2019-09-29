@@ -51,6 +51,7 @@ class ShopinvaderBackend(models.Model):
         required=True,
         help="Api_key section used for the authentication of"
         "calls to services dedicated to this backend",
+        copy=False,
     )
     lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
     pricelist_id = fields.Many2one("product.pricelist", string="Pricelist")
@@ -316,6 +317,7 @@ class ShopinvaderBackend(models.Model):
 
     @api.multi
     def write(self, values):
+        if "auth_api_key_id" in values:
+            self._get_id_from_auth_api_key.clear_cache(self.env[self._name])
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)
-

@@ -7,7 +7,6 @@ import json
 
 from odoo.addons.component.core import Component
 from odoo.addons.connector.components.mapper import changed_by, mapping
-from odoo.addons.server_environment import serv_config
 
 
 class ShopinvaderSiteExportMapper(Component):
@@ -63,16 +62,9 @@ class ShopinvaderSiteExportMapper(Component):
 
     @mapping
     def erp_config(self, record):
-        api_key = None
-        section_name = record.auth_api_key_name
-        for section in serv_config.sections():
-            if section == section_name and serv_config.has_option(
-                section, "key"
-            ):
-                api_key = serv_config.get(section, "key")
         erp = self.options["current_values"].get("erp", {})
         if self.options["force"] or not erp.get("api_key"):
-            erp["api_key"] = api_key
+            erp["api_key"] = record.auth_api_key_id.key
         if self.options["force"] or not erp.get("api_url"):
             erp["api_url"] = (
                 record.env["ir.config_parameter"]
