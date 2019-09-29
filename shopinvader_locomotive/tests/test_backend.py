@@ -17,6 +17,7 @@ class TestBackend(LocoCommonCase):
         self.odoo_url = self.env["ir.config_parameter"].get_param(
             "web.base.url"
         )
+        self.api_url = "{}/shopinvader".format(self.odoo_url)
         country_ids = [ref("base.fr").id, ref("base.us").id]
         filter_ids = [
             ref("shopinvader.product_filter_1").id,
@@ -37,7 +38,10 @@ class TestBackend(LocoCommonCase):
                 "all_filters": "{}",
                 "available_countries": "{}",
             },
-            "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
+            "erp": {
+                "api_key": self.backend.auth_api_key_id.key,
+                "api_url": self.api_url,
+            },
         }
         # simplified version of site data
         self.site = {
@@ -96,7 +100,10 @@ class TestBackend(LocoCommonCase):
                         "EUR": ref("base.EUR").rate,
                     },
                 },
-                "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
+                "erp": {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.api_url,
+                },
             }
             self.assertDictEqual(metafields, expected_metafields)
 
@@ -118,7 +125,10 @@ class TestBackend(LocoCommonCase):
                         "EUR": ref("base.EUR").rate,
                     },
                 },
-                "erp": {"api_key": self.api_key, "api_url": self.odoo_url},
+                "erp": {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.api_url,
+                },
             }
             self.assertDictEqual(metafields, expected_metafields)
 
@@ -140,7 +150,10 @@ class TestBackend(LocoCommonCase):
             )
             self.assertDictEqual(
                 metafields["erp"],
-                {"api_key": self.api_key, "api_url": self.odoo_url},
+                {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.api_url,
+                },
             )
 
     def test_erp_synchronize_02(self):
@@ -181,5 +194,8 @@ class TestBackend(LocoCommonCase):
             )
             self.assertDictEqual(
                 metafields["erp"],
-                {"api_key": self.api_key, "api_url": self.odoo_url},
+                {
+                    "api_key": self.backend.auth_api_key_id.key,
+                    "api_url": self.api_url,
+                },
             )
