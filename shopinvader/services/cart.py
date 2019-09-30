@@ -282,7 +282,7 @@ class CartService(Component):
         vals.update(self.env["sale.order"].play_onchanges(vals, vals.keys()))
         if self.shopinvader_backend.account_analytic_id.id:
             vals[
-                "project_id"
+                "analytic_account_id"
             ] = self.shopinvader_backend.account_analytic_id.id
         if self.shopinvader_backend.pricelist_id:
             # We must always force the pricelist. In the case of sale_profile
