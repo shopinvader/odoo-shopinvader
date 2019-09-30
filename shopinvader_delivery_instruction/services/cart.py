@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo.addons.component.core import Component
@@ -25,9 +24,7 @@ class CartService(Component):
         :return: bool
         """
         # If the user try to remove the value, we'll have an empty string
-        if delivery_instruction or isinstance(
-            delivery_instruction, (str, unicode)
-        ):
+        if delivery_instruction or isinstance(delivery_instruction, str):
             params.update({"picking_note": delivery_instruction})
         return True
 
