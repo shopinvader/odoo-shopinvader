@@ -6,3 +6,5 @@ requests_mock
 vcrpy
 vcrpy-unittest
 openupgradelib @ git+https://github.com/OCA/openupgradelib.git
+# sale_order_price_recalculation
+odoo13-addon-sale_order_price_recalculation @ git+https://github.com/acsone/sale-workflow@13.0-mig-sale_order_price_recalculation-dro
