@@ -27,6 +27,7 @@
         "component_event",
         "sale",
         "sale_discount_display_amount",
+        "sale_order_price_recalculation",
         "onchange_helper",
         "queue_job",
         "mail",

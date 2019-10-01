@@ -1,6 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from datetime import timedelta
 
 from odoo import fields
 from odoo.exceptions import MissingError
@@ -155,3 +156,122 @@ class SaleCase(CommonCase):
                 }
             ],
         )
+
+    def _create_sale_order(self):
+        """
+        Create a new sale.order with 1 line.
+        :return: bool
+        """
+        self.sale = sale = self.env["sale.order"].create(
+            {
+                "partner_id": self.partner.id,
+                "partner_shipping_id": self.partner.id,
+                "partner_invoice_id": self.partner.id,
+                "pricelist_id": self.backend.pricelist_id.id,
+                "typology": "cart",
+                "shopinvader_backend_id": self.backend.id,
+                "date_order": fields.Datetime.now(),
+                "project_id": self.backend.account_analytic_id.id,
+            }
+        )
+        so_line_obj = self.env["sale.order.line"]
+        line_values = {
+            "order_id": sale.id,
+            "product_id": self.product_1.id,
+            "product_uom_qty": 1,
+        }
+        new_line_values = so_line_obj.play_onchanges(
+            line_values, line_values.keys()
+        )
+        new_line_values.update(line_values)
+        self.line = so_line_obj.create(new_line_values)
+        return True
+
+    def test_update_pricelist(self):
+        """
+        Cases to test:
+        - A pricelist is defined on the backend (applied on the SO)
+            => Then change the pricelist (check new price applied)
+        - No pricelist defined on the backend (so the default comes from partner)
+            => Then define a pricelist on the backend (check applied)
+        - Pricelist on the backend (applied on SO)
+            => Then remove it (check pricelist from partner is applied)
+        :return:
+        """
+        # Let the user to set some discount if necessary
+        self.env.ref("sale.group_discount_per_so_line").write(
+            {"users": [(4, self.env.user.id, False)]}
+        )
+        fixed_price = 650
+        reduction = -100
+        self._create_pricelists(fixed_price, reduction)
+        self._create_sale_order()
+        self.assertEqual(self.backend.pricelist_id, self.sale.pricelist_id)
+        self.backend.write({"pricelist_id": self.first_pricelist.id})
+        self.sale._update_pricelist_and_update_line_prices()
+        self.assertEqual(self.first_pricelist, self.sale.pricelist_id)
+        self.assertAlmostEqual(
+            self.line.price_unit, fixed_price, places=self.precision
+        )
+        self.backend.write({"pricelist_id": self.second_pricelist.id})
+        self.sale._update_pricelist_and_update_line_prices()
+        self.assertEqual(self.second_pricelist, self.sale.pricelist_id)
+        self.assertAlmostEqual(
+            self.line.price_unit,
+            fixed_price + reduction,
+            places=self.precision,
+        )
+
+    def _create_pricelists(self, fixed_price, reduction):
+        """
+        Create 2 new pricelists (one with a fixed price) and another
+        (based on the first) with the given reduction.
+        :param fixed_price: float
+        :param reduction: float
+        :return: bool
+        """
+        pricelist_values = {
+            "name": "Custom pricelist 1",
+            "discount_policy": "with_discount",
+            "item_ids": [
+                (
+                    0,
+                    0,
+                    {
+                        "applied_on": "1_product",
+                        "product_tmpl_id": self.product_1.product_tmpl_id.id,
+                        "compute_price": "fixed",
+                        "fixed_price": fixed_price,
+                    },
+                )
+            ],
+        }
+        self.first_pricelist = self.env["product.pricelist"].create(
+            pricelist_values
+        )
+        pricelist_values = {
+            "name": "Custom pricelist 2",
+            "discount_policy": "with_discount",
+            "item_ids": [
+                (
+                    0,
+                    0,
+                    {
+                        "applied_on": "1_product",
+                        "product_tmpl_id": self.product_1.product_tmpl_id.id,
+                        "compute_price": "formula",
+                        "base": "pricelist",
+                        "price_surcharge": reduction,
+                        "base_pricelist_id": self.first_pricelist.id,
+                        "date_start": fields.Date.today(),
+                        # TODO: remove timedelta after Odoo date bug
+                        # https://github.com/odoo/odoo/pull/51967
+                        "date_end": fields.Date.today() + timedelta(days=1),
+                    },
+                )
+            ],
+        }
+        self.second_pricelist = self.env["product.pricelist"].create(
+            pricelist_values
+        )
+        return True
