@@ -148,7 +148,7 @@ class AnonymousCartCase(CartCase):
                 "typology": "cart",
                 "shopinvader_backend_id": self.backend.id,
                 "date_order": fields.Datetime.now(),
-                "project_id": self.backend.account_analytic_id.id,
+                "analytic_account_id": self.backend.account_analytic_id.id,
             }
         )
         so_line_obj = self.env["sale.order.line"]
@@ -335,6 +335,9 @@ class ConnectedCartCase(CommonConnectedCartCase):
         self.assertEqual(cart_bis.typology, "cart")
         self.assertEqual(cart_bis.state, "draft")
         self.assertEqual(cart_bis.partner_id, self.partner)
+        self.assertEqual(
+            self.backend.account_analytic_id, cart_bis.analytic_account_id
+        )
 
     def test_cart_delete_robustness(self):
         """
