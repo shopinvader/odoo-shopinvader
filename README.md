@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 12.0.0.1.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 12.0.2.1.1 | Shopinvader
+[shopinvader](shopinvader/) | 12.0.2.2.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
