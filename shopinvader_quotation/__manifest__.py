@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Quotation",
     "summary": "Shopinvader Quotation",
-    "version": "12.0.1.0.0",
+    "version": "12.0.1.0.1",
     "category": "e-commerce",
     "development_status": "Production/Stable",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
