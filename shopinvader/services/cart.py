@@ -57,8 +57,20 @@ class CartService(Component):
         self._delete_item(cart, params)
         return self._to_json(cart)
 
+    def clear(self):
+        """
+        Clear the current cart (by $session)
+        :return: dict/json
+        """
+        cart = self._get()
+        cart = self._clear_cart(cart)
+        return self._to_json(cart)
+
     # Validator
     def _validator_search(self):
+        return {}
+
+    def _validator_clear(self):
         return {}
 
     def _subvalidator_shipping(self):
@@ -135,6 +147,50 @@ class CartService(Component):
             vals.update(new_values)
             item.write(vals)
         cart.recompute()
+
+    def _do_clear_cart_cancel(self, cart):
+        """
+        Cancel the existing cart.
+        Don't need to create a new one because it'll done automatically
+        when the customer will add a new item.
+        :param cart: sale.order recordset
+        :return: sale.order recordset
+        """
+        cart.action_cancel()
+        return cart.browse()
+
+    def _do_clear_cart_delete(self, cart):
+        """
+        Delete/unlink the given cart
+        :param cart: sale.order recordset
+        :return: sale.order recordset
+        """
+        cart.unlink()
+        return cart.browse()
+
+    def _do_clear_cart_clear(self, cart):
+        """
+        Remove items from given cart.
+        :param cart: sale.order recordset
+        :return: sale.order recordset
+        """
+        cart.write({"order_line": [(5, False, False)]})
+        return cart
+
+    def _clear_cart(self, cart):
+        """
+        Action to clear the cart, depending on the backend configuration.
+        :param cart: sale.order recordset
+        :return: sale.order recordset
+        """
+        clear_option = self.shopinvader_backend.clear_cart_options
+        do_clear = "_do_clear_cart_%s" % clear_option
+        if hasattr(self, do_clear):
+            cart = getattr(self, do_clear)(cart)
+        else:
+            _logger.error("The %s function doesn't exists.", do_clear)
+            raise NotImplementedError(_("Missing feature to clear the cart!"))
+        return cart
 
     def _add_item(self, cart, params):
         existing_item = self._check_existing_cart_item(cart, params)
@@ -238,7 +294,11 @@ class CartService(Component):
 
     def _to_json(self, cart):
         if not cart:
-            return {"data": {}, "store_cache": {"cart": {}}}
+            return {
+                "data": {},
+                "store_cache": {"cart": {}},
+                "set_session": {"cart_id": 0},
+            }
         res = super(CartService, self)._to_json(cart)[0]
 
         return {
