@@ -1,90 +1,39 @@
 # -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from odoo import exceptions, fields
-from odoo.addons.shopinvader.tests.common import CommonCase
+
+from .common import CommonInvoiceCase
 
 
-class TestInvoiceService(CommonCase):
-    """
-    Tests for
-    """
-
+class TestInvoiceServiceAnonymous(CommonInvoiceCase):
     def setUp(self, *args, **kwargs):
-        super(TestInvoiceService, self).setUp(*args, **kwargs)
-        self.invoice_obj = self.env["account.invoice"]
-        self.journal_obj = self.env["account.journal"]
-        self.register_payments_obj = self.env["account.register.payments"]
-        self.sale = self.env.ref("shopinvader.sale_order_2")
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.partner2 = self.env.ref("shopinvader.partner_2")
-        self.product = self.env.ref("product.product_product_4")
-        self.bank_journal_euro = self.journal_obj.create(
-            {"name": "Bank", "type": "bank", "code": "BNK67"}
-        )
-        self.payment_method_manual_in = self.env.ref(
-            "account.account_payment_method_manual_in"
-        )
-        self.precision = 2
-        with self.work_on_services(partner=self.partner) as work:
-            self.service = work.component(usage="invoice")
-        with self.work_on_services(
-            partner=self.backend.anonymous_partner_id
-        ) as work:
-            self.service_guest = work.component(usage="invoice")
+        super(TestInvoiceServiceAnonymous, self).setUp(*args, **kwargs)
+        self.partner = self.env.ref("base.res_partner_2").copy()
 
-    def _check_data_content(self, data, invoices):
+    def test_get_invoice_anonymous(self):
         """
-        Check data based on given invoices
-        :param data: list
-        :param invoices: account.invoice recordset
-        :return: bool
+        Test the get on guest mode (using anonymous user).
+        It should not return any result, even if the anonymous user has some
+        invoices
+        :return:
         """
-        # To have them into correct order
-        invoices = invoices.search([('id', 'in', invoices.ids)])
-        self.assertEquals(len(data), len(invoices))
-        for current_data, invoice in zip(data, invoices):
-            state_label = self._get_selection_label(invoice, "state")
-            type_label = self._get_selection_label(invoice, "type")
-            self.assertEquals(current_data.get("invoice_id"), invoice.id)
-            self.assertEquals(current_data.get("number"), invoice.number)
-            self.assertEquals(
-                current_data.get("date_invoice"), invoice.date_invoice
-            )
-            self.assertEquals(current_data.get("state"), invoice.state)
-            self.assertEquals(current_data.get("type"), invoice.type)
-            self.assertEquals(current_data.get("state_label"), state_label)
-            self.assertEquals(current_data.get("type_label"), type_label)
-            self.assertEquals(
-                current_data.get("amount_total"), invoice.amount_total
-            )
-            self.assertEquals(
-                current_data.get("amount_tax"), invoice.amount_tax
-            )
-            self.assertEquals(
-                current_data.get("amount_untaxed"), invoice.amount_untaxed
-            )
-            self.assertEquals(current_data.get("amount_due"), invoice.residual)
-        return True
-
-    def _confirm_and_invoice_sale(self, sale, payment=True):
-        """
-        Confirm the given SO and create an invoice.
-        Can also make the payment if payment parameter is True
-        :param sale: sale.order recordset
-        :param payment: bool
-        :return: account.invoice
-        """
-        sale.action_confirm()
-        for line in sale.order_line:
-            line.write({"qty_delivered": line.product_uom_qty})
-        invoice_id = sale.action_invoice_create()
-        invoice = self.env["account.invoice"].browse(invoice_id)
-        invoice.action_invoice_open()
-        invoice.action_move_create()
-        if payment:
-            self._make_payment(invoice)
-        return invoice
+        # Check first without invoice related to the anonymous user
+        result = self.service_guest.dispatch("search")
+        data = result.get("data", [])
+        self.assertFalse(data)
+        # Then create a invoice related to the anonymous user
+        invoice = self._create_invoice(
+            partner=self.backend.anonymous_partner_id, validate=True
+        )
+        self.assertEquals(
+            invoice.partner_id, self.backend.anonymous_partner_id
+        )
+        result = self.service_guest.dispatch("search")
+        data = result.get("data", [])
+        self.assertFalse(data)
+        return
 
     def _make_payment(self, invoice, journal=False, amount=False):
         """
@@ -111,6 +60,8 @@ class TestInvoiceService(CommonCase):
             register_payments.write(values)
         register_payments.create_payment()
 
+
+class TestInvoiceService(CommonInvoiceCase):
     def test_get_invoice_logged(self):
         """
         Test the get on a logged user.

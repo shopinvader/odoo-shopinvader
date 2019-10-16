@@ -43,38 +43,7 @@ class InvoiceService(Component):
         Output validator for the search
         :return: dict
         """
-        invoice_schema = {
-            "invoice_id": {"type": "integer"},
-            "number": {"type": "string"},
-            "date_invoice": {"type": "string"},
-            "amount_total": {"type": "float"},
-            "amount_tax": {"type": "float"},
-            "amount_untaxed": {"type": "float"},
-            "amount_due": {"type": "float"},
-            "type": {"type": "string"},
-            "type_label": {"type": "string"},
-            "state": {"type": "string"},
-            "state_label": {"type": "string"},
-        }
-        schema = {"data": {"type": "dict", "schema": invoice_schema}}
-        return schema
-
-    def _validator_return_get(self):
-        """
-        Output validator for the search
-        :return: dict
-        """
-        invoice_schema = {
-            "invoice_id": {"type": "integer"},
-            "number": {"type": "string"},
-            "date_invoice": {"type": "string"},
-            "amount_total": {"type": "float"},
-            "amount_tax": {"type": "float"},
-            "amount_untaxed": {"type": "float"},
-            "amount_due": {"type": "float"},
-            "type": {"type": "string"},
-            "state": {"type": "string"},
-        }
+        invoice_schema = self._get_return_invoice_schema()
         schema = {"data": {"type": "dict", "schema": invoice_schema}}
         return schema
 
@@ -83,6 +52,22 @@ class InvoiceService(Component):
         Output validator for the search
         :return: dict
         """
+        invoice_schema = self._get_return_invoice_schema()
+        schema = {
+            "size": {"type": "integer"},
+            "data": {
+                "type": "list",
+                "schema": {"type": "dict", "schema": invoice_schema},
+            },
+        }
+        return schema
+
+    def _get_return_invoice_schema(self):
+        """
+        Get details about invoice to return
+        (used into validator_return)
+        :return: dict
+        """
         invoice_schema = {
             "invoice_id": {"type": "integer"},
             "number": {"type": "string"},
@@ -96,14 +81,7 @@ class InvoiceService(Component):
             "type_label": {"type": "string"},
             "state_label": {"type": "string"},
         }
-        schema = {
-            "size": {"type": "integer"},
-            "data": {
-                "type": "list",
-                "schema": {"type": "dict", "schema": invoice_schema},
-            },
-        }
-        return schema
+        return invoice_schema
 
     def _get_parser_invoice(self):
         """
@@ -117,9 +95,9 @@ class InvoiceService(Component):
             "amount_total",
             "amount_tax",
             "amount_untaxed",
-            "residual:amount_due",
-            "type",
             "state",
+            "type",
+            "residual:amount_due",
         ]
         return to_parse
 
