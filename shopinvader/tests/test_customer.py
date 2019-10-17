@@ -72,3 +72,27 @@ class TestCustomer(CommonCase):
         parent = self.env["res.partner"].create(data)
         partner.parent_id = parent.id
         self.assertEqual(partner.address_type, "address")
+
+    def test_create_no_create_cart(self):
+        """
+        Create a customer should not create an empty cart
+        """
+        self.data["external_id"] = "D5CdkqOEL"
+        res = self.service.dispatch("create", params=self.data)["data"]
+        partner = self.env["res.partner"].browse(res["id"])
+        self.service.work.partner = partner
+        sale_domain = [("partner_id", "=", partner.id)]
+        SaleOrder = self.env["sale.order"]
+        self.assertFalse(SaleOrder.search(sale_domain))
+
+    def test_sign_in_no_create_cart(self):
+        """
+        Customer sign-in should not create an empty cart
+        """
+        partner = self.env.ref("shopinvader.partner_1")
+        sale_domain = [("partner_id", "=", partner.id)]
+        SaleOrder = self.env["sale.order"]
+        SaleOrder.search(sale_domain).unlink()
+        self.service.work.partner = partner
+        self.service.sign_in()
+        self.assertFalse(SaleOrder.search(sale_domain))

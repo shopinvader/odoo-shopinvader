@@ -72,7 +72,7 @@ class CustomerService(Component):
 
     def _get_and_assign_cart(self):
         cart_service = self.component(usage="cart")
-        cart = cart_service._get()
+        cart = cart_service._get(create_if_not_found=False)
         if cart:
             if self.partner and cart.partner_id != self.partner:
                 # we need to affect the cart to the partner
