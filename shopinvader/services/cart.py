@@ -308,7 +308,7 @@ class CartService(Component):
             "store_cache": {"cart": res},
         }
 
-    def _get(self):
+    def _get(self, create_if_not_found=True):
         """
 
         :return: sale.order recordset (cart)
@@ -327,7 +327,9 @@ class CartService(Component):
             and cart.state == "draft"  # ensure that we only work on draft
         ):
             return cart
-        return self._create_empty_cart()
+        if create_if_not_found:
+            return self._create_empty_cart()
+        return cart
 
     def _create_empty_cart(self):
         vals = self._prepare_cart()
