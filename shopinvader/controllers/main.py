@@ -7,7 +7,7 @@ import logging
 
 from odoo.addons.base_rest.controllers import main
 from odoo.exceptions import MissingError
-from odoo.http import request
+from odoo.http import request, route
 
 _logger = logging.getLogger(__name__)
 
@@ -17,6 +17,13 @@ class InvaderController(main.RestController):
     _root_path = "/shopinvader/"
     _collection_name = "shopinvader.backend"
     _default_auth = "api_key"
+
+    @route(["/shopinvader/invoice/<int:_id>/download"], methods=["GET"])
+    def invoice_download(self, _id=None, **params):
+        params["id"] = _id
+        return self._process_method(
+            "invoice", "download", _id=_id, params=params
+        )
 
     @classmethod
     def _get_partner_from_headers(cls, headers):
