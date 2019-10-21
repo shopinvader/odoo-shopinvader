@@ -52,9 +52,18 @@ class CommonMixin(ComponentMixin):
 
 
 class CommonCase(SavepointCase, CommonMixin):
+
+    # by default disable tracking suite-wise, it's a time saver :)
+    tracking_disable = True
+
     @classmethod
     def setUpClass(cls):
         super(CommonCase, cls).setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context, tracking_disable=cls.tracking_disable
+            )
+        )
         CommonMixin._setup_backend(cls)
         cls.setUpComponent()
 
