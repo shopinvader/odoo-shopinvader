@@ -46,7 +46,7 @@ class ShopinvaderRecordListener(Component):
             return
         if "shopinvader_bind_ids" not in record._fields:
             return
-        for binding in record.shopinvader_bind_ids:
+        for binding in record._get_binding_to_export():
             binding.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record, fields=None):
