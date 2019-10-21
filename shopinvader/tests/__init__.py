@@ -13,5 +13,3 @@ from . import test_shopinvader_variant_seo_title
 from . import test_res_partner
 from . import test_invoice
 from . import test_shopinvader_partner_binding
-from . import test_res_partner
-from . import test_invoice
