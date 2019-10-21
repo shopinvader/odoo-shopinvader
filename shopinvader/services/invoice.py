@@ -107,13 +107,15 @@ class InvoiceService(Component):
         invoice_report_def = invoice.invoice_print()
         report_name = invoice_report_def["report_name"]
         report_type = invoice_report_def["report_type"]
-        content, format = self.env["ir.actions.report.xml"].render_report(
+        content, file_format = self.env["ir.actions.report.xml"].render_report(
             res_ids=invoice.ids,
             name=report_name,
             data={"report_type": report_type},
         )
         report = self._get_report(report_name, report_type)
-        filename = self._get_binary_content_filename(invoice, report, format)
+        filename = self._get_binary_content_filename(
+            invoice, report, file_format
+        )
         mimetype = mimetypes.guess_type(filename)
         if mimetype:
             mimetype = mimetype[0]
