@@ -63,7 +63,7 @@ class CustomerService(Component):
             }
         )
         # fmt: on
-        if params.get("vat"):
+        if params.get("is_company"):
             params["is_company"] = True
         return params
 

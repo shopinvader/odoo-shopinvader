@@ -43,8 +43,18 @@ class TestCustomer(CommonCase):
             else:
                 self.assertEqual(partner[key], self.data[key])
 
+    def test_create_customer_business_vat_only(self):
+        self.data["external_id"] = "D5CdkqOEL"
+        # no `is_company` flag
+        self.data["vat"] = "BE0477472701"
+        res = self.service.dispatch("create", params=self.data)["data"]
+        partner = self.env["res.partner"].browse(res["id"])
+        # no flag, no company, no party :)
+        self.assertEqual(partner.is_company, False)
+
     def test_create_customer_business(self):
         self.data["external_id"] = "D5CdkqOEL"
+        self.data["is_company"] = True
         self.data["vat"] = "BE0477472701"
         res = self.service.dispatch("create", params=self.data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
