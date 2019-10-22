@@ -23,7 +23,7 @@ class AddressService(Component):
     # The following method are 'public' and can be called from the controller.
 
     def get(self, _id):
-        return self._to_json(self._get(_id))
+        return self._to_address_info(_id)
 
     def search(self, **params):
         if not self.partner:
@@ -59,6 +59,9 @@ class AddressService(Component):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
+    def _to_address_info(self, _id):
+        info = self._to_json(self._get(_id))
+        return info
 
     # Validator
     def _validator_search(self):
@@ -163,7 +166,11 @@ class AddressService(Component):
         return res
 
     def _to_json(self, address):
-        return address.jsonify(self._json_parser())
+        data = address.jsonify(self._json_parser())
+        for item in data:
+            # access info on the current record partner record
+            item["access"] = self.access_info.address(item["id"])
+        return data
 
     def _prepare_params(self, params, mode="create"):
         for key in ["country", "state"]:

@@ -43,10 +43,6 @@ class TestCustomer(TestCustomerCommon):
         self.data["external_id"] = "D5CdkqOEL"
         res = self.service.dispatch("create", params=self.data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
-        self.assertEqual(partner.email, self.data["email"])
-        self.assertEqual(
-            partner.shopinvader_bind_ids.external_id, self.data["external_id"]
-        )
         self._test_partner_data(partner, self.data)
 
     def test_create_customer_business_vat_only(self):

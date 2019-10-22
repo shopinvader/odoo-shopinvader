@@ -38,6 +38,7 @@ class CustomerService(Component):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
+
     def _validator_sign_in(self):
         return {}
 
@@ -104,6 +105,10 @@ class CustomerService(Component):
     def _to_customer_info(self, partner):
         address = self.component(usage="addresses")
         info = address._to_json(partner)[0]
+        # access info on the current record partner record
+        info["access"] = self.access_info.profile(partner)
+        # global permission for current partner user
+        info["permission"] = self.access_info.permission(partner)
         return info
 
     def _prepare_create_response(self, binding):
