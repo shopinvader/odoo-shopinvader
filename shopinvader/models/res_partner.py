@@ -108,6 +108,11 @@ class ResPartner(models.Model):
                 )
         return True
 
+    def addr_type_display(self):
+        return self._fields["address_type"].convert_to_export(
+            self.address_type, self
+        )
+
     def action_enable_for_shop(self):
         self.write({"shopinvader_enabled": True})
         # TODO: maybe better to hook to an event?
@@ -123,13 +128,9 @@ class ResPartner(models.Model):
                 )
                 recipient = partner.parent_id
             recipient._shopinvader_notify(backends, notif_type)
-            addr_type_display = (
-                self._fields["address_type"]
-                .convert_to_export(partner.address_type, partner)
-                .lower()
-            )
-            msg_body = _("Shopinvader {addr_type} '{name}' validated").format(
-                addr_type=addr_type_display, name=partner.name
+            name = partner.name or partner.contact_address.replace("\n", " | ")
+            msg_body = _("Shop {addr_type} '{name}' validated").format(
+                addr_type=partner.addr_type_display().lower(), name=name
             )
             recipient.message_post(body=msg_body)
 
