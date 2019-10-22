@@ -35,7 +35,7 @@ class CartService(Component):
 
         :return:
         """
-        return self.component("delivery_carrier").search(
+        return self.component("delivery_carriers").search(
             target="current_cart"
         )["rows"]
 

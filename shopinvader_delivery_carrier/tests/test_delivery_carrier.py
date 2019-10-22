@@ -8,7 +8,7 @@ from .common import CommonCarrierCase
 class TestDeliveryCarrier(CommonCarrierCase):
     def setUp(self):
         super(CommonCarrierCase, self).setUp()
-        self.carrier_service = self.service.component("delivery_carrier")
+        self.carrier_service = self.service.component("delivery_carriers")
 
     def test_search_all(self):
         res = self.carrier_service.search()
