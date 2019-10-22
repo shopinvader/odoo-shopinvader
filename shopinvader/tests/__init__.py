@@ -3,6 +3,7 @@ from . import test_backend
 from . import test_cart
 from . import test_cart_item
 from . import test_address
+from . import test_partner_validation
 from . import test_product
 from . import test_sale
 from . import test_shopinvader_variant_binding_wizard

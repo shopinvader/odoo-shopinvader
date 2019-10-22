@@ -11,6 +11,7 @@ from odoo.http import request
 
 class ShopinvaderBackend(models.Model):
     _name = "shopinvader.backend"
+    _inherit = "collection.base"
     _description = "Shopinvader Backend"
 
     name = fields.Char(required=True)
@@ -108,6 +109,45 @@ class ShopinvaderBackend(models.Model):
         "It could be also useful if you want to keep cart for "
         "statistics reasons. A new cart is created automatically when the "
         "customer will add a new item.",
+    )
+    validate_customers = fields.Boolean(
+        default=False,  # let's be explicit here :)
+        help="Turn on this flag to block non validated customers. "
+        "If customers' partners are not validated, "
+        "registered users cannot log in. "
+        "Salesman will get notified via mail activity.",
+    )
+    validate_customers_type = fields.Selection(
+        selection=[
+            ("all", "Companies, simple users and addresses"),
+            ("company", "Company users only"),
+            ("user", "Simple users only"),
+            ("company_and_user", "Companies and simple users"),
+            ("address", "Addresses only"),
+        ],
+        default="all",
+    )
+    salesman_notify_create = fields.Selection(
+        selection=[
+            ("", "None"),
+            ("all", "Companies, simple users and addresses"),
+            ("company", "Company users only"),
+            ("user", "Simple users only"),
+            ("company_and_user", "Companies and simple users"),
+            ("address", "Addresses only"),
+        ],
+        default="company",
+    )
+    salesman_notify_update = fields.Selection(
+        selection=[
+            ("", "None"),
+            ("all", "Companies, simple users and addresses"),
+            ("company", "Company users only"),
+            ("user", "Simple users only"),
+            ("company_and_user", "Companies and simple users"),
+            ("address", "Addresses only"),
+        ],
+        default="",
     )
 
     _sql_constraints = [

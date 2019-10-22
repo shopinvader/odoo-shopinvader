@@ -23,6 +23,14 @@ class ResPartner(models.Model):
     opt_in = fields.Boolean(
         compute="_compute_opt_in", inverse="_inverse_opt_in"
     )
+    shopinvader_enabled = fields.Boolean(
+        string="Shop enabled",
+        default=True,
+        help="Enable user account on the frontend. "
+        "If this is disabled the user cannot log in on all the websites. "
+        "This behavior must be enabled on the backend "
+        "via 'Validate customers' flag.",
+    )
 
     @api.multi
     @api.constrains("email")
@@ -101,3 +109,34 @@ class ResPartner(models.Model):
                     {"partner_shipping_id": cart.partner_shipping_id.id}
                 )
         return True
+
+    @api.multi
+    def action_enable_for_shop(self):
+        self.write({"shopinvader_enabled": True})
+        # TODO: maybe better to hook to an event?
+        for partner in self:
+            if partner.address_type == "profile":
+                notif_type = "customer_validated"
+                backends = partner.mapped("shopinvader_bind_ids.backend_id")
+                recipient = partner
+            elif partner.address_type == "address":
+                notif_type = "address_validated"
+                backends = partner.mapped(
+                    "parent_id.shopinvader_bind_ids.backend_id"
+                )
+                recipient = partner.parent_id
+            recipient._shopinvader_notify(backends, notif_type)
+            addr_type_display = (
+                self._fields["address_type"]
+                .convert_to_export(partner.address_type, partner)
+                .lower()
+            )
+            msg_body = _("Shopinvader {addr_type} '{name}' validated").format(
+                addr_type=addr_type_display, name=partner.name
+            )
+            recipient.message_post(body=msg_body)
+
+    def _shopinvader_notify(self, backends, notif_type):
+        self.ensure_one()
+        for backend in backends:
+            backend._send_notification(notif_type, self)

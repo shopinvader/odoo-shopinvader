@@ -1,5 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2019 Camptocamp (http://www.camptocamp.com)
+# Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=consider-merging-classes-inherited,method-required-super
 
@@ -7,7 +9,10 @@ from odoo.addons.component.core import Component
 
 
 class CustomerService(Component):
-    _inherit = "base.shopinvader.service"
+    _inherit = [
+        "base.shopinvader.service",
+        "shopinvader.partner.service.mixin",
+    ]
     _name = "shopinvader.customer.service"
     _usage = "customer"
 
@@ -25,7 +30,7 @@ class CustomerService(Component):
         vals = self._prepare_params(params)
         binding = self.env["shopinvader.partner"].create(vals)
         self.work.partner = binding.record_id
-        self._send_welcome_message(binding)
+        self._post_create(self.work.partner)
         return self._prepare_create_response(binding)
 
     def sign_in(self, **params):
@@ -65,12 +70,10 @@ class CustomerService(Component):
         # fmt: on
         if params.get("is_company"):
             params["is_company"] = True
+        params[
+            "shopinvader_enabled"
+        ] = self.partner_validator.enabled_by_params(params, "profile")
         return params
-
-    def _send_welcome_message(self, binding):
-        self.shopinvader_backend._send_notification(
-            "new_customer_welcome", binding.record_id
-        )
 
     def _get_and_assign_cart(self):
         cart_service = self.component(usage="cart")
@@ -105,3 +108,19 @@ class CustomerService(Component):
         response = self._assign_cart_and_get_store_cache()
         response["data"] = {"id": self.partner.id, "name": self.partner.name}
         return response
+
+    def _get_notification_type(self, partner, mode):
+        if mode == "create":
+            notif = "new_customer_welcome"
+            if not self.partner_validator.is_partner_validated(partner):
+                notif = "new_customer_welcome_not_validated"
+        return notif
+
+    def _notify_salesman_needed(self, backend_policy, partner, mode):
+        if backend_policy in ("all", "company_and_user"):
+            return True
+        elif backend_policy == "company" and partner.is_company:
+            return True
+        elif backend_policy == "user" and not partner.is_company:
+            return True
+        return False

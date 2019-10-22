@@ -11,6 +11,23 @@ class ShopinvaderNotification(models.Model):
     _name = "shopinvader.notification"
     _description = "Shopinvader Notification"
 
+    backend_id = fields.Many2one(
+        "shopinvader.backend", "Backend", required=True
+    )
+    notification_type = fields.Selection(
+        selection="_selection_notification_type",
+        string="Notification Type",
+        required=True,
+    )
+    model_id = fields.Many2one("ir.model", "Model", required=True)
+    template_id = fields.Many2one(
+        "mail.template", "Mail Template", required=True
+    )
+
+    def _selection_notification_type(self):
+        notifications = self._get_all_notification()
+        return [(key, notifications[key]["name"]) for key in notifications]
+
     def _get_all_notification(self):
         return {
             "cart_confirmation": {
@@ -41,24 +58,31 @@ class ShopinvaderNotification(models.Model):
                 "name": _("New customer Welcome"),
                 "model": "res.partner",
             },
+            "new_customer_welcome_not_validated": {
+                "name": _("New customer Welcome not validated"),
+                "model": "res.partner",
+            },
+            "customer_validated": {
+                "name": _("New customer validated"),
+                "model": "res.partner",
+            },
+            "address_created": {
+                "name": _("Address created"),
+                "model": "res.partner",
+            },
+            "address_created_not_validated": {
+                "name": _("Address created not validated"),
+                "model": "res.partner",
+            },
+            "address_validated": {
+                "name": _("Address validated"),
+                "model": "res.partner",
+            },
+            "address_updated": {
+                "name": _("Address updated"),
+                "model": "res.partner",
+            },
         }
-
-    def _get_select_notification(self):
-        notifications = self._get_all_notification()
-        return [(key, notifications[key]["name"]) for key in notifications]
-
-    backend_id = fields.Many2one(
-        "shopinvader.backend", "Backend", required=True
-    )
-    notification_type = fields.Selection(
-        selection=_get_select_notification,
-        string="Notification Type",
-        required=True,
-    )
-    model_id = fields.Many2one("ir.model", "Model", required=True)
-    template_id = fields.Many2one(
-        "mail.template", "Mail Template", required=True
-    )
 
     @api.onchange("notification_type")
     def on_notification_type_change(self):
