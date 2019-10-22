@@ -31,8 +31,8 @@ class DeliveryCarrierService(Component):
         """
         delivery_carriers = self._search(**params)
         return {
-            "count": len(delivery_carriers),
-            "rows": [self._prepare_carrier(dc) for dc in delivery_carriers],
+            "size": len(delivery_carriers),
+            "data": [self._prepare_carrier(dc) for dc in delivery_carriers],
         }
 
     # Validators
@@ -48,8 +48,8 @@ class DeliveryCarrierService(Component):
 
     def _validator_return_search(self):
         return {
-            "count": {"type": "integer", "required": True},
-            "rows": {
+            "size": {"type": "integer", "required": True},
+            "data": {
                 "type": "list",
                 "required": True,
                 "schema": {
