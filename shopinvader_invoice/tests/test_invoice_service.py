@@ -104,7 +104,7 @@ class TestInvoiceService(CommonCase):
         :return: bool
         """
         ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
-        wizard_obj = self.register_payments_obj.with_context(ctx)
+        wizard_obj = self.register_payments_obj.with_context(**ctx)
         register_payments = wizard_obj.create(
             {
                 "payment_date": fields.Date.today(),
@@ -112,10 +112,13 @@ class TestInvoiceService(CommonCase):
                 "payment_method_id": self.payment_method_manual_in.id,
             }
         )
+        values = {}
         if journal:
-            register_payments.write({"journal_id": journal.id})
+            values.update({"journal_id": journal.id})
         if amount:
-            register_payments.write({"amount": amount})
+            values.update({"amount": amount})
+        if values:
+            register_payments.write(values)
         register_payments.create_payment()
 
     def test_get_invoice_logged(self):
