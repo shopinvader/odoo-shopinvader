@@ -60,6 +60,7 @@
                             <group name="cart_conf" string="Cart configuration">
                                 <field name="clear_cart_options"/>
                                 <field name="pricelist_id" required="1"/>
+                                <field name="partner_title_ids" widget="many2many_tags"/>
                             </group>
                             <group name="sale_conf" string="Sale configuration">
                                 <field name="company_id"/>

@@ -94,6 +94,18 @@ class AddressService(Component):
                     }
                 },
             },
+            "title": {
+                "required": False,
+                "type": "dict",
+                "schema": {
+                    "id": {
+                        "coerce": to_int,
+                        "required": False,
+                        "nullable": True,
+                        "type": "integer",
+                    }
+                },
+            },
             "is_company": {"coerce": to_bool, "type": "boolean"},
             "opt_in": {"coerce": to_bool, "type": "boolean"},
             "opt_out": {"coerce": to_bool, "type": "boolean"},
@@ -131,6 +143,7 @@ class AddressService(Component):
             ("country_id:country", ["id", "name"]),
             "address_type",
             "is_company",
+            ("title", ["id", "name"]),
         ]
         return res
 
