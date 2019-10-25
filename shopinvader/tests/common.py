@@ -15,12 +15,12 @@ from odoo.tests import SavepointCase
 
 
 class CommonMixin(ComponentMixin):
-    def setUp(self):
-        super(CommonMixin, self).setUp()
-        self.env = self.env(context={"lang": "en_US"})
-        self.backend = self.env.ref("shopinvader.backend_1")
-        self.backend.bind_all_product()
-        self.shopinvader_session = {}
+    @staticmethod
+    def _setup_backend(cls):
+        cls.env = cls.env(context={"lang": "en_US"})
+        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend.bind_all_product()
+        cls.shopinvader_session = {}
 
     @contextmanager
     def work_on_services(self, **params):
@@ -55,11 +55,10 @@ class CommonCase(SavepointCase, CommonMixin):
     @classmethod
     def setUpClass(cls):
         super(CommonCase, cls).setUpClass()
+        CommonMixin._setup_backend(cls)
         cls.setUpComponent()
 
     def setUp(self):
-        # resolve an inheritance issue (common.SavepointCase does not call
-        # super)
         SavepointCase.setUp(self)
         CommonMixin.setUp(self)
 
