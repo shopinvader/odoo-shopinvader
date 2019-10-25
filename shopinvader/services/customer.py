@@ -46,6 +46,7 @@ class CustomerService(Component):
                 "external_id": {"type": "string", "required": True},
                 "vat": {"type": "string", "required": False},
                 "lang": {"type": "string", "required": False},
+                "company_name": {"type": "string", "required": False},
             }
         )
         return schema
