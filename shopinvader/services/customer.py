@@ -72,6 +72,7 @@ class CustomerService(Component):
             {
                 # Email is mandatory anyway
                 "email": {"type": "string", "required": True, "nullable": False},
+                "lang": {"type": "string", "required": False, "nullable": True},
             }
         )
         schema.update(self._validator_external_ref())
@@ -118,7 +119,7 @@ class CustomerService(Component):
         # fmt: on
 
     def _validator_update_non_required_address_keys(self):
-        return self._validator_create_non_required_address_keys() + ["email"]
+        return self._validator_create_non_required_address_keys() + ["email", "lang"]
 
     def _validator_external_ref(self):
         return {
