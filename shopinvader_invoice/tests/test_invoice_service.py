@@ -13,8 +13,17 @@ class TestInvoiceService(CommonCase):
     def setUp(self, *args, **kwargs):
         super(TestInvoiceService, self).setUp(*args, **kwargs)
         self.invoice_obj = self.env["account.invoice"]
-        self.partner = self.env.ref("base.res_partner_2").copy()
+        self.journal_obj = self.env["account.journal"]
+        self.register_payments_obj = self.env["account.register.payments"]
+        self.sale = self.env.ref("shopinvader.sale_order_2")
+        self.partner = self.env.ref("shopinvader.partner_1")
         self.product = self.env.ref("product.product_product_4")
+        self.bank_journal_euro = self.journal_obj.create(
+            {"name": "Bank", "type": "bank", "code": "BNK67"}
+        )
+        self.payment_method_manual_in = self.env.ref(
+            "account.account_payment_method_manual_in"
+        )
         self.precision = 2
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="invoice")
@@ -44,13 +53,7 @@ class TestInvoiceService(CommonCase):
         :return: bool
         """
         # To have them into correct order
-        invoices = invoices.search(
-            [
-                ("id", "in", invoices.ids),
-                # Invoice must be paid to be in data
-                ("state", "in", ["open", "paid"]),
-            ]
-        )
+        invoices = invoices.search(self.service._get_base_search_domain())
         self.assertEquals(len(data), len(invoices))
         for current_data, invoice in zip(data, invoices):
             state_label = self._get_selection_label(invoice, "state")
@@ -74,65 +77,49 @@ class TestInvoiceService(CommonCase):
             self.assertEquals(current_data.get("amount_due"), invoice.residual)
         return True
 
-    def _create_invoice(
-        self, partner=False, inv_type="out_invoice", validate=False
-    ):
+    def _confirm_and_invoice_sale(self, sale, payment=True):
         """
-        Create a new invoice
-        :param partner: res.partner
-        :param inv_type: str
-        :param validate: bool
-        :return: stock.invoice recordset
+        Confirm the given SO and create an invoice.
+        Can also make the payment if payment parameter is True
+        :param sale: sale.order recordset
+        :param payment: bool
+        :return: account.invoice
         """
-        partner = partner or self.partner
-        account = self.product.categ_id.property_account_expense_categ_id
-        values = {
-            "partner_id": partner.id,
-            "partner_shipping_id": partner.id,
-            "shopinvader_backend_id": self.backend.id,
-            "date_invoice": fields.Date.today(),
-            "type": inv_type,
-            "invoice_line_ids": [
-                (
-                    0,
-                    False,
-                    {
-                        "product_id": self.product.id,
-                        "quantity": 10,
-                        "price_unit": 1250,
-                        "account_id": account.id,
-                        "name": self.product.display_name,
-                    },
-                )
-            ],
-        }
-        invoice = self.invoice_obj.create(values)
-        if validate:
-            invoice.action_invoice_open()
+        sale.action_confirm()
+        for line in sale.order_line:
+            line.write({"qty_delivered": line.product_uom_qty})
+        invoice_id = sale.action_invoice_create()
+        invoice = self.env["account.invoice"].browse(invoice_id)
+        invoice.action_invoice_open()
+        invoice.action_move_create()
+        if payment:
+            self._make_payment(invoice)
         return invoice
 
-    def test_get_invoice_anonymous(self):
+    def _make_payment(self, invoice, journal=False, amount=False):
         """
-        Test the get on guest mode (using anonymous user).
-        It should not return any result, even if the anonymous user has some
-        invoices
-        :return:
+        Make payment for given invoice
+        :param invoice: account.invoice recordset
+        :param amount: float
+        :return: bool
         """
-        # Check first without invoice related to the anonymous user
-        result = self.service_guest.dispatch("search")
-        data = result.get("data", [])
-        self.assertFalse(data)
-        # Then create a invoice related to the anonymous user
-        invoice = self._create_invoice(
-            partner=self.backend.anonymous_partner_id, validate=True
+        ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
+        wizard_obj = self.register_payments_obj.with_context(**ctx)
+        register_payments = wizard_obj.create(
+            {
+                "payment_date": fields.Date.today(),
+                "journal_id": self.bank_journal_euro.id,
+                "payment_method_id": self.payment_method_manual_in.id,
+            }
         )
-        self.assertEquals(
-            invoice.partner_id, self.backend.anonymous_partner_id
-        )
-        result = self.service_guest.dispatch("search")
-        data = result.get("data", [])
-        self.assertFalse(data)
-        return
+        values = {}
+        if journal:
+            values.update({"journal_id": journal.id})
+        if amount:
+            values.update({"amount": amount})
+        if values:
+            register_payments.write(values)
+        register_payments.create_payment()
 
     def test_get_invoice_logged(self):
         """
@@ -146,12 +133,12 @@ class TestInvoiceService(CommonCase):
         data = result.get("data", [])
         self.assertFalse(data)
         # Then create a invoice related to partner
-        invoice = self._create_invoice(partner=self.service.partner)
+        invoice = self._confirm_and_invoice_sale(self.sale, payment=False)
         self.assertEquals(invoice.partner_id, self.service.partner)
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, invoice)
-        invoice.action_invoice_open()
+        self._make_payment(invoice)
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, invoice)
@@ -164,16 +151,13 @@ class TestInvoiceService(CommonCase):
         But to the second, he should have one.
         :return:
         """
-        invoice1 = self._create_invoice(
-            partner=self.service.partner, validate=True
-        )
-        invoice2 = self._create_invoice(
-            partner=self.service.partner, validate=True
-        )
-        invoice3 = self._create_invoice(
-            partner=self.service.partner, validate=True
-        )
-        invoice4 = self._create_invoice(partner=self.service.partner)
+        sale2 = self.sale.copy()
+        sale3 = self.sale.copy()
+        sale4 = self.sale.copy()
+        invoice1 = self._confirm_and_invoice_sale(self.sale)
+        invoice2 = self._confirm_and_invoice_sale(sale2)
+        invoice3 = self._confirm_and_invoice_sale(sale3)
+        invoice4 = self._confirm_and_invoice_sale(sale4)
         invoices = invoice1 | invoice2 | invoice3 | invoice4
         self.assertEquals(invoice1.partner_id, self.service.partner)
         self.assertEquals(invoice2.partner_id, self.service.partner)

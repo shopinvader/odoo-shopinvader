@@ -6,10 +6,7 @@ from odoo.addons.component.core import Component
 
 
 class InvoiceService(Component):
-    _inherit = "shopinvader.abstract.mail.service"
-    _name = "shopinvader.invoice.service"
-    _usage = "invoice"
-    _expose_model = "account.invoice"
+    _inherit = "shopinvader.invoice.service"
 
     def search(self, **params):
         """
@@ -110,20 +107,3 @@ class InvoiceService(Component):
         for invoice in invoices:
             res.append(self._to_json_invoice(invoice))
         return res
-
-    def _get_base_search_domain(self):
-        """
-        Get every account.invoice (customer invoices or refunds)
-        related to current user.
-        If the current user is the anonymous one, it'll return an invalid
-        domain (to have 0 invoice as result)
-        :return:
-        """
-        if self.shopinvader_backend.anonymous_partner_id == self.partner:
-            return [(0, "=", 1)]
-        return [
-            ("partner_id", "=", self.partner.id),
-            ("type", "in", ("out_invoice", "out_refund")),
-            ("state", "in", ["open", "paid"]),
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-        ]
