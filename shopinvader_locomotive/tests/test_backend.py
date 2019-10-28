@@ -15,26 +15,39 @@ ODOO_STORE_JSON_KEY = [
 
 
 class TestBackend(LocoCommonCase):
-    def setUp(self, *args, **kwargs):
-        super().setUp(*args, **kwargs)
-        ref = self.env.ref
-        self.odoo_url = self.env["ir.config_parameter"].get_param(
-            "web.base.url"
-        )
-        self.api_url = "{}/shopinvader".format(self.odoo_url)
+
+    maxDiff = None
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestBackend, cls).setUpClass()
+        ref = cls.env.ref
+        cls.odoo_url = cls.env["ir.config_parameter"].get_param("web.base.url")
+        cls.api_url = "{}/shopinvader".format(cls.odoo_url)
         country_ids = [ref("base.fr").id, ref("base.us").id]
         filter_ids = [
             ref("shopinvader.product_filter_1").id,
             ref("shopinvader.product_filter_2").id,
         ]
         currency_ids = [ref("base.USD").id, ref("base.EUR").id]
-        self.backend.write(
+        cls.backend.write(
             {
+                # Fix test demo data compat:
+                # make sure no search backend is attached here.
+                # This test suite tests only data unrelated from SE
+                # and there might be some modules
+                # (eg: shopinvader_elasticsearch)
+                # that tie a specific backend to the main demo backend.
+                "se_backend_id": False,
+                # ---------------------
                 "allowed_country_ids": [(6, 0, country_ids)],
                 "filter_ids": [(6, 0, filter_ids)],
                 "currency_ids": [(6, 0, currency_ids)],
             }
         )
+
+    def setUp(self):
+        super(TestBackend, self).setUp()
         self.metafields = {
             "foo": "test",
             "_store": {

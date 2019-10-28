@@ -13,7 +13,7 @@
     "development_status": "Stable/Production",
     "depends": [
         "connector",
-        "connector_search_engine",
+        "shopinvader_search_engine",
         "queue_job",
         "shopinvader",
         "base_suspend_security",
