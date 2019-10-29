@@ -11,5 +11,5 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader_guest_mode", "shopinvader_locomotive"],
-    "installable": True,
+    "installable": False,
 }

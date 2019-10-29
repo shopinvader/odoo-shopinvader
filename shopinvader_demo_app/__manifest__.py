@@ -34,6 +34,6 @@
         "demo/storage_backend_demo.xml",
     ],
     "post_init_hook": "post_init_hook",
-    "installable": True,
+    "installable": False,
     "application": True,
 }

@@ -6,7 +6,8 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
 
-language: python
+language:
+  python
 
 stages:
   - linting
@@ -24,7 +25,7 @@ jobs:
       script: pre-commit run --all
 env:
   global:
-  - VERSION="12.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url"
+  - VERSION="13.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url"
 
   matrix:
   - TESTS="0" LINT_CHECK="1"

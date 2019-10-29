@@ -21,7 +21,7 @@
     "data": ["views/shopinvader_backend_view.xml", "data/ir_cron.xml"],
     "demo": ["demo/backend_demo.xml"],
     "external_dependencies": {"python": ["locomotivecms"]},
-    "installable": True,
+    "installable": False,
     "auto_install": False,
     "application": False,
 }
