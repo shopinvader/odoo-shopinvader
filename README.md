@@ -19,15 +19,13 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.0.1 | Shopinvader Locomotive Elasticsearch
-[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 | Shopinvader pending cart reminder
+[base_url](base_url/) | 13.0.1.0.0 | keep history of url for products & categories
 
 
 Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[base_url](base_url/) | 12.0.0.1.0 (unported) | keep history of url for products & categories
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
 [product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
@@ -46,10 +44,12 @@ addon | version | summary
 [shopinvader_lead](shopinvader_lead/) | 12.0.1.0.1 (unported) | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.2.0.4 (unported) | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
+[shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.0.1 (unported) | Shopinvader Locomotive Elasticsearch
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.0 (unported) | Shopinvader guest mode for locomotive
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_multi_category](shopinvader_multi_category/) | 10.0.1.0.0 (unported) | Shopinvader Many Categories
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
+[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 (unported) | Shopinvader pending cart reminder
 [shopinvader_product_media](shopinvader_product_media/) | 10.0.1.0.0 (unported) | Shopinvader Product Media
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 (unported) | This module is used to choose a stock field during theexport (by backend)
