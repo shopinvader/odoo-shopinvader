@@ -15,4 +15,5 @@
         "shopinvader_locomotive",
         "shopinvader_elasticsearch",
     ],
+    "installable": False,
 }

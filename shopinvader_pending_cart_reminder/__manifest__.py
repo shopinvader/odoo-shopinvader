@@ -16,4 +16,5 @@
         "data/mail_template.xml",
         "views/shopinvader_backend.xml",
     ],
+    "installable": False,
 }
