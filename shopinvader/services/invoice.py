@@ -2,6 +2,7 @@
 # Copyright 2019 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import mimetypes
+import time
 
 from odoo import _
 from odoo.addons.base_rest.components.service import (
@@ -12,6 +13,7 @@ from odoo.addons.component.core import Component
 from odoo.exceptions import MissingError
 from odoo.http import content_disposition, request
 from odoo.osv import expression
+from odoo.tools.safe_eval import safe_eval
 
 
 class InvoiceService(Component):
@@ -107,13 +109,13 @@ class InvoiceService(Component):
         invoice_report_def = invoice.invoice_print()
         report_name = invoice_report_def["report_name"]
         report_type = invoice_report_def["report_type"]
-        content, format = self.env["ir.actions.report.xml"].render_report(
-            res_ids=invoice.ids,
-            name=report_name,
-            data={"report_type": report_type},
-        )
         report = self._get_report(report_name, report_type)
-        filename = self._get_binary_content_filename(invoice, report, format)
+        content, extension = report.render(
+            invoice.ids, data={"report_type": report_type}
+        )
+        filename = self._get_binary_content_filename(
+            invoice, report, extension
+        )
         mimetype = mimetypes.guess_type(filename)
         if mimetype:
             mimetype = mimetype[0]
@@ -130,7 +132,12 @@ class InvoiceService(Component):
             ("report_type", "=", report_type),
             ("report_name", "=", report_name),
         ]
-        return self.env["ir.actions.report.xml"].search(domain)
+        return self.env["ir.actions.report"].search(domain)
 
-    def _get_binary_content_filename(self, invoice, report, format):
-        return "{}.{}".format(report.name, format)
+    def _get_binary_content_filename(self, invoice, report, extension):
+        if report.print_report_name and not len(invoice) > 1:
+            report_name = safe_eval(
+                report.print_report_name, {"object": invoice, "time": time}
+            )
+            return "{}.{}".format(report_name, extension)
+        return "{}.{}".format(report.name, extension)

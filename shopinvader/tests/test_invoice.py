@@ -41,7 +41,7 @@ class TestInvoice(CommonCase):
                 "payment_method_id": self.payment_method_manual_in.id,
             }
         )
-        register_payments.create_payment()
+        register_payments.create_payments()
 
     def _confirm_and_invoice_sale(self, sale):
         sale.action_confirm()
