@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
@@ -58,7 +57,8 @@ class TestInvoiceService(CommonCase):
             self.assertEquals(current_data.get("invoice_id"), invoice.id)
             self.assertEquals(current_data.get("number"), invoice.number)
             self.assertEquals(
-                current_data.get("date_invoice"), invoice.date_invoice
+                current_data.get("date_invoice"),
+                fields.Date.to_string(invoice.date_invoice),
             )
             self.assertEquals(current_data.get("state"), state_label)
             self.assertEquals(current_data.get("type"), type_label)
