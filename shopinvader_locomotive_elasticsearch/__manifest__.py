@@ -3,7 +3,7 @@
 
 {
     "name": "Shopinvader Locomotive Elasticsearch",
-    "description": """
+    "summary": """
         This addons is used to push the initial elasticsearch configuration
         to locomotive""",
     "version": "12.0.1.0.1",

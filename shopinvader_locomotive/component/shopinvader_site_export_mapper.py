@@ -4,9 +4,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import json
+import logging
 
 from odoo.addons.component.core import Component
 from odoo.addons.connector.components.mapper import changed_by, mapping
+from odoo.fields import first
+
+_logger = logging.getLogger(__name__)
 
 
 class ShopinvaderSiteExportMapper(Component):
@@ -72,6 +76,95 @@ class ShopinvaderSiteExportMapper(Component):
                 .get_param("web.base.url")
             )
         return {"erp": erp}
+
+    @mapping
+    def search_engine_config(self, record):
+        se_backend = record.se_backend_id
+        if not se_backend:
+            _logger.warning("No search engine configured yet.")
+            return {}
+        if not se_backend.search_engine_name:
+            _logger.warning("No search engine name declared.")
+            return {}
+        return {
+            se_backend.search_engine_name: self._search_engine_config(
+                se_backend
+            )
+        }
+
+    def _search_engine_config(self, se_backend):
+        config = self.options["current_values"].get(
+            se_backend.search_engine_name, {}
+        )
+        if self.options["force"] or not config.get("indices"):
+            indices, routes = self._get_indexes_config(se_backend)
+            config["indices"] = json.dumps(indices)
+            config["routes"] = json.dumps(routes)
+        # TODO: we could improve this.
+        # The best would be to use a specific mapper
+        # applied only on the specific backend model
+        # and use this mapper from the site mapper.
+        specific_handler = getattr(
+            self,
+            "_{}_config".format(se_backend.search_engine_name),
+            lambda se_backend, config: config,
+        )
+        return specific_handler(se_backend, config)
+
+    def _get_indexes_config(self, se_backend):
+        # we've 2 models exported. product.category and product.product.
+        # we must export for each model, the name 'without the code lang'
+        # of the index to use for the model and the route
+        indices = []
+        routes = []
+        index_categ = first(
+            se_backend.index_ids.filtered(
+                lambda i: i.model_id.model == "shopinvader.category"
+            )
+        )
+        if index_categ:
+            indices.append(
+                {
+                    "name": "categories",
+                    "index": self._get_index_name(index_categ),
+                }
+            )
+            routes.append(
+                [
+                    "*",
+                    {
+                        "name": "category",
+                        "template_handle": "category",
+                        "index": "categories",
+                    },
+                ]
+            )
+        index_product = first(
+            se_backend.index_ids.filtered(
+                lambda i: i.model_id.model == "shopinvader.variant"
+            )
+        )
+        if index_product:
+            indices.append(
+                {
+                    "name": "products",
+                    "index": self._get_index_name(index_product),
+                }
+            )
+            routes.append(
+                [
+                    "*",
+                    {
+                        "name": "product",
+                        "template_handle": "product",
+                        "index": "products",
+                    },
+                ]
+            )
+        return indices, routes
+
+    def _get_index_name(self, index):
+        return index.name.replace("_{}".format(index.lang_id.code), "")
 
     def finalize(self, map_record, values):
         """
