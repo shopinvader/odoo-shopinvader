@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo12-addon-shopinvader_algolia',
         'odoo12-addon-shopinvader_assortment',
         'odoo12-addon-shopinvader_backend_image_proxy',
+        'odoo12-addon-shopinvader_cart_expiry',
         'odoo12-addon-shopinvader_delivery_carrier',
         'odoo12-addon-shopinvader_demo_app',
         'odoo12-addon-shopinvader_elasticsearch',
