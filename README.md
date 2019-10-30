@@ -32,9 +32,9 @@ addon | version | summary
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
 [shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.0 | Shopinvader Invoice
 [shopinvader_lead](shopinvader_lead/) | 12.0.1.0.1 | Shopinvader Lead Management
-[shopinvader_locomotive](shopinvader_locomotive/) | 12.0.2.0.4 | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive](shopinvader_locomotive/) | 12.0.2.0.5 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.0.1 | Shopinvader Locomotive Elasticsearch
-[shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.0 | Shopinvader guest mode for locomotive
+[shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.1 | Shopinvader guest mode for locomotive
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 | Shopinvader pending cart reminder
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 | This module is used to choose a stock field during theexport (by backend)
