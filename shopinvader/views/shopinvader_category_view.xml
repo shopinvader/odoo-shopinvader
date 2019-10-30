@@ -69,7 +69,7 @@
 <record model="ir.actions.act_window" id="act_open_shopinvader_category_view">
     <field name="name">Shopinvader Category</field>
     <field name="res_model">shopinvader.category</field>
-    <field name="view_mode">tree</field>
+    <field name="view_mode">tree,form</field>
     <field name="search_view_id" ref="view_shopinvader_category_search"/>
 </record>
 
