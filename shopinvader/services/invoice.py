@@ -34,7 +34,7 @@ class InvoiceService(Component):
         invoice = self._get(_id)
         headers, content = self._get_binary_content(invoice)
         if not content:
-            raise MissingError(_("No image found for partner %s") % _id)
+            raise MissingError(_("No invoice found with id %s") % _id)
         response = request.make_response(content, headers)
         response.status_code = 200
         return response
