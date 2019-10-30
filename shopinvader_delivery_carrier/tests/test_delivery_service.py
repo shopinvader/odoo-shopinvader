@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from uuid import uuid4
 
+from odoo import fields
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
@@ -33,32 +34,31 @@ class TestDeliveryService(CommonCase):
         """
         # To have them into correct order
         pickings = pickings.search([("id", "in", pickings.ids)])
-        self.assertEquals(len(data), len(pickings))
+        self.assertEqual(len(data), len(pickings))
         for current_data, picking in zip(data, pickings):
             carrier_dict = current_data.get("carrier", {})
             sale_dict = current_data.get("sale", {})
-            self.assertEquals(current_data.get("delivery_id"), picking.id)
-            self.assertEquals(
+            self.assertEqual(current_data.get("delivery_id"), picking.id)
+            self.assertEqual(
                 current_data.get("tracking_reference"),
                 picking.carrier_tracking_ref or None,
             )
             if picking.carrier_id:
-                self.assertEquals(
+                self.assertEqual(
                     carrier_dict.get("name"), picking.carrier_id.name
                 )
             else:
                 self.assertFalse(carrier_dict)
             if picking.sale_id:
-                self.assertEquals(
-                    sale_dict.get("state"), picking.sale_id.state
-                )
-                self.assertAlmostEquals(
+                self.assertEqual(sale_dict.get("state"), picking.sale_id.state)
+                self.assertAlmostEqual(
                     sale_dict.get("amount_total"),
                     picking.sale_id.amount_total,
                     places=self.precision,
                 )
-                self.assertEquals(
-                    sale_dict.get("date_order"), picking.sale_id.date_order
+                self.assertEqual(
+                    sale_dict.get("date_order"),
+                    fields.Datetime.to_string(picking.sale_id.date_order),
                 )
             else:
                 self.assertFalse(sale_dict)
@@ -122,9 +122,7 @@ class TestDeliveryService(CommonCase):
         picking = self._create_picking(
             partner=self.backend.anonymous_partner_id
         )
-        self.assertEquals(
-            picking.partner_id, self.backend.anonymous_partner_id
-        )
+        self.assertEqual(picking.partner_id, self.backend.anonymous_partner_id)
         result = self.service_guest.dispatch("search")
         data = result.get("data", [])
         self.assertFalse(data)
@@ -143,7 +141,7 @@ class TestDeliveryService(CommonCase):
         self.assertFalse(data)
         # Then create a picking related to the partner
         picking = self._create_picking(partner=self.service.partner, sale=True)
-        self.assertEquals(picking.partner_id, self.service.partner)
+        self.assertEqual(picking.partner_id, self.service.partner)
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, picking)
@@ -182,7 +180,7 @@ class TestDeliveryService(CommonCase):
         self.assertFalse(data)
         # Then create a picking related to partner
         picking = self._create_picking(partner=self.service.partner, sale=True)
-        self.assertEquals(picking.partner_id, self.service.partner)
+        self.assertEqual(picking.partner_id, self.service.partner)
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, picking)
@@ -213,10 +211,6 @@ class TestDeliveryService(CommonCase):
             partner=self.service.partner, sale=True
         )
         pickings = picking1 | picking2 | picking3 | picking4
-        self.assertEquals(picking1.partner_id, self.service.partner)
-        self.assertEquals(picking2.partner_id, self.service.partner)
-        self.assertEquals(picking3.partner_id, self.service.partner)
-        self.assertEquals(picking4.partner_id, self.service.partner)
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, pickings)
