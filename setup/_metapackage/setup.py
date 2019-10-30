@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo12-addon-shopinvader_elasticsearch',
         'odoo12-addon-shopinvader_guest_mode',
         'odoo12-addon-shopinvader_image',
+        'odoo12-addon-shopinvader_invoice',
         'odoo12-addon-shopinvader_lead',
         'odoo12-addon-shopinvader_locomotive',
         'odoo12-addon-shopinvader_locomotive_elasticsearch',
