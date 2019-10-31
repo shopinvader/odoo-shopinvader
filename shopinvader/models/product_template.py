@@ -60,10 +60,10 @@ class ProductTemplate(models.Model):
         self_name = {r: r.name for r in self}
         yield
         for record in self:
-            if not record.shopinvader_bind_ids:
+            if not record.suspend_security().shopinvader_bind_ids:
                 continue
             if record.name != self_name.get(record):
-                record.shopinvader_bind_ids._sync_urls()
+                record.suspend_security().shopinvader_bind_ids._sync_urls()
 
     @api.multi
     def write(self, vals):

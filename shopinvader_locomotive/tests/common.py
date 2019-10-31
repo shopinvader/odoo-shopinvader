@@ -17,9 +17,10 @@ except (ImportError, IOError) as err:
 
 
 class LocoCommonCase(CommonCase):
-    def setUp(self, *args, **kwargs):
-        super().setUp(*args, **kwargs)
-        self.base_url = self.backend.location + "/locomotive/api/v3"
+    @classmethod
+    def setUpClass(cls):
+        super(LocoCommonCase, cls).setUpClass()
+        cls.base_url = cls.backend.location + "/locomotive/api/v3"
 
 
 @contextmanager
