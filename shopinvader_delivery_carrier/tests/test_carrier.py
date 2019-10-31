@@ -110,7 +110,7 @@ class CarrierCase(CommonCarrierCase):
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
         nb_lines_after = self.env["sale.order.line"].search_count([])
         self.assertDictEqual(cart_values_before, cart_values_after)
-        self.assertEquals(nb_lines_after, nb_lines_before)
+        self.assertEqual(nb_lines_after, nb_lines_before)
 
         partner.write({"country_id": french_country.id})
         self.cart.write({"carrier_id": self.poste_carrier.id})
@@ -125,15 +125,15 @@ class CarrierCase(CommonCarrierCase):
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
         params = {"country_id": belgium.id, "target": "current_cart"}
         result = self.carrier_service.dispatch("search", params=params)
-        self.assertEquals(self.cart.name, cart_values_before.get("name", ""))
+        self.assertEqual(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
         self.assertDictEqual(cart_values_before, cart_values_after)
         nb_lines_after = self.env["sale.order.line"].search_count([])
-        self.assertEquals(nb_lines_after, nb_lines_before)
+        self.assertEqual(nb_lines_after, nb_lines_before)
         # Ensure lines still ok
-        self.assertEquals(len(lines), len(self.cart.order_line))
-        for line_id, line_values in lines.iteritems():
+        self.assertEqual(len(lines), len(self.cart.order_line))
+        for line_id, line_values in lines.items():
             order_line = self.cart.order_line.filtered(
                 lambda l, lid=line_id: l.id == lid
             )
@@ -141,9 +141,9 @@ class CarrierCase(CommonCarrierCase):
             self.assertDictEqual(
                 order_line._convert_to_write(order_line._cache), line_values
             )
-        self.assertEquals(self.cart.partner_id, partner)
-        self.assertEquals(french_country, partner.country_id)
-        self._check_carriers(result)
+        self.assertEqual(self.cart.partner_id, partner)
+        self.assertEqual(french_country, partner.country_id)
+        self._check_carriers(result, country=belgium)
 
     def test_get_cart_price_by_country_anonymous(self):
         """
@@ -158,25 +158,27 @@ class CarrierCase(CommonCarrierCase):
         # Update with anonymous user
         self.test_get_cart_price_by_country1()
 
-    def _check_carriers(self, result):
+    def _check_carriers(self, result, country):
         """
         Check carrier for current cart based on given result list of dict.
         :param result: list of dict
         :return: bool
         """
-        available_carriers = self.backend.carrier_ids.with_context(
-            order_id=self.cart.id
-        ).filtered(lambda c: c.available)
+        available_carriers = self.backend.carrier_ids
+        available_carriers = available_carriers.filtered(
+            lambda c, country=country: country in c.country_ids
+            or not c.country_ids
+        )
         carrier_rows = result.get("rows")
-        self.assertEquals(len(available_carriers), len(carrier_rows))
+        self.assertEqual(len(available_carriers), len(carrier_rows))
         for carrier_result in carrier_rows:
             carrier = available_carriers.filtered(
                 lambda c: c.id == carrier_result.get("id")
             )
-            self.assertEquals(len(carrier), 1)
-            self.assertEquals(carrier.name, carrier_result.get("name"))
-            self.assertAlmostEquals(
-                carrier.price,
+            self.assertEqual(len(carrier), 1)
+            self.assertEqual(carrier.name, carrier_result.get("name"))
+            self.assertAlmostEqual(
+                carrier.rate_shipment(self.cart).get("price", 0.0),
                 carrier_result.get("price"),
                 places=self.precision,
             )
@@ -193,7 +195,8 @@ class CarrierCase(CommonCarrierCase):
         partner = self.cart.partner_id
         partner.write({"country_id": french_country.id})
         self.cart.write({"carrier_id": self.poste_carrier.id})
-        self.cart.delivery_set()
+        self.cart.get_delivery_price()
+        self.cart.set_delivery_line()
         # Force load every fields
         self.cart.read()
         cart_values_before = self.cart._convert_to_write(self.cart._cache)
@@ -206,16 +209,17 @@ class CarrierCase(CommonCarrierCase):
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
         params = {"country_id": belgium.id, "target": "current_cart"}
         result = self.carrier_service.dispatch("search", params=params)
-        self.assertEquals(self.cart.name, cart_values_before.get("name", ""))
+        self._check_carriers(result, country=belgium)
+        self.assertEqual(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
         cart_values_after.pop("order_line", None)
         self.assertDictEqual(cart_values_before, cart_values_after)
         nb_lines_after = self.env["sale.order.line"].search_count([])
-        self.assertEquals(nb_lines_after, nb_lines_before)
+        self.assertEqual(nb_lines_after, nb_lines_before)
         # Ensure lines still ok
-        self.assertEquals(len(lines), len(self.cart.order_line))
-        for line_id, line_values in lines.iteritems():
+        self.assertEqual(len(lines), len(self.cart.order_line))
+        for line_id, line_values in lines.items():
             order_line = self.cart.order_line.filtered(
                 lambda l, lid=line_id: l.id == lid
             )
@@ -230,9 +234,8 @@ class CarrierCase(CommonCarrierCase):
             self.assertDictEqual(
                 order_line._convert_to_write(order_line._cache), line_values
             )
-        self.assertEquals(self.cart.partner_id, partner)
-        self.assertEquals(french_country, partner.country_id)
-        self._check_carriers(result)
+        self.assertEqual(self.cart.partner_id, partner)
+        self.assertEqual(french_country, partner.country_id)
 
     def test_get_cart_price_by_country3(self):
         """
@@ -258,16 +261,17 @@ class CarrierCase(CommonCarrierCase):
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
         params = {"country_id": belgium.id, "target": "current_cart"}
         result = self.carrier_service.dispatch("search", params=params)
-        self.assertEquals(self.cart.name, cart_values_before.get("name", ""))
+        self._check_carriers(result, country=belgium)
+        self.assertEqual(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
         cart_values_after.pop("order_line", None)
         self.assertDictEqual(cart_values_before, cart_values_after)
         nb_lines_after = self.env["sale.order.line"].search_count([])
-        self.assertEquals(nb_lines_after, nb_lines_before)
+        self.assertEqual(nb_lines_after, nb_lines_before)
         # Ensure lines still ok
-        self.assertEquals(len(lines), len(self.cart.order_line))
-        for line_id, line_values in lines.iteritems():
+        self.assertEqual(len(lines), len(self.cart.order_line))
+        for line_id, line_values in lines.items():
             order_line = self.cart.order_line.filtered(
                 lambda l, lid=line_id: l.id == lid
             )
@@ -275,6 +279,5 @@ class CarrierCase(CommonCarrierCase):
             self.assertDictEqual(
                 order_line._convert_to_write(order_line._cache), line_values
             )
-        self.assertEquals(self.cart.partner_id, partner)
-        self.assertEquals(french_country, partner.country_id)
-        self._check_carriers(result)
+        self.assertEqual(self.cart.partner_id, partner)
+        self.assertEqual(french_country, partner.country_id)

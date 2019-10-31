@@ -30,10 +30,15 @@ class DeliveryCarrierService(Component):
         The field type is a technical field only use inform if the carrier
         provides some specialized functionalities
         """
-        delivery_carriers = self._search(**params)
+        cart = None
+        if params.get("target") == "current_cart":
+            cart = self.component(usage="cart")._get()
+        delivery_carriers = self._search(cart=cart, **params)
         return {
             "count": len(delivery_carriers),
-            "rows": [self._prepare_carrier(dc) for dc in delivery_carriers],
+            "rows": [
+                self._prepare_carrier(dc, cart) for dc in delivery_carriers
+            ],
         }
 
     # Validators
@@ -87,14 +92,15 @@ class DeliveryCarrierService(Component):
 
     # Services implementation
 
-    def _search(self, **params):
+    def _search(self, cart, **params):
         """
         Search for delivery carriers
+        :param: cart: if provided, the list will be limited to the carrier
+          applying to the given cart
         :param params: see _validator_search
         :return: delivery.carriers recordset
         """
-        if params.get("target") == "current_cart":
-            cart = self.component(usage="cart")._get()
+        if cart:
             country = self._load_country(params)
             zip_code = self._load_zip_code(params)
             if country or zip_code:
@@ -105,9 +111,13 @@ class DeliveryCarrierService(Component):
             return cart._get_available_carrier()
         return self.shopinvader_backend.carrier_ids
 
-    def _prepare_carrier(self, carrier):
+    def _prepare_carrier(self, carrier, cart=None):
         res = carrier.jsonify(self._json_parser_carrier)[0]
         res["type"] = None
+        price = 0.0
+        if cart:
+            price = carrier.rate_shipment(cart).get("price", 0.0)
+        res["price"] = price
         return res
 
     def _load_country(self, params):
@@ -133,4 +143,4 @@ class DeliveryCarrierService(Component):
 
     @property
     def _json_parser_carrier(self):
-        return ["id", "name", "description", "price"]
+        return ["id", "name", "name:description"]

@@ -42,7 +42,7 @@ class DeliveryCarrier(models.Model):
         return self.env.context.get("delivery_force_zip_code", "")
 
     @api.multi
-    def verify_carrier(self, contact):
+    def available_carriers(self, contact):
         """
         Inherit the function to force some values on the given contact
         (only in cache).
@@ -60,7 +60,9 @@ class DeliveryCarrier(models.Model):
                 # current zip could be related to another country and simulate
                 # a wrong price.
                 contact.update({"country_id": country.id, "zip": zip_code})
-                result = super(DeliveryCarrier, self).verify_carrier(contact)
+                result = super(DeliveryCarrier, self).available_carriers(
+                    contact
+                )
         else:
-            result = super(DeliveryCarrier, self).verify_carrier(contact)
+            result = super(DeliveryCarrier, self).available_carriers(contact)
         return result

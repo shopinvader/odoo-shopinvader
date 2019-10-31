@@ -17,14 +17,14 @@ class TestDeliveryCarrier(CommonCarrierCase):
             "rows": [
                 {
                     "price": 0.0,
-                    "description": self.free_carrier.description or None,
+                    "description": self.free_carrier.name or None,
                     "id": self.free_carrier.id,
                     "name": self.free_carrier.name,
                     "type": None,
                 },
                 {
                     "price": 0.0,
-                    "description": self.poste_carrier.description or None,
+                    "description": self.poste_carrier.name or None,
                     "id": self.poste_carrier.id,
                     "name": self.poste_carrier.name,
                     "type": None,
@@ -40,14 +40,14 @@ class TestDeliveryCarrier(CommonCarrierCase):
             "rows": [
                 {
                     "price": 0.0,
-                    "description": self.free_carrier.description or None,
+                    "description": self.free_carrier.name or None,
                     "id": self.free_carrier.id,
                     "name": self.free_carrier.name,
                     "type": None,
                 },
                 {
                     "price": 20.0,
-                    "description": self.poste_carrier.description or None,
+                    "description": self.poste_carrier.name or None,
                     "id": self.poste_carrier.id,
                     "name": self.poste_carrier.name,
                     "type": None,
