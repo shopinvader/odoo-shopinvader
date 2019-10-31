@@ -119,7 +119,7 @@ class TestInvoiceService(CommonCase):
             values.update({"amount": amount})
         if values:
             register_payments.write(values)
-        register_payments.create_payment()
+        register_payments.create_payments()
 
     def test_get_invoice_logged(self):
         """
