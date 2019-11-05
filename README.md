@@ -29,23 +29,25 @@ addon | version | summary
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
 [product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
-[shopinvader](shopinvader/) | 12.0.2.2.3 (unported) | Shopinvader
+[shopinvader](shopinvader/) | 12.0.2.4.3 (unported) | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.1.0.0 (unported) | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 (unported) | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.0 (unported) | Shopinvader cart expiry
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.1.1.1 (unported) | Carrier integration for Shopinvader
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.1.3.0 (unported) | Carrier integration for Shopinvader
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.2 (unported) | Shopinvader Elasticsearch
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.1.0.1 (unported) | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 (unported) | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 10.0.1.0.0 (unported) | Import product images
+[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 (unported) | Shopinvader Invoice
 [shopinvader_lead](shopinvader_lead/) | 12.0.1.0.1 (unported) | Shopinvader Lead Management
-[shopinvader_locomotive](shopinvader_locomotive/) | 12.0.2.0.4 (unported) | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive](shopinvader_locomotive/) | 12.0.2.1.0 (unported) | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
-[shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.0.1 (unported) | Shopinvader Locomotive Elasticsearch
-[shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.0 (unported) | Shopinvader guest mode for locomotive
+[shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
+[shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.1 (unported) | Shopinvader guest mode for locomotive
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_multi_category](shopinvader_multi_category/) | 10.0.1.0.0 (unported) | Shopinvader Many Categories
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
