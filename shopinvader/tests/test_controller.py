@@ -2,6 +2,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import os
+import unittest
 from uuid import uuid4
 
 import requests
@@ -10,6 +12,7 @@ from odoo.tools import mute_logger
 from .common import ShopinvaderRestCase
 
 
+@unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")
 class ShopinvaderControllerCase(ShopinvaderRestCase):
     def setUp(self, *args, **kwargs):
         super(ShopinvaderControllerCase, self).setUp(*args, **kwargs)

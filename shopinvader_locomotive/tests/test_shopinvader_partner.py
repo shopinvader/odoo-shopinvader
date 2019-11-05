@@ -137,3 +137,16 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             )
             # export ran as demo user even if no access on shopinvader_partner
             self._perform_created_job()
+
+    def test_get_binding_to_export(self):
+        """
+        Ensure the function _get_binding_to_export() correctly return
+        shopinvader.partner related to current partner.
+        :return:
+        """
+        shop_partner = self._create_shopinvader_partner(
+            self.data, u"5a953d6aae1c744cfcfb3cd3"
+        )[0]
+        partner = shop_partner.record_id
+        self.assertEqual(partner._get_binding_to_export(), shop_partner)
+        return
