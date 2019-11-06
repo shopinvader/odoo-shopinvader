@@ -149,6 +149,11 @@ class ShopinvaderBackend(models.Model):
         ],
         default="",
     )
+    partner_title_ids = fields.Many2many(
+        "res.partner.title",
+        string="Available partner titles",
+        default=lambda self: self._default_partner_title_ids(),
+    )
 
     _sql_constraints = [
         (
@@ -163,6 +168,10 @@ class ShopinvaderBackend(models.Model):
         return self.env["res.company"]._company_default_get(
             "shopinvader.backend"
         )
+
+    @api.model
+    def _default_partner_title_ids(self):
+        return self.env["res.partner.title"].search([])
 
     def _to_compute_nbr_content(self):
         """
