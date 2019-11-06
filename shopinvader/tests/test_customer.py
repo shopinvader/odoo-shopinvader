@@ -43,8 +43,18 @@ class TestCustomer(CommonCase):
             else:
                 self.assertEqual(partner[key], self.data[key])
 
+    def test_create_customer_business_vat_only(self):
+        self.data["external_id"] = "D5CdkqOEL"
+        # no `is_company` flag
+        self.data["vat"] = "BE0477472701"
+        res = self.service.dispatch("create", params=self.data)["data"]
+        partner = self.env["res.partner"].browse(res["id"])
+        # no flag, no company, no party :)
+        self.assertEqual(partner.is_company, False)
+
     def test_create_customer_business(self):
         self.data["external_id"] = "D5CdkqOEL"
+        self.data["is_company"] = True
         self.data["vat"] = "BE0477472701"
         res = self.service.dispatch("create", params=self.data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
@@ -96,3 +106,67 @@ class TestCustomer(CommonCase):
         self.service.work.partner = partner
         self.service.sign_in()
         self.assertFalse(SaleOrder.search(sale_domain))
+
+    def test_create_customer_validation(self):
+        data = dict(self.data, external_id="12345678", email="acme@foo.com")
+        # validation is not active
+        self.assertFalse(self.backend.validate_customers)
+        res = self.service.dispatch("create", params=data)["data"]
+        partner = self.env["res.partner"].browse(res["id"])
+        # hence is enabled by default
+        self.assertTrue(partner.shopinvader_enabled)
+        # enable validation for all
+        self.backend.update(
+            dict(validate_customers=True, validate_customers_type="all")
+        )
+        data = dict(self.data, external_id="D5CdkqOEL", email="funny@foo.com")
+        res = self.service.dispatch("create", params=data)["data"]
+        partner = self.env["res.partner"].browse(res["id"])
+        # must not be validated
+        self.assertFalse(partner.shopinvader_enabled)
+
+    def test_create_customer_validation_company(self):
+        data = dict(
+            self.data,
+            external_id="12345678X",
+            is_company=True,
+            vat="BE0477472701",
+            email="acme@foo.com",
+        )
+        # validation is active but only for simple users
+        self.backend.update(
+            dict(validate_customers=True, validate_customers_type="user")
+        )
+        res = self.service.dispatch("create", params=data)["data"]
+        partner = self.env["res.partner"].browse(res["id"])
+        # hence the company is enabled
+        self.assertTrue(partner.shopinvader_enabled)
+        # now enable it for company only
+        self.backend.validate_customers_type = "company"
+        data = dict(
+            self.data,
+            external_id="12345678Y",
+            is_company=True,
+            vat="BE0477472701",
+            email="funny@foo.com",
+        )
+        res = self.service.dispatch("create", params=data)["data"]
+        partner = self.env["res.partner"].browse(res["id"])
+        self.assertFalse(partner.shopinvader_enabled)
+        # now let's enable it w/ specific action
+        partner.action_enable_for_shop()
+        self.assertTrue(partner.shopinvader_enabled)
+
+    # TODO: test salesman notifications
+
+    def _find_activity(self, record):
+        domain = [
+            ("res_model_id", "=", self.env.ref("base.model_res_partner").id),
+            ("res_id", "=", record.id),
+            (
+                "activity_type_id",
+                "=",
+                self.env.ref("shopinvader.mail_activity_validate_customer").id,
+            ),
+        ]
+        return self.env["mail.activity"].search_count(domain)

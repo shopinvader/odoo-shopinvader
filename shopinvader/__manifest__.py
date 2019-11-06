@@ -60,6 +60,7 @@
         "data/ir_export_product.xml",
         "data/ir_export_category.xml",
         "data/cart_step.xml",
+        "data/mail_activity_data.xml",
     ],
     "demo": [
         "demo/account_demo.xml",

@@ -3,12 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models
+from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.addons.shopinvader.tests.test_notification import (
-    CommonNotificationCase,
+    NotificationCaseMixin,
 )
 
 
-class LeadCase(CommonNotificationCase):
+class LeadCase(CommonCase, NotificationCaseMixin):
     def test_create_lead(self):
         data = {
             "email": "revolution@shopinvader.com",

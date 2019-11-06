@@ -9,6 +9,7 @@
                 <field name="email"/>
                 <field name="external_id"/>
                 <field name="create_date"/>
+                <field name="shopinvader_enabled"/>
             </tree>
         </field>
     </record>
@@ -20,8 +21,10 @@
                 <field name="name"/>
                 <field name="email"/>
                 <field name="external_id"/>
+                <field name="shopinvader_enabled"/>
                 <group string="Group By">
                     <filter name="group_by_backend_id" string="Backend" domain="[]" context="{'group_by':'backend_id'}"/>
+                    <filter name="group_by_shopinvader_enabled" string="Enabled" domain="[]" context="{'group_by':'shopinvader_enabled'}"/>
                 </group>
             </search>
         </field>
