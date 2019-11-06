@@ -12,6 +12,7 @@ ODOO_STORE_JSON_KEY = [
     "currencies_rate",
     "locale_mapping",
     "available_customer_titles",
+    "available_customer_industries",
 ]
 
 
@@ -35,6 +36,10 @@ class TestBackend(LocoCommonCase):
             ref("base.res_partner_title_miss").id,
             ref("base.res_partner_title_mister").id,
         ]
+        industry_ids = [
+            ref("base.res_partner_industry_A").id,
+            ref("base.res_partner_industry_B").id,
+        ]
         cls.backend.write(
             {
                 # Fix test demo data compat:
@@ -49,6 +54,7 @@ class TestBackend(LocoCommonCase):
                 "filter_ids": [(6, 0, filter_ids)],
                 "currency_ids": [(6, 0, currency_ids)],
                 "partner_title_ids": [(6, 0, title_ids)],
+                "partner_industry_ids": [(6, 0, industry_ids)],
             }
         )
 
@@ -62,6 +68,7 @@ class TestBackend(LocoCommonCase):
                 "available_countries": "{}",
                 "locale_mapping": "{}",
                 "available_customer_titles": "{}",
+                "available_customer_industries": "{}",
             },
             "erp": {
                 "api_key": self.backend.auth_api_key_id.key,
@@ -93,6 +100,8 @@ class TestBackend(LocoCommonCase):
         ref = self.env.ref
         title_miss = ref("base.res_partner_title_miss")
         title_mister = ref("base.res_partner_title_mister")
+        industry_a = ref("base.res_partner_industry_A")
+        industry_b = ref("base.res_partner_industry_B")
         with mock_site_api(self.base_url, self.site) as mock:
             self.backend.synchronize_metadata()
             metafields = self._extract_metafields(
@@ -141,6 +150,20 @@ class TestBackend(LocoCommonCase):
                             },
                         ]
                     },
+                    "available_customer_industries": {
+                        "en": [
+                            {
+                                "name": industry_a.name,
+                                "id": industry_a.id,
+                                "full_name": industry_a.full_name,
+                            },
+                            {
+                                "name": industry_b.name,
+                                "id": industry_b.id,
+                                "full_name": industry_b.full_name,
+                            },
+                        ]
+                    },
                 },
                 "erp": {
                     "api_key": self.backend.auth_api_key_id.key,
@@ -163,6 +186,7 @@ class TestBackend(LocoCommonCase):
                     "all_filters": {},
                     "available_countries": {},
                     "available_customer_titles": {},
+                    "available_customer_industries": {},
                     "currencies_rate": {
                         "USD": ref("base.USD").rate,
                         "EUR": ref("base.EUR").rate,
