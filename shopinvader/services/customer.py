@@ -51,6 +51,7 @@ class CustomerService(Component):
                 "vat": {"type": "string", "required": False},
                 "lang": {"type": "string", "required": False},
                 "company_name": {"type": "string", "required": False},
+                "function": {"type": "string", "required": False},
             }
         )
         return schema
