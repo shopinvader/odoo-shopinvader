@@ -136,6 +136,7 @@ class AddressService(Component):
             "zip",
             "city",
             "phone",
+            "function",
             "opt_in",
             "is_blacklisted:opt_out",
             "vat",
@@ -144,6 +145,7 @@ class AddressService(Component):
             "address_type",
             "is_company",
             ("title", ["id", "name"]),
+            "shopinvader_enabled:enabled",
         ]
         return res
 
