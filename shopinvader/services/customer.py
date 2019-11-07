@@ -19,8 +19,7 @@ class CustomerService(Component):
     # The following method are 'public' and can be called from the controller.
     def get(self):
         if self.partner:
-            address = self.component(usage="addresses")
-            customer = address._to_json(self.partner)[0]
+            customer = self._to_customer_info(self.partner)
             return {"data": customer, "store_cache": {"customer": customer}}
         else:
             return {"data": {}}
@@ -102,7 +101,8 @@ class CustomerService(Component):
 
     def _to_customer_info(self, partner):
         address = self.component(usage="addresses")
-        return address._to_json(partner)[0]
+        info = address._to_json(partner)[0]
+        return info
 
     def _prepare_create_response(self, binding):
         response = self._assign_cart_and_get_store_cache()
