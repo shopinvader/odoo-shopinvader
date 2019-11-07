@@ -144,6 +144,7 @@ class AddressService(Component):
             "address_type",
             "is_company",
             ("title", ["id", "name"]),
+            "shopinvader_enabled:enabled",
         ]
         return res
 
