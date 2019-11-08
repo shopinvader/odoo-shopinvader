@@ -39,7 +39,6 @@ class ShopinvaderPartnerBinding(models.TransientModel):
             result.update({"shopinvader_backend_id": backend.id})
         return result
 
-    @api.multi
     @api.onchange("shopinvader_backend_id")
     def _onchange_shopinvader_backend_id(self):
         """
@@ -61,7 +60,6 @@ class ShopinvaderPartnerBinding(models.TransientModel):
                 lines.append((0, False, values))
         self.binding_lines = lines
 
-    @api.multi
     def action_apply(self):
         """
         Apply binding

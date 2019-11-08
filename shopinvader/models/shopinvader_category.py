@@ -55,7 +55,6 @@ class ShopinvaderCategory(models.Model):
         )
     ]
 
-    @api.multi
     def name_get(self):
         return [(cat.id, cat.record_id.display_name) for cat in self]
 
@@ -82,6 +81,7 @@ class ShopinvaderCategory(models.Model):
                     record.shopinvader_parent_id = binding
                     break
 
+    @api.depends("lang_id", "record_id", "backend_id", "record_id.child_id")
     def _compute_child_category(self):
         for record in self:
             record.shopinvader_child_ids = self.search(
@@ -92,7 +92,6 @@ class ShopinvaderCategory(models.Model):
                 ]
             )
 
-    @api.multi
     @api.depends(
         "lang_id", "record_id.name", "shopinvader_parent_id.automatic_url_key"
     )

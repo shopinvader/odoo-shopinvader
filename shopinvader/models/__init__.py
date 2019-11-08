@@ -8,8 +8,7 @@ from . import product_product
 from . import product_template
 from . import product_category
 from . import sale
-from . import url
-from . import account_invoice
+from . import account_move
 from . import shopinvader_backend
 from . import shopinvader_binding
 from . import shopinvader_cart_step

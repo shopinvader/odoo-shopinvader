@@ -18,7 +18,7 @@
     <record id="shopinvader_notification_invoice" model="shopinvader.notification">
         <field name="backend_id" ref="backend_1"/>
         <field name="notification_type">invoice_open</field>
-        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="model_id" ref="account.model_account_move"/>
         <field name="template_id" ref="email_invoice_notification"/>
     </record>
 

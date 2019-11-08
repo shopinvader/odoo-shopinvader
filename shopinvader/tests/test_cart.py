@@ -152,7 +152,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
         :return:
         """
         # User must be in this group to fill discount field on SO lines.
-        self.env.ref("sale.group_discount_per_so_line").write(
+        self.env.ref("product.group_discount_per_so_line").write(
             {"users": [(4, self.env.user.id, False)]}
         )
         # Create 2 pricelists

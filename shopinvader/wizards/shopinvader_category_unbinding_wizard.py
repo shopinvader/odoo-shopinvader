@@ -28,7 +28,6 @@ class ShopinvaderCategoryUnbindingWizard(models.TransientModel):
             )
         return result
 
-    @api.multi
     def action_unbind_categories(self):
         self.mapped("shopinvader_category_ids")._unbind()
 
@@ -44,7 +43,4 @@ class ShopinvaderCategoryUnbindingWizard(models.TransientModel):
         shopinvader_category_ids = self.env["shopinvader.category"].search(
             [("lang_id", "in", lang_ids), ("backend_id", "=", backend.id)]
         )
-        # use in memory record to avoid the creation of useless records into
-        # the database
-        wiz = self.new({"shopinvader_category_ids": shopinvader_category_ids})
-        wiz.action_unbind_categories()
+        shopinvader_category_ids._unbind()

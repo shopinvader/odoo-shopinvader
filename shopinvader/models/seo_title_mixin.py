@@ -20,7 +20,6 @@ class SEOTitleMixin(models.AbstractModel):
     )
     manual_seo_title = fields.Char(string="Manual SEO Title")
 
-    @api.multi
     def _build_seo_title(self):
         """
         Build the SEO Title of the current recordset.
@@ -29,7 +28,6 @@ class SEOTitleMixin(models.AbstractModel):
         self.ensure_one()
         return self.display_name
 
-    @api.multi
     def _inverse_seo_title(self):
         """
         When the seo_title is updated manually, we have to save it into
@@ -39,7 +37,6 @@ class SEOTitleMixin(models.AbstractModel):
         for record in self:
             record.manual_seo_title = record.seo_title
 
-    @api.multi
     @api.depends("manual_seo_title")
     def _compute_seo_title(self):
         """

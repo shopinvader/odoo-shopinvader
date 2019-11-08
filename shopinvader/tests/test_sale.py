@@ -13,7 +13,7 @@ class SaleCase(CommonCase):
         super(SaleCase, self).setUp(*args, **kwargs)
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.partner = self.env.ref("shopinvader.partner_1")
-        self.register_payments_obj = self.env["account.register.payments"]
+        self.register_payments_obj = self.env["account.payment.register"]
         self.journal_obj = self.env["account.journal"]
         self.payment_method_manual_in = self.env.ref(
             "account.account_payment_method_manual_in"
@@ -28,10 +28,7 @@ class SaleCase(CommonCase):
         self.sale.action_confirm()
         for line in self.sale.order_line:
             line.write({"qty_delivered": line.product_uom_qty})
-        invoice_id = self.sale.action_invoice_create()
-        self.invoice = self.env["account.invoice"].browse(invoice_id)
-        self.invoice.action_invoice_open()
-        self.invoice.action_move_create()
+        self.invoice = self.sale._create_invoices()
 
     def test_read_sale(self):
         self.sale.action_confirm_cart()
@@ -62,7 +59,7 @@ class SaleCase(CommonCase):
     def _create_notification_config(self):
         template = self.env.ref("account.email_template_edi_invoice")
         values = {
-            "model_id": self.env.ref("account.model_account_invoice").id,
+            "model_id": self.env.ref("account.model_account_move").id,
             "notification_type": "invoice_send_email",
             "template_id": template.id,
         }
@@ -83,8 +80,7 @@ class SaleCase(CommonCase):
         self.sale.action_confirm()
         for line in self.sale.order_line:
             line.write({"qty_delivered": line.product_uom_qty})
-        invoice_id = self.sale.action_invoice_create()
-        invoice = self.env["account.invoice"].browse(invoice_id)
+        invoice = self.sale._create_invoices()
         description = "Notify {} for {},{}".format(
             notif, invoice._name, invoice.id
         )
@@ -98,7 +94,8 @@ class SaleCase(CommonCase):
         :param invoice: account.invoice recordset
         :return: bool
         """
-        ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
+        invoice.post()
+        ctx = {"active_ids": invoice.ids}
         wizard_obj = self.register_payments_obj.with_context(ctx)
         register_payments = wizard_obj.create(
             {
@@ -119,7 +116,7 @@ class SaleCase(CommonCase):
             * No invoice information returned
         """
         self._confirm_and_invoice_sale()
-        self.assertNotEqual(self.invoice.state, "paid")
+        self.assertNotEqual(self.invoice.invoice_payment_state, "paid")
         res = self.service.get(self.sale.id)
         self.assertFalse(res["invoices"])
 
@@ -134,7 +131,7 @@ class SaleCase(CommonCase):
         """
         self._confirm_and_invoice_sale()
         self._make_payment(self.invoice)
-        self.assertEqual(self.invoice.state, "paid")
+        self.assertEqual(self.invoice.invoice_payment_state, "paid")
         res = self.service.get(self.sale.id)
         self.assertTrue(res)
         self.assertEqual(
@@ -142,8 +139,8 @@ class SaleCase(CommonCase):
             [
                 {
                     "id": self.invoice.id,
-                    "name": self.invoice.number,
-                    "date": self.invoice.date_invoice,
+                    "name": self.invoice.name,
+                    "date": self.invoice.invoice_date,
                 }
             ],
         )
