@@ -31,7 +31,8 @@ class CartService(Component):
            search an existing cart for the current partner"""
         if not self.cart_id:
             return {}
-        return self._to_json(self._get())
+        # If the cart_id doesn't exist anymore, we don't have to create a new
+        return self._to_json(self._get(create_if_not_found=False))
 
     def update(self, **params):
         cart = self._get()
