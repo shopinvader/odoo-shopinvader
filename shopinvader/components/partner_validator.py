@@ -4,7 +4,11 @@
 
 from odoo.addons.component.core import Component
 
-from ..exceptions import PartnerNotValidatedError
+# TODO: this exception is not handled yet on Locomotive side.
+# Currently if we raise the error the frontend is broken.
+# Hence, let's rely on `enabled` flag to adjust the UI
+# until we handle the exception client side,
+# from ..exceptions import PartnerNotValidatedError
 
 
 class PartnerValidator(Component):
@@ -17,26 +21,29 @@ class PartnerValidator(Component):
         if self.backend.validate_customers:
             validator = getattr(
                 self,
-                "_validate_partner_{}",
-                format(self.backend.validate_customers_type),
+                "_validate_partner_{}".format(
+                    self.backend.validate_customers_type
+                ),
                 lambda partner: True,
             )
             validator(partner)
 
     def _validate_partner_all(self, partner):
         if not partner.shopinvader_enabled:
-            raise PartnerNotValidatedError(
-                "Customer found but not validated yet."
-            )
+            # raise PartnerNotValidatedError(
+            #     "Customer found but not validated yet."
+            # )
+            pass
 
     def _validate_partner_address(self, partner):
         if (
             not partner.shopinvader_enabled
             and not partner.address_type == "address"
         ):
-            raise PartnerNotValidatedError(
-                "Address found but not validated yet."
-            )
+            # raise PartnerNotValidatedError(
+            #     "Address found but not validated yet."
+            # )
+            pass
 
     def _validate_partner_company(self, partner):
         if (
@@ -44,9 +51,10 @@ class PartnerValidator(Component):
             and partner.is_company
             and partner.address_type == "profile"
         ):
-            raise PartnerNotValidatedError(
-                "Company found but not validated yet."
-            )
+            # raise PartnerNotValidatedError(
+            #     "Company found but not validated yet."
+            # )
+            pass
 
     def _validate_partner_user(self, partner):
         if (
@@ -54,9 +62,10 @@ class PartnerValidator(Component):
             and not partner.is_company
             and partner.address_type == "profile"
         ):
-            raise PartnerNotValidatedError(
-                "Customer found but not validated yet."
-            )
+            # raise PartnerNotValidatedError(
+            #     "Customer found but not validated yet."
+            # )
+            pass
 
     def _validate_partner_company_and_user(self, partner):
         self._validate_partner_company(partner)
