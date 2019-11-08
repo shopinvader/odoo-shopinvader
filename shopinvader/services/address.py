@@ -171,6 +171,13 @@ class AddressService(Component):
                 val = params.pop(key)
                 if val.get("id"):
                     params["%s_id" % key] = val["id"]
+        # TODO: every field like m2o should be handled in the same way.
+        # `country` and `state` are exceptions as they should match `_id`
+        # naming already on client side as it has been done for industry.
+        # Moreover, is weird that we send a dictionary containing and ID
+        # instead of sending the ID straight.
+        if params.get("industry_id"):
+            params["industry_id"] = params.get("industry_id")["id"]
         params[
             "shopinvader_enabled"
         ] = self.partner_validator.enabled_by_params(params, "address")
