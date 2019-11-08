@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "12.0.3.2.1",
+    "version": "12.0.3.2.2",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
