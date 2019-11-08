@@ -11,6 +11,7 @@ ODOO_STORE_JSON_KEY = [
     "available_countries",
     "currencies_rate",
     "locale_mapping",
+    "available_customer_titles",
 ]
 
 
@@ -30,6 +31,10 @@ class TestBackend(LocoCommonCase):
             ref("shopinvader.product_filter_2").id,
         ]
         currency_ids = [ref("base.USD").id, ref("base.EUR").id]
+        title_ids = [
+            ref("base.res_partner_title_miss").id,
+            ref("base.res_partner_title_mister").id,
+        ]
         cls.backend.write(
             {
                 # Fix test demo data compat:
@@ -43,6 +48,7 @@ class TestBackend(LocoCommonCase):
                 "allowed_country_ids": [(6, 0, country_ids)],
                 "filter_ids": [(6, 0, filter_ids)],
                 "currency_ids": [(6, 0, currency_ids)],
+                "partner_title_ids": [(6, 0, title_ids)],
             }
         )
 
@@ -55,6 +61,7 @@ class TestBackend(LocoCommonCase):
                 "all_filters": "{}",
                 "available_countries": "{}",
                 "locale_mapping": "{}",
+                "available_customer_titles": "{}",
             },
             "erp": {
                 "api_key": self.backend.auth_api_key_id.key,
@@ -84,6 +91,8 @@ class TestBackend(LocoCommonCase):
 
     def test_synchronize_metadata(self):
         ref = self.env.ref
+        title_miss = ref("base.res_partner_title_miss")
+        title_mister = ref("base.res_partner_title_mister")
         with mock_site_api(self.base_url, self.site) as mock:
             self.backend.synchronize_metadata()
             metafields = self._extract_metafields(
@@ -118,6 +127,20 @@ class TestBackend(LocoCommonCase):
                         "EUR": ref("base.EUR").rate,
                     },
                     "locale_mapping": {"en": "en_US"},
+                    "available_customer_titles": {
+                        "en": [
+                            {
+                                "name": title_miss.name,
+                                "id": title_miss.id,
+                                "shortcut": title_miss.shortcut,
+                            },
+                            {
+                                "name": title_mister.name,
+                                "id": title_mister.id,
+                                "shortcut": title_mister.shortcut,
+                            },
+                        ]
+                    },
                 },
                 "erp": {
                     "api_key": self.backend.auth_api_key_id.key,
@@ -139,6 +162,7 @@ class TestBackend(LocoCommonCase):
                     "bar": "test",
                     "all_filters": {},
                     "available_countries": {},
+                    "available_customer_titles": {},
                     "currencies_rate": {
                         "USD": ref("base.USD").rate,
                         "EUR": ref("base.EUR").rate,

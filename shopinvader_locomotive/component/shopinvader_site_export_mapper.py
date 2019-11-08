@@ -166,6 +166,19 @@ class ShopinvaderSiteExportMapper(Component):
     def _get_index_name(self, index):
         return index.name.replace("_{}".format(index.lang_id.code), "")
 
+    @mapping
+    @changed_by("partner_title_ids")
+    def partner_titles(self, record):
+        res = {}
+        for lang in record.lang_ids:
+            res[lang.code[0:2]] = []
+            titles = record.partner_title_ids.with_context(lang=lang.code)
+            for rec in titles:
+                res[lang.code[0:2]].append(
+                    {"id": rec.id, "name": rec.name, "shortcut": rec.shortcut}
+                )
+        return {"available_customer_titles": res}
+
     def finalize(self, map_record, values):
         """
            By default, custom information are stored in the field "_store"

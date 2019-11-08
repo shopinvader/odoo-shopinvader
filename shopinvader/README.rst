@@ -32,6 +32,13 @@ This is the Odoo side of the `Shopinvader E-commerce Solution`_.
 .. contents::
    :local:
 
+Known issues / Roadmap
+======================
+
+* Customer validation limitation
+
+Customer validation is global: enable/disable affects all websites, if you have more than one.
+
 Changelog
 =========
 
@@ -67,6 +74,8 @@ Contributors
 ~~~~~~~~~~~~
 
 * Sebastien BEAU <sebastien.beau@akretion.com>
+* Simone Orsi <simone.orsi@camptocamp.com>
+* Laurent Mignon <laurent.mignon@acsone.eu>
 
 Other credits
 ~~~~~~~~~~~~~
@@ -77,6 +86,8 @@ The development of this module has been financially supported by:
 * Adaptoo
 * Encresdubuit
 * Abilis
+* Camptocamp
+* Cosanum
 
 Maintainers
 ~~~~~~~~~~~
