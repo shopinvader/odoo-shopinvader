@@ -9,10 +9,10 @@
         <field name="model">shopinvader.backend</field>
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
-            <field name="account_analytic_id" position="after">
+            <group name="sale_customer" position="inside">
                 <field name="is_guest_mode_allowed"/>
                 <field name="guest_account_expiry_delay" attrs="{'invisible': [('is_guest_mode_allowed', '=', False)]}"/>
-            </field>
+            </group>
         </field>
     </record>
 

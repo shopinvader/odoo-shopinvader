@@ -7,6 +7,7 @@ from . import abstract_mail
 from . import abstract_sale
 from . import cart
 from . import sale
+from . import partner_mixin
 from . import address
 from . import customer
 from . import invoice

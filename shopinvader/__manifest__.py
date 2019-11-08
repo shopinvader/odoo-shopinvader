@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "12.0.2.4.3",
+    "version": "12.0.3.1.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
@@ -60,6 +60,7 @@
         "data/ir_export_product.xml",
         "data/ir_export_category.xml",
         "data/cart_step.xml",
+        "data/mail_activity_data.xml",
     ],
     "demo": [
         "demo/account_demo.xml",

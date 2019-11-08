@@ -61,12 +61,11 @@ class ShopinvaderPartner(models.Model):
         partner = self.env["res.partner"].browse()
         if not config.is_partner_duplication_allowed():
             domain = self._get_unique_partner_domain(vals)
-            partner = partner.search(domain)
+            partner = partner.search(domain, limit=1)
         if partner:
             # here we check if one of the given value is different than those
             # on partner. If true, we create a child partner to keep the
             # given informations
-            partner = partner[0]
             if not self._is_same_partner_value(partner, vals):
                 self._create_child_partner(partner, vals)
             return partner

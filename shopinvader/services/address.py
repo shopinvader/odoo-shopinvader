@@ -1,5 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2019 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=method-required-super, consider-merging-classes-inherited
 
@@ -10,7 +12,10 @@ from odoo.exceptions import AccessError
 
 
 class AddressService(Component):
-    _inherit = "base.shopinvader.service"
+    _inherit = [
+        "base.shopinvader.service",
+        "shopinvader.partner.service.mixin",
+    ]
     _name = "shopinvader.address.service"
     _usage = "addresses"
     _expose_model = "res.partner"
@@ -31,7 +36,8 @@ class AddressService(Component):
         params["parent_id"] = self.partner.id
         if not params.get("type"):
             params["type"] = "other"
-        self.env["res.partner"].create(self._prepare_params(params))
+        partner = self.env["res.partner"].create(self._prepare_params(params))
+        self._post_create(partner)
         return self.search()
 
     def update(self, _id, **params):
@@ -40,6 +46,7 @@ class AddressService(Component):
         res = self.search()
         if address.address_type == "profile":
             res["store_cache"] = {"customer": self._to_json(address)[0]}
+        self._post_update(address)
         return res
 
     def delete(self, _id):
@@ -87,6 +94,18 @@ class AddressService(Component):
                     }
                 },
             },
+            "title": {
+                "required": False,
+                "type": "dict",
+                "schema": {
+                    "id": {
+                        "coerce": to_int,
+                        "required": False,
+                        "nullable": True,
+                        "type": "integer",
+                    }
+                },
+            },
             "is_company": {"coerce": to_bool, "type": "boolean"},
             "opt_in": {"coerce": to_bool, "type": "boolean"},
             "opt_out": {"coerce": to_bool, "type": "boolean"},
@@ -117,6 +136,7 @@ class AddressService(Component):
             "zip",
             "city",
             "phone",
+            "function",
             "opt_in",
             "is_blacklisted:opt_out",
             "vat",
@@ -124,6 +144,8 @@ class AddressService(Component):
             ("country_id:country", ["id", "name"]),
             "address_type",
             "is_company",
+            ("title", ["id", "name"]),
+            "shopinvader_enabled:enabled",
         ]
         return res
 
@@ -136,4 +158,23 @@ class AddressService(Component):
                 val = params.pop(key)
                 if val.get("id"):
                     params["%s_id" % key] = val["id"]
+        params[
+            "shopinvader_enabled"
+        ] = self.partner_validator.enabled_by_params(params, "address")
         return params
+
+    def _get_notification_type(self, partner, mode):
+        if mode == "create":
+            notif = "address_created"
+            if not self.partner_validator.is_partner_validated(partner):
+                notif = "address_created_not_validated"
+        elif mode == "update":
+            notif = "address_updated"
+        return notif
+
+    def _get_notification_recipient(self, partner, mode):
+        # notify the owner of the address
+        return partner.parent_id
+
+    def _notify_salesman_needed(self, backend_policy, partner, mode):
+        return backend_policy in ("all", "address")

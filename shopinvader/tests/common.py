@@ -21,6 +21,7 @@ class CommonMixin(ComponentMixin):
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.backend.bind_all_product()
         cls.shopinvader_session = {}
+        cls.existing_jobs = cls.env["queue.job"].browse()
 
     @contextmanager
     def work_on_services(self, **params):
@@ -37,24 +38,36 @@ class CommonMixin(ComponentMixin):
         )
 
     def _init_job_counter(self):
-        self.existing_job = self.env["queue.job"].search([])
+        self.existing_jobs = self.env["queue.job"].search([])
 
     @property
     def created_jobs(self):
-        return self.env["queue.job"].search([]) - self.existing_job
+        return self.env["queue.job"].search([]) - self.existing_jobs
 
     def _check_nbr_job_created(self, nbr):
         self.assertEqual(len(self.created_jobs), nbr)
 
+    def _perform_job(self, job):
+        Job.load(self.env, job.uuid).perform()
+
     def _perform_created_job(self):
         for job in self.created_jobs:
-            Job.load(self.env, job.uuid).perform()
+            self._perform_job(job)
 
 
 class CommonCase(SavepointCase, CommonMixin):
+
+    # by default disable tracking suite-wise, it's a time saver :)
+    tracking_disable = True
+
     @classmethod
     def setUpClass(cls):
         super(CommonCase, cls).setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context, tracking_disable=cls.tracking_disable
+            )
+        )
         CommonMixin._setup_backend(cls)
         cls.setUpComponent()
 

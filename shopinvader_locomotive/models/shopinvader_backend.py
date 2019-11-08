@@ -8,7 +8,8 @@ from odoo import api, fields, models
 class ShopinvaderBackend(models.Model):
     _description = "Locomotive CMS Backend"
     _name = "shopinvader.backend"
-    _inherit = ["shopinvader.backend", "connector.backend"]
+    # do not change this order otherwise MRO will go nuts
+    _inherit = ["connector.backend", "shopinvader.backend"]
     _backend_name = "locomotivecms"
 
     location = fields.Char(

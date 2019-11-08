@@ -2,22 +2,30 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from uuid import uuid4
 
+from dateutil import parser
 from odoo import fields
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
 class TestDeliveryService(CommonCase):
+
+    maxDiff = None
+
+    @classmethod
+    def setUpClass(cls):
+        super(TestDeliveryService, cls).setUpClass()
+        cls.picking_obj = cls.env["stock.picking"]
+        cls.move_obj = cls.env["stock.move"]
+        cls.partner = cls.env.ref("base.res_partner_2").copy()
+        cls.product = cls.env.ref("product.product_product_4")
+        cls.carrier = cls.env.ref("delivery.delivery_carrier")
+        cls.picking_type_out = cls.env.ref("stock.picking_type_out")
+        cls.location_stock = cls.env.ref("stock.stock_location_stock")
+        cls.location_cust = cls.env.ref("stock.stock_location_customers")
+        cls.precision = 2
+
     def setUp(self, *args, **kwargs):
         super(TestDeliveryService, self).setUp(*args, **kwargs)
-        self.picking_obj = self.env["stock.picking"]
-        self.move_obj = self.env["stock.move"]
-        self.partner = self.env.ref("base.res_partner_2").copy()
-        self.product = self.env.ref("product.product_product_4")
-        self.carrier = self.env.ref("delivery.delivery_carrier")
-        self.picking_type_out = self.env.ref("stock.picking_type_out")
-        self.location_stock = self.env.ref("stock.stock_location_stock")
-        self.location_cust = self.env.ref("stock.stock_location_customers")
-        self.precision = 2
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="delivery")
         with self.work_on_services(
@@ -56,9 +64,15 @@ class TestDeliveryService(CommonCase):
                     picking.sale_id.amount_total,
                     places=self.precision,
                 )
+                serv_date_order_string = fields.Datetime.to_string(
+                    parser.parse(sale_dict.get("date_order"))
+                )
+                date_order_ts = fields.Datetime.context_timestamp(
+                    picking, picking.sale_id.date_order
+                )
                 self.assertEqual(
-                    sale_dict.get("date_order"),
-                    fields.Datetime.to_string(picking.sale_id.date_order),
+                    serv_date_order_string,
+                    fields.Datetime.to_string(date_order_ts),
                 )
             else:
                 self.assertFalse(sale_dict)
