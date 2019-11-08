@@ -178,6 +178,8 @@ class AddressService(Component):
         # instead of sending the ID straight.
         if params.get("industry_id"):
             params["industry_id"] = params.get("industry_id")["id"]
+        if params.get("title"):
+            params["title"] = params.get("title")["id"]
         params[
             "shopinvader_enabled"
         ] = self.partner_validator.enabled_by_params(params, "address")
