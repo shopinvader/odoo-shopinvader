@@ -20,24 +20,20 @@ class ShopinvaderBackend(models.Model):
         domain = self.env["se.index"]._get_model_domain()
         return self.env["ir.model"].search(domain)
 
-    @api.multi
     def force_recompute_all_binding_index(self):
         self.mapped("se_backend_id.index_ids").force_recompute_all_binding()
         return True
 
-    @api.multi
     def force_batch_export_index(self):
         for index in self.mapped("se_backend_id.index_ids"):
             index.force_batch_export()
         return True
 
-    @api.multi
     def clear_index(self):
         for index in self.mapped("se_backend_id.index_ids"):
             index.clear_index()
         return True
 
-    @api.multi
     def add_misssing_index(self):
         self.ensure_one()
         ir_models = self._get_default_models()
@@ -63,6 +59,5 @@ class ShopinvaderBackend(models.Model):
                     )
         return True
 
-    @api.multi
     def force_resynchronize_index(self):
         self.mapped("se_backend_id.index_ids").resynchronize_all_bindings()

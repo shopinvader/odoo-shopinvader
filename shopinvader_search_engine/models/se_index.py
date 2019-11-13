@@ -17,3 +17,5 @@ class SeIndex(models.Model):
             active_id = self.env["shopinvader.backend"].browse(active_id)
             if active_id and rec.lang_id in active_id.lang_ids:
                 rec.is_valid = True
+            else:
+                rec.is_valid = False
