@@ -2,6 +2,9 @@ rest-framework
 connector
 queue
 server-auth
+search-engine
+# search-engine
+connector_algolia https://github.com/acsone/search-engine 13.0-MIG-connector_algolia
 # server-tools
 onchange_helper https://github.com/acsone/server-tools 13.0-MIG-onchange_helper
 # sale-workflow

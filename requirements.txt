@@ -3,3 +3,4 @@ cerberus
 pyquerystring
 parse-accept-language
 unidecode
+algoliasearch<2.0.0
