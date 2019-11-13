@@ -13,12 +13,11 @@ class LocomotiveBinding(models.AbstractModel):
 
     @job(default_channel="root.shopinvader")
     @related_action(action="related_action_unwrap_binding")
-    @api.multi
     def export_record(self, _fields=None):
         self.ensure_one()
         with self.backend_id.work_on(self._name) as work:
             exporter = work.component(usage="record.exporter")
-            return exporter.run(self.suspend_security())
+            return exporter.run(self.sudo())
 
     @job(default_channel="root.shopinvader")
     @related_action(action="related_action_unwrap_binding")

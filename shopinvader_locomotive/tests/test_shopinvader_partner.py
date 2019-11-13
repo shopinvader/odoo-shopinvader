@@ -115,10 +115,10 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         )
         demo_user_id = self.ref("base.user_demo")
         self._init_job_counter()
-        partner = shop_partner.record_id.sudo(demo_user_id)
+        partner = shop_partner.record_id.with_user(demo_user_id)
         # demo user has no write access on shopinvader_partner model
         with self.assertRaises(AccessError):
-            shop_partner.sudo(demo_user_id).write(
+            shop_partner.with_user(demo_user_id).write(
                 {"sync_date": fields.Datetime.now()}
             )
 
