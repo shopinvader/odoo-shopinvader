@@ -28,3 +28,5 @@ class ShopinvaderCategory(models.Model):
                         ("lang_id", "=", record.lang_id.id),
                     ]
                 )
+            else:
+                record.index_id = False
