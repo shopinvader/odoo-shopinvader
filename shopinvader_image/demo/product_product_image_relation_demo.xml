@@ -34,7 +34,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_chair_vortex_blue" model="product.product">
+    <record id="shopinvader.product_product_armchair_mid_century_blue" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -46,7 +46,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_chair_vortex_grey" model="product.product">
+    <record id="shopinvader.product_product_armchair_mid_century_grey" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -58,7 +58,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_chair_vortex_yellow" model="product.product">
+    <record id="shopinvader.product_product_armchair_mid_century_yellow" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -70,7 +70,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_chair_vortex_red" model="product.product">
+    <record id="shopinvader.product_product_armchair_mid_century_red" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -170,7 +170,7 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_tv_stand_wood_and_glass" model="product.product">
+    <record id="shopinvader.product_product_tv_stand_wood_and_glass_white" model="product.product">
         <field name="name">ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70&quot;</field>
         <field name="image_ids" eval="[(6,0,[ref('product_image_relation_53')])]"></field>
     </record>

@@ -2,7 +2,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ShopinvaderImageMixin(models.AbstractModel):
@@ -14,14 +14,12 @@ class ShopinvaderImageMixin(models.AbstractModel):
         compute="_compute_image", string="Shopinvader Image"
     )
 
-    @api.multi
     def _compute_image(self):
         # Note: this computed field depend on the lang used in the context
         # as the name of the record is used for generating the thumbnail
         for record in self:
             record.images = record._get_image_data_for_record()
 
-    @api.multi
     def _get_image_url_key(self, image_relation):
         # You can inherit this method to change the name of the image of
         # your website. By default we use the name of the product or category
@@ -30,7 +28,6 @@ class ShopinvaderImageMixin(models.AbstractModel):
         self.ensure_one()
         return self.display_name
 
-    @api.multi
     def _get_image_data_for_record(self):
         self.ensure_one()
         res = []
@@ -50,7 +47,6 @@ class ShopinvaderImageMixin(models.AbstractModel):
             res.append(image_data)
         return res
 
-    @api.multi
     def _prepare_data_resize(self, thumbnail, image_relation):
         """
         Prepare data to fill images serialized field

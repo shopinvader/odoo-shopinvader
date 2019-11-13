@@ -272,14 +272,14 @@
         <field name="image_id" ref="storage_image_44"/>
         <field name="sequence">0</field>
         <field name="tag_id" ref="image_tag_2"/>
-        <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_product_chair_mid_century')])]"></field>
+        <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_attribute_value_4')])]"></field>
     </record>
 
     <record id="product_image_relation_46" model="product.image.relation">
         <field name="image_id" ref="storage_image_45"/>
         <field name="sequence">0</field>
         <field name="tag_id" ref="image_tag_2"/>
-        <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_product_chair_mid_century')])]"></field>
+        <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_attribute_value_4')])]"></field>
     </record>
 
     <record id="product_image_relation_53" model="product.image.relation">
@@ -317,7 +317,7 @@
         <field name="image_id" ref="storage_image_61"/>
         <field name="sequence">0</field>
         <field name="tag_id" ref="image_tag_1"/>
-        <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_product_chair_mid_century')])]"></field>
+        <field name="attribute_value_ids" eval="[(6,0,[ref('product.product_attribute_value_4')])]"></field>
     </record>
 
     <record id="product_image_relation_59" model="product.image.relation">
