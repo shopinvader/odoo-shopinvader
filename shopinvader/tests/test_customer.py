@@ -61,14 +61,14 @@ class TestCustomer(CommonCase):
         data = {
             "email": "address@customer.example.com",
             "name": "Address",
-            "country": {"id": self.env.ref("base.fr").id},
+            "country_id": self.env.ref("base.fr").id,
         }
         partner = self.env["res.partner"].create(data)
         self.assertEqual(partner.address_type, "profile")
         data = {
             "email": "parent@customer.example.com",
             "name": "Parent",
-            "country": {"id": self.env.ref("base.fr").id},
+            "country_id": self.env.ref("base.fr").id,
         }
         parent = self.env["res.partner"].create(data)
         partner.parent_id = parent.id

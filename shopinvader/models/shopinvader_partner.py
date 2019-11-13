@@ -106,4 +106,9 @@ class ShopinvaderPartner(models.Model):
         if not v.get("type"):
             v["type"] = "other"
         v.pop("email")
+        # Remove field who doesn't exist in res.partner (partner_email,...)
+        partner_fields = self.env["res.partner"]._fields.keys()
+        for key in vals:
+            if key not in partner_fields:
+                v.pop(key)
         return v
