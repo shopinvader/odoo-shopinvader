@@ -141,19 +141,26 @@ class SaleOrderLine(models.Model):
 
     @api.depends("order_id.shopinvader_backend_id", "product_id")
     def _compute_shopinvader_variant(self):
-        lang = self._context.get("lang")
-        if not lang:
+        lang_ctx = self._context.get("lang")
+        if not lang_ctx:
             _logger.warning(
                 "No lang specified for getting the shopinvader variant "
                 "take the first binding"
             )
         for record in self:
+            sale_order = record.order_id
+            lang = sale_order.partner_id.lang
+            is_anonymous = (
+                sale_order.partner_id
+                in sale_order.shopinvader_backend_id.anonymous_partner_id
+            )
+            # If the user is the anonymous one, we have to use the lang of
+            # the context
+            if is_anonymous:
+                lang = lang_ctx
             bindings = record.product_id.shopinvader_bind_ids
             for binding in bindings:
-                if (
-                    binding.backend_id
-                    != record.order_id.shopinvader_backend_id
-                ):
+                if binding.backend_id != sale_order.shopinvader_backend_id:
                     continue
                 if lang and binding.lang_id.code != lang:
                     continue
