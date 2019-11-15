@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 12.0.0.1.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 12.0.3.2.3 | Shopinvader
+[shopinvader](shopinvader/) | 12.0.3.2.4 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
@@ -35,7 +35,7 @@ addon | version | summary
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.3.2.0 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 | This addons is used to push the initial elasticsearch configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.1 | Shopinvader guest mode for locomotive
-[shopinvader_partner_firstname](shopinvader_partner_firstname/) | 12.0.1.0.0 | Shopinvader Customer firstname/lastname
+[shopinvader_partner_firstname](shopinvader_partner_firstname/) | 12.0.1.0.1 | Shopinvader Customer firstname/lastname
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 | Shopinvader pending cart reminder
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 | This module is used to choose a stock field during theexport (by backend)
