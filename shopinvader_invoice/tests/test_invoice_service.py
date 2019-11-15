@@ -40,7 +40,7 @@ class TestInvoiceService(CommonCase):
         :return: bool
         """
         # To have them into correct order
-        invoices = invoices.search([("id", "in", invoices.ids)])
+        invoices = invoices.search([('id', 'in', invoices.ids)])
         self.assertEquals(len(data), len(invoices))
         for current_data, invoice in zip(data, invoices):
             state_label = self._get_selection_label(invoice, "state")
