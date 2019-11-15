@@ -6,6 +6,16 @@ from odoo.addons.component.core import Component
 class InvoiceService(Component):
     _inherit = "shopinvader.invoice.service"
 
+    def get(self, _id):
+        """
+        Get info about given invoice id.
+        :param _id: int
+        :return: dict/json
+        """
+        invoice = self._get(_id)
+        result = {"data": self._to_json(invoice)[0]}
+        return result
+
     def search(self, **params):
         """
         Get every invoices related to logged user
@@ -13,6 +23,9 @@ class InvoiceService(Component):
         :return: dict
         """
         return self._paginate_search(**params)
+
+    def _validator_get(self):
+        return {}
 
     def _validator_search(self):
         """
