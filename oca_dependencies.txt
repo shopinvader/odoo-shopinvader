@@ -10,4 +10,5 @@ server-tools
 sale-workflow
 product-attribute
 partner-contact
+e-commerce
 odoo-misc https://github.com/shopinvader/odoo-misc 13.0

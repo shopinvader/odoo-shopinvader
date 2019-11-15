@@ -4,7 +4,7 @@
 # @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ShopinvaderProduct(models.Model):
@@ -22,16 +22,20 @@ class ShopinvaderProduct(models.Model):
         compute="_compute_shopinvader_link",
     )
 
-    @api.multi
-    def _get_shopinvader_variant_link(self, link_type):
+    def _get_linked_shopinvader_variants(self, link_type):
         self.ensure_one()
-        res = []
+        res = self.env["shopinvader.variant"].browse()
         current_backend = self.backend_id
-        # Get links of the given link_type
+        # Get links for the given link_type
         for link in self.product_template_link_ids.filtered(
-            lambda x: x.link_type == link_type
+            lambda x: x.type_id == link_type
         ):
-            bindings = link.linked_product_template_id.shopinvader_bind_ids
+            origin = self.record_id
+            if link.left_product_tmpl_id != origin:
+                target = link.left_product_tmpl_id
+            else:
+                target = link.right_product_tmpl_id
+            bindings = target.shopinvader_bind_ids
             for binding in bindings:
                 # Get bindings of the correct backend and lang
                 if (
@@ -41,16 +45,21 @@ class ShopinvaderProduct(models.Model):
                     # Set only the "main" shopinvader variant
                     for shopinvader_variant in binding.shopinvader_variant_ids:
                         if shopinvader_variant.main:
-                            res.append(shopinvader_variant.id)
+                            res |= shopinvader_variant
                             break
         return res
 
-    @api.multi
     def _compute_shopinvader_link(self):
         for record in self:
-            record.cross_selling_ids = record._get_shopinvader_variant_link(
-                "cross_sell"
+            record.cross_selling_ids = record._get_linked_shopinvader_variants(
+                self.env.ref(
+                    "product_template_multi_link."
+                    "product_template_link_type_cross_selling"
+                )
             )
-            record.up_selling_ids = record._get_shopinvader_variant_link(
-                "up_sell"
+            record.up_selling_ids = record._get_linked_shopinvader_variants(
+                self.env.ref(
+                    "product_template_multi_link."
+                    "product_template_link_type_up_selling"
+                )
             )
