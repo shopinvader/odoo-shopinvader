@@ -24,6 +24,7 @@ setuptools.setup(
         'odoo12-addon-shopinvader_locomotive',
         'odoo12-addon-shopinvader_locomotive_elasticsearch',
         'odoo12-addon-shopinvader_locomotive_guest_mode',
+        'odoo12-addon-shopinvader_partner_firstname',
         'odoo12-addon-shopinvader_partner_vat',
         'odoo12-addon-shopinvader_pending_cart_reminder',
         'odoo12-addon-shopinvader_product_stock',
