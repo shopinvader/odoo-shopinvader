@@ -30,6 +30,8 @@ class CommonMixin(ComponentMixin):
             params["shopinvader_backend"] = self.backend
         if "shopinvader_session" not in params:
             params["shopinvader_session"] = {}
+        if not params.get("partner_user") and params.get("partner"):
+            params["partner_user"] = params["partner"]
         collection = _PseudoCollection("shopinvader.backend", self.env)
         yield WorkContext(
             model_name="rest.service.registration",
