@@ -22,14 +22,30 @@ class ShopinvaderBackend(models.Model):
 
     @api.multi
     def force_recompute_all_binding_index(self):
-        self.mapped("se_backend_id.index_ids").force_recompute_all_binding()
+        self_sudoer = self._use_technical_user_if_set()
+        self_sudoer.mapped(
+            "se_backend_id.index_ids"
+        ).force_recompute_all_binding()
         return True
 
     @api.multi
     def force_batch_export_index(self):
-        for index in self.mapped("se_backend_id.index_ids"):
+        self_sudoer = self._use_technical_user_if_set()
+        for index in self_sudoer.mapped("se_backend_id.index_ids"):
             index.force_batch_export()
         return True
+
+    def _use_technical_user_if_set(self):
+        """
+        Change the current user by the technical user if it's set on the
+        current user's company.
+        :return: self
+        """
+        self_sudoer = self
+        tech_user = self.env.user.company_id.user_tech_id
+        if tech_user:
+            self_sudoer = self.sudo(tech_user.id)
+        return self_sudoer
 
     @api.multi
     def clear_index(self):
