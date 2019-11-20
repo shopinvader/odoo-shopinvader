@@ -25,57 +25,61 @@ class ShopinvaderVariant(models.Model):
             "selected": variant == self,
         }
 
-    def _get_available_attribute_value(self, attribute):
-        for attribute_line in self.attribute_line_ids:
-            if attribute_line.attribute_id == attribute:
-                return attribute_line.value_ids
-        return self.env["product.attribute.value"].browse(False)
-
     def _get_matching_variant(self, values):
         """Return the first variant that matches the values."""
         for variant in self.shopinvader_variant_ids:
             if values <= variant.attribute_value_ids:
                 return variant
-        return self.env["shopinvader.variant"].browse(False)
+        return self.env["shopinvader.variant"].browse()
 
-    def _get_selector_for_attribute(
-        self, attribute, restrict_values, prefered_values
-    ):
+    def _get_selector_for_attribute(self, previous_attributes, attribute):
+        """This method return the attribute selector for the attribute
+        For all value available for this attribute we search the variant that
+        match this value and use it for filling the selector information
+        """
         res = {"name": attribute.name, "values": []}
-        for value in self._get_available_attribute_value(attribute):
-            variant = self._get_matching_variant(
-                value + restrict_values + prefered_values
-            )
-            if not variant:
-                variant = self._get_matching_variant(value + restrict_values)
+        values = self.attribute_line_ids.filtered(
+            lambda l: l.attribute_id == attribute
+        ).value_ids
+
+        # These are the minimal value that the variant must match
+        # as the previous attribute have been selected
+        minimal_values = self.attribute_value_ids.filtered(
+            lambda v: v.attribute_id in previous_attributes
+        )
+
+        for value in values:
+            if value in self.attribute_value_ids:
+                variant = self
+            else:
+                # We try first to choose a variant that only have a
+                #  variation of current attribute.
+                variant = self._get_matching_variant(
+                    self.attribute_value_ids - values + value
+                )
+
+                if not variant:
+                    # If there is no matching variant, we choose a variant
+                    #  with more variation but match previous attribute selected
+                    variant = self._get_matching_variant(
+                        minimal_values + value
+                    )
             res["values"].append(self._prepare_selector_value(variant, value))
+
         return res
 
-    def _filter_values(self, attribute):
-        attribute_value = self.env["product.attribute.value"].browse(False)
-        other_values = self.env["product.attribute.value"].browse(False)
-        for value in self.attribute_value_ids:
-            if value.attribute_id == attribute:
-                attribute_value = value
-            else:
-                other_values += value
-        return attribute_value, other_values
-
     def _compute_variant_selector(self):
-        attributes = self.env["product.attribute"].search([])
         for record in self:
             data = []
-            p_attrs = record.mapped("attribute_value_ids.attribute_id")
-            restrict_values = self.env["product.attribute.value"].browse(False)
+            attributes = record.mapped(
+                "attribute_value_ids.attribute_id"
+            ).sorted("sequence")
+            previous_attributes = self.env["product.attribute"].browse()
             for attribute in attributes:
-                if attribute in p_attrs:
-                    attribute_value, other_values = record._filter_values(
-                        attribute
+                data.append(
+                    record._get_selector_for_attribute(
+                        previous_attributes, attribute
                     )
-                    data.append(
-                        record._get_selector_for_attribute(
-                            attribute, restrict_values, other_values
-                        )
-                    )
-                    restrict_values += attribute_value
+                )
+                previous_attributes |= attribute
             record.variant_selector = data
