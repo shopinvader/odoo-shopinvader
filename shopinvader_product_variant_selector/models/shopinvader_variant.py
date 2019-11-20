@@ -12,6 +12,11 @@ class ShopinvaderVariant(models.Model):
         compute="_compute_variant_selector", string="Shopinvader Selector"
     )
 
+    # TODO we should do an integration with
+    # shopinvader_product_state to be able to show the
+    # stock information
+    # shopinvader_product_stock_variant_selector
+    # should inherit this method
     def _prepare_selector_value(self, variant, value):
         return {
             "name": value.name,
