@@ -1,6 +1,8 @@
 This is shopinvader the odoo module for the new generation of e-commerce.
 
-This module will add the field "variant_selector" in the variant json (exported to algolia or elastic). This new field will allow you to easily switch between the variant of the product.
+This module adds the field `variant_selector` in the product variant metadata (exported to algolia or elastic). 
+The value of the field contains the possible combinations of variants that are available.
+This ease frontend development of variant selectors.
 
 
 Example of value
