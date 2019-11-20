@@ -4,20 +4,21 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
-class ShopinvaderVariantCase(TransactionCase):
-    def setUp(self):
-        super(ShopinvaderVariantCase, self).setUp()
-        self.backend = self.env.ref("shopinvader.backend_1")
-        self.lang = self.env.ref("base.lang_en")
-        self.template = self.env.ref(
-            "product.product_product_4_product_template"
-        )
-        self.env.ref("product.product_attribute_2").sequence = 1
-        self.env.ref("product.product_attribute_1").sequence = 2
-        self.env.ref("product.product_attribute_3").sequence = 3
+class ShopinvaderVariantCase(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super(ShopinvaderVariantCase, cls).setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        ref = cls.env.ref
+        cls.backend = ref("shopinvader.backend_1")
+        cls.lang = ref("base.lang_en")
+        cls.template = ref("product.product_product_4_product_template")
+        ref("product.product_attribute_2").sequence = 1
+        ref("product.product_attribute_1").sequence = 2
+        ref("product.product_attribute_3").sequence = 3
 
     def _configure_and_get_variant(self, code):
         self.template.create_variant_ids()
