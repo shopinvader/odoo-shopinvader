@@ -27,7 +27,7 @@ class ShopinvaderVariant(models.Model):
         return self.env["product.attribute.value"].browse(False)
 
     def _get_matching_variant(self, values):
-        """Return the first vairant that match the values"""
+        """Return the first variant that matches the values."""
         for variant in self.shopinvader_variant_ids:
             if values <= variant.attribute_value_ids:
                 return variant
