@@ -22,6 +22,7 @@ setuptools.setup(
         'odoo12-addon-shopinvader_invoice',
         'odoo12-addon-shopinvader_lead',
         'odoo12-addon-shopinvader_locomotive',
+        'odoo12-addon-shopinvader_locomotive_algolia',
         'odoo12-addon-shopinvader_locomotive_elasticsearch',
         'odoo12-addon-shopinvader_locomotive_guest_mode',
         'odoo12-addon-shopinvader_partner_firstname',
