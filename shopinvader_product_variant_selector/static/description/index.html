@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.14: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.15.1: http://docutils.sourceforge.net/" />
 <title>Shopinvader Product Variant Selector</title>
 <style type="text/css">
 
@@ -369,23 +369,140 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/tree/10.0/shopinvader_product_variant_selector"><img alt="shopinvader/odoo-shopinvader" src="https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github" /></a></p>
 <p>This is shopinvader the odoo module for the new generation of e-commerce.</p>
-<p>This module will add the field “variant_selector” in the variant json (exported to algolia or elastic). This new field will allow you to easily switch between the variant of the product.</p>
+<p>This module adds the field <cite>variant_selector</cite> in the product variant metadata (exported to algolia or elastic).
+The value of the field contains the possible combinations of variants that are available.
+This ease frontend development of variant selectors.</p>
+<div class="section" id="example-of-value">
+<h1>Example of value</h1>
+<pre class="code python literal-block">
+<span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Frame Type&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster-White-70x50cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Wooden&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;Wooden-White-70x50cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Frame Color&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;White&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster-White-70x50cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Black&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster-Black-70x50cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Grey&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster-Grey-70x50cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="p">},</span>
+
+        <span class="p">],</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster Size&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;values&quot;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;45x30cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;70x50cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster-White-70x50cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;90x60cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;sku&quot;</span><span class="p">:</span> <span class="s2">&quot;Poster-White-90x60cm&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;selected&quot;</span><span class="p">:</span> <span class="bp">False</span><span class="p">,</span>
+                <span class="s2">&quot;available&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">],</span>
+    <span class="p">},</span>
+<span class="p">],</span>
+</pre>
+</div>
+<div class="section" id="undertanding-the-way-to-select-attribute">
+<h1>Undertanding the way to select attribute</h1>
+<p>It’s also important to understand how variant are selected and how attribute value are filtered.</p>
+<p>Imaging a case where you have a child shoes with
+- 6 sizes: 15, 16, 17, 18, 19, 20
+- 3 colors: Green, Red, Yellow</p>
+<p>It’s a special shoes:
+- Green exist in size: 18, 19
+- Red exist in size: 15, 16, 17
+- Yellow exist in size: 18, 19, 20</p>
+<p>In your ERP you have configured to select is the size then the color.
+And the default variant is the first “Green 18”</p>
+<div class="section" id="step-1-you-go-to-the-page-of-your-product">
+<h2>Step 1 : You go to the page of your product.</h2>
+<p>You will have:</p>
+<pre class="code python literal-block">
+<span class="n">size</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span>
+<span class="n">color</span> <span class="p">:</span> <span class="p">[</span><span class="n">Green</span><span class="p">],</span> <span class="p">(</span><span class="n">Red</span><span class="p">),</span> <span class="n">Yellow</span>
+
+<span class="p">[]</span> <span class="n">mean</span> <span class="n">selected</span>
+<span class="p">()</span> <span class="n">mean</span> <span class="ow">not</span> <span class="n">available</span>
+</pre>
+<p>Only the color Green and Yellow are available because the size 18 is selected.</p>
+</div>
+<div class="section" id="step-2-now-you-select-the-color-yellow">
+<h2>Step 2: Now you select the color Yellow</h2>
+<p>You will have:</p>
+<pre class="code python literal-block">
+<span class="n">size</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="p">[</span><span class="mi">18</span><span class="p">],</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span>
+<span class="n">color</span> <span class="p">:</span> <span class="n">Green</span><span class="p">,</span> <span class="p">(</span><span class="n">Red</span><span class="p">),</span> <span class="p">[</span><span class="n">Yellow</span><span class="p">]</span>
+</pre>
+<p>Even if you select the color Yellow the size are now filetered because the second filter can not filter the first one.</p>
+</div>
+<div class="section" id="step-3-now-you-select-the-size-16">
+<h2>Step 3: Now you select the size 16</h2>
+<p>As only the Red color is available for this size you are redirected to the Red shoes and you have</p>
+<pre class="code python literal-block">
+<span class="n">size</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">19</span><span class="p">,</span> <span class="mi">20</span>
+<span class="n">color</span> <span class="p">:</span> <span class="p">(</span><span class="n">Green</span><span class="p">),</span> <span class="p">[</span><span class="n">Red</span><span class="p">],</span> <span class="p">(</span><span class="n">Yellow</span><span class="p">)</span>
+</pre>
+</div>
+<div class="section" id="why-not-trying-to-filter-the-size-when-changing-the-color">
+<h2>Why not trying to filter the size when changing the color?</h2>
+<p>Because if we do this if you select the size 16</p>
+<p>Then you will have this</p>
+<pre class="code python literal-block">
+<span class="n">size</span> <span class="p">:</span> <span class="mi">15</span><span class="p">,</span> <span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="mi">17</span><span class="p">,</span> <span class="p">(</span><span class="mi">18</span><span class="p">),</span> <span class="p">(</span><span class="mi">19</span><span class="p">),</span> <span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">color</span> <span class="p">:</span> <span class="p">(</span><span class="n">Green</span><span class="p">),</span> <span class="p">[</span><span class="n">Red</span><span class="p">],</span> <span class="p">(</span><span class="n">Yellow</span><span class="p">)</span>
+</pre>
+<p>And you will be locked in this situation without any possibility to select the Yellow shoes with size 19. There is an order for filling/selected the value of each option and selecting a value should only impact the next attribute not the previous one.</p>
 <p>This is the Odoo side of <a class="reference external" href="https://shopinvader.com">Shopinvader</a>.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
 <li><a class="reference internal" href="#bug-tracker" id="id1">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id2">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id3">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id4">Contributors</a></li>
-<li><a class="reference internal" href="#other-credits" id="id5">Other credits</a></li>
-<li><a class="reference internal" href="#maintainers" id="id6">Maintainers</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#credits" id="id2">Credits</a></li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id1">Bug Tracker</a></h1>
+<h3><a class="toc-backref" href="#id1">Bug Tracker</a></h3>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -393,28 +510,30 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id2">Credits</a></h1>
+<h3><a class="toc-backref" href="#id2">Credits</a></h3>
+</div>
+</div>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id3">Authors</a></h2>
+<h2>Authors</h2>
 <ul class="simple">
 <li>Akretion</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id4">Contributors</a></h2>
+<h2>Contributors</h2>
 <ul class="simple">
 <li>Sebastien BEAU &lt;<a class="reference external" href="mailto:sebastien.beau&#64;akretion.com">sebastien.beau&#64;akretion.com</a>&gt;</li>
 </ul>
 </div>
 <div class="section" id="other-credits">
-<h2><a class="toc-backref" href="#id5">Other credits</a></h2>
+<h2>Other credits</h2>
 <p>The development of this module has been financially supported by:</p>
 <ul class="simple">
 <li>Abilis</li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id6">Maintainers</a></h2>
+<h2>Maintainers</h2>
 <p>This module is part of the <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/tree/10.0/shopinvader_product_variant_selector">shopinvader/odoo-shopinvader</a> project on GitHub.</p>
 <p>You are welcome to contribute.</p>
 </div>
