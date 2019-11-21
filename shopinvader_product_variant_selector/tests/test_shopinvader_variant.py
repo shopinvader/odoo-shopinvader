@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -10,7 +9,7 @@ from odoo.tests.common import SavepointCase
 class ShopinvaderVariantCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(ShopinvaderVariantCase, cls).setUpClass()
+        super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         ref = cls.env.ref
         cls.backend = ref("shopinvader.backend_1")
