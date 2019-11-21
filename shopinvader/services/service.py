@@ -19,7 +19,20 @@ class BaseShopinvaderService(AbstractComponent):
 
     @property
     def partner(self):
+        # partner that matches the real profile on client side
+        # or its main contact which in any case is used for all
+        # account information.
         return self.work.partner
+
+    @property
+    def partner_user(self):
+        # partner that matches the real user on client side.
+        # The standard `self.partner` will match `partner_user`
+        # only when the main customer account is logged in.
+        # In this way we can support multiple actors for the same profile.
+        # TODO: check if there are place wher it's better to use
+        # `partner_user` instead of `partner`.
+        return self.work.partner_user
 
     @property
     def shopinvader_session(self):
