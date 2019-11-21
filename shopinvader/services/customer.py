@@ -109,19 +109,3 @@ class CustomerService(Component):
         response = self._assign_cart_and_get_store_cache()
         response["data"] = {"id": self.partner.id, "name": self.partner.name}
         return response
-
-    def _get_notification_type(self, partner, mode):
-        if mode == "create":
-            notif = "new_customer_welcome"
-            if not self.partner_validator.is_partner_validated(partner):
-                notif = "new_customer_welcome_not_validated"
-        return notif
-
-    def _notify_salesman_needed(self, backend_policy, partner, mode):
-        if backend_policy in ("all", "company_and_user"):
-            return True
-        elif backend_policy == "company" and partner.is_company:
-            return True
-        elif backend_policy == "user" and not partner.is_company:
-            return True
-        return False

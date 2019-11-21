@@ -43,6 +43,13 @@
         <field name="template_id" ref="email_customer_validated_notification"/>
     </record>
 
+    <record id="shopinvader_notification_customer_updated" model="shopinvader.notification">
+        <field name="backend_id" ref="backend_1"/>
+        <field name="notification_type">customer_updated</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="template_id" ref="email_customer_updated_notification"/>
+    </record>
+
     <record id="shopinvader_notification_address_created" model="shopinvader.notification">
         <field name="backend_id" ref="backend_1"/>
         <field name="notification_type">address_created</field>

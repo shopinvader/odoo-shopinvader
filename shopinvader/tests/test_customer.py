@@ -153,17 +153,3 @@ class TestCustomer(TestCustomerCommon):
         # now let's enable it w/ specific action
         partner.action_enable_for_shop()
         self.assertTrue(partner.shopinvader_enabled)
-
-    # TODO: test salesman notifications
-
-    def _find_activity(self, record):
-        domain = [
-            ("res_model_id", "=", self.env.ref("base.model_res_partner").id),
-            ("res_id", "=", record.id),
-            (
-                "activity_type_id",
-                "=",
-                self.env.ref("shopinvader.mail_activity_validate_customer").id,
-            ),
-        ]
-        return self.env["mail.activity"].search_count(domain)
