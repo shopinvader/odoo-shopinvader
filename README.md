@@ -33,6 +33,7 @@ addon | version | summary
 [shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 | Shopinvader Invoice
 [shopinvader_lead](shopinvader_lead/) | 12.0.2.0.0 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.3.2.0 | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 12.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 | This addons is used to push the initial elasticsearch configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.1 | Shopinvader guest mode for locomotive
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 12.0.1.0.1 | Shopinvader Customer firstname/lastname
