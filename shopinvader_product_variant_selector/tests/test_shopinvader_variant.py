@@ -15,10 +15,14 @@ class ShopinvaderVariantCase(SavepointCase):
         ref = cls.env.ref
         cls.backend = ref("shopinvader.backend_1")
         cls.lang = ref("base.lang_en")
-        cls.template = ref("product.product_product_4_product_template")
-        ref("product.product_attribute_2").sequence = 1
-        ref("product.product_attribute_1").sequence = 2
-        ref("product.product_attribute_3").sequence = 3
+        cls.template = cls.mref("product_template_1")
+        cls.maxDiff = None
+
+    @classmethod
+    def mref(cls, key):
+        return cls.env.ref(
+            "shopinvader_product_variant_selector.{}".format(key)
+        )
 
     def _configure_and_get_variant(self, code):
         self.template.create_variant_ids()
@@ -38,7 +42,9 @@ class ShopinvaderVariantCase(SavepointCase):
             "product_variant_ids.shopinvader_bind_ids"
         ):
             if variant.default_code == code:
-                return variant
+                # We volontary return a new browse record to avoid useless
+                # recompute linked to the prefetch
+                return self.env["shopinvader.variant"].browse(variant.id)
 
     def _inactive_variant(self, codes):
         for variant in self.template.mapped(
@@ -48,24 +54,24 @@ class ShopinvaderVariantCase(SavepointCase):
                 variant.active = False
 
     def test_selector_with_one_dimension(self):
-        self.env.ref("product.product_attribute_line_3").unlink()
-        self.env.ref("product.product_attribute_line_2").unlink()
-        variant = self._configure_and_get_variant("16 GB")
+        self.mref("product_attribute_line_2").unlink()
+        self.mref("product_attribute_line_3").unlink()
+        variant = self._configure_and_get_variant("Poster")
         self.assertEqual(
             variant.variant_selector,
             [
                 {
-                    "name": "Memory",
+                    "name": "Frame Type",
                     "values": [
                         {
-                            "name": "16 GB",
-                            "sku": "16 GB",
+                            "name": "Poster",
+                            "sku": "Poster",
                             "selected": True,
                             "available": True,
                         },
                         {
-                            "name": "32 GB",
-                            "sku": "32 GB",
+                            "name": "Wooden",
+                            "sku": "Wooden",
                             "selected": False,
                             "available": True,
                         },
@@ -75,40 +81,46 @@ class ShopinvaderVariantCase(SavepointCase):
         )
 
     def test_selector_with_two_dimension(self):
-        self.env.ref("product.product_attribute_line_3").unlink()
-        variant = self._configure_and_get_variant("White-16 GB")
+        self.mref("product_attribute_line_3").unlink()
+        variant = self._configure_and_get_variant("Poster-White")
         self.assertEqual(
             variant.variant_selector,
             [
                 {
-                    "name": "Color",
+                    "name": "Frame Type",
                     "values": [
                         {
-                            "name": "White",
-                            "sku": "White-16 GB",
+                            "name": "Poster",
+                            "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
-                            "name": "Black",
-                            "sku": "Black-16 GB",
+                            "name": "Wooden",
+                            "sku": "Wooden-White",
                             "selected": False,
                             "available": True,
                         },
                     ],
                 },
                 {
-                    "name": "Memory",
+                    "name": "Frame Color",
                     "values": [
                         {
-                            "name": "16 GB",
-                            "sku": "White-16 GB",
+                            "name": "White",
+                            "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
-                            "name": "32 GB",
-                            "sku": "White-32 GB",
+                            "name": "Black",
+                            "sku": "Poster-Black",
+                            "selected": False,
+                            "available": True,
+                        },
+                        {
+                            "name": "Grey",
+                            "sku": "Poster-Grey",
                             "selected": False,
                             "available": True,
                         },
@@ -118,43 +130,49 @@ class ShopinvaderVariantCase(SavepointCase):
         )
 
     def test_selector_with_two_dimension_and_inactive(self):
-        self.env.ref("product.product_attribute_line_3").unlink()
-        variant = self._configure_and_get_variant("White-16 GB")
-        self._inactive_variant(["White-32 GB"])
+        self.mref("product_attribute_line_3").unlink()
+        variant = self._configure_and_get_variant("Poster-White")
+        self._inactive_variant(["Poster-Black"])
         self.assertEqual(
             variant.variant_selector,
             [
                 {
-                    "name": "Color",
+                    "name": "Frame Type",
                     "values": [
                         {
-                            "name": "White",
-                            "sku": "White-16 GB",
+                            "name": "Poster",
+                            "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
-                            "name": "Black",
-                            "sku": "Black-16 GB",
+                            "name": "Wooden",
+                            "sku": "Wooden-White",
                             "selected": False,
                             "available": True,
                         },
                     ],
                 },
                 {
-                    "name": "Memory",
+                    "name": "Frame Color",
                     "values": [
                         {
-                            "name": "16 GB",
-                            "sku": "White-16 GB",
+                            "name": "White",
+                            "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
-                            "name": "32 GB",
+                            "name": "Black",
                             "sku": "",
                             "selected": False,
                             "available": False,
+                        },
+                        {
+                            "name": "Grey",
+                            "sku": "Poster-Grey",
+                            "selected": False,
+                            "available": True,
                         },
                     ],
                 },
@@ -162,138 +180,154 @@ class ShopinvaderVariantCase(SavepointCase):
         )
 
     def test_selector_with_three_dimension_and_inactive(self):
-        value = self.env["product.attribute.value"].create(
-            {
-                "attribute_id": self.ref("product.product_attribute_3"),
-                "name": "42 GHz",
-            }
-        )
-        self.env.ref("product.product_attribute_line_3").write(
-            {"value_ids": [(4, value.id)]}
-        )
-        variant = self._configure_and_get_variant("White-16 GB-2.4 GHz")
-        self._inactive_variant(["White-32 GB-2.4 GHz", "White-16 GB-42 GHz"])
+        variant = self._configure_and_get_variant("Poster-White-70x50cm")
+        self._inactive_variant(["Poster-White-45x30cm"])
         self.assertEqual(
             variant.variant_selector,
             [
                 {
-                    "name": "Color",
+                    "name": "Frame Type",
+                    "values": [
+                        {
+                            "name": "Poster",
+                            "sku": "Poster-White-70x50cm",
+                            "selected": True,
+                            "available": True,
+                        },
+                        {
+                            "name": "Wooden",
+                            "sku": "Wooden-White-70x50cm",
+                            "selected": False,
+                            "available": True,
+                        },
+                    ],
+                },
+                {
+                    "name": "Frame Color",
                     "values": [
                         {
                             "name": "White",
-                            "sku": "White-16 GB-2.4 GHz",
+                            "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Black",
-                            "sku": "Black-16 GB-2.4 GHz",
+                            "sku": "Poster-Black-70x50cm",
+                            "selected": False,
+                            "available": True,
+                        },
+                        {
+                            "name": "Grey",
+                            "sku": "Poster-Grey-70x50cm",
                             "selected": False,
                             "available": True,
                         },
                     ],
                 },
                 {
-                    "name": "Memory",
+                    "name": "Poster Size",
                     "values": [
                         {
-                            "name": "16 GB",
-                            "sku": "White-16 GB-2.4 GHz",
-                            "selected": True,
-                            "available": True,
-                        },
-                        {
-                            "name": "32 GB",
-                            "sku": "White-32 GB-42 GHz",
-                            "selected": False,
-                            "available": True,
-                        },
-                    ],
-                },
-                {
-                    "name": "Wi-Fi",
-                    "values": [
-                        {
-                            "name": "2.4 GHz",
-                            "sku": "White-16 GB-2.4 GHz",
-                            "selected": True,
-                            "available": True,
-                        },
-                        {
-                            "name": "42 GHz",
+                            "name": "45x30cm",
                             "sku": "",
                             "selected": False,
                             "available": False,
+                        },
+                        {
+                            "name": "70x50cm",
+                            "sku": "Poster-White-70x50cm",
+                            "selected": True,
+                            "available": True,
+                        },
+                        {
+                            "name": "90x60cm",
+                            "sku": "Poster-White-90x60cm",
+                            "selected": False,
+                            "available": True,
                         },
                     ],
                 },
             ],
         )
 
-    def test_selector_with_three_dimension_inactive_specific_variant(self):
-        value = self.env["product.attribute.value"].create(
-            {
-                "attribute_id": self.ref("product.product_attribute_3"),
-                "name": "42 GHz",
-            }
-        )
-        self.env.ref("product.product_attribute_line_3").write(
-            {"value_ids": [(4, value.id)]}
-        )
-        variant = self._configure_and_get_variant("White-32 GB-42 GHz")
+    def test_selector_with_three_dimension_with_many_inactive(self):
+        variant = self._configure_and_get_variant("Poster-White-70x50cm")
+        # We inactive all Wooden product than match the White and 70x50cm value
+        # in order to force the system to propose for the selector Frame Type
+        # a variant that do not match this 2 values
         self._inactive_variant(
-            ["White-32 GB-2.4 GHz", "White-16 GB-42 GHz", "Black-32 GB-42 GHz"]
+            [
+                "Poster-White-45x30cm",
+                "Wooden-White-45x30cm",
+                "Wooden-White-70x50cm",
+                "Wooden-White-90x60cm",
+                "Wooden-Black-70x50cm",
+                "Poster-Black-70x50cm",
+            ]
         )
         self.assertEqual(
             variant.variant_selector,
             [
                 {
-                    "name": "Color",
+                    "name": "Frame Type",
+                    "values": [
+                        {
+                            "name": "Poster",
+                            "sku": "Poster-White-70x50cm",
+                            "selected": True,
+                            "available": True,
+                        },
+                        {
+                            "name": "Wooden",
+                            "sku": "Wooden-Black-45x30cm",
+                            "selected": False,
+                            "available": True,
+                        },
+                    ],
+                },
+                {
+                    "name": "Frame Color",
                     "values": [
                         {
                             "name": "White",
-                            "sku": "White-32 GB-42 GHz",
+                            "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Black",
-                            "sku": "Black-16 GB-2.4 GHz",
+                            "sku": "Poster-Black-45x30cm",
+                            "selected": False,
+                            "available": True,
+                        },
+                        {
+                            "name": "Grey",
+                            "sku": "Poster-Grey-70x50cm",
                             "selected": False,
                             "available": True,
                         },
                     ],
                 },
                 {
-                    "name": "Memory",
+                    "name": "Poster Size",
                     "values": [
                         {
-                            "name": "16 GB",
-                            "sku": "White-16 GB-2.4 GHz",
-                            "selected": False,
-                            "available": True,
-                        },
-                        {
-                            "name": "32 GB",
-                            "sku": "White-32 GB-42 GHz",
-                            "selected": True,
-                            "available": True,
-                        },
-                    ],
-                },
-                {
-                    "name": "Wi-Fi",
-                    "values": [
-                        {
-                            "name": "2.4 GHz",
+                            "name": "45x30cm",
                             "sku": "",
                             "selected": False,
                             "available": False,
                         },
                         {
-                            "name": "42 GHz",
-                            "sku": "White-32 GB-42 GHz",
+                            "name": "70x50cm",
+                            "sku": "Poster-White-70x50cm",
                             "selected": True,
+                            "available": True,
+                        },
+                        {
+                            "name": "90x60cm",
+                            "sku": "Poster-White-90x60cm",
+                            "selected": False,
                             "available": True,
                         },
                     ],
