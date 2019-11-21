@@ -74,23 +74,23 @@
             <field name="standard_price">50.0</field>
             <field name="list_price">50.0</field>
             <field name="type">consu</field>
-            <field name="uom_id" ref="product.product_uom_unit"/>
-            <field name="uom_po_id" ref="product.product_uom_unit"/>
+            <field name="uom_id" ref="uom.product_uom_unit"/>
+            <field name="uom_po_id" ref="uom.product_uom_unit"/>
         </record>
 
-        <record id="product_attribute_line_1" model="product.attribute.line">
+        <record id="product_attribute_line_1" model="product.template.attribute.line">
             <field name="product_tmpl_id" ref="product_template_1"/>
             <field name="attribute_id" ref="product_attribute_1"/>
             <field name="value_ids" eval="[(6,0,[ref('product_attribute_1_value_1'), ref('product_attribute_1_value_2')])]"/>
         </record>
 
-        <record id="product_attribute_line_2" model="product.attribute.line">
+        <record id="product_attribute_line_2" model="product.template.attribute.line">
             <field name="product_tmpl_id" ref="product_template_1"/>
             <field name="attribute_id" ref="product_attribute_2"/>
             <field name="value_ids" eval="[(6,0,[ref('product_attribute_2_value_1'), ref('product_attribute_2_value_2'), ref('product_attribute_2_value_3')])]"/>
         </record>
 
-        <record id="product_attribute_line_3" model="product.attribute.line">
+        <record id="product_attribute_line_3" model="product.template.attribute.line">
             <field name="product_tmpl_id" ref="product_template_1"/>
             <field name="attribute_id" ref="product_attribute_3"/>
             <field name="value_ids" eval="[(6,0,[ref('product_attribute_3_value_1'), ref('product_attribute_3_value_2'), ref('product_attribute_3_value_3')])]"/>
