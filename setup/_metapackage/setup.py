@@ -40,6 +40,7 @@ setuptools.setup(
         'odoo10-addon-shopinvader_product_stock',
         'odoo10-addon-shopinvader_product_stock_state',
         'odoo10-addon-shopinvader_product_template_multi_link',
+        'odoo10-addon-shopinvader_product_variant_selector',
         'odoo10-addon-shopinvader_promotion_rule',
         'odoo10-addon-shopinvader_quotation',
         'odoo10-addon-shopinvader_sale_profile',
