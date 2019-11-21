@@ -16,19 +16,23 @@ class TestSiteSearchEngineExport(Base):
         cls.indexes = [
             {
                 "name": "categories",
-                "index": "demo_elasticsearch_backend_shopinvader_category",
+                "index": "demo_algolia_backend_shopinvader_category",
             },
             {
                 "name": "products",
-                "index": "demo_elasticsearch_backend_shopinvader_variant",
+                "index": "demo_algolia_backend_shopinvader_variant",
             },
         ]
         cls.expected_settings["indices"] = json.dumps(cls.indexes)
-        cls.expected_settings["url"] = "http://127.0.0.1:9200"
+        cls.expected_settings["application_id"] = "ABCDEFG"
+        cls.expected_settings["api_key"] = "123456789"
 
     @classmethod
     def _setup_search_engine(cls):
-        cls.specific_backend = cls.env.ref("connector_elasticsearch.backend_1")
+        cls.specific_backend = cls.env.ref("connector_algolia.se_algolia_demo")
+        cls.specific_backend.write(
+            {"algolia_app_id": "ABCDEFG", "algolia_api_key": "123456789"}
+        )
         cls.backend.se_backend_id = cls.specific_backend.se_backend_id
         cls.search_engine_name = cls.backend.se_backend_id.search_engine_name
 
@@ -60,7 +64,8 @@ class TestSiteSearchEngineExport(Base):
         old_values = {
             "indices": "foo",
             "routes": "baz",
-            "url": "http://replace.url",
+            "application_id": "REPLACE_ID",
+            "api_key": "REPLACE_KEY",
         }
         # force this values in settings
         self._update_site_metafields(self.search_engine_name, old_values)
@@ -80,7 +85,8 @@ class TestSiteSearchEngineExport(Base):
         old_values = {
             "indices": "foo",
             "routes": "baz",
-            "url": "http://replace.url",
+            "application_id": "REPLACE_ID",
+            "api_key": "REPLACE_KEY",
         }
         # force this values in settings
         self._update_site_metafields(self.search_engine_name, old_values)
