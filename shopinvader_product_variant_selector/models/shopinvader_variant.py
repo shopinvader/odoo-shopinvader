@@ -26,13 +26,13 @@ class ShopinvaderVariant(models.Model):
         }
 
     def _get_matching_variant(self, values):
-        """Return the first variant that matches the values."""
+        """Return the first active variant that matches the values."""
         for variant in self.shopinvader_variant_ids:
-            if values <= variant.attribute_value_ids:
+            if variant.active and values <= variant.attribute_value_ids:
                 return variant
         return self.env["shopinvader.variant"].browse()
 
-    def _get_selector_for_attribute(self, previous_attributes, attribute):
+    def _get_selector_for_attribute(self, attribute, selected_values):
         """This method return the attribute selector for the attribute
         For all value available for this attribute we search the variant that
         match this value and use it for filling the selector information
@@ -41,13 +41,6 @@ class ShopinvaderVariant(models.Model):
         values = self.attribute_line_ids.filtered(
             lambda l: l.attribute_id == attribute
         ).value_ids
-
-        # These are the minimal value that the variant must match
-        # as the previous attribute have been selected
-        minimal_values = self.attribute_value_ids.filtered(
-            lambda v: v.attribute_id in previous_attributes
-        )
-
         for value in values:
             if value in self.attribute_value_ids:
                 variant = self
@@ -57,12 +50,11 @@ class ShopinvaderVariant(models.Model):
                 variant = self._get_matching_variant(
                     self.attribute_value_ids - values + value
                 )
-
                 if not variant:
                     # If there is no matching variant, we choose a variant
-                    #  with more variation but match previous attribute selected
+                    #  with more variation but match previous values selected
                     variant = self._get_matching_variant(
-                        minimal_values + value
+                        selected_values + value
                     )
             res["values"].append(self._prepare_selector_value(variant, value))
 
@@ -74,12 +66,14 @@ class ShopinvaderVariant(models.Model):
             attributes = record.mapped(
                 "attribute_value_ids.attribute_id"
             ).sorted("sequence")
-            previous_attributes = self.env["product.attribute"].browse()
+            selected_values = self.env["product.attribute.value"].browse()
             for attribute in attributes:
                 data.append(
                     record._get_selector_for_attribute(
-                        previous_attributes, attribute
+                        attribute, selected_values
                     )
                 )
-                previous_attributes |= attribute
+                selected_values |= record.attribute_value_ids.filtered(
+                    lambda v: v.attribute_id == attribute
+                )
             record.variant_selector = data
