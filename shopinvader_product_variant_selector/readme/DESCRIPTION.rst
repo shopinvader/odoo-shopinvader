@@ -13,57 +13,70 @@ Example of value
 
     [
         {
-            "name": "Color",
+            "name": "Frame Type",
+            "values": [
+                {
+                    "name": "Poster",
+                    "sku": "Poster-White-70x50cm",
+                    "selected": True,
+                    "available": True,
+                },
+                {
+                    "name": "Wooden",
+                    "sku": "Wooden-White-70x50cm",
+                    "selected": False,
+                    "available": True,
+                },
+            ],
+        },
+        {
+            "name": "Frame Color",
             "values": [
                 {
                     "name": "White",
-                    "sku": "White-32 GB-42 GHz",
+                    "sku": "Poster-White-70x50cm",
                     "selected": True,
                     "available": True,
                 },
                 {
                     "name": "Black",
-                    "sku": "Black-16 GB-2.4 GHz",
-                    "selected": False,
-                    "available": True,
-                },
-            ],
-        },
-        {
-            "name": "Memory",
-            "values": [
-                {
-                    "name": "16 GB",
-                    "sku": "White-16 GB-2.4 GHz",
+                    "sku": "Poster-Black-70x50cm",
                     "selected": False,
                     "available": True,
                 },
                 {
-                    "name": "32 GB",
-                    "sku": "White-32 GB-42 GHz",
-                    "selected": True,
+                    "name": "Grey",
+                    "sku": "Poster-Grey-70x50cm",
+                    "selected": False,
                     "available": True,
                 },
+
             ],
         },
         {
-            "name": "Wi-Fi",
+            "name": "Poster Size",
             "values": [
                 {
-                    "name": "2.4 GHz",
+                    "name": "45x30cm",
                     "sku": "",
                     "selected": False,
                     "available": False,
                 },
                 {
-                    "name": "42 GHz",
-                    "sku": "White-32 GB-42 GHz",
+                    "name": "70x50cm",
+                    "sku": "Poster-White-70x50cm",
                     "selected": True,
+                    "available": True,
+                },
+                {
+                    "name": "90x60cm",
+                    "sku": "Poster-White-90x60cm",
+                    "selected": False,
                     "available": True,
                 },
             ],
         },
-    ]
+    ],
 
 Undertanding the way to select attribute
 ------------------------------------------------

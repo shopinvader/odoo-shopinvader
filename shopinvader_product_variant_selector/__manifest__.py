@@ -16,4 +16,5 @@
     "external_dependencies": {"python": [], "bin": []},
     "depends": ["shopinvader"],
     "data": ["data/ir_export_product.xml"],
+    "demo": ["demo/product_demo.xml"],
 }
