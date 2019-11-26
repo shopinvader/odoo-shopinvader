@@ -78,21 +78,21 @@ Example of value
         },
     ],
 
-Undertanding the way to select attribute
+Understanding the way to select attributes
 ------------------------------------------------
 
-It's also important to understand how variant are selected and how attribute value are filtered.
+It's also important to understand how variants are selected and how attributes' values are filtered.
 
-Imaging a case where you have a child shoes with
+Imagine a case where you have shoes with
 - 6 sizes: 15, 16, 17, 18, 19, 20
 - 3 colors: Green, Red, Yellow
 
-It's a special shoes:
-- Green exist in size: 18, 19
-- Red exist in size: 15, 16, 17
-- Yellow exist in size: 18, 19, 20
+and some exceptions:
+- Green is available in size: 18, 19
+- Red is available in size: 15, 16, 17
+- Yellow is available in size: 18, 19, 20
 
-In your ERP you have configured to select is the size then the color.
+In your ERP you have configured to select first the size then the color.
 And the default variant is the first "Green 18"
 
 Step 1 : You go to the page of your product.
@@ -122,7 +122,7 @@ You will have:
     size : 15, 16, 17, [18], 19, 20
     color : Green, (Red), [Yellow]
 
-Even if you select the color Yellow the size are now filetered because the second filter can not filter the first one.
+Even if you select the color Yellow the size are now filtered because the second filter cannot affect the first one.
 
 
 Step 3: Now you select the size 16
@@ -139,9 +139,8 @@ As only the Red color is available for this size you are redirected to the Red s
 Why not trying to filter the size when changing the color?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Because if we do this if you select the size 16
+Allowing this would mean that if you select the size 16 you will have something like this:
 
-Then you will have this
 
 .. code-block:: python
 
@@ -149,7 +148,7 @@ Then you will have this
     color : (Green), [Red], (Yellow)
 
 
-And you will be locked in this situation without any possibility to select the Yellow shoes with size 19. There is an order for filling/selected the value of each option and selecting a value should only impact the next attribute not the previous one.
+And you will be locked in this situation without any possibility to select the Yellow shoes with size 19. There is an order for filling/selecting the value of each options and selecting a value should only impact the next attribute not the previous one.
 
 
 This is the Odoo side of Shopinvader_.
