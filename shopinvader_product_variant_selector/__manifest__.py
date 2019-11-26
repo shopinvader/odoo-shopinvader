@@ -4,15 +4,14 @@
 
 {
     "name": "Shopinvader Product Variant Selector",
-    "summary": "Module that allow multi selector on shopinvader site",
+    "summary": "Ease creation of variants selector on shopinvader sites",
     "version": "12.0.1.0.0",
     "category": "Shopinvader",
-    "website": "www.akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {"python": [], "bin": []},
     "depends": ["shopinvader"],
     "data": ["data/ir_export_product.xml"],
     "demo": ["demo/product_demo.xml"],
