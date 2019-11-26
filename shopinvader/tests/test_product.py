@@ -11,12 +11,6 @@ from .common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):
-    def install_lang(self, lang_xml_id):
-        lang = self.env.ref(lang_xml_id)
-        wizard = self.env["base.language.install"].create({"lang": lang.code})
-        wizard.lang_install()
-        return lang
-
     def test_create_shopinvader_variant(self):
         self.assertEqual(
             len(self.template.product_variant_ids),
@@ -258,7 +252,7 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
 
     def test_category_child_with_two_lang(self):
-        lang = self.install_lang("base.lang_fr")
+        lang = self._install_lang("base.lang_fr")
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         categ = self.env.ref("product.product_category_1")
@@ -285,7 +279,7 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
 
     def test_product_category_with_two_lang(self):
-        lang = self.install_lang("base.lang_fr")
+        lang = self._install_lang("base.lang_fr")
         product = self.env.ref("product.product_product_4")
         product.with_context(lang="fr_FR").name = "Bureau Personnalisable"
         product.flush()
@@ -877,3 +871,21 @@ class ProductCase(ProductCommonCase):
         # Disable only 1 variant
         with self._check_correct_unbind_active(self.shopinvader_variants):
             fields.first(self.shopinvader_variants).write({"active": False})
+
+    def test_get_invader_variant(self):
+        lang = self._install_lang("base.lang_fr")
+        self.backend.lang_ids |= lang
+        prod = self.env.ref("product.product_product_4b")
+        self._bind_products(prod)
+        variant_en = prod.shopinvader_bind_ids.filtered(
+            lambda x: x.lang_id.code == "en_US"
+        )
+        variant_fr = prod.shopinvader_bind_ids.filtered(
+            lambda x: x.lang_id.code == "fr_FR"
+        )
+        self.assertEqual(
+            prod._get_invader_variant(self.backend, "en_US"), variant_en
+        )
+        self.assertEqual(
+            prod._get_invader_variant(self.backend, "fr_FR"), variant_fr
+        )
