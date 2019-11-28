@@ -42,7 +42,7 @@ class AddressService(Component):
 
     def update(self, _id, **params):
         address = self._get(_id)
-        address.write(self._prepare_params(params))
+        address.write(self._prepare_params(params, mode="update"))
         res = self.search()
         if address.address_type == "profile":
             res["store_cache"] = {"customer": self._to_json(address)[0]}
@@ -165,7 +165,7 @@ class AddressService(Component):
     def _to_json(self, address):
         return address.jsonify(self._json_parser())
 
-    def _prepare_params(self, params):
+    def _prepare_params(self, params, mode="create"):
         for key in ["country", "state"]:
             if key in params:
                 val = params.pop(key)
@@ -180,7 +180,9 @@ class AddressService(Component):
             params["industry_id"] = params.get("industry_id")["id"]
         if params.get("title"):
             params["title"] = params.get("title")["id"]
-        params[
-            "shopinvader_enabled"
-        ] = self.partner_validator.enabled_by_params(params, "address")
+
+        if mode == "create":
+            params[
+                "shopinvader_enabled"
+            ] = self.partner_validator.enabled_by_params(params, "address")
         return params
