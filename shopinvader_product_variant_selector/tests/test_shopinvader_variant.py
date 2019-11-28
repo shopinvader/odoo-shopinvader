@@ -252,9 +252,10 @@ class ShopinvaderVariantCase(SavepointCase):
 
     def test_selector_with_three_dimension_with_many_inactive(self):
         variant = self._configure_and_get_variant("Poster-White-70x50cm")
-        # We make inactive all Wooden product than match the White and 70x50cm value
-        # in order to force the system to propose for the selector Frame Type
-        # a variant that does not match these 2 values
+        # We make inactive all Wooden product than match the White
+        # and 70x50cm value in order to force the system to propose
+        # for the selector Frame Type a variant that does not match
+        # these 2 values
         self._inactive_variant(
             [
                 "Poster-White-45x30cm",
