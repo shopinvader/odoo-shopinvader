@@ -9,9 +9,9 @@ from odoo.addons.component.core import Component
 class ShopInvaderCustomerService(Component):
     _inherit = "shopinvader.customer.service"
 
-    def _prepare_params(self, params):
+    def _prepare_params(self, params, mode="create"):
         params = super(ShopInvaderCustomerService, self)._prepare_params(
-            params
+            params, mode=mode
         )
         backend = self.shopinvader_backend
         if backend.use_sale_profile:
