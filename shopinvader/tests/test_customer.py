@@ -26,6 +26,7 @@ class TestCustomerCommon(CommonCase):
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
             self.service = work.component(usage="customer")
+            self.address_service = work.component(usage="addresses")
 
     def _test_partner_data(self, partner, data):
         for key in data:
@@ -121,6 +122,13 @@ class TestCustomer(TestCustomerCommon):
         partner = self.env["res.partner"].browse(res["id"])
         # must not be validated
         self.assertFalse(partner.shopinvader_enabled)
+        # now let's enable it w/ specific action
+        partner.action_enable_for_shop()
+        self.assertTrue(partner.shopinvader_enabled)
+        # no let's call an update -> validation state won't change
+        data = dict(data, email="funny@boo.com")
+        self.address_service.dispatch("update", partner.id, params=data)
+        self.assertTrue(partner.shopinvader_enabled)
 
     def test_create_customer_validation_company(self):
         data = dict(
