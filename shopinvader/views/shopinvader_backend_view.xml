@@ -74,6 +74,7 @@
                         <page name="products" string="Products">
                             <group>
                                 <field name="use_shopinvader_product_name"/>
+                                <field name="authorize_not_bound_products"/>
                             </group>
                         </page>
                         <page name="localization" string="Localization">

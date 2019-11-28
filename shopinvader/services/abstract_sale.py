@@ -20,6 +20,9 @@ class AbstractSaleService(AbstractComponent):
             "default_code:sku",
         ]
 
+    def _parser_unbound_product(self):
+        return ["name", "id", "default_code:sku"]
+
     def _convert_one_sale(self, sale):
         sale.ensure_one()
         return {
@@ -43,14 +46,28 @@ class AbstractSaleService(AbstractComponent):
     def _is_item(self, line):
         return True
 
-    def _convert_one_line(self, line):
+    def _get_product_to_convert(self, line):
+        """
+        Get the product to display on cart line
+        :param line:
+        :return: product.product
+        """
         if line.shopinvader_variant_id:
-            # TODO we should reuse the parser of the index
-            product = line.shopinvader_variant_id.jsonify(
-                self._parser_product()
-            )[0]
+            return (line.shopinvader_variant_id, self._parser_product)
+        elif (
+            line.product_id
+            and self.shopinvader_backend.authorize_not_bound_products
+        ):
+            return (line.product_id, self._parser_unbound_product)
         else:
-            product = {}
+            return (False, False)
+
+    def _convert_one_line(self, line):
+        product = {}
+        product_to_convert, parser = self._get_product_to_convert(line)
+        if product_to_convert:
+            # TODO we should reuse the parser of the index
+            product = product_to_convert.jsonify(parser())[0]
         return {
             "id": line.id,
             "product": product,

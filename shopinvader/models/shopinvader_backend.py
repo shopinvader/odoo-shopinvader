@@ -108,6 +108,11 @@ class ShopinvaderBackend(models.Model):
         " the computation will be done on the fly to ensure data"
         " integrity"
     )
+    authorize_not_bound_products = fields.Boolean(
+        help="Check this if you want to authorize cart to display products"
+        "that are not bound to this backend. This can be useful if"
+        "you want to modify existing carts from backend."
+    )
 
     _sql_constraints = [
         (

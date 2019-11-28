@@ -15,6 +15,7 @@ class AbstractItemCase(object):
         self.product_2 = self.env.ref("product.product_product_13")
         self.product_3 = self.env.ref("product.product_product_11")
         self.pricelist = self.env.ref("product.list0")
+        self.shopinvader_backend = self.env.ref("shopinvader.backend_1")
 
     def extract_cart(self, response):
         self.shopinvader_session["cart_id"] = response["set_session"][
@@ -108,6 +109,37 @@ class AbstractItemCase(object):
         self.add_item(self.product_1.id, 2)
         self._check_nbr_job_created(0)
         self._perform_created_job()
+
+    def test_add_unbound_item_with_an_existing_cart(self):
+        self.sale_line_obj = self.env["sale.order.line"]
+        self.unbound_product = self.product_3.copy()
+        cart = self.service.search()["data"]
+        nbr_line = len(cart["lines"]["items"])
+        vals = {"product_id": self.unbound_product.id}
+        values = self.sale_line_obj.play_onchanges(vals)
+        values.update(
+            {
+                "order_id": cart.get("id"),
+                "product_uom_qty": 3.0,
+                "product_id": self.unbound_product.id,
+            }
+        )
+        self.line = self.sale_line_obj.create(values)
+        cart = self.service.search()["data"]
+        product_json = cart["lines"]["items"][-1]["product"]
+        self.assertEquals(len(cart["lines"]["items"]), nbr_line + 1)
+        self.assertEquals(product_json, {})
+        self.shopinvader_backend.authorize_not_bound_products = True
+        cart = self.service.search()["data"]
+        product_json = cart["lines"]["items"][-1]["product"]
+        self.assertEquals(
+            product_json,
+            {
+                "id": self.unbound_product.id,
+                "name": u"iPod",
+                "sku": u"E-COM12",
+            },
+        )
 
     def test_update_item(self):
         line_id = self.cart.order_line[0].id
