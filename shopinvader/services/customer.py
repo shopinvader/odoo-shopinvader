@@ -56,9 +56,9 @@ class CustomerService(Component):
         )
         return schema
 
-    def _prepare_params(self, params):
+    def _prepare_params(self, params, mode="create"):
         address = self.component(usage="addresses")
-        params = address._prepare_params(params)
+        params = address._prepare_params(params, mode=mode)
         # fmt: off
         params.update(
             {
@@ -68,11 +68,12 @@ class CustomerService(Component):
             }
         )
         # fmt: on
-        if params.get("is_company"):
-            params["is_company"] = True
-        params[
-            "shopinvader_enabled"
-        ] = self.partner_validator.enabled_by_params(params, "profile")
+        if mode == "create":
+            if params.get("is_company"):
+                params["is_company"] = True
+            params[
+                "shopinvader_enabled"
+            ] = self.partner_validator.enabled_by_params(params, "profile")
         return params
 
     def _get_and_assign_cart(self):
