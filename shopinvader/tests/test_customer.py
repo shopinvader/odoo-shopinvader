@@ -27,6 +27,7 @@ class TestCustomer(CommonCase):
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
             self.service = work.component(usage="customer")
+            self.address_service = work.component(usage="addresses")
 
     def test_create_customer(self):
         self.data["external_id"] = "D5CdkqOEL"
