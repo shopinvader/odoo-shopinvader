@@ -3,6 +3,8 @@ rest-framework
 connector
 queue
 server-auth
+server-env
+e-commerce
 search-engine
 server-tools
 sale-workflow
