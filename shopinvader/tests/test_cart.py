@@ -413,6 +413,30 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.assertEqual(cart_bis.state, "draft")
         self.assertEqual(cart_bis.partner_id, self.partner)
 
+    def test_cart_deleted_then_search(self):
+        """
+        When a user have a cart into session (cart_id) and this cart is
+        removed (or doesn't match anymore to be loaded by the service),
+        the search shouldn't create a new empty cart.
+        This test ensure the search will not create a new cart is this case.
+        :return:
+        """
+        cart = self.service._get()
+        # Ensure correctly created
+        self.assertTrue(cart.exists())
+        # Put the cart into the session
+        self.service.shopinvader_session.update({"cart_id": cart.id})
+        # Delete the cart
+        cart.unlink()
+        self.assertFalse(cart.exists())
+        nb_sale_order_before = self.cart.search_count([])
+        result = self.service.search()
+        nb_sale_order_after = self.cart.search_count([])
+        self.assertDictEqual(result.get("data", {}), {})
+        # Ensure no new SO has been created
+        self.assertEqual(nb_sale_order_after, nb_sale_order_before)
+        return
+
 
 class ConnectedCartNoTaxCase(CartCase):
     def setUp(self, *args, **kwargs):
