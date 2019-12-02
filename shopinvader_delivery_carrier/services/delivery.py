@@ -158,4 +158,7 @@ class DeliveryService(Component):
         sale_obj = self.env[sale_service._expose_model]
         sale_domain = sale_service._get_base_search_domain()
         pickings = sale_obj.search(sale_domain).mapped("picking_ids")
+        pickings = pickings.filtered(
+            lambda p: p.picking_type_id.code == "outgoing"
+        )
         return [("id", "in", pickings.ids)]
