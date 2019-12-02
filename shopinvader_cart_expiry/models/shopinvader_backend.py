@@ -17,6 +17,11 @@ class ShopinvaderBackend(models.Model):
         "Let 0 (or less) to disable the feature.",
         default=0,
     )
+    cart_expiry_delay_unit = fields.Selection(
+        [("minutes", "Minute()s"), ("hours", "Hour(s)"), ("days", "Day(s)")],
+        string="Cart Expiry Unit",
+        default="days",
+    )
 
     cart_expiry_policy = fields.Selection(
         selection=[("delete", "Delete"), ("cancel", "Cancel")],
@@ -35,19 +40,25 @@ class ShopinvaderBackend(models.Model):
             )
             backend.with_delay(description=description).manage_cart_expiry()
 
-    @job(default_channel="root.shopinvader")
-    @api.multi
-    def manage_cart_expiry(self):
-        self.ensure_one()
+    def _get_cart_expiry_delay_domain(self):
         expiry_date = fields.Datetime.from_string(fields.Datetime.now())
-        expiry_date -= timedelta(days=self.cart_expiry_delay)
+        delta_arg = {self.cart_expiry_delay_unit: self.cart_expiry_delay}
+        expiry_date -= timedelta(**delta_arg)
         expiry_date = fields.Datetime.to_string(expiry_date)
         domain = [
             ("shopinvader_backend_id", "=", self.id),
             ("typology", "=", "cart"),
             ("write_date", "<=", expiry_date),
         ]
-        cart_expired = self.env["sale.order"].search(domain)
+        return domain
+
+    @job(default_channel="root.shopinvader")
+    @api.multi
+    def manage_cart_expiry(self):
+        self.ensure_one()
+        cart_expired = self.env["sale.order"].search(
+            self._get_cart_expiry_delay_domain()
+        )
         if cart_expired:
             if self.cart_expiry_policy == "cancel":
                 cart_expired.action_cancel()
