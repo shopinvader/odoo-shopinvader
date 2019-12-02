@@ -4,10 +4,10 @@ from datetime import timedelta
 
 import mock
 from odoo import fields
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader.tests.test_cart import CartCase
 
 
-class TestCartExpiry(CommonCase):
+class TestCartExpiry(CartCase):
     """
     Tests for cart expiry
     """
@@ -15,7 +15,14 @@ class TestCartExpiry(CommonCase):
     def setUp(self):
         super(TestCartExpiry, self).setUp()
         self.sale_obj = self.env["sale.order"]
+        self.partner = self.env.ref("shopinvader.partner_1")
         self.sale = self.env.ref("shopinvader.sale_order_2")
+        self.cart = self.env.ref("shopinvader.sale_order_2")
+        self.shopinvader_session = {"cart_id": self.cart.id}
+        with self.work_on_services(
+            partner=None, shopinvader_session=self.shopinvader_session
+        ) as work:
+            self.service = work.component(usage="cart")
 
     def test_cart_expiry_scheduler(self):
         """
@@ -32,6 +39,28 @@ class TestCartExpiry(CommonCase):
         self._check_nbr_job_created(1)
         return
 
+    def test_cart_expiration_date(self):
+        so_date = fields.Datetime.from_string(self.cart.write_date)
+        today = fields.Datetime.to_string(so_date + timedelta(hours=5))
+        self.backend.write(
+            {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
+        )
+        now_method = "odoo.fields.Datetime.now"
+        so_date = fields.Datetime.from_string(self.sale.write_date)
+        today = fields.Datetime.to_string(so_date + timedelta(hours=5))
+        self.backend.write(
+            {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
+        )
+        now_method = "odoo.fields.Datetime.now"
+        with mock.patch(now_method) as mock_now:
+            mock_now.return_value = today
+            expiration_date = so_date + timedelta(days=1)
+            self.assertEquals(expiration_date, self.sale.cart_expiration_date)
+            cart = self.service.search()
+            self.assertDictContainsSubset(
+                {"expiration_date": expiration_date}, cart.get("data")
+            )
+
     def test_cart_expiry_cancel(self):
         so_date = fields.Datetime.from_string(self.sale.write_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
@@ -43,7 +72,6 @@ class TestCartExpiry(CommonCase):
             mock_now.return_value = today
             self.backend.manage_cart_expiry()
             self.assertEqual(self.sale.state, "draft")
-
         today = fields.Datetime.to_string(so_date + timedelta(days=2))
         with mock.patch(now_method) as mock_now:
             mock_now.return_value = today
