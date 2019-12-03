@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <template id="cart_confirmation" name="Shopinvader cart confirmation email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Cart confirmation</t>
+      <t t-set="before_main_content">
+        INTRO TODO
+      </t>
+      <t t-set="main_content">
+        MAIN INFO TODO
+      </t>
+      <t t-set="after_main_content">
+        OUTTRO TODO
+      </t>
+    </t>
+  </template>
+
+</odoo>

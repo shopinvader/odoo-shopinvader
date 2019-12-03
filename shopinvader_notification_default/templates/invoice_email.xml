@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <template id="invoice_confirmation" name="Shopinvader invoice confirmation email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Invoce generated</t>
+      <t t-set="main_content">
+        Your invoice have been generated.
+      </t>
+    </t>
+  </template>
+
+</odoo>

@@ -8,6 +8,7 @@ search-engine
 product-attribute
 product-variant
 sale-workflow
+social
 storage
 rest-framework
 odoo-misc https://github.com/shopinvader/odoo-misc 12.0

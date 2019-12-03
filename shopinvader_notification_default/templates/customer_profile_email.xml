@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="customer_welcome" name="Shopinvader customer welcome">
+    <t t-set="website_name"
+       t-value="shopinvader_backend.website_public_name if shopinvader_backend else res_company.name" />
+    Welcome to <t t-esc="website_name"/>
+  </template>
+
+  <template id="new_customer_welcome" name="Shopinvader new customer email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">
+        <t t-call="shopinvader_notification_default.customer_welcome" />
+      </t>
+      <t t-set="main_content">
+        You are now registered on our website.
+      </t>
+    </t>
+  </template>
+
+  <template id="new_customer_not_validated" name="Shopinvader new customer not validated email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">
+        <t t-call="shopinvader_notification_default.customer_welcome" />
+      </t>
+      <t t-set="main_content">
+        Welcome, your account will be validated and activated soon
+      </t>
+    </t>
+  </template>
+
+  <template id="customer_validated" name="Shopinvader customer validated email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Account validated</t>
+      <t t-set="main_content">
+        Your account has been validated and activated
+      </t>
+    </t>
+  </template>
+
+  <template id="customer_updated" name="Shopinvader customer updated email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Account updated</t>
+      <t t-set="main_content">
+        Your account has been updated
+      </t>
+    </t>
+  </template>
+
+</odoo>
