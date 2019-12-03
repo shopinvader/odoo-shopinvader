@@ -23,7 +23,10 @@ class ShopinvaderBackend(models.Model):
     )
     location = fields.Char()
     notification_ids = fields.One2many(
-        "shopinvader.notification", "backend_id", "Notification"
+        "shopinvader.notification",
+        "backend_id",
+        "Notification",
+        default=lambda self: self.env["shopinvader.notification"].search([]),
     )
     nbr_product = fields.Integer(
         compute="_compute_nbr_content", string="Number of binded products"
