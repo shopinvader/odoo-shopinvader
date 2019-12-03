@@ -18,7 +18,7 @@ class ShopinvaderBackend(models.Model):
         default=0,
     )
     cart_expiry_delay_unit = fields.Selection(
-        [("minutes", "Minute()s"), ("hours", "Hour(s)"), ("days", "Day(s)")],
+        [("minutes", "Minute(s)"), ("hours", "Hour(s)"), ("days", "Day(s)")],
         string="Cart Expiry Unit",
         default="days",
     )

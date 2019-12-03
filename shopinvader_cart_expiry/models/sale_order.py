@@ -15,6 +15,13 @@ class SaleOrder(models.Model):
         help="Technical field to help passing expiration date to cart",
     )
 
+    def _is_expiring_cart(self):
+        return (
+            self.shopinvader_backend_id
+            and self.shopinvader_backend_id.cart_expiry_delay != 0
+            and self.typology == "cart"
+        )
+
     @api.depends(
         "shopinvader_backend_id.cart_expiry_delay", "typology", "write_date"
     )
@@ -23,15 +30,11 @@ class SaleOrder(models.Model):
         Compute the cart expiration date
         :return:
         """
-        carts = self.filtered(
-            lambda s: s.shopinvader_backend_id
-            and s.shopinvader_backend_id.cart_expiry_delay != 0
-            and s.typology == "cart"
-        )
-        for cart in carts:
-            backend = cart.shopinvader_backend_id
-            delta_arg = {
-                backend.cart_expiry_delay_unit: backend.cart_expiry_delay
-            }
-            expiration_date = cart.write_date + timedelta(**delta_arg)
-            cart.cart_expiration_date = expiration_date
+        for order in self:
+            if order._is_expiring_cart():
+                backend = order.shopinvader_backend_id
+                delta_arg = {
+                    backend.cart_expiry_delay_unit: backend.cart_expiry_delay
+                }
+                expiration_date = order.write_date + timedelta(**delta_arg)
+                order.cart_expiration_date = expiration_date
