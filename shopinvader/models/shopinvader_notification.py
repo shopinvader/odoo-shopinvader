@@ -12,7 +12,7 @@ class ShopinvaderNotification(models.Model):
     _description = "Shopinvader Notification"
 
     backend_id = fields.Many2one(
-        "shopinvader.backend", "Backend", required=True
+        "shopinvader.backend", "Backend", required=False
     )
     notification_type = fields.Selection(
         selection="_selection_notification_type",

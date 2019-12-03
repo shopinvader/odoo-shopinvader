@@ -97,7 +97,7 @@
                         </page>
                         <page name="email" string="Notifications">
                             <group name="notification" string="Notification">
-                                <field name="notification_ids" nolabel="1">
+                                <field name="notification_ids" nolabel="1" required="1">
                                     <tree editable="bottom">
                                         <field name="notification_type"/>
                                         <field name="model_id"/>
