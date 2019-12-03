@@ -39,6 +39,8 @@ class TestDeliveryService(CommonCase):
             carrier_dict = current_data.get("carrier", {})
             sale_dict = current_data.get("sale", {})
             self.assertEquals(current_data.get("delivery_id"), picking.id)
+            # Ensure we have only outgoing picking
+            self.assertEquals(picking.picking_type_id.code, "outgoing")
             self.assertEquals(
                 current_data.get("tracking_reference"),
                 picking.carrier_tracking_ref or None,
