@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <template id="address_created" name="Shopinvader address created email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Address created</t>
+      <t t-set="main_content">
+        A new address has been added to your account.
+      </t>
+    </t>
+  </template>
+
+  <template id="address_created_not_validated" name="Shopinvader address created not validated email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Address created but not validated</t>
+      <t t-set="main_content">
+        A new address has been added to your account, will be validated and activated soon.
+      </t>
+    </t>
+  </template>
+
+  <template id="address_validated" name="Shopinvader address validated email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Address validated</t>
+      <t t-set="main_content">
+        A new address has been validated and activated.
+      </t>
+    </t>
+  </template>
+
+  <template id="address_modified" name="Shopinvader address modified email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">Address modified</t>
+      <t t-set="main_content">
+        Your address has been modified.
+      </t>
+    </t>
+  </template>
+
+</odoo>

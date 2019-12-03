@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <template id="sale_confirmation" name="Shopinvader sale order confirmation email">
+    <t t-call="shopinvader_notification_default.email_layout">
+      <t t-set="mail_title">
+        <span class="number">
+          #<span t-field="object.name" /> -
+        </span>
+        Sale order confirmation
+      </t>
+      <t t-set="main_content">
+        We are processing your sale order.
+      </t>
+    </t>
+  </template>
+
+</odoo>
