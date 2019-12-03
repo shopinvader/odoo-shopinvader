@@ -53,9 +53,11 @@ class DeliveryService(Component):
                 "type": "dict",
                 "nullable": True,
                 "schema": {
+                    "sale_id": {"type": "integer"},
                     "state": {"type": "string"},
                     "amount_total": {"type": "float"},
                     "date_order": {"type": "string", "nullable": True},
+                    "name": {"type": "string", "nullable": True},
                 },
             },
         }
@@ -95,7 +97,13 @@ class DeliveryService(Component):
         Get the parser of sale.order
         :return: list
         """
-        to_parse = ["state", "amount_total", "date_order"]
+        to_parse = [
+            "id:sale_id",
+            "name",
+            "state",
+            "amount_total",
+            "date_order",
+        ]
         return to_parse
 
     def _add_sale_order_info(self, picking):
