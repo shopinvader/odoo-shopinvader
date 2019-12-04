@@ -38,7 +38,7 @@ class ShopinvaderBackend(models.Model):
         return True
 
     @api.multi
-    def add_misssing_index(self):
+    def add_missing_index(self):
         self.ensure_one()
         ir_models = self._get_default_models()
         index_obj = self.env["se.index"]
@@ -66,3 +66,7 @@ class ShopinvaderBackend(models.Model):
     @api.multi
     def force_resynchronize_index(self):
         self.mapped("se_backend_id.index_ids").resynchronize_all_bindings()
+
+    @api.multi
+    def export_index_settings(self):
+        self.mapped("se_backend_id.index_ids").export_settings()
