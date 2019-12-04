@@ -62,3 +62,7 @@ class ShopinvaderBackend(models.Model):
 
     def force_resynchronize_index(self):
         self.mapped("se_backend_id.index_ids").resynchronize_all_bindings()
+
+    @api.multi
+    def export_index_settings(self):
+        self.mapped("se_backend_id.index_ids").export_settings()
