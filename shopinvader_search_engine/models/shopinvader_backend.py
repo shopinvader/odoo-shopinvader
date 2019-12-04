@@ -34,7 +34,8 @@ class ShopinvaderBackend(models.Model):
             index.clear_index()
         return True
 
-    def add_misssing_index(self):
+    @api.multi
+    def add_missing_index(self):
         self.ensure_one()
         ir_models = self._get_default_models()
         index_obj = self.env["se.index"]

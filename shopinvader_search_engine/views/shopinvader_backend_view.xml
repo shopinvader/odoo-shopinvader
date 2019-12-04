@@ -48,7 +48,7 @@
                 </group>
                 <group colspan="4">
                     <button
-                            name="add_misssing_index"
+                            name="add_missing_index"
                             string="Add missing index"
                             type="object"/>
                 </group>
