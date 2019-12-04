@@ -42,7 +42,7 @@ addon | version | summary
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 12.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 | Shopinvader Quotation
-[shopinvader_search_engine](shopinvader_search_engine/) | 12.0.1.1.0 | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 12.0.1.2.0 | Shopinvader Catalog Search Engine Connector
 
 
 Unported addons
