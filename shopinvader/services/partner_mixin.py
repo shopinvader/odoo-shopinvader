@@ -84,6 +84,12 @@ class PartnerServiceMixin(AbstractComponent):
             return handler(partner, mode)
         return partner
 
+    def _notify_partner_recipient_address(self, partner, mode):
+        # notify on the owner of the address
+        # Safe default to given partner in case we are updating the profile
+        # which is done w/ the addresses endpoint anyway.
+        return partner.parent_id if partner.parent_id else partner
+
     def _notify_partner_type(self, partner, mode):
         handler = getattr(
             self, "_notify_partner_type_" + partner.address_type, None
