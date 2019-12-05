@@ -190,7 +190,6 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
         super(AnonymousItemCase, cls).setUpClass()
         cls.partner = cls.backend.anonymous_partner_id
         cls.cart = cls.env.ref("shopinvader.sale_order_1")
-        cls.cart.order_line._compute_shopinvader_variant()
 
     def setUp(self, *args, **kwargs):
         super(AnonymousItemCase, self).setUp(*args, **kwargs)
@@ -211,7 +210,6 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
         super(ConnectedItemCase, cls).setUpClass()
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.cart = cls.env.ref("shopinvader.sale_order_2")
-        cls.cart.order_line._compute_shopinvader_variant()
 
     def setUp(self, *args, **kwargs):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)
