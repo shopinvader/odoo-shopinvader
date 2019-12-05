@@ -43,11 +43,13 @@ class AbstractSaleService(AbstractComponent):
         return True
 
     def _convert_one_line(self, line):
-        if line.shopinvader_variant_id:
+        variant = line.product_id._get_invader_variant(
+            self.shopinvader_backend,
+            self.env.context.get("lang", line.order_id.partner_id.lang),
+        )
+        if variant:
             # TODO we should reuse the parser of the index
-            product = line.shopinvader_variant_id.jsonify(
-                self._parser_product()
-            )[0]
+            product = variant.jsonify(self._parser_product())[0]
         else:
             product = {}
         return {

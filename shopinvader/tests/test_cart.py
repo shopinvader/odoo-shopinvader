@@ -216,7 +216,6 @@ class AnonymousCartCase(CartCase, CartClearTest):
             "order_id": sale.id,
             "product_id": self.product_1.id,
             "product_uom_qty": 1,
-            "shopinvader_variant_id": self.product_1.shopinvader_bind_ids.id,
         }
         new_line_values = so_line_obj.play_onchanges(
             line_values, line_values.keys()
