@@ -71,3 +71,13 @@ class ProductProduct(models.Model):
                 lambda x: x.backend_id == backend
             )
         )
+
+    def _get_invader_variant(self, backend, lang):
+        """Retrieve invader variant by backend and language.
+
+        :param backend: backend recordset
+        :param lang: lang code
+        """
+        return self.shopinvader_bind_ids.filtered(
+            lambda x: x.backend_id == backend and x.lang_id.code == lang
+        )
