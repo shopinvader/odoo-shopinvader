@@ -32,7 +32,7 @@ class BaseShopinvaderService(AbstractComponent):
         # In this way we can support multiple actors for the same profile.
         # TODO: check if there are place wher it's better to use
         # `partner_user` instead of `partner`.
-        return self.work.partner_user
+        return getattr(self.work, "partner_user", self.partner)
 
     @property
     def shopinvader_session(self):
