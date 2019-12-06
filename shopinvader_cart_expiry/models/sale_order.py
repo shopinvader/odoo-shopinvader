@@ -32,9 +32,14 @@ class SaleOrder(models.Model):
         """
         for order in self:
             if order._is_expiring_cart():
+                trigger_date = (
+                    order.write_date
+                    and order.write_date
+                    or fields.Datetime.from_string(fields.Datetime.now())
+                )
                 backend = order.shopinvader_backend_id
                 delta_arg = {
                     backend.cart_expiry_delay_unit: backend.cart_expiry_delay
                 }
-                expiration_date = order.write_date + timedelta(**delta_arg)
+                expiration_date = trigger_date + timedelta(**delta_arg)
                 order.cart_expiration_date = expiration_date
