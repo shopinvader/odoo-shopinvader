@@ -55,7 +55,14 @@ class ShopinvaderPartnerBindingLine(models.TransientModel):
             )
             if not partner_binding:
                 bind_values = {"backend_id": backend.id}
-                record.partner_id.write(
-                    {"shopinvader_bind_ids": [(0, False, bind_values)]}
-                )
+                partner_values = {
+                    "shopinvader_bind_ids": [(0, False, bind_values)]
+                }
+                # Locomotive doesn't work with uppercase.
+                # And we have to do the write before the binding
+                email_lower = (record.partner_id.email or "").lower()
+                # Do the update only if necessary
+                if record.partner_id.email != email_lower:
+                    partner_values.update({"email": email_lower})
+                record.partner_id.write(partner_values)
         return {}
