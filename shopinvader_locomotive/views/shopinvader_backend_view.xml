@@ -47,7 +47,7 @@
                     name="currency_ids"
                     widget="many2many_tags"
                     colspan="2"
-                    groups="base.group_multi_currency"/>
+                    required="1" />
             </field>
         </field>
     </record>
