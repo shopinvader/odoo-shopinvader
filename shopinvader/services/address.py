@@ -121,6 +121,7 @@ class AddressService(Component):
             "is_company": {"coerce": to_bool, "type": "boolean"},
             "opt_in": {"coerce": to_bool, "type": "boolean"},
             "opt_out": {"coerce": to_bool, "type": "boolean"},
+            "lang": {"type": "string", "required": False},
         }
         return res
 
@@ -156,6 +157,7 @@ class AddressService(Component):
             ("country_id:country", ["id", "name"]),
             "address_type",
             "is_company",
+            "lang",
             ("title", ["id", "name"]),
             "shopinvader_enabled:enabled",
             ("industry_id", ["id", "name"]),
