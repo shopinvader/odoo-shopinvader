@@ -37,6 +37,8 @@ class CommonMixin(RegistryMixin, ComponentMixin):
     @contextmanager
     def work_on_services(cls, **params):
         params = params or {}
+        if params.get("partner") and not params.get("partner_user"):
+            params["partner_user"] = params["partner"]
         if "shopinvader_backend" not in params:
             params["shopinvader_backend"] = cls.backend
         if "shopinvader_session" not in params:
