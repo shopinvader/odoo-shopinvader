@@ -10,6 +10,7 @@ class CommonNotificationCase(CommonCase):
     def setUp(self):
         super(CommonNotificationCase, self).setUp()
         self.cart = self.env.ref("shopinvader.sale_order_2")
+        self.expected_priority = self.backend._get_notification_job_priority()
 
     def _check_notification(self, notif_type, record):
         notif = self.env["shopinvader.notification"].search(
@@ -34,6 +35,7 @@ class NotificationCartCase(CommonNotificationCase):
         self._init_job_counter()
         self.cart.action_confirm_cart()
         self._check_nbr_job_created(1)
+        self.assertEquals(self.expected_priority, self.created_jobs.priority)
         self._perform_created_job()
         self._check_notification("cart_confirmation", self.cart)
 
@@ -42,6 +44,7 @@ class NotificationCartCase(CommonNotificationCase):
         self._init_job_counter()
         self.cart.action_confirm()
         self._check_nbr_job_created(1)
+        self.assertEquals(self.expected_priority, self.created_jobs.priority)
         self._perform_created_job()
         self._check_notification("sale_confirmation", self.cart)
 
@@ -54,6 +57,7 @@ class NotificationCartCase(CommonNotificationCase):
         self._init_job_counter()
         self.cart.invoice_ids.action_invoice_open()
         self._check_nbr_job_created(1)
+        self.assertEquals(self.expected_priority, self.created_jobs.priority)
         self._perform_created_job()
         self._check_notification("invoice_open", self.cart.invoice_ids[0])
 
