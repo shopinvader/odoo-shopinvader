@@ -32,6 +32,7 @@ setuptools.setup(
         'odoo12-addon-shopinvader_product_variant_selector',
         'odoo12-addon-shopinvader_quotation',
         'odoo12-addon-shopinvader_search_engine',
+        'odoo12-addon-shopinvader_wishlist',
     ],
     classifiers=[
         'Programming Language :: Python',
