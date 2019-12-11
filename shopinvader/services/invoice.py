@@ -80,7 +80,7 @@ class InvoiceService(Component):
         :return: Odoo domain
         """
         # The partner must be set and not be the anonymous one
-        if not self._is_logged():
+        if not self._is_logged_in():
             return expression.FALSE_DOMAIN
 
         # here we only allow access to invoices linked to a sale order of the
