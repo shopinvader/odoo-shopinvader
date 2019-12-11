@@ -44,6 +44,7 @@
                     <notebook>
                         <page name="config" string="Front-end">
                             <group name="config" colspan="4" col="4">
+                                <field name="tech_name"/>
                                 <field name="location" placeholder="e.g. https://ecommerce.shopinvader.com"/>
                                 <field name="auth_api_key_id" required="True"/>
                             </group>
@@ -146,6 +147,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="tech_name"/>
                 <field name="location"/>
                 <field name="company_id"/>
             </tree>

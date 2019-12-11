@@ -3,6 +3,7 @@ connector
 server-backend
 server-tools
 server-auth
+server-env
 e-commerce
 search-engine
 product-attribute
