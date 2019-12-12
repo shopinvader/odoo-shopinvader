@@ -68,3 +68,32 @@ class TestCartExpiry(CommonCase):
             mock_now.return_value = today
             self.backend.manage_cart_expiry()
             self.assertFalse(self.sale.exists())
+
+    def test_cart_expiry_not_draft(self):
+        """
+        Ensure the cart is not deleted/canceled when the state is not draft.
+        :return:
+        """
+        so_date = fields.Datetime.from_string(self.sale.write_date)
+        today = fields.Datetime.to_string(so_date + timedelta(hours=5))
+        self.sale.write({"state": "sent"})
+        self.backend.write(
+            {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
+        )
+        now_method = "odoo.fields.Datetime.now"
+        with mock.patch(now_method) as mock_now:
+            mock_now.return_value = today
+            self.backend.manage_cart_expiry()
+            # The state still "sent"
+            self.assertEqual(self.sale.state, "sent")
+
+        today = fields.Datetime.to_string(so_date + timedelta(days=2))
+        with mock.patch(now_method) as mock_now:
+            mock_now.return_value = today
+            self.backend.manage_cart_expiry()
+            self.assertTrue(self.sale.exists())
+            self.assertEqual(self.sale.state, "sent")
+            # Then re-update the cart to draft state
+            self.sale.write({"state": "draft"})
+            self.backend.manage_cart_expiry()
+            self.assertEqual(self.sale.state, "cancel")
