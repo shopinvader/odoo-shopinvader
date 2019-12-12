@@ -12,6 +12,7 @@
                 <group>
                     <group name="cart_expiry" string="Cart Expiry Management">
                         <field name="cart_expiry_delay"/>
+                        <field name="cart_expiry_delay_unit"/>
                         <field name="cart_expiry_policy" attrs="{'invisible': [('cart_expiry_delay', '&lt;=', 0)], 'required': [('cart_expiry_delay', '&gt;', 0)]}"/>
                     </group>
                     <group></group>
