@@ -24,7 +24,7 @@ addon | version | summary
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
-[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.0 | Shopinvader cart expiry
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.1 | Shopinvader cart expiry
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.2.0.0 | Carrier integration for Shopinvader
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.2 | Shopinvader Elasticsearch
