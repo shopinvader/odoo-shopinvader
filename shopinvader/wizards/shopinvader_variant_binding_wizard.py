@@ -35,8 +35,9 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         )
         backend_id = self.env.context.get("active_id", False)
         if backend_id:
+            backend = self.env["shopinvader.backend"].browse(backend_id)
             res["backend_id"] = backend_id
-            res["lang_ids"] = (6, None, backend_id.lang_ids.ids)
+            res["lang_ids"] = [(6, None, backend.lang_ids.ids)]
         return res
 
     def _get_langs_to_bind(self):
