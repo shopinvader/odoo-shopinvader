@@ -28,20 +28,50 @@ class CommonNotificationCase(CommonCase):
         )
         self.assertEqual(len(message), 1)
 
+    def _check_job_priority(self, job, notif_type=False, force_priority=False):
+        """
+        Ensure the job priority is correct
+        :param job: queue.job recordset
+        :param notif_type: str
+        :param force_priority: int
+        :return: bool
+        """
+        if isinstance(force_priority, bool):
+            notification = self.env["shopinvader.notification"].search(
+                [
+                    ("backend_id", "=", self.backend.id),
+                    ("notification_type", "=", notif_type),
+                ],
+                limit=1,
+            )
+            priority = notification.queue_job_priority
+        else:
+            priority = force_priority
+        self.assertEquals(priority, job.priority)
+        return True
+
 
 class NotificationCartCase(CommonNotificationCase):
     def test_cart_notification(self):
         self._init_job_counter()
         self.cart.action_confirm_cart()
         self._check_nbr_job_created(1)
+        self._check_job_priority(self.created_jobs, "cart_confirmation")
         self._perform_created_job()
         self._check_notification("cart_confirmation", self.cart)
 
     def test_sale_notification(self):
+        priority = 30
+        self.env["shopinvader.notification"].search([]).write(
+            {"queue_job_priority": priority}
+        )
         self.cart.action_confirm_cart()
         self._init_job_counter()
         self.cart.action_confirm()
         self._check_nbr_job_created(1)
+        self._check_job_priority(
+            self.created_jobs, "sale_confirmation", force_priority=priority
+        )
         self._perform_created_job()
         self._check_notification("sale_confirmation", self.cart)
 
@@ -54,6 +84,7 @@ class NotificationCartCase(CommonNotificationCase):
         self._init_job_counter()
         self.cart.invoice_ids.action_invoice_open()
         self._check_nbr_job_created(1)
+        self._check_job_priority(self.created_jobs, "invoice_open")
         self._perform_created_job()
         self._check_notification("invoice_open", self.cart.invoice_ids[0])
 
