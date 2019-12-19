@@ -5,12 +5,12 @@
     "name": "Shopinvader Elasticsearch",
     "description": """
         Shopinvader Elasticsearch Connector""",
-    "version": "12.0.1.0.2",
+    "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://acsone.eu/",
     "depends": ["shopinvader_search_engine", "connector_elasticsearch"],
     "data": ["data/ir_export_product.xml"],
     "demo": ["demo/index_config_demo.xml", "demo/backend_demo.xml"],
-    "installable": False,
+    "installable": True,
 }
