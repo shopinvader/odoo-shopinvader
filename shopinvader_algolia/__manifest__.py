@@ -5,15 +5,15 @@
 
 {
     "name": "Shopinvader Algolia Connector",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "author": "Akretion",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "category": "Generic Modules",
-    "post_init_hook": "post_init_hook",
+    # "post_init_hook": "post_init_hook",
     "depends": ["shopinvader_search_engine", "connector_algolia"],
     "data": ["data/ir_export_product.xml"],
     "demo": ["demo/backend_demo.xml", "demo/product_demo.xml"],
-    "installable": False,
+    "installable": True,
     "application": True,
 }
