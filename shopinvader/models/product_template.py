@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from contextlib import contextmanager
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
@@ -32,7 +32,6 @@ class ProductTemplate(models.Model):
 
     active = fields.Boolean(inverse="_inverse_active")
 
-    @api.multi
     def _inverse_active(self):
         inactive = self.filtered(lambda p: not p.active)
         inactive.mapped("shopinvader_bind_ids").write({"active": False})
@@ -43,14 +42,12 @@ class ProductTemplate(models.Model):
                 "shopinvader_bind_ids.backend_id"
             )
 
-    @api.multi
     def unlink(self):
         for record in self:
             # TODO we should propose to redirect the old url
             record.shopinvader_bind_ids.unlink()
         return super(ProductTemplate, self).unlink()
 
-    @api.multi
     @contextmanager
     def _manage_name_update(self):
         """
@@ -60,12 +57,11 @@ class ProductTemplate(models.Model):
         self_name = {r: r.name for r in self}
         yield
         for record in self:
-            if not record.suspend_security().shopinvader_bind_ids:
+            if not record.sudo().shopinvader_bind_ids:
                 continue
             if record.name != self_name.get(record):
-                record.suspend_security().shopinvader_bind_ids._sync_urls()
+                record.sudo().shopinvader_bind_ids._sync_urls()
 
-    @api.multi
     def write(self, vals):
         """
         Inherit the write to re-sync url if necessary

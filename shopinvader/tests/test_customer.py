@@ -67,18 +67,10 @@ class TestCustomer(CommonCase):
         self.assertEqual(address.address_type, "address")
 
     def test_update_address_type(self):
-        data = {
-            "email": "address@customer.example.com",
-            "name": "Address",
-            "country": {"id": self.env.ref("base.fr").id},
-        }
+        data = {"email": "address@customer.example.com", "name": "Address"}
         partner = self.env["res.partner"].create(data)
         self.assertEqual(partner.address_type, "profile")
-        data = {
-            "email": "parent@customer.example.com",
-            "name": "Parent",
-            "country": {"id": self.env.ref("base.fr").id},
-        }
+        data = {"email": "parent@customer.example.com", "name": "Parent"}
         parent = self.env["res.partner"].create(data)
         partner.parent_id = parent.id
         self.assertEqual(partner.address_type, "address")

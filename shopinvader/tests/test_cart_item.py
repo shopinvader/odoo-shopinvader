@@ -136,7 +136,7 @@ class AbstractItemCase(object):
         self.env.user.write(
             {
                 "groups_id": [
-                    (4, self.ref("sale.group_discount_per_so_line"), 0)
+                    (4, self.ref("product.group_discount_per_so_line"), 0)
                 ]
             }
         )

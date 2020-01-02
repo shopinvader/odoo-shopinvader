@@ -1,6 +1,6 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import _, api, exceptions, fields, models
+from odoo import _, exceptions, fields, models
 
 
 class ShopinvaderPartnerBindingLine(models.TransientModel):
@@ -31,7 +31,6 @@ class ShopinvaderPartnerBindingLine(models.TransientModel):
         help="Tick to bind the partner to the backend. Untick to unbind it."
     )
 
-    @api.multi
     def action_apply(self):
         """
         Bind selected partners

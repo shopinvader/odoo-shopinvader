@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 import mock
@@ -11,7 +10,7 @@ from .common import CommonCase
 class TestInvoice(CommonCase):
     def setUp(self, *args, **kwargs):
         super(TestInvoice, self).setUp(*args, **kwargs)
-        self.register_payments_obj = self.env["account.register.payments"]
+        self.register_payments_obj = self.env["account.payment.register"]
         self.journal_obj = self.env["account.journal"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.partner = self.env.ref("shopinvader.partner_1")
@@ -25,6 +24,11 @@ class TestInvoice(CommonCase):
             self.sale_service = work.component(usage="sales")
             self.invoice_service = work.component(usage="invoice")
         self.invoice = self._confirm_and_invoice_sale(self.sale)
+        # set the layout on the company to be sure that the print action
+        # will not display the document layout configurator
+        self.env.company.external_report_layout_id = self.env.ref(
+            "web.external_layout_standard"
+        ).id
 
     def _make_payment(self, invoice):
         """
@@ -32,7 +36,8 @@ class TestInvoice(CommonCase):
         :param invoice: account.invoice recordset
         :return: bool
         """
-        ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
+        invoice.post()
+        ctx = {"active_ids": invoice.ids}
         wizard_obj = self.register_payments_obj.with_context(ctx)
         register_payments = wizard_obj.create(
             {
@@ -47,11 +52,7 @@ class TestInvoice(CommonCase):
         sale.action_confirm()
         for line in sale.order_line:
             line.write({"qty_delivered": line.product_uom_qty})
-        invoice_id = sale.action_invoice_create()
-        invoice = self.env["account.invoice"].browse(invoice_id)
-        invoice.action_invoice_open()
-        invoice.action_move_create()
-        return invoice
+        return sale._create_invoices()
 
     def test_01(self):
         """
@@ -76,9 +77,9 @@ class TestInvoice(CommonCase):
         """
         self._make_payment(self.invoice)
         with mock.patch(
-            "openerp.addons.shopinvader.services.invoice.content_disposition"
+            "odoo.addons.shopinvader.services.invoice.content_disposition"
         ) as mocked_cd, mock.patch(
-            "openerp.addons.shopinvader.services.invoice.request"
+            "odoo.addons.shopinvader.services.invoice.request"
         ) as mocked_request:
             mocked_cd.return_value = "attachment; filename=test"
             make_response = mock.MagicMock()

@@ -60,7 +60,6 @@ class SaleOrder(models.Model):
         res["shopinvader_backend_id"] = self.shopinvader_backend_id.id
         return res
 
-    @api.multi
     def action_confirm_cart(self):
         for record in self:
             if record.typology == "sale":
@@ -73,7 +72,6 @@ class SaleOrder(models.Model):
                 )
         return True
 
-    @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         for record in self:
@@ -96,7 +94,6 @@ class SaleOrder(models.Model):
                 return True
         return False
 
-    @api.multi
     def write_with_onchange(self, vals):
         self.ensure_one()
         # Playing onchange on one2many is not really really clean

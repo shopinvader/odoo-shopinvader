@@ -24,7 +24,7 @@
                 </page>
             </notebook>
             <!-- add validation button to address kanban -->
-            <xpath expr="//field[@name='child_ids']/kanban/field[@name='supplier']" position="after">
+            <xpath expr="//field[@name='child_ids']/kanban/field[@name='display_name']" position="after">
                 <field name="shopinvader_enabled" />
             </xpath>
             <xpath expr="//field[@name='child_ids']/kanban//div[hasclass('o_kanban_image')]" position="before">

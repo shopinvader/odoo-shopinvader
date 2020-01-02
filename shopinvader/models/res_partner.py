@@ -32,7 +32,6 @@ class ResPartner(models.Model):
         "via 'Validate customers' flag.",
     )
 
-    @api.multi
     @api.constrains("email")
     def _check_unique_email(self):
         config = self.env["shopinvader.config.settings"]
@@ -88,7 +87,6 @@ class ResPartner(models.Model):
             else:
                 partner.address_type = "profile"
 
-    @api.multi
     def write(self, vals):
         super(ResPartner, self).write(vals)
         if "country_id" in vals:
@@ -105,12 +103,11 @@ class ResPartner(models.Model):
             for cart in carts:
                 # Trigger a write on cart to recompute the
                 # fiscal position if needed
-                cart.suspend_security().write_with_onchange(
+                cart.sudo().write_with_onchange(
                     {"partner_shipping_id": cart.partner_shipping_id.id}
                 )
         return True
 
-    @api.multi
     def action_enable_for_shop(self):
         self.write({"shopinvader_enabled": True})
         # TODO: maybe better to hook to an event?

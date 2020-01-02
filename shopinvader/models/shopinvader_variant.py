@@ -48,9 +48,21 @@ class ShopinvaderVariant(models.Model):
     description = fields.Html(
         related="shopinvader_product_id.description", readonly=False
     )
+    attribute_value_ids = fields.Many2many(
+        comodel_name="product.attribute.value",
+        compute="_compute_attribute_value_ids",
+        readonly=True,
+    )
+
+    @api.depends("product_template_attribute_value_ids")
+    def _compute_attribute_value_ids(self):
+        for record in self:
+            record.attribute_value_ids = record.mapped(
+                "product_template_attribute_value_ids."
+                "product_attribute_value_id"
+            )
 
     @contextmanager
-    @api.multi
     def _action_product_disabled(self):
         """
         Action a deactivation of a variant, if every variants are disabled:
@@ -75,7 +87,6 @@ class ShopinvaderVariant(models.Model):
             ):
                 shopinv_product.write({"active": False})
 
-    @api.multi
     def write(self, vals):
         """
         Inherit to manage behaviour when the variant is disabled.
@@ -87,7 +98,6 @@ class ShopinvaderVariant(models.Model):
             result = super(ShopinvaderVariant, self).write(vals)
         return result
 
-    @api.multi
     def _build_seo_title(self):
         """
         Build the SEO product name.
@@ -99,10 +109,11 @@ class ShopinvaderVariant(models.Model):
 
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()
-        attributes = self.attribute_line_ids.filtered(
-            lambda l: len(l.value_ids) > 1
-        ).mapped("attribute_id")
-        short_name = self.attribute_value_ids._variant_name(attributes)
+        attributes = self.mapped(
+            "product_template_attribute_value_ids."
+            "product_attribute_value_id"
+        )
+        short_name = ", ".join(attributes.mapped("name"))
         full_name = self.shopinvader_display_name
         if short_name:
             full_name += " (%s)" % short_name

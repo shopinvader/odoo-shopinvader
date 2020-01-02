@@ -39,7 +39,6 @@ class ProductProduct(models.Model):
         "(at least one) shopinvader backend",
     )
 
-    @api.multi
     @api.depends("shopinvader_bind_ids", "shopinvader_bind_ids.backend_id")
     def _compute_is_shopinvader_binded(self):
         """
@@ -51,13 +50,11 @@ class ProductProduct(models.Model):
             binded = bool(rec.shopinvader_bind_ids.mapped("backend_id"))
             rec.is_shopinvader_binded = binded
 
-    @api.multi
     def _inverse_active(self):
         self.filtered(lambda p: not p.active).mapped(
             "shopinvader_bind_ids"
         ).write({"active": False})
 
-    @api.multi
     def _compute_shopinvader_backend_ids(self):
         for rec in self:
             rec.shopinvader_backend_ids = rec.mapped(

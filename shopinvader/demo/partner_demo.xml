@@ -12,7 +12,6 @@
 
     <record id="partner_1" model="res.partner">
         <field name="name">Osiris</field>
-        <field name="customer" eval="True"/>
         <field name="email">osiris@shopinvader.com</field>
         <field name="street">pré du haut</field>
         <field name="city">Aurec sur Loire</field>
@@ -31,7 +30,6 @@
         <field name="parent_id" ref="partner_1"/>
         <field name="type">other</field>
         <field name="name">Osiris</field>
-        <field name="customer" eval="True"/>
         <field name="street">chemin du bois</field>
         <field name="city">Aurec sur Loire</field>
         <field name="zip">43110</field>
@@ -42,7 +40,6 @@
         <field name="parent_id" ref="partner_1"/>
         <field name="type">other</field>
         <field name="name">Osiris</field>
-        <field name="customer" eval="True"/>
         <field name="street">holliday street</field>
         <field name="city">New York</field>
         <field name="zip">11102</field>
@@ -51,7 +48,6 @@
 
     <record id="partner_2" model="res.partner">
         <field name="name">Anubis</field>
-        <field name="customer" eval="True"/>
         <field name="email">anubis@shopinvader.com</field>
         <field name="street">3841 18th St</field>
         <field name="city">San Francisco</field>
@@ -69,7 +65,6 @@
         <field name="parent_id" ref="partner_2"/>
         <field name="type">other</field>
         <field name="name">Anubis</field>
-        <field name="customer" eval="True"/>
         <field name="street">43 Rue de Liège</field>
         <field name="city">Paris</field>
         <field name="zip">75008</field>

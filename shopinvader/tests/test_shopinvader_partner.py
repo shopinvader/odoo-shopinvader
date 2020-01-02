@@ -25,7 +25,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
                 "backend_id": self.backend.id,
             }
         )
-        with self.assertRaises(IntegrityError), self.cr.savepoint():
+        with self.assertRaises(IntegrityError):
             self.env["shopinvader.partner"].create(
                 {
                     "email": self.unique_email,

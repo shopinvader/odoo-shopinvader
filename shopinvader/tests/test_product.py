@@ -262,6 +262,8 @@ class ProductCase(ProductCommonCase):
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         categ = self.env.ref("product.product_category_1")
+        categ.with_context(lang="fr_FR").write({"name": "En Vente"})
+        categ.parent_id.with_context(lang="fr_FR").write({"name": "Tous"})
         self.assertEqual(len(categ.shopinvader_bind_ids), 2)
         shopinvader_categ = categ.shopinvader_bind_ids[0]
         self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
@@ -286,6 +288,7 @@ class ProductCase(ProductCommonCase):
         lang = self.install_lang("base.lang_fr")
         product = self.env.ref("product.product_product_4")
         product.with_context(lang="fr_FR").name = "Bureau Personnalisable"
+        product.flush()
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         self.backend.bind_all_product()
@@ -296,7 +299,7 @@ class ProductCase(ProductCommonCase):
             if binding.lang_id.code == "fr_FR":
                 self.assertEqual(binding.url_key, u"bureau-personnalisable")
             elif binding.lang_id.code == "en_US":
-                self.assertEqual(binding.url_key, u"customizable-desk")
+                self.assertEqual(binding.url_key, u"customizable-desk-config")
 
     def test_create_product_binding1(self):
         """
@@ -528,7 +531,6 @@ class ProductCase(ProductCommonCase):
         )
         # Set product shareable between companies
         product_12.company_id = False
-        self.env.user.company_id = company_2
         # Change product name to trigger compute
         product_12.write(
             {
@@ -536,7 +538,9 @@ class ProductCase(ProductCommonCase):
                 "default_code": "product_12_mc",
             }
         )
-        result = shopinvader_product_12.url_key.find("product_12_mc")
+        result = shopinvader_product_12.with_context(
+            allowed_company_ids=company_2.id
+        ).url_key.find("product_12_mc")
         self.assertTrue(result)
 
     def test_product_shopinvader_name(self):

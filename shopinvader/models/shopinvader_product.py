@@ -59,7 +59,6 @@ class ShopinvaderProduct(models.Model):
             else:
                 record.shopinvader_display_name = record.name
 
-    @api.multi
     def _build_seo_title(self):
         """
         Build the SEO product name
@@ -70,7 +69,6 @@ class ShopinvaderProduct(models.Model):
             self.name or u"", self.backend_id.website_public_name or u""
         )
 
-    @api.multi
     def _inverse_active(self):
         self.filtered(lambda p: not p.active).mapped(
             "shopinvader_variant_ids"
@@ -91,6 +89,9 @@ class ShopinvaderProduct(models.Model):
             ("lang_id", "=", self.lang_id.id),
         ]
 
+    @api.depends(
+        "categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id"
+    )
     def _compute_shopinvader_category(self):
         for record in self:
             categories = self.env["shopinvader.category"]
@@ -135,7 +136,6 @@ class ShopinvaderProduct(models.Model):
             binding._create_shopinvader_variant()
         return binding
 
-    @api.multi
     @api.depends("lang_id", "record_id.name")
     def _compute_automatic_url_key(self):
         records_by_lang = defaultdict(self.browse)
@@ -162,17 +162,16 @@ class ShopinvaderProduct(models.Model):
             res["backend_id"] = backend.id
         return res
 
-    @api.multi
     def toggle_published(self):
         """
         Toggle the active field
         :return: dict
         """
         actual_active = self.filtered(lambda s: s.active).with_prefetch(
-            self._prefetch
+            self._prefetch_ids
         )
         actual_inactive = self - actual_active
-        actual_inactive = actual_inactive.with_prefetch(self._prefetch)
+        actual_inactive = actual_inactive.with_prefetch(self._prefetch_ids)
         if actual_inactive:
             actual_inactive.write({"active": True})
         if actual_active:

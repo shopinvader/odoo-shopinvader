@@ -8,6 +8,7 @@ class ShopinvaderConfigSettings(models.TransientModel):
 
     _inherit = "res.config.settings"
     _name = "shopinvader.config.settings"
+    _description = "Shopinvader configuration"
 
     no_partner_duplicate = fields.Boolean(
         default=True,

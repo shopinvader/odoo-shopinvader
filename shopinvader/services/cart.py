@@ -208,7 +208,7 @@ class CartService(Component):
                 # - pricelist_id
                 new_values = (
                     self.env["sale.order.line"]
-                    .suspend_security()
+                    .sudo()
                     .play_onchanges(vals, vals.keys())
                 )
                 vals.update(new_values)

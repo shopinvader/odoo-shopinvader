@@ -93,13 +93,15 @@ class SaleService(Component):
 
     def _convert_invoices(self, sale):
         res = []
-        for invoice in sale.invoice_ids.filtered(lambda i: i.state == "paid"):
+        for invoice in sale.invoice_ids.filtered(
+            lambda i: i.invoice_payment_state == "paid"
+        ):
             res.append(self._convert_one_invoice(invoice))
         return res
 
     def _convert_one_invoice(self, invoice):
         return {
             "id": invoice.id,
-            "name": invoice.number,
-            "date": invoice.date_invoice or None,
+            "name": invoice.name,
+            "date": invoice.invoice_date or None,
         }

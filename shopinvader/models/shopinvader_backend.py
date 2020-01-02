@@ -240,7 +240,6 @@ class ShopinvaderBackend(models.Model):
                         bind.write({"active": True})
         return True
 
-    @api.multi
     def bind_all_product(self):
         result = self._bind_all_content(
             "product.template", "shopinvader.product", [("sale_ok", "=", True)]
@@ -248,7 +247,6 @@ class ShopinvaderBackend(models.Model):
         self.auto_bind_categories()
         return result
 
-    @api.multi
     def auto_bind_categories(self):
         """
         Auto bind product.category for binded shopinvader.product
@@ -278,7 +276,6 @@ class ShopinvaderBackend(models.Model):
                 )
         return True
 
-    @api.multi
     def _get_related_categories(self, products):
         """
         Get product.category to bind (based on current backend and
@@ -298,7 +295,6 @@ class ShopinvaderBackend(models.Model):
             level -= 1
         return categories
 
-    @api.multi
     def bind_all_category(self):
         self._bind_all_content("product.category", "shopinvader.category", [])
 
@@ -345,7 +341,6 @@ class ShopinvaderBackend(models.Model):
         auth_api_key_id = getattr(request, "auth_api_key_id", None)
         return self.browse(self._get_id_from_auth_api_key(auth_api_key_id))
 
-    @api.multi
     def _bind_langs(self, lang_ids):
         self.ensure_one()
         self.env["shopinvader.variant.binding.wizard"].bind_langs(
@@ -355,9 +350,7 @@ class ShopinvaderBackend(models.Model):
             self, lang_ids
         )
 
-    @api.multi
     def _unbind_langs(self, lang_ids):
-        self.ensure_one()
         self.ensure_one()
         self.env["shopinvader.variant.unbinding.wizard"].unbind_langs(
             self, lang_ids
@@ -384,7 +377,6 @@ class ShopinvaderBackend(models.Model):
             if removed_lang_ids:
                 record._unbind_langs(list(removed_lang_ids))
 
-    @api.multi
     def write(self, values):
         if "auth_api_key_id" in values:
             self._get_id_from_auth_api_key.clear_cache(self.env[self._name])

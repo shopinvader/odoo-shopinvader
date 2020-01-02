@@ -26,7 +26,6 @@ class ShopinvaderVariantUnbindingWizard(models.TransientModel):
             res["shopinvader_variant_ids"] = shopinvader_variant_ids
         return res
 
-    @api.multi
     def unbind_products(self):
         for wizard in self:
             wizard.shopinvader_variant_ids.write({"active": False})
@@ -45,5 +44,5 @@ class ShopinvaderVariantUnbindingWizard(models.TransientModel):
         )
         # use in memory record to avoid the creation of useless records into
         # the database
-        wiz = self.new({"shopinvader_variant_ids": shopinvader_variant_ids})
+        wiz = self.create({"shopinvader_variant_ids": shopinvader_variant_ids})
         wiz.unbind_products()

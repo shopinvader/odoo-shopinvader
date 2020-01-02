@@ -35,16 +35,15 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         )
         backend_id = self.env.context.get("active_id", False)
         if backend_id:
+            backend = self.env["shopinvader.backend"].browse(backend_id)
             res["backend_id"] = backend_id
-            res["lang_ids"] = (6, None, backend_id.lang_ids.ids)
+            res["lang_ids"] = [(6, None, backend.lang_ids.ids)]
         return res
 
-    @api.multi
     def _get_langs_to_bind(self):
         self.ensure_one()
         return self.lang_ids or self.backend_id.lang_ids
 
-    @api.multi
     def _get_binded_templates(self):
         """
         return a dict of binded shopinvader.product by product template id
@@ -79,14 +78,13 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
                     bind_record.write({"active": True})
         return ret
 
-    @api.multi
     def bind_products(self):
         for wizard in self:
             binded_templates = wizard._get_binded_templates()
             binding = self.env["shopinvader.variant"]
             for product in wizard.product_ids:
                 binded_products = binded_templates[product.product_tmpl_id]
-                for lang_id in self._get_langs_to_bind():
+                for lang_id in wizard._get_langs_to_bind():
                     for shopinvader_product in binded_products[lang_id]:
                         binded_variants = (
                             shopinvader_product.shopinvader_variant_ids
@@ -127,10 +125,12 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         # by default the wizard check if a product is already binded so we
         # can use it by giving the list of product already binded in one of
         # the specified lang and the process will create the missing one.
-        wiz = self.new(
+
+        # TODO 'new({})' doesn't work into V13 -> should use model lassmethod
+        wiz = self.create(
             {
                 "lang_ids": self.env["res.lang"].browse(lang_ids),
-                "backend_id": backend,
+                "backend_id": backend.id,
                 "product_ids": binded_products,
             }
         )

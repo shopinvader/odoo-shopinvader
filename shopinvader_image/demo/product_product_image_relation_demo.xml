@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="shopinvader.product_product_94" model="product.product">
+    <record id="shopinvader.product_product_thelma_grey" model="product.product">
         <field name="name">Thelma</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_54'), ref('product_image_relation_55'),
@@ -10,12 +10,12 @@
 
     </record>
 
-    <record id="shopinvader.product_product_58" model="product.product">
+    <record id="shopinvader.product_product_round_table_mid_century_white" model="product.product">
         <field name="name">Table ronde style mid-century plateau laqué</field>
         <field name="image_ids" eval="[(6,0,[ref('product_image_relation_31')])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_54" model="product.product">
+    <record id="shopinvader.product_product_tv_cabinet_cmcharper_brown" model="product.product">
         <field name="name">Meuble TV 40 cmHARPER</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_9'), ref('product_image_relation_10')
@@ -24,7 +24,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_46" model="product.product">
+    <record id="shopinvader.product_product_chair_mid_century_red" model="product.product">
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_1'), ref('product_image_relation_42')
@@ -34,7 +34,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_42" model="product.product">
+    <record id="shopinvader.product_product_chair_vortex_blue" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -46,7 +46,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_69" model="product.product">
+    <record id="shopinvader.product_product_chair_vortex_grey" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -58,7 +58,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_70" model="product.product">
+    <record id="shopinvader.product_product_chair_vortex_yellow" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -70,7 +70,7 @@
 
     </record>
 
-    <record id="shopinvader.product_product_71" model="product.product">
+    <record id="shopinvader.product_product_chair_vortex_red" model="product.product">
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_13'), ref('product_image_relation_14')
@@ -81,7 +81,7 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_45" model="product.product">
+    <record id="shopinvader.product_product_chair_mid_century_blue" model="product.product">
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_1'), ref('product_image_relation_42')
@@ -90,7 +90,7 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_47" model="product.product">
+    <record id="shopinvader.product_product_chair_mid_century_black" model="product.product">
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_1'), ref('product_image_relation_42')
@@ -99,14 +99,14 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_57" model="product.product">
+    <record id="shopinvader.product_product_tv_cabinet_mid_century_brown" model="product.product">
         <field name="name">Table style Mid-Century Modern Chêne</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_24'), ref('product_image_relation_25')
         , ref('product_image_relation_36')])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_56" model="product.product">
+    <record id="shopinvader.product_product_tv_cabinet_shaker_wood_grey" model="product.product">
         <field name="name">Meuble TV Warm Shaker bois massif 183cm</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_32'), ref('product_image_relation_33')
@@ -114,7 +114,7 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_55" model="product.product">
+    <record id="shopinvader.product_product_tv_cabinet_shaker_wood_brown" model="product.product">
         <field name="name">Meuble TV Warm Shaker bois massif 183cm</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_32'), ref('product_image_relation_33')
@@ -122,7 +122,7 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_96" model="product.product">
+    <record id="shopinvader.product_product_thelma_red" model="product.product">
         <field name="name">Thelma</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_54'), ref('product_image_relation_55')
@@ -131,7 +131,7 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_95" model="product.product">
+    <record id="shopinvader.product_product_thelma_black" model="product.product">
         <field name="name">Thelma</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_54'), ref('product_image_relation_55')
@@ -140,14 +140,14 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_51" model="product.product">
+    <record id="shopinvader.product_product_tv_cbinet_ameriwood" model="product.product">
         <field name="name">Ameriwood Home 1783213COM - Meuble TV</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_5'), ref('product_image_relation_6')
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_39" model="product.product">
+    <record id="shopinvader.product_product_chair_vortex_white" model="product.product">
         <field name="name">Vortex Side Chair</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_38'), ref('product_image_relation_39')
@@ -155,7 +155,7 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_41" model="product.product">
+    <record id="shopinvader.product_product_chair_vortex_blue" model="product.product">
         <field name="name">Vortex Side Chair</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_38'), ref('product_image_relation_39')
@@ -163,19 +163,19 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_50" model="product.product">
+    <record id="shopinvader.product_product_coffee_table_caftman_brown" model="product.product">
         <field name="name">Sauder 420011 Coffee Table, Furniture, Craftsman Oak</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_26'), ref('product_image_relation_27')
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_52" model="product.product">
+    <record id="shopinvader.product_product_tv_stand_wood_and_glass" model="product.product">
         <field name="name">ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70&quot;</field>
         <field name="image_ids" eval="[(6,0,[ref('product_image_relation_53')])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_48" model="product.product">
+    <record id="shopinvader.product_product_chair_mid_century_white" model="product.product">
         <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_1'), ref('product_image_relation_42')
@@ -184,14 +184,14 @@
         ])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_53" model="product.product">
+    <record id="shopinvader.product_product_park_entertainment" model="product.product">
         <field name="name">Sauder Harvey Park Entertainment Credenza, chêne clair</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_28'), ref('product_image_relation_29')
         , ref('product_image_relation_30')])]"></field>
     </record>
 
-    <record id="shopinvader.product_product_49" model="product.product">
+    <record id="shopinvader.product_product_tv_cabinet_concept_design_white" model="product.product">
         <field name="name">Convenience Concepts Designs2Go Oslo - meuble TV</field>
         <field name="image_ids" eval="[(6,0,[
         ref('product_image_relation_7'), ref('product_image_relation_8')
