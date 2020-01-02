@@ -7,6 +7,7 @@ search-engine
 product-attribute
 product-variant
 sale-workflow
+partner-contact
 storage https://github.com/akretion/storage 10.0
 base_rest https://github.com/oca/rest-framework 10.0
 odoo-pim https://github.com/shopinvader/odoo-pim 10.0

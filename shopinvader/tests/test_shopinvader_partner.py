@@ -20,7 +20,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner",
+                "name": "test partner",
                 "backend_id": self.backend.id,
             }
         )
@@ -28,7 +28,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             self.env["shopinvader.partner"].create(
                 {
                     "email": self.unique_email,
-                    "name": "test  partner",
+                    "name": "test partner",
                     "backend_id": self.backend.id,
                 }
             )
@@ -46,7 +46,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         binding = self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner",
+                "name": "test partner",
                 "backend_id": self.backend.id,
             }
         )
@@ -61,7 +61,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner 2",
+                "name": "test partner 2",
                 "backend_id": self.backend.id,
             }
         )
@@ -81,14 +81,14 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.assertFalse(
             self.shopinvader_config.is_partner_duplication_allowed()
         )
-        vals = {"email": self.unique_email, "name": "test  partner"}
+        vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
         # create a binding
         binding = self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner",
+                "name": "test partner",
                 "backend_id": self.backend.id,
             }
         )
@@ -111,7 +111,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.assertFalse(
             self.shopinvader_config.is_partner_duplication_allowed()
         )
-        vals = {"email": self.unique_email, "name": "test  partner"}
+        vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
         self.assertFalse(partner.child_ids)

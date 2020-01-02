@@ -10,9 +10,9 @@ from .common import CommonCase
 _logger = logging.getLogger(__name__)
 
 
-class TestCustomer(CommonCase):
+class TestCustomerCommon(CommonCase):
     def setUp(self, *args, **kwargs):
-        super(TestCustomer, self).setUp(*args, **kwargs)
+        super(TestCustomerCommon, self).setUp(*args, **kwargs)
         self.data = {
             "email": "new@customer.example.com",
             "name": "Purple",
@@ -29,6 +29,17 @@ class TestCustomer(CommonCase):
             self.service = work.component(usage="customer")
             self.address_service = work.component(usage="addresses")
 
+    def _test_partner_data(self, partner, data):
+        for key in data:
+            if key == "external_id":
+                continue
+            elif key == "country":
+                self.assertEqual(partner.country_id.id, data[key]["id"])
+            else:
+                self.assertEqual(partner[key], data[key])
+
+
+class TestCustomer(TestCustomerCommon):
     def test_create_customer(self):
         self.data["external_id"] = "D5CdkqOEL"
         res = self.service.dispatch("create", params=self.data)["data"]
@@ -37,13 +48,7 @@ class TestCustomer(CommonCase):
         self.assertEqual(
             partner.shopinvader_bind_ids.external_id, self.data["external_id"]
         )
-        for key in self.data:
-            if key == "external_id":
-                continue
-            elif key == "country":
-                self.assertEqual(partner.country_id.id, self.data[key]["id"])
-            else:
-                self.assertEqual(partner[key], self.data[key])
+        self._test_partner_data(partner, self.data)
 
     def test_create_customer_business(self):
         self.data["external_id"] = "D5CdkqOEL"

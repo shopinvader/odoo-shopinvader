@@ -1,3 +1,4 @@
+# coding: utf8
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -5,12 +6,15 @@
 from odoo.addons.shopinvader.tests.test_customer import TestCustomerCommon
 
 
-class TestCustomer(TestCustomerCommon):
+class TestCustomerCommon(TestCustomerCommon):
     @classmethod
     def setUpClass(cls):
-        super().setUpClass()
+        super(TestCustomerCommon, cls).setUpClass()
 
     def test_create_customer_firstname(self):
+        self.env["ir.config_parameter"].set_param(
+            "partner_names_order", "first_last"
+        )
         data = dict(
             self.data,
             external_id="jdoe",
