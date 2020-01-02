@@ -20,6 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.0.0 | keep history of url for products & categories
+[shopinvader](shopinvader/) | 13.0.1.0.0 | Shopinvader
 
 
 Unported addons
@@ -29,7 +30,6 @@ addon | version | summary
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
 [product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
-[shopinvader](shopinvader/) | 12.0.3.1.0 (unported) | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.1.0.0 (unported) | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 (unported) | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
