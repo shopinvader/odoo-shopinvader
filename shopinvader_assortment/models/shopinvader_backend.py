@@ -18,7 +18,6 @@ class ShopinvaderBackend(models.Model):
         context={"product_assortment": True},
     )
 
-    @api.multi
     def _autobind_product_from_assortment(self):
         self.ensure_one()
         product_obj = self.env["product.product"]
@@ -64,7 +63,6 @@ class ShopinvaderBackend(models.Model):
         for backend in self.search(domain):
             backend._autobind_product_from_assortment()
 
-    @api.multi
     def force_recompute_all_binding_index(self):
         records = self.filtered(
             lambda r: not r.product_manual_binding and r.product_assortment_id

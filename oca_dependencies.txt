@@ -3,7 +3,7 @@ connector
 queue
 server-auth
 search-engine
-search-engine
 server-tools
 sale-workflow
+product-attribute
 odoo-misc https://github.com/shopinvader/odoo-misc 13.0
