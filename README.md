@@ -20,6 +20,10 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.0.0 | keep history of url for products & categories
+[shopinvader](shopinvader/) | 13.0.1.0.0 | Shopinvader
+[shopinvader_algolia](shopinvader_algolia/) | 13.0.1.0.0 | Shopinvader Algolia Connector
+[shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
+[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.0.0 | Shopinvader Catalog Search Engine Connector
 
 
 Unported addons
@@ -29,9 +33,6 @@ addon | version | summary
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
 [product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
-[shopinvader](shopinvader/) | 12.0.3.1.0 (unported) | Shopinvader
-[shopinvader_algolia](shopinvader_algolia/) | 12.0.1.0.0 (unported) | Shopinvader Algolia Connector
-[shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 (unported) | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.0 (unported) | Shopinvader cart expiry
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
@@ -61,6 +62,5 @@ addon | version | summary
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 (unported) | Shopinvader Quotation
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 10.0.1.0.1 (unported) | ShopInvader - Sale profile
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader sale report
-[shopinvader_search_engine](shopinvader_search_engine/) | 12.0.1.1.0 (unported) | Shopinvader Catalog Search Engine Connector
 
 [//]: # (end addons)

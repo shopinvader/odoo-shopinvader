@@ -3,10 +3,7 @@ connector
 queue
 server-auth
 search-engine
-# search-engine
-connector_algolia https://github.com/acsone/search-engine 13.0-MIG-connector_algolia
-# server-tools
-onchange_helper https://github.com/acsone/server-tools 13.0-MIG-onchange_helper
-# sale-workflow
-sale_discount_display_amount https://github.com/acsone/sale-workflow 13.0-MIG-sale_discount_display_amount
+server-tools
+sale-workflow
+product-attribute
 odoo-misc https://github.com/shopinvader/odoo-misc 13.0

@@ -9,6 +9,10 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo13-addon-base_url',
+        'odoo13-addon-shopinvader',
+        'odoo13-addon-shopinvader_algolia',
+        'odoo13-addon-shopinvader_assortment',
+        'odoo13-addon-shopinvader_search_engine',
     ],
     classifiers=[
         'Programming Language :: Python',

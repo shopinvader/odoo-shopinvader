@@ -531,7 +531,6 @@ class ProductCase(ProductCommonCase):
         )
         # Set product shareable between companies
         product_12.company_id = False
-        self.env.user.company_id = company_2
         # Change product name to trigger compute
         product_12.write(
             {
@@ -539,7 +538,9 @@ class ProductCase(ProductCommonCase):
                 "default_code": "product_12_mc",
             }
         )
-        result = shopinvader_product_12.url_key.find("product_12_mc")
+        result = shopinvader_product_12.with_context(
+            allowed_company_ids=company_2.id
+        ).url_key.find("product_12_mc")
         self.assertTrue(result)
 
     def test_product_shopinvader_name(self):
