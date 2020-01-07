@@ -274,13 +274,13 @@
 
         <function model="ir.model.data" name="_update_xmlids">
             <value model="base" eval="[{
-                'xml_id': 'shopinvader.product_product_tv_cabinet_concept_design_brown',
+                'xml_id': 'shopinvader.product_product_coffee_table_caftman_brown',
                 'record': obj().env.ref('shopinvader.product_template_coffee_table_caftman')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_coffee_table_caftman_attribute_color_brown')),
                 'noupdate': False,
             },]"/>
         </function>
 
-    <record id="product_product_tv_cabinet_concept_design_brown" model="product.product">
+    <record id="product_product_coffee_table_caftman_brown" model="product.product">
         <field name="default_code">SAUDERTABLE-001</field>
     </record>
 

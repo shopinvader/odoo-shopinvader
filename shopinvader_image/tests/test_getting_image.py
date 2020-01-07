@@ -57,4 +57,4 @@ class ShopinvaderImageCase(ProductCommonCase, ProductImageCommonCase):
         for image in self.shopinvader_variant.image_ids.mapped("image_id"):
             # skip the two first thumbnail as there are odoo thumbnail
             for thumbnail in image.thumbnail_ids[2:]:
-                self.assertEqual(thumbnail.url_key, "customizable-desk")
+                self.assertEqual(thumbnail.url_key, "customizable-desk-config")
