@@ -7,3 +7,8 @@
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 * [12.0][MIG] shopinvader_elasticsearch
+
+13.0.1.0.0 (2019-12-19)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [13.0][MIG] shopinvader_elasticsearch
