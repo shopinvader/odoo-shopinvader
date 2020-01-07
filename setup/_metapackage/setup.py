@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_algolia',
         'odoo13-addon-shopinvader_assortment',
         'odoo13-addon-shopinvader_image',
+        'odoo13-addon-shopinvader_locomotive',
         'odoo13-addon-shopinvader_search_engine',
     ],
     classifiers=[
