@@ -50,7 +50,6 @@ class ProductSetLine(models.Model):
         required=False
     )
 
-    @api.multi
     def _inverse_shopinvader_variant(self):
         for record in self:
             if record.shopinvader_variant_id and not record.product_id:
