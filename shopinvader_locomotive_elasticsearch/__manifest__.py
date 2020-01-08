@@ -6,7 +6,7 @@
     "summary": """
         This addons is used to push the initial elasticsearch configuration
         to locomotive""",
-    "version": "12.0.1.1.0",
+    "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://acsone.eu/",
@@ -15,5 +15,5 @@
         "shopinvader_locomotive",
         "shopinvader_elasticsearch",
     ],
-    "installable": False,
+    "installable": True,
 }
