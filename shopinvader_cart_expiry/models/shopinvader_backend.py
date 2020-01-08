@@ -53,7 +53,6 @@ class ShopinvaderBackend(models.Model):
         return domain
 
     @job(default_channel="root.shopinvader")
-    @api.multi
     def manage_cart_expiry(self):
         self.ensure_one()
         cart_expired = self.env["sale.order"].search(
