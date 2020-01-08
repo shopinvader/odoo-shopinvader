@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "ShopInvader - Sale profile",
-    "version": "10.0.1.0.1",
+    "version": "13.0.1.0.0",
     "depends": ["base", "shopinvader_locomotive", "shopinvader"],
     "author": "Akretion,ACSONE SA/NV",
     "website": "http://www.akretion.com",
@@ -21,5 +20,5 @@
         "demo/shopinvader_sale_profile.xml",
         "demo/account_fiscal_position.xml",
     ],
-    "installable": False,
+    "installable": True,
 }

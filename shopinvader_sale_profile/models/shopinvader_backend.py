@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
@@ -28,7 +27,6 @@ class ShopinvaderBackend(models.Model):
                 )
                 self.pricelist_id = profile.pricelist_id
 
-    @api.multi
     @api.constrains("use_sale_profile", "pricelist_id")
     def _check_default(self):
         if self.pricelist_id and self.use_sale_profile:
