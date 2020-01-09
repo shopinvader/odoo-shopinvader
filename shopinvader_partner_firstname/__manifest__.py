@@ -6,7 +6,7 @@
     "Summary": """
         Integrates `partner_firstname` with shopinvader.
     """,
-    "version": "12.0.1.0.2",
+    "version": "13.0.1.0.0",
     "license": "AGPL-3",
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
