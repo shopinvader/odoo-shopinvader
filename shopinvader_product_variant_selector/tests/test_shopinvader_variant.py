@@ -24,7 +24,7 @@ class ShopinvaderVariantCase(SavepointCase):
         )
 
     def _configure_and_get_variant(self, code):
-        self.template.create_variant_ids()
+        self.template._create_variant_ids()
         self.env["shopinvader.product"].with_context(map_children=True).create(
             {
                 "backend_id": self.backend.id,
@@ -33,9 +33,9 @@ class ShopinvaderVariantCase(SavepointCase):
             }
         )
         for variant in self.template.product_variant_ids:
-            values = variant.mapped("attribute_value_ids").sorted(
-                lambda s: s.attribute_id.sequence
-            )
+            values = variant.mapped(
+                "product_template_attribute_value_ids"
+            ).sorted(lambda s: s.attribute_id.sequence)
             variant.default_code = "-".join(values.mapped("name"))
         for variant in self.template.mapped(
             "product_variant_ids.shopinvader_bind_ids"
