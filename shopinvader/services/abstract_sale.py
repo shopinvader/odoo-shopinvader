@@ -2,7 +2,11 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import logging
+
 from odoo.addons.component.core import AbstractComponent
+
+_logger = logging.getLogger(__name__)
 
 
 class AbstractSaleService(AbstractComponent):
@@ -43,11 +47,24 @@ class AbstractSaleService(AbstractComponent):
         return True
 
     def _convert_one_line(self, line):
-        if line.shopinvader_variant_id:
+        variant = line.product_id._get_invader_variant(
+            self.shopinvader_backend, self.env.context.get("lang")
+        )
+        if not variant:
+            _logger.debug(
+                "No variant found with ctx lang `%s`. "
+                "Falling back to partner lang `%s",
+                self.env.context.get("lang"),
+                line.order_id.partner_id.lang,
+            )
+            # this likely should never happen if the request from client
+            # is forwarded properly
+            variant = line.product_id._get_invader_variant(
+                self.shopinvader_backend, line.order_id.partner_id.lang
+            )
+        if variant:
             # TODO we should reuse the parser of the index
-            product = line.shopinvader_variant_id.jsonify(
-                self._parser_product()
-            )[0]
+            product = variant.jsonify(self._parser_product())[0]
         else:
             product = {}
         return {

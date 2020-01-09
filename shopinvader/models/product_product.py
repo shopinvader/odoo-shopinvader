@@ -60,3 +60,24 @@ class ProductProduct(models.Model):
             rec.shopinvader_backend_ids = rec.mapped(
                 "shopinvader_bind_ids.backend_id"
             )
+
+    def _add_to_cart_allowed(self, backend, partner=None):
+        """Check if you can add current product to a cart.
+
+        By default: make sure there's a binding for given backend.
+        """
+        return bool(
+            self.shopinvader_bind_ids.filtered(
+                lambda x: x.backend_id == backend
+            )
+        )
+
+    def _get_invader_variant(self, backend, lang):
+        """Retrieve invader variant by backend and language.
+
+        :param backend: backend recordset
+        :param lang: lang code
+        """
+        return self.shopinvader_bind_ids.filtered(
+            lambda x: x.backend_id == backend and x.lang_id.code == lang
+        )

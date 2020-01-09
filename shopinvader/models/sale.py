@@ -116,33 +116,7 @@ class SaleOrder(models.Model):
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
-    shopinvader_variant_id = fields.Many2one(
-        "shopinvader.variant",
-        compute="_compute_shopinvader_variant",
-        string="Shopinvader Variant",
-    )
-
     def reset_price_tax(self):
         for line in self:
             line.product_id_change()
             line._onchange_discount()
-
-    @api.depends("order_id.shopinvader_backend_id", "product_id")
-    def _compute_shopinvader_variant(self):
-        lang = self._context.get("lang")
-        if not lang:
-            _logger.warning(
-                "No lang specified for getting the shopinvader variant "
-                "take the first binding"
-            )
-        for record in self:
-            bindings = record.product_id.shopinvader_bind_ids
-            for binding in bindings:
-                if (
-                    binding.backend_id
-                    != record.order_id.shopinvader_backend_id
-                ):
-                    continue
-                if lang and binding.lang_id.code != lang:
-                    continue
-                record.shopinvader_variant_id = binding

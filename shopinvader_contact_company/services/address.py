@@ -20,8 +20,8 @@ class AddressService(Component):
         res += ["contact_name:name", "company"]
         return res
 
-    def _prepare_params(self, params):
-        params = super(AddressService, self)._prepare_params(params)
+    def _prepare_params(self, params, mode="create"):
+        params = super(AddressService, self)._prepare_params(params, mode=mode)
         if "name" in params:
             params["contact_name"] = params.pop("name")
         return params

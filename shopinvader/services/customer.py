@@ -49,16 +49,15 @@ class CustomerService(Component):
                 "email": {"type": "string", "required": True},
                 "external_id": {"type": "string", "required": True},
                 "vat": {"type": "string", "required": False},
-                "lang": {"type": "string", "required": False},
                 "company_name": {"type": "string", "required": False},
                 "function": {"type": "string", "required": False},
             }
         )
         return schema
 
-    def _prepare_params(self, params):
+    def _prepare_params(self, params, mode="create"):
         address = self.component(usage="addresses")
-        params = address._prepare_params(params)
+        params = address._prepare_params(params, mode=mode)
         # fmt: off
         params.update(
             {
@@ -68,11 +67,12 @@ class CustomerService(Component):
             }
         )
         # fmt: on
-        if params.get("is_company"):
-            params["is_company"] = True
-        params[
-            "shopinvader_enabled"
-        ] = self.partner_validator.enabled_by_params(params, "profile")
+        if mode == "create":
+            if params.get("is_company"):
+                params["is_company"] = True
+            params[
+                "shopinvader_enabled"
+            ] = self.partner_validator.enabled_by_params(params, "profile")
         return params
 
     def _get_and_assign_cart(self):
@@ -109,19 +109,3 @@ class CustomerService(Component):
         response = self._assign_cart_and_get_store_cache()
         response["data"] = {"id": self.partner.id, "name": self.partner.name}
         return response
-
-    def _get_notification_type(self, partner, mode):
-        if mode == "create":
-            notif = "new_customer_welcome"
-            if not self.partner_validator.is_partner_validated(partner):
-                notif = "new_customer_welcome_not_validated"
-        return notif
-
-    def _notify_salesman_needed(self, backend_policy, partner, mode):
-        if backend_policy in ("all", "company_and_user"):
-            return True
-        elif backend_policy == "company" and partner.is_company:
-            return True
-        elif backend_policy == "user" and not partner.is_company:
-            return True
-        return False

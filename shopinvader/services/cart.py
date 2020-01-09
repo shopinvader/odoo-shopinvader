@@ -193,6 +193,11 @@ class CartService(Component):
         return cart
 
     def _add_item(self, cart, params):
+        product = self.env["product.product"].browse(params["product_id"])
+        if not product._add_to_cart_allowed(
+            self.shopinvader_backend, partner=self.partner
+        ):
+            raise UserError(_("Product %s is not allowed") % product.name)
         existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
             qty = existing_item.product_uom_qty + params["item_qty"]

@@ -90,6 +90,8 @@ class InvaderController(main.RestController):
         res = super(InvaderController, self)._get_component_context()
         headers = request.httprequest.environ
         res["partner"] = self._get_partner_from_headers(headers)
+        # allow having a different partner for the user in extending modules
+        res["partner_user"] = res["partner"]
         res[
             "shopinvader_session"
         ] = self._get_shopinvader_session_from_headers(headers)

@@ -3,12 +3,16 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
+import logging
+
 from odoo import _
 from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
 
 from .. import shopinvader_response
+
+_logger = logging.getLogger(__name__)
 
 
 class BaseShopinvaderService(AbstractComponent):
@@ -19,7 +23,20 @@ class BaseShopinvaderService(AbstractComponent):
 
     @property
     def partner(self):
+        # partner that matches the real profile on client side
+        # or its main contact which in any case is used for all
+        # account information.
         return self.work.partner
+
+    @property
+    def partner_user(self):
+        # partner that matches the real user on client side.
+        # The standard `self.partner` will match `partner_user`
+        # only when the main customer account is logged in.
+        # In this way we can support multiple actors for the same profile.
+        # TODO: check if there are place wher it's better to use
+        # `partner_user` instead of `partner`.
+        return getattr(self.work, "partner_user", self.partner)
 
     @property
     def shopinvader_session(self):
@@ -123,7 +140,7 @@ class BaseShopinvaderService(AbstractComponent):
         )
         return defaults
 
-    def _is_logged(self):
+    def _is_logged_in(self):
         """
         Check if the current partner is a real partner (not the anonymous one
         and not empty)
@@ -136,6 +153,10 @@ class BaseShopinvaderService(AbstractComponent):
         ):
             logged = True
         return logged
+
+    def _is_logged(self):
+        _logger.warning("DEPRECATED: You should use `self._is_logged_in()`")
+        return self._is_logged_in()
 
     @property
     def shopinvader_response(self):
