@@ -88,9 +88,9 @@ class TestInvoiceService(CommonCase):
         sale.action_confirm()
         for line in sale.order_line:
             line.write({"qty_delivered": line.product_uom_qty})
-        invoice_id = sale.action_invoice_create()
+        invoice_id = sale._create_invoices()
         invoice = self.env["account.invoice"].browse(invoice_id)
-        invoice.action_invoice_open()
+        invoice.post()
         invoice.action_move_create()
         if payment:
             self._make_payment(invoice)
