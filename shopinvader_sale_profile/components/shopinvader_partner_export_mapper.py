@@ -11,5 +11,7 @@ class ShopinvaderPartnerExportMapper(Component):
     _inherit = "shopinvader.partner.export.mapper"
 
     @mapping
-    def sale_profile(self, record):
+    def role(self, record):
+        if not record.backend_id.use_sale_profile:
+            return super(ShopinvaderPartnerExportMapper, self).role(record)
         return {"role": record.sale_profile_id.code}
