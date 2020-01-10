@@ -11,5 +11,4 @@ class AbstractSaleService(AbstractComponent):
     def _convert_one_sale(self, sale):
         res = super(AbstractSaleService, self)._convert_one_sale(sale)
         res.update({"expiration_date": sale.cart_expiration_date})
-
         return res

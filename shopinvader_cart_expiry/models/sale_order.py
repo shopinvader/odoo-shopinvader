@@ -31,6 +31,7 @@ class SaleOrder(models.Model):
         :return:
         """
         for order in self:
+            order.cart_expiration_date = False
             if order._is_expiring_cart():
                 trigger_date = (
                     order.write_date
