@@ -18,15 +18,11 @@ class CommonWishlistCase(CommonCase):
             "partner_id": cls.partner.id,
             "lines": [
                 {
-                    "product_id": cls.env.ref(
-                        "shopinvader.product_product_39"
-                    ).id,
+                    "product_id": cls.env.ref("product.product_product_11").id,
                     "quantity": 1.0,
                 },
                 {
-                    "product_id": cls.env.ref(
-                        "shopinvader.product_product_41"
-                    ).id,
+                    "product_id": cls.env.ref("product.product_product_13").id,
                     "quantity": 5.0,
                 },
             ],
