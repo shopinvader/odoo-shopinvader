@@ -10,8 +10,9 @@ from odoo.addons.base_rest.tests.common import BaseRestCase
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
-from odoo.addons.shopinvader import shopinvader_response
 from odoo.tests import SavepointCase
+
+from .. import shopinvader_response
 
 
 class CommonMixin(ComponentMixin):
