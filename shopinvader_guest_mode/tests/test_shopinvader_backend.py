@@ -18,7 +18,7 @@ class TestShopinvaderBackend(SavepointComponentCase):
         shopinvader_partner = self.env["shopinvader.partner"].create(
             {
                 "email": "test@test.com",
-                "name": "test  partner",
+                "name": "test partner",
                 "is_guest": True,
                 "backend_id": self.backend.id,
             }

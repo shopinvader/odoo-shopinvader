@@ -18,7 +18,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         cls.shopinvader_partner = cls.env["shopinvader.partner"].create(
             {
                 "email": "test@test.com",
-                "name": "test  partner",
+                "name": "test partner",
                 "is_guest": True,
                 "backend_id": cls.backend.id,
             }
@@ -31,7 +31,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             self.env["shopinvader.partner"].create(
                 {
                     "email": "test@test.com",
-                    "name": "test  partner",
+                    "name": "test partner",
                     "is_guest": True,
                     "backend_id": self.backend.id,
                 }
@@ -41,7 +41,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["shopinvader.partner"].create(
             {
                 "email": "test@test.com",
-                "name": "test  partner",
+                "name": "test partner",
                 "is_guest": True,
                 "backend_id": self.backend.id,
                 "active": False,
@@ -50,7 +50,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         shopinvader_partner = self.env["shopinvader.partner"].create(
             {
                 "email": "test@test.com",
-                "name": "test  partner",
+                "name": "test partner",
                 "is_guest": True,
                 "backend_id": self.backend.id,
                 "active": False,
