@@ -100,31 +100,30 @@ class CommonCase(SavepointCase, CommonMixin):
 
 
 class ProductCommonCase(CommonCase):
-    def setUp(self):
-        super(ProductCommonCase, self).setUp()
-        self.template = self.env.ref(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.template = cls.env.ref(
             "product.product_product_4_product_template"
         )
-        self.variant = self.env.ref("product.product_product_4b")
-        self.template.taxes_id = self.env.ref("shopinvader.tax_1")
-        self.shopinvader_variants = self.env["shopinvader.variant"].search(
+        cls.variant = cls.env.ref("product.product_product_4b")
+        cls.template.taxes_id = cls.env.ref("shopinvader.tax_1")
+        cls.shopinvader_variants = cls.env["shopinvader.variant"].search(
             [
-                ("record_id", "in", self.template.product_variant_ids.ids),
-                ("backend_id", "=", self.backend.id),
+                ("record_id", "in", cls.template.product_variant_ids.ids),
+                ("backend_id", "=", cls.backend.id),
             ]
         )
-        self.shopinvader_variant = self.env["shopinvader.variant"].search(
+        cls.shopinvader_variant = cls.env["shopinvader.variant"].search(
             [
-                ("record_id", "=", self.variant.id),
-                ("backend_id", "=", self.backend.id),
+                ("record_id", "=", cls.variant.id),
+                ("backend_id", "=", cls.backend.id),
             ]
         )
-        self.env.user.company_id.currency_id = self.env.ref("base.USD")
-        base_price_list = self.env.ref("product.list0")
-        base_price_list.currency_id = self.env.ref("base.USD")
-        self.shopinvader_variant.record_id.currency_id = self.env.ref(
-            "base.USD"
-        )
+        cls.env.user.company_id.currency_id = cls.env.ref("base.USD")
+        base_price_list = cls.env.ref("product.list0")
+        base_price_list.currency_id = cls.env.ref("base.USD")
+        cls.shopinvader_variant.record_id.currency_id = cls.env.ref("base.USD")
 
 
 class ShopinvaderRestCase(BaseRestCase):
