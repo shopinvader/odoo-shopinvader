@@ -20,11 +20,11 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.0.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 13.0.1.0.0 | Shopinvader
+[shopinvader](shopinvader/) | 13.0.1.0.1 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch
-[shopinvader_image](shopinvader_image/) | 13.0.1.0.0 | Add the export of Image for Shopinvader
+[shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
 [shopinvader_locomotive](shopinvader_locomotive/) | 13.0.1.0.0 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.0.0 | Shopinvader Catalog Search Engine Connector
