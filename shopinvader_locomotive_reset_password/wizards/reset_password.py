@@ -22,6 +22,7 @@ class ShopinvaderResetPassword(models.TransientModel):
         default="6-hours",
         required=True,
     )
+    partner_ids = fields.Many2many(comodel_name="shopinvader.partner")
     template_id = fields.Many2one(
         "mail.template",
         "Mail Template",
@@ -43,12 +44,18 @@ class ShopinvaderResetPassword(models.TransientModel):
         record.onchange_delay()
         return record
 
+    @api.model
+    def default_get(self, fields_list):
+        res = super(ShopinvaderResetPassword, self).default_get(fields_list)
+        active_ids = self.env.context.get("active_ids")
+        if active_ids:
+            res["partner_ids"] = active_ids
+        return res
+
     @api.multi
     def confirm(self):
         self.ensure_one()
-        partners = self.env["shopinvader.partner"].browse(
-            self._context["active_ids"]
-        )
+        partners = self.partner_ids
         partners.write({"last_pwd_reset_datetime": False})
         for partner in partners:
             partner.with_delay()._reset_password(
