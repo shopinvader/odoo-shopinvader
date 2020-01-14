@@ -12,6 +12,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderPartner, cls).setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.shopinvader_config = cls.env["shopinvader.config.settings"]
         cls.unique_email = datetime.now().isoformat() + "@test.com"

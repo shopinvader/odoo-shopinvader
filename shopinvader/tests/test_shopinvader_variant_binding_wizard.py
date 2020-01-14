@@ -7,6 +7,7 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderVariantBindingWizard, cls).setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.template = cls.env.ref(
             "product.product_product_4_product_template"

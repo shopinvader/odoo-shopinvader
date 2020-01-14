@@ -11,6 +11,7 @@ class TestResPartner(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
         super(TestResPartner, cls).setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.shopinvader_config = cls.env["shopinvader.config.settings"]
         cls.unique_email = datetime.now().isoformat() + "@test.com"
 
@@ -25,9 +26,9 @@ class TestResPartner(SavepointComponentCase):
         self.env["res.partner"].create(
             {"email": self.unique_email, "name": "test partner 2"}
         )
-        self.shopinvader_config.create(
-            {"no_partner_duplicate": True}
-        ).execute()
+        self.env["ir.config_parameter"].create(
+            {"key": "shopinvader.no_partner_duplicate", "value": "True"}
+        )
         self.assertFalse(
             self.shopinvader_config.is_partner_duplication_allowed()
         )

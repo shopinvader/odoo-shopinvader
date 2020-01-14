@@ -11,6 +11,7 @@ class TestShopinvaderCategoryBindingWizard(
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderCategoryBindingWizard, cls).setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.backend2 = cls.env.ref("shopinvader.backend_2")
         cls.product_category = cls.env.ref("product.product_category_4")
