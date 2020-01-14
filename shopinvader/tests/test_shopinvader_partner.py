@@ -76,9 +76,14 @@ class TestShopinvaderPartner(SavepointComponentCase):
         Test that if a partner already exists with the same email, the binding
         will not create a new partner
         """
-        self.shopinvader_config.create(
-            {"no_partner_duplicate": True}
-        ).execute()
+        # IMPORTANT: never call `execute` on settings in tests
+        # otherwise is going to reset the env and screw computed fields.
+        # We could call `set_values` instead but it loads a lot of things
+        # that we don't need. Plus, is not going to show you what you can do to
+        # change the behavior via config param.
+        self.env["ir.config_parameter"].create(
+            {"key": "shopinvader.no_partner_duplicate", "value": "True"}
+        )
         self.assertFalse(
             self.shopinvader_config.is_partner_duplication_allowed()
         )
@@ -106,9 +111,9 @@ class TestShopinvaderPartner(SavepointComponentCase):
         new child partner or partner is created to keep the information
         provided when creating the binding
         """
-        self.shopinvader_config.create(
-            {"no_partner_duplicate": True}
-        ).execute()
+        self.env["ir.config_parameter"].create(
+            {"key": "shopinvader.no_partner_duplicate", "value": "True"}
+        )
         self.assertFalse(
             self.shopinvader_config.is_partner_duplication_allowed()
         )

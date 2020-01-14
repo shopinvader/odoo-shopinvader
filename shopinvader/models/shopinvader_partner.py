@@ -90,6 +90,16 @@ class ShopinvaderPartner(models.Model):
         """ we check if one of the given value is different than values
             of the given partner
         """
+        keys_to_check = self._is_same_partner_value_keys_to_check(
+            partner, vals
+        )
+        data = partner._convert_to_write(partner._cache)
+        for key in keys_to_check:
+            if data[key] != vals[key]:
+                return False
+        return True
+
+    def _is_same_partner_value_keys_to_check(self, partner, vals):
         skip_keys = self._is_same_partner_value_skip_keys(partner)
         keys_to_check = []
         for key in vals.keys():
@@ -98,11 +108,7 @@ class ShopinvaderPartner(models.Model):
             keys_to_check.append(key)
             # pylint: disable=pointless-statement
             partner[key]  # make sure key is cached
-        data = partner._convert_to_write(partner._cache)
-        for key in keys_to_check:
-            if data[key] != vals[key]:
-                return False
-        return True
+        return keys_to_check
 
     def _is_same_partner_value_skip_keys(self, partner):
         """Take control of keys to ignore for the match."""
