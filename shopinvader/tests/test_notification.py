@@ -84,7 +84,6 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
 
     def _find_job(self, **kw):
         leafs = dict(
-            channel="root.shopinvader.notification",
             channel_method_name="<shopinvader.notification>.send",
             model_name="shopinvader.notification",
         )
