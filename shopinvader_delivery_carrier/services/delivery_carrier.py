@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -108,7 +107,7 @@ class DeliveryCarrierService(Component):
                     delivery_force_country_id=country.id,
                     delivery_force_zip_code=zip_code,
                 )
-            return cart._get_available_carrier()
+            return cart._invader_available_carriers()
         return self.shopinvader_backend.carrier_ids
 
     def _prepare_carrier(self, carrier, cart=None):

@@ -1,12 +1,11 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import api, models
+from odoo import models
 
 
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.multi
     def _notify_backend(self, notification):
         """
         Send the notification to current recordset
@@ -17,7 +16,6 @@ class StockPicking(models.Model):
             self._notify_backend_outgoing(notification)
         return True
 
-    @api.multi
     def _notify_backend_outgoing(self, notification):
         """
         Notify current picking with outgoing type
@@ -43,7 +41,6 @@ class StockPicking(models.Model):
                 backend._send_notification(notification, picking)
         return True
 
-    @api.multi
     def _get_related_backends(self):
         """
         Get backend related to current pickings
@@ -56,7 +53,6 @@ class StockPicking(models.Model):
         )
         return backends
 
-    @api.multi
     def action_done(self):
         """
         Inherit to update the invoice state if necessary
