@@ -23,11 +23,15 @@ addon | version | summary
 [shopinvader](shopinvader/) | 13.0.1.0.1 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
-[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.0 | Shopinvader cart expiry
+[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
 [shopinvader_locomotive](shopinvader_locomotive/) | 13.0.1.0.0 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
+[shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
+[shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.0.0 | Shopinvader Catalog Search Engine Connector
+[shopinvader_wishlist](shopinvader_wishlist/) | 13.0.1.0.0 | Handle shop wishlist
 
 
 Unported addons
@@ -38,7 +42,6 @@ addon | version | summary
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
 [product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
-[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.0 (unported) | Shopinvader cart expiry
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.2.0.0 (unported) | Carrier integration for Shopinvader
