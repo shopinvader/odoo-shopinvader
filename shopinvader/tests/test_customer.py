@@ -9,9 +9,9 @@ from .common import CommonCase
 _logger = logging.getLogger(__name__)
 
 
-class TestCustomer(CommonCase):
+class TestCustomerCommon(CommonCase):
     def setUp(self, *args, **kwargs):
-        super(TestCustomer, self).setUp(*args, **kwargs)
+        super(TestCustomerCommon, self).setUp(*args, **kwargs)
         self.data = {
             "email": "new@customer.example.com",
             "name": "Purple",
@@ -26,7 +26,19 @@ class TestCustomer(CommonCase):
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
             self.service = work.component(usage="customer")
+            self.address_service = work.component(usage="addresses")
 
+    def _test_partner_data(self, partner, data):
+        for key in data:
+            if key == "external_id":
+                continue
+            elif key == "country":
+                self.assertEqual(partner.country_id.id, data[key]["id"])
+            else:
+                self.assertEqual(partner[key], data[key])
+
+
+class TestCustomer(TestCustomerCommon):
     def test_create_customer(self):
         self.data["external_id"] = "D5CdkqOEL"
         res = self.service.dispatch("create", params=self.data)["data"]
@@ -35,13 +47,7 @@ class TestCustomer(CommonCase):
         self.assertEqual(
             partner.shopinvader_bind_ids.external_id, self.data["external_id"]
         )
-        for key in self.data:
-            if key == "external_id":
-                continue
-            elif key == "country":
-                self.assertEqual(partner.country_id.id, self.data[key]["id"])
-            else:
-                self.assertEqual(partner[key], self.data[key])
+        self._test_partner_data(partner, self.data)
 
     def test_create_customer_business_vat_only(self):
         self.data["external_id"] = "D5CdkqOEL"
@@ -116,6 +122,13 @@ class TestCustomer(CommonCase):
         partner = self.env["res.partner"].browse(res["id"])
         # must not be validated
         self.assertFalse(partner.shopinvader_enabled)
+        # now let's enable it w/ specific action
+        partner.action_enable_for_shop()
+        self.assertTrue(partner.shopinvader_enabled)
+        # no let's call an update -> validation state won't change
+        data = dict(data, email="funny@boo.com")
+        self.address_service.dispatch("update", partner.id, params=data)
+        self.assertTrue(partner.shopinvader_enabled)
 
     def test_create_customer_validation_company(self):
         data = dict(
@@ -148,17 +161,3 @@ class TestCustomer(CommonCase):
         # now let's enable it w/ specific action
         partner.action_enable_for_shop()
         self.assertTrue(partner.shopinvader_enabled)
-
-    # TODO: test salesman notifications
-
-    def _find_activity(self, record):
-        domain = [
-            ("res_model_id", "=", self.env.ref("base.model_res_partner").id),
-            ("res_id", "=", record.id),
-            (
-                "activity_type_id",
-                "=",
-                self.env.ref("shopinvader.mail_activity_validate_customer").id,
-            ),
-        ]
-        return self.env["mail.activity"].search_count(domain)

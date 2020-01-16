@@ -18,35 +18,31 @@ class ShopinvaderSiteExportMapper(Component):
     _inherit = ["locomotive.export.mapper"]
     _apply_on = "shopinvader.backend"
 
-    @mapping
-    @changed_by("allowed_country_ids")
-    def country(self, record):
+    def _m2m_to_external(self, record, backend_field, parser):
         res = {}
         for lang in record.lang_ids:
             res[lang.code[0:2]] = []
-            for country in record.with_context(
-                lang=lang.code
-            ).allowed_country_ids:
-                res[lang.code[0:2]].append(
-                    {"name": country.name, "id": country.id}
-                )
-        return {"available_countries": res}
+            for rec in record[backend_field].with_context(lang=lang.code):
+                res[lang.code[0:2]].append(rec.jsonify(parser)[0])
+        return res
+
+    @mapping
+    @changed_by("allowed_country_ids")
+    def country(self, record):
+        return {
+            "available_countries": self._m2m_to_external(
+                record, "allowed_country_ids", ["id", "name"]
+            )
+        }
 
     @mapping
     @changed_by("filter_ids")
     def filters(self, record):
-        res = {}
-        for lang in record.lang_ids:
-            res[lang.code[0:2]] = []
-            for pfilter in record.with_context(lang=lang.code).filter_ids:
-                res[lang.code[0:2]].append(
-                    {
-                        "code": pfilter.display_name,
-                        "name": pfilter.name,
-                        "help": pfilter.help,
-                    }
-                )
-        return {"all_filters": res}
+        return {
+            "all_filters": self._m2m_to_external(
+                record, "filter_ids", ["name", "display_name:code", "help"]
+            )
+        }
 
     @mapping
     @changed_by("currency_ids")
@@ -169,15 +165,20 @@ class ShopinvaderSiteExportMapper(Component):
     @mapping
     @changed_by("partner_title_ids")
     def partner_titles(self, record):
-        res = {}
-        for lang in record.lang_ids:
-            res[lang.code[0:2]] = []
-            titles = record.partner_title_ids.with_context(lang=lang.code)
-            for rec in titles:
-                res[lang.code[0:2]].append(
-                    {"id": rec.id, "name": rec.name, "shortcut": rec.shortcut}
-                )
-        return {"available_customer_titles": res}
+        return {
+            "available_customer_titles": self._m2m_to_external(
+                record, "partner_title_ids", ["id", "name", "shortcut"]
+            )
+        }
+
+    @mapping
+    @changed_by("partner_industry_ids")
+    def partner_industries(self, record):
+        return {
+            "available_customer_industries": self._m2m_to_external(
+                record, "partner_industry_ids", ["id", "name", "full_name"]
+            )
+        }
 
     def finalize(self, map_record, values):
         """

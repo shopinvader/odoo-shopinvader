@@ -152,7 +152,7 @@ class DeliveryService(Component):
         domain (to have 0 picking as result)
         :return:
         """
-        if self.shopinvader_backend.anonymous_partner_id == self.partner:
+        if not self._is_logged_in():
             return expression.FALSE_DOMAIN
         sale_service = self.component(usage="sales")
         sale_obj = self.env[sale_service._expose_model]

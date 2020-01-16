@@ -6,6 +6,7 @@
 
 import logging
 
+from odoo import _
 from odoo.addons.base_rest.controllers import main
 from odoo.exceptions import MissingError
 from odoo.http import request, route
@@ -47,7 +48,7 @@ class InvaderController(main.RestController):
                     )
                 # Could be because the email is not related to a partner or
                 # because the partner is inactive
-                raise MissingError("The given partner is not found!")
+                raise MissingError(_("The given partner is not found!"))
         return partner_model.browse([]).record_id
 
     @classmethod
@@ -90,6 +91,8 @@ class InvaderController(main.RestController):
         res = super(InvaderController, self)._get_component_context()
         headers = request.httprequest.environ
         res["partner"] = self._get_partner_from_headers(headers)
+        # allow having a different partner for the user in extending modules
+        res["partner_user"] = res["partner"]
         res[
             "shopinvader_session"
         ] = self._get_shopinvader_session_from_headers(headers)

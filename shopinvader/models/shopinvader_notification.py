@@ -66,6 +66,10 @@ class ShopinvaderNotification(models.Model):
                 "name": _("New customer validated"),
                 "model": "res.partner",
             },
+            "customer_updated": {
+                "name": _("Customer updated"),
+                "model": "res.partner",
+            },
             "address_created": {
                 "name": _("Address created"),
                 "model": "res.partner",

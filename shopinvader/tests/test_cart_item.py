@@ -2,6 +2,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo import exceptions
+
 from .common import CommonCase
 
 
@@ -126,6 +128,13 @@ class AbstractItemCase(object):
             cart["lines"]["items"][0], self.product_1.id, 2
         )
 
+    def test_add_item_with_product_not_allowed(self):
+        self.remove_cart()
+        # drop bindings and try to add the product
+        self.product_1.shopinvader_bind_ids.unlink()
+        with self.assertRaises(exceptions.UserError):
+            self.add_item(self.product_1.id, 1)
+
     def remove_cart(self):
         self.cart.unlink()
         self.shopinvader_session.pop("cart_id")
@@ -176,11 +185,14 @@ class AbstractItemCase(object):
 
 
 class AnonymousItemCase(AbstractItemCase, CommonCase):
+    @classmethod
+    def setUpClass(cls):
+        super(AnonymousItemCase, cls).setUpClass()
+        cls.partner = cls.backend.anonymous_partner_id
+        cls.cart = cls.env.ref("shopinvader.sale_order_1")
+
     def setUp(self, *args, **kwargs):
         super(AnonymousItemCase, self).setUp(*args, **kwargs)
-        self.partner = self.backend.anonymous_partner_id
-        self.cart = self.env.ref("shopinvader.sale_order_1")
-        self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {"cart_id": self.cart.id}
         with self.work_on_services(
             partner=None, shopinvader_session=self.shopinvader_session
@@ -193,11 +205,14 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
 
 
 class ConnectedItemCase(AbstractItemCase, CommonCase):
+    @classmethod
+    def setUpClass(cls):
+        super(ConnectedItemCase, cls).setUpClass()
+        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.cart = cls.env.ref("shopinvader.sale_order_2")
+
     def setUp(self, *args, **kwargs):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.cart = self.env.ref("shopinvader.sale_order_2")
-        self.cart.order_line._compute_shopinvader_variant()
         self.shopinvader_session = {"cart_id": self.cart.id}
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session

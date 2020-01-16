@@ -28,11 +28,9 @@ class TestSiteSearchEngineExport(Base):
 
     @classmethod
     def _setup_search_engine(cls):
-        cls.se_backend = cls.env.ref(
-            "connector_elasticsearch.backend_1_se_backend"
-        )
-        cls.search_engine_name = cls.se_backend.search_engine_name
-        cls.backend.se_backend_id = cls.se_backend
+        cls.specific_backend = cls.env.ref("connector_elasticsearch.backend_1")
+        cls.backend.se_backend_id = cls.specific_backend.se_backend_id
+        cls.search_engine_name = cls.backend.se_backend_id.search_engine_name
 
     def test_search_engine_synchronize_01(self):
         """

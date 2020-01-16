@@ -12,6 +12,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderPartner, cls).setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.shopinvader_config = cls.env["shopinvader.config.settings"]
         cls.unique_email = datetime.now().isoformat() + "@test.com"
@@ -21,7 +22,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner",
+                "name": "test partner",
                 "backend_id": self.backend.id,
             }
         )
@@ -29,7 +30,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             self.env["shopinvader.partner"].create(
                 {
                     "email": self.unique_email,
-                    "name": "test  partner",
+                    "name": "test partner",
                     "backend_id": self.backend.id,
                 }
             )
@@ -47,7 +48,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         binding = self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner",
+                "name": "test partner",
                 "backend_id": self.backend.id,
             }
         )
@@ -62,7 +63,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner 2",
+                "name": "test partner 2",
                 "backend_id": self.backend.id,
             }
         )
@@ -76,20 +77,25 @@ class TestShopinvaderPartner(SavepointComponentCase):
         Test that if a partner already exists with the same email, the binding
         will not create a new partner
         """
-        self.shopinvader_config.create(
-            {"no_partner_duplicate": True}
-        ).execute()
+        # IMPORTANT: never call `execute` on settings in tests
+        # otherwise is going to reset the env and screw computed fields.
+        # We could call `set_values` instead but it loads a lot of things
+        # that we don't need. Plus, is not going to show you what you can do to
+        # change the behavior via config param.
+        self.env["ir.config_parameter"].create(
+            {"key": "shopinvader.no_partner_duplicate", "value": "True"}
+        )
         self.assertFalse(
             self.shopinvader_config.is_partner_duplication_allowed()
         )
-        vals = {"email": self.unique_email, "name": "test  partner"}
+        vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
         # create a binding
         binding = self.env["shopinvader.partner"].create(
             {
                 "email": self.unique_email,
-                "name": "test  partner",
+                "name": "test partner",
                 "backend_id": self.backend.id,
             }
         )
@@ -106,13 +112,13 @@ class TestShopinvaderPartner(SavepointComponentCase):
         new child partner or partner is created to keep the information
         provided when creating the binding
         """
-        self.shopinvader_config.create(
-            {"no_partner_duplicate": True}
-        ).execute()
+        self.env["ir.config_parameter"].create(
+            {"key": "shopinvader.no_partner_duplicate", "value": "True"}
+        )
         self.assertFalse(
             self.shopinvader_config.is_partner_duplication_allowed()
         )
-        vals = {"email": self.unique_email, "name": "test  partner"}
+        vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
         self.assertFalse(partner.child_ids)

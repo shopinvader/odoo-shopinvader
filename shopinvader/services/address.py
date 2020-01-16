@@ -42,7 +42,7 @@ class AddressService(Component):
 
     def update(self, _id, **params):
         address = self._get(_id)
-        address.write(self._prepare_params(params))
+        address.write(self._prepare_params(params, mode="update"))
         res = self.search()
         if address.address_type == "profile":
             res["store_cache"] = {"customer": self._to_json(address)[0]}
@@ -106,9 +106,22 @@ class AddressService(Component):
                     }
                 },
             },
+            "industry_id": {
+                "required": False,
+                "type": "dict",
+                "schema": {
+                    "id": {
+                        "coerce": to_int,
+                        "required": False,
+                        "nullable": True,
+                        "type": "integer",
+                    }
+                },
+            },
             "is_company": {"coerce": to_bool, "type": "boolean"},
             "opt_in": {"coerce": to_bool, "type": "boolean"},
             "opt_out": {"coerce": to_bool, "type": "boolean"},
+            "lang": {"type": "string", "required": False},
         }
         return res
 
@@ -144,37 +157,34 @@ class AddressService(Component):
             ("country_id:country", ["id", "name"]),
             "address_type",
             "is_company",
+            "lang",
             ("title", ["id", "name"]),
             "shopinvader_enabled:enabled",
+            ("industry_id", ["id", "name"]),
         ]
         return res
 
     def _to_json(self, address):
         return address.jsonify(self._json_parser())
 
-    def _prepare_params(self, params):
+    def _prepare_params(self, params, mode="create"):
         for key in ["country", "state"]:
             if key in params:
                 val = params.pop(key)
                 if val.get("id"):
                     params["%s_id" % key] = val["id"]
-        params[
-            "shopinvader_enabled"
-        ] = self.partner_validator.enabled_by_params(params, "address")
-        return params
+        # TODO: every field like m2o should be handled in the same way.
+        # `country` and `state` are exceptions as they should match `_id`
+        # naming already on client side as it has been done for industry.
+        # Moreover, is weird that we send a dictionary containing and ID
+        # instead of sending the ID straight.
+        if params.get("industry_id"):
+            params["industry_id"] = params.get("industry_id")["id"]
+        if params.get("title"):
+            params["title"] = params.get("title")["id"]
 
-    def _get_notification_type(self, partner, mode):
         if mode == "create":
-            notif = "address_created"
-            if not self.partner_validator.is_partner_validated(partner):
-                notif = "address_created_not_validated"
-        elif mode == "update":
-            notif = "address_updated"
-        return notif
-
-    def _get_notification_recipient(self, partner, mode):
-        # notify the owner of the address
-        return partner.parent_id
-
-    def _notify_salesman_needed(self, backend_policy, partner, mode):
-        return backend_policy in ("all", "address")
+            params[
+                "shopinvader_enabled"
+            ] = self.partner_validator.enabled_by_params(params, "address")
+        return params

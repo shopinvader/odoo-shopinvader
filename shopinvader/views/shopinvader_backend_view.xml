@@ -44,6 +44,7 @@
                     <notebook>
                         <page name="config" string="Front-end">
                             <group name="config" colspan="4" col="4">
+                                <field name="tech_name"/>
                                 <field name="location" placeholder="e.g. https://ecommerce.shopinvader.com"/>
                                 <field name="auth_api_key_id" required="True"/>
                             </group>
@@ -60,7 +61,6 @@
                             <group name="cart_conf" string="Cart configuration">
                                 <field name="clear_cart_options"/>
                                 <field name="pricelist_id" required="1"/>
-                                <field name="partner_title_ids" widget="many2many_tags"/>
                             </group>
                             <group name="sale_conf" string="Sale configuration">
                                 <field name="company_id"/>
@@ -76,6 +76,10 @@
                                 <group name="notify" string="Notification">
                                     <field name="salesman_notify_create"/>
                                     <field name="salesman_notify_update"/>
+                                </group>
+                                <group name="related" string="Related records">
+                                    <field name="partner_title_ids" widget="many2many_tags"/>
+                                    <field name="partner_industry_ids" widget="many2many_tags"/>
                                 </group>
                             </group>
                         </page>
@@ -143,6 +147,7 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="name"/>
+                <field name="tech_name"/>
                 <field name="location"/>
                 <field name="company_id"/>
             </tree>

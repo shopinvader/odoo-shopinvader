@@ -42,13 +42,19 @@
                             You can also drop index but this will introduce downtime, so it's
                             better to force a resynchronization"/>
                     <button
+                            name="export_index_settings"
+                            string="Export index settings"
+                            help="Loop trough all the indexes and export their settings (filters, facets, etc).
+                                  This is mandatory if you have updated filters."
+                            type="object"/>
+                    <button
                             name="clear_index"
                             string="Clear"
                             type="object"/>
                 </group>
                 <group colspan="4">
                     <button
-                            name="add_misssing_index"
+                            name="add_missing_index"
                             string="Add missing index"
                             type="object"/>
                 </group>

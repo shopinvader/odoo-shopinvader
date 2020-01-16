@@ -10,8 +10,9 @@ from odoo.addons.base_rest.tests.common import BaseRestCase
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
-from odoo.addons.shopinvader import shopinvader_response
 from odoo.tests import SavepointCase
+
+from .. import shopinvader_response
 
 
 class CommonMixin(ComponentMixin):
@@ -30,6 +31,8 @@ class CommonMixin(ComponentMixin):
             params["shopinvader_backend"] = self.backend
         if "shopinvader_session" not in params:
             params["shopinvader_session"] = {}
+        if not params.get("partner_user") and params.get("partner"):
+            params["partner_user"] = params["partner"]
         collection = _PseudoCollection("shopinvader.backend", self.env)
         yield WorkContext(
             model_name="rest.service.registration",
@@ -53,6 +56,20 @@ class CommonMixin(ComponentMixin):
     def _perform_created_job(self):
         for job in self.created_jobs:
             self._perform_job(job)
+
+    def _bind_products(self, products, backend=None):
+        backend = backend or self.backend
+        bind_wizard_model = self.env["shopinvader.variant.binding.wizard"]
+        bind_wizard = bind_wizard_model.create(
+            {"backend_id": backend.id, "product_ids": [(6, 0, products.ids)]}
+        )
+        bind_wizard.bind_products()
+
+    def _install_lang(self, lang_xml_id):
+        lang = self.env.ref(lang_xml_id)
+        wizard = self.env["base.language.install"].create({"lang": lang.code})
+        wizard.lang_install()
+        return lang
 
 
 class CommonCase(SavepointCase, CommonMixin):

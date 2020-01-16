@@ -51,9 +51,9 @@ class NotificationCartCase(CommonCase, NotificationCaseMixin):
         self.cart.action_confirm()
         for line in self.cart.order_line:
             line.qty_delivered = line.product_uom_qty
-        self.cart.action_invoice_create()
+        self.cart._create_invoices()
         self._init_job_counter()
-        self.cart.invoice_ids.action_invoice_open()
+        self.cart.invoice_ids.post()
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification("invoice_open", self.cart.invoice_ids[0])
@@ -84,7 +84,6 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
 
     def _find_job(self, **kw):
         leafs = dict(
-            channel="root.shopinvader.notification",
             channel_method_name="<shopinvader.notification>.send",
             model_name="shopinvader.notification",
         )

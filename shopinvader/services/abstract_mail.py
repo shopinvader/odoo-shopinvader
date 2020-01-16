@@ -74,7 +74,7 @@ class AbstractMailService(AbstractComponent):
         :return: dict
         """
         # Can not ask an email if not logged
-        if not self._is_logged():
+        if not self._is_logged_in():
             return {}
         target = self._load_target_email(_id)
         if not target:

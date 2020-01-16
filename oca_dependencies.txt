@@ -3,8 +3,11 @@ rest-framework
 connector
 queue
 server-auth
+server-env
+e-commerce
 search-engine
 server-tools
 sale-workflow
 product-attribute
+partner-contact
 odoo-misc https://github.com/shopinvader/odoo-misc 13.0
