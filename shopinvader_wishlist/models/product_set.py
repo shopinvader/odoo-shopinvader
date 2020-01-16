@@ -45,10 +45,6 @@ class ProductSetLine(models.Model):
         compute="_compute_shopinvader_variant",
         inverse="_inverse_shopinvader_variant",
     )
-    product_id = fields.Many2one(
-        # make it required in the form
-        required=False
-    )
 
     def _inverse_shopinvader_variant(self):
         for record in self:

@@ -57,19 +57,6 @@ class ProductSet(CommonCase):
     #     )
     #     self.assertEqual(line.shopinvader_variant_id, variant_en)
 
-    def test_create_no_product(self):
-        # ensure we can create a line from the variant and we get the product
-        prod = self.env.ref("product.product_product_4b")
-        variant = prod.shopinvader_bind_ids[0]
-        line = self.prod_set.set_line_ids.create(
-            {
-                "product_set_id": self.prod_set.id,
-                "shopinvader_variant_id": variant.id,
-                "quantity": 1,
-            }
-        )
-        self.assertEqual(line.product_id, prod)
-
     def test_get_line_by_product(self):
         # ensure we can create a line from the product and we get the variant
         prod = self.env.ref("product.product_product_4d")
