@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ###############################################################################
 #
 #    Akretion France
@@ -85,7 +84,6 @@ class ProductImageImportWizard(models.TransientModel):
                 tag_id = tags[0].id
         return tag_id
 
-    @api.multi
     def import_images(self):
 
         errors = []

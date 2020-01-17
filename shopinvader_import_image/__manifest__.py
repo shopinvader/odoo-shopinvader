@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ###############################################################################
 #
 #    Akretion
@@ -23,7 +22,7 @@
 ###############################################################################
 {
     "name": "Import Shopinvader product image",
-    "version": "10.0.1.0.0",
+    "version": "13.0.1.0.0",
     "summary": "Import product images",
     "author": "Sylvain Calador",
     "company": "Akretion",
@@ -34,5 +33,5 @@
     "external_dependencies": {"python": ["magic", "validators"]},
     "data": ["views/import_product_image_view.xml"],
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
 }
