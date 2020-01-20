@@ -57,7 +57,7 @@ def set_testmode(mode):
         get().reset()
 
 
-def get():
+def get(raise_if_not_found=True):
     """
     Returns an instance of `ShopinvaderResponse``
     """
@@ -67,6 +67,14 @@ def get():
         # our context local data. (in a process/thread safe way). Since we are
         # in test mode we can rely on the threadLocal context
         current_local = threadLocal
-    if not hasattr(current_local, "_shopinvader_response"):
-        setattr(current_local, "_shopinvader_response", ShopinvaderResponse())
+    try:
+        if not hasattr(current_local, "_shopinvader_response"):
+            setattr(
+                current_local, "_shopinvader_response", ShopinvaderResponse()
+            )
+    except RuntimeError:
+        if raise_if_not_found:
+            raise
+        else:
+            return None
     return current_local._shopinvader_response
