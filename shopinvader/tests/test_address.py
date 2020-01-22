@@ -2,7 +2,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 
 from .common import CommonCase
 
@@ -67,7 +67,7 @@ class AddressTestCase(object):
         # no email, verify defaults
         params = dict(self.address_params, parent_id=self.partner.id)
         # type defaults to `other`
-        expected = dict(params, type="other")
+        expected = dict(params)
         self._test_create_address(params, expected)
         # pass email and type
         params = dict(params, email="purple@test.oca", type="invoice")
@@ -78,6 +78,31 @@ class AddressTestCase(object):
         self.address_service.dispatch("update", address_id, params=params)
         address = self.env["res.partner"].browse(address_id)
         self.check_data(address, expected)
+
+    def test_add_address_invoice(self):
+        # Create an invoice address with wrong type
+        # Check raise
+        # Create an invoice address with invoice type
+        # Check data
+        self.address_params.update({"type": "wrong"})
+        address_ids = [
+            address["id"] for address in self.address_service.search()["data"]
+        ]
+        with self.assertRaises(UserError):
+            self.address_service.dispatch(
+                "create", params=self.address_params
+            )["data"]
+        self.address_params.update({"type": "invoice"})
+        address_list = self.address_service.dispatch(
+            "create", params=self.address_params
+        )["data"]
+        for address in address_list:
+            if address["id"] not in address_ids:
+                created_address = address
+        self.assertIsNotNone(created_address)
+        address = self.env["res.partner"].browse(created_address["id"])
+        self.assertEqual(address.parent_id, self.partner)
+        self.check_data(address, self.address_params)
 
     def test_update_address(self):
         params = dict(self.address_params, parent_id=self.partner.id)
@@ -103,6 +128,18 @@ class AddressTestCase(object):
         ids = {x["id"] for x in res}
         expected_ids = {self.address.id, self.address_2.id}
         self.assertEqual(ids, expected_ids)
+
+    def test_read_address_invoice(self):
+        # Create an invoice address
+        # Search it
+        self.address_params.update({"type": "invoice"})
+        self.address_service.dispatch("create", params=self.address_params)[
+            "data"
+        ]
+        res = self.address_service.dispatch(
+            "search", params={"scope": {"type": "invoice"}}
+        )["data"]
+        self.assertEqual(len(res), 1)
 
     def test_read_address_all(self):
         res = self.address_service.dispatch("search", params={})["data"]
