@@ -55,12 +55,20 @@ class AddressService(Component):
     # All params are trusted as they have been checked before
 
     # Validator
+    def _get_allowed_type(self):
+        return ["contact", "invoice", "delivery", "other", "private"]
+
     def _validator_search(self):
         return {"scope": {"type": "dict", "nullable": True}}
 
     def _validator_create(self):
         res = {
             "name": {"type": "string", "required": True},
+            "type": {
+                "type": "string",
+                "allowed": self._get_allowed_type(),
+                "empty": False,
+            },
             "street": {"type": "string", "required": True, "empty": False},
             "street2": {"type": "string", "nullable": True},
             "zip": {"type": "string", "required": True, "empty": False},
@@ -121,6 +129,7 @@ class AddressService(Component):
             "opt_in",
             "opt_out",
             "vat",
+            "type",
             ("state_id:state", ["id", "name"]),
             ("country_id:country", ["id", "name"]),
             "address_type",

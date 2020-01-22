@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, UserError
 
 from .common import CommonCase
 
@@ -51,6 +51,29 @@ class AddressTestCase(object):
         self.assertEqual(address.parent_id, self.partner)
         self.check_data(address, self.address_params)
 
+    def test_add_address_invoice(self):
+        # Create an invoice address with no type
+        # Check raise
+        # Create an invoice address with not type
+        # Check data
+        self.address_params.update({"type": False})
+        address_ids = [
+            address["id"] for address in self.service.search()["data"]
+        ]
+        with self.assertRaises(UserError):
+            self.service.dispatch("create", params=self.address_params)["data"]
+        self.address_params.update({"type": "invoice"})
+        address_list = self.service.dispatch(
+            "create", params=self.address_params
+        )["data"]
+        for address in address_list:
+            if address["id"] not in address_ids:
+                created_address = address
+        self.assertIsNotNone(created_address)
+        address = self.env["res.partner"].browse(created_address["id"])
+        self.assertEqual(address.parent_id, self.partner)
+        self.check_data(address, self.address_params)
+
     def test_update_address(self):
         params = self.address_params
         self.service.dispatch("update", self.address.id, params=params)
@@ -80,6 +103,16 @@ class AddressTestCase(object):
         ids = {x["id"] for x in res}
         expected_ids = {self.address.id, self.address_2.id}
         self.assertEqual(ids, expected_ids)
+
+    def test_read_address_invoice(self):
+        # Create an invoice address
+        # Search it
+        self.address_params.update({"type": "invoice"})
+        self.service.dispatch("create", params=self.address_params)["data"]
+        res = self.service.dispatch(
+            "search", params={"scope": {"type": "invoice"}}
+        )["data"]
+        self.assertEqual(len(res), 1)
 
     def test_read_address_all(self):
         res = self.service.dispatch("search", params={})["data"]
