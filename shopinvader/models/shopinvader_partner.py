@@ -14,7 +14,7 @@ class ShopinvaderPartner(models.Model):
     _inherits = {"res.partner": "record_id"}
 
     record_id = fields.Many2one(
-        "res.partner", required=True, ondelete="cascade"
+        "res.partner", required=True, ondelete="restrict"
     )
     partner_email = fields.Char(
         related="record_id.email", readonly=True, required=True, store=True
