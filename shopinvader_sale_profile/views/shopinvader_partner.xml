@@ -9,7 +9,7 @@
         <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <field name="email" position="after">
+            <field name="partner_email" position="after">
                 <field name="sale_profile_id"/>
             </field>
         </field>
