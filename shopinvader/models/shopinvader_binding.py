@@ -12,5 +12,5 @@ class ShopinvaderBinding(models.AbstractModel):
     backend_id = fields.Many2one(
         "shopinvader.backend", string="Backend", required=True
     )
-    external_id = fields.Char()
+    external_id = fields.Char(string="External ID")
     sync_date = fields.Datetime(string="Last synchronization date")
