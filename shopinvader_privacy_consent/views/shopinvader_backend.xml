@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="shopinvader_backend_form_view" model="ir.ui.view">
+        <field name="name">shopinvader.backend.form (in shopinvader_privacy_agreement)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="arch" type="xml">
+            <page name="delivery" position="after">
+                <page name="privacy" string="Privacy" groups="privacy.group_data_protection_user">
+                    <group name="activity" string="Activity">
+                        <field name="privacy_activity_id"/>
+                        <field name="privacy_consent_ids" attrs="{'invisible': [('privacy_activity_id', '=', False)]}"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>
