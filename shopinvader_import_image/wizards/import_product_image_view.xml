@@ -3,21 +3,28 @@
     <data>
         <record id="product_import_image_wizard_form_view" model="ir.ui.view">
             <field name="name">product.import.image.form</field>
-            <field name="model">import.product_image</field>
+            <field name="model">shopinvader.import.product_image</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Import shopinvader product images">
                     <group>
-                        <group>
+                        <group name="main">
                             <field name="storage_backend_id"/>
                             <field name="product_model"/>
-                            <field name="overwrite"/>
                             <field name="file_csv" filename="filename"/>
+                            <field name="csv_header"/>
+                            <field name="csv_delimiter"/>
                             <field name="file_zip" filename="filename"/>
+                            <field name="overwrite"/>
+                            <field name="create_missing_tags"/>
+                        </group>
+                        <group name="report">
+                            <separator string="Report" />
+                            <field name="report_html" nolabel="1" />
                         </group>
                     </group>
                     <footer>
-                        <button class="oe_highlight" string="Import File" name="import_images" type="object"/> or
+                        <button class="oe_highlight" string="Import images" name="do_import" type="object"/> or
                         <button class="oe_link" string="Cancel" special="cancel"/>
                     </footer>
                 </form>
@@ -27,13 +34,13 @@
         <record id="import_image_action_form" model="ir.actions.act_window">
             <field name="name">Import Product Image</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">import.product_image</field>
-            <field name="view_type">form</field>
+            <field name="res_model">shopinvader.import.product_image</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>
         </record>
 
-    <menuitem name="Import product images" id="menu_import_product_image"  parent="sales_team.menu_sales"
+    <menuitem name="Import product images" id="menu_import_product_image"
+              parent="sale.product_menu_catalog"
               action="import_image_action_form" sequence="22"/>
     </data>
 </odoo>
