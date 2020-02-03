@@ -50,19 +50,25 @@ class PartnerAccess(Component):
                     info["delete"] = False
         return info
 
-    def permission(self):
+    def permissions(self):
+        """Current user permissions mapping.
+
+        :returns: a dictionary in the format
+
+            {$component_usage: {$method: $permission_flag}}
+        """
         if self.partner is None:
-            return {"address": {}, "purchase": {}}
+            return {"address": {}, "cart": {}}
         return {
             # scope: permissions
-            "address": {
+            "addresses": {
                 # can create addresses only if profile partner is enabled
                 "create": self.partner.shopinvader_enabled
             },
-            "purchase": {
+            "cart": {
                 # can hit the button to add to cart
-                "add_to_cart": self.partner.shopinvader_enabled,
+                "add_item": self.partner.shopinvader_enabled,
                 # can go on w/ checkout steps
-                "checkout": self.partner.shopinvader_enabled,
+                "update_item": self.partner.shopinvader_enabled,
             },
         }

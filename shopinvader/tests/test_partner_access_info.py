@@ -47,18 +47,18 @@ class TestPartnerAccessInfo(CommonCase):
         # partner is enabled, can do everything
         self.partner.shopinvader_enabled = True
         expected = {
-            "address": {"create": True},
-            "purchase": {"add_to_cart": True, "checkout": True},
+            "addresses": {"create": True},
+            "cart": {"add_item": True, "update_item": True},
         }
-        self.assertEqual(info.permission(), expected)
+        self.assertEqual(info.permissions(), expected)
 
         # partner is disabled, can do nothing
         self.partner.shopinvader_enabled = False
         expected = {
-            "address": {"create": False},
-            "purchase": {"add_to_cart": False, "checkout": False},
+            "addresses": {"create": False},
+            "cart": {"add_item": False, "update_item": False},
         }
-        self.assertEqual(info.permission(), expected)
+        self.assertEqual(info.permissions(), expected)
 
     def test_access_info_non_owner1(self):
         with self.backend.work_on(
@@ -95,15 +95,15 @@ class TestPartnerAccessInfo(CommonCase):
         # partner is enabled, can do everything
         self.partner.shopinvader_enabled = True
         expected = {
-            "address": {"create": True},
-            "purchase": {"add_to_cart": True, "checkout": True},
+            "addresses": {"create": True},
+            "cart": {"add_item": True, "update_item": True},
         }
-        self.assertEqual(info.permission(), expected)
+        self.assertEqual(info.permissions(), expected)
 
         # partner is disabled, can do nothing
         self.partner.shopinvader_enabled = False
         expected = {
-            "address": {"create": False},
-            "purchase": {"add_to_cart": False, "checkout": False},
+            "addresses": {"create": False},
+            "cart": {"add_item": False, "update_item": False},
         }
-        self.assertEqual(info.permission(), expected)
+        self.assertEqual(info.permissions(), expected)
