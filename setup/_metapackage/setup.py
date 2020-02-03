@@ -13,6 +13,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_algolia',
         'odoo13-addon-shopinvader_assortment',
         'odoo13-addon-shopinvader_cart_expiry',
+        'odoo13-addon-shopinvader_delivery_carrier',
         'odoo13-addon-shopinvader_elasticsearch',
         'odoo13-addon-shopinvader_image',
         'odoo13-addon-shopinvader_import_image',
