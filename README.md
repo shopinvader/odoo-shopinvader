@@ -24,6 +24,7 @@ addon | version | summary
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.0 | Shopinvader cart expiry
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.1.0.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.1.0.0 | Import product images
@@ -45,7 +46,6 @@ addon | version | summary
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.2.0.0 (unported) | Carrier integration for Shopinvader
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 (unported) | Guest mode for Shopinvader
 [shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 (unported) | Shopinvader Invoice
