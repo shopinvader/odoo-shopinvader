@@ -13,16 +13,44 @@ class SaleOrder(models.Model):
         comodel_name="delivery.carrier",
     )
 
-    @api.multi
     @api.depends("shopinvader_backend_id")
     def _compute_shopinvader_available_carrier_ids(self):
-        for order in self.filtered("shopinvader_backend_id"):
-            carriers = order.shopinvader_backend_id.carrier_ids
-            carriers = order.available_carrier_ids & carriers
-            order.shopinvader_available_carrier_ids = carriers
+        for order in self:
+            if not order.shopinvader_backend_id:
+                continue
+            order.shopinvader_available_carrier_ids = (
+                order._available_carriers()
+                & order.shopinvader_backend_id.carrier_ids
+            )
 
-    def _get_available_carrier(self):
+    def _available_carriers(self):
+        carriers = self.env["delivery.carrier"].search(
+            [
+                "|",
+                ("company_id", "=", False),
+                ("company_id", "=", self.company_id.id),
+            ]
+        )
+        return (
+            carriers.available_carriers(self.partner_shipping_id)
+            if self.partner_id
+            else carriers
+        )
+
+    def _invader_available_carriers(self):
         self.ensure_one()
         return self.shopinvader_available_carrier_ids.sorted(
             lambda c: c.rate_shipment(self).get("price", 0.0)
         )
+
+    def _set_carrier_and_price(self, carrier_id):
+        wizard = (
+            self.env["choose.delivery.carrier"]
+            .with_context(
+                {"default_order_id": self.id, "default_carrier_id": carrier_id}
+            )
+            .create({})
+        )
+        wizard._onchange_carrier_id()
+        wizard.button_confirm()
+        return wizard.delivery_price

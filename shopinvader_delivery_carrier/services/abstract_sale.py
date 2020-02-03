@@ -59,10 +59,11 @@ class AbstractSaleService(AbstractComponent):
             "price": carrier.rate_shipment(cart).get("price", 0.0),
         }
 
+    # TODO: this method seems not used
     def _get_available_carrier(self, cart):
         return [
             self._prepare_carrier(cart, carrier)
-            for carrier in cart._get_available_carrier()
+            for carrier in cart._invader_available_carriers()
         ]
 
     def _is_item(self, line):
