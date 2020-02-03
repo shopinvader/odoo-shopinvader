@@ -106,7 +106,7 @@ class CustomerService(Component):
         # access info on the current record partner record
         info["access"] = self.access_info.for_profile(partner.id)
         # global permission for current partner user
-        info["permission"] = self.access_info.permission()
+        info["permissions"] = self.access_info.permissions()
         return info
 
     def _prepare_create_response(self, binding):
