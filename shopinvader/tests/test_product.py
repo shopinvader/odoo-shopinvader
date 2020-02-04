@@ -802,29 +802,26 @@ class ProductCase(ProductCommonCase):
         """
         During the execution of some cases, check the value of
         shopinvader products depending on related variants.
+        If every variants are disabled => Shop. product should be disabled
+        If at least 1 variant is enabled => Shop. product should be enabled
         :param variants: shopinvader.variant recordset
         :return:
         """
         variants = variants.with_context(active_test=False)
         # Save if the shopinvader product is active or not
-        product_active_dict = {
-            p: p.active for p in variants.mapped("shopinvader_product_id")
-        }
         yield
         for variant in variants:
             shopinv_product = variant.shopinvader_product_id
-            product_active = product_active_dict.get(shopinv_product)
             all_variants = shopinv_product.shopinvader_variant_ids
             # If all variants are disabled, the product should be disabled too.
-            if all([not a.active for a in all_variants]):
+            variants_disabled = all([not a.active for a in all_variants])
+            if variants_disabled:
                 self.assertFalse(shopinv_product.active)
                 self._check_category_after_unbind(shopinv_product)
             # But if at least 1 is active, the product should stay into his
             # previous state.
-            elif product_active:
-                self.assertTrue(shopinv_product.active)
             else:
-                self.assertFalse(shopinv_product.active)
+                self.assertTrue(shopinv_product.active)
 
     def _check_category_after_unbind(self, shopinv_product):
         """
