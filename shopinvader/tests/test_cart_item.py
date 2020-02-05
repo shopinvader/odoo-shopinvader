@@ -3,6 +3,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.tools import float_round
+
 from .common import CommonCase
 
 
@@ -49,7 +51,8 @@ class AbstractItemCase(object):
         last_order = self.env["sale.order"].search(
             [], limit=1, order="id desc"
         )
-        cart = self.add_item(self.product_1.id, 2)
+        self.add_item(self.product_1.id, 2)
+        cart = self.service.search()["data"]
         self.assertGreater(cart["id"], last_order.id)
         self.assertEqual(len(cart["lines"]["items"]), 1)
         self.assertEqual(cart["lines"]["count"], 2)
@@ -60,9 +63,20 @@ class AbstractItemCase(object):
 
     def test_add_item_with_an_existing_cart(self):
         cart = self.service.search()["data"]
+        sale = self.env["sale.order"].browse(cart["id"])
+        qty_before = sum(
+            float_round(
+                line.product_uom_qty,
+                precision_rounding=line.product_uom.rounding,
+            )
+            for line in sale.order_line
+        )
         nbr_line = len(cart["lines"]["items"])
-
-        cart = self.add_item(self.product_1.id, 2)
+        cart_simple = self.add_item(self.product_1.id, 2)
+        self.assertEquals(
+            {"id": cart["id"], "qty": qty_before + 2.0}, cart_simple
+        )
+        cart = self.service.search()["data"]
         self.assertEqual(cart["id"], self.cart.id)
         self.assertEqual(len(cart["lines"]["items"]), nbr_line + 1)
         self.check_product_and_qty(
@@ -116,12 +130,14 @@ class AbstractItemCase(object):
 
     def test_add_item_with_same_product_without_cart(self):
         self.remove_cart()
-        cart = self.add_item(self.product_1.id, 1)
+        self.add_item(self.product_1.id, 1)
+        cart = self.service.search()["data"]
         self.assertEqual(len(cart["lines"]["items"]), 1)
         self.check_product_and_qty(
             cart["lines"]["items"][0], self.product_1.id, 1
         )
-        cart = self.add_item(self.product_1.id, 1)
+        self.add_item(self.product_1.id, 1)
+        cart = self.service.search()["data"]
         self.assertEqual(len(cart["lines"]["items"]), 1)
         self.check_product_and_qty(
             cart["lines"]["items"][0], self.product_1.id, 2
@@ -153,7 +169,8 @@ class AbstractItemCase(object):
                 "product_id": self.product_3.id,
             }
         )
-        cart_data = self.add_item(self.product_3.id, 1)
+        self.add_item(self.product_3.id, 1)
+        cart_data = self.service.search()["data"]
         cart = self.env["sale.order"].browse(cart_data["id"])
         self.assertEqual(cart.pricelist_id, self.pricelist)
         return cart_data["lines"]["items"][0]["amount"]

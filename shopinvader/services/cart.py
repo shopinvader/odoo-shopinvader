@@ -10,6 +10,7 @@ from contextlib import contextmanager
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.exceptions import UserError
+from odoo.tools import float_round
 from odoo.tools.translate import _
 from werkzeug.exceptions import NotFound
 
@@ -43,12 +44,41 @@ class CartService(Component):
         else:
             return self._to_json(cart)
 
+    def _get_simple_cart_items(self, cart):
+        """
+        Returns fast
+        :return:
+        """
+        cart_simple = cart.with_context(prefetch_fields=False)
+        qty = sum(
+            float_round(
+                line.product_uom_qty,
+                precision_rounding=line.product_uom.rounding,
+            )
+            for line in cart_simple.order_line
+        )
+        return {
+            "data": {"id": cart.id, "qty": qty},
+            "set_session": {"cart_id": cart.id},
+            "store_cache": {"cart": {"id": cart.id, "qty": qty}},
+        }
+
     def add_item(self, **params):
+        """
+        Add item to cart.
+        Don't recompute immediately to keep this action smooth and quick.
+        Just return some limited information (e.g.: quantity)
+        Don't browse cart as ORM could launch recomputation!
+        The cart has to be recomputed
+        :param params:
+        :return:
+        """
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
         self._add_item(cart, params)
-        return self._to_json(cart)
+        res = self._get_simple_cart_items(cart)
+        return res
 
     def update_item(self, **params):
         cart = self._get()
@@ -149,7 +179,6 @@ class CartService(Component):
             cart._cache["order_line"] = tuple(real_line_ids)
             vals.update(new_values)
             item.write(vals)
-        cart.recompute()
 
     def _do_clear_cart_cancel(self, cart):
         """
@@ -206,7 +235,6 @@ class CartService(Component):
                 new_values = self._sale_order_line_onchange(vals)
                 vals.update(new_values)
                 self._create_sale_order_line(vals)
-            cart.recompute()
 
     @contextmanager
     def _ensure_ctx_lang(self, values):
