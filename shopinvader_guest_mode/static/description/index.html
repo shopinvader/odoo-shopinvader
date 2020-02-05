@@ -368,18 +368,18 @@ ul.auto-toc {
 !! changes will be overwritten.                   !!
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/tree/12.0/shopinvader_guest_mode"><img alt="shopinvader/odoo-shopinvader" src="https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github" /></a></p>
-<p>This addons adds a new option on the Shopnvader backend to allow to sale orders
+<p>This addons adds a new option on the Shopinvader backend to allow sale orders
 in guest mode. The guest mode is a special case on the ecommerce website where
-the customer is allowed to create a sale order without creating of a user
+the customer is allowed to create a sale order without creating a user
 account on the website.</p>
 <p>Into Odoo this results in the creation of a partner + binding with a fixed
 validity period linked to the sale order. At the end of this period, the
 binding is automatically disabled if the customer has not created an account.</p>
 <p>It’s not possible to create a new customer with the same email if a binding is
-valid. In such a case the customer must create an account</p>
-<p>If a customer create a new sale order in guest mode with the
+valid. In such a case the customer must create an account.</p>
+<p>If a customer creates a new sale order in guest mode with the
 same email, the new partner will be linked to the first partner found with
-the same email except if shopinvader is configured to avoid duplicate partners</p>
+the same email except if Shopinvader is configured to avoid duplicate partners</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
