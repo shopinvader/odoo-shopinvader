@@ -1,14 +1,16 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.osv import expression
 
 
 class SaleService(Component):
-    _inherit = "shopinvader.abstract.sale.service"
+    _inherit = [
+        "shopinvader.abstract.sale.service",
+        "abstract.shopinvader.download",
+    ]
     _name = "shopinvader.sale.service"
     _usage = "sales"
     _expose_model = "sale.order"
@@ -22,6 +24,15 @@ class SaleService(Component):
 
     def search(self, **params):
         return self._paginate_search(**params)
+
+    def _get_report_action(self, target, params=None):
+        """
+        Get the action/dict to generate the report
+        :param target: recordset
+        :param params: dict
+        :return: dict/action
+        """
+        return target.print_quotation()
 
     def ask_email_invoice(self, _id):
         """

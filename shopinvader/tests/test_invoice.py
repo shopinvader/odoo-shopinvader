@@ -4,10 +4,10 @@ import mock
 from odoo import fields
 from odoo.exceptions import MissingError
 
-from .common import CommonCase
+from .common import CommonCase, CommonTestDownload
 
 
-class TestInvoice(CommonCase):
+class TestInvoice(CommonCase, CommonTestDownload):
     def setUp(self, *args, **kwargs):
         super(TestInvoice, self).setUp(*args, **kwargs)
         self.register_payments_obj = self.env["account.payment.register"]
@@ -63,8 +63,7 @@ class TestInvoice(CommonCase):
         Expected result:
             * MissingError should be raised
         """
-        with self.assertRaises(MissingError):
-            self.invoice_service.download(self.invoice.id)
+        self._test_download_not_allowed(self.invoice_service, self.invoice)
 
     def test_02(self):
         """
@@ -76,21 +75,7 @@ class TestInvoice(CommonCase):
             * An http response with the file to download
         """
         self._make_payment(self.invoice)
-        with mock.patch(
-            "odoo.addons.shopinvader.services.invoice.content_disposition"
-        ) as mocked_cd, mock.patch(
-            "odoo.addons.shopinvader.services.invoice.request"
-        ) as mocked_request:
-            mocked_cd.return_value = "attachment; filename=test"
-            make_response = mock.MagicMock()
-            mocked_request.make_response = make_response
-            self.invoice_service.download(self.invoice.id)
-            self.assertEqual(1, make_response.call_count)
-            content, headers = make_response.call_args[0]
-            self.assertTrue(content)
-            self.assertIn(
-                ("Content-Disposition", "attachment; filename=test"), headers
-            )
+        self._test_download_allowed(self.invoice_service, self.invoice)
 
     def test_03(self):
         """
@@ -107,5 +92,4 @@ class TestInvoice(CommonCase):
         self.assertNotEqual(sale.partner_id, self.partner)
         invoice = self._confirm_and_invoice_sale(sale)
         self._make_payment(invoice)
-        with self.assertRaises(MissingError):
-            self.invoice_service.download(invoice.id)
+        self._test_download_not_owner(self.invoice_service, self.invoice)
