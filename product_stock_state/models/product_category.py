@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-Today GRAP (http://www.grap.coop).
 # Copyright 2018 ACSONE SA/NV
 # Copyright 2018 Akretion (http://www.akretion.com).
@@ -22,7 +21,6 @@ class ProductCategory(models.Model):
     )
     manual_stock_state_threshold = fields.Float()
 
-    @api.multi
     @api.depends(
         "parent_id.stock_state_threshold", "manual_stock_state_threshold"
     )

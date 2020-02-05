@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # Copyright 2017-Today GRAP (http://www.grap.coop).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
@@ -10,13 +9,13 @@
     "name": "Product Stock State",
     "summary": "Compute the state stock based on"
     "the stock level and sale_ok field",
-    "version": "10.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "Uncategorized",
     "website": "www.akretion.com",
-    "author": " Akretion,GRAP",
+    "author": " Akretion, GRAP",
     "license": "AGPL-3",
     "application": False,
-    "installable": False,
+    "installable": True,
     "external_dependencies": {"python": [], "bin": []},
     "depends": ["sale_stock"],
     "data": [
@@ -24,7 +23,7 @@
         "views/product_template_view.xml",
         "views/product_product_view.xml",
         "views/product_category_view.xml",
-        "views/sale_config_settings_view.xml",
+        "views/res_config_settings_view.xml",
     ],
     "demo": [
         "demo/res_groups.xml",

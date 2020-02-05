@@ -39,13 +39,6 @@ Go on the product tree and see the stock state
 .. image:: /product_stock_state/static/description/product_product_tree.png
      :width: 800 px
 
-Known issues / Roadmap
-======================
-
-* Company settings is in sale configuration, but it should be better on
-  stock configuration. It is not possible for the time being, because
-  stock.config.settings doesn't have company_id field in Odoo.
-
 Bug Tracker
 ===========
 
@@ -62,6 +55,7 @@ Contributors
 
 * Sebastien Beau <sebastien.beau@akretion.com>
 * Sylvain LE GAL <https://www.twitter.com/legalsylvain>
+* Kevin Khao <kevin.khao@akretion.com>
 
 Funders
 -------

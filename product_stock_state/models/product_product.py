@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017-Today GRAP (http://www.grap.coop).
 # Copyright 2018 ACSONE SA/NV
 # Copyright 2018 Akretion (http://www.akretion.com).
@@ -24,7 +23,6 @@ class ProductProduct(models.Model):
         selection=_STOCK_STATE_SELECTION, compute="_compute_stock_state"
     )
 
-    @api.multi
     def _get_qty_available(self):
         """
         This method can be overridden to provide the available qty.
@@ -34,7 +32,6 @@ class ProductProduct(models.Model):
         self.ensure_one()
         return self.qty_available
 
-    @api.multi
     @api.depends("qty_available", "incoming_qty")
     def _compute_stock_state(self):
         for product in self:
