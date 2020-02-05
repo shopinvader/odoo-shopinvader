@@ -4,19 +4,13 @@ import mimetypes
 import time
 
 from odoo import _
-from odoo.addons.base_rest.components.service import (
-    skip_secure_response,
-    to_int,
-)
 from odoo.addons.component.core import Component
-from odoo.exceptions import MissingError
-from odoo.http import content_disposition, request
 from odoo.osv import expression
 from odoo.tools.safe_eval import safe_eval
 
 
 class InvoiceService(Component):
-    _inherit = "shopinvader.abstract.mail.service"
+    _inherit = ["base.shopinvader.service", "abstract.shopinvader.download"]
     _name = "shopinvader.invoice.service"
     _usage = "invoice"
     _expose_model = "account.invoice"
@@ -24,19 +18,6 @@ class InvoiceService(Component):
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
-
-    @skip_secure_response
-    def download(self, _id, **params):
-        """
-        Get invoice file. This method is also callable by HTTP GET
-        """
-        invoice = self._get(_id)
-        headers, content = self._get_binary_content(invoice)
-        if not content:
-            raise MissingError(_("No invoice found with id %s") % _id)
-        response = request.make_response(content, headers)
-        response.status_code = 200
-        return response
 
     def to_openapi(self):
         res = super(InvoiceService, self).to_openapi()
@@ -62,12 +43,14 @@ class InvoiceService(Component):
         }
         return res
 
-    # Validator
-
-    def _validator_download(self):
-        return {"id": {"type": "integer", "required": True, "coerce": to_int}}
-
     # Private implementation
+
+    def _get_allowed_invoice_states(self):
+        """
+        Get every invoice states allowed to return on the service.
+        :return: list of str
+        """
+        return ["paid"]
 
     def _get_base_search_domain(self):
         """
@@ -94,49 +77,15 @@ class InvoiceService(Component):
         # and check if the invoice_id is into the list of sale.invoice_ids
         sales = self.env["sale.order"].search(so_domain)
         invoice_ids = sales.mapped("invoice_ids").ids
+        states = self._get_allowed_invoice_states()
         return expression.normalize_domain(
-            [("id", "in", invoice_ids), ("state", "=", "paid")]
+            [("id", "in", invoice_ids), ("state", "in", states)]
         )
 
-    def _get_binary_content(self, invoice):
+    def _get_report_action(self, target, params=None):
         """
-        Generate the invoice report....
-        :param invoice:
-          :returns: (headers, content)
+        Get the action/dict to generate the report
+        :param target: recordset
+        :return: dict/action
         """
-        # ensure the report is generated
-        invoice_report_def = invoice.invoice_print()
-        report_name = invoice_report_def["report_name"]
-        report_type = invoice_report_def["report_type"]
-        report = self._get_report(report_name, report_type)
-        content, extension = report.render(
-            invoice.ids, data={"report_type": report_type}
-        )
-        filename = self._get_binary_content_filename(
-            invoice, report, extension
-        )
-        mimetype = mimetypes.guess_type(filename)
-        if mimetype:
-            mimetype = mimetype[0]
-        headers = [
-            ("Content-Type", mimetype),
-            ("X-Content-Type-Options", "nosniff"),
-            ("Content-Disposition", content_disposition(filename)),
-            ("Content-Length", len(content)),
-        ]
-        return headers, content
-
-    def _get_report(self, report_name, report_type):
-        domain = [
-            ("report_type", "=", report_type),
-            ("report_name", "=", report_name),
-        ]
-        return self.env["ir.actions.report"].search(domain)
-
-    def _get_binary_content_filename(self, invoice, report, extension):
-        if report.print_report_name and not len(invoice) > 1:
-            report_name = safe_eval(
-                report.print_report_name, {"object": invoice, "time": time}
-            )
-            return "{}.{}".format(report_name, extension)
-        return "{}.{}".format(report.name, extension)
+        return target.invoice_print()
