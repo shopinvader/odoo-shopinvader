@@ -10,6 +10,6 @@ binding is automatically disabled if the customer has not created an account.
 It's not possible to create a new customer with the same email if a binding is
 valid. In such a case the customer must create an account.
 
-If a customer create a new sale order in guest mode with the
+If a customer creates a new sale order in guest mode with the
 same email, the new partner will be linked to the first partner found with
-the same email except if shopinvader is configured to avoid duplicate partners
+the same email except if Shopinvader is configured to avoid duplicate partners
