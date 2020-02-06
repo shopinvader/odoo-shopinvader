@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="ir_exp_shopinvader_variant_image_category" model="ir.exports.line">
+        <field name="name">image_categories</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    </record>
+</odoo>
