@@ -226,15 +226,20 @@ class CartService(Component):
 
     def _add_item(self, cart, params):
         existing_item = self._check_existing_cart_item(cart, params)
-        if existing_item:
-            qty = existing_item.product_uom_qty + params["item_qty"]
-            self._upgrade_cart_item_quantity(cart, existing_item, qty)
-        else:
-            with self.env.norecompute():
+        with self.env.norecompute():
+            if existing_item:
+                qty = existing_item.product_uom_qty + params["item_qty"]
+                self._upgrade_cart_item_quantity(cart, existing_item, qty)
+            else:
                 vals = self._prepare_cart_item(params, cart)
                 new_values = self._sale_order_line_onchange(vals)
                 vals.update(new_values)
                 self._create_sale_order_line(vals)
+        # Recompute cart asynchronously to avoid latencies on frontend
+        description = "Recompute cart %s" % (existing_item.id)
+        existing_item.order_id.with_delay(
+            description=description
+        )._shopinvader_delayed_recompute()
 
     @contextmanager
     def _ensure_ctx_lang(self, values):

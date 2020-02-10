@@ -7,6 +7,7 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.addons.queue_job.job import job
 
 _logger = logging.getLogger(__name__)
 
@@ -45,6 +46,10 @@ class SaleOrder(models.Model):
         compute="_compute_shopinvader_state",
         store=True,
     )
+
+    @job(default_channel="root.shopinvader")
+    def _shopinvader_delayed_recompute(self):
+        self.shopinvader_recompute()
 
     def _get_shopinvader_state(self):
         self.ensure_one()
@@ -123,6 +128,13 @@ class SaleOrder(models.Model):
         if reset_price:
             self.reset_price_tax()
         return True
+
+    @api.multi
+    def shopinvader_recompute(self):
+        self.ensure_one()
+        if self.shopinvader_to_be_recomputed:
+            self.recompute()
+            self.shopinvader_to_be_recomputed = False
 
 
 class SaleOrderLine(models.Model):
