@@ -62,7 +62,8 @@ class CarrierCase(CommonCarrierCase):
 
     def test_reset_carrier_on_add_item(self):
         self._apply_carrier_and_assert_set()
-        cart = self.add_item(self.product_1.id, 2)
+        self.add_item(self.product_1.id, 2)
+        cart = self.service.search()["data"]
         self.assertEqual(cart["shipping"]["amount"]["total"], 0)
         self.assertFalse(cart["shipping"]["selected_carrier"])
 
