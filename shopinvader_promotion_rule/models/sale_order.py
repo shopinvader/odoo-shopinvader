@@ -17,3 +17,14 @@ class SaleOrder(models.Model):
         if self.has_promotion_rules:
             self.apply_promotions()
         return result
+
+    @api.multi
+    def shopinvader_recompute(self):
+        """
+        Call apply_promotion() after the recompute (called when we use the
+        simple add item service)
+        :return:
+        """
+        res = super(SaleOrder, self).shopinvader_recompute()
+        self.apply_promotions()
+        return res
