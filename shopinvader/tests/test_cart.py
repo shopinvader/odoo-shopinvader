@@ -263,7 +263,12 @@ class AnonymousCartCase(CartCase, CartClearTest):
         self.backend.write({"pricelist_id": second_pricelist.id})
         params = {"product_id": self.product_1.id, "item_qty": 1}
         self.service.shopinvader_session.clear()
-        response = self.service.dispatch("add_item", params=params)
+        add_item_response = self.service.dispatch("add_item", params=params)
+        self.service.shopinvader_session.update(
+            add_item_response.get("set_session")
+        )
+
+        response = self.service.search()
         data = response.get("data")
         sale_id = response.get("set_session", {}).get("cart_id")
         sale_order = self.sale_obj.browse(sale_id)
