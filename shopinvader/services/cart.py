@@ -226,28 +226,14 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _upgrade_cart_item_quantity_vals(self, item, params, action="replace"):
-        assert action in ("sum", "replace")
-        if action == "replace":
-            qty = params["item_qty"]
-        else:
-            qty = item.product_uom_qty + params["item_qty"]
-        return {"product_uom_qty": qty}
-
-    def _upgrade_cart_item_quantity(
-        self, cart, item, params, action="replace"
-    ):
-        vals = self._upgrade_cart_item_quantity_vals(
-            item, params, action=action
-        )
-        with self.env.norecompute():
-            new_values = item.play_onchanges(vals, vals.keys())
-            # clear cache after play onchange
-            real_line_ids = [line.id for line in cart.order_line if line.id]
-            cart._cache["order_line"] = tuple(real_line_ids)
-            vals.update(new_values)
-            item.write(vals)
-        cart.recompute()
+    def _upgrade_cart_item_quantity(self, cart, item, product_qty):
+        vals = {"product_uom_qty": product_qty}
+        new_values = item.play_onchanges(vals, vals.keys())
+        # clear cache after play onchange
+        real_line_ids = [line.id for line in cart.order_line if line.id]
+        cart._cache["order_line"] = tuple(real_line_ids)
+        vals.update(new_values)
+        item.write(vals)
 
     def _do_clear_cart_cancel(self, cart):
         """

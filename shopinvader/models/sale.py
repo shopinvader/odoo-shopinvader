@@ -36,6 +36,21 @@ class SaleOrder(models.Model):
         compute="_compute_shopinvader_state",
         store=True,
     )
+    shopinvader_to_be_recomputed = fields.Boolean(
+        help="Technical field that will intend to check if the sale order has"
+        "to be recomputed du to a modification (asynchronous)"
+    )
+
+    @job(default_channel="root.shopinvader")
+    def _shopinvader_delayed_recompute(self):
+        self.shopinvader_recompute()
+
+    @api.multi
+    def shopinvader_recompute(self):
+        self.ensure_one()
+        if self.shopinvader_to_be_recomputed:
+            self.recompute()
+            self.shopinvader_to_be_recomputed = False
 
     def _get_shopinvader_state(self):
         self.ensure_one()
