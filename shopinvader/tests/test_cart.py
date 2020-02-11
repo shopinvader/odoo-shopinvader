@@ -3,7 +3,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields
+from odoo import api, fields
 
 from .common import CommonCase
 
@@ -25,6 +25,8 @@ class CartCase(CommonCase):
         templates.write(
             {"taxes_id": [(6, 0, [self.env.ref("shopinvader.tax_1").id])]}
         )
+        self.product_1 = self.env.ref("product.product_product_4b")
+        self.sale_obj = self.env["sale.order"]
 
     def _create_notification_config(self):
         template = self.env.ref("account.email_template_edi_invoice")
@@ -36,6 +38,42 @@ class CartCase(CommonCase):
         self.service.shopinvader_backend.write(
             {"notification_ids": [(0, 0, values)]}
         )
+
+    def _install_lang(self, lang_code):
+        """
+        Install given lang (only if not installed yet)
+        :param lang_code: str
+        :return: bool
+        """
+        lang = self.env["res.lang"].search(
+            [("code", "=", lang_code), ("active", "=", True)], limit=1
+        )
+        if not lang:
+            wizard = self.env["base.language.install"].create(
+                {"lang": lang_code}
+            )
+            wizard.lang_install()
+        return True
+
+    def _change_service_lang(self, lang):
+        """
+        Change the service lang
+        :param lang: str
+        :return: service
+        """
+        self._install_lang(lang)
+        context = self.service.env.context.copy()
+        context.update({"lang": lang})
+        with api.Environment.manage():
+            self.env = api.Environment(self.env.cr, self.env.uid, context)
+            partner = self.service.partner
+            session = self.service.shopinvader_session
+            usage = self.service._usage
+            with self.work_on_services(
+                partner=partner, shopinvader_session=session
+            ) as work:
+                self.service = work.component(usage=usage)
+            return self.service
 
     def tearDown(self):
         self.registry.leave_test_mode()
@@ -263,6 +301,64 @@ class AnonymousCartCase(CartCase, CartClearTest):
         cart_bis = self.service._get()
         self.assertNotEqual(cart, cart_bis)
 
+    def test_cart_line_lang_anonymous(self):
+        """
+        Test the case where the lang (from the front side) is not the same than
+        the anonymous partner lang.
+        So the current user is the anonymous one. Try to put an item into
+        a cart and the sale.order.line name.
+        This name value should be into the lang of the user.
+        :return:
+        """
+        params = {"product_id": self.product_1.id, "item_qty": 2}
+        # First do it in English (anonymous user lang is the user lang)
+        lang = "en_US"
+        self.backend.anonymous_partner_id.write({"lang": lang})
+        service = self._change_service_lang(lang)
+        response = service.dispatch("add_item", params=params)
+        sale_id = response.get("set_session", {}).get("cart_id")
+        sale_order = self.sale_obj.browse(sale_id)
+        so_line = fields.first(
+            sale_order.order_line.filtered(
+                lambda l, p=self.product_1: l.product_id == p
+            )
+        )
+        product = self.product_1.with_context(lang=lang)
+        description_sale_en = product.description_sale
+        name_en = product.name
+        self.assertIn(description_sale_en, so_line.name)
+        self.assertIn(name_en, so_line.name)
+        self.assertEquals(self.backend.anonymous_partner_id.lang, lang)
+        so_line.unlink()
+        previous_lang = lang
+        # Then both languages are different
+        lang = "fr_FR"
+        service = self._change_service_lang(lang)
+        product = product.with_context(lang=lang)
+        # Force a description in French for the product
+        product.write(
+            {
+                "name": "Un nom de produit en français",
+                "description_sale": "Une description de vente en français!",
+            }
+        )
+        description_sale_fr = product.description_sale
+        name_fr = product.name
+        response = service.dispatch("add_item", params=params)
+        sale_id = response.get("set_session", {}).get("cart_id")
+        sale_order = self.sale_obj.browse(sale_id)
+        so_line = fields.first(
+            sale_order.order_line.filtered(
+                lambda l, p=product: l.product_id == p
+            )
+        )
+        self.assertIn(description_sale_fr, so_line.name)
+        self.assertIn(name_fr, so_line.name)
+        self.assertEquals(
+            self.backend.anonymous_partner_id.lang, previous_lang
+        )
+        return
+
     def test_cart_search_no_create(self):
         """
         - if search is called with a cart_id in session, cart must be returned
@@ -296,6 +392,53 @@ class CommonConnectedCartCase(CartCase):
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:
             self.service = work.component(usage="cart")
+
+    def test_cart_line_lang_logged(self):
+        """
+        Test the case where the lang (from the front side) is not the same than
+        the anonymous partner lang.
+        For this case, we are not connected as anonymous user. But this check
+        ensure it still working for logged user.
+        :return:
+        """
+        params = {"product_id": self.product_1.id, "item_qty": 2}
+        # First, do it in English
+        lang = "en_US"
+        self.partner.write({"lang": lang})
+        service = self._change_service_lang(lang)
+        response = service.dispatch("add_item", params=params)
+        sale_id = response.get("set_session", {}).get("cart_id")
+        sale_order = self.sale_obj.browse(sale_id)
+        so_line = fields.first(
+            sale_order.order_line.filtered(
+                lambda l, p=self.product_1: l.product_id == p
+            )
+        )
+        product = self.product_1.with_context(lang=lang)
+        description_sale_en = product.description_sale
+        name_en = product.name
+        self.assertIn(description_sale_en, so_line.name)
+        self.assertIn(name_en, so_line.name)
+        so_line.unlink()
+        # Then in french
+        lang = "fr_FR"
+        self._install_lang(lang)
+        self.partner.write({"lang": lang})
+        service = self._change_service_lang(lang)
+        response = service.dispatch("add_item", params=params)
+        sale_id = response.get("set_session", {}).get("cart_id")
+        sale_order = self.sale_obj.browse(sale_id)
+        so_line = fields.first(
+            sale_order.order_line.filtered(
+                lambda l, p=self.product_1: l.product_id == p
+            )
+        )
+        product = self.product_1.with_context(lang=lang)
+        description_sale_fr = product.description_sale
+        name_fr = product.name
+        self.assertIn(description_sale_fr, so_line.name)
+        self.assertIn(name_fr, so_line.name)
+        return
 
 
 class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
