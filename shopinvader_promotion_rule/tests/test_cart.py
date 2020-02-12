@@ -99,6 +99,20 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
     def test_promotion_on_item(self):
         self.add_coupon_code(self.promotion_rule_coupon.code)
         count_existing_lines = len(self.cart.order_line)
+        # each time we add an item the promotion is recomputed and the coupon
+        # code is preserved
+        self.service.dispatch(
+            "add_item", params={"product_id": self.product_1.id, "item_qty": 2}
+        )
+        self.assertEquals(count_existing_lines + 1, len(self.cart.order_line))
+        # the promotion is applied on all lines
+        for line in self.cart.order_line:
+            self.check_discount_rule_set(line, self.promotion_rule_coupon)
+
+    def test_promotion_on_item_simple(self):
+        self.backend.simple_cart_service = True
+        self.add_coupon_code(self.promotion_rule_coupon.code)
+        count_existing_lines = len(self.cart.order_line)
         old_lines = self.cart.order_line
         # each time we add an item the promotion is recomputed and the coupon
         # code is preserved
@@ -111,7 +125,9 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         cart_data = self.service.search()["data"]
         cart = self.env["sale.order"].browse(cart_data["id"])
         new_line = cart.order_line - old_lines
-        self.check_discount_rule_set(new_line, self.promotion_rule_coupon)
+        self.check_discount_rule_set(
+            new_line, self.env["sale.promotion.rule"].browse()
+        )
         # the promotion is applied on all lines
         for line in self.cart.order_line - new_line:
             self.check_discount_rule_set(line, self.promotion_rule_coupon)

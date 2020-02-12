@@ -100,6 +100,10 @@ class ShopinvaderBackend(models.Model):
         "statistics reasons. A new cart is created automatically when the "
         "customer will add a new item.",
     )
+    simple_cart_service = fields.Boolean(
+        help="Technical field to change cart service behaviour. Change this"
+        "only if you know what you are doing"
+    )
 
     _sql_constraints = [
         (

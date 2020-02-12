@@ -73,11 +73,15 @@ class CartService(Component):
         :param params:
         :return:
         """
+        simple_service = self.shopinvader_backend.simple_cart_service
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
         self._add_item(cart, params)
-        res = self._get_simple_cart_items(cart)
+        if simple_service:
+            res = self._get_simple_cart_items(cart)
+        else:
+            res = self._to_json(cart)
         return res
 
     def update_item(self, **params):
@@ -224,6 +228,7 @@ class CartService(Component):
         return cart
 
     def _add_item(self, cart, params):
+        simple_service = self.shopinvader_backend.simple_cart_service
         existing_item = self._check_existing_cart_item(cart, params)
         with self.env.norecompute():
             if existing_item:
@@ -235,11 +240,15 @@ class CartService(Component):
                 vals.update(new_values)
                 existing_item = self._create_sale_order_line(vals)
             existing_item.order_id.shopinvader_to_be_recomputed = True
-        # Recompute cart asynchronously to avoid latencies on frontend
-        description = "Recompute cart %s" % (existing_item.id)
-        existing_item.order_id.with_delay(
-            description=description
-        )._shopinvader_delayed_recompute()
+        if simple_service:
+            # Recompute cart asynchronously to avoid latencies on frontend
+            description = "Recompute cart %s" % (existing_item.id)
+            existing_item.order_id.with_delay(
+                description=description
+            )._shopinvader_delayed_recompute()
+        else:
+            cart.recompute()
+            existing_item.order_id.shopinvader_to_be_recomputed = False
 
     @contextmanager
     def _ensure_ctx_lang(self, values):

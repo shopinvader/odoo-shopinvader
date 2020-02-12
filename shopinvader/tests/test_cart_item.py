@@ -63,6 +63,19 @@ class AbstractItemCase(object):
 
     def test_add_item_with_an_existing_cart(self):
         cart = self.service.search()["data"]
+        nbr_line = len(cart["lines"]["items"])
+
+        cart = self.add_item(self.product_1.id, 2)
+        self.assertEqual(cart["id"], self.cart.id)
+        self.assertEqual(len(cart["lines"]["items"]), nbr_line + 1)
+        self.check_product_and_qty(
+            cart["lines"]["items"][-1], self.product_1.id, 2
+        )
+        self.check_partner(cart)
+
+    def test_add_item_with_an_existing_cart_simple(self):
+        self.backend.simple_cart_service = True
+        cart = self.service.search()["data"]
         sale = self.env["sale.order"].browse(cart["id"])
         qty_before = sum(
             float_round(
