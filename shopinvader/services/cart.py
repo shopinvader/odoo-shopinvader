@@ -23,6 +23,10 @@ class CartService(Component):
     _usage = "cart"
 
     @property
+    def cart_recompute_identify_key(self):
+        return "sale.order._shopinvader_delayed_recompute.%s" % self.cart_id
+
+    @property
     def cart_id(self):
         return self.shopinvader_session.get("cart_id", 0)
 
@@ -244,7 +248,9 @@ class CartService(Component):
             # Recompute cart asynchronously to avoid latencies on frontend
             description = "Recompute cart %s" % (existing_item.id)
             existing_item.order_id.with_delay(
-                description=description, priority=1
+                description=description,
+                priority=1,
+                identity_key=self.cart_recompute_identify_key,
             )._shopinvader_delayed_recompute()
         else:
             cart.recompute()
