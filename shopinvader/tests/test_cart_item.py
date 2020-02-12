@@ -6,6 +6,7 @@ from odoo import exceptions
 from odoo.tools import mute_logger
 
 from .common import CommonCase
+from odoo.tools.float_utils import float_round
 
 
 class ItemCaseMixin(object):
@@ -96,14 +97,28 @@ class AbstractItemCase(ItemCaseMixin):
             for line in sale.order_line
         )
         nbr_line = len(cart["lines"]["items"])
-
-        cart = self.add_item(self.product_1.id, 2)
+        self._init_job_counter()
+        cart_simple = self.add_item(self.product_1.id, 2)
+        self._check_nbr_job_created(1)
+        job = self.created_jobs
+        self.assertEquals(
+            "sale.order._shopinvader_delayed_recompute.%s" % cart.get("id"),
+            job.identity_key,
+        )
+        self.assertEquals(
+            {"id": cart["id"], "qty": qty_before + 2.0}, cart_simple
+        )
+        cart = self.service.search()["data"]
         self.assertEqual(cart["id"], self.cart.id)
         self.assertEqual(len(cart["lines"]["items"]), nbr_line + 1)
         self.check_product_and_qty(
             cart["lines"]["items"][-1], self.product_1.id, 2
         )
         self.check_partner(cart)
+        self._init_job_counter()
+        self.add_item(self.product_1.id, 2)
+        self._check_nbr_job_created(0)
+        self._perform_created_job()
 
     def test_update_item(self):
         line_id = self.cart.order_line[0].id
