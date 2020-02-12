@@ -47,11 +47,25 @@ class CartService(Component):
             return self._to_json(cart)
 
     def add_item(self, **params):
+        """
+        Add item to cart.
+        Don't recompute immediately to keep this action smooth and quick.
+        Just return some limited information (e.g.: quantity)
+        Don't browse cart as ORM could launch recomputation!
+        The cart has to be recomputed
+        :param params:
+        :return:
+        """
+        simple_service = self.shopinvader_backend.simple_cart_service
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
         self._add_item(cart, params)
-        return self._to_json(cart)
+        if simple_service:
+            res = self._get_simple_cart_items(cart)
+        else:
+            res = self._to_json(cart)
+        return res
 
     def update_item(self, **params):
         cart = self._get()
@@ -280,11 +294,7 @@ class CartService(Component):
         return cart
 
     def _add_item(self, cart, params):
-        product = self.env["product.product"].browse(params["product_id"])
-        if not product._add_to_cart_allowed(
-            self.shopinvader_backend, partner=self.partner
-        ):
-            raise UserError(_("Product %s is not allowed") % product.name)
+        simple_service = self.shopinvader_backend.simple_cart_service
         existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
             self._upgrade_cart_item_quantity(
@@ -314,7 +324,16 @@ class CartService(Component):
                     product_id = vals["product_id"]
                     vals["name"] = self._get_sale_order_line_name(product_id)
                 self.env["sale.order.line"].create(vals)
-            cart.recompute()
+                existing_item.order_id.shopinvader_to_be_recomputed = True
+                if simple_service:
+                    # Recompute cart asynchronously to avoid latencies on frontend
+                    description = "Recompute cart %s" % (existing_item.id)
+                    existing_item.order_id.with_delay(
+                        description=description
+                    )._shopinvader_delayed_recompute()
+                else:
+                    cart.recompute()
+                    existing_item.order_id.shopinvader_to_be_recomputed = False
 
     def _get_sale_order_line_name(self, product_id):
         product = self.env["product.product"].browse(product_id)

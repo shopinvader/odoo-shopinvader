@@ -108,43 +108,25 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         for line in self.cart.order_line:
             self.check_discount_rule_set(line, self.promotion_rule_coupon)
 
-    def _sign_with(self, partner):
-        """
-        Simulate a sign_in with the given partner
-        :param partner: res.partner recordset
-        :return:
-        """
-        self.service.work.partner = partner
-        service_sign = self.service.component("customer")
-        service_sign.sign_in()
-
-    def test_promotion_rule_applied_after_fiscal_pos_update(self):
-        """
-        Ensure promotions are correctly applied even after updating the
-        fiscal position using the write_with_onchange (on cart).
-        :return:
-        """
-        fiscal_position = self.env.ref("shopinvader.fiscal_position_0")
-        # Apply promo rule
-        self.cart.apply_promotions()
-        # Then ensure a promo should be applied
-        self.assertIn(self.promotion_rule_auto, self.cart.promotion_rule_ids)
-        save_price_with_promo = self.cart.amount_total
-        # Clear promo to ensure they will be automatically set later
-        self.cart.clear_promotions()
-        self.assertFalse(self.cart.promotion_rule_ids)
-        self.assertFalse(self.cart.fiscal_position_id)
-        # Now add manually promotions
-        self.cart.write(
-            {"promotion_rule_ids": [(4, self.promotion_rule_auto.id, False)]}
+    def test_promotion_on_item_simple(self):
+        self.backend.simple_cart_service = True
+        self.add_coupon_code(self.promotion_rule_coupon.code)
+        count_existing_lines = len(self.cart.order_line)
+        old_lines = self.cart.order_line
+        # each time we add an item the promotion is recomputed and the coupon
+        # code is preserved
+        self.service.dispatch(
+            "add_item", params={"product_id": self.product_1.id, "item_qty": 2}
         )
-        # Update the fiscal position to have reset_price
-        # set to True (cfr shopinvader module)
-        self.cart.write_with_onchange(
-            {"fiscal_position_id": fiscal_position.id}
+        self.assertEquals(count_existing_lines + 1, len(self.cart.order_line))
+        new_line = self.cart.order_line - old_lines
+        self.assertFalse(new_line.coupon_promotion_rule_id)
+        cart_data = self.service.search()["data"]
+        cart = self.env["sale.order"].browse(cart_data["id"])
+        new_line = cart.order_line - old_lines
+        self.check_discount_rule_set(
+            new_line, self.env["sale.promotion.rule"].browse()
         )
-        self.assertAlmostEquals(
-            self.cart.amount_total,
-            save_price_with_promo,
-            places=self.price_precision_digits,
-        )
+        # the promotion is applied on all lines
+        for line in self.cart.order_line:
+            self.check_discount_rule_set(line, self.promotion_rule_coupon)

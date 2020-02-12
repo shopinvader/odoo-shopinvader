@@ -50,7 +50,8 @@ class CartService(Component):
 
     def _add_item(self, cart, params):
         res = super(CartService, self)._add_item(cart, params)
-        cart.apply_promotions()
+        if not self.shopinvader_backend.simple_cart_service:
+            cart.apply_promotions()
         return res
 
     def _update_item(self, cart, params, item=False):

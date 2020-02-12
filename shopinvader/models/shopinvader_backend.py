@@ -154,9 +154,9 @@ class ShopinvaderBackend(models.Model):
     validate_customers = fields.Boolean(
         default=False,  # let's be explicit here :)
         help="Turn on this flag to block non validated customers. "
-        "If customers' partners are not validated, "
-        "registered users cannot log in. "
-        "Salesman will get notified via mail activity.",
+             "If customers' partners are not validated, "
+             "registered users cannot log in. "
+             "Salesman will get notified via mail activity.",
     )
     validate_customers_type = fields.Selection(
         selection=[
@@ -200,33 +200,9 @@ class ShopinvaderBackend(models.Model):
         string="Available partner industries",
         default=lambda self: self._default_partner_industry_ids(),
     )
-    # Invoice settings
-    invoice_settings = Serialized(
-        # Default values on the sparse fields work only for create
-        # and does not provide defaults for existing records.
-        default={
-            "invoice_linked_to_sale_only": True,
-            "invoice_access_open": False,
-        }
-    )
-    invoice_linked_to_sale_only = fields.Boolean(
-        default=True,
-        string="Only sale invoices",
-        help="Only serve invoices that are linked to a sale order.",
-        sparse="invoice_settings",
-    )
-    invoice_access_open = fields.Boolean(
-        default=False,
-        string="Open invoices",
-        help="Give customer access to open invoices as well as the paid ones.",
-        sparse="invoice_settings",
-    )
-    invoice_report_id = fields.Many2one(
-        comodel_name="ir.actions.report",
-        domain=lambda self: self._get_invoice_report_id_domain(),
-        string="Specific report",
-        help="Select a specific report for invoice download, if none are selected "
-        "default shopinvader implementation is used.",
+    simple_cart_service = fields.Boolean(
+        help="Technical field to change cart service behaviour. Change this"
+        "only if you know what you are doing"
     )
     customer_default_role = fields.Char(
         compute="_compute_customer_default_role",

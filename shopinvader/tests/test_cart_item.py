@@ -84,6 +84,27 @@ class AbstractItemCase(ItemCaseMixin):
         )
         self.check_partner(cart)
 
+    def test_add_item_with_an_existing_cart_simple(self):
+        self.backend.simple_cart_service = True
+        cart = self.service.search()["data"]
+        sale = self.env["sale.order"].browse(cart["id"])
+        qty_before = sum(
+            float_round(
+                line.product_uom_qty,
+                precision_rounding=line.product_uom.rounding,
+            )
+            for line in sale.order_line
+        )
+        nbr_line = len(cart["lines"]["items"])
+
+        cart = self.add_item(self.product_1.id, 2)
+        self.assertEqual(cart["id"], self.cart.id)
+        self.assertEqual(len(cart["lines"]["items"]), nbr_line + 1)
+        self.check_product_and_qty(
+            cart["lines"]["items"][-1], self.product_1.id, 2
+        )
+        self.check_partner(cart)
+
     def test_update_item(self):
         line_id = self.cart.order_line[0].id
         product_id = self.cart.order_line[0].product_id.id
