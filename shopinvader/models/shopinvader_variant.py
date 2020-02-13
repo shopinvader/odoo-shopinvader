@@ -50,20 +50,28 @@ class ShopinvaderVariant(models.Model):
 
     @contextmanager
     @api.multi
-    def _action_product_disabled(self):
+    def _action_product_toggle_active(self):
         """
         Action a deactivation of a variant, if every variants are disabled:
         disable the product too.
+        Also when a variant is enabled, the related shopinvader product
+        should be re-enabled too.
         :return:
         """
         product_active_dict = {
             p: p.active for p in self.mapped("shopinvader_product_id")
         }
         yield
+        to_activate_ids = set()
+        to_inactivate_ids = set()
         for variant in self:
-            if variant.active:
-                continue
             shopinv_product = variant.shopinvader_product_id
+            if variant.active:
+                # If the variant is active and the related shop. product is
+                # not active, we have to active it.
+                if not shopinv_product.active:
+                    to_activate_ids.add(shopinv_product.id)
+                continue
             # If the product is already disabled, we don't have anything to do!
             if not product_active_dict.get(shopinv_product, True):
                 continue
@@ -72,17 +80,25 @@ class ShopinvaderVariant(models.Model):
             if all(
                 [not v.active for v in shopinv_product.shopinvader_variant_ids]
             ):
-                shopinv_product.write({"active": False})
+                to_inactivate_ids.add(shopinv_product.id)
+        if to_activate_ids:
+            self.env["shopinvader.product"].browse(to_activate_ids).write(
+                {"active": True}
+            )
+        if to_inactivate_ids:
+            self.env["shopinvader.product"].browse(to_inactivate_ids).write(
+                {"active": False}
+            )
 
     @api.multi
     def write(self, vals):
         """
         Inherit to manage behaviour when the variant is disabled.
-        We may habe to disable also the shopinvader.product
+        We may have to disable also the shopinvader.product
         :param vals: dict
         :return: bool
         """
-        with self._action_product_disabled():
+        with self._action_product_toggle_active():
             result = super(ShopinvaderVariant, self).write(vals)
         return result
 
