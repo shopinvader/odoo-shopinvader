@@ -48,31 +48,10 @@ class CartService(Component):
         else:
             return self._to_json(cart)
 
-    def _get_simple_cart_items(self, cart):
-        """
-        Returns fast
-        :return:
-        """
-        cart_simple = cart.with_context(prefetch_fields=False)
-        qty = sum(
-            float_round(
-                line.product_uom_qty,
-                precision_rounding=line.product_uom.rounding,
-            )
-            for line in cart_simple.order_line
-        )
-        return {
-            "data": {"id": cart.id, "qty": qty},
-            "set_session": {"cart_id": cart.id},
-            "store_cache": {"cart": {"id": cart.id, "qty": qty}},
-        }
-
     def add_item(self, **params):
         """
         Add item to cart.
-        Don't recompute immediately to keep this action smooth and quick.
-        Just return some limited information (e.g.: quantity)
-        Don't browse cart as ORM could launch recomputation!
+        Don't access to cart fields in this method. Do it in _add_item.
         The cart has to be recomputed
         :param params:
         :return:
@@ -81,7 +60,10 @@ class CartService(Component):
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
-        self._add_item(cart, params)
+        # Modify the cart with no recomputation
+        with self.env.norecompute():
+            item = self._add_item(cart, params)
+        self._launch_cart_recompute(cart, item)
         if simple_service:
             res = self._get_simple_cart_items(cart)
         else:
@@ -178,6 +160,45 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
+    def _get_simple_cart_items(self, cart):
+        """
+        Returns simple and fast items
+        :return:
+        """
+        cart_simple = cart.with_context(prefetch_fields=False)
+        qty = sum(
+            float_round(
+                line.product_uom_qty,
+                precision_rounding=line.product_uom.rounding,
+            )
+            for line in cart_simple.order_line
+        )
+        return {
+            "data": {"id": cart.id, "qty": qty},
+            "set_session": {"cart_id": cart.id},
+            "store_cache": {"cart": {"id": cart.id, "qty": qty}},
+        }
+
+    def _launch_cart_recompute(self, cart, item):
+        """
+        Launches cart recompute depending the backend configuration
+        :param cart:
+        :param item:
+        :return:
+        """
+        simple_service = self.shopinvader_backend.simple_cart_service
+        if simple_service:
+            # Recompute cart asynchronously to avoid latencies on frontend
+            description = "Recompute cart %s" % (item.order_id.id)
+            item.order_id.with_delay(
+                description=description,
+                priority=1,
+                identity_key=self.cart_recompute_identify_key,
+            )._shopinvader_delayed_recompute()
+        else:
+            cart.recompute()
+            item.order_id.shopinvader_to_be_recomputed = False
+
     def _upgrade_cart_item_quantity(self, cart, item, product_qty):
         vals = {"product_uom_qty": product_qty}
         new_values = item.play_onchanges(vals, vals.keys())
@@ -232,29 +253,17 @@ class CartService(Component):
         return cart
 
     def _add_item(self, cart, params):
-        simple_service = self.shopinvader_backend.simple_cart_service
         existing_item = self._check_existing_cart_item(cart, params)
-        with self.env.norecompute():
-            if existing_item:
-                qty = existing_item.product_uom_qty + params["item_qty"]
-                self._upgrade_cart_item_quantity(cart, existing_item, qty)
-            else:
-                vals = self._prepare_cart_item(params, cart)
-                new_values = self._sale_order_line_onchange(vals)
-                vals.update(new_values)
-                existing_item = self._create_sale_order_line(vals)
-            existing_item.order_id.shopinvader_to_be_recomputed = True
-        if simple_service:
-            # Recompute cart asynchronously to avoid latencies on frontend
-            description = "Recompute cart %s" % (existing_item.id)
-            existing_item.order_id.with_delay(
-                description=description,
-                priority=1,
-                identity_key=self.cart_recompute_identify_key,
-            )._shopinvader_delayed_recompute()
+        if existing_item:
+            qty = existing_item.product_uom_qty + params["item_qty"]
+            self._upgrade_cart_item_quantity(cart, existing_item, qty)
         else:
-            cart.recompute()
-            existing_item.order_id.shopinvader_to_be_recomputed = False
+            vals = self._prepare_cart_item(params, cart)
+            new_values = self._sale_order_line_onchange(vals)
+            vals.update(new_values)
+            existing_item = self._create_sale_order_line(vals)
+        existing_item.order_id.shopinvader_to_be_recomputed = True
+        return existing_item
 
     @contextmanager
     def _ensure_ctx_lang(self, values):

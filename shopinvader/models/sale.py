@@ -51,6 +51,17 @@ class SaleOrder(models.Model):
         "to be recomputed du to a modification (asynchronous)"
     )
 
+    def _shopinvader_fields_recompute(self):
+        """
+        Call recompute_todo to build the list of fields to recompute
+        TODO: Limit the real changed fields and built the job identity_key
+            with them to ensure we forget no field
+        :return:
+        """
+        for name, field in self._fields.iteritems():
+            if field.compute and field.store:
+                self._recompute_todo(field)
+
     @job(default_channel="root.shopinvader")
     def _shopinvader_delayed_recompute(self):
         self.shopinvader_recompute()
@@ -59,6 +70,7 @@ class SaleOrder(models.Model):
     def shopinvader_recompute(self):
         self.ensure_one()
         if self.shopinvader_to_be_recomputed:
+            self._shopinvader_fields_recompute()
             self.recompute()
             self.shopinvader_to_be_recomputed = False
 
