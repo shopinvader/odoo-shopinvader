@@ -6,7 +6,7 @@
 from odoo.addons.component.core import Component
 
 
-class AlgoliaExporter(Component):
+class ElasticsearchExporter(Component):
     _name = "elasticsearch.se.exporter"
     _inherit = ["se.exporter", "elasticsearch.se.connector"]
     _apply_on = ["shopinvader.variant", "shopinvader.category"]
