@@ -56,7 +56,7 @@ class ProductCase(ProductCommonCase):
                             "key": u"technical_description",
                         },
                         {
-                            "value": True,
+                            "value": u"true",
                             "name": u"X linux compatible",
                             "key": u"linux_compatible",
                         },

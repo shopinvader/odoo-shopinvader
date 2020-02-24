@@ -19,13 +19,16 @@ class ShopinvaderVariant(models.Model):
     )
 
     def _get_attr_vals(self, attr):
+        """The value of the attribute as string."""
         self.ensure_one()
         if attr.attribute_type == "select":
             return self[attr.name]["name"]
         elif attr.attribute_type == "multiselect":
             return self[attr.name].mapped("name")
+        elif attr.attribute_type == "boolean":
+            return self[attr.name] and 'true' or 'false'
         else:
-            return self[attr.name]
+            return '%s' % self[attr.name]
 
     def _compute_attributes(self):
         for record in self:
@@ -47,6 +50,7 @@ class ShopinvaderVariant(models.Model):
                             "name": attr.field_description,
                             "key": attr.name[2:],
                             "value": record._get_attr_vals(attr),
+                            "type": attr.attribute_type,
                         }
                     )
                 strc_attr.append(group_data)
