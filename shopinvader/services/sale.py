@@ -35,16 +35,12 @@ class SaleService(Component):
 
     # Validator
     def _validator_search(self):
-        return {
-            "id": {"coerce": to_int, "type": "integer"},
-            "per_page": {
-                "coerce": to_int,
-                "nullable": True,
-                "type": "integer",
-            },
-            "page": {"coerce": to_int, "nullable": True, "type": "integer"},
-            "scope": {"type": "dict", "nullable": True},
-        }
+        default_search_validator = self._default_validator_search()
+        default_search_validator.pop("domain", {})
+        default_search_validator.update(
+            {"id": {"coerce": to_int, "type": "integer"}}
+        )
+        return default_search_validator
 
     def _validator_ask_email_invoice(self):
         return self._validator_ask_email()

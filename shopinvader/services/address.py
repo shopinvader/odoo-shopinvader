@@ -56,7 +56,9 @@ class AddressService(Component):
 
     # Validator
     def _validator_search(self):
-        return {"scope": {"type": "dict", "nullable": True}}
+        validator = self._default_validator_search()
+        validator.pop("domain", {})
+        return validator
 
     def _validator_create(self):
         res = {
