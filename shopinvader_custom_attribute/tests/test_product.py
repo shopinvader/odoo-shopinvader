@@ -25,7 +25,7 @@ class ProductCase(ProductCommonCase):
         self.product.write(
             {
                 "attribute_set_id": self.attr_set.id,
-                "x_linux_compatible": True,
+                "x_linux_compatible": "true",
                 "x_processor": self.processor.id,
                 "x_technical_description": "foo",
             }
@@ -34,36 +34,39 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             self.shopinvader_variant.attributes,
             {
-                u"linux_compatible": True,
+                u"linux_compatible": "true",
                 u"processor": u"Intel i5",
                 u"technical_description": u"foo",
             },
         )
 
-        self.assertEqual(
+        self.assertListEqual(
             self.shopinvader_variant.structured_attributes,
             [
                 {
                     "fields": [
                         {
-                            "value": u"Intel i5",
-                            "name": u"X processor",
-                            "key": u"processor",
+                            "value": "Intel i5",
+                            "name": "X Processor",
+                            "key": "processor",
+                            "type": "select",
                         },
                         {
-                            "value": u"foo",
-                            "name": u"X technical description",
-                            "key": u"technical_description",
+                            "value": "foo",
+                            "name": "X Technical Description",
+                            "key": "technical_description",
+                            "type": "text",
                         },
                         {
-                            "value": u"true",
-                            "name": u"X linux compatible",
-                            "key": u"linux_compatible",
+                            "value": "true",
+                            "name": "X Linux Compatible",
+                            "key": "linux_compatible",
+                            "type": "boolean",
                         },
                     ],
-                    "group_name": u"Technical",
+                    "group_name": "Technical",
                 }
-            ],
+            ]
         )
 
     def test_filter(self):
