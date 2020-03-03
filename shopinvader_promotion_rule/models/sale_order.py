@@ -19,12 +19,12 @@ class SaleOrder(models.Model):
         return result
 
     @api.multi
-    def shopinvader_recompute(self):
+    def _shopinvader_recompute(self):
         """
         Call apply_promotion() after the recompute (called when we use the
         simple add item service)
         :return:
         """
-        res = super(SaleOrder, self).shopinvader_recompute()
+        res = super(SaleOrder, self)._shopinvader_recompute()
         self.apply_promotions()
         return res

@@ -436,6 +436,8 @@ class CartService(Component):
             # criteria on the cart but in this case, each time the _get method
             # would have been called, a new SQL query would have been done
             cart = self.env["sale.order"].browse(self.cart_id).exists()
+            # Recompute cart if needed (in case of simple service call)
+            cart.shopinvader_recompute()
         if (
             cart.shopinvader_backend_id == self.shopinvader_backend
             and cart.typology == "cart"
