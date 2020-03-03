@@ -34,18 +34,16 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        result = super(ShopinvaderCategoryBindingWizard, self).default_get(
+        res = super(ShopinvaderCategoryBindingWizard, self).default_get(
             fields_list
         )
-        backend_id = self.env.context.get("active_id")
-        if backend_id:
-            result.update(
-                {
-                    "backend_id": backend_id,
-                    "lang_ids": (6, None, backend_id.lang_ids.ids),
-                }
-            )
-        return result
+        backend = self.backend_id.browse(
+            self.env.context.get("active_id", False)
+        )
+        if backend:
+            res["backend_id"] = backend.id
+            res["lang_ids"] = backend.lang_ids.ids
+        return res
 
     @api.multi
     def _get_langs_to_bind(self):
