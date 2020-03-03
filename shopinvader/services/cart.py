@@ -53,7 +53,9 @@ class CartService(Component):
     def add_item(self, **params):
         """
         Add item to cart.
-        Don't access to cart fields in this method. Do it in _add_item.
+        Don't recompute immediately to keep this action smooth and quick.
+        Just return some limited information (e.g.: quantity)
+        Don't browse cart as ORM could launch recomputation!
         The cart has to be recomputed
         :param params:
         :return:
@@ -62,10 +64,7 @@ class CartService(Component):
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
-        # Modify the cart with no recomputation
-        with self.env.norecompute():
-            item = self._add_item(cart, params)
-        self._launch_cart_recompute(cart, item)
+        self._add_item(cart, params)
         if simple_service:
             res = self._get_simple_cart_items(cart)
         else:
@@ -245,45 +244,6 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _get_simple_cart_items(self, cart):
-        """
-        Returns simple and fast items
-        :return:
-        """
-        cart_simple = cart.with_context(prefetch_fields=False)
-        qty = sum(
-            float_round(
-                line.product_uom_qty,
-                precision_rounding=line.product_uom.rounding,
-            )
-            for line in cart_simple.order_line
-        )
-        return {
-            "data": {"id": cart.id, "qty": qty},
-            "set_session": {"cart_id": cart.id},
-            "store_cache": {"cart": {"id": cart.id, "qty": qty}},
-        }
-
-    def _launch_cart_recompute(self, cart, item):
-        """
-        Launches cart recompute depending the backend configuration
-        :param cart:
-        :param item:
-        :return:
-        """
-        simple_service = self.shopinvader_backend.simple_cart_service
-        if simple_service:
-            # Recompute cart asynchronously to avoid latencies on frontend
-            description = "Recompute cart %s" % (item.order_id.id)
-            item.order_id.with_delay(
-                description=description,
-                priority=1,
-                identity_key=self.cart_recompute_identify_key,
-            )._shopinvader_delayed_recompute()
-        else:
-            cart.recompute()
-            item.order_id.shopinvader_to_be_recomputed = False
-
     def _upgrade_cart_item_quantity(self, cart, item, product_qty):
         vals = {"product_uom_qty": product_qty}
         new_values = item.play_onchanges(vals, vals.keys())
@@ -338,95 +298,40 @@ class CartService(Component):
         return cart
 
     def _add_item(self, cart, params):
+        simple_service = self.shopinvader_backend.simple_cart_service
         existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
             self._upgrade_cart_item_quantity(
                 cart, existing_item, params, action="sum"
             )
         else:
-            vals = self._prepare_cart_item(params, cart)
-            new_values = (
+            with self.env.norecompute():
+                vals = self._prepare_cart_item(params, cart)
+                # the next statement is done with suspending the security for
+                #  performance reasons. It is safe only if both 3 following
+                # fields are filled on the sale order:
+                # - company_id
+                # - fiscal_position_id
+                # - pricelist_id
+                new_values = (
                     self.env["sale.order.line"]
                     .sudo()
                     .play_onchanges(vals, vals.keys())
                 )
-            vals.update(new_values)
-            existing_item = self._create_sale_order_line(vals)
-        existing_item.order_id.shopinvader_to_be_recomputed = True
-        return existing_item
-
-    @contextmanager
-    def _ensure_ctx_lang(self, values):
-        """
-        Todo: concurrent update still possible. We should find an improvement
-        (env.do_in_draft do SQL write so it's not a solution!)
-        Simulate the anonymous partner lang using the lang from the context.
-        To avoid to fill sale.order.line name/description with the anonymous
-        lang if the lang of the context is different.
-        This function update (in cache only) the anonymous partner's lang,
-        then you do your job (create etc) and the previous lang is
-        automatically reset with the original one.
-        Usage:
-        with self._simulate_anonymous_lang(vals):
-            # Do your job here
-        :param values: dict
-        :return:
-        """
-        order_id = values.get("order_id")
-        partner = self.env["sale.order"].browse(order_id).partner_id
-        anonymous_partner = self.shopinvader_backend.anonymous_partner_id
-        original_lang = partner.lang
-        ctx_lang = self.env.context.get("lang", partner.lang)
-        if (
-            partner
-            and anonymous_partner
-            and partner == anonymous_partner
-            and partner.lang != ctx_lang
-        ):
-            try:
-                partner.lang = ctx_lang
-                yield
-            finally:
-                partner.lang = original_lang
-        else:
-            yield
-
-    def _create_sale_order_line(self, vals):
-        """
-        Create the sale order line.
-        We also have to force the lang from the context because the
-        sale.order.line create could add some missing values (and call
-        the onchange on the product).
-        :param vals: dict
-        :return: sale.order.line recordset
-        """
-        with self._ensure_ctx_lang(vals):
-            line = self.env["sale.order.line"].create(vals)
-        return line
-
-    def _sale_order_line_onchange(self, vals):
-        """
-        Simulate the onchange on sale.order.line with given vals.
-        :param vals: dict
-        :return: dict
-        """
-        # the next statement is done with suspending the security for
-        #  performance reasons. It is safe only if both 3 following
-        # fields are filled on the sale order:
-        # - company_id
-        # - fiscal_position_id
-        # - pricelist_id
-        so_line_obj = self.env["sale.order.line"].suspend_security()
-        with self._ensure_ctx_lang(vals):
-            new_values = so_line_obj.play_onchanges(vals, vals.keys())
-        return new_values
-
-    def _get_sale_order_line_name(self, product_id):
-        product = self.env["product.product"].browse(product_id)
-        name = product.name_get()[0][1]
-        if product.description_sale:
-            name += "\n" + product.description_sale
-        return name
+                vals.update(new_values)
+                self.env["sale.order.line"].create(vals)
+                existing_item.order_id.shopinvader_to_be_recomputed = True
+                if simple_service:
+                    # Recompute cart asynchronously to avoid latencies on frontend
+                    description = "Recompute cart %s" % (existing_item.id)
+                    existing_item.order_id.with_delay(
+                        description=description,
+                        priority=1,
+                        identity_key=self.cart_recompute_identify_key,
+                    )._shopinvader_delayed_recompute()
+                else:
+                    cart.recompute()
+                    existing_item.order_id.shopinvader_to_be_recomputed = False
 
     def _update_item(self, cart, params, item=False):
         if not item:

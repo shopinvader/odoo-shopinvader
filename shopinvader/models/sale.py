@@ -6,6 +6,7 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.addons.queue_job.job import job
 
 _logger = logging.getLogger(__name__)
 
@@ -57,12 +58,21 @@ class SaleOrder(models.Model):
         self.shopinvader_recompute()
 
     @api.multi
+    def _shopinvader_recompute(self):
+        """
+        Method called if shopinvader_to_be_recomputed is True
+        Can be inherited
+        :return:
+        """
+        self._shopinvader_fields_recompute()
+        self.recompute()
+        self.shopinvader_to_be_recomputed = False
+
+    @api.multi
     def shopinvader_recompute(self):
         self.ensure_one()
         if self.shopinvader_to_be_recomputed:
-            self._shopinvader_fields_recompute()
-            self.recompute()
-            self.shopinvader_to_be_recomputed = False
+            self._shopinvader_recompute()
 
     def _get_shopinvader_state(self):
         self.ensure_one()
