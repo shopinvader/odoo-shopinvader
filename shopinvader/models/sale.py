@@ -48,7 +48,7 @@ class SaleOrder(models.Model):
     )
     shopinvader_to_be_recomputed = fields.Boolean(
         help="Technical field that will intend to check if the sale order has"
-        "to be recomputed du to a modification (asynchronous)"
+        "to be recomputed due to a modification (asynchronous)"
     )
 
     def _shopinvader_fields_recompute(self):

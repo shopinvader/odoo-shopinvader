@@ -94,7 +94,8 @@ class AbstractItemCase(object):
             job.identity_key,
         )
         self.assertEquals(
-            {"id": cart["id"], "qty": qty_before + 2.0}, cart_simple
+            {"id": cart["id"], "lines": {"count": qty_before + 2.0}},
+            cart_simple,
         )
         cart = self.service.search()["data"]
         self.assertEqual(cart["id"], self.cart.id)

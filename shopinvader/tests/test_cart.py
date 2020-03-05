@@ -4,6 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields
+from odoo.addons.shopinvader import shopinvader_response
 
 from .common import CommonCase
 
@@ -268,7 +269,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
             add_item_response.get("set_session")
         )
 
-        response = self.service.search()
+        response = self.service.dispatch("search")
         data = response.get("data")
         sale_id = response.get("set_session", {}).get("cart_id")
         sale_order = self.sale_obj.browse(sale_id)
@@ -371,13 +372,14 @@ class AnonymousCartCase(CartCase, CartClearTest):
           result must be empty
         """
         self.assertTrue(self.service.shopinvader_session.get("cart_id"))
-        search_result = self.service.search()
+        search_result = self.service.dispatch("search")
         self.assertEqual(
             search_result["store_cache"]["cart"]["name"], self.cart.name
         )
         # reset cart_id parameter
+        shopinvader_response.get().reset()
         self.service.shopinvader_session.update({"cart_id": False})
-        search_result = self.service.search()
+        search_result = self.service.dispatch("search")
         self.assertDictEqual(search_result, {})
 
 
@@ -578,7 +580,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         cart.unlink()
         self.assertFalse(cart.exists())
         nb_sale_order_before = self.cart.search_count([])
-        result = self.service.search()
+        result = self.service.dispatch("search")
         nb_sale_order_after = self.cart.search_count([])
         self.assertDictEqual(result.get("data", {}), {})
         # Ensure no new SO has been created

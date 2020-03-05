@@ -101,8 +101,12 @@ class ShopinvaderBackend(models.Model):
         "customer will add a new item.",
     )
     simple_cart_service = fields.Boolean(
-        help="Technical field to change cart service behaviour. Change this"
-        "only if you know what you are doing"
+        help="If this option is checked, the add item action on frontend will"
+        " either add a new line either increase qty but promotion, taxes,"
+        " subtotal computations will be delegated to an asynchronous job."
+        " It the customer wants to see his cart before its execution,"
+        " the computation will be done on the fly to ensure data"
+        " integrity"
     )
 
     _sql_constraints = [

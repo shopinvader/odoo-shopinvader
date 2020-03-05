@@ -10,9 +10,10 @@ from contextlib import contextmanager
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.exceptions import UserError
-from odoo.tools import float_round
 from odoo.tools.translate import _
 from werkzeug.exceptions import NotFound
+
+from .. import shopinvader_response
 
 _logger = logging.getLogger(__name__)
 
@@ -64,11 +65,7 @@ class CartService(Component):
         with self.env.norecompute():
             item = self._add_item(cart, params)
         self._launch_cart_recompute(cart, item)
-        if simple_service:
-            res = self._get_simple_cart_items(cart)
-        else:
-            res = self._to_json(cart)
-        return res
+        return self._to_json(cart, simple=simple_service)
 
     def update_item(self, **params):
         cart = self._get()
@@ -159,25 +156,6 @@ class CartService(Component):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
-
-    def _get_simple_cart_items(self, cart):
-        """
-        Returns simple and fast items
-        :return:
-        """
-        cart_simple = cart.with_context(prefetch_fields=False)
-        qty = sum(
-            float_round(
-                line.product_uom_qty,
-                precision_rounding=line.product_uom.rounding,
-            )
-            for line in cart_simple.order_line
-        )
-        return {
-            "data": {"id": cart.id, "qty": qty},
-            "set_session": {"cart_id": cart.id},
-            "store_cache": {"cart": {"id": cart.id, "qty": qty}},
-        }
 
     def _launch_cart_recompute(self, cart, item):
         """
@@ -408,20 +386,39 @@ class CartService(Component):
         else:
             return step
 
-    def _to_json(self, cart):
-        if not cart:
-            return {
-                "data": {},
-                "store_cache": {"cart": {}},
-                "set_session": {"cart_id": 0},
-            }
-        res = super(CartService, self)._to_json(cart)[0]
+    def _to_json_simple(self, cart):
+        """
+        Returns simple and fast items
+        :return: dict
+        """
+        cart_simple = cart.with_context(prefetch_fields=False)
+        qty = sum(
+            line.product_uom_qty
+            for line in cart_simple.order_line
+            if self._is_item(line)
+        )
+        return {"id": cart.id, "lines": {"count": qty}}
 
-        return {
-            "data": res,
-            "set_session": {"cart_id": res["id"]},
-            "store_cache": {"cart": res},
-        }
+    def _to_json(self, cart, simple=False):
+        """
+        Return cart json depending on which type of service (simple or not)
+        Modify Session response accordingly
+        :param cart:
+        :param simple:
+        :return:
+        """
+        response = shopinvader_response.get()
+        if not cart:
+            response.set_session("cart_id", 0)
+            response.set_store_cache("cart", {})
+            return {"data": {}}
+        if simple:
+            res = self._to_json_simple(cart)
+        else:
+            res = super(CartService, self)._to_json(cart)[0]
+        response.set_session("cart_id", res["id"])
+        response.set_store_cache("cart", res)
+        return {"data": res}
 
     def _get(self, create_if_not_found=True):
         """
@@ -437,7 +434,8 @@ class CartService(Component):
             # would have been called, a new SQL query would have been done
             cart = self.env["sale.order"].browse(self.cart_id).exists()
             # Recompute cart if needed (in case of simple service call)
-            cart.shopinvader_recompute()
+            if cart:
+                cart.shopinvader_recompute()
         if (
             cart.shopinvader_backend_id == self.shopinvader_backend
             and cart.typology == "cart"
