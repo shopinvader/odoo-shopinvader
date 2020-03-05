@@ -134,5 +134,5 @@ class InvoiceService(Component):
         ]
         return self.env["ir.actions.report.xml"].search(domain)
 
-    def _get_binary_content_filename(self, invoice, report, format):
-        return "{}.{}".format(report.name, format)
+    def _get_binary_content_filename(self, invoice, report, file_format):
+        return "{}.{}".format(report.name, file_format)

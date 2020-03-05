@@ -3,7 +3,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=method-required-super
-
 from contextlib import contextmanager
 
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
@@ -12,8 +11,9 @@ from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
 from odoo.addons.server_environment import serv_config
-from odoo.addons.shopinvader import shopinvader_response
 from odoo.tests import SavepointCase
+
+from .. import shopinvader_response
 
 
 class CommonCase(SavepointCase, ComponentMixin):
