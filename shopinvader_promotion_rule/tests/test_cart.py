@@ -121,12 +121,11 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         self.assertEquals(count_existing_lines + 1, len(self.cart.order_line))
         new_line = self.cart.order_line - old_lines
         self.assertFalse(new_line.coupon_promotion_rule_id)
-        cart_data = self.service.search()["data"]
+        cart_data = self.service.dispatch("search")["data"]
         cart = self.env["sale.order"].browse(cart_data["id"])
         new_line = cart.order_line - old_lines
-        self.check_discount_rule_set(
-            new_line, self.env["sale.promotion.rule"].browse()
-        )
+        # As a search has been done, the cart computation has been forced
+        self.check_discount_rule_set(new_line, self.promotion_rule_coupon)
         # the promotion is applied on all lines
         for line in self.cart.order_line:
             self.check_discount_rule_set(line, self.promotion_rule_coupon)

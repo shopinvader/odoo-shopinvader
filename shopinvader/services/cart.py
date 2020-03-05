@@ -13,6 +13,8 @@ from odoo.tools.translate import _
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
+from .. import shopinvader_response
+
 _logger = logging.getLogger(__name__)
 
 
@@ -64,12 +66,11 @@ class CartService(Component):
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
-        self._add_item(cart, params)
-        if simple_service:
-            res = self._get_simple_cart_items(cart)
-        else:
-            res = self._to_json(cart)
-        return res
+        # Modify the cart with no recomputation
+        with self.env.norecompute():
+            item = self._add_item(cart, params)
+        self._launch_cart_recompute(cart, item)
+        return self._to_json(cart, simple=simple_service)
 
     def update_item(self, **params):
         cart = self._get()
@@ -244,6 +245,26 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
+    def _launch_cart_recompute(self, cart, item):
+        """
+        Launches cart recompute depending the backend configuration
+        :param cart:
+        :param item:
+        :return:
+        """
+        simple_service = self.shopinvader_backend.simple_cart_service
+        if simple_service:
+            # Recompute cart asynchronously to avoid latencies on frontend
+            description = "Recompute cart %s" % (item.order_id.id)
+            item.order_id.with_delay(
+                description=description,
+                priority=1,
+                identity_key=self.cart_recompute_identify_key,
+            )._shopinvader_delayed_recompute()
+        else:
+            cart.recompute()
+            item.order_id.shopinvader_to_be_recomputed = False
+
     def _upgrade_cart_item_quantity(self, cart, item, product_qty):
         vals = {"product_uom_qty": product_qty}
         new_values = item.play_onchanges(vals, vals.keys())
@@ -414,20 +435,39 @@ class CartService(Component):
         else:
             return step
 
-    def _to_json(self, cart):
-        if not cart:
-            return {
-                "data": {},
-                "store_cache": {"cart": {}},
-                "set_session": {"cart_id": 0},
-            }
-        res = super(CartService, self)._to_json(cart)[0]
+    def _to_json_simple(self, cart):
+        """
+        Returns simple and fast items
+        :return: dict
+        """
+        cart_simple = cart.with_context(prefetch_fields=False)
+        qty = sum(
+            line.product_uom_qty
+            for line in cart_simple.order_line
+            if self._is_item(line)
+        )
+        return {"id": cart.id, "lines": {"count": qty}}
 
-        return {
-            "data": res,
-            "set_session": {"cart_id": res["id"]},
-            "store_cache": {"cart": res},
-        }
+    def _to_json(self, cart, simple=False):
+        """
+        Return cart json depending on which type of service (simple or not)
+        Modify Session response accordingly
+        :param cart:
+        :param simple:
+        :return:
+        """
+        response = shopinvader_response.get()
+        if not cart:
+            response.set_session("cart_id", 0)
+            response.set_store_cache("cart", {})
+            return {"data": {}}
+        if simple:
+            res = self._to_json_simple(cart)
+        else:
+            res = super(CartService, self)._to_json(cart)[0]
+        response.set_session("cart_id", res["id"])
+        response.set_store_cache("cart", res)
+        return {"data": res}
 
     def _get(self, create_if_not_found=True):
         """
@@ -442,6 +482,9 @@ class CartService(Component):
             # criteria on the cart but in this case, each time the _get method
             # would have been called, a new SQL query would have been done
             cart = self.env["sale.order"].browse(self.cart_id).exists()
+            # Recompute cart if needed (in case of simple service call)
+            if cart:
+                cart.shopinvader_recompute()
         if (
             cart.shopinvader_backend_id == self.shopinvader_backend
             and cart.typology == "cart"
