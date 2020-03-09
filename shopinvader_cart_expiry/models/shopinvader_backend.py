@@ -36,21 +36,38 @@ class ShopinvaderBackend(models.Model):
             )
             backend.with_delay(description=description).manage_cart_expiry()
 
+    def _get_expiry_date(self):
+        """
+        Get the expiry date (based on the cart_expiry_delay)
+        :return: datetime (str)
+        """
+        expiry_date = fields.Datetime.from_string(fields.Datetime.now())
+        expiry_date -= timedelta(days=self.cart_expiry_delay)
+        expiry_date = fields.Datetime.to_string(expiry_date)
+        return expiry_date
+
+    @api.multi
+    def _get_expiry_cart_domain(self):
+        """
+        Get the domain to search every expired cart
+        :return: list/domain
+        """
+        expiry_date = self._get_expiry_date()
+        domain = [
+            ("shopinvader_backend_id", "in", self.ids),
+            ("typology", "=", "cart"),
+            ("write_date", "<=", expiry_date),
+        ]
+        return domain
+
     @job(default_channel="root.shopinvader")
     @api.multi
     def manage_cart_expiry(self):
         self.ensure_one()
-        expiry_date = fields.Datetime.from_string(fields.Datetime.now())
-        expiry_date -= timedelta(days=self.cart_expiry_delay)
-        expiry_date = fields.Datetime.to_string(expiry_date)
-        domain = [
-            ("shopinvader_backend_id", "=", self.id),
-            ("typology", "=", "cart"),
-            ("write_date", "<=", expiry_date),
-        ]
+        domain = self._get_expiry_cart_domain()
         cart_expired = self.env["sale.order"].search(domain)
         if cart_expired:
             if self.cart_expiry_policy == "cancel":
                 cart_expired.action_cancel()
-            else:
+            elif self.cart_expiry_policy == "delete":
                 cart_expired.unlink()
