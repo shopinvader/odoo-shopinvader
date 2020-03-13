@@ -122,7 +122,7 @@ class BaseShopinvaderService(AbstractComponent):
             {
                 "name": "API-KEY",
                 "in": "header",
-                "description": "Ath API key",
+                "description": "Auth API key",
                 "required": True,
                 "schema": {"type": "string"},
                 "style": "simple",
