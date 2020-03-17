@@ -165,7 +165,7 @@ class CartService(Component):
     def _validator_return_copy(self):
         return Validator({}, allow_unknown=True)
 
-    def _schema_for_full_cart(self):
+    def _schema_for_to_json(self):
         return {
             # TODO: optional return all empty dicts
             "data": {"type": "dict", "schema": self._schema_for_cart()},
@@ -181,7 +181,7 @@ class CartService(Component):
         return {}
 
     def _validator_return_search(self):
-        return self._schema_for_full_cart()
+        return self._schema_for_to_json()
 
     def _schema_for_cart(self):
         return self._schema_for_one_sale()
@@ -196,7 +196,7 @@ class CartService(Component):
         return {}
 
     def _validator_return_clear(self):
-        return self._schema_for_full_cart()
+        return self._schema_for_to_json()
 
     def _subvalidator_shipping(self):
         return {
@@ -243,7 +243,7 @@ class CartService(Component):
         }
 
     def _validator_return_update(self):
-        return self._schema_for_full_cart()
+        return self._schema_for_to_json()
 
     def _validator_add_item(self):
         return {
@@ -256,7 +256,7 @@ class CartService(Component):
         }
 
     def _validator_return_add_item(self):
-        return self._schema_for_full_cart()
+        return self._schema_for_to_json()
 
     def _validator_update_item(self):
         return {
@@ -265,7 +265,7 @@ class CartService(Component):
         }
 
     def _validator_return_update_item(self):
-        return self._schema_for_full_cart()
+        return self._schema_for_to_json()
 
     def _validator_delete_item(self):
         return {
@@ -273,7 +273,7 @@ class CartService(Component):
         }
 
     def _validator_return_delete_item(self):
-        return self._schema_for_full_cart()
+        return self._schema_for_to_json()
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.

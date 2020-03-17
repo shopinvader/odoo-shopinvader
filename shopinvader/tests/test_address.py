@@ -178,3 +178,6 @@ class AddressTestCase(object):
 
 class AddressCase(CommonAddressCase, AddressTestCase):
     """ Test address"""
+
+    def test_to_openapi(self):
+        self._test_to_openapi(service=self.address_service)
