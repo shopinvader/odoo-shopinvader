@@ -320,6 +320,9 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
             ],
         )
 
+    def test_to_openapi(self):
+        self._test_to_openapi()
+
     def test_set_shipping_address_no_default_invocing(self):
         cart = self.cart
         self.backend.cart_checkout_address_policy = "no_defaults"

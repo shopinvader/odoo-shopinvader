@@ -106,6 +106,11 @@ class CommonMixin(RegistryMixin, ComponentMixin):
         values.update(kw)
         return env["shopinvader.partner"].create(values)
 
+    def _test_to_openapi(self, service=None):
+        service = service or self.service
+        # will raise if it fails to generate the openapi specs
+        service.to_openapi()
+
 
 class CommonCase(SavepointCase, CommonMixin):
 

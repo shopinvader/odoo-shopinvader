@@ -225,3 +225,52 @@ class AddressService(Component):
                 "shopinvader_enabled"
             ] = self.partner_validator.enabled_by_params(params, "address")
         return params
+
+    def _schema_for_one_address(self):
+        return {
+            "id": {"required": True, "type": "integer"},
+            "name": {"type": "string", "required": True},
+            "display_name": {"type": "string", "required": True},
+            "ref": {"type": "string"},
+            "street": {"type": "string"},
+            "street2": {"type": "string"},
+            "zip": {"type": "string"},
+            "city": {"type": "string"},
+            "phone": {"type": "string"},
+            "function": {"type": "string"},
+            "opt_in": {"type": "boolean"},
+            "opt_out": {"type": "boolean"},
+            "is_company": {"type": "boolean"},
+            "vat": {"type": "string"},
+            "lang": {"type": "string", "required": False},
+            "state": {
+                "type": "dict",
+                "schema": {
+                    "id": {"type": "integer"},
+                    "name": {"type": "string"},
+                },
+            },
+            "country": {
+                "type": "dict",
+                "schema": {
+                    "id": {"type": "integer"},
+                    "name": {"type": "string"},
+                },
+            },
+            "title": {
+                "required": False,
+                "type": "dict",
+                "schema": {
+                    "id": {"type": "integer"},
+                    "name": {"type": "string"},
+                },
+            },
+            "industry_id": {
+                "required": False,
+                "type": "dict",
+                "schema": {
+                    "id": {"type": "integer"},
+                    "name": {"type": "string"},
+                },
+            },
+        }

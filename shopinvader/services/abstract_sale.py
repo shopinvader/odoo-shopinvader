@@ -13,16 +13,6 @@ class AbstractSaleService(AbstractComponent):
     _inherit = "shopinvader.abstract.mail.service"
     _name = "shopinvader.abstract.sale.service"
 
-    def _parser_product(self):
-        return [
-            "full_name:name",
-            "short_name",
-            ("shopinvader_product_id:model", ("name",)),
-            "object_id:id",
-            "url_key",
-            "default_code:sku",
-        ]
-
     def _convert_one_sale(self, sale):
         sale.ensure_one()
         state_label = self._get_selection_label(sale, "shopinvader_state")
@@ -40,14 +30,79 @@ class AbstractSaleService(AbstractComponent):
             "invoicing": self._convert_invoicing(sale),
         }
 
+    def _schema_for_one_sale(self):
+        return {
+            "id": {"required": True, "type": "integer"},
+            # TODO: validate w/ shopinvader_state options
+            "state": {"type": "string", "required": True},
+            "name": {"type": "string", "required": True},
+            # # TODO: shall we use `date` type?
+            "date": {"type": "string", "required": True},
+            "step": {"type": "dict", "schema": self._schema_for_step()},
+            "lines": {"type": "dict", "schema": self._schema_for_lines()},
+            "amount": {"type": "dict", "schema": self._schema_for_amount()},
+            "shipping": {
+                "type": "dict",
+                "schema": self._schema_for_shipping(),
+            },
+            "invoicing": {
+                "type": "dict",
+                "schema": self._schema_for_invoicing(),
+            },
+        }
+
     def _convert_step(self, sale):
         return {
             "current": sale.current_step_id.code,
             "done": sale.done_step_ids.mapped("code"),
         }
 
-    def _is_item(self, line):
-        return True
+    def _schema_for_step(self):
+        # TODO: return options
+        return {
+            "current": {"type": "string", "required": True},
+            "done": {
+                "type": "list",
+                "schema": {"type": "string"},
+                "nullable": True,
+            },
+        }
+
+    def _convert_lines(self, sale):
+        items = []
+        for line in sale.order_line:
+            if self._is_item(line):
+                items.append(self._convert_one_line(line))
+        return {
+            "items": items,
+            "count": sum([item["qty"] for item in items]),
+            "amount": {
+                "tax": sum([item["amount"]["tax"] for item in items]),
+                "untaxed": sum([item["amount"]["untaxed"] for item in items]),
+                "total": sum([item["amount"]["total"] for item in items]),
+            },
+        }
+
+    def _schema_for_lines(self):
+        return {
+            "items": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": self._schema_for_one_line(),
+                },
+                "nullable": True,
+            },
+            "count": {"type": "integer"},
+            "amount": {
+                "type": "dict",
+                "schema": {
+                    "tax": {"type": "float"},
+                    "untaxed": {"type": "float"},
+                    "total": {"type": "float"},
+                },
+            },
+        }
 
     def _convert_one_line(self, line):
         variant = line.product_id._get_invader_variant(
@@ -84,21 +139,58 @@ class AbstractSaleService(AbstractComponent):
             "discount": {"rate": line.discount, "value": line.discount_total},
         }
 
-    def _convert_lines(self, sale):
-        items = []
-        for line in sale.order_line:
-            if self._is_item(line):
-                items.append(self._convert_one_line(line))
+    def _parser_product(self):
+        return [
+            "full_name:name",
+            "short_name",
+            ("shopinvader_product_id:model", ("name",)),
+            "object_id:id",
+            "url_key",
+            "default_code:sku",
+        ]
+
+    def _schema_for_one_line(self):
         return {
-            "items": items,
-            # TODO: does this make any sense? Sum up qty of different products?
-            "count": sum([item["qty"] for item in items]),
+            "id": {"required": True, "type": "integer"},
+            "product": {
+                "type": "dict",
+                "schema": self._schema_for_line_product(),
+            },
             "amount": {
-                "tax": sum([item["amount"]["tax"] for item in items]),
-                "untaxed": sum([item["amount"]["untaxed"] for item in items]),
-                "total": sum([item["amount"]["total"] for item in items]),
+                "type": "dict",
+                "schema": self._schema_for_line_amount(),
+            },
+            "qty": {"type": "float"},
+            "discount": {
+                "type": "dict",
+                "schema": {
+                    "rate": {"type": "float"},
+                    "value": {"type": "float"},
+                },
             },
         }
+
+    def _schema_for_line_product(self):
+        return {
+            "id": {"required": True, "type": "integer"},
+            "name": {"required": True, "type": "string"},
+            "short_name": {"type": "string"},
+            "model": {"type": "string"},
+            "url_key": {"type": "string"},
+            "sku": {"type": "string"},
+        }
+
+    def _schema_for_line_amount(self):
+        return {
+            "price": {"type": "float"},
+            "tax": {"type": "float"},
+            "untaxed": {"type": "float"},
+            "total": {"type": "float"},
+            "total_without_discount": {"type": "float"},
+        }
+
+    def _is_item(self, line):
+        return True
 
     def _convert_shipping(self, sale):
         if (
@@ -114,6 +206,16 @@ class AbstractSaleService(AbstractComponent):
                 ]
             }
 
+    def _schema_for_shipping(self):
+        return {
+            "address": {
+                "type": "dict",
+                "schema": self.component(
+                    usage="addresses"
+                )._schema_for_one_address(),
+            }
+        }
+
     def _convert_invoicing(self, sale):
         if (
             sale.partner_invoice_id
@@ -126,6 +228,16 @@ class AbstractSaleService(AbstractComponent):
                 "address": address_service._to_json(sale.partner_invoice_id)[0]
             }
 
+    def _schema_for_invoicing(self):
+        return {
+            "address": {
+                "type": "dict",
+                "schema": self.component(
+                    usage="addresses"
+                )._schema_for_one_address(),
+            }
+        }
+
     def _convert_amount(self, sale):
         return {
             "tax": sale.amount_tax,
@@ -133,6 +245,15 @@ class AbstractSaleService(AbstractComponent):
             "total": sale.amount_total,
             "discount_total": sale.discount_total,
             "total_without_discount": sale.price_total_no_discount,
+        }
+
+    def _schema_for_amount(self):
+        return {
+            "tax": {"type": "float"},
+            "untaxed": {"type": "float"},
+            "total": {"type": "float"},
+            "discount_total": {"type": "float"},
+            "total_without_discount": {"type": "float"},
         }
 
     def _to_json(self, sales):
