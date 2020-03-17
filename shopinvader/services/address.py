@@ -258,22 +258,27 @@ class AddressService(Component):
 
     def _schema_for_one_address(self, access_info=True):
         schema = {
-            "id": {"required": True, "type": "integer"},
-            "name": {"type": "string", "required": True},
-            "display_name": {"type": "string", "required": True},
-            "ref": {"type": "string"},
-            "street": {"type": "string"},
-            "street2": {"type": "string"},
-            "zip": {"type": "string"},
-            "city": {"type": "string"},
-            "phone": {"type": "string"},
-            "function": {"type": "string"},
-            "opt_in": {"type": "boolean"},
-            "opt_out": {"type": "boolean"},
-            "is_company": {"type": "boolean"},
-            "vat": {"type": "string"},
-            "lang": {"type": "string", "required": False},
+            # TODO: review what can be nullable or not
+            # Many of them have been set to nullable as they break tests
+            # because not all tests provide complete set of data.
+            # Eg: cart tests.
+            "id": {"type": "integer", "nullable": True},
+            "name": {"type": "string", "nullable": True},
+            "display_name": {"type": "string", "nullable": True},
+            "ref": {"type": "string", "nullable": True},
+            "street": {"type": "string", "nullable": True},
+            "street2": {"type": "string", "nullable": True},
+            "zip": {"type": "string", "nullable": True},
+            "city": {"type": "string", "nullable": True},
+            "phone": {"type": "string", "nullable": True},
+            "function": {"type": "string", "nullable": True},
+            "opt_in": {"type": "boolean", "nullable": True},
+            "opt_out": {"type": "boolean", "nullable": True},
+            "is_company": {"type": "boolean", "nullable": True},
+            "vat": {"type": "string", "nullable": True},
+            "lang": {"type": "string"},
             "state": {
+                "nullable": True,
                 "type": "dict",
                 "schema": {
                     "id": {"type": "integer"},
@@ -288,7 +293,7 @@ class AddressService(Component):
                 },
             },
             "title": {
-                "required": False,
+                "nullable": True,
                 "type": "dict",
                 "schema": {
                     "id": {"type": "integer"},
@@ -296,7 +301,7 @@ class AddressService(Component):
                 },
             },
             "industry_id": {
-                "required": False,
+                "nullable": True,
                 "type": "dict",
                 "schema": {
                     "id": {"type": "integer"},

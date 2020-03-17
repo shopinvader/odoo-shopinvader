@@ -32,12 +32,11 @@ class AbstractSaleService(AbstractComponent):
 
     def _schema_for_one_sale(self):
         return {
-            "id": {"required": True, "type": "integer"},
+            "id": {"type": "integer"},
             # TODO: validate w/ shopinvader_state options
-            "state": {"type": "string", "required": True},
-            "name": {"type": "string", "required": True},
-            # # TODO: shall we use `date` type?
-            "date": {"type": "string", "required": True},
+            "state": {"type": "string"},
+            "name": {"type": "string"},
+            "date": {"type": "datetime"},
             "step": {"type": "dict", "schema": self._schema_for_step()},
             "lines": {"type": "dict", "schema": self._schema_for_lines()},
             "amount": {"type": "dict", "schema": self._schema_for_amount()},
@@ -53,14 +52,14 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_step(self, sale):
         return {
-            "current": sale.current_step_id.code,
+            "current": sale.current_step_id.code or "",
             "done": sale.done_step_ids.mapped("code"),
         }
 
     def _schema_for_step(self):
         # TODO: return options
         return {
-            "current": {"type": "string", "required": True},
+            "current": {"type": "string", "nullable": True, "empty": True},
             "done": {
                 "type": "list",
                 "schema": {"type": "string"},
@@ -93,7 +92,7 @@ class AbstractSaleService(AbstractComponent):
                 },
                 "nullable": True,
             },
-            "count": {"type": "integer"},
+            "count": {"type": "float"},
             "amount": {
                 "type": "dict",
                 "schema": {
@@ -175,7 +174,7 @@ class AbstractSaleService(AbstractComponent):
             "id": {"required": True, "type": "integer"},
             "name": {"required": True, "type": "string"},
             "short_name": {"type": "string"},
-            "model": {"type": "string"},
+            "model": {"type": "dict", "nullable": True},
             "url_key": {"type": "string"},
             "sku": {"type": "string"},
         }
@@ -209,6 +208,7 @@ class AbstractSaleService(AbstractComponent):
     def _schema_for_shipping(self):
         return {
             "address": {
+                "empty": True,
                 "type": "dict",
                 "schema": self.component(
                     usage="addresses"
@@ -231,6 +231,7 @@ class AbstractSaleService(AbstractComponent):
     def _schema_for_invoicing(self):
         return {
             "address": {
+                "empty": True,
                 "type": "dict",
                 "schema": self.component(
                     usage="addresses"

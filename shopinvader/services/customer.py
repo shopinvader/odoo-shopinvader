@@ -135,10 +135,14 @@ class CustomerService(Component):
             "store_cache": self._schema_for_store_cache(
                 {
                     "cart": {
+                        "empty": True,
+                        "nullable": True,
                         "type": "dict",
                         "schema": cart_service._schema_for_one_sale(),
                     },
                     "customer": {
+                        "empty": True,
+                        "nullable": True,
                         "type": "dict",
                         "schema": self._schema_for_to_customer_info(),
                     },
