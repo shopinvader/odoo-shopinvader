@@ -36,6 +36,9 @@ class TestCustomerCommon(CommonCase):
 
 
 class TestCustomer(TestCustomerCommon):
+    def test_to_openapi(self):
+        self._test_to_openapi()
+
     def test_create_customer(self):
         self.data["external_id"] = "D5CdkqOEL"
         res = self.service.dispatch("create", params=self.data)["data"]

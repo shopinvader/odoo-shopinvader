@@ -187,10 +187,7 @@ class CartService(Component):
         return self._schema_for_one_sale()
 
     def _schema_for_session(self):
-        return {
-            # TODO
-            "cart_id": {"coerce": to_int, "type": "integer"}
-        }
+        return {"cart_id": {"coerce": to_int, "type": "integer"}}
 
     def _validator_clear(self):
         return {}
