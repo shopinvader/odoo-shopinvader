@@ -44,7 +44,6 @@ install:
   - pip install pylint==1.8.4
   - printf '[options]\n\nrunning_env = dev\nkeychain_key_dev = HRdthrkXp28SCHX0kmwOgIob-82N-w8zWoE_UsctE7E=' > ${HOME}/.openerp_serverrc
   - export PATH=.travis:${PATH}
-  - travis_configure
 
 script:
   - mv .isort.cfg .isoft.cfg.disabled # to avoid trouble with pylint
