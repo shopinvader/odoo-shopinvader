@@ -28,7 +28,7 @@ jobs:
       script: pre-commit run --all
 env:
   global:
-  - VERSION="10.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url"
+  - VERSION="10.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url" MQT_DEP="PIP"
 
   matrix:
   - ODOO_REPO="odoo/odoo"

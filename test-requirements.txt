@@ -1,0 +1,2 @@
+--extra-index-url=https://wheelhouse.shopinvader.com/simple
+git+https://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
