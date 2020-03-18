@@ -24,7 +24,7 @@ jobs:
       script: pre-commit run --all
 env:
   global:
-  - VERSION="12.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url"
+  - VERSION="12.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url" MQT_DEP="PIP"
 
   matrix:
   - TESTS="0" LINT_CHECK="1"
