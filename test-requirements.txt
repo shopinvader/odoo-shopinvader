@@ -2,3 +2,7 @@
 # TODO locomotivecms dep should be in the setup.py of the addon that needs it
 git+https://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
 cachetools<3  # TODO because of component
+# test requirements
+requests_mock
+vcrpy
+vcrpy-unittest
