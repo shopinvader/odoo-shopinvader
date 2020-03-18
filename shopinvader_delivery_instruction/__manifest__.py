@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Shopinvader delivery instruction",
-    "description": """Shopinvader addons to let user define delivery
+    "summary": """Shopinvader addons to let user define delivery
     instructions""",
     "author": "ACSONE SA/NV",
     "website": "http://shopinvader.com/",
