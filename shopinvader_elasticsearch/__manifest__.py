@@ -3,7 +3,7 @@
 
 {
     "name": "Shopinvader Elasticsearch",
-    "description": """
+    "summary": """
         Shopinvader Elasticsearch Connector""",
     "version": "12.0.1.0.2",
     "license": "AGPL-3",
