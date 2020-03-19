@@ -8,7 +8,7 @@
     "author": "ACSONE SA/NV",
     "website": "http://shopinvader.com/",
     "category": "e-commerce",
-    "version": "10.0.1.0.1",
+    "version": "10.0.1.0.2",
     "license": "AGPL-3",
     "depends": [
         "shopinvader",
