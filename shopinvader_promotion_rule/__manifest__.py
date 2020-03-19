@@ -5,7 +5,7 @@
 {
     "name": "Shopvinvader Promotion Rule",
     "summary": "Module to manage Promotion Rule with shopinvader",
-    "version": "10.0.1.0.2",
+    "version": "10.0.1.1.0",
     "category": "Sale",
     "website": "https://akretion.com",
     "author": "Akretion, " "ACSONE SA / NV",
