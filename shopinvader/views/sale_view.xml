@@ -6,6 +6,14 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="priority" eval="20"/>
         <field name="arch" type="xml">
+            <button name="action_done"
+                    position="after">
+                <field name="shopinvader_to_be_recomputed" invisible="1"/>
+                <button name="shopinvader_recompute"
+                        attrs="{'invisible': [('shopinvader_to_be_recomputed', '=', False)]}"
+                        string="Recompute"
+                        type="object"/>
+            </button>
             <field name="partner_id" position="after">
                 <field name="typology" invisible="True"/>
                 <field name="current_step_id" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>

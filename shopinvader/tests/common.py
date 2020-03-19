@@ -72,6 +72,7 @@ class CommonCase(SavepointCase, ComponentMixin):
         ComponentMixin.setUp(self)
 
         shopinvader_response.set_testmode(True)
+        shopinvader_response.get().reset()
 
         @self.addCleanup
         def cleanupShopinvaderResponseTestMode():

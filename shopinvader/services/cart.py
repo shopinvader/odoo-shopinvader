@@ -13,6 +13,8 @@ from odoo.exceptions import UserError
 from odoo.tools.translate import _
 from werkzeug.exceptions import NotFound
 
+from .. import shopinvader_response
+
 _logger = logging.getLogger(__name__)
 
 
@@ -20,6 +22,10 @@ class CartService(Component):
     _inherit = "shopinvader.abstract.sale.service"
     _name = "shopinvader.cart.service"
     _usage = "cart"
+
+    @property
+    def cart_recompute_identify_key(self):
+        return "sale.order._shopinvader_delayed_recompute.%s" % self.cart_id
 
     @property
     def cart_id(self):
@@ -44,11 +50,22 @@ class CartService(Component):
             return self._to_json(cart)
 
     def add_item(self, **params):
+        """
+        Add item to cart.
+        Don't access to cart fields in this method. Do it in _add_item.
+        The cart has to be recomputed
+        :param params:
+        :return:
+        """
+        simple_service = self.shopinvader_backend.simple_cart_service
         cart = self._get()
         if not cart:
             cart = self._create_empty_cart()
-        self._add_item(cart, params)
-        return self._to_json(cart)
+        # Modify the cart with no recomputation
+        with self.env.norecompute():
+            item = self._add_item(cart, params)
+        self._launch_cart_recompute(cart, item)
+        return self._to_json(cart, simple=simple_service)
 
     def update_item(self, **params):
         cart = self._get()
@@ -140,16 +157,34 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
+    def _launch_cart_recompute(self, cart, item):
+        """
+        Launches cart recompute depending the backend configuration
+        :param cart:
+        :param item:
+        :return:
+        """
+        simple_service = self.shopinvader_backend.simple_cart_service
+        if simple_service:
+            # Recompute cart asynchronously to avoid latencies on frontend
+            description = "Recompute cart %s" % (item.order_id.id)
+            item.order_id.with_delay(
+                description=description,
+                priority=1,
+                identity_key=self.cart_recompute_identify_key,
+            )._shopinvader_delayed_recompute()
+        else:
+            cart.recompute()
+            item.order_id.shopinvader_to_be_recomputed = False
+
     def _upgrade_cart_item_quantity(self, cart, item, product_qty):
-        with self.env.norecompute():
-            vals = {"product_uom_qty": product_qty}
-            new_values = item.play_onchanges(vals, vals.keys())
-            # clear cache after play onchange
-            real_line_ids = [line.id for line in cart.order_line if line.id]
-            cart._cache["order_line"] = tuple(real_line_ids)
-            vals.update(new_values)
-            item.write(vals)
-        cart.recompute()
+        vals = {"product_uom_qty": product_qty}
+        new_values = item.play_onchanges(vals, vals.keys())
+        # clear cache after play onchange
+        real_line_ids = [line.id for line in cart.order_line if line.id]
+        cart._cache["order_line"] = tuple(real_line_ids)
+        vals.update(new_values)
+        item.write(vals)
 
     def _do_clear_cart_cancel(self, cart):
         """
@@ -201,12 +236,12 @@ class CartService(Component):
             qty = existing_item.product_uom_qty + params["item_qty"]
             self._upgrade_cart_item_quantity(cart, existing_item, qty)
         else:
-            with self.env.norecompute():
-                vals = self._prepare_cart_item(params, cart)
-                new_values = self._sale_order_line_onchange(vals)
-                vals.update(new_values)
-                self._create_sale_order_line(vals)
-            cart.recompute()
+            vals = self._prepare_cart_item(params, cart)
+            new_values = self._sale_order_line_onchange(vals)
+            vals.update(new_values)
+            existing_item = self._create_sale_order_line(vals)
+        existing_item.order_id.shopinvader_to_be_recomputed = True
+        return existing_item
 
     @contextmanager
     def _ensure_ctx_lang(self, values):
@@ -351,20 +386,39 @@ class CartService(Component):
         else:
             return step
 
-    def _to_json(self, cart):
-        if not cart:
-            return {
-                "data": {},
-                "store_cache": {"cart": {}},
-                "set_session": {"cart_id": 0},
-            }
-        res = super(CartService, self)._to_json(cart)[0]
+    def _to_json_simple(self, cart):
+        """
+        Returns simple and fast items
+        :return: dict
+        """
+        cart_simple = cart.with_context(prefetch_fields=False)
+        qty = sum(
+            line.product_uom_qty
+            for line in cart_simple.order_line
+            if self._is_item(line)
+        )
+        return {"id": cart.id, "lines": {"count": qty}}
 
-        return {
-            "data": res,
-            "set_session": {"cart_id": res["id"]},
-            "store_cache": {"cart": res},
-        }
+    def _to_json(self, cart, simple=False):
+        """
+        Return cart json depending on which type of service (simple or not)
+        Modify Session response accordingly
+        :param cart:
+        :param simple:
+        :return:
+        """
+        response = shopinvader_response.get()
+        if not cart:
+            response.set_session("cart_id", 0)
+            response.set_store_cache("cart", {})
+            return {"data": {}}
+        if simple:
+            res = self._to_json_simple(cart)
+        else:
+            res = super(CartService, self)._to_json(cart)[0]
+        response.set_session("cart_id", res["id"])
+        response.set_store_cache("cart", res)
+        return {"data": res}
 
     def _get(self, create_if_not_found=True):
         """
@@ -379,6 +433,9 @@ class CartService(Component):
             # criteria on the cart but in this case, each time the _get method
             # would have been called, a new SQL query would have been done
             cart = self.env["sale.order"].browse(self.cart_id).exists()
+            # Recompute cart if needed (in case of simple service call)
+            if cart:
+                cart.shopinvader_recompute()
         if (
             cart.shopinvader_backend_id == self.shopinvader_backend
             and cart.typology == "cart"

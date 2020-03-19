@@ -117,6 +117,9 @@
                                             string="Bind all category"
                                             type="object"/>
                                 </group>
+                                <group name="service" string="Service" col="10" colspan="4">
+                                    <field name="simple_cart_service"/>
+                                </group>
                             </group>
                         </page>
                     </notebook>
