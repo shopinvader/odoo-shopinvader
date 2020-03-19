@@ -23,8 +23,8 @@ addon | version | summary
 [shopinvader](shopinvader/) | 13.0.1.1.2 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
-[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.0 | Shopinvader cart expiry
-[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.1.0.1 | Shopinvader Customer Multi User
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
+[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.1.0.1 | Enable registration of multiple users per each company customer.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.1.0.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
@@ -49,7 +49,7 @@ addon | version | summary
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 (unported) | Guest mode for Shopinvader
-[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 (unported) | Shopinvader Invoice
+[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 (unported) | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 12.0.2.0.0 (unported) | Shopinvader Lead Management
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
@@ -57,7 +57,7 @@ addon | version | summary
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_multi_category](shopinvader_multi_category/) | 10.0.1.0.0 (unported) | Shopinvader Many Categories
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
-[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 (unported) | Shopinvader pending cart reminder
+[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 (unported) | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_media](shopinvader_product_media/) | 10.0.1.0.0 (unported) | Shopinvader Product Media
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 (unported) | This module is used to choose a stock field during theexport (by backend)
@@ -66,6 +66,6 @@ addon | version | summary
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 (unported) | Shopinvader Quotation
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 10.0.1.0.1 (unported) | ShopInvader - Sale profile
-[shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader sale report
+[shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
 
 [//]: # (end addons)
