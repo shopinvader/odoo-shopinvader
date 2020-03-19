@@ -23,7 +23,7 @@
 ###############################################################################
 {
     "name": "Import Shopinvader product image",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "summary": "Import product images",
     "author": "Sylvain Calador",
     "company": "Akretion",
