@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Shopinvader cart expiry",
-    "description": """Shopinvader module to manage an expiry delay on cart""",
+    "summary": """Shopinvader module to manage an expiry delay on cart""",
     "author": "ACSONE SA/NV",
     "website": "http://www.shopinvader.com",
     "category": "e-commerce",

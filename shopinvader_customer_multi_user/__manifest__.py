@@ -3,7 +3,7 @@
 
 {
     "name": "Shopinvader Customer Multi User",
-    "description": """
+    "summary": """
         Enable registration of multiple users per each company customer.""",
     "version": "13.0.1.0.1",
     "license": "AGPL-3",
