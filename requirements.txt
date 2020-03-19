@@ -5,7 +5,7 @@ unidecode
 pysimplesoap
 mailjet_rest
 requests_mock
--e git://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
+-e git+https://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
 pyquerystring
 parse-accept-language
 openupgradelib

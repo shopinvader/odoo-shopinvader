@@ -22,6 +22,20 @@ repos:
     args: [--ignore=E501 F401]  # ignore imported unused in __init__.py
     files: __init__.py
     language_version: python2.7
+  - id: fix-encoding-pragma
+    exclude: /__init__\.py$
+- repo: https://github.com/pre-commit/mirrors-pylint
+  rev: v2.3.1
+  hooks:
+    - id: pylint
+      name: pylint with optional checks
+      args: ["--rcfile=.pylintrc", "--exit-zero"]
+      verbose: true
+      additional_dependencies: ["pylint-odoo==3.1.0"]
+    - id: pylint
+      name: pylint with mandatory checks
+      args: ["--rcfile=.pylintrc-mandatory"]
+      additional_dependencies: ["pylint-odoo==3.1.0"]
 - repo: https://github.com/asottile/pyupgrade
   rev: v1.6.1
   hooks:
