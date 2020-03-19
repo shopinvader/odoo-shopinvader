@@ -21,6 +21,7 @@
         To be sure that only our new item is assigned to the price list
         we reassign the item_ids....
     -->
+    <!-- pylint: disable=duplicate-xml-record-id -->
     <record id="pricelist_1" model="product.pricelist">
         <field name="item_ids" eval="[(6, 0, [ref('shopinvader.item_1')])]"/>
     </record>
