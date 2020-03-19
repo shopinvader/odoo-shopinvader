@@ -1,4 +1,11 @@
-exclude: "^(setup/)|(cassettes/)|.pot$|.po$|README.rst"
+exclude: >
+  (?x)(
+    ^setup/|
+    /cassettes/|
+    \.pot$|
+    \.po$|
+    /README.rst$
+  )
 repos:
 - repo: https://github.com/ambv/black
   rev: 18.9b0
