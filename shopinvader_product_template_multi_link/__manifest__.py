@@ -8,7 +8,7 @@
 {
     "name": "Shopinvader Product Link",
     "summary": "Shopinvader Product Link",
-    "version": "10.0.1.0.0",
+    "version": "10.0.1.0.1",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion,GRAP",
