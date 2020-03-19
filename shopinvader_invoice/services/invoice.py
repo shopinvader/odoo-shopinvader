@@ -8,6 +8,16 @@ from odoo.addons.component.core import Component
 class InvoiceService(Component):
     _inherit = "shopinvader.invoice.service"
 
+    def get(self, _id):
+        """
+        Get info about given invoice id.
+        :param _id: int
+        :return: dict/json
+        """
+        invoice = self._get(_id)
+        result = {"data": self._to_json(invoice)[0]}
+        return result
+
     def search(self, **params):
         """
         Get every invoices related to logged user
@@ -15,6 +25,9 @@ class InvoiceService(Component):
         :return: dict
         """
         return self._paginate_search(**params)
+
+    def _validator_get(self):
+        return {}
 
     def _validator_search(self):
         """
@@ -29,6 +42,25 @@ class InvoiceService(Component):
             },
             "page": {"coerce": to_int, "nullable": True, "type": "integer"},
         }
+        return schema
+
+    def _validator_return_get(self):
+        """
+        Output validator for the search
+        :return: dict
+        """
+        invoice_schema = {
+            "invoice_id": {"type": "integer"},
+            "number": {"type": "string"},
+            "date_invoice": {"type": "string"},
+            "amount_total": {"type": "float"},
+            "amount_tax": {"type": "float"},
+            "amount_untaxed": {"type": "float"},
+            "amount_due": {"type": "float"},
+            "type": {"type": "string"},
+            "state": {"type": "string"},
+        }
+        schema = {"data": {"type": "dict", "schema": invoice_schema}}
         return schema
 
     def _validator_return_search(self):
