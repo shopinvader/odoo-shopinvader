@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # Copyright 2017-Today GRAP (http://www.grap.coop).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
