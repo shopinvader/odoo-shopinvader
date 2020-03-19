@@ -63,6 +63,8 @@ class TestDeliveryService(CommonCase):
                 self.assertEquals(
                     sale_dict.get("date_order"), picking.sale_id.date_order
                 )
+                self.assertEquals(sale_dict.get("sale_id"), picking.sale_id.id)
+                self.assertEquals(sale_dict.get("name"), picking.sale_id.name)
             else:
                 self.assertFalse(sale_dict)
         return True
