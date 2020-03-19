@@ -24,6 +24,7 @@ addon | version | summary
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.0 | Shopinvader cart expiry
+[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.1.0.0 | Shopinvader Customer Multi User
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.1.0.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
