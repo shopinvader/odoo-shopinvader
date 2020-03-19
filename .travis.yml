@@ -38,7 +38,7 @@ env:
   # the test of module that do not depend of stock module
   # same issue for base_url that fail if the mail module is preinstalled
   - UNIT_TEST="1" ODOO_REPO="OCA/OCB" EXCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier,base_url"
-  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier"
+  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="shopinvader_product_stock,shopinvader_delivery_carrier"
   - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="base_url"
 
 install:
