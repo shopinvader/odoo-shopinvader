@@ -1,4 +1,8 @@
 sudo: false
+cache:
+  directories:
+  - $HOME/.cache/pip
+  - $HOME/.cache/pre-commit
 
 addons:
   postgresql: "9.6"
@@ -24,32 +28,26 @@ jobs:
       script: pre-commit run --all
 env:
   global:
-  - VERSION="12.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url"
+  - VERSION="12.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url" MQT_DEP="PIP"
 
   matrix:
-  - TESTS="0" LINT_CHECK="1"
   - ODOO_REPO="odoo/odoo"
   # for speed reason all dependency are preinstalled in OCA script,
   # stock module add specific required field that can make failed
   # the test of module that do not depend of stock module
   # same issue for base_url that fail if the mail module is preinstalled
   - UNIT_TEST="1" ODOO_REPO="OCA/OCB" EXCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier,base_url"
-  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier"
+  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="shopinvader_product_stock,shopinvader_delivery_carrier"
   - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="base_url"
 
 install:
-  - git clone -b configure_line_with_error https://github.com/akretion/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - pip install pylint==1.8.4
   - printf '[options]\n\nrunning_env = dev\nkeychain_key_dev = HRdthrkXp28SCHX0kmwOgIob-82N-w8zWoE_UsctE7E=' > ${HOME}/.openerp_serverrc
-  - git clone https://github.com/akretion/akretion-quality-tools ${HOME}/akretion-quality-tools
-  - export PATH=${HOME}/akretion-quality-tools/travis:${PATH}
   - export PATH=.travis:${PATH}
-  - travis_configure
 
 script:
-  - mv .isort.cfg .isoft.cfg.disabled # to avoid trouble with pylint
   - travis_run_tests
 
 after_success:

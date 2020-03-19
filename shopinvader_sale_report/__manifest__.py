@@ -1,9 +1,8 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Shopinvader sale report",
-    "description": """Shopinvader addons to extend sale report with backend""",
+    "summary": """Shopinvader addons to extend sale report with backend""",
     "author": "ACSONE SA/NV",
     "website": "http://acsone.eu",
     "category": "e-commerce",
