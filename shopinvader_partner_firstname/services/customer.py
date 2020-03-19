@@ -27,8 +27,10 @@ class CustomerService(Component):
         )
         return schema
 
-    def _prepare_params(self, params):
-        params = super(CustomerService, self)._prepare_params(params)
+    def _prepare_params(self, params, mode="create"):
+        params = super(CustomerService, self)._prepare_params(
+            params, mode=mode
+        )
         # make sure name is not passed to create, even empty,
         # otherwise partner creation will be broken
         if params.get("firstname") and params.get("lastname"):
