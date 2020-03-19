@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="res_partner_view_form" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="shopinvader.res_partner_view_form"/>
+    <field name="arch" type="xml">
+      <group name="extras" position="inside">
+        <field name="invader_user_token"/>
+        <button name="action_regenerate_invader_user_token" type="object"
+                string="Re-generate token" attrs="{'invisible': [('invader_user_token','=',False)]}"/>
+      </group>
+    </field>
+  </record>
+
+</odoo>

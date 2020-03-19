@@ -50,6 +50,10 @@ class PartnerServiceMixin(AbstractComponent):
             )
 
     def _notify_salesman_values(self, partner, mode):
+        # TODO: mode is not translated
+        msg = _("{addr_type} {mode} '{name}' needs review").format(
+            addr_type=partner.addr_type_display(), name=partner.name, mode=mode
+        )
         return {
             "res_model_id": self.env.ref("base.model_res_partner").id,
             "res_id": self._notify_salesman_recipient(partner, mode).id,
@@ -57,7 +61,7 @@ class PartnerServiceMixin(AbstractComponent):
             "activity_type_id": self.env.ref(
                 "shopinvader.mail_activity_validate_customer"
             ).id,
-            "summary": _("Partner needs review"),
+            "summary": msg,
         }
 
     def _get_salesman(self, partner):

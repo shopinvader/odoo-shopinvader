@@ -59,7 +59,6 @@ class AddressService(Component):
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
     # All params are trusted as they have been checked before
-
     def _to_address_info(self, _id):
         return self._to_json(self._get(_id))
 
