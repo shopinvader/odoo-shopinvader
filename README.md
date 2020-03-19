@@ -27,7 +27,7 @@ addon | version | summary
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.1 | Shopinvader cart expiry
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.2.0.0 | Carrier integration for Shopinvader
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 | Shopinvader Demo App
-[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.2 | Shopinvader Elasticsearch
+[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
 [shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 | Shopinvader Invoice
