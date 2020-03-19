@@ -5,3 +5,4 @@ git+https://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecm
 requests_mock
 vcrpy
 vcrpy-unittest
+openupgradelib @ git+https://github.com/OCA/openupgradelib.git
