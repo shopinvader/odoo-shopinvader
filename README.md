@@ -24,13 +24,13 @@ addon | version | summary
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
-[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.1 | Shopinvader cart expiry
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.1 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.2.0.0 | Carrier integration for Shopinvader
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 | Shopinvader Demo App
-[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch
+[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
-[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 | Shopinvader Invoice
+[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 12.0.2.0.0 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.3.2.1 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 12.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
@@ -38,7 +38,7 @@ addon | version | summary
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.1 | Shopinvader guest mode for locomotive
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 12.0.1.0.2 | Shopinvader Customer firstname/lastname
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 | Shopinvader Check VAT with invader environnement
-[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 | Shopinvader pending cart reminder
+[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 12.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 | Shopinvader Quotation
@@ -65,6 +65,6 @@ addon | version | summary
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 10.0.1.0.0 (unported) | Shopinvader Product Link
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 10.0.1.0.1 (unported) | ShopInvader - Sale profile
-[shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader sale report
+[shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
 
 [//]: # (end addons)
