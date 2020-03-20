@@ -5,7 +5,6 @@
 # pylint: disable=consider-merging-classes-inherited
 
 import logging
-from contextlib import contextmanager
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
@@ -239,58 +238,24 @@ class CartService(Component):
             vals = self._prepare_cart_item(params, cart)
             new_values = self._sale_order_line_onchange(vals)
             vals.update(new_values)
-            existing_item = self._create_sale_order_line(vals)
+            # As the frontend could be in several languages but we have only
+            # one anonymous parnter with his language set, we need to ensure
+            # that description on the line is in the right language
+            partner = cart.partner_id
+            ctx_lang = self.env.context.get("lang", partner.lang)
+            if partner.lang != ctx_lang:
+                product_id = vals["product_id"]
+                vals["name"] = self._get_sale_order_line_name(product_id)
+            existing_item = self.env["sale.order.line"].create(vals)
         existing_item.order_id.shopinvader_to_be_recomputed = True
         return existing_item
 
-    @contextmanager
-    def _ensure_ctx_lang(self, values):
-        """
-        Todo: concurrent update still possible. We should find an improvement
-        (env.do_in_draft do SQL write so it's not a solution!)
-        Simulate the anonymous partner lang using the lang from the context.
-        To avoid to fill sale.order.line name/description with the anonymous
-        lang if the lang of the context is different.
-        This function update (in cache only) the anonymous partner's lang,
-        then you do your job (create etc) and the previous lang is
-        automatically reset with the original one.
-        Usage:
-        with self._simulate_anonymous_lang(vals):
-            # Do your job here
-        :param values: dict
-        :return:
-        """
-        order_id = values.get("order_id")
-        partner = self.env["sale.order"].browse(order_id).partner_id
-        anonymous_partner = self.shopinvader_backend.anonymous_partner_id
-        original_lang = partner.lang
-        ctx_lang = self.env.context.get("lang", partner.lang)
-        if (
-            partner
-            and anonymous_partner
-            and partner == anonymous_partner
-            and partner.lang != ctx_lang
-        ):
-            try:
-                partner.lang = ctx_lang
-                yield
-            finally:
-                partner.lang = original_lang
-        else:
-            yield
-
-    def _create_sale_order_line(self, vals):
-        """
-        Create the sale order line.
-        We also have to force the lang from the context because the
-        sale.order.line create could add some missing values (and call
-        the onchange on the product).
-        :param vals: dict
-        :return: sale.order.line recordset
-        """
-        with self._ensure_ctx_lang(vals):
-            line = self.env["sale.order.line"].create(vals)
-        return line
+    def _get_sale_order_line_name(self, product_id):
+        product = self.env["product.product"].browse(product_id)
+        name = product.name_get()[0][1]
+        if product.description_sale:
+            name += "\n" + product.description_sale
+        return name
 
     def _sale_order_line_onchange(self, vals):
         """
@@ -305,8 +270,7 @@ class CartService(Component):
         # - fiscal_position_id
         # - pricelist_id
         so_line_obj = self.env["sale.order.line"].suspend_security()
-        with self._ensure_ctx_lang(vals):
-            new_values = so_line_obj.play_onchanges(vals, vals.keys())
+        new_values = so_line_obj.play_onchanges(vals, vals.keys())
         return new_values
 
     def _update_item(self, cart, params, item=False):
