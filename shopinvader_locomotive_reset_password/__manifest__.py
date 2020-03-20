@@ -16,7 +16,12 @@
     "installable": True,
     "external_dependencies": {"python": [], "bin": []},
     "depends": ["shopinvader_locomotive"],
-    "data": ["wizards/reset_password_view.xml", "views/partner_view.xml"],
-    "demo": [],
-    "qweb": [],
+    "data": [
+        "views/shopinvader_backend.xml",
+        "wizards/reset_password_view.xml",
+        "views/partner_view.xml",
+        "data/mail_template.xml",
+        "data/ir_cron.xml",
+    ],
+    "demo": ["demo/shopinvader_backend.xml"],
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo noupdate="1">
+
+    <record id="shopinvader.backend_1" model="shopinvader.backend">
+        <field name="password_validity">0</field>
+        <field name="password_reset_template_id" ref="shopinvader_locomotive_reset_password.email_template_shopinvader_reset_password"/>
+    </record>
+
+</odoo>
