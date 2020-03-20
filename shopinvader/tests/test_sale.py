@@ -39,6 +39,11 @@ class SaleCase(CommonCase, CommonTestDownload):
         res = self.service.get(self.sale.id)
         self.assertEqual(res["id"], self.sale.id)
         self.assertEqual(res["name"], self.sale.name)
+        self.assertEqual(res["state"], self.sale.shopinvader_state)
+        self.assertEqual(
+            res["state_label"],
+            self._get_selection_label(self.sale, "shopinvader_state"),
+        )
 
     def test_cart_are_not_readable_as_sale(self):
         with self.assertRaises(MissingError):
@@ -51,6 +56,9 @@ class SaleCase(CommonCase, CommonTestDownload):
         sale = res["data"][0]
         self.assertEqual(sale["id"], self.sale.id)
         self.assertEqual(sale["name"], self.sale.name)
+        self.assertEqual(sale["state"], self.sale.shopinvader_state)
+        state_label = self._get_selection_label(self.sale, "shopinvader_state")
+        self.assertEqual(sale["state_label"], state_label)
 
     def test_hack_read_other_customer_sale(self):
         sale = self.env.ref("sale.sale_order_1")

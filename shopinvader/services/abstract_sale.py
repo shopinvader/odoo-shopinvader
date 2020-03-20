@@ -22,9 +22,11 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_one_sale(self, sale):
         sale.ensure_one()
+        state_label = self._get_selection_label(sale, "shopinvader_state")
         return {
             "id": sale.id,
             "state": sale.shopinvader_state,
+            "state_label": state_label,
             "name": sale.name,
             "date": sale.date_order,
             "step": self._convert_step(sale),
