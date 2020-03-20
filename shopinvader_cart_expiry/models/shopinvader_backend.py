@@ -46,6 +46,7 @@ class ShopinvaderBackend(models.Model):
         domain = [
             ("shopinvader_backend_id", "=", self.id),
             ("typology", "=", "cart"),
+            ("state", "=", "draft"),
             ("write_date", "<=", expiry_date),
         ]
         cart_expired = self.env["sale.order"].search(domain)
