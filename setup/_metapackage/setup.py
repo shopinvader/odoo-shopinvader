@@ -39,6 +39,7 @@ setuptools.setup(
         'odoo10-addon-shopinvader_product_media',
         'odoo10-addon-shopinvader_product_new',
         'odoo10-addon-shopinvader_product_stock',
+        'odoo10-addon-shopinvader_product_stock_assortment',
         'odoo10-addon-shopinvader_product_stock_state',
         'odoo10-addon-shopinvader_product_template_multi_link',
         'odoo10-addon-shopinvader_product_variant_selector',
