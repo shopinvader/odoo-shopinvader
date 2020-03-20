@@ -19,12 +19,8 @@ class TestCartExpiry(CartCase):
         self.sale_obj = self.env["sale.order"]
         self.partner = self.env.ref("shopinvader.partner_1")
         self.sale = self.env.ref("shopinvader.sale_order_2")
-        self.cart = self.env.ref("shopinvader.sale_order_2")
-        self.shopinvader_session = {"cart_id": self.cart.id}
-        with self.work_on_services(
-            partner=None, shopinvader_session=self.shopinvader_session
-        ) as work:
-            self.service = work.component(usage="cart")
+        self.sale.write({"last_external_update_date": fields.Datetime.now()})
+        self.so_date = self.sale.last_external_update_date
 
     def test_cart_expiry_scheduler(self):
         """
@@ -58,7 +54,7 @@ class TestCartExpiry(CartCase):
             )
 
     def test_cart_expiry_cancel(self):
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.backend.write(
             {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
@@ -75,7 +71,7 @@ class TestCartExpiry(CartCase):
             self.assertEqual(self.sale.state, "cancel")
 
     def test_cart_expiry_delete(self):
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.backend.write(
             {"cart_expiry_delay": 1, "cart_expiry_policy": "delete"}
@@ -92,8 +88,14 @@ class TestCartExpiry(CartCase):
             self.backend.manage_cart_expiry()
             self.assertFalse(self.sale.exists())
 
-    def test_new_cart_expiration_date(self):
-        today = fields.Datetime.now()
+    def test_cart_expiry_not_draft(self):
+        """
+        Ensure the cart is not deleted/canceled when the state is not draft.
+        :return:
+        """
+        so_date = fields.Datetime.from_string(self.so_date)
+        today = fields.Datetime.to_string(so_date + timedelta(hours=5))
+        self.sale.write({"state": "sent"})
         self.backend.write(
             {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
         )

@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
             ("shopinvader_backend_id", "=", backend.id),
             ("typology", "=", "cart"),
             ("pending_cart_reminder_sent_dt", "=", False),
-            ("write_date", "<=", reminder_date),
+            ("last_external_update_date", "<=", reminder_date),
             ("create_date", ">=", backend.reminder_start_date),
         ]
         return domain
