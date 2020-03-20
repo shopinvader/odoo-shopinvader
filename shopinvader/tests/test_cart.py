@@ -151,7 +151,9 @@ class AnonymousCartCase(CartCase, CartClearTest):
     def test_anonymous_cart_then_sign(self):
         cart = self.cart
         partner = self.env.ref("shopinvader.partner_1")
+        last_external_update_date = self._get_last_external_update_date(cart)
         self._sign_with(partner)
+        self._check_last_external_update_date(cart, last_external_update_date)
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id, partner)
         self.assertEqual(cart.partner_invoice_id, partner)
@@ -450,21 +452,25 @@ class CommonConnectedCartCase(CartCase):
 
 class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
     def test_set_shipping_address(self):
+        cart = self.cart
+        last_external_update_date = self._get_last_external_update_date(cart)
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
         )
-        cart = self.cart
+        self._check_last_external_update_date(cart, last_external_update_date)
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.address)
         self.assertEqual(cart.partner_invoice_id, self.address)
 
     def test_set_invoice_address(self):
+        cart = self.cart
+        last_external_update_date = self._get_last_external_update_date(cart)
         self.service.dispatch(
             "update",
             params={"invoicing": {"address": {"id": self.address.id}}},
         )
+        self._check_last_external_update_date(cart, last_external_update_date)
 
-        cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
         self.assertEqual(cart.partner_invoice_id, self.address)

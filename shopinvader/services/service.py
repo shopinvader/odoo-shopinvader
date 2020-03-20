@@ -9,6 +9,7 @@ from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
+from odoo.tools import frozendict
 
 from .. import shopinvader_response
 
@@ -18,6 +19,12 @@ class BaseShopinvaderService(AbstractComponent):
     _name = "base.shopinvader.service"
     _collection = "shopinvader.backend"
     _expose_model = None
+
+    @property
+    def env(self):
+        env = self.work.env
+        env.context = frozendict(dict(env.context, shopinvader_request=True))
+        return env
 
     @property
     def partner(self):

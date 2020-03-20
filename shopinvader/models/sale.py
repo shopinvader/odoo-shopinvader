@@ -21,7 +21,8 @@ class ShopinvaderCartStep(models.Model):
 
 
 class SaleOrder(models.Model):
-    _inherit = "sale.order"
+    _name = "sale.order"
+    _inherit = ["sale.order", "track.external.mixin"]
 
     typology = fields.Selection(
         [("sale", "Sale"), ("cart", "Cart")], default="sale"
