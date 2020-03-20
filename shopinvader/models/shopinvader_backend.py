@@ -6,8 +6,10 @@ from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
 from odoo.addons.http_routing.models.ir_http import slugify
+from odoo.addons.queue_job.job import job
 from odoo.addons.server_environment import serv_config
 from odoo.http import request
+from odoo.osv import expression
 
 
 class ShopinvaderBackend(models.Model):
@@ -426,3 +428,58 @@ class ShopinvaderBackend(models.Model):
     def _onchange_name(self):
         if self.name and not self.tech_name:
             self.tech_name = self._normalize_name(self.name)
+        auth_api_key = getattr(request, "auth_api_key", None)
+        return self.browse(self._get_id_from_auth_api_key(auth_api_key))
+
+    @api.multi
+    @job(default_channel="root.shopinvader")
+    def _job_sale_price_update(self, sales):
+        """
+        Jobify the process to update prices.
+        After launching the price update, we also have to re-apply promotions
+        (in case of the promotion change and conditions doesn't match anymore).
+        Could be inherited to add others prices recompute.
+        :param sales: sale.order recordset
+        :return: None
+        """
+        sales._update_pricelist_and_update_line_prices()
+
+    @api.multi
+    @job(default_channel="root.shopinvader")
+    def _job_split_sale_price_update(self, sales):
+        """
+        Split the current job on many SO to 1 job per SO.
+        To avoid rollback full price update in case of error.
+        Better to have 1 SO bad recomputed instead of all SO.
+        :param sales: sale.order recordset
+        :return: bool
+        """
+        for sale in sales:
+            description = "Recompute prices for cart %s" % sale.display_name
+            self.with_delay(description=description)._job_sale_price_update(
+                sale
+            )
+        return True
+
+    @api.model
+    def _launch_sale_price_update(self, domain=False):
+        """
+        Retrieve cart to update then apply the recalculation
+        (could be used for a cron)
+        :param domain: list/domain
+        :return: bool
+        """
+        domain = domain or []
+        if domain:
+            domain = expression.normalize_domain(domain)
+        sale_domain = expression.normalize_domain(
+            [("typology", "=", "cart"), ("state", "=", "draft")]
+        )
+        domain = expression.AND([domain, sale_domain])
+        sale_carts = self.env["sale.order"].search(domain)
+        if sale_carts:
+            description = "Recompute prices for carts (split: 1 job per cart)"
+            return self.with_delay(
+                description=description
+            )._job_split_sale_price_update(sale_carts)
+        return True

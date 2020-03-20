@@ -58,6 +58,7 @@
         "data/ir_export_category.xml",
         "data/cart_step.xml",
         "data/mail_activity_data.xml",
+        "data/ir_cron.xml",
     ],
     "demo": [
         "demo/account_demo.xml",
