@@ -2,7 +2,6 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
-from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.osv import expression
 
@@ -26,15 +25,10 @@ class DeliveryService(Component):
         Validator for the search
         :return: dict
         """
-        schema = {
-            "per_page": {
-                "coerce": to_int,
-                "nullable": True,
-                "type": "integer",
-            },
-            "page": {"coerce": to_int, "nullable": True, "type": "integer"},
-        }
-        return schema
+        validator = self._default_validator_search()
+        validator.pop("domain", {})
+        validator.pop("scope", {})
+        return validator
 
     def _get_picking_schema(self):
         """

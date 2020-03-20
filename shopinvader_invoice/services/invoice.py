@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 
@@ -34,15 +33,10 @@ class InvoiceService(Component):
         Validator for the search
         :return: dict
         """
-        schema = {
-            "per_page": {
-                "coerce": to_int,
-                "nullable": True,
-                "type": "integer",
-            },
-            "page": {"coerce": to_int, "nullable": True, "type": "integer"},
-        }
-        return schema
+        default_validator = self._default_validator_search()
+        default_validator.pop("scope", {})
+        default_validator.pop("domain", {})
+        return default_validator
 
     def _validator_return_get(self):
         """

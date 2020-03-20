@@ -88,6 +88,17 @@ class AddressTestCase(object):
         expected_ids = {self.partner.id, self.address.id, self.address_2.id}
         self.assertEqual(ids, expected_ids)
 
+    def test_search_per_page(self):
+        # Ensure the 'per_page' is working into search.
+        res = self.service.dispatch("search", params={"per_page": 2})["data"]
+        self.assertEqual(len(res), 2)
+        # Ensure the 'page' is working. As there is 3 address for logged user, we
+        # should have only 1 remaining result on the second page.
+        res = self.service.dispatch(
+            "search", params={"per_page": 2, "page": 2}
+        )["data"]
+        self.assertEqual(len(res), 1)
+
     def test_delete_address(self):
         address_id = self.address.id
         self.service.delete(address_id)
