@@ -116,7 +116,9 @@ class AnonymousCartCase(CartCase, CartClearTest):
         cart = self.cart
         invader_partner = self.env.ref("shopinvader.shopinvader_partner_1")
         partner = invader_partner.record_id
+        last_external_update_date = self._get_last_external_update_date(cart)
         self._sign_with(invader_partner)
+        self._check_last_external_update_date(cart, last_external_update_date)
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id, partner)
         self.assertEqual(cart.partner_invoice_id, partner)
@@ -327,24 +329,28 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
 
     def test_set_shipping_address_default_invoicing(self):
         cart = self.cart
+        last_external_update_date = self._get_last_external_update_date(cart)
         invoice_addr = self.env.ref("shopinvader.partner_1_address_2")
         cart.partner_invoice_id = invoice_addr
         self.backend.cart_checkout_address_policy = "invoice_defaults_to_shipping"
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
         )
+        self._check_last_external_update_date(cart, last_external_update_date)
         self.assertEqual(cart.partner_id, self.partner)
         # invoice address is replaced
         self.assertEqual(cart.partner_shipping_id, self.address)
         self.assertEqual(cart.partner_invoice_id, self.address)
 
     def test_set_invoice_address(self):
+        cart = self.cart
+        last_external_update_date = self._get_last_external_update_date(cart)
         self.service.dispatch(
             "update",
             params={"invoicing": {"address": {"id": self.address.id}}},
         )
+        self._check_last_external_update_date(cart, last_external_update_date)
 
-        cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
         self.assertEqual(cart.partner_invoice_id, self.address)
