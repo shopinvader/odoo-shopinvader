@@ -7,7 +7,7 @@
     "author": "ACSONE SA/NV",
     "website": "http://www.shopinvader.com",
     "category": "e-commerce",
-    "version": "10.0.1.0.2",
+    "version": "10.0.1.1.0",
     "license": "AGPL-3",
     "depends": ["shopinvader", "queue_job"],
     "data": ["data/ir_cron.xml", "views/shopinvader_backend.xml"],
