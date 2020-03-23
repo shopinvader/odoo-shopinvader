@@ -27,6 +27,10 @@ class CommonCase(SavepointCase, ComponentMixin):
         cls.setUpComponent()
         cls.env = cls.env(context={"lang": "en_US"})
         cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.product_1 = cls.env.ref("product.product_product_4b")
+        cls.precision = cls.env["decimal.precision"].precision_get(
+            "Product Price"
+        )
         cls.backend.bind_all_product()
         cls.shopinvader_session = {}
         cls.api_key = "myApiKey"

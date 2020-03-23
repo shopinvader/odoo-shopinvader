@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <record id="shopinvader_sale_order_price_recompute" model="ir.cron">
+        <field name="name">Shopinvader - Recompute prices on carts</field>
+        <field name="active" eval="True"/>
+        <field name="user_id" ref="base.user_root"/>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="numbercall" eval="-1"/>
+        <field name="doall" eval="False"/>
+        <field name="model">shopinvader.backend</field>
+        <field name="function">_launch_sale_price_update</field>
+        <field name="nextcall" eval="(DateTime.now()).strftime('%Y-%m-%d 06:00:00')"/>
+    </record>
+</odoo>
