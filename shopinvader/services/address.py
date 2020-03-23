@@ -10,6 +10,8 @@ from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
 from odoo.exceptions import AccessError
 
+from .. import shopinvader_response
+
 
 class AddressService(Component):
     _inherit = [
@@ -44,6 +46,11 @@ class AddressService(Component):
         res = self.search()
         if self._store_cache_needed(address):
             res["store_cache"] = {"customer": self._to_json(address)[0]}
+            customer = self.component(usage="customer")
+            response = shopinvader_response.get()
+            customer_data = customer._to_customer_info(address)
+            response.set_store_cache("customer", customer_data)
+
         self._post_update(address)
         return res
 
