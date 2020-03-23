@@ -47,7 +47,7 @@ class ShopinvaderBackend(models.Model):
             ("shopinvader_backend_id", "=", self.id),
             ("typology", "=", "cart"),
             ("state", "=", "draft"),
-            ("write_date", "<=", expiry_date),
+            ("last_external_update_date", "<=", expiry_date),
         ]
         cart_expired = self.env["sale.order"].search(domain)
         if cart_expired:

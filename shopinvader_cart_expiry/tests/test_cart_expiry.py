@@ -17,6 +17,8 @@ class TestCartExpiry(CommonCase):
         super(TestCartExpiry, self).setUp()
         self.sale_obj = self.env["sale.order"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
+        self.sale.write({"last_external_update_date": fields.Datetime.now()})
+        self.so_date = self.sale.last_external_update_date
 
     def test_cart_expiry_scheduler(self):
         """
@@ -34,7 +36,7 @@ class TestCartExpiry(CommonCase):
         return
 
     def test_cart_expiry_cancel(self):
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.backend.write(
             {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
@@ -52,7 +54,7 @@ class TestCartExpiry(CommonCase):
             self.assertEqual(self.sale.state, "cancel")
 
     def test_cart_expiry_delete(self):
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.backend.write(
             {"cart_expiry_delay": 1, "cart_expiry_policy": "delete"}
@@ -74,7 +76,7 @@ class TestCartExpiry(CommonCase):
         Ensure the cart is not deleted/canceled when the state is not draft.
         :return:
         """
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.sale.write({"state": "sent"})
         self.backend.write(
