@@ -3,9 +3,9 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 # pylint: disable=consider-merging-classes-inherited
-
 import logging
 
+from cerberus import Validator
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 from odoo.exceptions import UserError
@@ -85,7 +85,85 @@ class CartService(Component):
         cart = self._clear_cart(cart)
         return self._to_json(cart)
 
+    def _get_validator_cart_by_id_domain(self, value):
+        """
+        Get cart by id domain. Limiting to session partner.
+        :param value:
+        :return:
+        """
+        return [("partner_id", "=", self.partner.id), ("id", "=", value)]
+
+    def _get_line_copy_vals(self, line):
+        """
+        Prepare copy values to be passed to _add_item
+        :param line: sale.order.line
+        :return: dict
+        """
+        return {
+            "product_id": line.product_id.id,
+            "item_qty": line.product_uom_qty,
+        }
+
+    def _get_lines_to_copy(self, cart):
+        return cart.order_line
+
+    # pylint: disable=W8102,W8106
+    def copy(self, **params):
+        """
+        This service allows
+        :param params:
+        :return:
+        """
+        return self._copy(**params)
+
+    def _copy(self, **params):
+        """
+        Copy the cart given by id without the lines
+        They will be re-added
+        :return: dict/json
+        """
+        cart = self.env["sale.order"].search(
+            self._get_validator_cart_by_id_domain(params.get("id"))
+        )
+        # Copy the existing cart
+        # Delete all lines and re-add them with 'shopinvader' flavour
+        new_cart = cart.copy({"order_line": False, "typology": "cart"})
+        for line in self._get_lines_to_copy(cart):
+            vals = self._get_line_copy_vals(line)
+            self._add_item(new_cart, vals)
+
+        return self._to_json(new_cart)
+
     # Validator
+    def _cart_validator_exists(self, field, value, error):
+        """
+        Implements 'check_with' validation
+        :param field:
+        :param value:
+        :param error:
+        :return:
+        """
+        cart = self.env["sale.order"].search(
+            self._get_validator_cart_by_id_domain(value)
+        )
+        if len(cart) != 1:
+            error(
+                field, _("The cart does not exists or does not belong to you!")
+            )
+
+    def _validator_copy(self):
+        return {
+            "id": {
+                "coerce": to_int,
+                "required": True,
+                "type": "integer",
+                "check_with": self._cart_validator_exists,
+            }
+        }
+
+    def _validator_return_copy(self):
+        return Validator({}, allow_unknown=True)
+
     def _validator_search(self):
         return {}
 

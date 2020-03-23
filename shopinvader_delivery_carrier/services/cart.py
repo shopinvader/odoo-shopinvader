@@ -123,3 +123,12 @@ class CartService(Component):
     def _unset_carrier(self, cart):
         cart.write({"carrier_id": False})
         cart._delivery_unset()
+
+    def _get_lines_to_copy(self, cart):
+        """
+        Don't copy delivery lines
+        :param cart:
+        :return:
+        """
+        res = super(CartService, self)._get_lines_to_copy(cart)
+        return res.filtered(lambda l: not l.is_delivery)
