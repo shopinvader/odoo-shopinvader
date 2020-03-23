@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Carrier",
     "summary": "Carrier integration for Shopinvader",
-    "version": "10.0.1.1.3",
+    "version": "10.0.1.2.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
