@@ -59,10 +59,18 @@ class CommonInvoiceCase(CommonCase):
                 current_data.get("amount_total"), invoice.amount_total
             )
             self.assertEquals(
+                current_data.get("amount_total_signed"),
+                invoice.amount_total_signed,
+            )
+            self.assertEquals(
                 current_data.get("amount_tax"), invoice.amount_tax
             )
             self.assertEquals(
                 current_data.get("amount_untaxed"), invoice.amount_untaxed
+            )
+            self.assertEquals(
+                current_data.get("amount_untaxed_signed"),
+                invoice.amount_total_signed,
             )
             self.assertEquals(current_data.get("amount_due"), invoice.residual)
         return True
