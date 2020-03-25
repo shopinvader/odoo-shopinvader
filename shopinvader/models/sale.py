@@ -59,6 +59,7 @@ class SaleOrder(models.Model):
             with them to ensure we forget no field
         :return:
         """
+        self.order_line.shopinvader_recompute()
         for name, field in self._fields.iteritems():
             if field.compute and field.store:
                 self._recompute_todo(field)
@@ -208,6 +209,14 @@ class SaleOrderLine(models.Model):
         compute="_compute_shopinvader_variant",
         string="Shopinvader Variant",
     )
+
+    @api.multi
+    def shopinvader_recompute(self):
+        for line in self:
+            for name, field in line._fields.iteritems():
+                if field.compute and field.store:
+                    line._recompute_todo(field)
+        self.recompute()
 
     def reset_price_tax(self):
         for line in self:
