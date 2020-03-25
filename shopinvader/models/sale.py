@@ -6,6 +6,7 @@
 import logging
 
 from odoo import api, fields, models
+from odoo.addons.queue_job.job import job
 
 _logger = logging.getLogger(__name__)
 
@@ -36,6 +37,43 @@ class SaleOrder(models.Model):
         compute="_compute_shopinvader_state",
         store=True,
     )
+    shopinvader_to_be_recomputed = fields.Boolean(
+        help="Technical field that will intend to check if the sale order has"
+        "to be recomputed due to a modification (asynchronous)"
+    )
+
+    def _shopinvader_fields_recompute(self):
+        """
+        Call recompute_todo to build the list of fields to recompute
+        TODO: Limit the real changed fields and built the job identity_key
+            with them to ensure we forget no field
+        :return:
+        """
+        self.order_line.shopinvader_recompute()
+        for name, field in self._fields.iteritems():
+            if field.compute and field.store:
+                self._recompute_todo(field)
+
+    @job(default_channel="root.shopinvader")
+    def _shopinvader_delayed_recompute(self):
+        self.shopinvader_recompute()
+
+    @api.multi
+    def _shopinvader_recompute(self):
+        """
+        Method called if shopinvader_to_be_recomputed is True
+        Can be inherited
+        :return:
+        """
+        self._shopinvader_fields_recompute()
+        self.recompute()
+        self.shopinvader_to_be_recomputed = False
+
+    @api.multi
+    def shopinvader_recompute(self):
+        self.ensure_one()
+        if self.shopinvader_to_be_recomputed:
+            self._shopinvader_recompute()
 
     def _get_shopinvader_state(self):
         self.ensure_one()
@@ -115,6 +153,20 @@ class SaleOrder(models.Model):
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
+
+    shopinvader_variant_id = fields.Many2one(
+        "shopinvader.variant",
+        compute="_compute_shopinvader_variant",
+        string="Shopinvader Variant",
+    )
+
+    @api.multi
+    def shopinvader_recompute(self):
+        for line in self:
+            for name, field in line._fields.iteritems():
+                if field.compute and field.store:
+                    line._recompute_todo(field)
+        self.recompute()
 
     def reset_price_tax(self):
         for line in self:
