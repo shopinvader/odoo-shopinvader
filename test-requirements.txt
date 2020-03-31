@@ -6,3 +6,4 @@ cachetools<3  # TODO because of component
 requests_mock
 vcrpy
 vcrpy-unittest
+unittest2 # For shopinvader test_controller, which inherits component
