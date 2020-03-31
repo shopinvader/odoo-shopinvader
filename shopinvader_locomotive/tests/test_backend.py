@@ -6,23 +6,23 @@ import json
 
 from .common import LocoCommonCase, mock_site_api
 
-ODOO_STORE_JSON_KEY = [
-    "all_filters",
-    "available_countries",
-    "currencies_rate",
-    "locale_mapping",
-    "available_customer_titles",
-    "available_customer_industries",
-]
 
-
-class TestBackend(LocoCommonCase):
+class TestBackendCommonCase(LocoCommonCase):
 
     maxDiff = None
 
+    ODOO_STORE_JSON_KEY = [
+        "all_filters",
+        "available_countries",
+        "currencies_rate",
+        "locale_mapping",
+        "available_customer_titles",
+        "available_customer_industries",
+    ]
+
     @classmethod
     def setUpClass(cls):
-        super(TestBackend, cls).setUpClass()
+        super().setUpClass()
         ref = cls.env.ref
         cls.odoo_url = cls.env["ir.config_parameter"].get_param("web.base.url")
         cls.api_url = "{}/shopinvader".format(cls.odoo_url)
@@ -59,7 +59,7 @@ class TestBackend(LocoCommonCase):
         )
 
     def setUp(self):
-        super(TestBackend, self).setUp()
+        super().setUp()
         self.metafields = {
             "foo": "test",
             "_store": {
@@ -91,11 +91,13 @@ class TestBackend(LocoCommonCase):
         metafields = json.loads(metafields)
         self.assertIn("_store", metafields)
         for key, vals in metafields["_store"].items():
-            if key in ODOO_STORE_JSON_KEY:
+            if key in self.ODOO_STORE_JSON_KEY:
                 self.assertIsInstance(vals, str)
                 metafields["_store"][key] = json.loads(vals)
         return metafields
 
+
+class TestBackend(TestBackendCommonCase):
     def test_synchronize_metadata(self):
         ref = self.env.ref
         title_miss = ref("base.res_partner_title_miss")
