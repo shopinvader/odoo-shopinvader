@@ -14,8 +14,7 @@ class ShopinvaderVariant(models.Model):
         if "state" in config:
             res["state"] = self.stock_state
         if config == "only_state" or (
-            config == "state_and_low_qty"
-            and res["state"] != "in_limited_stock"
+            config == "state_and_low_qty" and res["state"] != "in_limited_stock"
         ):
             res.pop("qty")
         return res
