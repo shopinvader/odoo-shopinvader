@@ -5,12 +5,12 @@
 {
     "name": "Shopinvader Many Categories",
     "summary": "Shopinvader Many Categories",
-    "version": "10.0.1.0.0",
+    "version": "12.0.1.0.0",
     "category": "e-commerce",
     "website": "https://shopinvader.com/",
     "author": "Akretion",
     "license": "AGPL-3",
     "depends": ["shopinvader", "product_multi_category"],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
 }
