@@ -62,8 +62,9 @@ class CustomerService(Component):
             }
         )
         # fmt: on
-        if params.get("vat"):
-            params["is_company"] = True
+        if mode == "create":
+            if params.get("vat"):
+                params["is_company"] = True
         return params
 
     def _send_welcome_message(self, binding):
