@@ -19,6 +19,15 @@ class ShopinvaderVariant(models.Model):
     )
 
     def _get_attr_vals(self, attr):
+        """The raw value of the attribute."""
+        self.ensure_one()
+        if attr.attribute_type == "select":
+            return self[attr.name]["name"]
+        elif attr.attribute_type == "multiselect":
+            return self[attr.name].mapped("name")
+        return self[attr.name]
+
+    def _get_attr_vals_string(self, attr):
         """The value of the attribute as string."""
         self.ensure_one()
         if attr.attribute_type == "select":
@@ -33,25 +42,30 @@ class ShopinvaderVariant(models.Model):
     def _compute_attributes(self):
         for record in self:
             attributes = {}
-            for group in record.attribute_set_id.attribute_group_ids:
-                for attr in group.attribute_ids:
-                    # all attr start with "x_" we remove it for the export
-                    attributes[attr.name[2:]] = record._get_attr_vals(attr)
+            for attr in record.attribute_set_id.attribute_ids:
+                # all attr start with "x_" we remove it for the export
+                attributes[attr.name[2:]] = record._get_attr_vals(attr)
             record.attributes = attributes
 
     def _compute_structured_attributes(self):
         for record in self:
-            strc_attr = []
-            for group in record.attribute_set_id.attribute_group_ids:
-                group_data = {"group_name": group.name, "fields": []}
-                for attr in group.attribute_ids:
-                    group_data["fields"].append(
-                        {
-                            "name": attr.field_description,
-                            "key": attr.name[2:],
-                            "value": record._get_attr_vals(attr),
-                            "type": attr.attribute_type,
-                        }
-                    )
-                strc_attr.append(group_data)
-            record.structured_attributes = strc_attr
+            strc_attr = {}
+            attr_set = record.attribute_set_id
+            groups = attr_set.attribute_ids.mapped('attribute_group_id')
+            for group in groups:
+                strc_attr[group.id] = {
+                    "group_name": group.name, "fields": []
+                }
+
+            for attr in attr_set.attribute_ids:
+                strc_attr[attr.attribute_group_id.id]["fields"].append(
+                    {
+                        "name": attr.field_description,
+                        "key": attr.name[2:],
+                        "value": record._get_attr_vals_string(attr),
+                        # in structured attribute, all value shoudstr be of
+                        # the same type. So we convert it to string
+                        "type": attr.attribute_type,
+                    }
+                )
+            record.structured_attributes = list(strc_attr.values())
