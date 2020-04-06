@@ -105,3 +105,63 @@ class TestShopinvaderPartnerBinding(CommonCase):
         # Ensure the binding is done
         self.assertTrue(shopinv_partner)
         self.assertEquals(shopinv_partner.email, lower_email)
+
+    def test_binding_multicompany(self):
+        shopinv_partner = self._get_shopinvader_partner(
+            self.partner, self.backend
+        )
+        # This partner shouldn't be already binded
+        self.assertFalse(shopinv_partner)
+        context = self.env.context.copy()
+        context.update(
+            {
+                "active_id": self.partner.id,
+                "active_ids": self.partner.ids,
+                "active_model": self.partner._name,
+            }
+        )
+        wizard_obj = self.binding_wiz_obj.with_context(context)
+        fields_list = wizard_obj.fields_get().keys()
+        values = wizard_obj.default_get(fields_list)
+        values.update({"shopinvader_backend_id": self.backend.id})
+        wizard = wizard_obj.create(values)
+        wizard._onchange_shopinvader_backend_id()
+        wizard.binding_lines.write({"bind": True})
+        wizard.action_apply()
+        shopinv_partner = self._get_shopinvader_partner(
+            self.partner, self.backend
+        )
+        # But now we set bind = True so we check if it's done.
+        self.assertTrue(shopinv_partner)
+
+        # Switch to Company Liege
+        company_before = self.env.user.company_id
+        self.env.user.write({"company_id": self.company_liege.id})
+        shopinv_partner = self._get_shopinvader_partner(
+            self.partner, self.backend_liege
+        )
+        # This partner shouldn't be already binded to Liege
+        self.assertFalse(shopinv_partner)
+
+        context = self.env.context.copy()
+        context.update(
+            {
+                "active_id": self.partner.id,
+                "active_ids": self.partner.ids,
+                "active_model": self.partner._name,
+            }
+        )
+        wizard_obj = self.binding_wiz_obj.with_context(context)
+        fields_list = wizard_obj.fields_get().keys()
+        values = wizard_obj.default_get(fields_list)
+        values.update({"shopinvader_backend_id": self.backend_liege.id})
+        wizard = wizard_obj.create(values)
+        wizard._onchange_shopinvader_backend_id()
+        wizard.binding_lines.write({"bind": True})
+        wizard.action_apply()
+        shopinv_partner = self._get_shopinvader_partner(
+            self.partner, self.backend_liege
+        )
+        # But now we set bind = True so we check if it's done.
+        self.assertTrue(shopinv_partner)
+        self.env.user.write({"company_id": company_before.id})

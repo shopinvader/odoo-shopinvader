@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <!-- Company Belgium-->
+    <record id="res_company_liege" model="res.company">
+        <field name="name">My Company, Liege</field>
+        <field name="parent_id" ref="base.main_company"/>
+        <field name="street">Place Cathedrale</field>
+        <field model="res.country" name="country_id" search="[('code','ilike','be')]"/>
+        <field name="zip">4000</field>
+        <field name="city">Liege</field>
+        <field name="email">liege@yourcompany.com</field>
+        <field name="phone">+32 4 222 00 00</field>
+        <field name="website">www.yourcompany.com</field>
+    </record>
+</odoo>

@@ -43,6 +43,8 @@ class CommonCase(SavepointCase, ComponentMixin):
             serv_config.set(cls.auth_api_key_name, "user", "admin")
             serv_config.set(cls.auth_api_key_name, "key", cls.api_key)
         cls.backend.auth_api_key_name = cls.auth_api_key_name
+        cls.backend_liege = cls.env.ref("shopinvader.backend_liege")
+        cls.company_liege = cls.env.ref("shopinvader.res_company_liege")
 
     @contextmanager
     def work_on_services(self, **params):
