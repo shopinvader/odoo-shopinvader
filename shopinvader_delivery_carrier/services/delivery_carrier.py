@@ -31,10 +31,14 @@ class DeliveryCarrierService(Component):
         provides some specialized functionalities
         """
         delivery_carriers = self._search(**params)
-        return {
-            "count": len(delivery_carriers),
-            "rows": [self._prepare_carrier(dc) for dc in delivery_carriers],
+        vals = {
+            "size": len(delivery_carriers),
+            "data": [self._prepare_carrier(dc) for dc in delivery_carriers],
         }
+        # TODO DEPRECATED this old API is deprecated
+        #  keep returing the result but this should be not used anymore
+        vals.update({"count": vals["size"], "rows": vals["data"]})
+        return vals
 
     # Validators
 
@@ -54,9 +58,9 @@ class DeliveryCarrierService(Component):
         }
 
     def _validator_return_search(self):
-        return {
-            "count": {"type": "integer", "required": True},
-            "rows": {
+        schema = {
+            "size": {"type": "integer", "required": True},
+            "data": {
                 "type": "list",
                 "required": True,
                 "schema": {
@@ -84,6 +88,9 @@ class DeliveryCarrierService(Component):
                 },
             },
         }
+        # TODO DEPRECATED this old API is deprecated
+        schema.update({"count": schema["size"], "rows": schema["data"]})
+        return schema
 
     # Services implementation
 
