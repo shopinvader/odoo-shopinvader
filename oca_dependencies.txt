@@ -7,7 +7,7 @@ server-env
 e-commerce
 search-engine
 server-tools
-sale-workflow
+sale-workflow https://github.com/akretion/odoo-shopinvader 12.0-mig_promotion_rule #Do not merge this
 product-attribute
 partner-contact
 e-commerce
