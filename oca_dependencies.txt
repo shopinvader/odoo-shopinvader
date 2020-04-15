@@ -8,7 +8,7 @@ e-commerce
 search-engine
 product-attribute
 product-variant
-sale-workflow
+sale-workflow https://github.com/akretion/odoo-shopinvader 12.0-mig_promotion_rule #Do not merge this
 storage
 rest-framework
 odoo-misc https://github.com/shopinvader/odoo-misc 12.0
