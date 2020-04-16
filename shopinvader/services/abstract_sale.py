@@ -31,6 +31,7 @@ class AbstractSaleService(AbstractComponent):
             "amount": self._convert_amount(sale),
             "shipping": self._convert_shipping(sale),
             "invoicing": self._convert_invoicing(sale),
+            "note": sale.note,
         }
 
     def _convert_step(self, sale):
