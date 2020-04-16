@@ -419,6 +419,11 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.assertEqual(cart_bis.state, "draft")
         self.assertEqual(cart_bis.partner_id, self.partner)
 
+    def test_writing_note(self):
+        res = self.service.dispatch("update", params={"note": "FOO"})
+        self.assertIn("note", res["data"])
+        self.assertEqual("FOO", res["data"]["note"])
+
 
 class ConnectedCartNoTaxCase(CartCase):
     def setUp(self, *args, **kwargs):
