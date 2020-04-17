@@ -112,6 +112,11 @@ class CartService(Component):
         self._unset_carrier(cart)
         return res
 
+    def _update(self, cart, params):
+        if params.get("shipping", {}).get("address"):
+            self._unset_carrier(cart)
+        return super(CartService, self)._update(cart, params)
+
     def _set_carrier(self, cart, carrier_id):
         if carrier_id not in [x["id"] for x in cart._get_available_carrier()]:
             raise UserError(
