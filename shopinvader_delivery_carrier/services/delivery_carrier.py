@@ -72,6 +72,11 @@ class DeliveryCarrierService(Component):
                             "required": False,
                             "nullable": True,
                         },
+                        "code": {
+                            "type": "string",
+                            "required": False,
+                            "nullable": True,
+                        },
                         "description": {
                             "type": "string",
                             "required": False,
@@ -112,8 +117,8 @@ class DeliveryCarrierService(Component):
             return cart._get_available_carrier()
         return self.shopinvader_backend.carrier_ids
 
-    def _prepare_carrier(self, carrier):
-        res = carrier.jsonify(self._json_parser_carrier)[0]
+    def _prepare_carrier(self, carrier, no_price=False):
+        res = carrier.jsonify(self._json_parser_carrier(no_price=no_price))[0]
         res["type"] = None
         return res
 
@@ -138,6 +143,8 @@ class DeliveryCarrierService(Component):
     def allowed_carrier_types(self):
         return []
 
-    @property
-    def _json_parser_carrier(self):
-        return ["id", "name", "description", "price"]
+    def _json_parser_carrier(self, no_price=False):
+        res = ["id", "name", "default_code:code", "description"]
+        if not no_price:
+            res.append("price")
+        return res

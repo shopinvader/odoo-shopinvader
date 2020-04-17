@@ -22,6 +22,16 @@ class CarrierCase(CommonCarrierCase):
     def test_setting_free_carrier(self):
         cart = self._set_carrier(self.free_carrier)
         self.assertEqual(cart["shipping"]["amount"]["total"], 0)
+        self.assertEqual(
+            cart["shipping"]["selected_carrier"],
+            {
+                "description": self.free_carrier.description or None,
+                "id": self.free_carrier.id,
+                "name": self.free_carrier.name,
+                "code": self.free_carrier.code,
+                "type": None,
+            },
+        )
 
     def test_setting_poste_carrier(self):
         cart = self._set_carrier(self.poste_carrier)
@@ -58,6 +68,18 @@ class CarrierCase(CommonCarrierCase):
         )
         self.assertEqual(
             cart_amount["tax_without_shipping"], tax_without_shipping
+        )
+
+        # Check Selected carrier
+        self.assertEqual(
+            cart["shipping"]["selected_carrier"],
+            {
+                "description": self.poste_carrier.description or None,
+                "id": self.poste_carrier.id,
+                "name": self.poste_carrier.name,
+                "code": self.poste_carrier.code,
+                "type": None,
+            },
         )
 
     def test_reset_carrier_on_add_item(self):

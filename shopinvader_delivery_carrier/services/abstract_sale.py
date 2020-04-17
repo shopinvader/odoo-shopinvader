@@ -10,14 +10,12 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_shipping(self, cart):
         res = super(AbstractSaleService, self)._convert_shipping(cart)
-        selected_carrier = {}
         if cart.carrier_id:
-            carrier = cart.carrier_id
-            selected_carrier = {
-                "id": carrier.id,
-                "name": carrier.name,
-                "description": carrier.description,
-            }
+            selected_carrier = self._prepare_carrier(
+                cart.carrier_id, no_price=True
+            )
+        else:
+            selected_carrier = {}
         res.update(
             {
                 "amount": {
@@ -52,13 +50,9 @@ class AbstractSaleService(AbstractComponent):
         )
         return result
 
-    def _prepare_carrier(self, carrier):
-        return {
-            "id": carrier.id,
-            "name": carrier.name,
-            "description": carrier.description,
-            "price": carrier.price,
-        }
+    def _prepare_carrier(self, carrier, no_price=False):
+        service = self.component(usage="delivery_carrier")
+        return service._prepare_carrier(carrier, no_price=no_price)
 
     def _get_available_carrier(self, cart):
         return [
