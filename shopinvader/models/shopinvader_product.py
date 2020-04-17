@@ -139,9 +139,15 @@ class ShopinvaderProduct(models.Model):
     @api.depends("lang_id", "record_id.name")
     def _compute_automatic_url_key(self):
         records_by_lang = defaultdict(self.browse)
-        for record in self:
-            records_by_lang[record.lang_id] |= record
         key_by_id = {}
+        for record in self:
+            if not record.with_context(lang=record.lang_id.code).name:
+                # slugify don't like False instead of str
+                # no traduction available for this record
+                # automatic_url_key will be False anyways
+                key_by_id[record.id] = False
+                continue
+            records_by_lang[record.lang_id] |= record
         for lang_id, records in records_by_lang.items():
             key_by_id.update(
                 _build_slugified_field_by_id(
