@@ -38,6 +38,7 @@ class ShopinvaderPartnerBindingLine(models.TransientModel):
         Bind selected partners
         :return: dict
         """
+        shopinvader_partner_obj = self.env["shopinvader.partner"]
         if self.filtered(lambda r: not r.bind):
             message = _(
                 "The unbind is not implemented.\n"
@@ -54,15 +55,16 @@ class ShopinvaderPartnerBindingLine(models.TransientModel):
                 lambda x, b=backend: x.backend_id == b
             )
             if not partner_binding:
-                bind_values = {"backend_id": backend.id}
-                partner_values = {
-                    "shopinvader_bind_ids": [(0, False, bind_values)]
+                bind_values = {
+                    "backend_id": backend.id,
+                    "record_id": record.partner_id.id,
                 }
                 # Locomotive doesn't work with uppercase.
                 # And we have to do the write before the binding
                 email_lower = (record.partner_id.email or "").lower()
                 # Do the update only if necessary
                 if record.partner_id.email != email_lower:
-                    partner_values.update({"email": email_lower})
-                record.partner_id.write(partner_values)
+                    bind_values.update({"email": email_lower})
+
+                shopinvader_partner_obj.create(bind_values)
         return {}

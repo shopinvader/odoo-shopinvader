@@ -17,4 +17,13 @@
         <field name="account_analytic_id" ref="account_analytic_0"/>
     </record>
 
+    <record id="backend_liege" model="shopinvader.backend">
+        <field name="name">Demo Shopinvader Website Liege</field>
+        <field name="location">http://locomotive:3000</field>
+        <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]"/>
+        <field name="pricelist_id" ref="product.list0"/>
+        <field name="company_id" ref="shopinvader.res_company_liege"/>
+        <field name="account_analytic_id" ref="account_analytic_0"/>
+    </record>
+
 </odoo>

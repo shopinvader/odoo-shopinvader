@@ -64,6 +64,7 @@
         "data/ir_cron.xml",
     ],
     "demo": [
+        "demo/res_company.xml",
         "demo/account_demo.xml",
         "demo/pricelist_demo.xml",
         "demo/backend_demo.xml",
