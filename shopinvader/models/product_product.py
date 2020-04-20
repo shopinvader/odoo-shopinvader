@@ -81,3 +81,9 @@ class ProductProduct(models.Model):
         return self.shopinvader_bind_ids.filtered(
             lambda x: x.backend_id == backend and x.lang_id.code == lang
         )
+
+    def unlink(self):
+        # Call unlink manually to be sure to trigger
+        # shopinvader variant unlink constraint
+        self.mapped("shopinvader_bind_ids").unlink()
+        return super(ProductProduct, self).unlink()
