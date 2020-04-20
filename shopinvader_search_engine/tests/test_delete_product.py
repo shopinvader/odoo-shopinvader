@@ -4,34 +4,36 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.exceptions import UserError
-from odoo.tests.common import TransactionCase
+from odoo.tests import SavepointCase
 
 
-class BindingCase(TransactionCase):
-    def setUp(self):
-        super(BindingCase, self).setUp()
-        self.template = self.env["product.template"].create({"name": "Test"})
-        self.product = self.template.product_variant_ids
-        self.shopinvader_product = (
-            self.env["shopinvader.product"]
+class BindingCase(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super(BindingCase, cls).setUpClass()
+        cls.template = cls.env["product.template"].create({"name": "Test"})
+        cls.product = cls.template.product_variant_ids
+        cls.shopinvader_product = (
+            cls.env["shopinvader.product"]
             .with_context(map_children=True)
             .create(
                 {
-                    "record_id": self.template.id,
-                    "backend_id": self.ref("shopinvader.backend_1"),
-                    "lang_id": self.ref("base.lang_en"),
+                    "record_id": cls.template.id,
+                    "backend_id": cls.env.ref("shopinvader.backend_1").id,
+                    "lang_id": cls.env.ref("base.lang_en").id,
                 }
             )
         )
-        self.shopinvader_variant = (
-            self.shopinvader_product.shopinvader_variant_ids
+        cls.shopinvader_variant = (
+            cls.shopinvader_product.shopinvader_variant_ids
         )
 
 
 class BindingDoneCase(BindingCase):
-    def setUp(self):
-        super(BindingDoneCase, self).setUp()
-        self.shopinvader_variant.write({"sync_state": "done"})
+    @classmethod
+    def setUpClass(cls):
+        super(BindingDoneCase, cls).setUpClass()
+        cls.shopinvader_variant.write({"sync_state": "done"})
 
     def test_unlink_shopinvader_product(self):
         with self.assertRaises(UserError):
@@ -47,9 +49,11 @@ class BindingDoneCase(BindingCase):
 
 
 class BindingInactiveDoneCase(BindingCase):
-    def setUp(self):
-        super(BindingInactiveDoneCase, self).setUp()
-        self.shopinvader_variant.write({"sync_state": "done", "active": False})
+    @classmethod
+    def setUpClass(cls):
+        super(BindingInactiveDoneCase, cls).setUpClass()
+        cls.shopinvader_variant.active = False
+        cls.shopinvader_variant.sync_state = "done"
 
     def test_unlink_shopinvader_product(self):
         self.shopinvader_product.unlink()
