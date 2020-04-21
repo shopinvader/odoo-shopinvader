@@ -51,7 +51,7 @@ class AbstractSaleService(AbstractComponent):
         )
         return result
 
-    def _prepare_carrier(self, cart, carrier):
+    def _prepare_carrier(self, carrier, cart):
         return {
             "id": carrier.id,
             "name": carrier.name,
@@ -61,7 +61,7 @@ class AbstractSaleService(AbstractComponent):
 
     def _get_available_carrier(self, cart):
         return [
-            self._prepare_carrier(cart, carrier)
+            self._prepare_carrier(carrier, cart)
             for carrier in cart._get_available_carrier()
         ]
 
