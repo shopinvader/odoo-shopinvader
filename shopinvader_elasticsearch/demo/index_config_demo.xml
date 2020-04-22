@@ -99,8 +99,8 @@
             {
               "settings" : {
                 "index" : {
-                  "sort.field" : ["id"],
-                  "sort.order" : ["asc"]
+                  "sort.field" : ["sequence", "name"],
+                  "sort.order" : ["asc", "asc"]
                 }
               },
               "mappings": {
@@ -113,6 +113,12 @@
                   },
                   "id": {
                     "type":  "integer"
+                  },
+                  "sequence": {
+                     "type": "integer"
+                  },
+                  "name": {
+                     "type": "keyword"
                   }
                 }
               }
