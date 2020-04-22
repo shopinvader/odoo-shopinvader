@@ -40,6 +40,7 @@ addon | version | summary
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 | This module is used to choose a stock field during theexport (by backend)
+[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 12.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 12.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 | Shopinvader Quotation
 [shopinvader_search_engine](shopinvader_search_engine/) | 12.0.1.2.0 | Shopinvader Catalog Search Engine Connector
@@ -60,7 +61,6 @@ addon | version | summary
 [shopinvader_multi_category](shopinvader_multi_category/) | 10.0.1.0.0 (unported) | Shopinvader Many Categories
 [shopinvader_product_media](shopinvader_product_media/) | 10.0.1.0.0 (unported) | Shopinvader Product Media
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
-[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 10.0.1.0.0 (unported) | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 10.0.1.0.0 (unported) | Shopinvader Product Link
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 10.0.1.0.1 (unported) | ShopInvader - Sale profile
