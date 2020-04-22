@@ -33,9 +33,9 @@ class DeliveryCarrierService(Component):
         if params.get("target") == "current_cart":
             cart = self.component(usage="cart")._get()
         delivery_carriers = self._search(cart=cart, **params)
-        return {
-            "count": len(delivery_carriers),
-            "rows": [
+        vals = {
+            "size": len(delivery_carriers),
+            "data": [
                 self._prepare_carrier(dc, cart) for dc in delivery_carriers
             ],
         }
