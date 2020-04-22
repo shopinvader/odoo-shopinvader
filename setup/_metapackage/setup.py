@@ -29,6 +29,7 @@ setuptools.setup(
         'odoo12-addon-shopinvader_partner_vat',
         'odoo12-addon-shopinvader_pending_cart_reminder',
         'odoo12-addon-shopinvader_product_stock',
+        'odoo12-addon-shopinvader_product_stock_state',
         'odoo12-addon-shopinvader_product_variant_selector',
         'odoo12-addon-shopinvader_quotation',
         'odoo12-addon-shopinvader_search_engine',
