@@ -27,14 +27,15 @@ class TestProductProduct(StockCommonCase):
         )
 
     def test_in_stock(self):
-        self._add_stock_to_product(self.product, self.loc_1, 20)
+        # Threshold is 20
+        self._add_stock_to_product(self.product, self.loc_1, 20.5)
         self.assertEqual(
             self.shop_product.stock_data, {"global": {"state": "in_stock"}}
         )
 
     def test_resupplying(self):
         move = self._create_incomming_move()
-        move.action_confirm()
+        move._action_confirm()
         self.assertEqual(
             self.shop_product.stock_data, {"global": {"state": "resupplying"}}
         )
