@@ -53,7 +53,7 @@ class TestSiteSearchEngineExportBase(LocoCommonCase):
         # simplified version of site data
         self.site = {
             "name": "My site",
-            "handle": "shopinvader",
+            "handle": "my-website-1",
             "_id": "space_id",
             "metafields": json.dumps(self.metafields),
         }
