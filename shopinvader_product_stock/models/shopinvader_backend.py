@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import logging
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -16,7 +16,9 @@ except (ImportError, IOError) as err:
 
 
 class ShopinvaderBackend(models.Model):
-    _inherit = "shopinvader.backend"
+
+    _name = "shopinvader.backend"
+    _inherit = ["shopinvader.backend", "stock.exclude.location.mixin"]
 
     warehouse_ids = fields.Many2many(
         "stock.warehouse",
@@ -60,3 +62,17 @@ class ShopinvaderBackend(models.Model):
             for warehouse in self.warehouse_ids:
                 result[slugify(warehouse.code)] = [warehouse.id]
         return result
+
+    @api.onchange("warehouse_ids")
+    def onchange_warehouse_ids(self):
+        return {
+            "domain": {
+                "stock_excluded_location_ids": [
+                    (
+                        "id",
+                        "child_of",
+                        self.warehouse_ids.mapped("view_location_id.id"),
+                    )
+                ]
+            }
+        }

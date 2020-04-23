@@ -15,6 +15,7 @@
     "installable": True,
     "depends": [
         "stock",
+        "stock_available_base_exclude_location",
         "shopinvader",
         "queue_job",
         "connector_search_engine",

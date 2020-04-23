@@ -151,3 +151,72 @@ class TestProductProduct(StockCommonCase):
                 u"wh": {u"qty": 100.0},
             },
         )
+
+    def test_multi_warehouse_exclude_some_locations(self):
+        wh_ids = [self.warehouse_1.id, self.warehouse_2.id]
+        self.shopinvader_backend.write({"warehouse_ids": [(6, 0, wh_ids)]})
+        shopinvader_product = self.product.shopinvader_bind_ids
+        shopinvader_product.recompute_json()
+        shopinvader_product.sync_state = "to_update"
+        self.shopinvader_backend.stock_excluded_location_ids = (
+            self.location_1_1
+        )
+
+        self.assertEqual(
+            shopinvader_product.data["stock"],
+            {
+                u"chic": {u"qty": 0.0},
+                u"global": {u"qty": 0.0},
+                u"wh": {u"qty": 0.0},
+            },
+        )
+
+        jobs = self.job_counter()
+        self._add_stock_to_product(self.product, self.loc_1, 100)
+        self._add_stock_to_product(self.product, self.loc_2, 200)
+        self._add_stock_to_product(self.product, self.location_1_1, 150)
+        self.assertEqual(jobs.count_created(), 1)
+        with SeAdapterFake.mocked_calls():
+            self.perform_jobs(jobs)
+
+        self.assertEqual(
+            shopinvader_product.data["stock"],
+            {
+                u"chic": {u"qty": 200.0},
+                u"global": {u"qty": 300.0},
+                u"wh": {u"qty": 100.0},
+            },
+        )
+
+    def test_multi_warehouse_add_some_locations(self):
+        wh_ids = [self.warehouse_1.id, self.warehouse_2.id]
+        self.shopinvader_backend.write({"warehouse_ids": [(6, 0, wh_ids)]})
+        shopinvader_product = self.product.shopinvader_bind_ids
+        self.shopinvader_backend.stock_excluded_location_ids = False
+        shopinvader_product.recompute_json()
+        shopinvader_product.sync_state = "to_update"
+        self.assertEqual(
+            shopinvader_product.data["stock"],
+            {
+                u"chic": {u"qty": 0.0},
+                u"global": {u"qty": 0.0},
+                u"wh": {u"qty": 0.0},
+            },
+        )
+
+        jobs = self.job_counter()
+        self._add_stock_to_product(self.product, self.loc_1, 100)
+        self._add_stock_to_product(self.product, self.loc_2, 200)
+        self._add_stock_to_product(self.product, self.location_1_1, 150)
+        self.assertEqual(jobs.count_created(), 1)
+        with SeAdapterFake.mocked_calls():
+            self.perform_jobs(jobs)
+
+        self.assertEqual(
+            shopinvader_product.data["stock"],
+            {
+                u"chic": {u"qty": 350.0},
+                u"global": {u"qty": 450.0},
+                u"wh": {u"qty": 100.0},
+            },
+        )

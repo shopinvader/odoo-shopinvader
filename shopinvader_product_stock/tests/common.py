@@ -57,6 +57,12 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
     @classmethod
     def setUpClass(cls):
         super(StockCommonCase, cls).setUpClass()
+        vals = {
+            "name": "Sub Location 1 Shop 0",
+            "location_id": cls.env.ref("stock.stock_location_shop0").id,
+        }
+        cls.location_1_1 = cls.env["stock.location"].create(vals)
+        cls.env["stock.location"]._parent_store_compute()
         cls.env = cls.env(
             context=dict(
                 cls.env.context,
