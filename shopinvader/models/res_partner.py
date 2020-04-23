@@ -49,7 +49,7 @@ class ResPartner(models.Model):
                     ROW_NUMBER() OVER (PARTITION BY email) AS Row
                 FROM
                     res_partner
-                WHERE email is not null
+                WHERE email is not null and active = True
                 ) dups
             WHERE dups.Row > 1;
         """
