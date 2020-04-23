@@ -5,7 +5,7 @@
 <odoo>
 
     <record id="connector_elasticsearch.backend_1" model="se.backend.elasticsearch">
-        <field name="es_server_host">http://elastic.localtest.me:9200</field>
+        <field name="es_server_host">http://elastic.localhost:80</field>
     </record>
 
 </odoo>
