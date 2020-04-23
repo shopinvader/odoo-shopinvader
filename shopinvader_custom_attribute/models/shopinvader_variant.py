@@ -18,26 +18,35 @@ class ShopinvaderVariant(models.Model):
         string="Shopinvader attributes Fields",
     )
 
+    def _get_m2m_name(self, fieldname):
+        # It may or may not be a name on the target record
+        # TODO: improve it by use an export instead
+        try:
+            return self[fieldname].mapped("name")
+        except KeyError:
+            # no "name" on the pointed object
+            return [""]
+
     def _get_attr_vals(self, attr):
         """The raw value of the attribute."""
         self.ensure_one()
         if attr.attribute_type == "select":
-            return self[attr.name]["name"]
+            return self._get_m2m_name(attr.name)[0]
         elif attr.attribute_type == "multiselect":
-            return self[attr.name].mapped("name")
+            return self._get_m2m_name(attr.name)
         return self[attr.name]
 
     def _get_attr_vals_string(self, attr):
         """The value of the attribute as string."""
         self.ensure_one()
         if attr.attribute_type == "select":
-            return self[attr.name]["name"]
+            return self._get_m2m_name(attr.name)[0]
         elif attr.attribute_type == "multiselect":
-            return self[attr.name].mapped("name")
+            return self._get_m2m_name(attr.name)
         elif attr.attribute_type == "boolean":
-            return self[attr.name] and 'true' or 'false'
+            return self[attr.name] and "true" or "false"
         else:
-            return '%s' % self[attr.name]
+            return "%s" % self[attr.name]
 
     def _compute_attributes(self):
         for record in self:
@@ -51,11 +60,9 @@ class ShopinvaderVariant(models.Model):
         for record in self:
             strc_attr = {}
             attr_set = record.attribute_set_id
-            groups = attr_set.attribute_ids.mapped('attribute_group_id')
+            groups = attr_set.attribute_ids.mapped("attribute_group_id")
             for group in groups:
-                strc_attr[group.id] = {
-                    "group_name": group.name, "fields": []
-                }
+                strc_attr[group.id] = {"group_name": group.name, "fields": []}
 
             for attr in attr_set.attribute_ids:
                 strc_attr[attr.attribute_group_id.id]["fields"].append(
