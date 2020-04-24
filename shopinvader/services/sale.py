@@ -63,7 +63,7 @@ class SaleService(Component):
     def _get_base_search_domain(self):
         return expression.normalize_domain(
             [
-                ("partner_id", "=", self.partner.id),
+                ("partner_id", "child_of", self.partner.id),
                 ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
                 ("typology", "=", "sale"),
             ]
