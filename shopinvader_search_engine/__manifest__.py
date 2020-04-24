@@ -11,7 +11,11 @@
     "website": "www.akretion.com",
     "license": "AGPL-3",
     "category": "Generic Modules",
-    "depends": ["shopinvader", "connector_search_engine"],
+    "depends": [
+        "shopinvader",
+        "connector_search_engine",
+        "base_technical_user",
+    ],
     "data": [
         "views/shopinvader_backend_view.xml",
         "views/product_view.xml",
