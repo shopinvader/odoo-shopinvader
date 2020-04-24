@@ -4,16 +4,25 @@
 import mock
 from odoo.exceptions import ValidationError
 from odoo.tests import SavepointCase
+from odoo_test_helper import FakeModelLoader
 
-from .models import ResPartnerAddressableFake, UrlBackendFake
 
-
-class TestAbstractUrl(SavepointCase):
+class TestAbstractUrl(SavepointCase, FakeModelLoader):
     @classmethod
     def setUpClass(cls):
         super(TestAbstractUrl, cls).setUpClass()
-        UrlBackendFake._test_setup_model(cls.env)
-        ResPartnerAddressableFake._test_setup_model(cls.env)
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
+        from .models import (
+            UrlBackendFake,
+            ResPartner,
+            ResPartnerAddressableFake,
+        )
+
+        cls.loader.update_registry(
+            (UrlBackendFake, ResPartner, ResPartnerAddressableFake)
+        )
+
         cls.lang = cls.env.ref("base.lang_en")
         cls.UrlUrl = cls.env["url.url"]
         cls.ResPartnerAddressable = cls.env["res.partner.addressable.fake"]
@@ -25,8 +34,7 @@ class TestAbstractUrl(SavepointCase):
 
     @classmethod
     def tearDownClass(cls):
-        ResPartnerAddressableFake._test_teardown_model(cls.env)
-        UrlBackendFake._test_teardown_model(cls.env)
+        cls.loader.restore_registry()
         super(TestAbstractUrl, cls).tearDownClass()
 
     def _get_default_partner_value(self):
@@ -125,3 +133,31 @@ class TestAbstractUrl(SavepointCase):
             {}, ["automatic_url_key"], {}
         )
         self.assertEqual(result, {"value": {}})
+
+    def test_create_from_main(self):
+        partner = self.env["res.partner"].create({"name": self.name})
+        partner.write(
+            {
+                "binding_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "lang_id": self.lang.id,
+                            "url_builder": "auto",
+                            "backend_id": self.url_backend.id,
+                        },
+                    )
+                ]
+            }
+        )
+        self._check_url_key(partner.binding_ids, "partner-name")
+
+    def test_write_from_main(self):
+        my_partner = self._create_auto()
+        my_partner.record_id.write(
+            {"binding_ids": [(1, my_partner.id, {"special_code": "foo"})]}
+        )
+        self.assertEqual(2, len(my_partner.url_url_ids))
+        url_keys = set(my_partner.mapped("url_url_ids.url_key"))
+        self.assertSetEqual(url_keys, {"partner-name-foo", "partner-name"})
