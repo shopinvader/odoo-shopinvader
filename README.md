@@ -29,6 +29,7 @@ addon | version | summary
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.1.0.0 | Import product images
+[shopinvader_lead](shopinvader_lead/) | 13.0.1.0.0 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 13.0.1.0.0 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
@@ -50,7 +51,6 @@ addon | version | summary
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 (unported) | Guest mode for Shopinvader
 [shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 (unported) | Shopinvader Invoice module
-[shopinvader_lead](shopinvader_lead/) | 12.0.2.0.0 (unported) | Shopinvader Lead Management
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.1 (unported) | Shopinvader guest mode for locomotive
