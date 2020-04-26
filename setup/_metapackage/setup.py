@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_elasticsearch',
         'odoo13-addon-shopinvader_image',
         'odoo13-addon-shopinvader_import_image',
+        'odoo13-addon-shopinvader_lead',
         'odoo13-addon-shopinvader_locomotive',
         'odoo13-addon-shopinvader_locomotive_algolia',
         'odoo13-addon-shopinvader_partner_firstname',
