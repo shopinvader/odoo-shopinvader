@@ -113,6 +113,15 @@
                                 <field name="allowed_country_ids" nolabel="1"/>
                             </group>
                         </page>
+                        <page name="invoices" string="Invoices">
+                            <group name="invoice_visibility" string="Invoice visibility">
+                                <field name="invoice_linked_to_sale_only"/>
+                                <field name="access_to_open_invoice"/>
+                            </group>
+                            <group name="invoice_report" string="Invoice report">
+                                <field name="invoice_report_to_print" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                        </page>
                         <page name="developper" string="Developper">
                             <group name="developper" colspan="4">
                                 <group name="product" string="Product" col="10" colspan="4">
