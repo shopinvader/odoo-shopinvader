@@ -85,18 +85,30 @@ class InvoiceService(Component):
 
         # here we only allow access to invoices linked to a sale order of the
         # current customer
-        so_domain = [
-            ("partner_id", "=", self.partner.id),
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-            ("typology", "=", "sale"),
-        ]
-        # invoice_ids on sale.order is a computed field...
-        # to avoid to duplicate the logic, we search for the sale orders
-        # and check if the invoice_id is into the list of sale.invoice_ids
-        sales = self.env["sale.order"].search(so_domain)
-        invoice_ids = sales.mapped("invoice_ids").ids
+        if self.shopinvader_backend.invoice_linked_to_sale_only:
+            so_domain = [
+                ("partner_id", "=", self.partner.id),
+                ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+                ("typology", "=", "sale"),
+            ]
+            # invoice_ids on sale.order is a computed field...
+            # to avoid to duplicate the logic, we search for the sale orders
+            # and check if the invoice_id is into the list of sale.invoice_ids
+            sales = self.env["sale.order"].search(so_domain)
+            invoice_ids = sales.mapped("invoice_ids").ids
+        else:
+            invoice_ids = (
+                self.env["account.invoice"]
+                .search([("partner_id", "=", self.partner.id)])
+                .ids
+            )
+        if self.shopinvader_backend.access_to_open_invoice:
+            domain_state = [("state", "in", ["open", "paid"])]
+        else:
+            domain_state = [("state", "=", "paid")]
+        domain_invoice_ids = [("id", "in", invoice_ids)]
         return expression.normalize_domain(
-            [("id", "in", invoice_ids), ("state", "=", "paid")]
+            expression.AND([domain_invoice_ids, domain_state])
         )
 
     def _get_binary_content(self, invoice):
@@ -106,10 +118,14 @@ class InvoiceService(Component):
           :returns: (headers, content)
         """
         # ensure the report is generated
-        invoice_report_def = invoice.invoice_print()
-        report_name = invoice_report_def["report_name"]
-        report_type = invoice_report_def["report_type"]
-        report = self._get_report(report_name, report_type)
+        report = self.shopinvader_backend.invoice_report_to_print
+        if not report:
+            invoice_report_def = invoice.invoice_print()
+            report_name = invoice_report_def["report_name"]
+            report_type = invoice_report_def["report_type"]
+            report = self._get_report(report_name, report_type)
+        else:
+            report_type = report.report_type
         content, extension = report.render(
             invoice.ids, data={"report_type": report_type}
         )

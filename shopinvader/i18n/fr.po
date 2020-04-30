@@ -44,3 +44,38 @@ msgstr "Le paiement a échoué veuillez ré-essayer"
 #, python-format
 msgid "An account already exist for this email"
 msgstr "Un compte existe déjà pour cet adresse email, veuillez-vous connecter"
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__access_to_open_invoice
+msgid "Give customer access to open invoices as well as the paid ones."
+msgstr "Donner accès aux factures ouverts en plus de celle payées."
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__invoice_linked_to_sale_only
+msgid "Only sale invoices"
+msgstr "Seulement liée à une commande"
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__invoice_linked_to_sale_only
+msgid "Only serve invoices that are linked to a sale order."
+msgstr "Donner accès uniquement au factures liées à une commaned."
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__access_to_open_invoice
+msgid "Open invoices"
+msgstr "Factures ouvertes"
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
+msgid "Invoice visibility"
+msgstr "Visibilité des factures"
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
+msgid "Invoice report"
+msgstr "Rapport"
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__invoice_report_to_print
+msgid "Select a specific report for invoice download, if none are selected default shopinvader implementation is used."
+msgstr "Selection d'un rapport spécifique pour le téléchargement d'une facture."
