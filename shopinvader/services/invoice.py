@@ -44,10 +44,12 @@ class InvoiceService(Component):
     # Private implementation
 
     def _get_allowed_invoice_states(self):
-        """
-        Get every invoice states allowed to return on the service.
+        """Get downloadable invoice states.
+
         :return: list of str
         """
+        if self.shopinvader_backend.access_to_open_invoice:
+            return ["open", "paid"]
         return ["paid"]
 
     def _get_base_search_domain(self):
@@ -65,19 +67,27 @@ class InvoiceService(Component):
 
         # here we only allow access to invoices linked to a sale order of the
         # current customer
-        so_domain = [
-            ("partner_id", "=", self.partner.id),
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-            ("typology", "=", "sale"),
-        ]
-        # invoice_ids on sale.order is a computed field...
-        # to avoid to duplicate the logic, we search for the sale orders
-        # and check if the invoice_id is into the list of sale.invoice_ids
-        sales = self.env["sale.order"].search(so_domain)
-        invoice_ids = sales.mapped("invoice_ids").ids
-        states = self._get_allowed_invoice_states()
+        if self.shopinvader_backend.invoice_linked_to_sale_only:
+            so_domain = [
+                ("partner_id", "=", self.partner.id),
+                ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+                ("typology", "=", "sale"),
+            ]
+            # invoice_ids on sale.order is a computed field...
+            # to avoid to duplicate the logic, we search for the sale orders
+            # and check if the invoice_id is into the list of sale.invoice_ids
+            sales = self.env["sale.order"].search(so_domain)
+            invoice_ids = sales.mapped("invoice_ids").ids
+        else:
+            invoice_ids = (
+                self.env["account.invoice"]
+                .search([("partner_id", "=", self.partner.id)])
+                .ids
+            )
+        domain_invoice_ids = [("id", "in", invoice_ids)]
+        domain_state = [("state", "in", self._get_allowed_invoice_states())]
         return expression.normalize_domain(
-            [("id", "in", invoice_ids), ("state", "in", states)]
+            expression.AND([domain_invoice_ids, domain_state])
         )
 
     def _get_report_action(self, target, params=None):

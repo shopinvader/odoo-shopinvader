@@ -166,6 +166,23 @@ class ShopinvaderBackend(models.Model):
         string="Available partner industries",
         default=lambda self: self._default_partner_industry_ids(),
     )
+    invoice_linked_to_sale_only = fields.Boolean(
+        default=True,
+        string="Only sale invoices",
+        help="Only serve invoices that are linked to a sale order.",
+    )
+    access_to_open_invoice = fields.Boolean(
+        default=False,
+        string="Open invoices",
+        help="Give customer access to open invoices as well as the paid ones.",
+    )
+    invoice_report_to_print = fields.Many2one(
+        comodel_name="ir.actions.report",
+        domain=lambda self: self._get_invoice_report_to_print_domain(),
+        string="Specific report",
+        help="Select a specific report for invoice download, if none are selected "
+        "default shopinvader implementation is used.",
+    )
 
     _sql_constraints = [
         (
@@ -201,6 +218,15 @@ class ShopinvaderBackend(models.Model):
     @api.model
     def _default_partner_industry_ids(self):
         return self.env["res.partner.industry"].search([])
+
+    def _get_invoice_report_to_print_domain(self):
+        return [
+            (
+                "binding_model_id",
+                "=",
+                self.env.ref("account.model_account_invoice").id,
+            )
+        ]
 
     def _to_compute_nbr_content(self):
         """
