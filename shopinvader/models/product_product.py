@@ -64,3 +64,9 @@ class ProductProduct(models.Model):
             rec.shopinvader_backend_ids = rec.mapped(
                 "shopinvader_bind_ids.backend_id"
             )
+
+    def unlink(self):
+        # Call unlink manually to be sure to trigger
+        # shopinvader variant unlink constraint
+        self.mapped("shopinvader_bind_ids").unlink()
+        return super(ProductProduct, self).unlink()
