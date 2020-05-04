@@ -14,6 +14,8 @@ class TestDeliveryService(CommonCase):
         self.partner = self.env.ref("base.res_partner_2").copy()
         self.product = self.env.ref("product.product_product_4")
         self.carrier = self.env.ref("delivery.delivery_carrier")
+        self.carrier.description = "Free for > 100 €, else 9€"
+        self.carrier.description_picking = "Delivery by The Poste"
         self.picking_type_out = self.env.ref("stock.picking_type_out")
         self.location_stock = self.env.ref("stock.stock_location_stock")
         self.location_cust = self.env.ref("stock.stock_location_customers")
@@ -48,6 +50,24 @@ class TestDeliveryService(CommonCase):
             if picking.carrier_id:
                 self.assertEquals(
                     carrier_dict.get("name"), picking.carrier_id.name
+                )
+                self.assertEquals(
+                    carrier_dict.get("description"),
+                    picking.carrier_id.description
+                    if picking.carrier_id.description
+                    else None,
+                )
+                self.assertEquals(
+                    carrier_dict.get("description_sale"),
+                    picking.carrier_id.description_sale
+                    if picking.carrier_id.description_sale
+                    else None,
+                )
+                self.assertEquals(
+                    carrier_dict.get("description_picking"),
+                    picking.carrier_id.description_picking
+                    if picking.carrier_id.description_picking
+                    else None,
                 )
             else:
                 self.assertFalse(carrier_dict)
