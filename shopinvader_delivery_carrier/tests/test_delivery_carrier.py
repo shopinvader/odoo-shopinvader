@@ -22,6 +22,10 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 {
                     "price": 0.0,
                     "description": self.free_carrier.description or None,
+                    "description_sale": self.free_carrier.description_sale
+                    or None,
+                    "description_picking": self.free_carrier.description_picking
+                    or None,
                     "id": self.free_carrier.id,
                     "name": self.free_carrier.name,
                     "code": self.free_carrier.code,
@@ -30,6 +34,10 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 {
                     "price": 0.0,
                     "description": self.poste_carrier.description or None,
+                    "description_sale": self.poste_carrier.description_sale
+                    or None,
+                    "description_picking": self.poste_carrier.description_picking
+                    or None,
                     "id": self.poste_carrier.id,
                     "name": self.poste_carrier.name,
                     "code": self.poste_carrier.code,
@@ -47,6 +55,10 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 {
                     "price": 0.0,
                     "description": self.free_carrier.description or None,
+                    "description_sale": self.free_carrier.description_sale
+                    or None,
+                    "description_picking": self.free_carrier.description_picking
+                    or None,
                     "id": self.free_carrier.id,
                     "name": self.free_carrier.name,
                     "code": self.free_carrier.code,
@@ -55,6 +67,10 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 {
                     "price": 20.0,
                     "description": self.poste_carrier.description or None,
+                    "description_sale": self.poste_carrier.description_sale
+                    or None,
+                    "description_picking": self.poste_carrier.description_picking
+                    or None,
                     "id": self.poste_carrier.id,
                     "name": self.poste_carrier.name,
                     "code": self.poste_carrier.code,

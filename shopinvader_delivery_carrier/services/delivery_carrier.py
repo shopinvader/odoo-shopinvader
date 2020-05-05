@@ -82,6 +82,14 @@ class DeliveryCarrierService(Component):
                             "required": False,
                             "nullable": True,
                         },
+                        "description_sale": {
+                            "type": "string",
+                            "nullable": True,
+                        },
+                        "description_picking": {
+                            "type": "string",
+                            "nullable": True,
+                        },
                         "price": {"type": "float", "required": False},
                         "type": {
                             "type": "string",
@@ -144,7 +152,14 @@ class DeliveryCarrierService(Component):
         return []
 
     def _json_parser_carrier(self, no_price=False):
-        res = ["id", "name", "default_code:code", "description"]
+        res = [
+            "id",
+            "name",
+            "default_code:code",
+            "description",
+            "description_sale",
+            "description_picking",
+        ]
         if not no_price:
             res.append("price")
         return res
