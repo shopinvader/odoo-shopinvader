@@ -9,7 +9,7 @@
         <field name="inherit_id" ref="shopinvader_locomotive.shopinvader_backend_view_form"/>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <group name="allowed_country" position="before">
+            <group name="sale_conf" position="before">
                 <group name="price" colspan="4" attrs="{'invisible': [('use_sale_profile', '=', False)]}">
                     <field name="sale_profile_ids" string="Sale profiles" colspan="4" nolabel="True">
                         <tree editable="bottom">
