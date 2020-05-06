@@ -8,17 +8,32 @@ from odoo import api, models
 class DeliveryCarrier(models.Model):
     _inherit = "delivery.carrier"
 
+    def _get_protected_partner_fields(self, partner):
+        """
+        Build protected partner fields in order ot get back original
+        data
+        :return: tuple(partner_values, protected_fields)
+        """
+        fields = ["country_id", "zip"]
+        partner_values = {}
+        protected_fields = []
+        for field in fields:
+            partner_values.update({field: partner[field]})
+            protected_fields.append(partner._fields[field])
+        return partner_values, protected_fields
+
     @contextmanager
     def _simulate_delivery_cost(self, partner):
         """
-        Change the env mode (draft) to avoid real update on the partner.
+        Remove fields to compute to avoid real update on the partner.
         Then, restore the partner with previous values.
         :param partner: res.partner recordset
         :return:
         """
-        partner.read(["country_id", "zip"])
-        partner_values = partner._convert_to_write(partner._cache)
-        with partner.env.do_in_draft():
+        partner_values, protected_fields = self._get_protected_partner_fields(
+            partner
+        )
+        with self.env.protecting(protected_fields, partner):
             yield
             # Restore values
             partner.update(partner_values)
