@@ -21,7 +21,7 @@ class TestInvoice(CommonCase, CommonTestDownload):
         )
         with self.work_on_services(partner=self.partner) as work:
             self.sale_service = work.component(usage="sales")
-            self.invoice_service = work.component(usage="invoice")
+            self.invoice_service = work.component(usage="invoices")
         self.invoice = self._confirm_and_invoice_sale(self.sale)
 
     def _make_payment(self, invoice):
@@ -90,3 +90,10 @@ class TestInvoice(CommonCase, CommonTestDownload):
         invoice = self._confirm_and_invoice_sale(sale)
         self._make_payment(invoice)
         self._test_download_not_owner(self.invoice_service, self.invoice)
+
+
+class DeprecatedTestInvoice(TestInvoice):
+    def setUp(self, *args, **kwargs):
+        super(DeprecatedTestInvoice, self).setUp(*args, **kwargs)
+        with self.work_on_services(partner=self.partner) as work:
+            self.invoice_service = work.component(usage="invoice")

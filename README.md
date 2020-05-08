@@ -35,7 +35,11 @@ In some really rare case your API is a singleton,
 this mean work on only record without specifying the id
 In that case and only in that case you can use singular
 to make it explicit.
-For now we have only 2 cases of singleton API customer and cart
+
+For now we have only 3 cases of singleton API:
+- customer
+- cart
+- guest
 
 
 ```python
