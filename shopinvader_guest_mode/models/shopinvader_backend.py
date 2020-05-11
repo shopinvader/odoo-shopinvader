@@ -22,7 +22,6 @@ class ShopinvaderBackend(models.Model):
         default=7,
     )
 
-    @api.multi
     @api.constrains("is_guest_mode_allowed")
     def _check_is_guest_mode_allowed(self):
         for record in self:
@@ -40,7 +39,6 @@ class ShopinvaderBackend(models.Model):
                     )
                 )
 
-    @api.multi
     @api.constrains("guest_account_expiry_delay", "is_guest_mode_allowed")
     def _check_guest_account_expiry_delay(self):
         for record in self:

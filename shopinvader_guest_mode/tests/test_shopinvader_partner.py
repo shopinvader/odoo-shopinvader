@@ -58,6 +58,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         )
         with self.assertRaises(ValidationError), self.cr.savepoint():
             shopinvader_partner.active = True
+            shopinvader_partner.flush()
 
     def test_expiry_dt(self):
         self.assertTrue(self.shopinvader_partner.expiry_dt)

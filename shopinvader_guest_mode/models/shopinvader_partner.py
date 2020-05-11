@@ -67,7 +67,6 @@ class ShopinvaderPartner(models.Model):
         ),
     ]
 
-    @api.multi
     @api.constrains("is_guest")
     def _check_is_guest_mode_allowed(self):
         recs = self.filtered(
@@ -81,7 +80,6 @@ class ShopinvaderPartner(models.Model):
                 )
             )
 
-    @api.multi
     @api.depends("backend_id.guest_account_expiry_delay", "is_guest")
     def _compute_expiry_dt(self):
         for record in self:
@@ -114,6 +112,10 @@ class ShopinvaderPartner(models.Model):
         return super().create(vals)
 
     @wrap_integrity_error
-    @api.multi
     def write(self, vals):
         return super().write(vals)
+
+    @wrap_integrity_error
+    @api.model
+    def flush(self, fnames=None, records=None):
+        return super().flush(fnames=fnames, records=records)
