@@ -46,7 +46,7 @@ class ShopinvaderVariant(models.Model):
         elif attr.attribute_type == "boolean":
             return self[attr.name] and "true" or "false"
         else:
-            return "%s" % self[attr.name]
+            return "%s" % (self[attr.name] or "")
 
     def _compute_attributes(self):
         for record in self:
