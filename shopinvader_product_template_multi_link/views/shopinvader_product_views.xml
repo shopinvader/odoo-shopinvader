@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_product_form_view">
+        <field name="name">shopinvader.product.form (in shopinvader_product_template_multi_link)</field>
+        <field name="model">shopinvader.product</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_product_form_view"/>
+        <field name="arch" type="xml">
+            <page name="variant" position="after">
+                <page name="product_template_links">
+                    <group name="product_template_links">
+                        <field name="cross_selling_ids" readonly="1"/>
+                        <field name="up_selling_ids" readonly="1"/>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>
