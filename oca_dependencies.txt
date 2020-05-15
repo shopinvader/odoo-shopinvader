@@ -4,7 +4,7 @@ connector
 queue
 server-auth
 server-env
-e-commerce
+e-commerce https://github.com/acsone/e-commerce 13.0-imp-product_template_multi_link
 search-engine
 server-tools
 sale-workflow
