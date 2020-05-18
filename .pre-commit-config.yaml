@@ -13,17 +13,20 @@ repos:
   - id: end-of-file-fixer
   - id: check-yaml
   - id: debug-statements
+  - id: fix-encoding-pragma
+    exclude: /__init__\.py$
+- repo: https://gitlab.com/pycqa/flake8
+  rev: 3.7.9
+  hooks:
   - id: flake8
     name: flake8 except __init__.py
     args: [--exclude=__init__.py]
     language_version: python2.7
   - id: flake8
     name: flake8 only __init__.py
-    args: [--ignore=E501 F401]  # ignore imported unused in __init__.py
+    args: [--extend-ignore=F401]  # ignore imported unused in __init__.py
     files: __init__.py
     language_version: python2.7
-  - id: fix-encoding-pragma
-    exclude: /__init__\.py$
 - repo: https://github.com/pre-commit/mirrors-pylint
   rev: v2.3.1
   hooks:
