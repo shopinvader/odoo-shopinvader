@@ -31,11 +31,10 @@ class StockPicking(models.Model):
         all_move_lines = picking_outgoing.mapped("move_lines")
         backends = picking_outgoing._get_related_backends()
 
-        def filter_line(l, b):
-            lbackend = (
-                l.procurement_id.sale_line_id.order_id.shopinvader_backend_id
-            )
-            return lbackend == b
+        def filter_line(line, backend):
+            order = line.procurement_id.sale_line_id.order_id
+            lbackend = order.shopinvader_backend_id
+            return lbackend == backend
 
         for backend in backends:
             move_lines = all_move_lines.filtered(
