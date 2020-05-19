@@ -56,3 +56,34 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         )
         role = params.get("content_entry").get("role")
         self.assertEquals("public_tax_inc", role)
+
+    def test_profile_no_fiscal_pos(self):
+        pricelist = self.env["product.pricelist"].create(
+            {"name": "TEST profile"}
+        )
+        profile = self.env["shopinvader.sale.profile"].create(
+            {
+                "code": "NoFPos",
+                "pricelist_id": pricelist.id,
+                "backend_id": self.env.ref("shopinvader.backend_1").id,
+            }
+        )
+        self.data.update(
+            {
+                "property_product_pricelist": pricelist.id,
+                "property_account_position_id": False,
+                "country_id": False,
+            }
+        )
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, u"5a953dmpefe1c744cfcfb3cd3"
+        )
+
+        self.assertEqual(shop_partner.property_product_pricelist, pricelist)
+        self.backend.pricelist_id = False
+        self.backend.use_sale_profile = True
+        partner, params = self._get_shopinvader_partner(
+            shop_partner, u"5a953dmpefe1c744cfcfb3cd3"
+        )
+        role = params.get("content_entry").get("role")
+        self.assertEquals(role, profile.code)
