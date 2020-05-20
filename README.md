@@ -44,6 +44,7 @@ addon | version | summary
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 12.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 12.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 | Shopinvader Quotation
+[shopinvader_sale_profile](shopinvader_sale_profile/) | 12.0.1.0.2 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 12.0.1.2.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 12.0.1.0.0 | Handle shop wishlist
 
@@ -63,7 +64,6 @@ addon | version | summary
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 10.0.1.0.0 (unported) | Shopinvader Product Link
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
-[shopinvader_sale_profile](shopinvader_sale_profile/) | 10.0.1.0.1 (unported) | ShopInvader - Sale profile
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
 
 [//]: # (end addons)
