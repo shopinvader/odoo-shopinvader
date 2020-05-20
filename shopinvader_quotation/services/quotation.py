@@ -8,7 +8,10 @@ from odoo.addons.component.core import Component
 
 
 class QuotationService(Component):
-    _inherit = "shopinvader.abstract.sale.service"
+    _inherit = [
+        "shopinvader.abstract.sale.service",
+        "abstract.shopinvader.download",
+    ]
     _name = "shopinvader.quotation.service"
     _usage = "quotations"
     _expose_model = "sale.order"
@@ -22,6 +25,15 @@ class QuotationService(Component):
 
     def search(self, **params):
         return self._paginate_search(**params)
+
+    def _get_report_action(self, target, params=None):
+        """
+        Get the action/dict to generate the report
+        :param target: recordset
+        :param params: dict
+        :return: dict/action
+        """
+        return target.print_quotation()
 
     # Validator
     def _validator_get(self):
