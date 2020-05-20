@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo12-addon-shopinvader_product_stock_state',
         'odoo12-addon-shopinvader_product_variant_selector',
         'odoo12-addon-shopinvader_quotation',
+        'odoo12-addon-shopinvader_sale_profile',
         'odoo12-addon-shopinvader_search_engine',
         'odoo12-addon-shopinvader_wishlist',
     ],
