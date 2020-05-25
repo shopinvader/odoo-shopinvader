@@ -6,7 +6,7 @@
 
 {
     "name": "Shopinvader Catalog Search Engine Connector",
-    "version": "10.0.1.2.0",
+    "version": "10.0.1.2.1",
     "author": "Akretion",
     "website": "www.akretion.com",
     "license": "AGPL-3",
