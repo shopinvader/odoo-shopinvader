@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 12.0.0.1.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 12.0.3.5.2 | Shopinvader
+[shopinvader](shopinvader/) | 12.0.3.5.3 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
@@ -30,7 +30,7 @@ addon | version | summary
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
-[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.2 | Shopinvader Invoice module
+[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.3 | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 12.0.2.0.0 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.3.2.2 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 12.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
