@@ -24,6 +24,27 @@ class InvoiceService(Component):
         default_validator.pop("domain", {})
         return default_validator
 
+    def _validator_return_get(self):
+        """
+        Output validator for the search
+        :return: dict
+        """
+        invoice_schema = {
+            "invoice_id": {"type": "integer"},
+            "number": {"type": "string"},
+            "date_invoice": {"type": "string"},
+            "amount_total": {"type": "float"},
+            "amount_tax": {"type": "float"},
+            "amount_untaxed": {"type": "float"},
+            "amount_due": {"type": "float"},
+            "type": {"type": "string"},
+            "type_label": {"type": "string"},
+            "state": {"type": "string"},
+            "state_label": {"type": "string"},
+        }
+        schema = {"data": {"type": "dict", "schema": invoice_schema}}
+        return schema
+
     def _validator_return_search(self):
         """
         Output validator for the search
@@ -39,6 +60,8 @@ class InvoiceService(Component):
             "amount_due": {"type": "float"},
             "type": {"type": "string"},
             "state": {"type": "string"},
+            "type_label": {"type": "string"},
+            "state_label": {"type": "string"},
         }
         schema = {
             "size": {"type": "integer"},
@@ -62,26 +85,10 @@ class InvoiceService(Component):
             "amount_tax",
             "amount_untaxed",
             "residual:amount_due",
+            "type",
+            "state",
         ]
         return to_parse
-
-    def _get_selection_label(self, invoice, field):
-        """
-        Get the translated label of the invoice selection field
-        :param invoice: account.invoice recordset
-        :param field: str
-        :return: str
-        """
-        if field not in invoice._fields:
-            return ""
-        # _description_selection return a list of tuple (str, str).
-        # Exactly like the definition of Selection field but this function
-        # translate possible values.
-        type_dict = dict(
-            invoice._fields.get(field)._description_selection(invoice.env)
-        )
-        technical_value = invoice[field]
-        return type_dict.get(technical_value, technical_value)
 
     def _to_json_invoice(self, invoice):
         invoice.ensure_one()
@@ -89,8 +96,8 @@ class InvoiceService(Component):
         values = invoice.jsonify(parser)[0]
         values.update(
             {
-                "type": self._get_selection_label(invoice, "type"),
-                "state": self._get_selection_label(invoice, "state"),
+                "type_label": self._get_selection_label(invoice, "type"),
+                "state_label": self._get_selection_label(invoice, "state"),
             }
         )
         return values
