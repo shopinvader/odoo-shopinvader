@@ -6,6 +6,7 @@
 import logging
 
 from odoo import _
+from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
@@ -71,6 +72,26 @@ class BaseShopinvaderService(AbstractComponent):
             return expression.normalize_domain(domain)
         except Exception as e:
             raise UserError(_("Invalid scope %s, error : %s"), scope, e)
+
+    # Validator
+    def _default_validator_search(self):
+        """
+        Get a default validator for search service.
+        This search include every parameters used for pagination, scope and domain.
+        This directly used a _validator_search in case of an existing service
+        doesn't allow all of these parameters (backward compatibility).
+        :return: dict
+        """
+        return {
+            "page": {"coerce": to_int, "nullable": True, "type": "integer"},
+            "per_page": {
+                "coerce": to_int,
+                "nullable": True,
+                "type": "integer",
+            },
+            "domain": {"type": "list", "nullable": True},
+            "scope": {"type": "dict", "nullable": True},
+        }
 
     def _paginate_search(self, default_page=1, default_per_page=5, **params):
         """
