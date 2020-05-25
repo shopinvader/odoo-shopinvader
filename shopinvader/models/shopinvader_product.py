@@ -199,3 +199,9 @@ class ShopinvaderProduct(models.Model):
                     }
                 )
         return True
+
+    def unlink(self):
+        # Call unlink manually to be sure to trigger
+        # shopinvader variant unlink constraint
+        self.mapped("shopinvader_variant_ids").unlink()
+        return super(ShopinvaderProduct, self).unlink()
