@@ -26,19 +26,15 @@ jobs:
       python: 3.6
       install: pip install pre_commit
       script: pre-commit run --all
+    - stage: test
+      env:
+        - TESTS="1" ODOO_REPO="odoo/odoo"
+    - stage: test
+      env:
+        - TESTS="1" ODOO_REPO="OCA/OCB"
 env:
   global:
-  - VERSION="10.0" TESTS="1" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url" MQT_DEP="PIP"
-
-  matrix:
-  - ODOO_REPO="odoo/odoo"
-  # for speed reason all dependency are preinstalled in OCA script,
-  # stock module add specific required field that can make failed
-  # the test of module that do not depend of stock module
-  # same issue for base_url that fail if the mail module is preinstalled
-  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" EXCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier,base_url"
-  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="product_stock_state,shopinvader_product_stock,shopinvader_product_stock_state,shopinvader_delivery_carrier"
-  - UNIT_TEST="1" ODOO_REPO="OCA/OCB" INCLUDE="base_url"
+  - VERSION="10.0" TESTS="0" LINT_CHECK="0" ERRORS_IGNORE="Wrong HTTP_API_KEY;RESTFULL call to url" MQT_DEP="PIP"
 
 install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
