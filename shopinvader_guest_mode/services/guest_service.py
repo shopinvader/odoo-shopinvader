@@ -98,6 +98,7 @@ class GuestService(Component):
         binding = self._get_binding(email)
         if binding:
             binding.active = False
+            binding.flush()
 
     def _to_customer_info(self, partner):
         info = super()._to_customer_info(partner)

@@ -6,7 +6,6 @@ from odoo import api, models
 class ResPartner(models.Model):
     _inherit = "res.partner"
 
-    @api.multi
     def _get_binding_to_export(self):
         """
         Inherit to restrict binding to export:
