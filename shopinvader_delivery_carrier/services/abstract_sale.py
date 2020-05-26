@@ -15,7 +15,7 @@ class AbstractSaleService(AbstractComponent):
             selected_carrier = {
                 "id": carrier.id,
                 "name": carrier.name,
-                "description": carrier.name,
+                "description": carrier.description,
             }
         res.update(
             {
@@ -55,7 +55,7 @@ class AbstractSaleService(AbstractComponent):
         return {
             "id": carrier.id,
             "name": carrier.name,
-            "description": carrier.name,
+            "description": carrier.description,
             "price": carrier.rate_shipment(cart).get("price", 0.0),
         }
 
