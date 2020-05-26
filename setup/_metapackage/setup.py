@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo10-addon-shopinvader_locomotive_contact_company',
         'odoo10-addon-shopinvader_locomotive_guest_mode',
         'odoo10-addon-shopinvader_locomotive_reset_password',
+        'odoo10-addon-shopinvader_membership',
         'odoo10-addon-shopinvader_multi_category',
         'odoo10-addon-shopinvader_partner_vat',
         'odoo10-addon-shopinvader_pending_cart_reminder',
