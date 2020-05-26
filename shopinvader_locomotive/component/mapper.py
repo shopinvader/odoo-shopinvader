@@ -30,7 +30,13 @@ class ShopinvaderSiteExportMapper(Component):
             ).allowed_country_ids:
                 states = []
                 for state in country.state_ids:
-                    states.append({"code": state.code, "name": state.name})
+                    states.append(
+                        {
+                            "code": state.code,
+                            "name": state.name,
+                            "id": state.id,
+                        }
+                    )
                 res[lang.code[0:2]].append(
                     {"name": country.name, "id": country.id, "states": states}
                 )
