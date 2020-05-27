@@ -50,17 +50,20 @@ class CartService(Component):
 
     def _add_item(self, cart, params):
         res = super(CartService, self)._add_item(cart, params)
-        cart.apply_promotions()
+        if cart.current_step_id and cart.current_step_id.code != "cart_init":
+            cart.apply_promotions()
         return res
 
     def _update_item(self, cart, params, item=False):
         res = super(CartService, self)._update_item(cart, params, item)
-        cart.apply_promotions()
+        if cart.current_step_id and cart.current_step_id.code != "cart_init":
+            cart.apply_promotions()
         return res
 
     def _delete_item(self, cart, params):
         res = super(CartService, self)._delete_item(cart, params)
-        cart.apply_promotions()
+        if cart.current_step_id and cart.current_step_id.code != "cart_init":
+            cart.apply_promotions()
         return res
 
     # Validator
