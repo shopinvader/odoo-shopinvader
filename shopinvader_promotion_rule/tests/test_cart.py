@@ -100,6 +100,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         count_existing_lines = len(self.cart.order_line)
         # each time we add an item the promotion is recomputed and the coupon
         # code is preserved
+        self.cart.current_step_id = self.env.ref("shopinvader.cart_index").id
         self.service.dispatch(
             "add_item", params={"product_id": self.product_1.id, "item_qty": 2}
         )
