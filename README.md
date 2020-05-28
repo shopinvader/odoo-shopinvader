@@ -20,7 +20,7 @@ Guideline
 Naming service
 ---------------
 
-Service must always be named in plural for example
+Services must always be named in plural form. Example:
 
 
 ```python
@@ -31,15 +31,16 @@ Service must always be named in plural for example
         _expose_model = "sale.order"
 ```
 
-In some really rare case your API is a singleton,
-this mean work on only record without specifying the id
-In that case and only in that case you can use singular
-to make it explicit.
+In some rare cases where you need to expose a singleton,
+you can use singular to make it explicit.
 
-For now we have only 3 cases of singleton API:
+At the moment we have only 3 cases of singleton API:
+
 - customer
 - cart
 - guest
+
+Finally, working on one record at once allows to skip passing its ID around.
 
 
 ```python
