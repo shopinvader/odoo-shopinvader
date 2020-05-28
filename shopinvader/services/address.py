@@ -137,8 +137,8 @@ class AddressService(Component):
             "opt_out",
             "vat",
             "type",
-            ("state_id:state", ["id", "name"]),
-            ("country_id:country", ["id", "name"]),
+            ("state_id:state", ["id", "name", "code"]),
+            ("country_id:country", ["id", "name", "code"]),
             "address_type",
             "is_company",
         ]
