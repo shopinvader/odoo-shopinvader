@@ -1,6 +1,7 @@
 from . import test_controller
 from . import test_backend
 from . import test_cart
+from . import test_cart_copy
 from . import test_cart_item
 from . import test_address
 from . import test_partner_validation
