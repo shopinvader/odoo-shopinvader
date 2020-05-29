@@ -27,6 +27,7 @@
         "component_event",
         "sale",
         "sale_discount_display_amount",
+        "sale_order_price_recalculation",
         "onchange_helper",
         "queue_job",
         "mail",
@@ -61,6 +62,7 @@
         "data/ir_export_category.xml",
         "data/cart_step.xml",
         "data/mail_activity_data.xml",
+        "data/ir_cron.xml",
     ],
     "demo": [
         "demo/account_demo.xml",
