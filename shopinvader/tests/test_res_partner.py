@@ -19,11 +19,11 @@ class TestResPartner(SavepointComponentCase):
         self.assertTrue(
             self.shopinvader_config.is_partner_duplication_allowed()
         )
-        self.env["res.partner"].create(
+        partner_1 = self.env["res.partner"].create(
             {"email": self.unique_email, "name": "test partner"}
         )
         # by default we can create partner with same email
-        self.env["res.partner"].create(
+        partner_2 = self.env["res.partner"].create(
             {"email": self.unique_email, "name": "test partner 2"}
         )
         self.env["ir.config_parameter"].create(
@@ -38,3 +38,10 @@ class TestResPartner(SavepointComponentCase):
             self.env["res.partner"].create(
                 {"email": self.unique_email, "name": "test partner 3"}
             )
+
+        # unicity constrains is only applicable on active records
+        partners = partner_1 | partner_2
+        partners.write({"active": False})
+        self.env["res.partner"].create(
+            {"email": self.unique_email, "name": "test partner 3"}
+        )
