@@ -2,6 +2,11 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+
+from datetime import timedelta
+
+from freezegun import freeze_time
+
 from odoo import fields
 from odoo.tools import mute_logger
 
@@ -102,6 +107,8 @@ class AnonymousCartCase(CartCase, CartClearTest):
     def setUp(self, *args, **kwargs):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref("shopinvader.sale_order_1")
+        with freeze_time(fields.Datetime.now() - timedelta(minutes=1)):
+            self.cart.last_external_update_date = fields.Datetime.now()
         self.shopinvader_session = {"cart_id": self.cart.id}
         self.partner = self.backend.anonymous_partner_id
         self.product_1 = self.env.ref("product.product_product_4b")
@@ -296,6 +303,8 @@ class CommonConnectedCartCase(CartCase):
     def setUp(self, *args, **kwargs):
         super(CommonConnectedCartCase, self).setUp(*args, **kwargs)
         self.cart = self.env.ref("shopinvader.sale_order_2")
+        with freeze_time(fields.Datetime.now() - timedelta(minutes=1)):
+            self.cart.last_external_update_date = fields.Datetime.now()
         self.shopinvader_session = {"cart_id": self.cart.id}
         self.partner = self.env.ref("shopinvader.partner_1")
         self.address = self.env.ref("shopinvader.partner_1_address_1")
@@ -345,6 +354,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
         )
+
     def test_set_shipping_address(self):
         cart = self.cart
         last_external_update_date = self._get_last_external_update_date(cart)

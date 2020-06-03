@@ -2,9 +2,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import time
 
-from odoo import exceptions
+from odoo import exceptions, fields
 from odoo.tools import mute_logger
 
 from .common import CommonCase
@@ -204,9 +203,6 @@ class AbstractItemCase(ItemCaseMixin):
         self._check_last_external_update_date(
             self.cart, last_external_update_date
         )
-
-        time.sleep(1)
-
         last_external_update_date = self._get_last_external_update_date(
             self.cart
         )
@@ -215,9 +211,6 @@ class AbstractItemCase(ItemCaseMixin):
         self._check_last_external_update_date(
             self.cart, last_external_update_date
         )
-
-        time.sleep(1)
-
         last_external_update_date = self._get_last_external_update_date(
             self.cart
         )
@@ -233,6 +226,7 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
         super(AnonymousItemCase, cls).setUpClass()
         cls.partner = cls.backend.anonymous_partner_id
         cls.cart = cls.env.ref("shopinvader.sale_order_1")
+        cls.cart.last_external_update_date = fields.Datetime.now()
 
     def setUp(self, *args, **kwargs):
         super(AnonymousItemCase, self).setUp(*args, **kwargs)
@@ -253,6 +247,7 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
         super(ConnectedItemCase, cls).setUpClass()
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.cart = cls.env.ref("shopinvader.sale_order_2")
+        cls.cart.last_external_update_date = fields.Datetime.now()
 
     def setUp(self, *args, **kwargs):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)

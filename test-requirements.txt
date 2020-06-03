@@ -7,3 +7,4 @@ openupgradelib @ git+https://github.com/OCA/openupgradelib.git
 
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
+freezegun

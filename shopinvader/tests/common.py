@@ -15,11 +15,9 @@ from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
-from odoo.exceptions import MissingError
 from odoo.addons.shopinvader.models.track_external_mixin import (
     TrackExternalMixin,
 )
-from odoo.tests import SavepointCase
 
 from .. import shopinvader_response
 
