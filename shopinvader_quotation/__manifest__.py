@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Quotation",
     "summary": "Shopinvader Quotation",
-    "version": "10.0.1.0.3",
+    "version": "10.0.1.1.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
