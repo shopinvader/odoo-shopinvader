@@ -7,8 +7,8 @@ from .common import CommonCarrierCase
 
 class TestDeliveryCarrier(CommonCarrierCase):
     def setUp(self):
-        super(CommonCarrierCase, self).setUp()
-        self.carrier_service = self.service.component("delivery_carrier")
+        super(TestDeliveryCarrier, self).setUp()
+        self.carrier_service = self.service.component("delivery_carriers")
 
     def _check_response(self, res, expected):
         expected.update({"count": expected["size"], "rows": expected["data"]})
@@ -63,3 +63,9 @@ class TestDeliveryCarrier(CommonCarrierCase):
             ],
         }
         self._check_response(res, expected)
+
+
+class DeprecatedTestDeliveryCarrier(TestDeliveryCarrier):
+    def setUp(self):
+        super(DeprecatedTestDeliveryCarrier, self).setUp()
+        self.carrier_service = self.service.component("delivery_carrier")

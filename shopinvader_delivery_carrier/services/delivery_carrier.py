@@ -11,7 +11,7 @@ from odoo.addons.component.core import Component
 class DeliveryCarrierService(Component):
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.delivery.carrier.service"
-    _usage = "delivery_carrier"
+    _usage = "delivery_carriers"
     _description = """
         This service allows you to retrieve the informations of available
         delivery carriers.
@@ -148,3 +148,10 @@ class DeliveryCarrierService(Component):
         if not no_price:
             res.append("price")
         return res
+
+
+class DeprecatedDeliveryCarrierService(Component):
+    _inherit = "shopinvader.delivery.carrier.service"
+    _name = "shopinvader.deprecated.delivery.carrier.service"
+    _usage = "delivery_carrier"
+    _description = "Deprecated use 'delivery_carriers' instead"

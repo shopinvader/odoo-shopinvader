@@ -11,8 +11,9 @@ from odoo.addons.component.core import Component
 class LeadService(Component):
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.lead.service"
-    _usage = "lead"
+    _usage = "leads"
     _expose_model = "crm.lead"
+    _description = "Service providing a method to lead"
 
     # The following methods are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator
@@ -67,3 +68,10 @@ class LeadService(Component):
                 params[key] = params.pop(human_key)
         params["shopinvader_backend_id"] = self.shopinvader_backend.id
         return params
+
+
+class DeprecatedLeadService(Component):
+    _inherit = "shopinvader.lead.service"
+    _name = "shopinvader.deprecated.lead.service"
+    _usage = "lead"
+    _description = "Deprecated Service use 'leads' instead"

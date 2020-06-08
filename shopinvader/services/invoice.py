@@ -8,7 +8,7 @@ from odoo.osv import expression
 class InvoiceService(Component):
     _inherit = ["base.shopinvader.service", "abstract.shopinvader.download"]
     _name = "shopinvader.invoice.service"
-    _usage = "invoice"
+    _usage = "invoices"
     _expose_model = "account.invoice"
     _description = "Service providing a method to download invoices"
 
@@ -85,3 +85,10 @@ class InvoiceService(Component):
         :return: dict/action
         """
         return target.invoice_print()
+
+
+class DeprecatedInvoiceService(Component):
+    _inherit = "shopinvader.invoice.service"
+    _name = "shopinvader.deprecated.invoice.service"
+    _usage = "invoice"
+    _description = "Deprecated Service use 'invoices' instead"

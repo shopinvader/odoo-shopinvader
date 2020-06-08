@@ -10,6 +10,13 @@ from odoo.addons.shopinvader.tests.test_notification import (
 
 
 class LeadCase(CommonNotificationCase):
+    def setUp(self):
+        super(LeadCase, self).setUp()
+        with self.work_on_services(
+            partner=None, shopinvader_session=self.shopinvader_session
+        ) as work:
+            self.service = work.component(usage="leads")
+
     def test_create_lead(self):
         data = {
             "email": "revolution@shopinvader.com",
@@ -31,10 +38,6 @@ class LeadCase(CommonNotificationCase):
             }
         )
 
-        with self.work_on_services(
-            partner=None, shopinvader_session=self.shopinvader_session
-        ) as work:
-            self.service = work.component(usage="lead")
         self._init_job_counter()
         self.service.dispatch("create", params=data)
         lead = self.env["crm.lead"].search([], order="id desc", limit=1)[0]
@@ -46,3 +49,12 @@ class LeadCase(CommonNotificationCase):
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification("lead_confirmation", lead)
+
+
+class DeprecatedLeadCase(CommonNotificationCase):
+    def setUp(self):
+        super(DeprecatedLeadCase, self).setUp()
+        with self.work_on_services(
+            partner=None, shopinvader_session=self.shopinvader_session
+        ) as work:
+            self.service = work.component(usage="lead")

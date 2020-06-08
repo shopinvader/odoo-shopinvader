@@ -11,4 +11,41 @@ Web alternative solution based on locomotivecms
 Documentation
 ===============
 
-A work in progress documentation is available here : https://akretion.github.io/shopinvader-documentation
+The official documentation is available here: https://doc.shopinvader.com
+
+
+Guideline
+==============
+
+Naming service
+---------------
+
+Services must always be named in plural form. Example:
+
+
+```python
+    class SaleService(Component):
+        _inherit = "shopinvader.abstract.sale.service"
+        _name = "shopinvader.sale.service"
+        _usage = "sales"
+        _expose_model = "sale.order"
+```
+
+In some rare cases where you need to expose a singleton,
+you can use singular to make it explicit.
+
+At the moment we have only 3 cases of singleton API:
+
+- customer
+- cart
+- guest
+
+Finally, working on one record at once allows to skip passing its ID around.
+
+
+```python
+    class CartService(Component):
+        _inherit = "shopinvader.abstract.sale.service"
+        _name = "shopinvader.cart.service"
+        _usage = "cart"
+```

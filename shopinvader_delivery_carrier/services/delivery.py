@@ -9,8 +9,9 @@ from odoo.osv import expression
 class DeliveryService(Component):
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.delivery.service"
-    _usage = "delivery"
+    _usage = "deliveries"
     _expose_model = "stock.picking"
+    _description = "Service for getting information on stock.picking"
 
     def search(self, **params):
         """
@@ -165,3 +166,11 @@ class DeliveryService(Component):
             lambda p: p.picking_type_id.code == "outgoing"
         )
         return [("id", "in", pickings.ids)]
+
+
+class DeprecatedDeliveryService(Component):
+    _inherit = "shopinvader.delivery.service"
+    _name = "shopinvader.deprecated.delivery.service"
+    _usage = "delivery"
+    _expose_model = "stock.picking"
+    _description = "Deprecated Service use 'deliveries'"
