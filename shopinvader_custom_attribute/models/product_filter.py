@@ -21,7 +21,7 @@ class ProductFilter(models.Model):
     def _build_display_name(self):
         if self.based_on == "custom_attribute":
             return (
-                "custom_attributes.%s"
+                "attributes.%s"
                 % sanitize_attr_name(self.custom_attribute_id)[2:]
             )
         else:
