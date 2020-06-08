@@ -42,6 +42,7 @@
                 <sheet>
                     <group name="variant">
                             <field name="name"/>
+                            <field name="shopinvader_product_id"/>
                             <field name="lang_id"/>
                             <field name="default_code"/>
                             <field name="backend_id"/>
