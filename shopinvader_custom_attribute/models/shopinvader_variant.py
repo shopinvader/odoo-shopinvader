@@ -34,6 +34,8 @@ class ShopinvaderVariant(models.Model):
             return self._get_m2m_name(attr.name)[0]
         elif attr.attribute_type == "multiselect":
             return self._get_m2m_name(attr.name)
+        elif attr.attribute_type in ("char", "text"):
+            return "%s" % (self[attr.name] or "")
         return self[attr.name]
 
     def _get_attr_vals_string(self, attr):
