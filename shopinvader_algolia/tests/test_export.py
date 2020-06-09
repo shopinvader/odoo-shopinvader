@@ -9,7 +9,11 @@ from odoo.addons.connector_algolia.components.adapter import AlgoliaAdapter
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBase,
 )
-from vcr_unittest import VCRMixin
+
+try:
+    from vcr_unittest import VCRMixin
+except ImportError:
+    VCRMixin = None
 
 
 class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
