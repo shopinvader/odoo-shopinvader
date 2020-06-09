@@ -21,7 +21,7 @@ addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.1.0 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 13.0.1.6.1 | Shopinvader
-[shopinvader_algolia](shopinvader_algolia/) | 13.0.1.0.0 | Shopinvader Algolia Connector
+[shopinvader_algolia](shopinvader_algolia/) | 13.0.1.1.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.1.0.1 | Enable registration of multiple users per each company customer.
@@ -36,7 +36,7 @@ addon | version | summary
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 13.0.1.0.1 | Shopinvader guest mode for locomotive
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
-[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.1.0 | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.2.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 13.0.1.0.0 | Handle shop wishlist
 
 
