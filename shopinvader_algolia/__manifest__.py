@@ -14,6 +14,7 @@
     "depends": ["shopinvader_search_engine", "connector_algolia"],
     "data": ["data/ir_export_product.xml"],
     "demo": ["demo/backend_demo.xml", "demo/product_demo.xml"],
+    "external_dependencies": {"python": ["vcrpy_unittest"]},
     "installable": True,
     "application": True,
 }
