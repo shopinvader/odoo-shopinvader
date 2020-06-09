@@ -6,17 +6,21 @@ from odoo.addons.connector_search_engine.tests.models import SeBackendFake
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBaseFake,
 )
-from odoo.addons.queue_job.tests.common import JobMixin
+from odoo.addons.shopinvader.tests.common import CommonMixin
 
 
-class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
+class StockCommonCase(TestBindingIndexBaseFake, CommonMixin):
     def setUp(self):
         super(StockCommonCase, self).setUp()
         ref = self.env.ref
         self.shopinvader_backend = ref("shopinvader.backend_1")
         self.warehouse_1 = ref("stock.warehouse0")
         self.loc_1 = self.warehouse_1.lot_stock_id
-        self.warehouse_2 = ref("stock.stock_warehouse_shop0")
+        self.warehouse_2 = self.env['stock.warehouse'].create({
+            'name': 'Warehouse 2',
+            'code': 'WH2',
+            'company_id': self.env.ref('base.main_company').id
+        })
         self.loc_2 = self.warehouse_2.lot_stock_id
         self.product = ref("product.product_product_4")
         self.shopinvader_backend.bind_all_product()
@@ -62,20 +66,30 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
         # SeBackendFake._test_teardown_model(cls.env)
         super().tearDownClass()
 
+    def _init_stock_to_zero(self, product, location):
+        self._add_stock_to_product(product, location, 0)
+
     def _add_stock_to_product(self, product, location, qty):
         """
         Set the stock quantity of the product
         :param product: product.product recordset
         :param qty: float
         """
-        wizard = self.env["stock.change.product.qty"].create(
-            {
-                "product_id": product.id,
-                "new_quantity": qty,
-                "location_id": location.id,
-            }
-        )
-        wizard.change_product_qty()
+        inventory = self.env['stock.inventory'].create({
+            'location_ids': [(4, location.id)],
+            'product_ids': [(4, product.id)],
+        })
+        inventory.action_start()
+        if inventory.line_ids:
+            inventory.line_ids = False
+        inventory.write({'line_ids': [(0, 0, {
+            'product_id': product.id,
+            'product_uom_id': product.uom_id.id,
+            'product_qty': qty,
+            'location_id': location.id
+        })]
+                         })
+        inventory.action_validate()
 
     def _create_incomming_move(self):
         location_dest = self.picking_type_in.default_location_dest_id

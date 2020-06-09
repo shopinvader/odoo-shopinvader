@@ -18,9 +18,9 @@ class TestProductProduct(StockCommonCase):
         Test that updating the quantity through an inventory create a
         new queue.job
         """
-        job = self.job_counter()
+        self._init_job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
-        self.assertEqual(job.count_created(), 1)
+        self._check_nbr_job_created(1)
 
     def test_update_stock_on_new_product(self):
         """
@@ -32,18 +32,20 @@ class TestProductProduct(StockCommonCase):
 
     def _test_update_stock_with_key(self, key_stock, sync_immediatly=True):
         shopinvader_product = self.product.shopinvader_bind_ids
+        self._init_stock_to_zero(self.product, self.loc_1)
+        self._init_stock_to_zero(self.product, self.loc_2)
         shopinvader_product.recompute_json()
         shopinvader_product.sync_state = "to_update"
         self.assertEqual(
             shopinvader_product.data[key_stock], {u"global": {u"qty": 0.0}}
         )
 
-        jobs = self.job_counter()
+        self._init_job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
-        self.assertEqual(jobs.count_created(), 1)
+        self._check_nbr_job_created(1)
 
         with SeAdapterFake.mocked_calls() as calls:
-            self.perform_jobs(jobs)
+            self._perform_created_job()
 
         self.assertEqual(
             shopinvader_product.data[key_stock], {u"global": {u"qty": 100.0}}
@@ -114,38 +116,41 @@ class TestProductProduct(StockCommonCase):
         shopinvader_product.sync_state = "to_update"
         self.assertNotIn("stock", shopinvader_product.data)
 
-        jobs = self.job_counter()
+        self._init_job_counter()
+        self._init_stock_to_zero(self.product, self.loc_1)
         self._add_stock_to_product(self.product, self.loc_1, 100)
-        self.assertEqual(jobs.count_created(), 1)
-        self.perform_jobs(jobs)
+        self._check_nbr_job_created(1)
+        self._perform_created_job()
         self.assertNotIn("stock", shopinvader_product.data)
 
     def test_multi_warehouse(self):
         wh_ids = [self.warehouse_1.id, self.warehouse_2.id]
         self.shopinvader_backend.write({"warehouse_ids": [(6, 0, wh_ids)]})
+        self._init_stock_to_zero(self.product, self.loc_1)
+        self._init_stock_to_zero(self.product, self.loc_2)
         shopinvader_product = self.product.shopinvader_bind_ids
         shopinvader_product.recompute_json()
         shopinvader_product.sync_state = "to_update"
         self.assertEqual(
             shopinvader_product.data["stock"],
             {
-                u"chic": {u"qty": 0.0},
+                u"wh2": {u"qty": 0.0},
                 u"global": {u"qty": 0.0},
                 u"wh": {u"qty": 0.0},
             },
         )
 
-        jobs = self.job_counter()
+        self._init_job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
         self._add_stock_to_product(self.product, self.loc_2, 200)
-        self.assertEqual(jobs.count_created(), 1)
+        self._check_nbr_job_created(1)
         with SeAdapterFake.mocked_calls():
-            self.perform_jobs(jobs)
+            self._perform_created_job()
 
         self.assertEqual(
             shopinvader_product.data["stock"],
             {
-                u"chic": {u"qty": 200.0},
+                u"wh2": {u"qty": 200.0},
                 u"global": {u"qty": 300.0},
                 u"wh": {u"qty": 100.0},
             },

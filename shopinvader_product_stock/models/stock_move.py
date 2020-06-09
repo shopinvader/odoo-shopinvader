@@ -18,7 +18,6 @@ class StockMove(models.Model):
             lambda p: p.is_shopinvader_binded
         )
 
-    @api.multi
     def _jobify_product_stock_update(self):
         """
         Trigger on update on related backend if the product quantity has been
@@ -35,7 +34,6 @@ class StockMove(models.Model):
             )._synchronize_all_binding_stock_level()
         return True
 
-    @api.multi
     def _action_cancel(self):
         """
 
@@ -45,7 +43,6 @@ class StockMove(models.Model):
         self._jobify_product_stock_update()
         return result
 
-    @api.multi
     def _action_confirm(self, merge=True, merge_into=False):
         """
 
@@ -57,7 +54,6 @@ class StockMove(models.Model):
         result._jobify_product_stock_update()
         return result
 
-    @api.multi
     def _action_done(self):
         """
 

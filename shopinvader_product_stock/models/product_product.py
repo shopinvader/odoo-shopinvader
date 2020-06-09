@@ -9,7 +9,6 @@ from odoo.addons.queue_job.job import job
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    @api.multi
     @job(default_channel="root.search_engine.synchronize_stock")
     def _synchronize_all_binding_stock_level(self):
         """
@@ -26,7 +25,7 @@ class ProductProduct(models.Model):
             )
             # To avoid access rights issues, execute the job with the user
             # related to the backend
-            bindings = bindings.sudo(backend.user_id.id)
+            bindings = bindings.with_user(backend.user_id.id)
             for binding in bindings:
                 if binding.sync_state == "new":
                     # this binding have been not yet computed
