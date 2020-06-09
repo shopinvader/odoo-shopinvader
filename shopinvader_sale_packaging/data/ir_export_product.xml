@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="ir_exp_shopinvader_variant_packaging" model="ir.exports.line">
+    <field name="name">packaging</field>
+    <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+  </record>
+
+  <record id="ir_exp_shopinvader_variant_sell_only_by_packaging" model="ir.exports.line">
+    <field name="name">sell_only_by_packaging</field>
+    <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+  </record>
+
+</odoo>
