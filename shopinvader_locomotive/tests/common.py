@@ -21,6 +21,11 @@ class LocoCommonCase(CommonCase):
     def setUpClass(cls):
         super(LocoCommonCase, cls).setUpClass()
         cls.base_url = cls.backend.location + "/locomotive/api/v3"
+        cls.site = {
+            "name": "My site",
+            "handle": "shopinvader",
+            "_id": "space_id",
+        }
 
 
 @contextmanager

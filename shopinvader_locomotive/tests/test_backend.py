@@ -76,12 +76,7 @@ class TestBackendCommonCase(LocoCommonCase):
             },
         }
         # simplified version of site data
-        self.site = {
-            "name": "My site",
-            "handle": "shopinvader",
-            "_id": "space_id",
-            "metafields": json.dumps(self.metafields),
-        }
+        self.site.update({"metafields": json.dumps(self.metafields)})
 
     def _update_site_metafields(self, key, values):
         self.metafields[key] = values
