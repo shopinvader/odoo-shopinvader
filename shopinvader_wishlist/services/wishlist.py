@@ -274,11 +274,11 @@ class WishlistService(Component):
         )
         record2 = self._get(params["move_to_wishlist_id"])
         self.env["product.set.line"].create(
-            self._prepare_item(params, record2)
+            self._prepare_item(record2, params)
         )
         existing.unlink()
 
-    def _prepare_item(self, params, record):
+    def _prepare_item(self, record, params):
         return {
             "product_set_id": record.id,
             "product_id": params["product_id"],
