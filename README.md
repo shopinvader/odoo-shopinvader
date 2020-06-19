@@ -31,7 +31,7 @@ addon | version | summary
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
-[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.3 | Shopinvader Invoice module
+[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.2.0 | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 12.0.2.0.0 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.3.2.2 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 12.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
