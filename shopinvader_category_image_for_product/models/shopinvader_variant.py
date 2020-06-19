@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import api, fields, models
@@ -19,13 +18,6 @@ class ShopinvaderVariant(models.Model):
             and c.images
         )
 
-    @api.multi
-    @api.depends(
-        "shopinvader_categ_ids",
-        "shopinvader_categ_ids.index_id",
-        "shopinvader_categ_ids.index_id.backend_id",
-        "shopinvader_categ_ids.images",
-    )
     def _compute_image_categories(self):
         """
         Compute function for image_categories field.
