@@ -124,6 +124,7 @@ class TestCartExpiry(CartCase):
                 {"expiration_date": sale.cart_expiration_date},
                 cart.get("data"),
             )
+
     def test_cart_expiry_not_draft(self):
         """
         Ensure the cart is not deleted/canceled when the state is not draft.
