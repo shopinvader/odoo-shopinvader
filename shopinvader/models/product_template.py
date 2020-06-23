@@ -9,6 +9,11 @@ from odoo import fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
+    is_webshop = fields.Boolean(
+        string='Can be sold on the Webshop',
+        default=True
+    )
+
     def _search_shopinvader_backend_ids(self, operator, value):
         si_var_obj = self.env["shopinvader.product"]
         bindings = si_var_obj.search([("backend_id.name", operator, value)])

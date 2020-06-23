@@ -5,6 +5,13 @@
         <field name="model">product.template</field>
          <field name="inherit_id" ref="product.product_template_form_view" />
         <field name="arch" type="xml">
+
+            <xpath expr="//label[@for='sale_ok']" position="after">
+                <div>
+                    <field name="is_webshop"/>
+                    <label for="is_webshop"/>
+                </div>
+            </xpath>
             <xpath expr="/form/sheet/notebook" position="inside">
                 <page name="shopinvader" string="ShopInvader">
                     <field name="shopinvader_bind_ids"/>
