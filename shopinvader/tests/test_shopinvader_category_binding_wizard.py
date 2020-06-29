@@ -1,35 +1,17 @@
 # Copyright 2016 Cédric Pigeon
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.addons.component.tests.common import SavepointComponentCase
 
-from .common import CommonMixin
+from .test_shopinvader_category import TestShopinvaderCategoryBase
 
 
-class TestShopinvaderCategoryBindingWizard(
-    SavepointComponentCase, CommonMixin
-):
+class TestShopinvaderCategoryBindingWizard(TestShopinvaderCategoryBase):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderCategoryBindingWizard, cls).setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.backend = cls.env.ref("shopinvader.backend_1")
-        cls.backend2 = cls.env.ref("shopinvader.backend_2")
-        cls.product_category = cls.env.ref("product.product_category_4")
         cls.bind_wizard_model = cls.env["shopinvader.category.binding.wizard"]
         cls.unbind_wizard_model = cls.env[
             "shopinvader.category.unbinding.wizard"
         ]
-        cls.category_bind_model = cls.env["shopinvader.category"]
-        cat_obj = cls.env["product.category"]
-
-        cls.cat_level1 = cat_obj.create({"name": "Category Level 1"})
-        cls.cat_level2 = cat_obj.create(
-            {"name": "Category Level 2", "parent_id": cls.cat_level1.id}
-        )
-        cls.cat_level3 = cat_obj.create(
-            {"name": "Category Level 3", "parent_id": cls.cat_level2.id}
-        )
-        cls.cat_level1._parent_store_compute()
 
     def test_category_binding(self):
         """

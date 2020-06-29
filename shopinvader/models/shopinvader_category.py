@@ -1,9 +1,14 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
 
 from odoo import api, fields, models
 from odoo.addons.base_url.models.abstract_url import get_model_ref
+
+_logger = logging.getLogger(__name__)
 
 
 class ShopinvaderCategory(models.Model):
@@ -91,17 +96,27 @@ class ShopinvaderCategory(models.Model):
             )
 
     def _post_process_url_key(self, key):
-        key = super(ShopinvaderCategory, self)._post_process_url_key(key)
+        path_bits = [
+            super(ShopinvaderCategory, self)._post_process_url_key(key)
+        ]
         if self.parent_id and self.shopinvader_parent_id.active:
-            if not self.shopinvader_parent_id.automatic_url_key:
-                self.shopinvader_parent_id._compute_automatic_url_key()
-            parent_url = self.shopinvader_parent_id.automatic_url_key
-            key = "/".join([parent_url, key])
-        return key
+            parent_key = self.shopinvader_parent_id.automatic_url_key
+            if parent_key:
+                path_bits.insert(0, parent_key)
+            else:
+                _logger.warning(
+                    "Parent URL key missing for category ID=%d parent ID=%d",
+                    (self.id, self.parent_id.id),
+                )
+        # Safely join all bits
+        return "/".join([x for x in path_bits if x and x.strip()])
 
-    @api.depends(
-        "lang_id", "record_id.name", "shopinvader_parent_id.automatic_url_key"
-    )
+    def _compute_automatic_url_key_depends(self):
+        return super()._compute_automatic_url_key_depends() + [
+            "shopinvader_parent_id.automatic_url_key",
+            "shopinvader_parent_id.active",
+        ]
+
     def _compute_automatic_url_key(self):
         self._generic_compute_automatic_url_key()
 
