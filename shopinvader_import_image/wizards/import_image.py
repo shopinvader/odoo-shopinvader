@@ -44,6 +44,16 @@ class ProductImageImportWizard(models.TransientModel):
         string="Product Model",
         required=True,
     )
+    source_type = fields.Selection(
+        [
+            ("url", "URL"),
+            ("zip_file", "Zip file"),
+            ("external_storage", "External storage"),
+        ],
+        string="Source type",
+        required=True,
+        default="url",
+    )
     file_csv = fields.Binary(string="CSV file", required=True)
     csv_header = fields.Char(
         string="CSV file header",
@@ -54,6 +64,13 @@ class ProductImageImportWizard(models.TransientModel):
         string="CSV file delimiter", default=",", required=True
     )
     source_zipfile = fields.Binary("ZIP with images", required=False)
+    source_storage_backend_id = fields.Many2one(
+        "storage.backend", "Storage Backend with images"
+    )
+    external_csv_path = fields.Char(
+        string="Path to CSV file",
+        help="Relative path of the CSV file located in the external storage",
+    )
     options = fields.Serialized(readonly=True)
     overwrite = fields.Boolean(
         "Overwrite image with same name", sparse="options", default=False
@@ -88,19 +105,18 @@ class ProductImageImportWizard(models.TransientModel):
         res = {}
         binary = None
         mimetype = None
-        if validators.url(file_path):
-            binary = self._read_from_url(file_path)
-        elif self.source_zipfile:
-            binary = self._read_from_zip(file_path)
+        binary = getattr(self, "_read_from_" + self.source_type)(file_path)
         if binary:
             mimetype = magic.from_buffer(binary, mime=True)
             res = {"mimetype": mimetype, "b64": base64.encodestring(binary)}
         return res
 
     def _read_from_url(self, file_path):
-        return urlopen(file_path).read()
+        if validators.url(file_path):
+            return urlopen(file_path).read()
+        return None
 
-    def _read_from_zip(self, file_path):
+    def _read_from_zip_file(self, file_path):
         if not self.source_zipfile:
             raise exceptions.UserError(_("No zip file provided!"))
         file_content = base64.b64decode(self.source_zipfile)
@@ -112,10 +128,22 @@ class ProductImageImportWizard(models.TransientModel):
                     # File missing
                     return None
 
+    def _read_from_external_storage(self, file_path):
+        if not self.source_storage_backend_id:
+            raise exceptions.UserError(_("No storage backend provided!"))
+        return self.source_storage_backend_id._get_bin_data(file_path)
+
+    def _read_csv(self):
+        if self.file_csv:
+            return base64.b64decode(self.file_csv)
+        elif self.external_csv_path:
+            return self.source_storage_backend_id._get_bin_data(
+                self.external_csv_path
+            )
+
     def _get_lines(self):
         lines = []
-        file_content = base64.b64decode(self.file_csv)
-        with closing(io.BytesIO(file_content)) as file_csv:
+        with closing(io.BytesIO(self._read_csv())) as file_csv:
             reader = csv_reader(file_csv, delimiter=self.csv_delimiter)
             headers = next(reader, None)
 

@@ -5,6 +5,7 @@
 import base64
 import os
 
+import mock
 from odoo.addons.shopinvader_image.tests.common import TestShopinvaderImageCase
 
 
@@ -35,6 +36,7 @@ class TestShopinvaderImportImageCase(TestShopinvaderImageCase):
             "product_model": "product.template",
             "file_csv": self.file_csv_content,
             "source_zipfile": self.file_zip_content,
+            "source_type": "zip_file",
         }
         vals.update(kw)
         return self.env["shopinvader.import.product_image"].create(vals)
@@ -63,7 +65,7 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
         img_content = self._get_file_content(
             "A001.jpg", base_path=self.base_path, as_binary=True
         )
-        self.assertEqual(self.wiz._read_from_zip("A001.jpg"), img_content)
+        self.assertEqual(self.wiz._read_from_zip_file("A001.jpg"), img_content)
 
     def test_get_b64(self):
         img_content = self._get_file_content(
@@ -164,3 +166,27 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
         self.assertEqual(len(self.products[1].image_ids), 1)
         self.assertEqual(self.products[0].image_ids[0].tag_id.name, "A001 tag")
         self.assertEqual(self.products[1].image_ids[0].tag_id.name, "A002 tag")
+
+    def test_import_with_storage(self):
+        wiz = self._get_wizard(
+            source_type="external_storage",
+            source_storage_backend_id=self.storage_backend.id,
+            create_missing_tags=True,
+        )
+        fake_image_binary = self._get_file_content(
+            "A001.jpg", base_path=self.base_path, as_binary=True
+        )
+        with mock.patch.object(
+            self.storage_backend.__class__, "_get_bin_data"
+        ) as mocked:
+            mocked.return_value = fake_image_binary
+            wiz.do_import()
+        self.assertEqual(
+            wiz.report,
+            {
+                "created": ["A001", "A002", "A004"],
+                "missing": ["A003"],
+                "missing_tags": [],
+                "file_not_found": [],
+            },
+        )
