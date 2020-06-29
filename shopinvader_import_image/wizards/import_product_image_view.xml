@@ -14,7 +14,7 @@
                             <field name="file_csv" filename="filename"/>
                             <field name="csv_header"/>
                             <field name="csv_delimiter"/>
-                            <field name="file_zip" filename="filename"/>
+                            <field name="source_zipfile" filename="filename"/>
                             <field name="overwrite"/>
                             <field name="create_missing_tags"/>
                         </group>

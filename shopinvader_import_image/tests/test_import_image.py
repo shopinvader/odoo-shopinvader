@@ -33,7 +33,7 @@ class TestShopinvaderImportImageCase(TestShopinvaderImageCase):
             "storage_backend_id": self.storage_backend.id,
             "product_model": "product.template",
             "file_csv": self.file_csv_content,
-            "file_zip": self.file_zip_content,
+            "source_zipfile": self.file_zip_content,
         }
         vals.update(kw)
         return self.env["shopinvader.import.product_image"].create(vals)

@@ -53,7 +53,7 @@ class ProductImageImportWizard(models.TransientModel):
     csv_delimiter = fields.Char(
         string="CSV file delimiter", default=",", required=True
     )
-    file_zip = fields.Binary("ZIP with images", required=False)
+    source_zipfile = fields.Binary("ZIP with images", required=False)
     options = fields.Serialized(readonly=True)
     overwrite = fields.Boolean(
         "Overwrite image with same name", sparse="options", default=False
@@ -89,7 +89,7 @@ class ProductImageImportWizard(models.TransientModel):
         mimetype = None
         if validators.url(file_path):
             binary = self._read_from_url(file_path)
-        elif self.file_zip:
+        elif self.source_zipfile:
             binary = self._read_from_zip(file_path)
         if binary:
             mimetype = magic.from_buffer(binary, mime=True)
@@ -99,7 +99,7 @@ class ProductImageImportWizard(models.TransientModel):
         return urlopen(file_path).read()
 
     def _read_from_zip(self, file_path):
-        file_content = base64.b64decode(self.file_zip)
+        file_content = base64.b64decode(self.source_zipfile)
         with closing(io.BytesIO(file_content)) as zip_file:
             with ZipFile(zip_file, "r") as z:
                 return z.read(file_path)
