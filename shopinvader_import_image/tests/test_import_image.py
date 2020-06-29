@@ -24,9 +24,10 @@ class TestShopinvaderImportImageCase(TestShopinvaderImageCase):
         )
 
         cls.wiz = cls._get_wizard(cls)
-        cls.products = cls.env["product.template"].search([], limit=2)
+        cls.products = cls.env["product.template"].search([], limit=3)
         cls.products[0].write({"default_code": "A001", "image_ids": False})
         cls.products[1].write({"default_code": "A002", "image_ids": False})
+        cls.products[2].write({"default_code": "A004", "image_ids": False})
 
     def _get_wizard(self, **kw):
         vals = {
@@ -49,6 +50,12 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
                 "file_path": "A00%d.jpg" % x,
             }
             for x in range(1, 4)
+        ] + [
+            {
+                "default_code": "A004",
+                "file_path": "A004-MISSING.jpg",
+                "tag_name": "",
+            }
         ]
         self.assertEqual(lines, expected)
 
@@ -64,7 +71,10 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
         )
         self.assertEqual(
             self.wiz._get_base64("A001.jpg"),
-            ("image/jpeg", base64.encodestring(img_content)),
+            {
+                "mimetype": "image/jpeg",
+                "b64": base64.encodestring(img_content),
+            },
         )
 
     def test_import_errors(self):
@@ -77,6 +87,7 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
                 "created": [],
                 "missing": ["A001", "A002", "A003"],
                 "missing_tags": ["A001 tag", "A002 tag", "A003 tag"],
+                "file_not_found": ["A004"],
             },
         )
 
@@ -88,6 +99,7 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
                 "created": ["A001", "A002"],
                 "missing": ["A003"],
                 "missing_tags": ["A001 tag", "A002 tag", "A003 tag"],
+                "file_not_found": ["A004"],
             },
         )
         self.assertEqual(len(self.products[0].image_ids), 1)
@@ -102,6 +114,7 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
                 "created": ["A001", "A002"],
                 "missing": ["A003"],
                 "missing_tags": ["A001 tag", "A002 tag", "A003 tag"],
+                "file_not_found": ["A004"],
             },
         )
         self.assertEqual(len(self.products[0].image_ids), 2)
@@ -116,6 +129,7 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
                 "created": ["A001", "A002"],
                 "missing": ["A003"],
                 "missing_tags": ["A001 tag", "A002 tag", "A003 tag"],
+                "file_not_found": ["A004"],
             },
         )
         self.assertEqual(len(self.products[0].image_ids), 1)
@@ -127,6 +141,7 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
                 "created": ["A001", "A002"],
                 "missing": ["A003"],
                 "missing_tags": ["A001 tag", "A002 tag", "A003 tag"],
+                "file_not_found": ["A004"],
             },
         )
         self.assertEqual(len(self.products[0].image_ids), 1)
@@ -137,7 +152,13 @@ class TestShopinvaderImportImage(TestShopinvaderImportImageCase):
         self.wiz.create_missing_tags = True
         self.wiz.do_import()
         self.assertEqual(
-            self.wiz.report, {"created": ["A001", "A002"], "missing": ["A003"]}
+            self.wiz.report,
+            {
+                "created": ["A001", "A002"],
+                "missing": ["A003"],
+                "missing_tags": [],
+                "file_not_found": ["A004"],
+            },
         )
         self.assertEqual(len(self.products[0].image_ids), 1)
         self.assertEqual(len(self.products[1].image_ids), 1)

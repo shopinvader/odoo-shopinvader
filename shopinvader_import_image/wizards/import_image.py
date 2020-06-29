@@ -85,6 +85,7 @@ class ProductImageImportWizard(models.TransientModel):
 
     @api.model
     def _get_base64(self, file_path):
+        res = {}
         binary = None
         mimetype = None
         if validators.url(file_path):
@@ -93,16 +94,23 @@ class ProductImageImportWizard(models.TransientModel):
             binary = self._read_from_zip(file_path)
         if binary:
             mimetype = magic.from_buffer(binary, mime=True)
-        return mimetype, binary and base64.encodestring(binary)
+            res = {"mimetype": mimetype, "b64": base64.encodestring(binary)}
+        return res
 
     def _read_from_url(self, file_path):
         return urlopen(file_path).read()
 
     def _read_from_zip(self, file_path):
+        if not self.source_zipfile:
+            raise exceptions.UserError(_("No zip file provided!"))
         file_content = base64.b64decode(self.source_zipfile)
         with closing(io.BytesIO(file_content)) as zip_file:
             with ZipFile(zip_file, "r") as z:
-                return z.read(file_path)
+                try:
+                    return z.read(file_path)
+                except KeyError:
+                    # File missing
+                    return None
 
     def _get_lines(self):
         lines = []
@@ -148,7 +156,11 @@ class ProductImageImportWizard(models.TransientModel):
         image_obj = self.env["storage.image"]
         relation_obj = self.env["product.image.relation"]
 
-        report = {"created": set()}
+        report = {
+            "created": set(),
+            "file_not_found": set(),
+            "missing_tags": [],
+        }
         options = options or {}
 
         # do all query at once
@@ -167,7 +179,7 @@ class ProductImageImportWizard(models.TransientModel):
             [code for code in all_codes if not existing_by_code.get(code)]
         )
 
-        all_tags = [x["tag_name"] for x in lines]
+        all_tags = [x["tag_name"] for x in lines if x["tag_name"]]
         tags = tag_obj.search_read([("name", "in", all_tags)], ["name"])
         tag_by_name = {x["name"]: x["id"] for x in tags}
         missing_tags = set(all_tags).difference(set(tag_by_name.keys()))
@@ -184,6 +196,9 @@ class ProductImageImportWizard(models.TransientModel):
             line = lines_by_code[prod["default_code"]]
             file_path = line["file_path"]
             file_vals = self._prepare_file_values(file_path)
+            if not file_vals:
+                report["file_not_found"].add(prod["default_code"])
+                continue
             file_vals.update(
                 {"name": file_vals["name"], "alt_name": file_vals["name"]}
             )
@@ -213,16 +228,19 @@ class ProductImageImportWizard(models.TransientModel):
             )
             report["created"].add(prod["default_code"])
         report["created"] = sorted(report["created"])
+        report["file_not_found"] = sorted(report["file_not_found"])
         return report
 
     def _prepare_file_values(self, file_path, filetype="image"):
         name = os.path.basename(file_path)
-        mimetype, file_b64 = self._get_base64(file_path)
+        file_data = self._get_base64(file_path)
+        if not file_data:
+            return {}
         vals = {
-            "data": file_b64,
+            "data": file_data["b64"],
             "name": name,
             "file_type": filetype,
-            "mimetype": mimetype,
+            "mimetype": file_data["mimetype"],
             "backend_id": self.storage_backend_id.id,
         }
         return vals
