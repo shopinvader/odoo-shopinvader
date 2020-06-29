@@ -15,7 +15,12 @@
     "category": "Product",
     "depends": ["shopinvader_image"],
     "external_dependencies": {"python": ["magic", "validators"]},
-    "data": ["wizards/import_product_image_view.xml"],
+    "data": [
+        "data/ir_cron.xml",
+        "security/ir_model_access.xml",
+        "views/import_product_image_view.xml",
+        "views/report_html.xml",
+    ],
     "license": "AGPL-3",
     "installable": True,
 }

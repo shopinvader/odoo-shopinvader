@@ -17,6 +17,8 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 
 from odoo import _, api, exceptions, fields, models
+from odoo.addons.queue_job.job import job
+from odoo.tools import date_utils
 from odoo.tools.pycompat import csv_reader
 
 _logger = logging.getLogger(__name__)
@@ -28,10 +30,10 @@ except (ImportError, IOError) as err:
     _logger.debug(err)
 
 
-class ProductImageImportWizard(models.TransientModel):
+class ProductImageImportWizard(models.Model):
 
     _name = "shopinvader.import.product_image"
-    _description = "Wizard to import product images"
+    _description = "Handle import of shopinvader product images"
 
     storage_backend_id = fields.Many2one(
         "storage.backend", "Storage Backend", required=True
@@ -77,27 +79,22 @@ class ProductImageImportWizard(models.TransientModel):
     )
     create_missing_tags = fields.Boolean(sparse="options", default=False)
     report = fields.Serialized(readonly=True)
-    # FIXME: the report it's computed but is not displayed :/
     report_html = fields.Html(readonly=True, compute="_compute_report_html")
+    state = fields.Selection(
+        [("new", "New"), ("scheduled", "Scheduled"), ("done", "Done")],
+        string="Import state",
+        default="new",
+    )
+    done_on = fields.Datetime()
 
     @api.depends("report")
     def _compute_report_html(self):
+        tmpl = self.env.ref("shopinvader_import_image.report_html")
         for record in self:
             if not record.report:
                 record.report_html = ""
                 continue
-            report_html = (
-                "<div>"
-                + "\n".join(
-                    [
-                        "<p><strong>{}</strong></p><p>{}</p>".format(
-                            key, ", ".join(vals)
-                        )
-                        for key, vals in record.report.items()
-                    ]
-                )
-                + "</div>"
-            )
+            report_html = tmpl.render({"record": record})
             record.report_html = report_html
 
     @api.model
@@ -170,14 +167,25 @@ class ProductImageImportWizard(models.TransientModel):
     def _get_options(self):
         return self.options
 
-    def do_import(self):
+    def action_import(self):
         self.report = self.report_html = False
+        self.state = "scheduled"
+        return self.with_delay().do_import()
+
+    @job(default_channel="root.shopinvader.import.images")
+    def do_import(self):
         lines = self._get_lines()
         report = self._do_import(
             lines, self.product_model, options=self._get_options()
         )
-        self.report = report
-        return {"type": "ir.actions.act_view_reload"}
+        self.write(
+            {
+                "report": report,
+                "state": "done",
+                "done_on": fields.Datetime.now(),
+            }
+        )
+        return report
 
     def _do_import(self, lines, product_model, options=None):
         tag_obj = self.env["image.tag"]
@@ -187,6 +195,7 @@ class ProductImageImportWizard(models.TransientModel):
         report = {
             "created": set(),
             "file_not_found": set(),
+            "missing": [],
             "missing_tags": [],
         }
         options = options or {}
@@ -272,3 +281,26 @@ class ProductImageImportWizard(models.TransientModel):
             "backend_id": self.storage_backend_id.id,
         }
         return vals
+
+    @api.model
+    def _cron_cleanup_obsolete(self, days=7):
+        from_date = fields.Datetime.now().replace(
+            hour=23, minute=59, second=59
+        )
+        limit_date = date_utils.subtract(from_date, days)
+        records = self.search(
+            [("state", "=", "done"), ("done_on", "<=", limit_date)]
+        )
+        records.unlink()
+        _logger.info(
+            "Cleanup obsolete images import. %d records found.", len(records)
+        )
+
+    def _report_label_for(self, key):
+        labels = {
+            "created": _("Created"),
+            "file_not_found": _("Image file not found"),
+            "missing": _("Product not found"),
+            "missing_tags": _("Tags not found"),
+        }
+        return labels.get(key, key)
