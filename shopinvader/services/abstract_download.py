@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import mimetypes
+import time
 
 from odoo import _
 from odoo.addons.base_rest.components.service import (
@@ -11,6 +11,7 @@ from odoo.addons.base_rest.components.service import (
 from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError
 from odoo.http import content_disposition, request
+from odoo.tools.safe_eval import safe_eval
 
 
 class AbstractDownload(AbstractComponent):
@@ -75,14 +76,12 @@ class AbstractDownload(AbstractComponent):
         target_report_def = self._get_report_action(target, params=params)
         report_name = target_report_def.get("report_name")
         report_type = target_report_def.get("report_type")
-        content, file_format = self.env["ir.actions.report.xml"].render_report(
-            res_ids=target.ids,
-            name=report_name,
-            data={"report_type": report_type},
+        report = self._get_report(report_name, report_type)
+        content, extension = report.render(
+            target.ids, data={"report_type": report_type}
         )
-        report = self._get_report(report_name, report_type, params=params)
         filename = self._get_binary_content_filename(
-            target, report, file_format, params=params
+            target, report, extension, params=params
         )
         mimetype = mimetypes.guess_type(filename)
         if mimetype:
@@ -107,10 +106,10 @@ class AbstractDownload(AbstractComponent):
             ("report_type", "=", report_type),
             ("report_name", "=", report_name),
         ]
-        return self.env["ir.actions.report.xml"].search(domain, limit=1)
+        return self.env["ir.actions.report"].search(domain)
 
     def _get_binary_content_filename(
-        self, target, report, format, params=None
+        self, target, report, extension, params=None
     ):
         """
         Build the filename
@@ -120,4 +119,9 @@ class AbstractDownload(AbstractComponent):
         :param params: dict
         :return: str
         """
-        return "{}.{}".format(report.name, format)
+        if report.print_report_name and not len(target) > 1:
+            report_name = safe_eval(
+                report.print_report_name, {"object": target, "time": time}
+            )
+            return "{}.{}".format(report_name, extension)
+        return "{}.{}".format(report.name, extension)

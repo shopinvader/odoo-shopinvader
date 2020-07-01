@@ -32,7 +32,9 @@ class SaleService(Component):
         :param params: dict
         :return: dict/action
         """
-        return target.print_quotation()
+        return self.env.ref("sale.action_report_saleorder").report_action(
+            target, config=False
+        )
 
     def ask_email_invoice(self, _id):
         """
