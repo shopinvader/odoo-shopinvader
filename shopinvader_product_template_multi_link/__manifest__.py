@@ -10,7 +10,7 @@
     "version": "13.0.1.0.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
-    "author": "Akretion,GRAP",
+    "author": "Akretion,GRAP,Camptocamp",
     "license": "AGPL-3",
     "installable": True,
     "auto_install": True,
