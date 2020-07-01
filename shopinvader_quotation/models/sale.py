@@ -29,7 +29,6 @@ class SaleOrder(models.Model):
             return "estimated"
         return super()._get_shopinvader_state()
 
-    @api.multi
     def action_request_quotation(self):
         for cart in self:
             if cart.state == "draft" and cart.typology == "cart":

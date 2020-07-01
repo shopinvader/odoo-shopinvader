@@ -32,7 +32,9 @@ class QuotationService(Component):
         :param params: dict
         :return: dict/action
         """
-        return target.print_quotation()
+        return self.env.ref("sale.action_report_saleorder").report_action(
+            target, config=False
+        )
 
     # Validator
     def _validator_get(self):

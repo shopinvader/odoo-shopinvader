@@ -6,13 +6,14 @@ from odoo.addons.shopinvader.tests.common import CommonCase, CommonTestDownload
 
 
 class QuotationDownloadCase(CommonCase, CommonTestDownload):
-    def setUp(self, *args, **kwargs):
-        super(QuotationDownloadCase, self).setUp(*args, **kwargs)
-        self.quotation = self.env.ref("shopinvader.sale_order_2")
-        self.quotation.write({"typology": "quotation"})
-        self.partner = self.env.ref("shopinvader.partner_1")
-        with self.work_on_services(partner=self.partner) as work:
-            self.service = work.component(usage="quotations")
+    @classmethod
+    def setUpClass(cls, *args, **kwargs):
+        super().setUpClass(*args, **kwargs)
+        cls.quotation = cls.env.ref("shopinvader.sale_order_2")
+        cls.quotation.write({"typology": "quotation"})
+        cls.partner = cls.env.ref("shopinvader.partner_1")
+        with cls.work_on_services(partner=cls.partner) as work:
+            cls.service = work.component(usage="quotations")
 
     def test_quotation_download(self):
         self.assertEqual(self.quotation.typology, "quotation")
