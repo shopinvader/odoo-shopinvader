@@ -11,7 +11,7 @@
     "version": "10.0.1.0.1",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "author": "Akretion,GRAP",
+    "author": "Akretion,GRAP,Camptocamp",
     "license": "AGPL-3",
     "installable": True,
     "auto_install": True,
