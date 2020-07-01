@@ -151,19 +151,6 @@ class ShopinvaderRestCase(BaseRestCase):
         # To ensure multi-backend works correctly, we just have to create
         # a new one on the same company.
         self.backend_copy = self.env.ref("shopinvader.backend_2")
-        self.api_key = "myApiKey"
-        self.api_key2 = "myApiKey2"
-        self.auth_api_key_name = self.AUTH_API_KEY_NAME
-        self.auth_api_key_name2 = self.AUTH_API_KEY_NAME2
-        if self.auth_api_key_name not in serv_config.sections():
-            serv_config.add_section(self.auth_api_key_name)
-            serv_config.set(self.auth_api_key_name, "user", "admin")
-            serv_config.set(self.auth_api_key_name, "key", self.api_key)
-        if self.auth_api_key_name2 not in serv_config.sections():
-            serv_config.add_section(self.auth_api_key_name2)
-            serv_config.set(self.auth_api_key_name2, "user", "admin")
-            serv_config.set(self.auth_api_key_name2, "key", self.api_key2)
-        self.backend.auth_api_key_name = self.auth_api_key_name2
 
 
 class CommonTestDownload(object):

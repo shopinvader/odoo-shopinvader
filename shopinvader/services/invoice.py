@@ -1,16 +1,14 @@
 # Copyright 2019 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-import mimetypes
-import time
-
-from odoo import _
 from odoo.addons.component.core import Component
 from odoo.osv import expression
-from odoo.tools.safe_eval import safe_eval
 
 
 class InvoiceService(Component):
-    _inherit = ["base.shopinvader.service", "abstract.shopinvader.download"]
+    _inherit = [
+        "shopinvader.abstract.mail.service",
+        "abstract.shopinvader.download",
+    ]
     _name = "shopinvader.invoice.service"
     _usage = "invoice"
     _expose_model = "account.invoice"
@@ -50,7 +48,7 @@ class InvoiceService(Component):
         Get every invoice states allowed to return on the service.
         :return: list of str
         """
-        return ["paid"]
+        return ["posted"]
 
     def _get_base_search_domain(self):
         """
@@ -88,4 +86,6 @@ class InvoiceService(Component):
         :param target: recordset
         :return: dict/action
         """
-        return target.invoice_print()
+        return self.env.ref("account.account_invoices").report_action(
+            target, config=False
+        )

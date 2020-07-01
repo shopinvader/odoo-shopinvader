@@ -1,8 +1,6 @@
 # Copyright 2019 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-import mock
 from odoo import fields
-from odoo.exceptions import MissingError
 
 from .common import CommonCase, CommonTestDownload
 
