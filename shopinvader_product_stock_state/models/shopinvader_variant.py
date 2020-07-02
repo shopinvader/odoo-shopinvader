@@ -13,6 +13,9 @@ class ShopinvaderVariant(models.Model):
         config = self.backend_id.stock_level_config
         if "state" in config:
             res["state"] = self.stock_state
+        # TODO @simahawk: I don't get why this would be useful
+        # The qty should be always there IMO.
+        # Plus, it's already calculated so we don't have any perf improvement.
         if config == "only_state" or (
             config == "state_and_low_qty"
             and res["state"] != "in_limited_stock"
