@@ -49,13 +49,17 @@ class ShopinvaderBackend(models.Model):
         return self.env["stock.warehouse"].search([], limit=1)
 
     def _get_warehouse_list_for_export(self):
-        """Return the list of warehouse what will be used for exporting the
-        stock level. A global key "global" is added with the list of all
-        warehouse ids
+        """Get list of warehouse to be used for exporting stock level.
+        
+        A global key "global" is added with the list of all warehouse ids.
+
         :return: dict with warehouse code as key and warehouse_ids as value """
         self.ensure_one()
         result = {"global": self.warehouse_ids.ids}
         if len(self.warehouse_ids) > 1:
             for warehouse in self.warehouse_ids:
-                result[slugify(warehouse.code)] = [warehouse.id]
+                result[self._make_warehouse_key(warehouse)] = [warehouse.id]
         return result
+    
+    def _make_warehouse_key(self, wh):
+        return slugify(wh.code)

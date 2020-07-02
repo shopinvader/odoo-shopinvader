@@ -4,7 +4,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from collections import defaultdict
-
 from odoo import api, fields, models
 
 
@@ -30,7 +29,6 @@ class ShopinvaderVariant(models.Model):
         stock_field = self.backend_id.product_stock_field_id.name
         return {"qty": self[stock_field]}
 
-    @api.multi
     def _compute_stock_data(self):
         result = defaultdict(dict)
         for backend in self.mapped("backend_id"):
@@ -39,7 +37,6 @@ class ShopinvaderVariant(models.Model):
                 wh_key,
                 wh_ids,
             ) in backend._get_warehouse_list_for_export().items():
-
                 for loc_record in loc_records.with_context(warehouse=wh_ids):
                     result[loc_record.id][
                         wh_key
