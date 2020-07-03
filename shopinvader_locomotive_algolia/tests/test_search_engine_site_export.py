@@ -31,7 +31,10 @@ class TestSiteSearchEngineExport(Base):
     def _setup_search_engine(cls):
         cls.specific_backend = cls.env.ref("connector_algolia.se_algolia_demo")
         cls.specific_backend.write(
-            {"algolia_app_id": "ABCDEFG", "algolia_api_key": "123456789"}
+            {
+                "algolia_app_id": "ABCDEFG",
+                "algolia_api_key_public": "123456789",
+            }
         )
         cls.backend.se_backend_id = cls.specific_backend.se_backend_id
         cls.search_engine_name = cls.backend.se_backend_id.search_engine_name
