@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_partner_binding_form_view">
+        <field name="name">shopinvader.partner.binding.form (in shopinvader)</field>
+        <field name="model">shopinvader.partner.binding</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_binding_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='binding_lines']/tree/field[@name='bind']" position="before">
+                <field name="is_guest" readonly="True"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

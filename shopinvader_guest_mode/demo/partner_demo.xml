@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo noupdate="1">
+
+    <record id="shopinvader.backend_1" model="shopinvader.backend">
+        <field name="is_guest_mode_allowed" eval="True"/>
+    </record>
+
+    <record id="partner_demo_1" model="res.partner">
+        <field name="name">Seth</field>
+        <field name="customer" eval="True"/>
+        <field name="email">seth@shopinvader.com</field>
+        <field name="street">pré du bas</field>
+        <field name="city">Aurec sur Loire</field>
+        <field name="zip">43110</field>
+        <field name="country_id" ref="base.fr"/>
+        <field name="property_product_pricelist" ref="product.list0"/>
+    </record>
+
+    <record id="shopinvader_partner_1" model="shopinvader.partner">
+        <field name="backend_id" ref="shopinvader.backend_1"/>
+        <field name="external_id">UG9uEXk=</field>
+        <field name="is_guest" eval="True"/>
+        <field name="record_id" ref="partner_demo_1"/>
+    </record>
+
+</odoo>
