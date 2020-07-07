@@ -32,7 +32,14 @@ class PartnerEventListener(Component):
             return False
         return True
 
-    @skip_if(lambda self, record, **kwargs: not record.customer)
+    def _get_skip_if_condition(self, record, **kwargs):
+        return not record.customer
+
+    @skip_if(
+        lambda self, record, **kwargs: self._get_skip_if_condition(
+            record, **kwargs
+        )
+    )
     def on_record_create(self, record, fields=None):
         if not self._check_partner(record):
             return
@@ -50,7 +57,11 @@ class PartnerEventListener(Component):
             wizard.binding_lines.write({"bind": True})
             wizard.action_apply()
 
-    @skip_if(lambda self, record, **kwargs: not record.customer)
+    @skip_if(
+        lambda self, record, **kwargs: self._get_skip_if_condition(
+            record, **kwargs
+        )
+    )
     def on_record_write(self, record, fields=None):
         """
         If target fields are updated to trigger the website binding,
