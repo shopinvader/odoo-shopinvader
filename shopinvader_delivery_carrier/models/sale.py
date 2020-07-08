@@ -49,10 +49,15 @@ class SaleOrder(models.Model):
         wizard = (
             self.env["choose.delivery.carrier"]
             .with_context(
-                {"default_order_id": self.id, "default_carrier_id": carrier_id}
+                {
+                    "default_order_id": self.id,
+                    "default_carrier_id": carrier_id,
+                    "carrier_recompute": True,
+                }
             )
             .create({})
         )
         wizard._onchange_carrier_id()
+        wizard.save()
         wizard.button_confirm()
-        return wizard.delivery_price
+        return True
