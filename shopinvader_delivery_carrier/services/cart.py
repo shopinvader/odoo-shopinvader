@@ -112,9 +112,13 @@ class CartService(Component):
         self._unset_carrier(cart)
         return res
 
+    def _check_carrier_unset(self, cart, params):
+        return True
+
     def _update(self, cart, params):
         if params.get("shipping", {}).get("address"):
-            self._unset_carrier(cart)
+            if self._check_carrier_unset(cart, params):
+                self._unset_carrier(cart)
         return super(CartService, self)._update(cart, params)
 
     def _set_carrier(self, cart, carrier_id):
