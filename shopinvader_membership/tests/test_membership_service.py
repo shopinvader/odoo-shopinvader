@@ -6,6 +6,7 @@ from datetime import timedelta
 
 from odoo import fields
 from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.exceptions import UserError
 
 
 class TestMembershipService(CommonCase):
@@ -143,3 +144,24 @@ class TestMembershipService(CommonCase):
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, membership_lines)
+
+    def test_subscription(self):
+        # Check first not logged
+        with self.assertRaises(UserError) as e:
+            self.service_guest.dispatch("subscribe", self.product.id)
+        self.assertEqual(e.exception.name, "A user should be logged")
+        # Then with a logged user but with a non membership product
+        self.product.write({"membership": False})
+        with self.assertRaises(UserError) as e:
+            self.service.dispatch("subscribe", self.product.id)
+        self.assertIn("No membership product found with", e.exception.name)
+        # Then user logged and real membership product
+        self.product.write({"membership": True})
+        result = self.service.dispatch("subscribe", self.product.id)
+        invoice_id = result.get("invoice_id")
+        invoice = self.env["account.invoice"].browse(invoice_id)
+        self.assertEqual(self.partner, invoice.partner_id)
+        self.assertEqual(self.product, invoice.invoice_line_ids[0].product_id)
+        self.assertEqual(
+            self.product.list_price, invoice.invoice_line_ids[0].price_unit
+        )
