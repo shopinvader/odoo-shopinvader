@@ -5,21 +5,20 @@
 from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
-from odoo.addons.http_routing.models.ir_http import slugify
 from odoo.addons.server_environment import serv_config
 from odoo.http import request
 
 
 class ShopinvaderBackend(models.Model):
     _name = "shopinvader.backend"
-    _inherit = ["collection.base", "server.env.mixin"]
+    _inherit = [
+        "collection.base",
+        "server.env.techname.mixin",
+        "server.env.mixin",
+    ]
     _description = "Shopinvader Backend"
 
     name = fields.Char(required=True)
-    tech_name = fields.Char(
-        required=True,
-        help="Unique name for technical purposes. " "Eg: server env keys.",
-    )
     company_id = fields.Many2one(
         "res.company",
         "Company",
@@ -181,20 +180,12 @@ class ShopinvaderBackend(models.Model):
             "auth_api_key_id_uniq",
             "unique(auth_api_key_id)",
             "An authentication API Key can be used by only one backend.",
-        ),
-        ("tech_name_uniq", "unique(tech_name)", "`tech_name` must be unique"),
+        )
     ]
 
     @property
     def _server_env_fields(self):
         return {"location": {}}
-
-    def _server_env_section_name(self):
-        self.ensure_one()
-        if not self.tech_name:
-            return
-        base = self._server_env_global_section_name()
-        return ".".join((base, self.tech_name))
 
     @api.model
     def _default_company_id(self):
@@ -443,21 +434,3 @@ class ShopinvaderBackend(models.Model):
             self._get_id_from_auth_api_key.clear_cache(self.env[self._name])
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)
-
-    # TODO: would be nice to put this `tech_name` logic into server.env.mixin
-    # as we already copied it from search engine backend.
-    @api.model
-    def create(self, vals):
-        # make sure technical names are always there
-        if not vals.get("tech_name"):
-            vals["tech_name"] = self._normalize_name(vals["name"])
-        return super().create(vals)
-
-    @staticmethod
-    def _normalize_name(name):
-        return slugify(name).replace("-", "_")
-
-    @api.onchange("name")
-    def _onchange_name(self):
-        if self.name and not self.tech_name:
-            self.tech_name = self._normalize_name(self.name)
