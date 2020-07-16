@@ -4,7 +4,9 @@
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+from odoo.exceptions import UserError
 from odoo.osv import expression
+from odoo.tools.translate import _
 
 
 class MembershipService(Component):
@@ -38,6 +40,41 @@ class MembershipService(Component):
         :return: dict
         """
         return self._paginate_search(**params)
+
+    def subscribe(self, _id):
+        """
+        Subscribe to a membership product with logged user
+        :param _id: id of product.product
+        :return: dict with invoice_id
+        """
+        if not self._is_logged():
+            raise UserError(_("A user should be logged"))
+        membership_product = self.env["product.product"].search(
+            [("id", "=", _id), ("membership", "=", True)]
+        )
+        if not membership_product:
+            raise UserError(_("No membership product found with id %s") % _id)
+        wizard = self.env["membership.invoice"].create(
+            {"product_id": _id, "member_price": membership_product.list_price}
+        )
+        invoices_views_dict = wizard.with_context(
+            active_ids=self.partner.ids
+        ).membership_invoice()
+        return {"invoice_id": invoices_views_dict.get("domain")[0][2][0]}
+
+    def _validator_subscribe(self):
+        """
+        Validator for the subscribe
+        :return: dict
+        """
+        return {"membership_product_id": {"type": "integer"}}
+
+    def _validator_return_subscribe(self):
+        """
+        Output validator for the subscribe
+        :return: dict
+        """
+        return {"invoice_id": {"type": "integer"}}
 
     def _validator_search(self):
         """
