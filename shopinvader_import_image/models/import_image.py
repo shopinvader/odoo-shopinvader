@@ -254,7 +254,8 @@ class ProductImageImportWizard(models.Model):
             if product_model == "product.template":
                 tmpl_id = prod["id"]
             elif product_model == "product.product":
-                tmpl_id = prod["product_tmpl_id"]
+                # TODO: test product.product import
+                tmpl_id = prod["product_tmpl_id"][0]
 
             relation_obj.create(
                 {
