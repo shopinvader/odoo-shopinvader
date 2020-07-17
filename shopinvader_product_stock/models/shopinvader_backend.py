@@ -1,6 +1,8 @@
 # Copyright 2018 Akretion (http://www.akretion.com)
 # Copyright 2018 ACSONE SA/NV
 # Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
+# Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import logging
 
@@ -41,12 +43,26 @@ class ShopinvaderBackend(models.Model):
             "depending on the cron configuration"
         ),
     )
+    # NOTE: this field right now has no effect on qty sync.
+    # It's here to allow extending modules to define their own policies.
+    # See example in `shopinvader_product_stock_state`.
+    stock_level_config = fields.Selection(
+        selection="_selection_stock_level_config",
+        default="only_qty",
+        required=True,
+        help="Define stock level export policy"
+    )
 
     def _default_stock_field_id(self):
         return self.env.ref("stock.field_product_product__qty_available")
 
     def _default_warehouse_ids(self):
         return self.env["stock.warehouse"].search([], limit=1)
+
+    def _selection_stock_level_config(self):
+        return [
+            ("only_qty", "Only Quantity"),
+        ]
 
     def _get_warehouse_list_for_export(self):
         """Get list of warehouse to be used for exporting stock level.

@@ -15,6 +15,7 @@ class TestProductProduct(StockCommonCase):
         super(TestProductProduct, cls).setUpClass()
         cls.shopinvader_product = cls.product.shopinvader_bind_ids
         cls.company = cls.env.ref("base.main_company")
+        cls.shopinvader_backend.stock_level_config = "state_and_low_qty"
 
     def test_out_of_stock(self):
         self.assertEqual(

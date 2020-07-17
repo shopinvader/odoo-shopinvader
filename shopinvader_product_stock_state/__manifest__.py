@@ -12,6 +12,4 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["product_stock_state", "shopinvader_product_stock"],
-    "data": ["views/shopinvader_backend.xml"],
-    "external_dependencies": {},
 }
