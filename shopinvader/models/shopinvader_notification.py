@@ -12,7 +12,7 @@ class ShopinvaderNotification(models.Model):
     _description = "Shopinvader Notification"
 
     backend_id = fields.Many2one(
-        "shopinvader.backend", "Backend", required=True
+        "shopinvader.backend", "Backend", required=False
     )
     notification_type = fields.Selection(
         selection="_selection_notification_type",
@@ -107,4 +107,13 @@ class ShopinvaderNotification(models.Model):
     @job(default_channel="root.shopinvader.notification")
     def send(self, record_id):
         self.ensure_one()
-        return self.template_id.send_mail(record_id)
+        return self.template_id.with_context(
+            **self._get_template_context()
+        ).send_mail(record_id)
+
+    def _get_template_context(self):
+        return {
+            "notification_type": self.notification_type,
+            "shopinvader_backend": self.backend_id,
+            "website_name": self.backend_id.website_public_name,
+        }

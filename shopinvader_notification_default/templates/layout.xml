@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <!-- Using tables is still the only reliable way for html emails -->
+  <template id="make_table">
+    <t t-set="table_class" t-value="'block' + (' ' + extra_class if extra_class else '')" />
+    <table t-att-class="table_class">
+      <tbody>
+        <tr>
+          <td>
+            <t t-raw="0" />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </template>
+
+
+  <template id="default_values">
+    <t t-if="not partner and object._name == 'res.partner'">
+      <t t-set="partner" t-value="object" />
+    </t>
+    <t t-if="not partner and 'partner_id' in object._fields and object.partner_id">
+      <t t-set="partner" t-value="object.partner_id" />
+    </t>
+    <t t-if="partner">
+      <t t-set="object" t-value="object.with_context(lang=partner.lang)"/>
+    </t>
+    <t t-if="not website_name">
+      <t t-set="website_name" t-value="res_company.name" />
+    </t>
+  </template>
+
+
+  <template id="email_layout" name="Shopinvader email layout">
+    <t t-call="shopinvader_notification_default.default_values" />
+    <html>
+      <body t-attf-class="type-#{notification_type} model-#{object._name.replace('.', '_')}">
+        <!-- TODO: move to LESS file
+        If we put the link as it is `premailer` won't be able to render it.
+        To ease this, we could:
+        1. find the less file on FS
+        2. compile to less
+        3. populate style block
+        -->
+        <style>
+          body, table, td { font-family: verdana, Arial, Helvetica, sans-serif !important; }
+          #main_wrapper_td {
+            width: 620px;
+          }
+          #main_wrapper {
+            max-width: 620px;
+            margin: 0 auto;
+            font-size: 18px;
+          }
+          #main_header {
+            margin-bottom: 2em;
+          }
+          #mail_title,
+          #main_header .logo {
+            text-align: center;
+          }
+          #main_logo {
+            max-width: 100px;
+          }
+          table#main_header, table.block { width: 100% }
+          table#main_header > tbody > tr > td{
+            padding-top: 30px;
+          }
+          .company_info {
+            text-align: center;
+            margin-top: 2em;
+            border-top: 2px solid #ccc;
+            padding-top: 1em;
+          }
+          <t t-raw="extra_styles" />
+        </style>
+        <t t-set="main_logo" t-value="main_logo or res_company.logo" />
+        <table id="body-wrapper" align="center">
+          <tr>
+            <td id="main_wrapper_td">
+              <div id="main_wrapper">
+                <table id="main_header">
+                  <tbody>
+                    <tr>
+                      <td class="logo" t-if="main_logo">
+                        <img id="main_logo" t-ignore="true" t-att-src="image_data_uri(main_logo)" />
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <main id="main_content">
+                  <t t-if="mail_title">
+                    <t t-call="shopinvader_notification_default.make_table">
+                      <h1 id="mail_title">
+                        <t t-raw="mail_title" />
+                      </h1>
+                    </t>
+                  </t>
+                  <t t-if="not custom_greeting and partner">
+                    <t t-call="shopinvader_notification_default.make_table">
+                      <t t-set="extra_class" t-value="'greeting'" />
+                      <span t-ignore="true" t-field="partner.title" />
+                      <span t-ignore="true" t-field="partner.name" />,
+                    </t>
+                  </t>
+                  <t t-if="before_main_content">
+                    <t t-call="shopinvader_notification_default.make_table">
+                      <t t-set="extra_class" t-value="'before_main_content'" />
+                      <t t-raw="before_main_content" />
+                    </t>
+                  </t>
+                  <t t-call="shopinvader_notification_default.make_table">
+                    <t t-set="extra_class" t-value="'main_content'" />
+                    <t t-raw="main_content" />
+                  </t>
+                  <t t-if="after_main_content">
+                    <t t-call="shopinvader_notification_default.make_table">
+                      <t t-set="extra_class" t-value="'after_main_content'" />
+                      <t t-raw="after_main_content" />
+                    </t>
+                  </t>
+                </main>
+                <footer id="main_footer">
+                  <t t-call="shopinvader_notification_default.make_table">
+                    <t t-set="extra_class" t-value="'company_info'" />
+                    <t t-call="shopinvader_notification_default.company_info" />
+                  </t>
+                </footer>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </body>
+    </html>
+  </template>
+
+
+  <template id="company_info">
+    <span t-ignore="true" t-field="res_company.name" />
+  </template>
+
+</odoo>
