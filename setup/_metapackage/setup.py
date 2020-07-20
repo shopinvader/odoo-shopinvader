@@ -23,6 +23,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_locomotive',
         'odoo13-addon-shopinvader_locomotive_algolia',
         'odoo13-addon-shopinvader_locomotive_guest_mode',
+        'odoo13-addon-shopinvader_notification_default',
         'odoo13-addon-shopinvader_partner_firstname',
         'odoo13-addon-shopinvader_product_variant_selector',
         'odoo13-addon-shopinvader_search_engine',
