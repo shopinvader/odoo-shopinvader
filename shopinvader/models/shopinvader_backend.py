@@ -190,9 +190,7 @@ class ShopinvaderBackend(models.Model):
 
     @api.model
     def _default_company_id(self):
-        return self.env["res.company"]._company_default_get(
-            "shopinvader.backend"
-        )
+        return self.env.company
 
     @api.model
     def _default_partner_title_ids(self):
