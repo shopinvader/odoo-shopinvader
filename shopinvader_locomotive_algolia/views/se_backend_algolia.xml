@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record model="ir.ui.view" id="se_backend_algolia_form_view">
+    <field name="model">se.backend.algolia</field>
+    <field name="inherit_id" ref="connector_algolia.se_backend_algolia_form_view" />
+    <field name="arch" type="xml">
+      <field name="algolia_api_key" position="after">
+        <field name="algolia_api_key_public" />
+      </field>
+    </field>
+  </record>
+</odoo>

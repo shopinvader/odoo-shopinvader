@@ -19,7 +19,7 @@ class ShopinvaderSiteExportMapper(Component):
             config.update(
                 {
                     "application_id": spec_backend.algolia_app_id,
-                    "api_key": spec_backend.algolia_api_key,
+                    "api_key": spec_backend.algolia_api_key_public,
                 }
             )
         return config
