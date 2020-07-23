@@ -81,6 +81,7 @@ class AbstractUrl(models.AbstractModel):
         Note the self already include in the context the lang of the record
         """
         self.ensure_one()
+        # TODO: IMO we should add the ID here by default to make sure the URL is always unique
         return [self.name]
 
     def _post_process_url_key(self, key):
@@ -114,6 +115,10 @@ class AbstractUrl(models.AbstractModel):
             else:
                 record.automatic_url_key = False
 
+    def _compute_automatic_url_key_depends(self):
+        return ["lang_id", "record_id.name"]
+
+    @api.depends(lambda self: self._compute_automatic_url_key_depends())
     def _compute_automatic_url_key(self):
         raise NotImplementedError(
             "Automatic url key must be computed in concrete model"
