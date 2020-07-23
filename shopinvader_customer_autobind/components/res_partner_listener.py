@@ -33,6 +33,17 @@ class PartnerEventListener(Component):
         return True
 
     def _get_skip_if_condition(self, record, **kwargs):
+        """
+        Check if we have to skip the listener
+        :param record: res.partner recordset
+        :param kwargs: dict
+        :return: bool
+        """
+        # When we're into the shopinvader_request, we don't have to
+        # auto-bind because the guest service will create the
+        # shopinvader.partner automatically
+        if self.env.context.get("shopinvader_request"):
+            return True
         return not record.customer
 
     @skip_if(
