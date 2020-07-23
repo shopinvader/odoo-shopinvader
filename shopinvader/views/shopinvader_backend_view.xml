@@ -123,12 +123,13 @@
                                             type="object"/>
                                 </group>
                                 <group name="category" string="Category" col="10" colspan="4">
+                                    <field name="category_root_binding_level"/><newline />
+                                    <field name="category_binding_level"/><newline />
                                     <span>Levels of categories to automatically bind such as:</span><newline />
                                     <span>- 0: none</span><newline />
-                                    <span>- 1: parent_caterogy1</span><newline />
-                                    <span>- 2: parent_caterogy1/child_category2</span><newline />
-                                    <span>- 3: parent_caterogy1/child_category2/child_category3</span><newline />
-                                    <field name="category_binding_level"/>
+                                    <span>- 1: parent_category1</span><newline />
+                                    <span>- 2: parent_category1/child_category2</span><newline />
+                                    <span>- 3: parent_category1/child_category2/child_category3</span><newline />
                                     <button
                                             name="bind_all_category"
                                             string="Bind all category"
