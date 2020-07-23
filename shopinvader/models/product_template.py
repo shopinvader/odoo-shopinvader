@@ -73,6 +73,7 @@ class ProductTemplate(models.Model):
         :param vals: dict
         :return: bool
         """
-        with self._manage_name_update():
-            result = super(ProductTemplate, self).write(vals)
-        return result
+        if "name" in vals:
+            with self._manage_name_update():
+                return super(ProductTemplate, self).write(vals)
+        return super(ProductTemplate, self).write(vals)
