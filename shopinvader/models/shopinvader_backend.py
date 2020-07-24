@@ -34,7 +34,7 @@ class ShopinvaderBackend(models.Model):
         default=lambda self: self.env["shopinvader.notification"].search([]),
     )
     nbr_product = fields.Integer(
-        compute="_compute_nbr_content", string="Number of binded products"
+        compute="_compute_nbr_content", string="Number of bound products"
     )
     nbr_variant = fields.Integer(compute="_compute_nbr_content")
     nbr_category = fields.Integer(compute="_compute_nbr_content")
@@ -78,6 +78,14 @@ class ShopinvaderBackend(models.Model):
         string="Use Shopinvader product display name",
         help="If checked, use the specific shopinvader display name for "
         "products instead of the original product name.",
+    )
+    category_root_binding_level = fields.Integer(
+        default=0,
+        help="Define the starting level for root categories when auto-binding."
+        "This is typically handy when you want to have some root categories "
+        "for internal organization only (eg: All / Saleable) "
+        "but you don't want them to appear in the shop."
+        "Works for both 'Bind all products' and 'Bind all categories'",
     )
     category_binding_level = fields.Integer(
         default=0,
@@ -267,16 +275,17 @@ class ShopinvaderBackend(models.Model):
                         bind.write({"active": True})
         return True
 
-    def bind_all_product(self):
+    def bind_all_product(self, domain=None):
+        domain = domain or [("sale_ok", "=", True)]
         result = self._bind_all_content(
-            "product.template", "shopinvader.product", [("sale_ok", "=", True)]
+            "product.template", "shopinvader.product", domain
         )
         self.auto_bind_categories()
         return result
 
     def auto_bind_categories(self):
         """
-        Auto bind product.category for binded shopinvader.product
+        Auto bind product.category for bound shopinvader.product
         :return: bool
         """
         backends = self.filtered(lambda b: b.category_binding_level > 0)
@@ -304,15 +313,18 @@ class ShopinvaderBackend(models.Model):
         return True
 
     def _get_related_categories(self, products):
-        """
-        Get product.category to bind (based on current backend and
-        given products)
+        """Get related product.category to bind based on current backend.
+
         :param products: product recordset (product or template)
         :return: product.category recordset
         """
         self.ensure_one()
         # As we consume the first level (direct category), minus 1
         level = self.category_binding_level - 1
+        # TODO: this will include categories out of the level of hierarchy
+        # when they are assigned directly to the product.
+        # We should have a flag to turn this on/off explicitely
+        # and in case it should documented on the backend UI.
         categories = products.mapped("categ_id")
         # pull up until the correct level
         parent_categories = categories
@@ -320,10 +332,32 @@ class ShopinvaderBackend(models.Model):
             parent_categories = parent_categories.mapped("parent_id")
             categories |= parent_categories
             level -= 1
+        to_exclude = self._get_categories_to_exclude()
+        return categories - to_exclude
+
+    def _get_categories_to_exclude(self):
+        root_lvl = self.category_root_binding_level
+        if not root_lvl:
+            return self.env["product.category"].browse()
+        categories = self.env["product.category"].search(
+            [("parent_id", "=", False)]
+        )
+        lvl = root_lvl - 1  # the limit is inclusive
+        while lvl:
+            categories += categories.mapped("child_id")
+            lvl -= 1
         return categories
 
-    def bind_all_category(self):
-        self._bind_all_content("product.category", "shopinvader.category", [])
+    def bind_all_category(self, domain=None):
+        if domain is None:
+            domain = []
+            to_exclude = self._get_categories_to_exclude()
+            if to_exclude:
+                domain = [("id", "not in", to_exclude.ids)]
+        # TODO: we should exclude levels from `category_binding_level` as well
+        self._bind_all_content(
+            "product.category", "shopinvader.category", domain
+        )
 
     def _send_notification(self, notification, record):
         self.ensure_one()
