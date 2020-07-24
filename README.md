@@ -36,7 +36,7 @@ addon | version | summary
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 13.0.1.0.1 | Shopinvader guest mode for locomotive
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
-[shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.0 | Shopinvader Product Link
+[shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.1 | Shopinvader Product Link
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.2.1 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 13.0.1.0.0 | Handle shop wishlist
