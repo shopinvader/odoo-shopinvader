@@ -20,11 +20,11 @@ class InvaderController(main.RestController):
     _collection_name = "shopinvader.backend"
     _default_auth = "api_key"
 
-    @route(["/shopinvader/invoice/<int:_id>/download"], methods=["GET"])
-    def invoice_download(self, _id=None, **params):
+    @route(["/shopinvader/<service>/<int:_id>/download"], methods=["GET"])
+    def service_download(self, service, _id=None, **params):
         params["id"] = _id
         return self._process_method(
-            "invoice", "download", _id=_id, params=params
+            service, "download", _id=_id, params=params
         )
 
     @classmethod

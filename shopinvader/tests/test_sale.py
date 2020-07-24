@@ -5,10 +5,10 @@
 from odoo import fields
 from odoo.exceptions import MissingError
 
-from .common import CommonCase
+from .common import CommonCase, CommonTestDownload
 
 
-class SaleCase(CommonCase):
+class SaleCase(CommonCase, CommonTestDownload):
     def setUp(self, *args, **kwargs):
         super(SaleCase, self).setUp(*args, **kwargs)
         self.sale = self.env.ref("shopinvader.sale_order_2")
@@ -152,3 +152,41 @@ class SaleCase(CommonCase):
                 }
             ],
         )
+
+    def test_download01(self):
+        """
+        Data
+            * A draft sale order
+        Case:
+            * Try to download the document
+        Expected result:
+            * MissingError should be raised
+        """
+        self._test_download_not_allowed(self.service, self.sale)
+
+    def test_download02(self):
+        """
+        Data
+            * A confirmed sale order
+        Case:
+            * Try to download the document
+        Expected result:
+            * An http response with the file to download
+        """
+        self.sale.action_confirm_cart()
+        self._test_download_allowed(self.service, self.sale)
+
+    def test_download03(self):
+        """
+        Data
+            * A confirmed sale order but not for the current customer
+        Case:
+            * Try to download the document
+        Expected result:
+            * MissingError should be raised
+        """
+        sale = self.env.ref("sale.sale_order_1")
+        sale.action_confirm_cart()
+        sale.shopinvader_backend_id = self.backend
+        self.assertNotEqual(sale.partner_id, self.service.partner)
+        self._test_download_not_owner(self.service, sale)
