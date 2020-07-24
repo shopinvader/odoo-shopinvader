@@ -145,6 +145,12 @@ class WishlistService(Component):
                 "type": "integer",
             },
             "quantity": {"coerce": float, "type": "float", "default": 1.0},
+            "sequence": {
+                "coerce": int,
+                "type": "integer",
+                "required": False,
+                "default": 0,
+            },
         }
 
     def _validator_update_item(self):
@@ -197,6 +203,8 @@ class WishlistService(Component):
         return records.jsonify(self._json_parser())
 
     def _to_json_one(self, records):
+        # This works only here... see `_update_item` :/
+        records.set_line_ids.invalidate_cache()
         values = self._to_json(records)
         if len(records) == 1:
             values = values[0]
@@ -253,20 +261,32 @@ class WishlistService(Component):
             existing.quantity += params["quantity"]
         else:
             self.env["product.set.line"].create(
-                self._prepare_item(params, record)
+                self._prepare_item(record, params)
             )
 
     def _update_item(self, record, params):
         existing = self._get_existing_line(
             record, params, raise_if_not_found=True
         )
+        update_params = self._prepare_item(record, params)
         if existing:
+            update_params = {
+                k: v
+                for k, v in params.items()
+                if k not in ("product_set_id", "product_id")
+            }
             # update qty
-            existing.quantity += params["quantity"]
+            if update_params.get("quantity"):
+                update_params["quantity"] += existing.quantity
+            existing.update(update_params)
         else:
             self.env["product.set.line"].create(
-                self._prepare_item(params, record)
+                self._prepare_item(record, params)
             )
+        # TODO: WTF?? This does not work here, must be called in `_to_json_one`???
+        # record.set_line_ids.invalidate_cache()
+        # flush does not work neither
+        # record.set_line_ids.flush()
 
     def _move_item(self, record, params):
         existing = self._get_existing_line(
@@ -274,15 +294,16 @@ class WishlistService(Component):
         )
         record2 = self._get(params["move_to_wishlist_id"])
         self.env["product.set.line"].create(
-            self._prepare_item(params, record2)
+            self._prepare_item(record2, params)
         )
         existing.unlink()
 
-    def _prepare_item(self, params, record):
+    def _prepare_item(self, record, params):
         return {
             "product_set_id": record.id,
             "product_id": params["product_id"],
             "quantity": params.get("quantity") or 1,
+            "sequence": params.get("sequence") or 0,
         }
 
     def _delete_item(self, record, params):

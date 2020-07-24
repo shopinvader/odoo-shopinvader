@@ -138,7 +138,7 @@ class WishlistCase(CommonWishlistCase):
         )
         self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
 
-    def test_update_item(self):
+    def _test_update_item(self):
         prod = self.env.ref("product.product_product_4b")
         self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
         self._bind_products(prod)
@@ -153,6 +153,40 @@ class WishlistCase(CommonWishlistCase):
             "update_item", self.prod_set.id, params=params
         )
         self.assertEqual(line.quantity, 2)
+        return line
+
+    def test_update_item(self):
+        self._test_update_item()
+
+    def test_update_item_order(self):
+        line1 = self._test_update_item()
+        line1.sequence = 10
+        # Add another line and change order
+        prod2 = self.env.ref("product.product_product_4d")
+        self.assertNotIn(
+            prod2, self.prod_set.mapped("set_line_ids.product_id")
+        )
+        self._bind_products(prod2)
+        params = {"product_id": prod2.id}
+        before = self.wishlist_service.dispatch(
+            "add_item", self.prod_set.id, params=params
+        )
+        line2 = self.prod_set.get_line_by_product(product_id=prod2.id)
+        self.assertEqual(line1.sequence, 10)
+        self.assertEqual(line2.sequence, 0)
+        self.assertEqual(
+            [x["id"] for x in before["lines"]], [line2.id, line1.id]
+        )
+        params = {"product_id": prod2.id, "sequence": 20}
+        after = self.wishlist_service.dispatch(
+            "update_item", self.prod_set.id, params=params
+        )
+        self.prod_set.invalidate_cache()
+        self.assertEqual(line1.sequence, 10)
+        self.assertEqual(line2.sequence, 20)
+        self.assertEqual(
+            [x["id"] for x in after["lines"]], [line1.id, line2.id]
+        )
 
     def test_delete_item(self):
         prod = self.env.ref("product.product_product_4b")
