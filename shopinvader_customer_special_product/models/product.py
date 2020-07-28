@@ -7,8 +7,8 @@ from odoo import fields, models
 class ProductTemplate(models.Model):
     _inherit = "product.template"
 
-    manufactured_for_partner_ids = fields.Many2many(
+    procured_for_partner_ids = fields.Many2many(
         comodel_name="res.partner",
         domain=[("customer_rank", ">", 0)],
-        string="Manufactured for",
+        string="Procured for",
     )

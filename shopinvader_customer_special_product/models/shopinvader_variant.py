@@ -8,11 +8,10 @@ from odoo.addons.base_sparse_field.models.fields import Serialized
 class ShopinvaderVariant(models.Model):
     _inherit = "shopinvader.variant"
 
-    manufactured_for_partners = Serialized(compute="_compute_manufactured_for_partners")
+    procured_for_partners = Serialized(
+        compute="_compute_procured_for_partners"
+    )
 
-    def _compute_export_manufactured_for_partner_ids(self):
+    def _compute_procured_for_partners(self):
         for record in self:
-            if record.manufactured_for_partner_ids:
-                record.export_manufactured_for_partner_ids = record.manufactured_for_partner_ids.ids
-            else:
-                record.export_manufactured_for_partner_ids = False
+            record.procured_for_partners = record.procured_for_partner_ids.ids

@@ -12,10 +12,10 @@ class TestCustomerSpecialProduct(ProductCommonCase):
         cls.ir_export = cls.env.ref("shopinvader.ir_exp_shopinvader_variant")
         cls.parser = cls.ir_export.get_json_parser()
         cls.customer = cls.env.ref("base.res_partner_2")
-        cls.shopinvader_variant.record_id.manufactured_for_partner_ids = [
+        cls.shopinvader_variant.record_id.procured_for_partner_ids = [
             (6, 0, cls.customer.ids)
         ]
 
     def test_extra_fields(self):
         data = self.shopinvader_variant.jsonify(self.parser)[0]
-        self.assertEqual(data["partners"], self.customer.ids)
+        self.assertEqual(data["procured_for_partners"], self.customer.ids)

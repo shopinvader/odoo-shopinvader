@@ -2,7 +2,7 @@
 <odoo>
 
     <record id="ir_exp_shopinvader_variant_partner_ids" model="ir.exports.line">
-        <field name="name">manufactured_for_partners</field>
+        <field name="name">procured_for_partners</field>
         <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     </record>
 
