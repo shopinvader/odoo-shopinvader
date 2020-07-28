@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 Camptocamp
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+  <record model="ir.ui.view" id="product_template_form_view">
+    <field name="name">view.product.form.customer.special.product</field>
+    <field name="model">product.template</field>
+    <field name="inherit_id" ref="product.product_template_form_view"/>
+    <field name="arch" type="xml">
+      <xpath expr="//page[@name='sales']/group[@name='shopinvader']" position="inside">
+        <field name="manufactured_for_partner_ids" widget="many2many_tags" options="{'no_create_edit': True}"/>
+      </xpath>
+    </field>
+  </record>
+</odoo>
