@@ -20,6 +20,7 @@ class AddressService(Component):
     _name = "shopinvader.address.service"
     _usage = "addresses"
     _expose_model = "res.partner"
+    _description = "Shopinvader Address Service"
 
     # The following method are 'public' and can be called from the controller.
 

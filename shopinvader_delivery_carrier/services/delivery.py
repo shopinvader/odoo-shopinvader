@@ -11,6 +11,7 @@ class DeliveryService(Component):
     _name = "shopinvader.delivery.service"
     _usage = "delivery"
     _expose_model = "stock.picking"
+    _description = "Service to manage carriers"
 
     def search(self, **params):
         """

@@ -12,6 +12,7 @@ class LeadService(Component):
     _name = "shopinvader.lead.service"
     _usage = "lead"
     _expose_model = "crm.lead"
+    _description = "Shopinvader CRM Lead Service"
 
     # The following methods are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator

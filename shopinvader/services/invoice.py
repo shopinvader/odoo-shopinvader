@@ -13,7 +13,9 @@ class InvoiceService(Component):
     _name = "shopinvader.invoice.service"
     _usage = "invoice"
     _expose_model = "account.invoice"
-    _description = "Service providing a method to download invoices"
+    _description = (
+        "Shopinvader Service providing a method to download invoices"
+    )
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
