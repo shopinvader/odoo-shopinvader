@@ -2,6 +2,8 @@
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
+
 from odoo import _, exceptions
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
@@ -63,24 +65,24 @@ class WishlistService(Component):
         # return new cart
         return cart_service._to_json(cart)
 
-    def add_item(self, _id, **params):
+    def add_items(self, _id, **params):
         record = self._get(_id)
-        self._add_item(record, params)
+        self._add_items(record, params)
         return self._to_json_one(record)
 
-    def update_item(self, _id, **params):
+    def update_items(self, _id, **params):
         record = self._get(_id)
-        self._update_item(record, params)
+        self._update_items(record, params)
         return self._to_json_one(record)
 
-    def delete_item(self, _id, **params):
+    def delete_items(self, _id, **params):
         record = self._get(_id)
-        self._delete_item(record, params)
+        self._delete_items(record, params)
         return self._to_json_one(record)
 
-    def move_item(self, _id, **params):
+    def move_items(self, _id, **params):
         record = self._get(_id)
-        self._move_item(record, params)
+        self._move_items(record, params)
         return self._to_json_one(record)
 
     def _post_create(self, record):
@@ -137,6 +139,18 @@ class WishlistService(Component):
     def _validator_add_to_cart(self):
         return {"id": {"coerce": to_int, "type": "integer"}}
 
+    def _validator_add_items(self):
+        return {
+            "lines": {
+                "type": "list",
+                "required": True,
+                "schema": {
+                    "type": "dict",
+                    "schema": self._validator_add_item(),
+                },
+            }
+        }
+
     def _validator_add_item(self):
         return {
             "product_id": {
@@ -153,8 +167,20 @@ class WishlistService(Component):
             },
         }
 
-    def _validator_update_item(self):
-        return self._validator_add_item()
+    def _validator_update_items(self):
+        return self._validator_add_items()
+
+    def _validator_move_items(self):
+        return {
+            "lines": {
+                "type": "list",
+                "required": True,
+                "schema": {
+                    "type": "dict",
+                    "schema": self._validator_move_item(),
+                },
+            }
+        }
 
     def _validator_move_item(self):
         return {
@@ -168,6 +194,18 @@ class WishlistService(Component):
                 "required": True,
                 "type": "integer",
             },
+        }
+
+    def _validator_delete_items(self):
+        return {
+            "lines": {
+                "type": "list",
+                "required": True,
+                "schema": {
+                    "type": "dict",
+                    "schema": self._validator_delete_item(),
+                },
+            }
         }
 
     def _validator_delete_item(self):
@@ -254,49 +292,62 @@ class WishlistService(Component):
             )
         return line
 
-    def _add_item(self, record, params):
-        existing = self._get_existing_line(record, params)
-        if existing:
-            # update qty
-            existing.quantity += params["quantity"]
-        else:
-            self.env["product.set.line"].create(
-                self._prepare_item(record, params)
+    def _update_lines(self, record, lines, raise_if_not_found=False):
+        new_items = []
+        for item_params in lines:
+            existing = self._get_existing_line(
+                record, item_params, raise_if_not_found=raise_if_not_found
             )
-
-    def _update_item(self, record, params):
-        existing = self._get_existing_line(
-            record, params, raise_if_not_found=True
-        )
-        update_params = self._prepare_item(record, params)
-        if existing:
-            update_params = {
-                k: v
-                for k, v in params.items()
-                if k not in ("product_set_id", "product_id")
-            }
-            # update qty
-            if update_params.get("quantity"):
-                update_params["quantity"] += existing.quantity
-            existing.update(update_params)
-        else:
-            self.env["product.set.line"].create(
-                self._prepare_item(record, params)
-            )
-        # TODO: WTF?? This does not work here, must be called in `_to_json_one`???
+            if existing:
+                # prevent move or prod change on update
+                update_params = {
+                    k: v
+                    for k, v in item_params.items()
+                    if k not in ("product_set_id", "product_id")
+                }
+                existing.update(update_params)
+            else:
+                new_items.append(item_params)
+        values = [
+            (0, 0, self._prepare_item(record, item_params))
+            for item_params in new_items
+        ]
+        record.write({"set_line_ids": values})
+        # TODO: WTF?? Cache on sequence is not invalidated.
+        # And calling this does not work here, must be called in `_to_json_one`.
         # record.set_line_ids.invalidate_cache()
         # flush does not work neither
         # record.set_line_ids.flush()
 
-    def _move_item(self, record, params):
-        existing = self._get_existing_line(
-            record, params, raise_if_not_found=True
-        )
-        record2 = self._get(params["move_to_wishlist_id"])
-        self.env["product.set.line"].create(
-            self._prepare_item(record2, params)
-        )
-        existing.unlink()
+    def _add_items(self, record, params):
+        self._update_lines(record, params["lines"])
+
+    def _update_items(self, record, params):
+        self._update_lines(record, params["lines"], raise_if_not_found=True)
+
+    def _move_items(self, record, params):
+        # group lines by destination
+        by_destination = defaultdict(self.env["product.set.line"].browse)
+        to_delete = self.env["product.set.line"].browse()
+        for item_params in params["lines"]:
+            existing = self._get_existing_line(
+                record, item_params, raise_if_not_found=True
+            )
+            to_delete |= existing
+            by_destination[item_params["move_to_wishlist_id"]] += existing
+
+        # move all lines to each destination at once
+        for move_to_id, move_to_items in by_destination.items():
+            move_to_wl = self._get(move_to_id)
+            lines = move_to_items.read(
+                ["product_id", "quantity", "sequence"], load="_classic_write"
+            )
+            values = [
+                (0, 0, self._prepare_item(move_to_wl, line)) for line in lines
+            ]
+            move_to_wl.write({"set_line_ids": values})
+        # delete all old records
+        to_delete.unlink()
 
     def _prepare_item(self, record, params):
         return {
@@ -306,9 +357,11 @@ class WishlistService(Component):
             "sequence": params.get("sequence") or 0,
         }
 
-    def _delete_item(self, record, params):
-        existing = self._get_existing_line(
-            record, params, raise_if_not_found=True
-        )
-        if existing:
-            existing.unlink()
+    def _delete_items(self, record, params):
+        to_delete = self.env["product.set.line"].browse()
+        for item_params in params["lines"]:
+            existing = self._get_existing_line(
+                record, item_params, raise_if_not_found=True
+            )
+            to_delete |= existing
+        to_delete.unlink()
