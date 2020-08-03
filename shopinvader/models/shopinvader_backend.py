@@ -437,8 +437,6 @@ class ShopinvaderBackend(models.Model):
     def _onchange_name(self):
         if self.name and not self.tech_name:
             self.tech_name = self._normalize_name(self.name)
-        auth_api_key = getattr(request, "auth_api_key", None)
-        return self.browse(self._get_id_from_auth_api_key(auth_api_key))
 
     @api.multi
     @job(default_channel="root.shopinvader")
