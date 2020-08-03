@@ -17,6 +17,13 @@ from odoo.tests import SavepointCase
 from .. import shopinvader_response
 
 
+def _install_lang_odoo(env, lang_xml_id):
+    lang = env.ref(lang_xml_id)
+    wizard = env["base.language.install"].create({"lang": lang.code})
+    wizard.lang_install()
+    return lang
+
+
 class CommonMixin(ComponentMixin):
     @staticmethod
     def _setup_backend(cls):
@@ -70,10 +77,7 @@ class CommonMixin(ComponentMixin):
         bind_wizard.bind_products()
 
     def _install_lang(self, lang_xml_id):
-        lang = self.env.ref(lang_xml_id)
-        wizard = self.env["base.language.install"].create({"lang": lang.code})
-        wizard.lang_install()
-        return lang
+        return _install_lang_odoo(self.env, lang_xml_id)
 
 
 class CommonCase(SavepointCase, CommonMixin):

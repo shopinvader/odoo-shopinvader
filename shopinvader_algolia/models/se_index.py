@@ -13,7 +13,7 @@ class SeIndex(models.Model):
         model = self.model_id.model
         # TODO check backend se type and call specific algolia method?
         facetting_values = self.env[model]._get_facetting_values(
-            self.backend_id
+            self.backend_id, self.lang_id
         )
         data.update({"attributesForFaceting": facetting_values})
         return data

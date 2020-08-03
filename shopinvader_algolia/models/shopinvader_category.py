@@ -9,5 +9,5 @@ class ShopinvaderCategory(models.Model):
     _inherit = "shopinvader.category"
 
     @api.model
-    def _get_facetting_values(self, se_backend):
+    def _get_facetting_values(self, se_backend, lang):
         return ["id", "level", "parent.id", "redirect_url_key", "url_key"]

@@ -1,5 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com)
 # Benoît GUILLOT <benoit.guillot@akretion.com>
+# Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import json
@@ -9,6 +11,7 @@ from odoo.addons.connector_algolia.components.adapter import AlgoliaAdapter
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBase,
 )
+from odoo.addons.shopinvader.tests.common import _install_lang_odoo
 
 try:
     from vcr_unittest import VCRMixin
@@ -108,3 +111,51 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
 
     def test_30_export_all_categories(self):
         self._test_export_all_binding(self.index_categ)
+
+    def test_facet_settings(self):
+        _install_lang_odoo(self.env, "base.lang_fr")
+        filter1 = self.env.ref("shopinvader.product_filter_1")
+        filter2 = self.env.ref("shopinvader.product_filter_2")
+        attr1 = filter1.variant_attribute_id
+        attr2 = filter2.variant_attribute_id
+        attr1.with_context(lang="fr_FR").name = attr1.name + " FR"
+        attr2.with_context(lang="fr_FR").name = attr2.name + " FR"
+        self.shopinvader_backend.filter_ids = filter1 + filter2
+        settings_en = self.env["shopinvader.variant"]._get_facetting_values(
+            self.backend, self.env.ref("base.lang_en")
+        )
+        settings_fr = self.env["shopinvader.variant"]._get_facetting_values(
+            self.backend, self.env.ref("base.lang_fr")
+        )
+        self.assertEqual(
+            settings_en,
+            [
+                "categories.id",
+                "Categories.lvl0hierarchical",
+                "Categories.lvl1hierarchical",
+                "Categories.lvl2hierarchical",
+                "main",
+                "redirect_url_key",
+                "url_key",
+                "sku",
+                "price.default.value",
+                "variant_attributes.legs",
+                "variant_attributes.color",
+            ],
+        )
+        self.assertEqual(
+            settings_fr,
+            [
+                "categories.id",
+                "Categories.lvl0hierarchical",
+                "Categories.lvl1hierarchical",
+                "Categories.lvl2hierarchical",
+                "main",
+                "redirect_url_key",
+                "url_key",
+                "sku",
+                "price.default.value",
+                "variant_attributes.legs_fr",
+                "variant_attributes.color_fr",
+            ],
+        )
