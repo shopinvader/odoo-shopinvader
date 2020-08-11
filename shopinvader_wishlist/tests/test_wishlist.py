@@ -71,21 +71,44 @@ class WishlistCase(CommonWishlistCase):
         )
         self.assertEqual(self.prod_set.name, "Baz")
 
-    def test_move_item(self):
-        prod = self.prod_set.set_line_ids[0].product_id
-        move_to_set = self.prod_set.copy(default={"set_line_ids": False})
-        self.assertFalse(move_to_set.set_line_ids)
+    def test_move_items(self):
+        for line in self.wl_params["lines"]:
+            self.prod_set.set_line_ids.create(
+                dict(line, product_set_id=self.prod_set.id)
+            )
+        prod1 = self.prod_set.set_line_ids[0].product_id
+        prod2 = self.prod_set.set_line_ids[1].product_id
+        prod3 = self.prod_set.set_line_ids[2].product_id
+        move_to_set1 = self.prod_set.copy(default={"set_line_ids": False})
+        move_to_set2 = self.prod_set.copy(default={"set_line_ids": False})
+        self.assertFalse(move_to_set1.set_line_ids)
+        self.assertFalse(move_to_set2.set_line_ids)
         self.wishlist_service.dispatch(
-            "move_item",
+            "move_items",
             self.prod_set.id,
             params={
-                "move_to_wishlist_id": move_to_set.id,
-                "product_id": prod.id,
+                "lines": [
+                    {
+                        "move_to_wishlist_id": move_to_set1.id,
+                        "product_id": prod1.id,
+                    },
+                    {
+                        "move_to_wishlist_id": move_to_set1.id,
+                        "product_id": prod2.id,
+                    },
+                    {
+                        "move_to_wishlist_id": move_to_set2.id,
+                        "product_id": prod3.id,
+                    },
+                ]
             },
         )
         self.assertFalse(self.prod_set.set_line_ids)
-        self.assertEqual(len(move_to_set.set_line_ids), 1)
-        self.assertIn(prod, move_to_set.mapped("set_line_ids.product_id"))
+        self.assertEqual(len(move_to_set1.set_line_ids), 2)
+        self.assertEqual(len(move_to_set2.set_line_ids), 1)
+        self.assertIn(prod1, move_to_set1.mapped("set_line_ids.product_id"))
+        self.assertIn(prod2, move_to_set1.mapped("set_line_ids.product_id"))
+        self.assertIn(prod3, move_to_set2.mapped("set_line_ids.product_id"))
 
     def test_search(self):
         res = self.wishlist_service.dispatch(
@@ -128,38 +151,64 @@ class WishlistCase(CommonWishlistCase):
             self.wishlist_service.add_to_cart(self.prod_set.id)
             self.assertEqual(cart.order_line[0].product_id, prod)
 
-    def test_add_item(self):
-        prod = self.env.ref("product.product_product_4d")
-        self.assertNotIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
-        self._bind_products(prod)
-        params = {"product_id": prod.id}
-        self.wishlist_service.dispatch(
-            "add_item", self.prod_set.id, params=params
+    def test_add_items(self):
+        prod1 = self.env.ref("product.product_product_4d")
+        prod2 = self.env.ref("product.product_product_11")
+        self.assertNotIn(
+            prod1, self.prod_set.mapped("set_line_ids.product_id")
         )
-        self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
+        self.assertNotIn(
+            prod2, self.prod_set.mapped("set_line_ids.product_id")
+        )
+        self._bind_products(prod1 + prod2)
+        params = {
+            "lines": [{"product_id": prod1.id}, {"product_id": prod2.id}]
+        }
+        self.wishlist_service.dispatch(
+            "add_items", self.prod_set.id, params=params
+        )
+        self.assertIn(prod1, self.prod_set.mapped("set_line_ids.product_id"))
+        self.assertIn(prod2, self.prod_set.mapped("set_line_ids.product_id"))
 
-    def _test_update_item(self):
-        prod = self.env.ref("product.product_product_4b")
-        self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
-        self._bind_products(prod)
-        line = self.prod_set.get_line_by_product(product_id=prod.id)
-        self.assertEqual(line.quantity, 1)
+    def _test_update_items(self, prods, lines_data):
+        self._bind_products(prods)
+        params = {"lines": lines_data}
+        self.wishlist_service.dispatch(
+            "update_items", self.prod_set.id, params=params
+        )
+        for line in lines_data:
+            line = self.prod_set.get_line_by_product(
+                product_id=line["product_id"]
+            )
+            self.assertEqual(line.quantity, line["quantity"])
+
+    def test_update_items(self):
         with self.assertRaises(NotFound):
             self.wishlist_service.dispatch(
-                "update_item", self.prod_set.id, params={"product_id": 9999}
+                "update_items",
+                self.prod_set.id,
+                params={"lines": [{"product_id": 9999}]},
             )
-        params = {"product_id": prod.id}
-        self.wishlist_service.dispatch(
-            "update_item", self.prod_set.id, params=params
-        )
-        self.assertEqual(line.quantity, 2)
-        return line
-
-    def test_update_item(self):
-        self._test_update_item()
+        for line in self.wl_params["lines"]:
+            self.prod_set.set_line_ids.create(
+                dict(line, product_set_id=self.prod_set.id)
+            )
+        prod1 = self.env.ref("product.product_product_4b")
+        prod2 = self.env.ref("product.product_product_11")
+        prod3 = self.env.ref("product.product_product_13")
+        lines = [
+            {"product_id": prod1.id, "quantity": 10},
+            {"product_id": prod2.id, "quantity": 15},
+            {"product_id": prod3.id, "quantity": 20},
+        ]
+        self._test_update_items(prod1 + prod2 + prod3, lines)
 
     def test_update_item_order(self):
-        line1 = self._test_update_item()
+        prod1 = self.env.ref("product.product_product_4b")
+        self._test_update_items(
+            prod1, [{"product_id": prod1.id, "quantity": 1}]
+        )
+        line1 = self.prod_set.get_line_by_product(product_id=prod1.id)
         line1.sequence = 10
         # Add another line and change order
         prod2 = self.env.ref("product.product_product_4d")
@@ -167,9 +216,9 @@ class WishlistCase(CommonWishlistCase):
             prod2, self.prod_set.mapped("set_line_ids.product_id")
         )
         self._bind_products(prod2)
-        params = {"product_id": prod2.id}
+        params = {"lines": [{"product_id": prod2.id}]}
         before = self.wishlist_service.dispatch(
-            "add_item", self.prod_set.id, params=params
+            "add_items", self.prod_set.id, params=params
         )
         line2 = self.prod_set.get_line_by_product(product_id=prod2.id)
         self.assertEqual(line1.sequence, 10)
@@ -177,9 +226,9 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(
             [x["id"] for x in before["lines"]], [line2.id, line1.id]
         )
-        params = {"product_id": prod2.id, "sequence": 20}
+        params = {"lines": [{"product_id": prod2.id, "sequence": 20}]}
         after = self.wishlist_service.dispatch(
-            "update_item", self.prod_set.id, params=params
+            "update_items", self.prod_set.id, params=params
         )
         self.prod_set.invalidate_cache()
         self.assertEqual(line1.sequence, 10)
@@ -188,15 +237,15 @@ class WishlistCase(CommonWishlistCase):
             [x["id"] for x in after["lines"]], [line1.id, line2.id]
         )
 
-    def test_delete_item(self):
+    def test_delete_items(self):
         prod = self.env.ref("product.product_product_4b")
         self._bind_products(prod)
         self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
         line = self.prod_set.get_line_by_product(product_id=prod.id)
         self.assertEqual(line.quantity, 1)
-        params = {"product_id": prod.id}
+        params = {"lines": [{"product_id": prod.id}]}
         self.wishlist_service.dispatch(
-            "delete_item", self.prod_set.id, params=params
+            "delete_items", self.prod_set.id, params=params
         )
         self.assertFalse(line.exists())
 
