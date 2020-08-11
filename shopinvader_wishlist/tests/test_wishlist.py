@@ -12,19 +12,15 @@ class CommonWishlistCase(CommonCase):
     def setUpClass(cls):
         super(CommonWishlistCase, cls).setUpClass()
         cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.prod1 = cls.env.ref("product.product_product_11")
+        cls.prod2 = cls.env.ref("product.product_product_13")
         cls.wl_params = {
             "name": "My new wishlist :)",
             "ref": "MY_NEW",
             "partner_id": cls.partner.id,
             "lines": [
-                {
-                    "product_id": cls.env.ref("product.product_product_11").id,
-                    "quantity": 1.0,
-                },
-                {
-                    "product_id": cls.env.ref("product.product_product_13").id,
-                    "quantity": 5.0,
-                },
+                {"product_id": cls.prod1.id, "quantity": 1.0},
+                {"product_id": cls.prod2.id, "quantity": 5.0},
             ],
         }
 

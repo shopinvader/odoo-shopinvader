@@ -121,11 +121,24 @@ class WishlistService(Component):
                 "required": False,
                 "schema": {
                     "type": "dict",
-                    "schema": {
-                        "product_id": {"type": "integer", "required": True},
-                        "quantity": {"type": "float", "required": True},
-                    },
+                    "schema": self._validator_line_schema(),
                 },
+            },
+        }
+
+    def _validator_line_schema(self):
+        return {
+            "product_id": {
+                "coerce": to_int,
+                "required": True,
+                "type": "integer",
+            },
+            "quantity": {"coerce": float, "type": "float", "default": 1.0},
+            "sequence": {
+                "coerce": int,
+                "type": "integer",
+                "required": False,
+                "default": 0,
             },
         }
 
@@ -152,20 +165,7 @@ class WishlistService(Component):
         }
 
     def _validator_add_item(self):
-        return {
-            "product_id": {
-                "coerce": to_int,
-                "required": True,
-                "type": "integer",
-            },
-            "quantity": {"coerce": float, "type": "float", "default": 1.0},
-            "sequence": {
-                "coerce": int,
-                "type": "integer",
-                "required": False,
-                "default": 0,
-            },
-        }
+        return self._validator_line_schema()
 
     def _validator_update_items(self):
         return self._validator_add_items()
@@ -232,8 +232,10 @@ class WishlistService(Component):
                 params["partner_id"] = self.partner_user.id
         if not params.get("typology"):
             params["typology"] = "wishlist"
+        record = self.env[self._expose_model].browse()  # no record yet
         params["set_line_ids"] = [
-            (0, 0, line) for line in params.pop("lines", [])
+            (0, 0, self._prepare_item(record, line))
+            for line in params.pop("lines", [])
         ]
         return params
 
@@ -299,20 +301,22 @@ class WishlistService(Component):
                 record, item_params, raise_if_not_found=raise_if_not_found
             )
             if existing:
+                item_update_params = self._prepare_item(record, item_params)
                 # prevent move or prod change on update
-                update_params = {
+                item_update_params = {
                     k: v
-                    for k, v in item_params.items()
+                    for k, v in item_update_params.items()
                     if k not in ("product_set_id", "product_id")
                 }
-                existing.update(update_params)
+                existing.write(item_update_params)
             else:
                 new_items.append(item_params)
         values = [
             (0, 0, self._prepare_item(record, item_params))
             for item_params in new_items
         ]
-        record.write({"set_line_ids": values})
+        if values:
+            record.write({"set_line_ids": values})
         # TODO: WTF?? Cache on sequence is not invalidated.
         # And calling this does not work here, must be called in `_to_json_one`.
         # record.set_line_ids.invalidate_cache()
