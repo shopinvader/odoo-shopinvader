@@ -4,18 +4,14 @@
 
 {
     "name": "Shopinvader Product Media",
-    "summary": "Shopinvader Product Media",
-    "version": "10.0.1.0.0",
+    "summary": "Index storage media data into external search engine",
+    "version": "13.0.1.0.0",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion",
     "license": "AGPL-3",
-    "application": False,
-    "installable": False,
+    "installable": True,
     "auto_install": True,
-    "external_dependencies": {"python": [], "bin": []},
     "depends": ["shopinvader", "storage_media_product"],
     "data": ["data/ir_product_export.xml"],
-    "demo": [],
-    "qweb": [],
 }
