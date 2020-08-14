@@ -34,8 +34,6 @@ class AddressService(Component):
     # pylint: disable=W8106
     def create(self, **params):
         params["parent_id"] = self.partner.id
-        if not params.get("type"):
-            params["type"] = "other"
         partner = self.env["res.partner"].create(self._prepare_params(params))
         self._post_create(partner)
         return self.search()
@@ -70,12 +68,14 @@ class AddressService(Component):
 
     def _validator_create(self):
         res = {
+            "type": {"type": "string", "default": "other"},
             "name": {"type": "string", "required": True},
             "street": {"type": "string", "required": True, "empty": False},
             "street2": {"type": "string", "nullable": True},
             "zip": {"type": "string", "required": True, "empty": False},
             "city": {"type": "string", "required": True, "empty": False},
             "phone": {"type": "string", "nullable": True, "empty": False},
+            "email": {"type": "string", "required": False, "nullable": True},
             "state": {
                 "type": "dict",
                 "schema": {
@@ -145,6 +145,8 @@ class AddressService(Component):
     def _json_parser(self):
         res = [
             "id",
+            ("parent_id", lambda rec, fname: rec.parent_id.id),
+            "type",
             "display_name",
             "name",
             "ref",
@@ -153,6 +155,7 @@ class AddressService(Component):
             "zip",
             "city",
             "phone",
+            "email",
             "function",
             "opt_in",
             "is_blacklisted:opt_out",
