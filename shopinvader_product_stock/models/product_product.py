@@ -18,7 +18,10 @@ class ProductProduct(models.Model):
         If data changed and binding is in done state it forces it to 'to_update'.
         :return:
         """
-        all_bindinds = self.mapped("shopinvader_bind_ids")
+        # Use `sudo` because this action might be triggered
+        # from a low access level user (eg: external user on portal/website).
+        # In any case, the real operation is done w/ the backend user below.
+        all_bindinds = self.sudo().mapped("shopinvader_bind_ids")
         backends = all_bindinds.mapped("backend_id")
         for backend in backends:
             bindings = all_bindinds.filtered(
