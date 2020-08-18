@@ -11,7 +11,7 @@ from .common import CommonCase, CommonTestDownload
 class SaleCase(CommonCase, CommonTestDownload):
     @classmethod
     def setUpClass(cls):
-        super(SaleCase, cls).setUpClass()
+        super().setUpClass()
         cls.sale = cls.env.ref("shopinvader.sale_order_2")
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.register_payments_obj = cls.env["account.payment.register"]
