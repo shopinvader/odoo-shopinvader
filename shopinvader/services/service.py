@@ -91,9 +91,12 @@ class BaseShopinvaderService(AbstractComponent):
             },
             "domain": {"type": "list", "nullable": True},
             "scope": {"type": "dict", "nullable": True},
+            "order": {"type": "string", "nullable": True},
         }
 
-    def _paginate_search(self, default_page=1, default_per_page=5, **params):
+    def _paginate_search(
+        self, default_page=1, default_per_page=5, order=None, **params
+    ):
         """
         Build a domain and search on it.
         As we use expression (from Odoo), manuals domains get from "scope" and
@@ -116,9 +119,22 @@ class BaseShopinvaderService(AbstractComponent):
         page = params.get("page", default_page)
         per_page = params.get("per_page", default_per_page)
         records = model_obj.search(
-            domain, limit=per_page, offset=per_page * (page - 1)
+            domain,
+            limit=per_page,
+            offset=per_page * (page - 1),
+            order=self._get_search_order(order, **params),
         )
         return {"size": total_count, "data": self._to_json(records)}
+
+    def _get_search_order(self, order, **params):
+        """Customize search results order.
+
+        By default, simply pass the *internal odoo field* you want to sort on
+        (eg: 'date_order desc').
+
+        Override to define special sorting policies.
+        """
+        return order
 
     def _get(self, _id):
         domain = expression.normalize_domain(self._get_base_search_domain())

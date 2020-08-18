@@ -195,3 +195,31 @@ class SaleCase(CommonCase, CommonTestDownload):
         sale.shopinvader_backend_id = self.backend
         self.assertNotEqual(sale.partner_id, self.service.partner)
         self._test_download_not_owner(self.service, sale)
+
+    # TODO (long-term): this test is not specifically for sale.order.
+    # This as many other tests should be moved to a generic test case
+    # to ensure core feature a working on independently.
+    def test_sale_search_order(self):
+        order1 = self.sale
+        order1.date_order = "2020-08-18"
+        order1.action_confirm_cart()
+        order2 = order1.copy({"date_order": "2020-08-31"})
+        order2.action_confirm_cart()
+        res = self.service.search()
+        self.assertEqual(len(res["data"]), 2)
+        # by default order is `_order = 'date_order desc, id desc'`
+        self.assertEqual(res["data"][0]["id"], order2.id)
+        self.assertEqual(res["data"][1]["id"], order1.id)
+        # change ordering
+        res = self.service.dispatch(
+            "search", params={"order": "date_order asc"}
+        )
+        self.assertEqual(len(res["data"]), 2)
+        self.assertEqual(res["data"][0]["id"], order1.id)
+        self.assertEqual(res["data"][1]["id"], order2.id)
+        order1.name = "O1"
+        order2.name = "O2"
+        res = self.service.dispatch("search", params={"order": "name desc"})
+        self.assertEqual(len(res["data"]), 2)
+        self.assertEqual(res["data"][0]["id"], order2.id)
+        self.assertEqual(res["data"][1]["id"], order1.id)
