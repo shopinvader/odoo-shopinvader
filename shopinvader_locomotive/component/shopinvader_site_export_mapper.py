@@ -1,11 +1,14 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
+# Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import json
 import logging
 
+from odoo import models
 from odoo.addons.component.core import Component
 from odoo.addons.connector.components.mapper import changed_by, mapping
 from odoo.fields import first
@@ -22,7 +25,13 @@ class ShopinvaderSiteExportMapper(Component):
         res = {}
         for lang in record.lang_ids:
             res[lang.code[0:2]] = []
-            for rec in record[backend_field].with_context(lang=lang.code):
+            # Make sure no value is cached in the former lang processed
+            # TODO: tested manually and it works. Needs test coverage.
+            record.invalidate_cache([backend_field])
+            field_value = record[backend_field]
+            if isinstance(field_value, models.Model):
+                field_value.invalidate_cache()
+            for rec in field_value.with_context(lang=lang.code):
                 res[lang.code[0:2]].append(rec.jsonify(parser)[0])
         return res
 
