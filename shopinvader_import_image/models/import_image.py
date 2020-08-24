@@ -238,6 +238,7 @@ class ProductImageImportWizard(models.Model):
         tag_obj = self.env["image.tag"]
         image_obj = self.env["storage.image"]
         relation_obj = self.env["product.image.relation"]
+        prod_tmpl_attr_value_obj = self.env["product.template.attribute.value"]
 
         report = {
             "created": set(),
@@ -254,6 +255,8 @@ class ProductImageImportWizard(models.Model):
         if product_model == "product.template":
             # exclude template id
             _fields = _fields[:1]
+        else:
+            _fields.append("product_template_attribute_value_ids")
 
         products = self.env[product_model].search_read(
             [("default_code", "in", all_codes)], _fields
@@ -289,28 +292,42 @@ class ProductImageImportWizard(models.Model):
             # storage_file = file_obj.create(file_vals)
             tag_id = tag_by_name.get(line["tag_name"])
 
-            image = image_obj.create(file_vals)
-            if options.get("overwrite"):
-                domain = [
-                    ("image_id.name", "=", image.name),
-                    ("tag_id", "=", tag_id),
-                    ("product_tmpl_id", "=", prod["id"]),
-                ]
-                relation_obj.search(domain).unlink()
-
             if product_model == "product.template":
                 tmpl_id = prod["id"]
             elif product_model == "product.product":
                 # TODO: test product.product import
                 tmpl_id = prod["product_tmpl_id"][0]
 
-            relation_obj.create(
-                {
-                    "image_id": image.id,
-                    "tag_id": tag_id,
-                    "product_tmpl_id": tmpl_id,
-                }
-            )
+            image = image_obj.create(file_vals)
+            if options.get("overwrite"):
+                domain = [
+                    ("image_id.name", "=", image.name),
+                    ("tag_id", "=", tag_id),
+                    ("product_tmpl_id", "=", tmpl_id),
+                ]
+                relation_obj.search(domain).unlink()
+
+            img_relation_values = {
+                "image_id": image.id,
+                "tag_id": tag_id,
+                "product_tmpl_id": tmpl_id,
+            }
+            # Assign specific product attribute values
+            if (
+                product_model == "product.product"
+                and prod["product_template_attribute_value_ids"]
+            ):
+                attr_values = prod_tmpl_attr_value_obj.browse(
+                    prod["product_template_attribute_value_ids"]
+                )
+                img_relation_values["attribute_value_ids"] = [
+                    (
+                        6,
+                        0,
+                        attr_values.mapped("product_attribute_value_id").ids,
+                    )
+                ]
+            relation_obj.create(img_relation_values)
             report["created"].add(prod["default_code"])
         report["created"] = sorted(report["created"])
         report["file_not_found"] = sorted(report["file_not_found"])
