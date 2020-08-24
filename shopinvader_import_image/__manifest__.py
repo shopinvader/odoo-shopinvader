@@ -14,7 +14,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "Product",
     "depends": ["shopinvader_image"],
-    "external_dependencies": {"python": ["magic", "validators"]},
+    "external_dependencies": {"python": ["python-magic", "validators"]},
     "data": [
         "data/ir_cron.xml",
         "security/ir_model_access.xml",
