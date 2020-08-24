@@ -51,6 +51,7 @@
                         <field name="csv_delimiter"/>
                         <field name="overwrite"/>
                         <field name="create_missing_tags"/>
+                        <field name="chunk_size"/>
                     </group>
                     <separator string="Report" />
                     <field name="report_html" nolabel="1" />

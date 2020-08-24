@@ -30,6 +30,23 @@ except (ImportError, IOError) as err:
     _logger.debug(err)
 
 
+def gen_chunks(iterable, chunksize=10):
+    """Chunk generator.
+
+    Take an iterable and yield `chunksize` sized slices.
+    "Borrowed" from connector_importer.
+    """
+    chunk = []
+    last_chunk = False
+    for i, line in enumerate(iterable):
+        if i % chunksize == 0 and i > 0:
+            yield chunk, last_chunk
+            del chunk[:]
+        chunk.append(line)
+    last_chunk = True
+    yield chunk, last_chunk
+
+
 class ProductImageImportWizard(models.Model):
 
     _name = "shopinvader.import.product_image"
@@ -78,6 +95,11 @@ class ProductImageImportWizard(models.Model):
         "Overwrite image with same name", sparse="options", default=False
     )
     create_missing_tags = fields.Boolean(sparse="options", default=False)
+    chunk_size = fields.Integer(
+        sparse="options",
+        default=10,
+        help="How many lines will be handled in each job.",
+    )
     report = fields.Serialized(readonly=True)
     report_html = fields.Html(readonly=True, compute="_compute_report_html")
     state = fields.Selection(
@@ -165,24 +187,49 @@ class ProductImageImportWizard(models.Model):
         return lines
 
     def _get_options(self):
-        return self.options
+        return self.options or {}
 
     def action_import(self):
         self.report = self.report_html = False
         self.state = "scheduled"
-        return self.with_delay().do_import()
+        # Generate N chunks to split in several jobs.
+        chunks = gen_chunks(
+            self._get_lines(), chunksize=self._get_options().get("chunk_size")
+        )
+        for i, (chunk, is_last_chunk) in enumerate(chunks, 1):
+            self.with_delay().do_import(lines=chunk, last_chunk=is_last_chunk)
+            _logger.info(
+                "Generated job for chunk nr %d. Is last: %s.",
+                i,
+                "yes" if is_last_chunk else "no",
+            )
 
     @job(default_channel="root.shopinvader.import.images")
-    def do_import(self):
-        lines = self._get_lines()
+    def do_import(self, lines=None, last_chunk=False):
+        lines = lines or self._get_lines()
         report = self._do_import(
             lines, self.product_model, options=self._get_options()
         )
+        # Refresh report
+        extendable_keys = [
+            "created",
+            "file_not_found",
+            "missing",
+            "missing_tags",
+        ]
+        prev_report = self.report or {}
+        for k, v in report.items():
+            if k in extendable_keys and prev_report.get(k):
+                report[k] = sorted(set(prev_report[k] + report[k]))
+
+        # Lock as writing can come from several jobs
+        sql = "SELECT id FROM %s WHERE ID IN %%s FOR UPDATE" % self._table
+        self.env.cr.execute(sql, (tuple(self.ids),), log_exceptions=False)
         self.write(
             {
                 "report": report,
-                "state": "done",
-                "done_on": fields.Datetime.now(),
+                "state": "done" if last_chunk else self.state,
+                "done_on": fields.Datetime.now() if last_chunk else False,
             }
         )
         return report
