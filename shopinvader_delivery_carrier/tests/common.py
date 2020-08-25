@@ -11,6 +11,8 @@ class CommonCarrierCase(CommonConnectedCartCase):
         super(CommonCarrierCase, cls).setUpClass()
         cls.free_carrier = cls.env.ref("delivery.free_delivery_carrier")
         cls.poste_carrier = cls.env.ref("delivery.delivery_carrier")
+        cls.free_carrier.default_code = "FREE"
+        cls.poste_carrier.default_code = "POSTE"
         cls.product_1 = cls.env.ref("product.product_product_4b")
         cls.precision = 2
 

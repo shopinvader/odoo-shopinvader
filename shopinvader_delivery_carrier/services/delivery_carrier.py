@@ -76,6 +76,11 @@ class DeliveryCarrierService(Component):
                             "required": False,
                             "nullable": True,
                         },
+                        "code": {
+                            "type": "string",
+                            "required": False,
+                            "nullable": True,
+                        },
                         "description": {
                             "type": "string",
                             "required": False,
