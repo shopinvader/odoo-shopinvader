@@ -9,14 +9,14 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_shipping(self, cart):
         res = super(AbstractSaleService, self)._convert_shipping(cart)
-        selected_carrier = {}
         if cart.carrier_id:
-            carrier = cart.carrier_id
-            selected_carrier = {
-                "id": carrier.id,
-                "name": carrier.name,
-                "description": carrier.name,
-            }
+            # we do not need an estimation of the price
+            # so we do not pass the cart to the _prepare_carrier method
+            # and we remove the field
+            selected_carrier = self._prepare_carrier(cart.carrier_id)
+            selected_carrier.pop("price")
+        else:
+            selected_carrier = {}
         res.update(
             {
                 "amount": {
@@ -51,13 +51,9 @@ class AbstractSaleService(AbstractComponent):
         )
         return result
 
-    def _prepare_carrier(self, carrier, cart):
-        return {
-            "id": carrier.id,
-            "name": carrier.name,
-            "description": carrier.name,
-            "price": carrier.rate_shipment(cart).get("price", 0.0),
-        }
+    def _prepare_carrier(self, carrier, cart=None):
+        service = self.component(usage="delivery_carrier")
+        return service._prepare_carrier(carrier, cart=cart)
 
     def _get_available_carrier(self, cart):
         return [
