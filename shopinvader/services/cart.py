@@ -184,6 +184,11 @@ class CartService(Component):
 
     def _validator_update(self):
         return {
+            "client_order_ref": {
+                "type": "string",
+                "required": False,
+                "nullable": True,
+            },
             "step": self._subvalidator_step(),
             "shipping": self._subvalidator_shipping(),
             "invoicing": self._subvalidator_invoicing(),

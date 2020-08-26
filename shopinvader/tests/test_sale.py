@@ -55,6 +55,7 @@ class SaleCase(CommonCase, CommonTestDownload):
         self.assertEqual(sale["state"], self.sale.shopinvader_state)
         state_label = self._get_selection_label(self.sale, "shopinvader_state")
         self.assertEqual(sale["state_label"], state_label)
+        self.assertEqual(sale["client_order_ref"], "DEMO_ORDER_2")
 
     def test_hack_read_other_customer_sale(self):
         sale = self.env.ref("sale.sale_order_1")

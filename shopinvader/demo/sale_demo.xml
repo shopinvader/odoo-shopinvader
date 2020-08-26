@@ -9,6 +9,7 @@
         <field name="user_id" ref="base.user_demo"/>
         <field name="pricelist_id" ref="product.list0"/>
         <field name="typology">cart</field>
+        <field name="client_order_ref">DEMO_ORDER_1</field>
     </record>
 
     <record id="sale_order_line_1" model="sale.order.line">
@@ -46,6 +47,7 @@
         <field name="user_id" ref="base.user_root"/>
         <field name="pricelist_id" ref="product.list0"/>
         <field name="typology">cart</field>
+        <field name="client_order_ref">DEMO_ORDER_2</field>
     </record>
 
     <record id="sale_order_line_4" model="sale.order.line">
@@ -74,6 +76,7 @@
         <field name="user_id" ref="base.user_root"/>
         <field name="pricelist_id" ref="product.list0"/>
         <field name="typology">cart</field>
+        <field name="client_order_ref">DEMO_ORDER_3</field>
     </record>
 
     <record id="sale_order_line_6" model="sale.order.line">
