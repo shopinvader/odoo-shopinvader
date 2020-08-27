@@ -10,18 +10,22 @@ from .common import CommonCase, CommonTestDownload
 
 
 class SaleCase(CommonCase, CommonTestDownload):
-    def setUp(self, *args, **kwargs):
-        super(SaleCase, self).setUp(*args, **kwargs)
-        self.sale = self.env.ref("shopinvader.sale_order_2")
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.register_payments_obj = self.env["account.register.payments"]
-        self.journal_obj = self.env["account.journal"]
-        self.payment_method_manual_in = self.env.ref(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.sale = cls.env.ref("shopinvader.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.register_payments_obj = cls.env["account.register.payments"]
+        cls.journal_obj = cls.env["account.journal"]
+        cls.payment_method_manual_in = cls.env.ref(
             "account.account_payment_method_manual_in"
         )
-        self.bank_journal_euro = self.journal_obj.create(
+        cls.bank_journal_euro = cls.journal_obj.create(
             {"name": "Bank", "type": "bank", "code": "BNK6278"}
         )
+
+    def setUp(self, *args, **kwargs):
+        super(SaleCase, self).setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="sales")
 
