@@ -58,6 +58,7 @@ class ShopinvaderPartnerBindingLine(models.TransientModel):
                 bind_values = {
                     "backend_id": backend.id,
                     "record_id": record.partner_id.id,
+                    "active": record.partner_id.active,
                 }
                 # Locomotive doesn't work with uppercase.
                 # And we have to do the write before the binding
