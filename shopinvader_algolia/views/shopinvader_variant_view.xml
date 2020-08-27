@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
+Simone Orsi <simahawk@gmail.com>
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+  <record model="ir.ui.view" id="shopinvader_variant_tree_view">
+    <field name="name">shopinvader.variant.tree (in shopinvader_algolia)</field>
+    <field name="model">shopinvader.variant</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_variant_tree_view" />
+    <field name="arch" type="xml">
+      <field name="name" position="after">
+        <field name="data_size"/>
+      </field>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="shopinvader_variant_form_view">
+    <field name="name">shopinvader.variant.form (in shopinvader_algolia)</field>
+    <field name="model">shopinvader.variant</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_variant_form_view" />
+    <field name="arch" type="xml">
+      <field name="date_syncronized" position="after">
+        <field name="data_size" />
+      </field>
+    </field>
+  </record>
+
+</odoo>
