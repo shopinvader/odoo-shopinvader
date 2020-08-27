@@ -21,11 +21,12 @@
     <field name="inherit_id" ref="shopinvader.shopinvader_variant_form_view"/>
     <field name="arch" type="xml">
         <group name="variant" position="after">
-            <group string="Search engine">
+            <group name="search_engine" string="Search engine">
                 <field name="index_id"/>
                 <field name="sync_state"/>
                 <field name="date_modified"/>
                 <field name="date_syncronized"/>
+                <field name="data_display" widget="ace" readonly="1" groups="base.group_no_one"/>
             </group>
         </group>
     </field>
