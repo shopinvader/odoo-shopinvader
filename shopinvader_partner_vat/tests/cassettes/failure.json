@@ -2,62 +2,66 @@ interactions:
 - request:
     body: null
     headers:
-      Connection: [close]
-      Host: [ec.europa.eu]
-      User-Agent: [Python-urllib/2.7]
+      Connection:
+      - close
+      Host:
+      - ec.europa.eu
+      User-Agent:
+      - Python-urllib/3.5
     method: GET
-    uri: http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl
+    uri: https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl
   response:
-    body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
-        <wsdl:definitions targetNamespace=\"urn:ec.europa.eu:taxud:vies:services:checkVat\"\
-        \ xmlns:tns1=\"urn:ec.europa.eu:taxud:vies:services:checkVat:types\" xmlns:soapenc=\"\
-        http://schemas.xmlsoap.org/soap/encoding/\" xmlns:impl=\"urn:ec.europa.eu:taxud:vies:services:checkVat\"\
-        \ xmlns:apachesoap=\"http://xml.apache.org/xml-soap\" xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\"\
-        \ xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:wsdlsoap=\"http://schemas.xmlsoap.org/wsdl/soap/\"\
-        >\n  <xsd:documentation>\n\t The objective of this Internet site is to allow\
-        \ persons involved in the intra-Community supply of goods or of services to\
-        \ obtain confirmation of the validity of the VAT identification number of\
-        \ any specified person, in accordance to article 31 of Council Regulation\
-        \ (EC) No. 904/2010 of 7 October 2010. \\n\n    Any other use and any extraction\
-        \ and use of the data which is not in conformity with the objective of this\
-        \ site is strictly forbidden. \n    Any retransmission of the contents of\
-        \ this site, whether for a commercial purpose or otherwise, as well as any\
-        \ more general use other than as far as is necessary to support the activity\
-        \ of a legitimate user (for example: to draw up their own invoices) is expressly\
-        \ forbidden. In addition, any copying or reproduction of the contents of this\
-        \ site is strictly forbidden. \n    The European Commission maintains this\
-        \ website to enhance the access by taxable persons making intra-Community\
-        \ supplies to verification of their customers' VAT identification numbers.\
-        \ Our goal is to supply instantaneous and accurate information. \n    However\
-        \ the Commission accepts no responsibility or liability whatsoever with regard\
-        \ to the information obtained using this site. This information: \n    - is\
-        \ obtained from Member States' databases over which the Commission services\
-        \ have no control and for which the Commission assumes no responsibility;\
-        \ it is the responsibility of the Member States to keep their databases complete,\
-        \ accurate and up to date; \n    - is not professional or legal advice (if\
-        \ you need specific advice, you should always consult a suitably qualified\
-        \ professional); \n    - does not in itself give a right to exempt intra-Community\
-        \ supplies from Value Added Tax; \n    - does not change any obligations imposed\
-        \ on taxable persons in relation to intra-Community supplies. \n    It is\
-        \ our goal to minimise disruption caused by technical errors. However some\
-        \ data or information on our site may have been created or structured in files\
-        \ or formats which are not error-free and we cannot guarantee that our service\
-        \ will not be interrupted or otherwise affected by such problems. The Commission\
-        \ accepts no responsibility with regard to such problems incurred as a result\
-        \ of using this site or any linked external sites. \n    This disclaimer is\
-        \ not intended to limit the liability of the Commission in contravention of\
-        \ any requirements laid down in applicable national law nor to exclude its\
-        \ liability for matters which may not be excluded under that law. \n    Collecting\
-        \ or handling personal data falls under the Data Protection Notice. This data\
-        \ protection declaration explains the Processing in the VIES-on-the-web Internet\
-        \ Website of VAT Identification Numbers for intra-Community Transaction on\
-        \ Goods or Services. Details of your legal rights associated with the collection,\
-        \ processing and use of this data are also provided: http://ec.europa.eu/dpo-register/details.htm?id=40647\
-        \ . \n    \n    Usage: \n    The countryCode input parameter must follow the\
-        \ pattern [A-Z]{2} \n    The vatNumber input parameter must follow the pattern\
-        \ [0-9A-Za-z\\+\\*\\.]{2,12} \n    In case of problems, the returned FaultString\
-        \ can take the following specific values: \n    - INVALID_INPUT: The provided\
-        \ CountryCode is invalid or the VAT number is empty; \n    - GLOBAL_MAX_CONCURRENT_REQ:\
+    body:
+      string: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<wsdl:definitions targetNamespace=\"\
+        urn:ec.europa.eu:taxud:vies:services:checkVat\" xmlns:tns1=\"urn:ec.europa.eu:taxud:vies:services:checkVat:types\"\
+        \ xmlns:soapenc=\"http://schemas.xmlsoap.org/soap/encoding/\" xmlns:impl=\"\
+        urn:ec.europa.eu:taxud:vies:services:checkVat\" xmlns:apachesoap=\"http://xml.apache.org/xml-soap\"\
+        \ xmlns:wsdl=\"http://schemas.xmlsoap.org/wsdl/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"\
+        \ xmlns:wsdlsoap=\"http://schemas.xmlsoap.org/wsdl/soap/\">\n  <xsd:documentation>\n\
+        \t The objective of this Internet site is to allow persons involved in the\
+        \ intra-Community supply of goods or of services to obtain confirmation of\
+        \ the validity of the VAT identification number of any specified person, in\
+        \ accordance to article 31 of Council Regulation (EC) No. 904/2010 of 7 October\
+        \ 2010. \\n\n    Any other use and any extraction and use of the data which\
+        \ is not in conformity with the objective of this site is strictly forbidden.\
+        \ \n    Any retransmission of the contents of this site, whether for a commercial\
+        \ purpose or otherwise, as well as any more general use other than as far\
+        \ as is necessary to support the activity of a legitimate user (for example:\
+        \ to draw up their own invoices) is expressly forbidden. In addition, any\
+        \ copying or reproduction of the contents of this site is strictly forbidden.\
+        \ \n    The European Commission maintains this website to enhance the access\
+        \ by taxable persons making intra-Community supplies to verification of their\
+        \ customers' VAT identification numbers. Our goal is to supply instantaneous\
+        \ and accurate information. \n    However the Commission accepts no responsibility\
+        \ or liability whatsoever with regard to the information obtained using this\
+        \ site. This information: \n    - is obtained from Member States' databases\
+        \ over which the Commission services have no control and for which the Commission\
+        \ assumes no responsibility; it is the responsibility of the Member States\
+        \ to keep their databases complete, accurate and up to date; \n    - is not\
+        \ professional or legal advice (if you need specific advice, you should always\
+        \ consult a suitably qualified professional); \n    - does not in itself give\
+        \ a right to exempt intra-Community supplies from Value Added Tax; \n    -\
+        \ does not change any obligations imposed on taxable persons in relation to\
+        \ intra-Community supplies. \n    It is our goal to minimise disruption caused\
+        \ by technical errors. However some data or information on our site may have\
+        \ been created or structured in files or formats which are not error-free\
+        \ and we cannot guarantee that our service will not be interrupted or otherwise\
+        \ affected by such problems. The Commission accepts no responsibility with\
+        \ regard to such problems incurred as a result of using this site or any linked\
+        \ external sites. \n    This disclaimer is not intended to limit the liability\
+        \ of the Commission in contravention of any requirements laid down in applicable\
+        \ national law nor to exclude its liability for matters which may not be excluded\
+        \ under that law. \n    Collecting or handling personal data falls under the\
+        \ Data Protection Notice. This data protection declaration explains the Processing\
+        \ in the VIES-on-the-web Internet Website of VAT Identification Numbers for\
+        \ intra-Community Transaction on Goods or Services. Details of your legal\
+        \ rights associated with the collection, processing and use of this data are\
+        \ also provided: http://ec.europa.eu/dpo-register/details.htm?id=40647 . \n\
+        \    \n    Usage: \n    The countryCode input parameter must follow the pattern\
+        \ [A-Z]{2} \n    The vatNumber input parameter must follow the pattern [0-9A-Za-z\\\
+        +\\*\\.]{2,12} \n    In case of problems, the returned FaultString can take\
+        \ the following specific values: \n    - INVALID_INPUT: The provided CountryCode\
+        \ is invalid or the VAT number is empty; \n    - GLOBAL_MAX_CONCURRENT_REQ:\
         \ Your Request for VAT validation has not been processed; the maximum number\
         \ of concurrent requests has been reached. Please re-submit your request later\
         \ or contact TAXUD-VIESWEB@ec.europa.eu for further information\": Your request\
@@ -167,35 +171,59 @@ interactions:
         \  </wsdl:binding>\n  <wsdl:service name=\"checkVatService\">\n    <wsdl:port\
         \ name=\"checkVatPort\" binding=\"impl:checkVatBinding\">\n      <wsdlsoap:address\
         \ location=\"http://ec.europa.eu/taxation_customs/vies/services/checkVatService\"\
-        />\n    </wsdl:port>\n  </wsdl:service>\n</wsdl:definitions>\n"}
+        />\n    </wsdl:port>\n  </wsdl:service>\n</wsdl:definitions>\n"
     headers:
-      accept-ranges: [bytes]
-      connection: [close]
-      content-length: ['11631']
-      date: ['Tue, 11 Dec 2018 09:43:13 GMT']
-      last-modified: ['Thu, 11 Jan 2018 15:38:49 GMT']
-      server: [Europa]
-    status: {code: 200, message: OK}
+      Accept-Ranges:
+      - bytes
+      Connection:
+      - close
+      Content-Length:
+      - '11631'
+      Date:
+      - Fri, 28 Aug 2020 14:57:45 GMT
+      Last-Modified:
+      - Wed, 11 Mar 2020 18:19:23 GMT
+      Server:
+      - Europa
+    status:
+      code: 200
+      message: OK
 - request:
-    body: !!python/unicode '<?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope
-      xmlns:ns0="urn:ec.europa.eu:taxud:vies:services:checkVat:types" xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"><SOAP-ENV:Header/><ns1:Body><ns0:checkVat><ns0:countryCode>FR</ns0:countryCode><ns0:vatNumber>54348545954</ns0:vatNumber></ns0:checkVat></ns1:Body></SOAP-ENV:Envelope>'
+    body: <?xml version="1.0" encoding="UTF-8"?><SOAP-ENV:Envelope xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/"
+      xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns0="urn:ec.europa.eu:taxud:vies:services:checkVat:types"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><SOAP-ENV:Header/><ns1:Body><ns0:checkVat><ns0:countryCode>FR</ns0:countryCode><ns0:vatNumber>54348545954</ns0:vatNumber></ns0:checkVat></ns1:Body></SOAP-ENV:Envelope>
     headers:
-      Connection: [close]
-      Content-Length: ['455']
-      Content-Type: [text/xml; charset=utf-8]
-      Host: [ec.europa.eu]
-      Soapaction: ['""']
-      User-Agent: [Python-urllib/2.7]
+      Connection:
+      - close
+      Content-Length:
+      - '455'
+      Content-Type:
+      - text/xml; charset=utf-8
+      Host:
+      - ec.europa.eu
+      Soapaction:
+      - !!binary |
+        IiI=
+      User-Agent:
+      - Python-urllib/3.5
     method: POST
     uri: http://ec.europa.eu/taxation_customs/vies/services/checkVatService
   response:
-    body: {string: !!python/unicode '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><checkVatResponse
-        xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types"><countryCode>FR</countryCode><vatNumber>54348545954</vatNumber><requestDate>2018-12-11+01:00</requestDate><valid>false</valid><name>---</name><address>---</address></checkVatResponse></soap:Body></soap:Envelope>'}
+    body:
+      string: <soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><checkVatResponse
+        xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types"><countryCode>FR</countryCode><vatNumber>54348545954</vatNumber><requestDate>2020-08-28+02:00</requestDate><valid>false</valid><name>---</name><address>---</address></checkVatResponse></soap:Body></soap:Envelope>
     headers:
-      connection: [close]
-      content-type: [text/xml; charset=UTF-8]
-      date: ['Tue, 11 Dec 2018 09:43:14 GMT']
-      server: [Europa]
-    status: {code: 200, message: OK}
+      Connection:
+      - close
+      Content-Type:
+      - text/xml; charset=UTF-8
+      Date:
+      - Fri, 28 Aug 2020 14:57:45 GMT
+      Server:
+      - Europa
+      Transfer-Encoding:
+      - chunked
+    status:
+      code: 200
+      message: OK
 version: 1
