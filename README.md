@@ -39,7 +39,7 @@ addon | version | summary
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.2 | Shopinvader guest mode for locomotive
 [shopinvader_multi_category](shopinvader_multi_category/) | 12.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 12.0.1.0.2 | Shopinvader Customer firstname/lastname
-[shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 | Shopinvader Check VAT with invader environnement
+[shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.1 | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 12.0.1.0.1 | This module is used to choose a stock state during theexport (by backend)
