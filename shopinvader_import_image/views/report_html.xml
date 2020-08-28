@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <template id="report_html">
+    <div class="report-html mb16">
+      <t t-foreach="record.report.keys()" t-as="report_key">
+        <div t-att-id="report_key" class="row mt8">
+          <div class="col-2">
+            <strong t-esc="record._report_label_for(report_key)" />
+          </div>
+          <div class="col-10">
+            <t t-esc="', '.join(record.report.get(report_key, []))" />
+          </div>
+        </div>
+      </t>
+    </div>
+  </template>
+</odoo>
