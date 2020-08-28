@@ -7,13 +7,12 @@ from odoo import exceptions
 from .common import CommonCase
 
 
-class AbstractItemCase(object):
-    def setUp(self, *args, **kwargs):
-        super(AbstractItemCase, self).setUp(*args, **kwargs)
-        self.product_1 = self.env.ref("product.product_product_4b")
-        self.product_2 = self.env.ref("product.product_product_13")
-        self.product_3 = self.env.ref("product.product_product_11")
-        self.pricelist = self.env.ref("product.list0")
+class ItemCaseMixin(object):
+    def _setup_products(cls):
+        cls.product_1 = cls.env.ref("product.product_product_4b")
+        cls.product_2 = cls.env.ref("product.product_product_13")
+        cls.product_3 = cls.env.ref("product.product_product_11")
+        cls.pricelist = cls.env.ref("product.list0")
 
     def extract_cart(self, response):
         self.shopinvader_session["cart_id"] = response["set_session"][
@@ -22,18 +21,18 @@ class AbstractItemCase(object):
         self.assertEqual(response["store_cache"], {"cart": response["data"]})
         return response["data"]
 
-    def add_item(self, product_id, qty):
+    def add_item(self, product_id, qty, **kw):
+        params = {"product_id": product_id, "item_qty": qty}
+        params.update(kw)
         return self.extract_cart(
-            self.service.dispatch(
-                "add_item", params={"product_id": product_id, "item_qty": qty}
-            )
+            self.service.dispatch("add_item", params=params)
         )
 
-    def update_item(self, item_id, qty):
+    def update_item(self, item_id, qty, **kw):
+        params = {"item_id": item_id, "item_qty": qty}
+        params.update(kw)
         return self.extract_cart(
-            self.service.dispatch(
-                "update_item", params={"item_id": item_id, "item_qty": qty}
-            )
+            self.service.dispatch("update_item", params=params)
         )
 
     def delete_item(self, item_id):
@@ -44,6 +43,17 @@ class AbstractItemCase(object):
     def check_product_and_qty(self, line, product_id, qty):
         self.assertEqual(line["product"]["id"], product_id)
         self.assertEqual(line["qty"], qty)
+
+    def remove_cart(self):
+        self.cart.unlink()
+        self.shopinvader_session.pop("cart_id")
+
+
+class AbstractItemCase(ItemCaseMixin):
+    @classmethod
+    def setUpClass(cls):
+        super(AbstractItemCase, cls).setUpClass()
+        AbstractItemCase._setup_products(cls)
 
     def test_add_item_without_cart(self):
         self.remove_cart()
@@ -134,10 +144,6 @@ class AbstractItemCase(object):
         self.product_1.shopinvader_bind_ids.unlink()
         with self.assertRaises(exceptions.UserError):
             self.add_item(self.product_1.id, 1)
-
-    def remove_cart(self):
-        self.cart.unlink()
-        self.shopinvader_session.pop("cart_id")
 
     def _test_pricelist_product(self):
         self.remove_cart()

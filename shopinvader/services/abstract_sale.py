@@ -90,6 +90,7 @@ class AbstractSaleService(AbstractComponent):
                 items.append(self._convert_one_line(line))
         return {
             "items": items,
+            # TODO: does this make any sense? Sum up qty of different products?
             "count": sum([item["qty"] for item in items]),
             "amount": {
                 "tax": sum([item["amount"]["tax"] for item in items]),

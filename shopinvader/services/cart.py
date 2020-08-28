@@ -215,9 +215,21 @@ class CartService(Component):
     # from the controller.
     # All params are trusted as they have been checked before
 
-    def _upgrade_cart_item_quantity(self, cart, item, product_qty):
+    def _upgrade_cart_item_quantity_vals(self, item, params, action="replace"):
+        assert action in ("sum", "replace")
+        if action == "replace":
+            qty = params["item_qty"]
+        else:
+            qty = item.product_uom_qty + params["item_qty"]
+        return {"product_uom_qty": qty}
+
+    def _upgrade_cart_item_quantity(
+        self, cart, item, params, action="replace"
+    ):
+        vals = self._upgrade_cart_item_quantity_vals(
+            item, params, action=action
+        )
         with self.env.norecompute():
-            vals = {"product_uom_qty": product_qty}
             new_values = item.play_onchanges(vals, vals.keys())
             # clear cache after play onchange
             real_line_ids = [line.id for line in cart.order_line if line.id]
@@ -278,8 +290,9 @@ class CartService(Component):
             raise UserError(_("Product %s is not allowed") % product.name)
         existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
-            qty = existing_item.product_uom_qty + params["item_qty"]
-            self._upgrade_cart_item_quantity(cart, existing_item, qty)
+            self._upgrade_cart_item_quantity(
+                cart, existing_item, params, action="sum"
+            )
         else:
             with self.env.norecompute():
                 vals = self._prepare_cart_item(params, cart)
@@ -317,7 +330,7 @@ class CartService(Component):
         if not item:
             item = self._get_cart_item(cart, params, raise_if_not_found=False)
         if item:
-            self._upgrade_cart_item_quantity(cart, item, params["item_qty"])
+            self._upgrade_cart_item_quantity(cart, item, params)
             return
         # The item id is maybe the one from a previous cart.
         line_id = params["item_id"]
