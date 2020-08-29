@@ -17,7 +17,7 @@ class ShopInvaderCustomerService(Component):
         if backend.use_sale_profile:
             params[
                 "property_product_pricelist"
-            ] = backend.sale_profile_ids.filtered("default").id
+            ] = backend.sale_profile_ids.filtered("default").pricelist_id.id
         return params
 
     def _prepare_create_response(self, binding):
