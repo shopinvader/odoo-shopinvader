@@ -14,14 +14,15 @@ interactions:
     uri: http://ec.europa.eu/taxation_customs/vies/services/checkVatService
   response:
     body: {string: !!python/unicode '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><checkVatResponse
-        xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types"><countryCode>FR</countryCode><vatNumber>86792377731</vatNumber><requestDate>2018-12-11+01:00</requestDate><valid>true</valid><name>SARL
+        xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types"><countryCode>FR</countryCode><vatNumber>86792377731</vatNumber><requestDate>2020-08-29+02:00</requestDate><valid>true</valid><name>SARL
         AKRETION FRANCE</name><address>35 B RUE MONTGOLFIER
 
         69100 VILLEURBANNE</address></checkVatResponse></soap:Body></soap:Envelope>'}
     headers:
       connection: [close]
       content-type: [text/xml; charset=UTF-8]
-      date: ['Tue, 11 Dec 2018 09:43:14 GMT']
+      date: ['Sat, 29 Aug 2020 14:25:48 GMT']
       server: [Europa]
+      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 version: 1
