@@ -5,6 +5,7 @@
 import logging
 
 from .common import CommonCase
+from .test_address import _check_partner_data
 
 _logger = logging.getLogger(__name__)
 
@@ -29,13 +30,7 @@ class TestCustomerCommon(CommonCase):
             self.address_service = work.component(usage="addresses")
 
     def _test_partner_data(self, partner, data):
-        for key in data:
-            if key == "external_id":
-                continue
-            elif key == "country":
-                self.assertEqual(partner.country_id.id, data[key]["id"])
-            else:
-                self.assertEqual(partner[key], data[key])
+        _check_partner_data(self, partner, data)
 
 
 class TestCustomer(TestCustomerCommon):

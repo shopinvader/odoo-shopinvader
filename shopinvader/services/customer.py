@@ -45,6 +45,9 @@ class CustomerService(Component):
     def _validator_create(self):
         address = self.component(usage="addresses")
         schema = address._validator_create()
+        exclude_keys = ["type"]
+        for key in exclude_keys:
+            schema.pop(key, None)
         schema.update(
             {
                 "email": {"type": "string", "required": True},
