@@ -1,9 +1,11 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 from .tools import sanitize_attr_name
 
@@ -47,6 +49,7 @@ class ProductFilter(models.Model):
                 self.variant_attribute_id
             )
 
+    @api.depends_context("lang")
     def _compute_display_name(self):
         for pfilter in self:
             pfilter.display_name = pfilter._build_display_name()
