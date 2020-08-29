@@ -6,7 +6,7 @@ interactions:
       Host: [ec.europa.eu]
       User-Agent: [Python-urllib/2.7]
     method: GET
-    uri: http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl
+    uri: https://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl
   response:
     body: {string: !!python/unicode "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
         <wsdl:definitions targetNamespace=\"urn:ec.europa.eu:taxud:vies:services:checkVat\"\
@@ -172,8 +172,8 @@ interactions:
       accept-ranges: [bytes]
       connection: [close]
       content-length: ['11631']
-      date: ['Tue, 11 Dec 2018 09:43:13 GMT']
-      last-modified: ['Thu, 11 Jan 2018 15:38:49 GMT']
+      date: ['Sat, 29 Aug 2020 14:25:47 GMT']
+      last-modified: ['Wed, 11 Mar 2020 18:19:23 GMT']
       server: [Europa]
     status: {code: 200, message: OK}
 - request:
@@ -191,11 +191,12 @@ interactions:
     uri: http://ec.europa.eu/taxation_customs/vies/services/checkVatService
   response:
     body: {string: !!python/unicode '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><checkVatResponse
-        xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types"><countryCode>FR</countryCode><vatNumber>54348545954</vatNumber><requestDate>2018-12-11+01:00</requestDate><valid>false</valid><name>---</name><address>---</address></checkVatResponse></soap:Body></soap:Envelope>'}
+        xmlns="urn:ec.europa.eu:taxud:vies:services:checkVat:types"><countryCode>FR</countryCode><vatNumber>54348545954</vatNumber><requestDate>2020-08-29+02:00</requestDate><valid>false</valid><name>---</name><address>---</address></checkVatResponse></soap:Body></soap:Envelope>'}
     headers:
       connection: [close]
       content-type: [text/xml; charset=UTF-8]
-      date: ['Tue, 11 Dec 2018 09:43:14 GMT']
+      date: ['Sat, 29 Aug 2020 14:25:47 GMT']
       server: [Europa]
+      transfer-encoding: [chunked]
     status: {code: 200, message: OK}
 version: 1
