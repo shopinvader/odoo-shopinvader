@@ -65,6 +65,7 @@ addon | version | summary
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 (unported) | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 (unported) | This module is used to choose a stock field during theexport (by backend)
+[shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 13.0.1.0.0 (unported) | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 10.0.1.0.0 (unported) | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 (unported) | Shopinvader Quotation
