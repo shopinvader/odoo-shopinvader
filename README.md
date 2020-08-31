@@ -69,7 +69,7 @@ addon | version | summary
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 10.0.1.0.0 (unported) | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 (unported) | Shopinvader Quotation
-[shopinvader_sale_profile](shopinvader_sale_profile/) | 10.0.1.0.1 (unported) | ShopInvader - Sale profile
+[shopinvader_sale_profile](shopinvader_sale_profile/) | 12.0.1.0.2 (unported) | ShopInvader - Sale profile
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
 
 [//]: # (end addons)
