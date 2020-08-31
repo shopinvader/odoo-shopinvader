@@ -63,6 +63,7 @@ addon | version | summary
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_product_media](shopinvader_product_media/) | 10.0.1.0.0 (unported) | Shopinvader Product Media
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
+[shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 12.0.1.0.0 (unported) | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 10.0.1.0.0 (unported) | Shopinvader Product Link
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
