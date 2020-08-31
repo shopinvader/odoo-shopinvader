@@ -147,4 +147,4 @@ class DeliveryCarrierService(Component):
 
     @property
     def _json_parser_carrier(self):
-        return ["id", "name", "name:description"]
+        return ["id", "name", "code", "description"]
