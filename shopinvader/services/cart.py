@@ -370,7 +370,11 @@ class CartService(Component):
             # shipping address, if you want a different invoice address
             # just pass it
             params["partner_shipping_id"] = address["id"]
-            params["partner_invoice_id"] = params["partner_shipping_id"]
+            if (
+                self.shopinvader_backend.cart_checkout_address_policy
+                == "invoice_defaults_to_shipping"
+            ):
+                params["partner_invoice_id"] = params["partner_shipping_id"]
 
     def _prepare_invoicing(self, invoicing, params):
         if "address" in invoicing:
