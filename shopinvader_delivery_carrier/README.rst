@@ -26,6 +26,14 @@ Add the configuration and the logic to manage the carrier on your ShopInvader si
 .. contents::
    :local:
 
+Usage
+=====
+
+This module will give you several endpoint for interacting with delivery carrier.
+You can play with it with swagger.
+
+Becarefull the key "rows" and "count" in the endpoint "delivery_carrier" are deprecated.
+
 Bug Tracker
 ===========
 
