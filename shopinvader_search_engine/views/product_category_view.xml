@@ -40,6 +40,7 @@
     <field name="name">Recompute shopinvader category</field>
     <field name="model_id" ref="product.model_product_category"/>
     <field name="binding_model_id" ref="product.model_product_category"/>
+    <field name="state">code</field>
     <field name="code">
         records.mapped("shopinvader_bind_ids")._jobify_recompute_json(force_export=True)
     </field>
