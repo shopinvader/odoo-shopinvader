@@ -20,13 +20,13 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 12.0.0.2.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 12.0.3.16.0 | Shopinvader
+[shopinvader](shopinvader/) | 12.0.3.17.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.2 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 12.0.1.0.0 | Shopinvader Display category image for product
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.3.0.0 | Carrier integration for Shopinvader
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.3.1.0 | Carrier integration for Shopinvader
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.5 | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 | Guest mode for Shopinvader
@@ -44,7 +44,7 @@ addon | version | summary
 [shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 12.0.1.0.1 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 12.0.1.0.0 | Ease creation of variants selector on shopinvader sites
-[shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 | Shopinvader Quotation
+[shopinvader_quotation](shopinvader_quotation/) | 12.0.2.1.0 | Shopinvader Quotation
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 12.0.1.2.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 12.0.1.5.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 12.0.1.0.0 | Handle shop wishlist
