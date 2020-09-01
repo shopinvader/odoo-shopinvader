@@ -19,13 +19,16 @@ class ResPartner(models.Model):
 
     _inherit = "res.partner"
 
-    invader_user_token = fields.Char(readonly=True, index=True)
-    # `type` is the base field from odoo core :/
-    type = fields.Selection(
-        selection_add=[("invader_client_user", "Invader client user")]
+    invader_user_token = fields.Char(
+        readonly=True,
+        index=True,
+        help="The token is automatically generated "
+        "when a binding to the shop is created.",
     )
-
-    _invader_client_user_type = "invader_client_user"
+    is_invader_user = fields.Boolean(
+        compute="_compute_is_invader_user",
+        help="At least one backend has an invader user for this partner.",
+    )
 
     _sql_constraints = [
         (
@@ -34,6 +37,13 @@ class ResPartner(models.Model):
             "Already exists in database",
         )
     ]
+
+    @api.depends("shopinvader_bind_ids")
+    def _compute_is_invader_user(self):
+        for rec in self:
+            rec.is_invader_user = any(
+                rec.mapped("shopinvader_bind_ids.is_invader_user")
+            )
 
     @api.model
     def _generate_invader_user_token(self, length=10):
@@ -56,7 +66,3 @@ class ResPartner(models.Model):
         # directly because the client passes the context as 1st argument
         # hence the token turns to be the ctx dict as a string :/
         self.assign_invader_user_token()
-
-    def is_invader_user(self):
-        self.ensure_one()
-        return self.type == self._invader_client_user_type
