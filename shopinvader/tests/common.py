@@ -12,7 +12,6 @@ from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
 from odoo.addons.shopinvader import shopinvader_response
-from odoo.addons.server_environment import serv_config
 from odoo.exceptions import MissingError
 from odoo.tests import SavepointCase
 

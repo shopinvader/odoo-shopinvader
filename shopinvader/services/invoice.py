@@ -48,7 +48,7 @@ class InvoiceService(Component):
         Get every invoice states allowed to return on the service.
         :return: list of str
         """
-        return ["posted"]
+        return ["paid"]
 
     def _get_base_search_domain(self):
         """
