@@ -29,16 +29,17 @@ class CommonMixin(ComponentMixin):
         cls.shopinvader_session = {}
         cls.existing_jobs = cls.env["queue.job"].browse()
 
+    @classmethod
     @contextmanager
-    def work_on_services(self, **params):
+    def work_on_services(cls, **params):
         params = params or {}
         if "shopinvader_backend" not in params:
-            params["shopinvader_backend"] = self.backend
+            params["shopinvader_backend"] = cls.backend
         if "shopinvader_session" not in params:
             params["shopinvader_session"] = {}
         if not params.get("partner_user") and params.get("partner"):
             params["partner_user"] = params["partner"]
-        collection = _PseudoCollection("shopinvader.backend", self.env)
+        collection = _PseudoCollection("shopinvader.backend", cls.env)
         yield WorkContext(
             model_name="rest.service.registration",
             collection=collection,
