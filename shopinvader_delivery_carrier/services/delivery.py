@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class DeliveryService(Component):
-    _inherit = "base.shopinvader.service"
+    _inherit = ["base.shopinvader.service", "abstract.shopinvader.download"]
     _name = "shopinvader.delivery.service"
     _usage = "delivery"
     _expose_model = "stock.picking"
@@ -56,6 +56,19 @@ class DeliveryService(Component):
             },
         }
         return schema
+
+    def _get_report_action(self, target, params=None):
+        return self.env.ref("stock.action_report_delivery").report_action(
+            target, config=False
+        )
+
+    def _get_allowed_picking_domain(self):
+        """
+        Get every picking states allowed to return on the service.
+        Hook to set required domain for pickings
+        :return: list of tuples
+        """
+        return []
 
     def _validator_return_search(self):
         """
@@ -159,5 +172,8 @@ class DeliveryService(Component):
         sale_service = self.component(usage="sales")
         sale_obj = self.env[sale_service._expose_model]
         sale_domain = sale_service._get_base_search_domain()
+        sale_domain = expression.AND(
+            [sale_domain, self._get_allowed_picking_domain()]
+        )
         pickings = sale_obj.search(sale_domain).mapped("picking_ids")
         return [("id", "in", pickings.ids)]
