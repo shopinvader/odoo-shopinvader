@@ -17,7 +17,11 @@ class ShopinvaderPartner(models.Model):
         "res.partner", string="Partner", required=True, ondelete="restrict"
     )
     partner_email = fields.Char(
-        related="record_id.email", readonly=True, required=True, store=True
+        related="record_id.email",
+        readonly=True,
+        required=True,
+        store=True,
+        compute_sudo=True,
     )
 
     _sql_constraints = [
