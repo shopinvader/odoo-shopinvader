@@ -21,6 +21,7 @@ except (ImportError, IOError) as err:
 class TestShopinvaderPartner(CommonShopinvaderPartner):
     def setUp(self):
         super(TestShopinvaderPartner, self).setUp()
+        self.user_liege = self.env.ref("shopinvader.user_liege_shop")
 
     def _get_shopinvader_partner(self, shopinvader_partner, external_id):
         with requests_mock.mock() as m:
@@ -87,3 +88,29 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         )
         role = params.get("content_entry").get("role")
         self.assertEquals(role, profile.code)
+
+    def test_shopinvader_multi_company(self):
+        """
+        Test if modifications to a partner on a company A with a shopinvader.partner on a company B
+        work
+        """
+        self.backend.pricelist_id = False
+        self.backend.use_sale_profile = True
+
+        vals = {
+            "email": "test+35@test.com",
+            "name": "test  partner",
+            "country_id": self.env.ref("base.fr").id,
+        }
+        # create a partner...
+        partner = self.env["res.partner"].create(vals)
+        # create a binding on company A
+        self.env["shopinvader.partner"].create(
+            {
+                "email": "test+35@test.com",
+                "name": "test  partner",
+                "backend_id": self.backend.id,
+            }
+        )
+        # The user from company Liège is modifying partner
+        partner.sudo(self.user_liege).country_id = self.env.ref("base.us")
