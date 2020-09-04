@@ -12,6 +12,40 @@ class PartnerEventListener(Component):
 
     _apply_on = ["res.partner"]
 
+    def _send_bind_customers_email(self, backend, partners):
+        template = backend.new_customer_autobind_mail_template_id
+        if not template:
+            return
+        for partner in partners:
+            template.send_mail(partner.id)
+
+    def _bind_customers(self, record):
+        """
+        Get all backends that we want to bind to
+        :param record:
+        :return:
+        """
+        for backend in self.env["shopinvader.backend"].search(
+            [("bind_new_customers", "=", True)]
+        ):
+            # Don't bind if record is already bound
+            if record.shopinvader_bind_ids.filtered(
+                lambda b: b.backend_id == backend
+            ):
+                continue
+            wizard = (
+                self.env["shopinvader.partner.binding"]
+                .with_context(
+                    active_ids=record.ids, active_model="res.partner"
+                )
+                .create({"shopinvader_backend_id": backend.id})
+            )
+            wizard._onchange_shopinvader_backend_id()
+            wizard.binding_lines.write({"bind": True})
+            partners = wizard.binding_lines.mapped("partner_id")
+            wizard.action_apply()
+            self._send_bind_customers_email(backend, partners)
+
     def _get_write_fields(self):
         return ["email"]
 
@@ -54,19 +88,7 @@ class PartnerEventListener(Component):
     def on_record_create(self, record, fields=None):
         if not self._check_partner(record):
             return
-        for backend in self.env["shopinvader.backend"].search(
-            [("bind_new_customers", "=", True)]
-        ):
-            wizard = (
-                self.env["shopinvader.partner.binding"]
-                .with_context(
-                    active_ids=record.ids, active_model="res.partner"
-                )
-                .create({"shopinvader_backend_id": backend.id})
-            )
-            wizard._onchange_shopinvader_backend_id()
-            wizard.binding_lines.write({"bind": True})
-            wizard.action_apply()
+        self._bind_customers(record)
 
     @skip_if(
         lambda self, record, **kwargs: self._get_skip_if_condition(
@@ -88,21 +110,4 @@ class PartnerEventListener(Component):
             return
         if not self._check_partner(record, warn=False):
             return
-        for backend in self.env["shopinvader.backend"].search(
-            [("bind_new_customers", "=", True)]
-        ):
-            # Don't bind if record is already bound
-            if record.shopinvader_bind_ids.filtered(
-                lambda b: b.backend_id == backend
-            ):
-                continue
-            wizard = (
-                self.env["shopinvader.partner.binding"]
-                .with_context(
-                    active_ids=record.ids, active_model="res.partner"
-                )
-                .create({"shopinvader_backend_id": backend.id})
-            )
-            wizard._onchange_shopinvader_backend_id()
-            wizard.binding_lines.write({"bind": True})
-            wizard.action_apply()
+        self._bind_customers(record)

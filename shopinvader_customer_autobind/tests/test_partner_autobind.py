@@ -11,6 +11,10 @@ class TestPartnerAutoBind(CommonCase):
         super(TestPartnerAutoBind, cls).setUpClass()
         cls.backend.bind_new_customers = True
         cls.partner_obj = cls.env["res.partner"]
+        cls.backend.new_customer_autobind_mail_template_id = cls.env.ref(
+            "shopinvader_customer_autobind.mail_template_autobind_new_customers"
+        )
+        cls.mail_domain = [("body", "like", "%shop account has been created%")]
 
     def test_partner_autobind(self):
         # Create a partner without mail address
@@ -35,7 +39,10 @@ class TestPartnerAutoBind(CommonCase):
         self.assertEqual(1, len(news))
 
         vals = {"email": "test1@test.com"}
+        mail_before = self.env["mail.mail"].search(self.mail_domain)
         self.partner_auto.write(vals)
+        mail_after = self.env["mail.mail"].search(self.mail_domain)
+        self.assertEquals(1, len(mail_after - mail_before))
         self.assertEquals(1, len(self.partner_auto.shopinvader_bind_ids))
 
         vals = {
