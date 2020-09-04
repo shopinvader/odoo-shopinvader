@@ -12,5 +12,5 @@
     "website": "https://shopinvader.com",
     "depends": ["shopinvader", "web_notify"],
     "data": ["views/shopinvader_backend.xml"],
-    "demo": [],
+    "demo": ["demo/mail_template.xml"],
 }

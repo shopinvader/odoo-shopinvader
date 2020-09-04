@@ -13,3 +13,9 @@ class ShopinvaderBackend(models.Model):
         help="Check this if you want to automatically bind new customers "
         "to this backend."
     )
+    new_customer_autobind_mail_template_id = fields.Many2one(
+        comodel_name="mail.template",
+        string="New Customer Auto Binding Email",
+        help="Fill in this field with Mail Template that will be used to send a welcome mail to customers"
+        "automatically bound to Shopinvader backends.",
+    )

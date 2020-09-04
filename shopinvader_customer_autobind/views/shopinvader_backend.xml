@@ -11,6 +11,8 @@
         <field name="arch" type="xml">
             <field name="account_analytic_id" position="after">
                 <field name="bind_new_customers"/>
+                <field name="new_customer_autobind_mail_template_id"
+                       attrs="{'invisible': [('bind_new_customers', '=', False)]}"/>
             </field>
         </field>
     </record>
