@@ -7,7 +7,6 @@ from odoo import api, models
 class ShopinvaderImageMixin(models.AbstractModel):
     _inherit = "shopinvader.image.mixin"
 
-    @api.multi
     def _prepare_data_resize(self, thumbnail, image_relation):
         """
         Prepare data to fill images serialized field
