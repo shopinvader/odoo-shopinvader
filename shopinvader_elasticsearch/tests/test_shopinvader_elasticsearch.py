@@ -13,6 +13,7 @@ from odoo.addons.connector_search_engine.tests.test_all import (
 
 _logger = logging.getLogger(__name__)
 
+
 try:
     from vcr_unittest import VCRMixin
 except ImportError as err:
