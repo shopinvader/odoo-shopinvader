@@ -125,6 +125,25 @@ class ShopinvaderBackend(models.Model):
         "statistics reasons. A new cart is created automatically when the "
         "customer will add a new item.",
     )
+    cart_checkout_address_policy = fields.Selection(
+        selection=[
+            ("no_defaults", "No defaults"),
+            (
+                "invoice_defaults_to_shipping",
+                "Invoice address defaults to shipping",
+            ),
+        ],
+        default="no_defaults",
+        required=True,
+        string="Cart address behavior",
+        help="Define how the cart address will be handled in the checkout step:\n"
+        "- No defaults: client will pass shipping and invoicing address"
+        " together or in separated calls."
+        " No automatic value for non passed addresses will be set;\n"
+        "- Invoice address defaults to shipping:"
+        " if the client does not pass the invoice address explicitly "
+        " the shipping one will be used as invoice address as well.\n",
+    )
     validate_customers = fields.Boolean(
         default=False,  # let's be explicit here :)
         help="Turn on this flag to block non validated customers. "

@@ -302,12 +302,31 @@ class CommonConnectedCartCase(CartCase):
 
 
 class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
-    def test_set_shipping_address(self):
+    def test_set_shipping_address_no_default_invocing(self):
+        cart = self.cart
+        self.backend.cart_checkout_address_policy = "no_defaults"
+        invoice_addr = self.env.ref("shopinvader.partner_1_address_2")
+        cart.partner_invoice_id = invoice_addr
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
         )
-        cart = self.cart
         self.assertEqual(cart.partner_id, self.partner)
+        # invoice address is preserved
+        self.assertEqual(cart.partner_shipping_id, self.address)
+        self.assertEqual(cart.partner_invoice_id, invoice_addr)
+
+    def test_set_shipping_address_default_invoicing(self):
+        cart = self.cart
+        invoice_addr = self.env.ref("shopinvader.partner_1_address_2")
+        cart.partner_invoice_id = invoice_addr
+        self.backend.cart_checkout_address_policy = (
+            "invoice_defaults_to_shipping"
+        )
+        self.service.dispatch(
+            "update", params={"shipping": {"address": {"id": self.address.id}}}
+        )
+        self.assertEqual(cart.partner_id, self.partner)
+        # invoice address is replaced
         self.assertEqual(cart.partner_shipping_id, self.address)
         self.assertEqual(cart.partner_invoice_id, self.address)
 
@@ -453,7 +472,6 @@ class ConnectedCartNoTaxCase(CartCase):
         )
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.address)
-        self.assertEqual(cart.partner_invoice_id, self.address)
         self.assertEqual(cart.fiscal_position_id, self.default_fposition)
         self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
 
@@ -464,7 +482,6 @@ class ConnectedCartNoTaxCase(CartCase):
         )
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
-        self.assertEqual(cart.partner_invoice_id, self.partner)
         self.assertEqual(cart.fiscal_position_id, self.fposition)
         self.assertEqual(cart.amount_total, cart.amount_untaxed)
 
@@ -479,7 +496,6 @@ class ConnectedCartNoTaxCase(CartCase):
         )
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.address)
-        self.assertEqual(cart.partner_invoice_id, self.address)
         self.assertEqual(cart.fiscal_position_id, self.default_fposition)
         self.assertNotEqual(cart.amount_total, cart.amount_untaxed)
 
