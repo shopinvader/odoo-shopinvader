@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
 
-    <record id="ir_exp_shopinvader_variant_cross_sellings" model="ir.exports.line">
-        <field name="name">cross_selling_ids/object_id</field>
-        <field name="alias">cross_selling_ids:cross_sellings/object_id:id</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
-    </record>
-
-
-    <record id="ir_exp_shopinvader_variant_up_sellings" model="ir.exports.line">
-        <field name="name">up_selling_ids/object_id</field>
-        <field name="alias">up_selling_ids:up_sellings/object_id:id</field>
+    <record id="ir_exp_shopinvader_variant_links" model="ir.exports.line">
+        <field name="name">product_links:links</field>
         <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     </record>
 

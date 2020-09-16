@@ -16,5 +16,6 @@
     "installable": True,
     "auto_install": True,
     "depends": ["shopinvader", "product_template_multi_link"],
+    "external_dependencies": {"python": ["slugify"]},
     "data": ["data/ir_exports_line.xml"],
 }
