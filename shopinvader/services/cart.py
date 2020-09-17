@@ -174,7 +174,12 @@ class CartService(Component):
                 "type": "dict",
                 "schema": self._schema_for_session(),
             },
-            "store_cache": {"type": "dict", "schema": self._schema_for_cart()},
+            "store_cache": {
+                "type": "dict",
+                "schema": {
+                    "cart": {"type": "dict", "schema": self._schema_for_cart()}
+                },
+            },
         }
 
     def _validator_search(self):

@@ -72,7 +72,7 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
             self.url, headers={"API_KEY": self.backend.auth_api_key_id.key}
         )
         self.assertEqual(result.status_code, 200)
-        self.assertEqual(result.json(), {"data": []})
+        self.assertEqual(result.json(), {"size": 0, "data": []})
 
     @mute_logger(
         "odoo.addons.auth_api_key.models.ir_http", "odoo.addons.base_rest.http"

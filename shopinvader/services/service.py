@@ -143,6 +143,7 @@ class BaseShopinvaderService(AbstractComponent):
         Override to define special sorting policies.
         """
         return order
+
     def _to_json(self, records):
         raise NotImplementedError()
 
