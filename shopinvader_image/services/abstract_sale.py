@@ -12,3 +12,17 @@ class AbstractSaleService(AbstractComponent):
         res = super()._parser_product()
         res.append("images")
         return res
+
+    def _schema_for_line_product(self):
+        schema = super()._schema_for_line_product()
+        schema.update(
+            {
+                "images": {
+                    "empty": True,
+                    "nullable": True,
+                    "type": "list",
+                    "schema": {"type": "binary"},
+                }
+            }
+        )
+        return schema

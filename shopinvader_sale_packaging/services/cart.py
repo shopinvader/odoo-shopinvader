@@ -42,3 +42,25 @@ class CartService(Component):
             res.pop("product_uom_qty", None)
             res.update(pkg_params)
         return res
+
+    def _schema_for_one_line(self):
+        schema = super()._schema_for_one_line()
+        schema.update(
+            {
+                "packaging": {
+                    "empty": True,
+                    "nullable": True,
+                    "type": "dict",
+                    "schema": {
+                        "id": {"type": "integer"},
+                        "name": {"type": "string"},
+                    },
+                },
+                "packaging_qty": {
+                    "type": "float",
+                    "empty": True,
+                    "nullable": True,
+                },
+            }
+        )
+        return schema

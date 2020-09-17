@@ -79,3 +79,28 @@ class AbstractSaleService(AbstractComponent):
         values = super(AbstractSaleService, self)._convert_one_line(line)
         values.update({"qty_delivered": line.qty_delivered})
         return values
+
+    def _schema_for_shipping(self):
+        schema = super()._schema_for_shipping()
+        schema.update(
+            {
+                "amount": {
+                    "type": "dict",
+                    "schema": {
+                        "tax": {"type": "float"},
+                        "untaxed": {"type": "float"},
+                        "total": {"type": "float"},
+                    },
+                },
+                "selected_carrier": {
+                    "type": "dict",
+                    "empty": True,
+                    "schema": {
+                        "id": {"type": "integer"},
+                        "name": {"type": "string"},
+                        "description": {"type": "string"},
+                    },
+                },
+            }
+        )
+        return schema
