@@ -252,7 +252,7 @@ class ShopinvaderBackend(models.Model):
             (
                 "binding_model_id",
                 "=",
-                self.env.ref("account.model_account_invoice").id,
+                self.env.ref("account.model_account_move").id,
             )
         ]
 

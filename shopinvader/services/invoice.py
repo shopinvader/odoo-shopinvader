@@ -44,13 +44,21 @@ class InvoiceService(Component):
     # Private implementation
 
     def _get_allowed_invoice_states(self):
-        """Get downloadable invoice states.
+        """Get invoice states.
 
         :return: list of str
         """
+        return ["posted"]
+
+    def _get_allowed_payment_states(self):
+        """Get invoice payment states.
+
+        :return: list of str
+        """
+        states = ["paid"]
         if self.shopinvader_backend.invoice_access_open:
-            return ["open", "paid"]
-        return ["paid"]
+            states += ["not_paid", "in_payment"]
+        return states
 
     def _get_base_search_domain(self):
         """Domain used to retrieve requested invoices.
@@ -65,8 +73,13 @@ class InvoiceService(Component):
         invoices = self._get_available_invoices()
         domain_invoice_ids = [("id", "in", invoices.ids)]
         domain_state = [("state", "in", self._get_allowed_invoice_states())]
+        domain_payment_state = [
+            ("invoice_payment_state", "in", self._get_allowed_payment_states())
+        ]
         return expression.normalize_domain(
-            expression.AND([domain_invoice_ids, domain_state])
+            expression.AND(
+                [domain_invoice_ids, domain_state, domain_payment_state]
+            )
         )
 
     def _get_available_invoices(self):
@@ -81,8 +94,11 @@ class InvoiceService(Component):
             sales = self.env["sale.order"].search(so_domain)
             invoices = sales.mapped("invoice_ids")
         else:
-            invoices = self.env["account.invoice"].search(
-                [("partner_id", "=", self.partner.id)]
+            invoices = self.env["account.move"].search(
+                [
+                    ("partner_id", "=", self.partner.id),
+                    ("type", "in", ["out_invoice", "out_refund"]),
+                ]
             )
         return invoices
 
