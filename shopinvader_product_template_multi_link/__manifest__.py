@@ -7,7 +7,7 @@
 {
     "name": "Shopinvader Product Link",
     "summary": "Shopinvader Product Link",
-    "version": "13.0.1.0.1",
+    "version": "13.0.1.0.2",
     "category": "e-commerce",
     "website": "https://akretion.com",
     "author": "Akretion,GRAP,Camptocamp",
