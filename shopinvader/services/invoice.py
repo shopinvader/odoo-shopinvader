@@ -51,14 +51,12 @@ class InvoiceService(Component):
 
         :return: list of str
         """
-        if self.shopinvader_backend.access_to_open_invoice:
+        if self.shopinvader_backend.invoice_access_open:
             return ["open", "paid"]
         return ["paid"]
 
     def _get_base_search_domain(self):
-        """
-        This method must provide a domain used to retrieve the requested
-        invoice.
+        """Domain used to retrieve requested invoices.
 
         This domain MUST TAKE CARE of restricting the access to the invoices
         visible for the current customer
@@ -67,38 +65,44 @@ class InvoiceService(Component):
         # The partner must be set and not be the anonymous one
         if not self._is_logged_in():
             return expression.FALSE_DOMAIN
-
-        # here we only allow access to invoices linked to a sale order of the
-        # current customer
-        if self.shopinvader_backend.invoice_linked_to_sale_only:
-            so_domain = [
-                ("partner_id", "=", self.partner.id),
-                ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-                ("typology", "=", "sale"),
-            ]
-            # invoice_ids on sale.order is a computed field...
-            # to avoid to duplicate the logic, we search for the sale orders
-            # and check if the invoice_id is into the list of sale.invoice_ids
-            sales = self.env["sale.order"].search(so_domain)
-            invoice_ids = sales.mapped("invoice_ids").ids
-        else:
-            invoice_ids = (
-                self.env["account.invoice"]
-                .search([("partner_id", "=", self.partner.id)])
-                .ids
-            )
-        domain_invoice_ids = [("id", "in", invoice_ids)]
+        invoices = self._get_available_invoices()
+        domain_invoice_ids = [("id", "in", invoices.ids)]
         domain_state = [("state", "in", self._get_allowed_invoice_states())]
         return expression.normalize_domain(
             expression.AND([domain_invoice_ids, domain_state])
         )
 
+    def _get_available_invoices(self):
+        """Retrieve invoices for current customer."""
+        # here we only allow access to invoices linked to a sale order of the
+        # current customer
+        if self.shopinvader_backend.invoice_linked_to_sale_only:
+            so_domain = self._get_sale_order_domain()
+            # invoice_ids on sale.order is a computed field...
+            # to avoid to duplicate the logic, we search for the sale orders
+            # and check if the invoice_id is into the list of sale.invoice_ids
+            sales = self.env["sale.order"].search(so_domain)
+            invoices = sales.mapped("invoice_ids")
+        else:
+            invoices = self.env["account.invoice"].search(
+                [("partner_id", "=", self.partner.id)]
+            )
+        return invoices
+
+    def _get_sale_order_domain(self):
+        return [
+            ("partner_id", "=", self.partner.id),
+            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+            ("typology", "=", "sale"),
+        ]
+
     def _get_report_action(self, target, params=None):
-        """
-        Get the action/dict to generate the report
+        """Get the action/dict to generate the report.
+
         :param target: recordset
         :return: dict/action
         """
-        return self.env.ref("account.account_invoices").report_action(
-            target, config=False
-        )
+        report = self.shopinvader_backend.invoice_report_id
+        if not report:
+            report = self.env.ref("account.account_invoices")
+        return report.report_action(target, config=False)

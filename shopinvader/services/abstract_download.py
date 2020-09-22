@@ -101,7 +101,7 @@ class AbstractDownload(AbstractComponent):
         :param report_name: str
         :param report_type: str
         :param params: dict
-        :return: ir.actions.report.xml recordset
+        :return: ir.actions.report recordset
         """
         domain = [
             ("report_type", "=", report_type),
