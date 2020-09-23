@@ -97,16 +97,17 @@ class SaleService(Component):
 
     def _convert_one_sale(self, sale):
         res = super(SaleService, self)._convert_one_sale(sale)
-        res["invoices"] = self._convert_invoices(sale.sudo())
+        res["invoices"] = self._convert_invoices(self._get_invoices(sale))
         return res
 
-    def _convert_invoices(self, sale):
-        res = []
-        for invoice in sale.invoice_ids.filtered(
-            lambda i: i.invoice_payment_state == "paid"
-        ):
-            res.append(self._convert_one_invoice(invoice))
-        return res
+    def _get_invoices(self, sale):
+        invoices = sale.sudo().invoice_ids
+        invoice_service = self.component(usage="invoice")
+        domain_state = invoice_service._get_domain_state()
+        return invoices.filtered_domain(domain_state)
+
+    def _convert_invoices(self, invoices):
+        return [self._convert_one_invoice(invoice) for invoice in invoices]
 
     def _convert_one_invoice(self, invoice):
         return {

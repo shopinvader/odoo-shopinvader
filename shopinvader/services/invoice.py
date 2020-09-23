@@ -72,15 +72,16 @@ class InvoiceService(Component):
             return expression.FALSE_DOMAIN
         invoices = self._get_available_invoices()
         domain_invoice_ids = [("id", "in", invoices.ids)]
+        return expression.normalize_domain(
+            expression.AND([domain_invoice_ids, self._get_domain_state()])
+        )
+
+    def _get_domain_state(self):
         domain_state = [("state", "in", self._get_allowed_invoice_states())]
         domain_payment_state = [
             ("invoice_payment_state", "in", self._get_allowed_payment_states())
         ]
-        return expression.normalize_domain(
-            expression.AND(
-                [domain_invoice_ids, domain_state, domain_payment_state]
-            )
-        )
+        return expression.AND([domain_state, domain_payment_state])
 
     def _get_available_invoices(self):
         """Retrieve invoices for current customer."""
