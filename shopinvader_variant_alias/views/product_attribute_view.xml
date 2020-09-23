@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!--sale inherits the views in-place-->
+    <record id="variants_alias_tree_view" model="ir.ui.view">
+        <field name="name">shopinvader.variants.template.tree</field>
+        <field name="model">product.attribute.value</field>
+        <field name="inherit_id" ref="product.variants_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="shopinvader_alias"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="variants_alias_form_view" model="ir.ui.view">
+        <field name="name">shopinvader.variants.attribute.form</field>
+        <field name="model">product.template.attribute.value</field>
+        <field name="inherit_id" ref="product.product_template_attribute_value_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="shopinvader_alias"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="variants_alias_product_attribute_view_form" model="ir.ui.view">
+        <field name="name">shopinvader.attribute.form</field>
+        <field name="model">product.attribute</field>
+        <field name="inherit_id" ref="product.product_attribute_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='value_ids']//field[@name='name']" position="after">
+                <field name="shopinvader_alias"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="variants_alias_product_template_attribute_line_form" model="ir.ui.view">
+        <field name="name">shopinvader.variants.template.line.form</field>
+        <field name="model">product.template.attribute.line</field>
+        <field name="inherit_id" ref="product.product_template_attribute_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='value_ids']/tree/field[@name='name']" position="after">
+                <field name="shopinvader_alias"/>
+            </xpath>
+            <xpath expr="//field[@name='value_ids']/form/field[@name='name']" position="after">
+                <div/> <field name="shopinvader_alias"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="variants_alias_template_attribute_value_view_tree" model="ir.ui.view">
+        <field name="name">shopinvader.variants.template.value.tree</field>
+        <field name="model">product.template.attribute.value</field>
+        <field name="inherit_id" ref="product.product_template_attribute_value_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="shopinvader_alias"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="variants_alias_product_template_attribute_value_form" model="ir.ui.view">
+        <field name="name">shopinvader.variants.template.attribute.form</field>
+        <field name="model">product.template.attribute.value</field>
+        <field name="inherit_id" ref="product.product_template_attribute_value_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="shopinvader_alias"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
