@@ -8,7 +8,7 @@ from odoo.addons.shopinvader.controllers import main
 class InvaderController(main.InvaderController):
     def _get_component_context(self):
         res = super(InvaderController, self)._get_component_context()
-        if res["partner"] and res["partner"].is_invader_user():
+        if res["partner"] and res["partner"].is_invader_user:
             # just a user of the same main account:
             # override partner w/ its parent
             # The original partner is already into `res['partner_user']`

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="shopinvader_partner_view_form" model="ir.ui.view">
+    <field name="model">shopinvader.partner</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_form"/>
+    <field name="arch" type="xml">
+      <field name="external_id" position="after">
+        <field name="is_invader_user"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="shopinvader_partner_view_tree" model="ir.ui.view">
+    <field name="model">shopinvader.partner</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree"/>
+    <field name="arch" type="xml">
+      <field name="external_id" position="after">
+        <field name="is_invader_user"/>
+      </field>
+    </field>
+  </record>
+
+  <record id="shopinvader_partner_view_search" model="ir.ui.view">
+    <field name="model">shopinvader.partner</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search"/>
+    <field name="arch" type="xml">
+      <field name="external_id" position="after">
+        <field name="is_invader_user"/>
+      </field>
+      <filter name="group_by_backend_id" position="after">
+        <filter name="group_by_is_invader_user" string="Is invader user" domain="[]" context="{'group_by':'is_invader_user'}"/>
+      </filter>
+    </field>
+  </record>
+
+  </odoo>

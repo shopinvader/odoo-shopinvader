@@ -60,7 +60,7 @@ class TestCustomer(TestCustomerCommon):
         res = self.service.dispatch("create", params=params)["data"]
         partner = self.env["res.partner"].browse(res["id"])
         self.assertFalse(partner.parent_id)
-        self.assertNotEqual(partner.type, "invader_client_user")
+        self.assertFalse(partner.is_invader_user)
         self._test_partner_data(partner, self.data)
 
     def test_create_customer_multi_user(self):
@@ -73,7 +73,8 @@ class TestCustomer(TestCustomerCommon):
         res = self.service.dispatch("create", params=params)["data"]
         partner1 = self.env["res.partner"].browse(res["id"])
         self.assertEqual(partner1.parent_id, self.company)
-        self.assertEqual(partner1.type, "invader_client_user")
+        self.assertEqual(partner1.type, "contact")
+        self.assertTrue(partner1.is_invader_user)
         self._test_partner_data(partner1, data)
         # customer 2
         data = dict(
@@ -83,11 +84,14 @@ class TestCustomer(TestCustomerCommon):
         res = self.service.dispatch("create", params=params)["data"]
         partner2 = self.env["res.partner"].browse(res["id"])
         self.assertEqual(partner2.parent_id, self.company)
-        self.assertEqual(partner2.type, "invader_client_user")
+        self.assertEqual(partner2.type, "contact")
+        self.assertTrue(partner2.is_invader_user)
         self._test_partner_data(partner2, data)
         # both are there
         self.assertIn(partner1, self.company.child_ids)
         self.assertIn(partner2, self.company.child_ids)
+        # the company is not an invader user
+        self.assertFalse(self.company.is_invader_user)
 
     def test_create_customer_multi_user_wrong_token(self):
         self.data.update({"external_id": "cust1"})
@@ -96,9 +100,10 @@ class TestCustomer(TestCustomerCommon):
         partner = self.env["res.partner"].browse(res["id"])
         # partner is created normally, no relation w/ the company
         self.assertFalse(partner.parent_id)
-        self.assertNotEqual(partner.type, "invader_client_user")
+        self.assertFalse(partner.is_invader_user)
         self._test_partner_data(partner, self.data)
         self.assertNotIn(partner, self.company.child_ids)
+        self.assertFalse(self.company.is_invader_user)
 
     def test_controller_service_context(self):
         self.backend.customer_multi_user = True
