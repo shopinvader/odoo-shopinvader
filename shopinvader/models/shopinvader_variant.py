@@ -239,4 +239,4 @@ class ShopinvaderVariant(models.Model):
     def _get_shop_data(self):
         """Compute shop data base_jsonify parser."""
         exporter = self.env.ref("shopinvader.ir_exp_shopinvader_variant")
-        return self.jsonify(exporter.get_json_parser())[0]
+        return self.jsonify(exporter.get_json_parser(), one=True)

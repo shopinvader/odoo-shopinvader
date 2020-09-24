@@ -123,7 +123,7 @@ class DeliveryCarrierService(Component):
         return self.shopinvader_backend.carrier_ids
 
     def _prepare_carrier(self, carrier, cart=None):
-        res = carrier.jsonify(self._json_parser_carrier)[0]
+        res = carrier.jsonify(self._json_parser_carrier, one=True)
         res["type"] = None
         price = 0.0
         if cart:
