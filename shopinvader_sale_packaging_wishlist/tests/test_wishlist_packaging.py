@@ -2,12 +2,13 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-
 from odoo.addons.shopinvader_wishlist.tests.test_wishlist import (
     CommonWishlistCase,
 )
+from odoo.tests import tagged
 
 
+@tagged("post_install", "-at_install")
 class WishlistCase(CommonWishlistCase):
     @classmethod
     def setUpClass(cls):
@@ -16,6 +17,10 @@ class WishlistCase(CommonWishlistCase):
         cls.prod_set.shopinvader_backend_id = cls.backend
         cls.product_packaging = cls.env["product.packaging"].create(
             {"name": "PKG TEST", "product_id": cls.prod1.id, "qty": 4}
+        )
+        # Make sure our products' data is up to date
+        cls._recompute_json(
+            cls, cls.prod_set.mapped("set_line_ids.product_id")
         )
 
     def test_create(self):

@@ -248,3 +248,12 @@ class ShopinvaderVariant(models.Model):
                 record.main = True
             else:
                 record.main = False
+
+    def get_shop_data(self):
+        """Return product data for the shop."""
+        return self._get_shop_data()
+
+    def _get_shop_data(self):
+        """Compute shop data base_jsonify parser."""
+        exporter = self.env.ref("shopinvader.ir_exp_shopinvader_variant")
+        return self.jsonify(exporter.get_json_parser())[0]

@@ -4,8 +4,10 @@
 
 from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.addons.shopinvader.tests.test_cart_item import ItemCaseMixin
+from odoo.tests import tagged
 
 
+@tagged("post_install", "-at_install")
 class ConnectedItemCase(ItemCaseMixin, CommonCase):
     @classmethod
     def setUpClass(cls):
@@ -21,6 +23,10 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         )
         cls.pkg_pallet = cls.env["product.packaging"].create(
             {"name": "Pallet", "product_id": cls.product_1.id, "qty": 2000}
+        )
+        # This module adds new keys: recompute
+        cls._recompute_json(
+            cls, cls.cart.mapped("order_line.product_id") + cls.product_1
         )
 
     def setUp(self):
@@ -60,6 +66,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
             {"id": self.pkg_pallet.id, "name": self.pkg_pallet.name},
         )
         self.assertEqual(cart_line["packaging_qty"], 2)
+        self.assertIn("sell_only_by_packaging", cart_line["product"])
 
     def test_update_item(self):
         line = self.cart.order_line[0]
@@ -81,6 +88,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
             {"id": self.pkg_pallet.id, "name": self.pkg_pallet.name},
         )
         self.assertEqual(cart_line["packaging_qty"], 3.0)
+        self.assertIn("sell_only_by_packaging", cart_line["product"])
 
     def test_copy_line(self):
         line = self.cart.order_line[0]
@@ -98,8 +106,9 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         cart_line = [
             x
             for x in cart["lines"]["items"]
-            if x["product"]["id"] == product.id
+            if x["product"]["objectID"] == product.id
         ][0]
+        self.assertIn("sell_only_by_packaging", cart_line["product"])
         self.check_product_and_qty(cart_line, product.id, 8000)
         # Check cart line values
         self.assertEqual(

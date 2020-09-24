@@ -11,12 +11,6 @@ class AbstractSaleService(AbstractComponent):
         "shopinvader.packaging.service.mixin",
     ]
 
-    def _parser_product(self):
-        return super()._parser_product() + [
-            "packaging",
-            "sell_only_by_packaging",
-        ]
-
     def _convert_one_line(self, line):
         res = super()._convert_one_line(line)
         pkg_vals = {
