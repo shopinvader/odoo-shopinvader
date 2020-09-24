@@ -304,25 +304,11 @@ class WishlistService(Component):
             "id",
             "sequence",
             "quantity",
-            ("shopinvader_variant_id:product", self._json_parser_product()),
+            ("shopinvader_variant_id:product", self._json_parser_product_data),
         ]
 
-    def _json_parser_product(self):
-        # TODO: might be better to use product's index data
-        # to avoid further computation, conversion
-        # and mismatch between indexed data and current data.
-        parser = [
-            "id",
-            "name",
-            "default_code:sku",
-            "url_key",
-            "price",
-            "object_id:objectID",
-        ]
-        if "images" in self.env["shopinvader.variant"]._fields:
-            # avoid hard dependency on shopinvader_image
-            parser.append("images")
-        return parser
+    def _json_parser_product_data(self, rec, fname):
+        return rec.shopinvader_variant_id.get_shop_data()
 
     def _get_existing_line(self, record, params, raise_if_not_found=False):
         product_id = params["product_id"]

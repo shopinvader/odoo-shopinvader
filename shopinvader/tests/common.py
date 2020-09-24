@@ -95,6 +95,17 @@ class CommonMixin(RegistryMixin, ComponentMixin):
         )
         bind_wizard.bind_products()
 
+    def _recompute_json(self, products, backend=None):
+        """Force recomputation of JSON data for given products.
+
+        Especially helpful if your module adds new JSON keys
+        but the product are already there and computed w/out your key.
+        """
+        backend = backend or self.backend
+        products.shopinvader_bind_ids.filtered_domain(
+            [("backend_id", "=", backend.id)]
+        ).shopinvader_variant_ids.recompute_json()
+
     def _install_lang(self, lang_xml_id):
         return _install_lang_odoo(self.env, lang_xml_id)
 
