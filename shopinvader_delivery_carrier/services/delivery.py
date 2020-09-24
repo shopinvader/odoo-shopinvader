@@ -128,13 +128,13 @@ class DeliveryService(Component):
         if not sale_order:
             return {}
         parser = self._get_parser_sale_order()
-        values = sale_order.jsonify(parser)[0]
+        values = sale_order.jsonify(parser, one=True)
         return values
 
     def _to_json_picking(self, picking):
         picking.ensure_one()
         parser = self._get_parser_picking()
-        values = picking.jsonify(parser)[0]
+        values = picking.jsonify(parser, one=True)
         values.update(
             {
                 "sale": self._add_sale_order_info(picking),
