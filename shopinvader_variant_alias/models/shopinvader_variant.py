@@ -1,22 +1,8 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import models
 from odoo.addons.shopinvader.models.tools import sanitize_attr_name
-
-
-class ProductAttributeValue(models.Model):
-    _inherit = "product.attribute.value"
-    shopinvader_alias = fields.Char(
-        help="Name under which this attribute will be exported to ShopInvader."
-    )
-
-
-class ProductTemplateAttributeValue(models.Model):
-    _inherit = "product.template.attribute.value"
-    shopinvader_alias = fields.Char(
-        related="product_attribute_value_id.shopinvader_alias"
-    )
 
 
 class ShopinvaderVariant(models.Model):
