@@ -83,21 +83,27 @@ class InvaderController(main.RestController):
         return {"cart_id": int(headers.get("HTTP_SESS_CART_ID", 0))}
 
     def _get_component_context(self):
-        """
-        This method adds the component context:
-        * the partner
-        * the cart_id
-        * the shopinvader_backend
+        """Retrieve service component work context.
+
+        Main keys to look for:
+
+        * partner_user: the partner of the current user (matching via email)
+        * partner: every service will use it as the current partner (eg: customer info)
+        * cart_id: sale order ID used to keep in sync client and backend
+        * shopinvader_backend: current shopinvader backend (matching API key)
         """
         res = super(InvaderController, self)._get_component_context()
-        headers = request.httprequest.environ
-        res["partner"] = self._get_partner_from_headers(headers)
-        # allow having a different partner for the user in extending modules
-        res["partner_user"] = res["partner"]
-        res[
-            "shopinvader_session"
-        ] = self._get_shopinvader_session_from_headers(headers)
         res[
             "shopinvader_backend"
         ] = self._get_shopinvader_backend_from_request()
+        headers = request.httprequest.environ
+        partner = self._get_partner_from_headers(headers)
+        res["partner_user"] = partner
+        # The partner user for the main account or for sale order may differ.
+        res["partner"] = partner.get_customer_partner(
+            res["shopinvader_backend"]
+        )
+        res[
+            "shopinvader_session"
+        ] = self._get_shopinvader_session_from_headers(headers)
         return res
