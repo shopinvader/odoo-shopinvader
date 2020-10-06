@@ -153,3 +153,8 @@ class ResPartner(models.Model):
         :return: res.partner record.
         """
         return self
+
+    def _get_invader_partner(self, backend):
+        """Get bound partner matching backend."""
+        domain = [("backend_id", "=", backend.id)]
+        return self.shopinvader_bind_ids.filtered_domain(domain)
