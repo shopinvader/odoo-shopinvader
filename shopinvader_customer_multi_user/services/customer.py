@@ -1,5 +1,5 @@
 # Copyright 2019 Camptocamp (http://www.camptocamp.com)
-# Simone Orsi <simone.orsi@camptocamp.com>
+# Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
@@ -45,4 +45,16 @@ class CustomerService(Component):
     def _to_customer_info(self, partner):
         info = super()._to_customer_info(partner)
         info["company_token"] = partner.invader_user_token
+        info["main_account"] = self._get_main_account_info(partner)
         return info
+
+    def _get_main_account_info(self, partner):
+        invader_partner = partner._get_invader_partner(
+            self.shopinvader_backend
+        )
+        return invader_partner.main_partner_id.jsonify(
+            self._json_parser_main_account(), one=True
+        )
+
+    def _json_parser_main_account(self):
+        return [("id", lambda rec, fname: rec.record_id.id), "name", "ref"]
