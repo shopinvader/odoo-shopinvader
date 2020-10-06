@@ -138,3 +138,16 @@ class ResPartner(models.Model):
         self.ensure_one()
         for backend in backends:
             backend._send_notification(notif_type, self)
+
+    def get_customer_partner(self, backend):
+        """Retrieve current partner customer account.
+
+        By default is the same user's partner.
+        Hook here to provide your own behavior.
+
+        This partner is used to provide main account information client side
+        and to assign the partner to the sale order / cart.
+
+        :return: res.partner record.
+        """
+        return self
