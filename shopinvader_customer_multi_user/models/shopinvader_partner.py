@@ -1,5 +1,5 @@
 # Copyright 2019 Camptocamp SA (http://www.camptocamp.com).
-# @author Simone Orsi <simone.orsi@camptocamp.com>
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
@@ -10,12 +10,24 @@ class ShopinvaderPartner(models.Model):
     _inherit = "shopinvader.partner"
 
     is_invader_user = fields.Boolean(
-        compute="_compute_is_invader_user", store=True
+        compute="_compute_parent_dependent", store=True
+    )
+    main_partner_id = fields.Many2one(
+        string="Main partner for this account",
+        help="The main account for the shop might differ from the one of the user."
+        "It's nice to display in the frontend "
+        "which account the user belongs to."
+        "Usually is the company but depending on the logic "
+        "it can be another contact in the hierarchy.",
+        comodel_name="shopinvader.partner",
+        compute="_compute_parent_dependent",
+        store=True,
     )
 
-    @api.depends("parent_id", "parent_id.shopinvader_bind_ids")
-    def _compute_is_invader_user(self):
+    @api.depends("parent_id", "parent_id.shopinvader_bind_ids", "backend_id")
+    def _compute_parent_dependent(self):
         for rec in self:
+            rec.main_partner_id = rec._get_main_partner()
             rec.is_invader_user = rec._check_is_invader_user()
 
     def _check_is_invader_user(self):
@@ -29,11 +41,26 @@ class ShopinvaderPartner(models.Model):
         If we have a binding on both records (child partner and parent partner)
         this is an invader user.
         """
-        return bool(
-            self.parent_id.shopinvader_bind_ids.filtered(
-                lambda x: x.backend_id == self.backend_id
-            )
-        )
+        return bool(self.main_partner_id and not self.main_partner_id == self)
+
+    def _get_parent_partner(self):
+        """Get parent bound partner matching backend."""
+        return self.parent_id._get_invader_partner(self.backend_id)
+
+    def _get_main_partner(self):
+        """Retrieve the main partner of the account."""
+        return self._get_company()
+
+    def _get_company(self):
+        """Lookup for the company among bound parent records."""
+        if self.is_company:
+            return self
+        partner = self
+        while partner._get_parent_partner():
+            partner = partner._get_parent_partner()
+            if partner.is_company:
+                break
+        return partner
 
     @api.model
     def create(self, vals):

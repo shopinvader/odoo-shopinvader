@@ -1,13 +1,10 @@
-# Copyright 2017 Akretion (http://www.akretion.com).
-# @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2019 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
 
 from odoo.addons.shopinvader.tests.test_customer import TestCustomerCommon
-from odoo.addons.website.tools import MockRequest
-
-from ..controllers.main import InvaderController
 
 _logger = logging.getLogger(__name__)
 
@@ -29,6 +26,7 @@ class TestCustomer(TestCustomerCommon):
             "name": "ACME ltd",
             "external_id": "acme",
             "email": "company@test.com",
+            "ref": "#ACME",
         }
         values.update(kw)
         return env["shopinvader.partner"].create(values)
@@ -105,7 +103,7 @@ class TestCustomer(TestCustomerCommon):
         self.assertNotIn(partner, self.company.child_ids)
         self.assertFalse(self.company.is_invader_user)
 
-    def test_controller_service_context(self):
+    def test_get_customer_partner(self):
         self.backend.customer_multi_user = True
         data = dict(
             self.data, external_id="cust1", email="new@one.com", name="New One"
@@ -114,14 +112,24 @@ class TestCustomer(TestCustomerCommon):
         params = dict(data, company_token="ABCDEF")
         res = self.service.dispatch("create", params=params)["data"]
         partner1 = self.env["res.partner"].browse(res["id"])
-        ctrl = InvaderController()
-        with MockRequest(self.env) as request:
-            request["httprequest"]["environ"] = {
-                "HTTP_PARTNER_EMAIL": params["email"]
-            }
-            request["auth_api_key_id"] = self.backend.auth_api_key_id.id
-            ctx = ctrl._get_component_context()
+        binding1 = partner1._get_invader_partner(self.backend)
         # partner is the parent company
-        self.assertEqual(ctx["partner"], self.company_binding.record_id)
-        # partner_user is the current partner
-        self.assertEqual(ctx["partner_user"], partner1)
+        self.assertTrue(binding1.is_invader_user)
+        self.assertEqual(
+            partner1.get_customer_partner(self.backend), self.company
+        )
+        self.assertEqual(
+            self.company.get_customer_partner(self.backend), self.company
+        )
+
+    def test_customer_data(self):
+        res = self.service._to_customer_info(self.company)
+        self.assertEqual(res["company_token"], "ABCDEF")
+        self.assertEqual(
+            res["main_account"],
+            {
+                "id": self.company.id,
+                "name": self.company.name,
+                "ref": self.company.ref,
+            },
+        )

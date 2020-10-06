@@ -1,1 +1,1 @@
-* Simone Orsi <simone.orsi@camptocamp.com>
+* Simone Orsi <simahawk@gmail.com>

@@ -1,5 +1,5 @@
 # Copyright 2019 Camptocamp SA (http://www.camptocamp.com).
-# @author Simone Orsi <simone.orsi@camptocamp.com>
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import random
@@ -26,6 +26,7 @@ class ResPartner(models.Model):
         "when a binding to the shop is created.",
     )
     is_invader_user = fields.Boolean(
+        string="Has an invader user",
         compute="_compute_is_invader_user",
         help="At least one backend has an invader user for this partner.",
     )
@@ -66,3 +67,14 @@ class ResPartner(models.Model):
         # directly because the client passes the context as 1st argument
         # hence the token turns to be the ctx dict as a string :/
         self.assign_invader_user_token()
+
+    def get_customer_partner(self, backend):
+        default = super().get_customer_partner(backend)
+        if not backend.customer_multi_user:
+            return default
+        invader_partner = self._get_invader_partner(backend)
+        # If this is just a simple user,
+        # by default the main account is the parent company
+        if invader_partner.is_invader_user:
+            return invader_partner.main_partner_id.record_id
+        return default
