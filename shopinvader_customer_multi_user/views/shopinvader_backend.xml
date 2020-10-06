@@ -12,6 +12,7 @@
             <group name="sale_customer" position="inside">
                 <group name="multi_user" string="Multiple users">
                     <field name="customer_multi_user"/>
+                    <field name="multi_user_profile_policy"/>
                 </group>
             </group>
         </field>

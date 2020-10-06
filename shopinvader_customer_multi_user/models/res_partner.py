@@ -59,8 +59,9 @@ class ResPartner(models.Model):
         return self.search([("invader_user_token", "=", token)], limit=1)
 
     def assign_invader_user_token(self, token=None):
-        token = token or self._generate_invader_user_token()
-        self.write({"invader_user_token": token})
+        for rec in self:
+            token = token or self._generate_invader_user_token()
+            rec.invader_user_token = token
 
     def action_regenerate_invader_user_token(self):
         # NOTE: for buttons we cannot use `_generate_invader_user_token`
@@ -76,5 +77,7 @@ class ResPartner(models.Model):
         # If this is just a simple user,
         # by default the main account is the parent company
         if invader_partner.is_invader_user:
-            return invader_partner.main_partner_id.record_id
+            if backend.multi_user_profile_policy == "main_partner":
+                return invader_partner.main_partner_id.record_id
+            return invader_partner.record_id
         return default
