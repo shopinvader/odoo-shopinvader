@@ -65,11 +65,8 @@ class SaleService(Component):
 
     def _get_base_search_domain(self):
         return expression.normalize_domain(
-            [
-                ("partner_id", "child_of", self.partner.id),
-                ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-                ("typology", "=", "sale"),
-            ]
+            self._default_domain_for_partner_records()
+            + [("typology", "=", "sale")]
         )
 
     def _get_email_notification_type(self, record):

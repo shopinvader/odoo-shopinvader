@@ -178,10 +178,7 @@ class WishlistService(Component):
     def _get_base_search_domain(self):
         if not self._is_logged_in():
             return expression.FALSE_DOMAIN
-        return [
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-            ("partner_id", "=", self.partner_user.id),
-        ]
+        return self._default_domain_for_partner_records()
 
     def _prepare_params(self, params, mode="create"):
         if mode == "create":
