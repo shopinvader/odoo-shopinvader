@@ -19,11 +19,9 @@ class BaseShopinvaderService(AbstractComponent):
         self, partner_field="partner_id", with_backend=True
     ):
         # Change partner domain based on backend policy
-        domain = [(partner_field, "child_of", self.partner.id)]
-        if with_backend:
-            domain.append(
-                ("shopinvader_backend_id", "=", self.shopinvader_backend.id)
-            )
+        domain = super()._default_domain_for_partner_records(
+            partner_field=partner_field, with_backend=with_backend
+        )
         policy_field = self.shopinvader_backend.multi_user_records_policy
         if policy_field == "record_id":
             return domain

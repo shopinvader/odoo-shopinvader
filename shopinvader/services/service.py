@@ -31,6 +31,13 @@ class BaseShopinvaderService(AbstractComponent):
         return self.work.partner
 
     @property
+    def invader_partner(self):
+        partner = self.partner
+        if partner:
+            return partner._get_invader_partner(self.shopinvader_backend)
+        return self.env["shopinvader.partner"].browse()
+
+    @property
     def partner_user(self):
         # partner that matches the real user on client side.
         # The standard `self.partner` will match `partner_user`
