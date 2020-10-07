@@ -43,3 +43,24 @@ class ShopinvaderBackend(models.Model):
         "* profile info will include a reference to the main account "
         "inside the `main_account` key.",
     )
+    multi_user_records_policy = fields.Selection(
+        selection=[
+            # Field name or dotted path to a res.partner relation
+            # suitable for `shopinvader.partner.mapped`
+            ("main_partner_id", "View main partner records"),
+            ("parent_id", "View parent partner records"),
+            ("record_id", "View current partner records only"),
+        ],
+        default="record_id",
+        help="This affects the behavior of every endpoint "
+        "which lists partner related records, directy or indirectly.\n"
+        "\n`View main partner records`: "
+        "view all records coming from main partner and its children. "
+        "Usually this is the main company of the user."
+        "\n`View parent partner records`: "
+        "view all records coming from parent partner and its children. "
+        "Usually this is the main company but it can be any sub partner "
+        "such as a contact or delivery address or invoice address. "
+        "\n`View current partner records only`: "
+        "view only records related to current partner. ",
+    )

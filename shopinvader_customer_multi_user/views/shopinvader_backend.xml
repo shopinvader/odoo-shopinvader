@@ -13,6 +13,7 @@
                 <group name="multi_user" string="Multiple users">
                     <field name="customer_multi_user"/>
                     <field name="multi_user_profile_policy"/>
+                    <field name="multi_user_records_policy"/>
                 </group>
             </group>
         </field>
