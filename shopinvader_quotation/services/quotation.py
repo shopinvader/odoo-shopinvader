@@ -53,9 +53,7 @@ class QuotationService(Component):
     # All params are trusted as they have been checked before
 
     def _get_base_search_domain(self):
-        return [
-            ("partner_id", "=", self.partner.id),
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+        return self._default_domain_for_partner_records() + [
             ("typology", "=", "quotation"),
         ]
 

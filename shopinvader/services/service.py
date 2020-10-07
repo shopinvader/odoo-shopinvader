@@ -151,6 +151,18 @@ class BaseShopinvaderService(AbstractComponent):
     def _get_base_search_domain(self):
         return []
 
+    def _default_domain_for_partner_records(
+        self, partner_field="partner_id", with_backend=True
+    ):
+        """Domain to filter records bound to current partner and backend.
+        """
+        domain = [(partner_field, "child_of", self.partner.id)]
+        if with_backend:
+            domain.append(
+                ("shopinvader_backend_id", "=", self.shopinvader_backend.id)
+            )
+        return domain
+
     def _get_selection_label(self, record, field):
         """
         Get the translated label of the record selection field
