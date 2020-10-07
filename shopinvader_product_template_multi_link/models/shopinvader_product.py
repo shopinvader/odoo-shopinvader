@@ -24,34 +24,33 @@ class ShopinvaderProduct(models.Model):
     )
 
     @api.multi
-    def _get_shopinvader_variant_link(self, link_type):
+    def _get_shopinvader_variant_link(self):
         self.ensure_one()
-        res = []
+        up_sell = []
+        cross_sell = []
         current_backend = self.backend_id
         # Get links of the given link_type
-        for link in self.product_template_link_ids.filtered(
-            lambda x: x.link_type == link_type
-        ):
+        for link in self.product_template_link_ids:
             bindings = link.linked_product_template_id.shopinvader_bind_ids
+            # Get bindings of the correct backend and lang
+            bindings = bindings.filtered(
+                lambda x: x.backend_id == current_backend
+                and x.lang_id == self.lang_id
+            )
             for binding in bindings:
-                # Get bindings of the correct backend and lang
-                if (
-                    binding.backend_id == current_backend
-                    and binding.lang_id == self.lang_id
-                ):
-                    # Set only the "main" shopinvader variant
-                    for shopinvader_variant in binding.shopinvader_variant_ids:
-                        if shopinvader_variant.main:
-                            res.append(shopinvader_variant.id)
-                            break
-        return res
+                # Set only the "main" shopinvader variant
+                variants = binding.shopinvader_variant_ids.filtered(
+                    lambda x: x.main
+                )
+                if link.link_type == "cross_sell":
+                    cross_sell.extend(variants.ids)
+                else:
+                    up_sell.extend(variants.ids)
+        return up_sell, cross_sell
 
     @api.multi
     def _compute_shopinvader_link(self):
         for record in self:
-            record.cross_selling_ids = record._get_shopinvader_variant_link(
-                "cross_sell"
-            )
-            record.up_selling_ids = record._get_shopinvader_variant_link(
-                "up_sell"
-            )
+            up_sell, cross_sell = record._get_shopinvader_variant_link()
+            record.up_selling_ids = up_sell
+            record.cross_selling_ids = cross_sell
