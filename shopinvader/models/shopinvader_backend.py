@@ -5,6 +5,7 @@
 from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
+from odoo.addons.base_sparse_field.models.fields import Serialized
 from odoo.addons.server_environment import serv_config
 from odoo.http import request
 
@@ -193,6 +194,34 @@ class ShopinvaderBackend(models.Model):
         string="Available partner industries",
         default=lambda self: self._default_partner_industry_ids(),
     )
+    # Invoice settings
+    invoice_settings = Serialized(
+        # Default values on the sparse fields work only for create
+        # and does not provide defaults for existing records.
+        default={
+            "invoice_linked_to_sale_only": True,
+            "invoice_access_open": False,
+        }
+    )
+    invoice_linked_to_sale_only = fields.Boolean(
+        default=True,
+        string="Only sale invoices",
+        help="Only serve invoices that are linked to a sale order.",
+        sparse="invoice_settings",
+    )
+    invoice_access_open = fields.Boolean(
+        default=False,
+        string="Open invoices",
+        help="Give customer access to open invoices as well as the paid ones.",
+        sparse="invoice_settings",
+    )
+    invoice_report_id = fields.Many2one(
+        comodel_name="ir.actions.report",
+        domain=lambda self: self._get_invoice_report_id_domain(),
+        string="Specific report",
+        help="Select a specific report for invoice download, if none are selected "
+        "default shopinvader implementation is used.",
+    )
 
     _sql_constraints = [
         (
@@ -217,6 +246,15 @@ class ShopinvaderBackend(models.Model):
     @api.model
     def _default_partner_industry_ids(self):
         return self.env["res.partner.industry"].search([])
+
+    def _get_invoice_report_id_domain(self):
+        return [
+            (
+                "binding_model_id",
+                "=",
+                self.env.ref("account.model_account_move").id,
+            )
+        ]
 
     def _to_compute_nbr_content(self):
         """
