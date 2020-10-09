@@ -22,10 +22,12 @@ class ShopinvaderBackend(models.Model):
     )
     multi_user_profile_policy = fields.Selection(
         selection=[
-            ("main_partner", "Main partner"),
-            ("user_partner", "User's partner"),
+            # Field name or dotted path to a res.partner relation
+            # suitable for `shopinvader.partner.mapped`
+            ("main_partner_id", "Main partner"),
+            ("record_id", "User's partner"),
         ],
-        default="main_partner",
+        default="main_partner_id",
         help="This affects the behavior of the /customer endpoint "
         "as well as the behavior of any service acting on the current partner.\n"
         "\n`Main partner`: the main profile for the shop frontend "
