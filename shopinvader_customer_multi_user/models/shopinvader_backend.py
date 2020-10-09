@@ -66,3 +66,20 @@ class ShopinvaderBackend(models.Model):
         "\n`View current partner records only`: "
         "view only records related to current partner. ",
     )
+    multi_user_main_partner_domain = fields.Char(
+        default="[]",
+        help="This affects the behavior of `main_partner_id` computation. "
+        "The computation is done by walking up in the hierarchy of partners "
+        "to get the the uppermost partner. "
+        "Here you can set - for instance - only delivery partners "
+        "are considered main partners."
+        "The parent recor will be checked against this domain.",
+    )
+
+    def write(self, vals):
+        res = super().write(vals)
+        if "multi_user_main_partner_domain" in vals:
+            self.env["shopinvader.partner"].invalidate_cache(
+                ["main_partner_id"]
+            )
+        return res
