@@ -100,9 +100,7 @@ class InvaderController(main.RestController):
         partner = self._get_partner_from_headers(headers)
         res["partner_user"] = partner
         # The partner user for the main account or for sale order may differ.
-        res["partner"] = partner.get_customer_partner(
-            res["shopinvader_backend"]
-        )
+        res["partner"] = partner.get_shop_partner(res["shopinvader_backend"])
         res[
             "shopinvader_session"
         ] = self._get_shopinvader_session_from_headers(headers)
