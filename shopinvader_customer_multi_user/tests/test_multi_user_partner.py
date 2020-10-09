@@ -44,20 +44,20 @@ class TestMultiUserPartner(TestMultiUserCommon):
     def test_get_customer_partner_multi_enabled_company(self):
         self.backend.customer_multi_user = True
         self.assertEqual(
-            self.backend.multi_user_profile_policy, "main_partner"
+            self.backend.multi_user_profile_policy, "main_partner_id"
         )
         customer_partner = self.company.get_customer_partner(self.backend)
         self.assertEqual(customer_partner, self.company)
 
         # as we have only the company account, nothing changes when user_partner is on
-        self.backend.multi_user_profile_policy = "user_partner"
+        self.backend.multi_user_profile_policy = "record_id"
         customer_partner = self.company.get_customer_partner(self.backend)
         self.assertEqual(customer_partner, self.company)
 
     def test_get_customer_partner_multi_enabled_simple_user(self):
         self.backend.customer_multi_user = True
         self.assertEqual(
-            self.backend.multi_user_profile_policy, "main_partner"
+            self.backend.multi_user_profile_policy, "main_partner_id"
         )
 
         customer_partner = self.user_binding.record_id.get_customer_partner(
@@ -66,7 +66,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(customer_partner, self.user_binding.main_partner_id)
 
         # change policy
-        self.backend.multi_user_profile_policy = "user_partner"
+        self.backend.multi_user_profile_policy = "record_id"
         # now we get the same partner as customer
         customer_partner = self.user_binding.record_id.get_customer_partner(
             self.backend

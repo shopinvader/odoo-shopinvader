@@ -77,7 +77,8 @@ class ResPartner(models.Model):
         # If this is just a simple user,
         # by default the main account is the parent company
         if invader_partner.is_invader_user:
-            if backend.multi_user_profile_policy == "main_partner":
-                return invader_partner.main_partner_id
+            mapped_field = backend.multi_user_profile_policy
+            if invader_partner.mapped(mapped_field):
+                return invader_partner.mapped(mapped_field)
             return invader_partner.record_id
         return default
