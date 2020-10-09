@@ -31,10 +31,10 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
         self.assertEqual(ctx["partner_user"], self.company)
         self.assertEqual(ctx["partner"], self.company)
 
-        with self._get_mocked_request(self.invader_user.record_id):
+        with self._get_mocked_request(self.user_binding.record_id):
             ctx = ctrl._get_component_context()
-        self.assertEqual(ctx["partner_user"], self.invader_user.record_id)
-        self.assertEqual(ctx["partner"], self.invader_user.record_id)
+        self.assertEqual(ctx["partner_user"], self.user_binding.record_id)
+        self.assertEqual(ctx["partner"], self.user_binding.record_id)
 
     def test_cart_assignment_default_multi_enabled(self):
         self.backend.customer_multi_user = True
@@ -44,12 +44,10 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
         self.assertEqual(ctx["partner_user"], self.company)
         self.assertEqual(ctx["partner"], self.company)
 
-        with self._get_mocked_request(self.invader_user.record_id):
+        with self._get_mocked_request(self.user_binding.record_id):
             ctx = ctrl._get_component_context()
-        self.assertEqual(ctx["partner_user"], self.invader_user.record_id)
-        self.assertEqual(
-            ctx["partner"], self.invader_user.main_partner_id.record_id
-        )
+        self.assertEqual(ctx["partner_user"], self.user_binding.record_id)
+        self.assertEqual(ctx["partner"], self.user_binding.main_partner_id)
 
     def test_cart_assignment_default_multi_enabled_user_partner(self):
         self.backend.customer_multi_user = True
@@ -60,7 +58,7 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
         self.assertEqual(ctx["partner_user"], self.company)
         self.assertEqual(ctx["partner"], self.company)
 
-        with self._get_mocked_request(self.invader_user.record_id):
+        with self._get_mocked_request(self.user_binding.record_id):
             ctx = ctrl._get_component_context()
-        self.assertEqual(ctx["partner_user"], self.invader_user.record_id)
-        self.assertEqual(ctx["partner"], self.invader_user.record_id)
+        self.assertEqual(ctx["partner_user"], self.user_binding.record_id)
+        self.assertEqual(ctx["partner"], self.user_binding.record_id)
