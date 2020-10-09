@@ -72,3 +72,22 @@ class TestMultiUserPartner(TestMultiUserCommon):
             self.backend
         )
         self.assertEqual(customer_partner, self.user_binding.record_id)
+
+    def test_main_partner_recompute(self):
+        self.backend.customer_multi_user = True
+        self.assertEqual(self.user_binding.main_partner_id, self.company)
+
+        new_parent = self.env["res.partner"].create({"name": "New parent"})
+        self.user_binding.parent_id = new_parent
+        # gets recomputed on new parent
+        self.assertEqual(self.user_binding.main_partner_id, new_parent)
+
+        self.backend.multi_user_main_partner_domain = (
+            "[('type', '=', 'delivery')]"
+        )
+        self.assertEqual(
+            self.user_binding.main_partner_id, self.env["res.partner"].browse()
+        )
+        new_parent.type = "delivery"
+        self.user_binding.invalidate_cache()
+        self.assertEqual(self.user_binding.main_partner_id, new_parent)

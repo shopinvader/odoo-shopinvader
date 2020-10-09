@@ -14,6 +14,7 @@
                     <field name="customer_multi_user"/>
                     <field name="multi_user_profile_policy"/>
                     <field name="multi_user_records_policy"/>
+                    <field name="multi_user_main_partner_domain" widget="domain" options="{'model': 'res.partner'}"/>
                 </group>
             </group>
         </field>

@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
+from odoo.tools.safe_eval import safe_eval
 
 
 class ShopinvaderPartner(models.Model):
@@ -29,7 +30,6 @@ class ShopinvaderPartner(models.Model):
         "it can be another contact in the hierarchy.",
         comodel_name="res.partner",
         compute="_compute_main_partner_id",
-        store=True,
     )
 
     @api.depends("parent_id", "parent_id.shopinvader_bind_ids", "backend_id")
@@ -61,9 +61,20 @@ class ShopinvaderPartner(models.Model):
     def _get_main_partner(self):
         """Retrieve the main partner of the account."""
         partner = self.parent_id
+        main_partner_domain = safe_eval(
+            self.backend_id.multi_user_main_partner_domain or "[]"
+        )
+        if main_partner_domain and partner.filtered_domain(
+            main_partner_domain
+        ):
+            return partner
         while partner.parent_id:
             partner = partner.parent_id
-        return partner
+            if main_partner_domain and partner.filtered_domain(
+                main_partner_domain
+            ):
+                return partner
+        return partner.filtered_domain(main_partner_domain)
 
     def _get_parent_invader_parent(self):
         return self.parent_id._get_invader_partner(self.backend_id)
