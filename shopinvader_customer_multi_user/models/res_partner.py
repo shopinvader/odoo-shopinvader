@@ -69,8 +69,8 @@ class ResPartner(models.Model):
         # hence the token turns to be the ctx dict as a string :/
         self.assign_invader_user_token()
 
-    def get_customer_partner(self, backend):
-        default = super().get_customer_partner(backend)
+    def get_shop_partner(self, backend):
+        default = super().get_shop_partner(backend)
         if not backend.customer_multi_user:
             return default
         invader_partner = self._get_invader_partner(backend)

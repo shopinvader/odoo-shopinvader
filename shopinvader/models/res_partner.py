@@ -139,7 +139,7 @@ class ResPartner(models.Model):
         for backend in backends:
             backend._send_notification(notif_type, self)
 
-    def get_customer_partner(self, backend):
+    def get_shop_partner(self, backend):
         """Retrieve current partner customer account.
 
         By default is the same user's partner.
