@@ -25,9 +25,9 @@ class ResPartner(models.Model):
         help="The token is automatically generated "
         "when a binding to the shop is created.",
     )
-    is_invader_user = fields.Boolean(
+    has_invader_user = fields.Boolean(
         string="Has an invader user",
-        compute="_compute_is_invader_user",
+        compute="_compute_has_invader_user",
         help="At least one backend has an invader user for this partner.",
     )
 
@@ -40,9 +40,9 @@ class ResPartner(models.Model):
     ]
 
     @api.depends("shopinvader_bind_ids")
-    def _compute_is_invader_user(self):
+    def _compute_has_invader_user(self):
         for rec in self:
-            rec.is_invader_user = any(
+            rec.has_invader_user = any(
                 rec.mapped("shopinvader_bind_ids.is_invader_user")
             )
 
