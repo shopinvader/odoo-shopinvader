@@ -48,15 +48,16 @@ class CustomerService(Component):
             return info
         if partner.is_company:
             info["company_token"] = partner.invader_user_token
-        invader_partner = partner._get_invader_partner(
-            self.shopinvader_backend
-        )
+        invader_partner = self.invader_partner
         info["is_simple_user"] = invader_partner.is_invader_user
         info["main_account"] = self._get_main_account_info(invader_partner)
         return info
 
     def _get_main_account_info(self, invader_partner):
-        if invader_partner == invader_partner.main_partner_id:
+        if (
+            not invader_partner.main_partner_id
+            or invader_partner.record_id == invader_partner.main_partner_id
+        ):
             # the partner is already the main one
             return None
         return invader_partner.main_partner_id.jsonify(
@@ -64,4 +65,4 @@ class CustomerService(Component):
         )
 
     def _json_parser_main_account(self):
-        return [("id", lambda rec, fname: rec.record_id.id), "name", "ref"]
+        return [("id", lambda rec, fname: rec.id), "name", "ref"]

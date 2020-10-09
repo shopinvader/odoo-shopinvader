@@ -10,18 +10,42 @@ class TestMultiUserPartner(TestMultiUserCommon):
     """
 
     def test_get_customer_partner_default(self):
-        customer_partner = self.company.get_customer_partner(self.backend)
-        self.assertEqual(customer_partner, self.company)
         self.assertEqual(
-            self.company_binding.main_partner_id, self.company_binding
+            self.company.get_customer_partner(self.backend), self.company
+        )
+        self.assertEqual(
+            self.user_binding.record_id.get_customer_partner(self.backend),
+            self.user_binding.record_id,
         )
 
-    def test_get_customer_partner_multi_enabled_default(self):
+    def test_main_partner_default(self):
+        self.assertEqual(
+            # this is already the main partner, get nothing
+            self.company_binding.main_partner_id,
+            self.company.browse(),
+        )
+        self.assertEqual(self.user_binding.main_partner_id, self.company)
+
+    def test_invader_parent(self):
+        self.assertEqual(
+            self.company_binding.invader_parent_id,
+            self.company_binding.browse(),
+        )
+        self.assertEqual(
+            self.user_binding.invader_parent_id, self.company_binding
+        )
+
+    def test_is_invader_user(self):
+        self.assertFalse(self.company_binding.is_invader_user)
+        self.assertFalse(self.company.has_invader_user)
+        self.assertTrue(self.user_binding.is_invader_user)
+        self.assertTrue(self.user_binding.record_id.has_invader_user)
+
+    def test_get_customer_partner_multi_enabled_company(self):
         self.backend.customer_multi_user = True
         self.assertEqual(
             self.backend.multi_user_profile_policy, "main_partner"
         )
-
         customer_partner = self.company.get_customer_partner(self.backend)
         self.assertEqual(customer_partner, self.company)
 
@@ -32,20 +56,19 @@ class TestMultiUserPartner(TestMultiUserCommon):
 
     def test_get_customer_partner_multi_enabled_simple_user(self):
         self.backend.customer_multi_user = True
-        self.backend.multi_user_profile_policy = "user_partner"
-        # check info on binding
-        self.assertTrue(self.invader_user.is_invader_user)
         self.assertEqual(
-            self.invader_user.main_partner_id, self.company_binding
+            self.backend.multi_user_profile_policy, "main_partner"
         )
-        # check info on partner
-        partner = self.invader_user.record_id
-        self.assertTrue(partner.is_invader_user)
 
-        # check info on company
-        customer_partner = self.company.get_customer_partner(self.backend)
-        self.assertEqual(customer_partner, self.company)
+        customer_partner = self.user_binding.record_id.get_customer_partner(
+            self.backend
+        )
+        self.assertEqual(customer_partner, self.user_binding.main_partner_id)
 
+        # change policy
+        self.backend.multi_user_profile_policy = "user_partner"
         # now we get the same partner as customer
-        customer_partner = partner.get_customer_partner(self.backend)
-        self.assertEqual(customer_partner, partner)
+        customer_partner = self.user_binding.record_id.get_customer_partner(
+            self.backend
+        )
+        self.assertEqual(customer_partner, self.user_binding.record_id)

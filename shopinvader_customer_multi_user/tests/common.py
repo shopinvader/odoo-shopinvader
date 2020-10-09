@@ -13,7 +13,7 @@ class TestMultiUserCommon(TestCustomerCommon):
             cls.env, invader_user_token="ABCDEF", is_company=True
         )
         cls.company = cls.company_binding.record_id
-        cls.invader_user = cls._create_partner(
+        cls.user_binding = cls._create_partner(
             cls.env,
             name="Simple user",
             parent_id=cls.company.id,

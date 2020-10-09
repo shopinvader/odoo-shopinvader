@@ -78,6 +78,6 @@ class ResPartner(models.Model):
         # by default the main account is the parent company
         if invader_partner.is_invader_user:
             if backend.multi_user_profile_policy == "main_partner":
-                return invader_partner.main_partner_id.record_id
+                return invader_partner.main_partner_id
             return invader_partner.record_id
         return default

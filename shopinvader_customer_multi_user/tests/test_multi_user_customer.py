@@ -61,7 +61,12 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         self.assertFalse(self.company.has_invader_user)
 
     def test_customer_data(self):
-        res = self.service._to_customer_info(self.company)
+        with self.work_on_services(
+            partner=self.company, shopinvader_session=self.shopinvader_session
+        ) as work:
+            service = work.component(usage="customer")
+
+        res = service._to_customer_info(self.company)
         # multi user not enabled
         self.assertNotIn("company_token", res)
         self.assertNotIn("main_account", res)
@@ -71,14 +76,19 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         self.backend.customer_multi_user = True
 
         # check on the company
-        res = self.service._to_customer_info(self.company)
+        res = service._to_customer_info(self.company)
         self.assertEqual(res["company_token"], "ABCDEF")
         self.assertFalse(res["is_simple_user"])
         # same user of the company
         self.assertEqual(res["main_account"], None)
 
         # check on a simple user
-        res = self.service._to_customer_info(self.invader_user.record_id)
+        with self.work_on_services(
+            partner=self.user_binding.record_id,
+            shopinvader_session=self.shopinvader_session,
+        ) as work:
+            service = work.component(usage="customer")
+        res = service._to_customer_info(self.user_binding.record_id)
         self.assertTrue(res["is_simple_user"])
         self.assertNotIn("company_token", res)
         self.assertEqual(
