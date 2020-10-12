@@ -11,6 +11,10 @@
         <button name="action_regenerate_invader_user_token" type="object"
                 string="Re-generate token" attrs="{'invisible': [('invader_user_token','=',False)]}"/>
       </group>
+
+      <xpath expr="//field[@name='shopinvader_bind_ids']//field[@name='backend_id']" position="after">
+        <field name="main_partner_id"/>
+      </xpath>
     </field>
   </record>
 
