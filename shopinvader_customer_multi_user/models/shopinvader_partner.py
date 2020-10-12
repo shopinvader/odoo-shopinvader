@@ -30,6 +30,9 @@ class ShopinvaderPartner(models.Model):
         "it can be another contact in the hierarchy.",
         comodel_name="res.partner",
         compute="_compute_main_partner_id",
+        store=True,
+        readonly=False,
+        ondelete="restrict",
     )
 
     @api.depends("parent_id", "parent_id.shopinvader_bind_ids", "backend_id")
@@ -38,7 +41,7 @@ class ShopinvaderPartner(models.Model):
             rec.invader_parent_id = rec._get_invader_parent()
             rec.is_invader_user = rec._check_is_invader_user()
 
-    @api.depends("parent_id")
+    @api.depends("parent_id", "backend_id")
     def _compute_main_partner_id(self):
         for rec in self:
             rec.main_partner_id = rec._get_main_partner()

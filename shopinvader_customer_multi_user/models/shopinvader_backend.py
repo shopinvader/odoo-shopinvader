@@ -68,18 +68,13 @@ class ShopinvaderBackend(models.Model):
     )
     multi_user_main_partner_domain = fields.Char(
         default="[]",
-        help="This affects the behavior of `main_partner_id` computation. "
+        help="This affects the behavior of `main_partner_id` computation "
+        "when no specific value is passed.\n"
         "The computation is done by walking up in the hierarchy of partners "
-        "to get the the uppermost partner. "
+        "to get the the uppermost partner.\n"
         "Here you can set - for instance - only delivery partners "
-        "are considered main partners."
-        "The parent recor will be checked against this domain.",
+        "are considered main partners.\n"
+        "The parent record will be always checked against this domain.\n"
+        "NOTE: if you change this value existing records won't be affected "
+        "as the field is stored to allow manual customization.",
     )
-
-    def write(self, vals):
-        res = super().write(vals)
-        if "multi_user_main_partner_domain" in vals:
-            self.env["shopinvader.partner"].invalidate_cache(
-                ["main_partner_id"]
-            )
-        return res
