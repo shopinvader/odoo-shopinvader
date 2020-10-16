@@ -10,7 +10,7 @@ product-attribute
 product-variant
 sale-workflow
 storage
-rest-framework
+rest-framework https://github.com/acsone/12.0-new-api-wip
 odoo-misc https://github.com/shopinvader/odoo-misc 12.0
 shopinvader-payment https://github.com/shopinvader/odoo-shopinvader-payment 12.0
 
