@@ -48,6 +48,7 @@
         "views/shopinvader_partner_view.xml",
         "views/shopinvader_backend_view.xml",
         "views/product_view.xml",
+        "views/product_filter_view.xml",
         "views/partner_view.xml",
         "views/product_category_view.xml",
         "views/sale_view.xml",
