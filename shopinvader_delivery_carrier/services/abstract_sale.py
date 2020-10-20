@@ -42,11 +42,15 @@ class AbstractSaleService(AbstractComponent):
         untaxed = result.get("untaxed", 0) - shipping_amounts.get("untaxed", 0)
         total = result.get("total", 0) - shipping_amounts.get("total", 0)
         precision = sale.currency_id.decimal_places
+        total_without_shipping_without_discount = total - sale.discount_total
         result.update(
             {
                 "tax_without_shipping": float_round(tax, precision),
                 "untaxed_without_shipping": float_round(untaxed, precision),
                 "total_without_shipping": float_round(total, precision),
+                "total_without_shipping_without_discount": float_round(
+                    total_without_shipping_without_discount, precision
+                ),
             }
         )
         return result

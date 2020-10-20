@@ -280,3 +280,36 @@ class CarrierCase(CommonCarrierCase):
             )
         self.assertEqual(self.cart.partner_id, partner)
         self.assertEqual(french_country, partner.country_id)
+        self._check_carriers(result, belgium)
+
+    def test_total_without_shipping_without_discount(self):
+        self.cart.order_line[0].discount = 10
+        self.assertEqual(self.cart.discount_total, 265.5)
+        cart = self._set_carrier(self.poste_carrier)
+        cart_amount = cart.get("amount")
+        cart_ship = cart.get("shipping")
+
+        total_without_shipping = (
+            cart_amount["total"] - cart_ship["amount"]["total"]
+        )
+        untaxed_without_shipping = (
+            cart_amount["untaxed"] - cart_ship["amount"]["untaxed"]
+        )
+        tax_without_shipping = cart_amount["tax"] - cart_ship["amount"]["tax"]
+        self.assertEqual(
+            cart_amount["total_without_shipping"], total_without_shipping
+        )
+        self.assertEqual(
+            cart_amount["untaxed_without_shipping"], untaxed_without_shipping
+        )
+        self.assertEqual(
+            cart_amount["tax_without_shipping"], tax_without_shipping
+        )
+
+        total_without_shipping_without_discount = (
+            total_without_shipping - cart_amount["discount_total"]
+        )
+        self.assertEqual(
+            cart_amount["total_without_shipping_without_discount"],
+            total_without_shipping_without_discount,
+        )
