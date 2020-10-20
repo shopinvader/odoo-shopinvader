@@ -1,7 +1,7 @@
 exclude: "^(setup/)|(cassettes/)|.pot$|.po$|README.rst"
 repos:
 - repo: https://github.com/ambv/black
-  rev: 18.9b0
+  rev: 19.10b0
   hooks:
   - id: black
     args: [--line-length=79, --safe]
