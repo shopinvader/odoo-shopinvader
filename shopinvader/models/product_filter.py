@@ -33,12 +33,14 @@ class ProductFilter(models.Model):
                 ("product.template", "product.product", "shopinvader.product"),
             )
         ],
+        ondelete="cascade",
     )
     variant_attribute_id = fields.Many2one(
         string="Attribute",
         comodel_name="product.attribute",
         ondelete="cascade",
     )
+    # TODO: rename to not clash w/ built-in
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
     display_name = fields.Char(compute="_compute_display_name")
