@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo import api, fields, models
+from odoo import _, api, exceptions, fields, models
 
 from .tools import sanitize_attr_name
 
@@ -55,3 +55,24 @@ class ProductFilter(models.Model):
     def _compute_display_name(self):
         for pfilter in self:
             pfilter.display_name = pfilter._build_display_name()
+
+    @api.constrains("based_on", "field_id", "variant_attribute_id")
+    def _contrains_based_on(self):
+        based_on_field_error = _(
+            "Product filter ID=%d is based on field: requires a field!"
+        )
+        based_on_attr_error = _(
+            "Product filter ID=%d is based on variant attribute: "
+            "requires an attribute!"
+        )
+        for rec in self:
+            error = None
+            if rec.based_on == "field" and not rec.field_id:
+                error = based_on_field_error % rec.id
+            elif (
+                rec.based_on == "variant_attribute"
+                and not rec.variant_attribute_id
+            ):
+                error = based_on_attr_error % rec.id
+            if error:
+                raise exceptions.UserError(error)

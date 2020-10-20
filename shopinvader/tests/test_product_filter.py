@@ -1,6 +1,8 @@
 # Copyright 2020 Camptocamp (http://www.camptocamp.com).
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo import exceptions
+
 from .common import CommonCase
 
 
@@ -59,3 +61,19 @@ class TestProductFilter(CommonCase):
         )
         product_attribute.unlink()
         self.assertFalse(filter1.exists())
+
+    def test_product_filter_constrains(self):
+        with self.assertRaises(exceptions.UserError) as err:
+            self.filter_on_field.write({"field_id": False})
+        self.assertEqual(
+            err.exception.name,
+            "Product filter ID=%d is based on field: "
+            "requires a field!" % self.filter_on_field.id,
+        )
+        with self.assertRaises(exceptions.UserError) as err:
+            self.filter_on_attr.write({"variant_attribute_id": False})
+        self.assertEqual(
+            err.exception.name,
+            "Product filter ID=%d is based on variant attribute: "
+            "requires an attribute!" % self.filter_on_attr.id,
+        )
