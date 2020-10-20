@@ -45,3 +45,17 @@ class TestProductFilter(CommonCase):
             self.filter_on_attr.with_context(lang="fr_FR").display_name,
             "variant_attributes.jambes",
         )
+
+    def test_delete_attribute_delete_filter_cascade(self):
+        product_attribute = self.env["product.attribute"].create(
+            {"name": "Test delete", "create_variant": "no_variant"}
+        )
+        filter1 = self.env["product.filter"].create(
+            {
+                "name": "Test Filter delete",
+                "based_on": "variant_attribute",
+                "variant_attribute_id": product_attribute.id,
+            }
+        )
+        product_attribute.unlink()
+        self.assertFalse(filter1.exists())

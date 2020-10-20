@@ -35,7 +35,9 @@ class ProductFilter(models.Model):
         ],
     )
     variant_attribute_id = fields.Many2one(
-        string="Attribute", comodel_name="product.attribute"
+        string="Attribute",
+        comodel_name="product.attribute",
+        ondelete="cascade",
     )
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
