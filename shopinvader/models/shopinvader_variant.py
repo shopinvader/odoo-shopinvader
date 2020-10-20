@@ -125,9 +125,10 @@ class ShopinvaderVariant(models.Model):
 
     def _compute_names(self):
         for record in self:
-            record.full_name, record.short_name = (
-                record._prepare_variant_name_and_short_name()
-            )
+            (
+                record.full_name,
+                record.short_name,
+            ) = record._prepare_variant_name_and_short_name()
 
     def _compute_price(self):
         for record in self:
