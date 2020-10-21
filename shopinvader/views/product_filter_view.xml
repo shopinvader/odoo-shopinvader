@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="product_filter_view_form" model="ir.ui.view">
+        <field name="model">product.filter</field>
+        <field name="arch" type="xml">
+            <form string="Filter">
+                <group>
+                    <field name="name"/>
+                    <field name="based_on"/>
+                    <field name="field_id" attrs="{'invisible': [('based_on', '!=', 'field')],
+
+                                               'required': [('based_on', '=', 'field')]}"/>
+                    <field name="variant_attribute_id" attrs="{'invisible': [('based_on', '!=', 'variant_attribute')],
+                                                   'required': [('based_on', '=', 'variant_attribute')]}"/>
+                    <separator string="Help"/>
+                    <field name="help" colspan="4" nolabel="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="product_filter_view_tree" model="ir.ui.view">
+        <field name="model">product.filter</field>
+        <field name="arch" type="xml">
+            <tree string="Filter">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="product_filter_action" model="ir.actions.act_window">
+        <field name="name">Product filter</field>
+        <field name="res_model">product.filter</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            id="menu_product_filter_action"
+            action="product_filter_action"
+            parent="sale.prod_config_main"
+            sequence="15"/>
+
+</odoo>

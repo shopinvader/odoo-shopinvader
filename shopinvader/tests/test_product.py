@@ -35,33 +35,6 @@ class ProductCase(ProductCommonCase):
             self.shopinvader_variant.variant_attributes, attr_dict
         )
 
-    def test_product_filter(self):
-        field_id = self.env["ir.model.fields"].search(
-            [("model", "=", "shopinvader.product"), ("name", "=", "name")]
-        )
-        filter_on_field = self.env["product.filter"].create(
-            {
-                "name": "Test Filter on field name",
-                "based_on": "field",
-                "field_id": field_id.id,
-            }
-        )
-        self.assertEqual(filter_on_field.display_name, "name")
-
-        attribute_id = self.env["product.attribute"].search(
-            [("name", "=", "Legs")]
-        )
-        filter_on_attr = self.env["product.filter"].create(
-            {
-                "name": "Test Filter on field name",
-                "based_on": "variant_attribute",
-                "variant_attribute_id": attribute_id.id,
-            }
-        )
-        self.assertEqual(
-            filter_on_attr.display_name, "variant_attributes.legs"
-        )
-
     def test_product_price(self):
         self.assertEqual(
             self.shopinvader_variant.price,

@@ -7,6 +7,7 @@ from . import test_address
 from . import test_partner_validation
 from . import test_partner_access_info
 from . import test_product
+from . import test_product_filter
 from . import test_sale
 from . import test_shopinvader_category
 from . import test_shopinvader_variant_binding_wizard
