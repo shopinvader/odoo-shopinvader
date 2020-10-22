@@ -37,23 +37,23 @@ class ProductLinkCaseBase(ProductCommonCase):
         cls.variant_2_2 = cls.template_2.product_variant_ids[1]
         cls.variant_3_1 = cls.template_3.product_variant_ids[0]
         cls.variant_3_2 = cls.template_3.product_variant_ids[1]
-        cls.shopinvader_variant_1_1 = cls.variant_1_1._get_invader_variant(
-            cls.backend, "en_US"
+        cls.shopinvader_variant_1_1 = cls.variant_1_1.shopinvader_bind_ids.filtered(
+            lambda b: b.backend_id.id == cls.backend.id
         )
-        cls.shopinvader_variant_1_2 = cls.variant_1_2._get_invader_variant(
-            cls.backend, "en_US"
+        cls.shopinvader_variant_1_2 = cls.variant_1_2.shopinvader_bind_ids.filtered(
+            lambda b: b.backend_id.id == cls.backend.id
         )
-        cls.shopinvader_variant_2_1 = cls.variant_2_1._get_invader_variant(
-            cls.backend, "en_US"
+        cls.shopinvader_variant_2_1 = cls.variant_2_1.shopinvader_bind_ids.filtered(
+            lambda b: b.backend_id.id == cls.backend.id
         )
-        cls.shopinvader_variant_2_2 = cls.variant_2_2._get_invader_variant(
-            cls.backend, "en_US"
+        cls.shopinvader_variant_2_2 = cls.variant_2_2.shopinvader_bind_ids.filtered(
+            lambda b: b.backend_id.id == cls.backend.id
         )
-        cls.shopinvader_variant_3_1 = cls.variant_3_1._get_invader_variant(
-            cls.backend, "en_US"
+        cls.shopinvader_variant_3_1 = cls.variant_3_1.shopinvader_bind_ids.filtered(
+            lambda b: b.backend_id.id == cls.backend.id
         )
-        cls.shopinvader_variant_3_2 = cls.variant_3_2._get_invader_variant(
-            cls.backend, "en_US"
+        cls.shopinvader_variant_3_2 = cls.variant_3_2.shopinvader_bind_ids.filtered(
+            lambda b: b.backend_id.id == cls.backend.id
         )
 
         cls._create_links()
