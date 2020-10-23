@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
 import json
+import logging
 
 from odoo.addons.connector_elasticsearch.components.adapter import (
     ElasticsearchAdapter,
@@ -10,7 +10,13 @@ from odoo.addons.connector_elasticsearch.components.adapter import (
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBase,
 )
-from vcr_unittest import VCRMixin
+
+_logger = logging.getLogger(__name__)
+
+try:
+    from vcr_unittest import VCRMixin
+except ImportError as err:
+    _logger.debug(err)
 
 
 class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
