@@ -91,9 +91,9 @@ class ShopinvaderProduct(models.Model):
 
         :return: set
         """
-        for (
-            shopinvader_variant
-        ) in target.shopinvader_bind_ids.shopinvader_variant_ids:
+        for shopinvader_variant in target.mapped(
+            "shopinvader_bind_ids.shopinvader_variant_ids"
+        ):
             # Get bindings of the correct backend and lang, pick only the main one
             if (
                 shopinvader_variant.backend_id == self.backend_id
