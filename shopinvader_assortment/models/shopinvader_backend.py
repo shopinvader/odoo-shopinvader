@@ -23,20 +23,18 @@ class ShopinvaderBackend(models.Model):
     def _autobind_product_from_assortment(self):
         self.ensure_one()
         product_obj = self.env["product.product"]
-        shopinvader_variant_obj = self.env["shopinvader.variant"]
         binding_wizard_obj = self.env["shopinvader.variant.binding.wizard"]
         unbinding_wizard_obj = self.env["shopinvader.variant.unbinding.wizard"]
         assortment_domain = self.product_assortment_id._get_eval_domain()
         assortment_products = product_obj.search(assortment_domain)
-        variants_binded = shopinvader_variant_obj.search(
-            [("backend_id", "=", self.id)]
+        products_bound = product_obj.search(
+            [("shopinvader_bind_ids.backend_id", "=", self.id)]
         )
-        products_binded = variants_binded.mapped("record_id")
-        products_to_bind = assortment_products - products_binded
-        products_to_unbind = products_binded - assortment_products
-        variants_to_unbind = variants_binded.filtered(
-            lambda x: x.record_id.id in products_to_unbind.ids
-        )
+        products_to_bind = assortment_products - products_bound
+        products_to_unbind = products_bound - assortment_products
+        variants_to_unbind = products_to_unbind.mapped(
+            "shopinvader_bind_ids"
+        ).filtered(lambda p: p.backend_id.id == self.id)
 
         if products_to_bind:
             binding_wizard = binding_wizard_obj.create(
