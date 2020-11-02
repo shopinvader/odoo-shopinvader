@@ -48,6 +48,36 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         # the company is not an invader user
         self.assertFalse(self.company.has_invader_user)
 
+    def test_update_customer_multi_user_store_cache(self):
+        self.backend.customer_multi_user = True
+        data = dict(
+            self.data, external_id="new1", email="new@one.com", name="New One"
+        )
+        # customer 1
+        params = dict(data, company_token="ABCDEF")
+        res = self.service.dispatch("create", params=params)["data"]
+        partner1 = self.env["res.partner"].browse(res["id"])
+        # Update happens via address service. To be changed as per
+        # https://github.com/shopinvader/odoo-shopinvader/issues/530
+        params["name"] = params["name"] + " UPDATED!"
+        res = self.address_service.dispatch(
+            "update", _id=partner1.id, params=params
+        )
+        # By default the customer partner is the main partner
+        # hence we are not editing the main profile and we don't need cache
+        self.assertNotIn("store_cache", res)
+        # Change the policy
+        self.backend.multi_user_profile_policy = "record_id"
+        params["name"] = params["name"] + " UPDATED 2 times!"
+        res = self.address_service.dispatch(
+            "update", _id=partner1.id, params=params
+        )
+        self.assertTrue(
+            res["store_cache"]["customer"]["name"].endswith(
+                " UPDATED 2 times!"
+            )
+        )
+
     def test_create_customer_multi_user_wrong_token(self):
         self.data.update({"external_id": "cust1"})
         params = dict(self.data, company_token="WRONG_TOKEN")
