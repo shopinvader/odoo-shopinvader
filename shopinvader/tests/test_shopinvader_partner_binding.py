@@ -15,26 +15,12 @@ class TestShopinvaderPartnerBinding(CommonCase):
         self.binding_wiz_obj = self.env["shopinvader.partner.binding"]
         self.partner = self.env.ref("base.res_partner_2")
 
-    def _get_shopinvader_partner(self, partner, backend):
-        """
-        Get the shopinvader partner related to given partner on given backend.
-        :param partner: res.partner
-        :param backend: shopinvader.backend
-        :return: shopinvader.partner
-        """
-        shopinv_partner = partner.shopinvader_bind_ids.filtered(
-            lambda r, b=backend: r.backend_id == b
-        )
-        return shopinv_partner
-
     def test_binding1(self):
         """
         Test the binding by using the shopinvader.partner.binding wizard.
         :return:
         """
-        shopinv_partner = self._get_shopinvader_partner(
-            self.partner, self.backend
-        )
+        shopinv_partner = self.partner._get_invader_partner(self.backend)
         # This partner shouldn't be already binded
         self.assertFalse(shopinv_partner)
         context = self.env.context.copy()
@@ -55,16 +41,12 @@ class TestShopinvaderPartnerBinding(CommonCase):
         with self.assertRaises(exceptions.UserError) as e:
             wizard.action_apply()
         self.assertIn("unbind is not implemented", e.exception.name)
-        shopinv_partner = self._get_shopinvader_partner(
-            self.partner, self.backend
-        )
+        shopinv_partner = self.partner._get_invader_partner(self.backend)
         # As we set bind = False, we check if the binding is not executed.
         self.assertFalse(shopinv_partner)
         wizard.binding_lines.write({"bind": True})
         wizard.action_apply()
-        shopinv_partner = self._get_shopinvader_partner(
-            self.partner, self.backend
-        )
+        shopinv_partner = self.partner._get_invader_partner(self.backend)
         # But now we set bind = True so we check if it's done.
         self.assertTrue(shopinv_partner)
         return

@@ -1,5 +1,5 @@
 # Copyright 2019 Camptocamp SA (http://www.camptocamp.com).
-# @author Simone Orsi <simone.orsi@camptocamp.com>
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import random
@@ -25,8 +25,9 @@ class ResPartner(models.Model):
         help="The token is automatically generated "
         "when a binding to the shop is created.",
     )
-    is_invader_user = fields.Boolean(
-        compute="_compute_is_invader_user",
+    has_invader_user = fields.Boolean(
+        string="Has an invader user",
+        compute="_compute_has_invader_user",
         help="At least one backend has an invader user for this partner.",
     )
 
@@ -39,9 +40,9 @@ class ResPartner(models.Model):
     ]
 
     @api.depends("shopinvader_bind_ids")
-    def _compute_is_invader_user(self):
+    def _compute_has_invader_user(self):
         for rec in self:
-            rec.is_invader_user = any(
+            rec.has_invader_user = any(
                 rec.mapped("shopinvader_bind_ids.is_invader_user")
             )
 
@@ -58,11 +59,26 @@ class ResPartner(models.Model):
         return self.search([("invader_user_token", "=", token)], limit=1)
 
     def assign_invader_user_token(self, token=None):
-        token = token or self._generate_invader_user_token()
-        self.write({"invader_user_token": token})
+        for rec in self:
+            token = token or self._generate_invader_user_token()
+            rec.invader_user_token = token
 
     def action_regenerate_invader_user_token(self):
         # NOTE: for buttons we cannot use `_generate_invader_user_token`
         # directly because the client passes the context as 1st argument
         # hence the token turns to be the ctx dict as a string :/
         self.assign_invader_user_token()
+
+    def get_shop_partner(self, backend):
+        default = super().get_shop_partner(backend)
+        if not backend.customer_multi_user:
+            return default
+        invader_partner = self._get_invader_partner(backend)
+        # If this is just a simple user,
+        # by default the main account is the parent company
+        if invader_partner.is_invader_user:
+            mapped_field = backend.multi_user_profile_policy
+            if invader_partner.mapped(mapped_field):
+                return invader_partner.mapped(mapped_field)
+            return invader_partner.record_id
+        return default

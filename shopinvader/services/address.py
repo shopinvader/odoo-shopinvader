@@ -42,7 +42,7 @@ class AddressService(Component):
         address = self._get(_id)
         address.write(self._prepare_params(params, mode="update"))
         res = self.search()
-        if address.address_type == "profile":
+        if self._store_cache_needed(address):
             res["store_cache"] = {"customer": self._to_json(address)[0]}
         self._post_update(address)
         return res
@@ -59,6 +59,9 @@ class AddressService(Component):
     # All params are trusted as they have been checked before
     def _to_address_info(self, _id):
         return self._to_json(self._get(_id))
+
+    def _store_cache_needed(self, partner):
+        return partner.address_type == "profile"
 
     # Validator
     def _validator_search(self):
@@ -140,7 +143,9 @@ class AddressService(Component):
         return {}
 
     def _get_base_search_domain(self):
-        return [("id", "child_of", self.partner.id)]
+        return self._default_domain_for_partner_records(
+            partner_field="id", with_backend=False
+        )
 
     def _json_parser(self):
         res = [

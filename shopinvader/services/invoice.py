@@ -104,10 +104,8 @@ class InvoiceService(Component):
         return invoices
 
     def _get_sale_order_domain(self):
-        return [
-            ("partner_id", "=", self.partner.id),
-            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
-            ("typology", "=", "sale"),
+        return self._default_domain_for_partner_records() + [
+            ("typology", "=", "sale")
         ]
 
     def _get_report_action(self, target, params=None):
