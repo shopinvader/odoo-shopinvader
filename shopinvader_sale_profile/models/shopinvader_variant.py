@@ -10,9 +10,8 @@ class ShopinvaderVariant(models.Model):
     _inherit = "shopinvader.variant"
 
     def _get_all_price(self):
-        """
-        Compute the Serialized price field with prices for each sale profile
-        of related backend
+        """Update prices with each sale profile of related backend
+
         :return:
         """
         res = super(ShopinvaderVariant, self)._get_all_price()

@@ -16,10 +16,13 @@ class ShopinvaderBackend(models.Model):
     )
 
     @api.onchange("use_sale_profile")
-    def change_pricelist(self):
+    def _onchange_use_sale_profile(self):
         if self.use_sale_profile:
             self.pricelist_id = False
         else:
+            # TODO @simahawk: I don't get this...
+            # If self.use_sale_profile is False
+            # why shall you retrieve the pricelist from sale profiles?
             if self.sale_profile_ids and not self.pricelist_id:
                 profile = (
                     self.sale_profile_ids.filtered("default")
@@ -28,7 +31,7 @@ class ShopinvaderBackend(models.Model):
                 self.pricelist_id = profile.pricelist_id
 
     @api.constrains("use_sale_profile", "pricelist_id")
-    def _check_default(self):
+    def _check_use_sale_profile(self):
         if self.pricelist_id and self.use_sale_profile:
             raise exceptions.ValidationError(
                 _(

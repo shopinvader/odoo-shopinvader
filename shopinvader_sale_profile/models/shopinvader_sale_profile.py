@@ -6,9 +6,7 @@ from odoo import _, api, exceptions, fields, models
 
 
 class ShopinvaderSaleProfile(models.Model):
-    """
-    Model to represent a customer sale profile with a specific pricelist
-    per backend.
+    """Represent a customer sale profile with a specific pricelist  per backend.
     """
 
     _name = "shopinvader.sale.profile"
