@@ -12,5 +12,5 @@ class ShopinvaderPartnerExportMapper(Component):
     @mapping
     def role(self, record):
         if not record.backend_id.use_sale_profile:
-            return super(ShopinvaderPartnerExportMapper, self).role(record)
+            return super().role(record)
         return {"role": record.sale_profile_id.code}

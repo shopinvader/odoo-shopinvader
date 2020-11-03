@@ -5,7 +5,7 @@
 {
     "name": "ShopInvader - Sale profile",
     "version": "13.0.1.0.0",
-    "depends": ["base", "shopinvader_locomotive", "shopinvader"],
+    "depends": ["base", "shopinvader"],
     "author": "Akretion,ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",

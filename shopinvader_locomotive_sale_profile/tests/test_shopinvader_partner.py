@@ -18,9 +18,6 @@ except (ImportError, IOError) as err:
 
 
 class TestShopinvaderPartner(CommonShopinvaderPartner):
-    def setUp(self):
-        super(TestShopinvaderPartner, self).setUp()
-
     def _get_shopinvader_partner(self, shopinvader_partner, external_id):
         with requests_mock.mock() as m:
             m.post(
