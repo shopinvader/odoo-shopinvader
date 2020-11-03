@@ -18,7 +18,6 @@ class ShopinvaderPartner(models.Model):
         "fiscal position (country, zip, vat, account position,...)",
     )
 
-    @api.multi
     @api.depends(
         "record_id.country_id",
         "country_id",
@@ -81,7 +80,6 @@ class ShopinvaderPartner(models.Model):
                 record = record.with_prefetch(self._prefetch)
                 record.sale_profile_id = sale_profile
 
-    @api.multi
     def _sale_profile_with_backend(
         self, default_sale_profiles, fposition_id, sale_profiles
     ):

@@ -27,7 +27,6 @@ class ShopinvaderBackend(models.Model):
                 )
                 self.pricelist_id = profile.pricelist_id
 
-    @api.multi
     @api.constrains("use_sale_profile", "pricelist_id")
     def _check_default(self):
         if self.pricelist_id and self.use_sale_profile:
