@@ -61,7 +61,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         # https://github.com/shopinvader/odoo-shopinvader/issues/530
         params["name"] = params["name"] + " UPDATED!"
         res = self.address_service.dispatch(
-            "update", _id=partner1.id, params=params
+            "update", partner1.id, params=params
         )
         # By default the customer partner is the main partner
         # hence we are not editing the main profile and we don't need cache
@@ -70,7 +70,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         self.backend.multi_user_profile_policy = "record_id"
         params["name"] = params["name"] + " UPDATED 2 times!"
         res = self.address_service.dispatch(
-            "update", _id=partner1.id, params=params
+            "update", partner1.id, params=params
         )
         self.assertTrue(
             res["store_cache"]["customer"]["name"].endswith(
