@@ -78,7 +78,4 @@ class CustomerPriceService(Component):
         return fp_model.browse(fpos_id)
 
     def _get_pricelist(self):
-        return (
-            self.partner.property_product_pricelist
-            or self.shopinvader_backend.pricelist_id
-        )
+        return self.shopinvader_backend._get_cart_pricelist(self.partner)

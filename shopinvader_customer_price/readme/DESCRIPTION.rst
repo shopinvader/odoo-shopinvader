@@ -1,4 +1,11 @@
-Expose endpoint to fetch customer prices for products.
+Handle customer specific prices.
+
+Provides:
+
+* endpoint `/customer_price/products` to fetch customer prices for products.
+* backend configuration to state which pricelist should be used by partner
+  (by selecting a partner field that relates to pricelists)
+
 
 **Use case**
 
@@ -17,5 +24,8 @@ and you'd need to index all prices for all customers to make it work seemlessly.
 
 **Warning**
 
-It's strongly recomended to not call the endpoint for each product on search results
+It's strongly recommended to not call the endpoint for each product on search results
 otherwise you'll get potentially thousands of requests to Odoo.
+
+Also, when setting the pricelist field for the partner,
+beware that prices in the indexes might differ from the prices in the cart.
