@@ -9,4 +9,5 @@
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader"],
+    "data": ["views/shopinvader_backend_views.xml"],
 }

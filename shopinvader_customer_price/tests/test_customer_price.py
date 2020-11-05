@@ -15,6 +15,10 @@ class CommonCustomerPriceCase(ProductCommonCase):
         cls.discount_pricelist = cls.env.ref("shopinvader.pricelist_1")
         cls.fiscal_pos1 = cls.env.ref("shopinvader.fiscal_position_0")
         cls.fiscal_pos2 = cls.env.ref("shopinvader.fiscal_position_2")
+        cls.pricelist_field = cls.env.ref(
+            "product.field_res_partner__property_product_pricelist"
+        )
+        cls.backend.cart_pricelist_partner_field_id = cls.pricelist_field
 
     def _get_service(self, partner):
         with self.work_on_services(partner=partner) as work:

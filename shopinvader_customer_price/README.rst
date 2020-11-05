@@ -13,16 +13,20 @@ Shopinvader Customer Price
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fshopinvader-lightgray.png?logo=github
-    :target: https://github.com/OCA/shopinvader/tree/13.0/shopinvader_customer_price
-    :alt: OCA/shopinvader
-.. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/shopinvader-13-0/shopinvader-13-0-shopinvader_customer_price
-    :alt: Translate me on Weblate
+.. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fshopinvader-lightgray.png?logo=github
+    :target: https://github.com/shopinvader/shopinvader/tree/13.0/shopinvader_customer_price
+    :alt: shopinvader/shopinvader
 
-|badge1| |badge2| |badge3| |badge4| 
+|badge1| |badge2| |badge3| 
 
-Expose endpoint to fetch customer prices for products.
+Handle customer specific prices.
+
+Provides:
+
+* endpoint `/customer_price/products` to fetch customer prices for products.
+* backend configuration to state which pricelist should be used by partner
+  (by selecting a partner field that relates to pricelists)
+
 
 **Use case**
 
@@ -41,8 +45,11 @@ and you'd need to index all prices for all customers to make it work seemlessly.
 
 **Warning**
 
-It's strongly recomended to not call the endpoint for each product on search results
+It's strongly recommended to not call the endpoint for each product on search results
 otherwise you'll get potentially thousands of requests to Odoo.
+
+Also, when setting the pricelist field for the partner,
+beware that prices in the indexes might differ from the prices in the cart.
 
 **Table of contents**
 
@@ -68,10 +75,10 @@ Things that would be needed to go for an indexed solution:
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/shopinvader/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/shopinvader/issues/new?body=module:%20shopinvader_customer_price%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/shopinvader/issues/new?body=module:%20shopinvader_customer_price%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -99,16 +106,6 @@ The development of this module has been financially supported by:
 Maintainers
 ~~~~~~~~~~~
 
-This module is maintained by the OCA.
+This module is part of the `shopinvader/shopinvader <https://github.com/shopinvader/shopinvader/tree/13.0/shopinvader_customer_price>`_ project on GitHub.
 
-.. image:: https://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: https://odoo-community.org
-
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-This module is part of the `OCA/shopinvader <https://github.com/OCA/shopinvader/tree/13.0/shopinvader_customer_price>`_ project on GitHub.
-
-You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
+You are welcome to contribute.
