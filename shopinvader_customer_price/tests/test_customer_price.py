@@ -33,18 +33,27 @@ class CommonCustomerPriceCase(ProductCommonCase):
         self.assertEqual(res, expected)
 
     def test_get_fiscal_position(self):
-        service = self._get_service(self.partner1)
-        self.assertEqual(service._get_fiscal_position(), self.fiscal_pos1)
-        service = self._get_service(self.partner2)
-        self.assertEqual(service._get_fiscal_position(), self.fiscal_pos2)
+        self.assertEqual(
+            self.backend._get_fiscal_position(self.partner1), self.fiscal_pos1
+        )
+        self.assertEqual(
+            self.backend._get_fiscal_position(self.partner2), self.fiscal_pos2
+        )
 
     def test_get_pricelist(self):
-        service = self._get_service(self.partner1)
-        self.assertEqual(service._get_pricelist(), self.backend.pricelist_id)
+        self.assertEqual(
+            self.backend._get_cart_pricelist(self.partner1),
+            self.backend.pricelist_id,
+        )
         self.partner1.property_product_pricelist = self.discount_pricelist
-        self.assertEqual(service._get_pricelist(), self.discount_pricelist)
-        service = self._get_service(self.partner2)
-        self.assertEqual(service._get_pricelist(), self.backend.pricelist_id)
+        self.assertEqual(
+            self.backend._get_cart_pricelist(self.partner1),
+            self.discount_pricelist,
+        )
+        self.assertEqual(
+            self.backend._get_cart_pricelist(self.partner2),
+            self.backend.pricelist_id,
+        )
 
     def test_get_price_default(self):
         s_variant = self.shopinvader_variant
