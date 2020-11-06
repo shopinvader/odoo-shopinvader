@@ -23,10 +23,10 @@ class ShopinvaderBackend(models.Model):
         "The default pricelist will still be used for products' indexes.",
     )
 
-    @tools.ormcache("partner.id", "self.cart_pricelist_partner_field_id.id")
-    def _get_cart_pricelist(self, partner):
-        pricelist = super()._get_cart_pricelist(partner)
-        if self.cart_pricelist_partner_field_id:
+    @tools.ormcache("self.cart_pricelist_partner_field_id.id", "partner")
+    def _get_cart_pricelist(self, partner=None):
+        pricelist = super()._get_cart_pricelist(partner=partner)
+        if self.cart_pricelist_partner_field_id and partner:
             pricelist = partner[self.cart_pricelist_partner_field_id.name]
         return pricelist
 
