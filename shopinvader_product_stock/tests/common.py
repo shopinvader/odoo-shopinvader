@@ -24,13 +24,6 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
                 test_queue_job_no_delay=False,  # we want the jobs
             )
         )
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
-        from odoo.addons.connector_search_engine.tests.models import SeBackendFake
-        cls.loader.update_registry(
-            (SeBackendFake, )
-        )
-        cls._create_fake_acl(SeBackendFake)
         ref = cls.env.ref
         cls.shopinvader_backend = ref("shopinvader.backend_1")
         cls.warehouse_1 = ref("stock.warehouse0")
@@ -62,11 +55,6 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
         cls.loc_supplier = cls.env.ref("stock.stock_location_suppliers")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
 
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        super(StockCommonCase, cls).tearDownClass()
 
     def _add_stock_to_product(self, product, location, qty):
         """Set the stock quantity of the product.

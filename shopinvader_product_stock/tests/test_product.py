@@ -5,7 +5,6 @@
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.connector_search_engine.tests.models import SeAdapterFake
 
 from .common import StockCommonCase
 
@@ -20,9 +19,9 @@ class TestProductProduct(StockCommonCase):
         for wh in warehouse_recs:
             key = self.shopinvader_backend._make_warehouse_key(wh)
             res[key] = {
-                "qty":prod.with_context(warehouse=wh.id).qty_available 
+                "qty":prod.with_context(warehouse=wh.id).qty_available
             }
-        return res 
+        return res
 
     def test_update_qty_from_wizard(self):
         """Updating the quantity through an inventory create a job."""
@@ -47,10 +46,10 @@ class TestProductProduct(StockCommonCase):
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
         self.assertEqual(jobs.count_created(), 1)
-        
+
         shopinvader_product.invalidate_cache(["stock_data"])
 
-        with SeAdapterFake.mocked_calls() as calls:
+        with self.se_adapter_fake.mocked_calls() as calls:
             self.perform_jobs(jobs)
 
         self.assertEqual(
@@ -134,7 +133,7 @@ class TestProductProduct(StockCommonCase):
 
         shopinvader_product.invalidate_cache(["stock_data"])
         self.assertEqual(jobs.count_created(), 1)
-        with SeAdapterFake.mocked_calls():
+        with self.se_adapter_fake.mocked_calls():
             self.perform_jobs(jobs)
         expected = self._expectect_qty_by_wh(warehouses, self.product)
         self.assertEqual(
