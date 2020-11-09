@@ -5,12 +5,13 @@
 
 from collections import defaultdict
 from odoo import api, fields, models
+from odoo.addons.base_sparse_field.models.fields import Serialized
 
 
 class ShopinvaderVariant(models.Model):
     _inherit = "shopinvader.variant"
 
-    stock_data = fields.Serialized(compute="_compute_stock_data")
+    stock_data = Serialized(compute="_compute_stock_data")
 
     def _get_stock_export_key(self):
         self.ensure_one()
