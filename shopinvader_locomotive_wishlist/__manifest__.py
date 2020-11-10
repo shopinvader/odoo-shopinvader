@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Locomotive Wishlist",
     "summary": "Synchronize wishlist details to Locomotive users record.",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp",
