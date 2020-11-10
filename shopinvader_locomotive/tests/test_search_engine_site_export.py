@@ -3,7 +3,7 @@
 
 import json
 
-from odoo.addons.connector_search_engine.tests.models import SeBackendFake
+from odoo_test_helper import FakeModelLoader
 
 from .common import LocoCommonCase, mock_site_api
 
@@ -82,7 +82,15 @@ class TestSiteSearchEngineExportBase(LocoCommonCase):
 class TestSiteSearchEngineExport(TestSiteSearchEngineExportBase):
     @classmethod
     def _setup_search_engine(cls):
-        SeBackendFake._test_setup_model(cls.env)
+        # Load fake models ->/
+        cls.loader = FakeModelLoader(cls.env, cls.__module__)
+        cls.loader.backup_registry()
+        from odoo.addons.connector_search_engine.tests.models import (
+            SeBackendFake,
+        )
+
+        cls.loader.update_registry((SeBackendFake,))
+        # ->/ Load fake models
         cls.se_backend = (
             cls.env[SeBackendFake._name]
             .create({"name": "Fake SE"})
@@ -119,7 +127,7 @@ class TestSiteSearchEngineExport(TestSiteSearchEngineExportBase):
 
     @classmethod
     def tearDownClass(cls):
-        SeBackendFake._test_teardown_model(cls.env)
+        cls.loader.restore_registry()
         super(TestSiteSearchEngineExport, cls).tearDownClass()
 
     def test_search_engine_synchronize_01(self):
