@@ -8,13 +8,22 @@ from odoo.addons.component.core import AbstractComponent
 class BaseShopinvaderService(AbstractComponent):
     _inherit = "base.shopinvader.service"
 
+    @property
+    def invader_partner(self):
+        partner = self.partner
+        if partner:
+            return partner._get_invader_partner(self.shopinvader_backend)
+        return self.env["shopinvader.partner"].browse()
+
     def _default_domain_for_partner_records(
         self, partner_field="partner_id", with_backend=True
     ):
         # Change partner domain based on backend policy
-        domain = super()._default_domain_for_partner_records(
-            partner_field=partner_field, with_backend=with_backend
-        )
+        domain = [(partner_field, "child_of", self.partner.id)]
+        if with_backend:
+            domain.append(
+                ("shopinvader_backend_id", "=", self.shopinvader_backend.id)
+            )
         policy_field = self.shopinvader_backend.multi_user_records_policy
         if policy_field == "record_id":
             return domain

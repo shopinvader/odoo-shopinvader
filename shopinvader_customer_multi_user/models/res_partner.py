@@ -82,3 +82,9 @@ class ResPartner(models.Model):
                 return invader_partner.mapped(mapped_field)
             return invader_partner.record_id
         return default
+
+    # lifted from shopinvader v13
+    def _get_invader_partner(self, backend):
+        """Get bound partner matching backend."""
+        domain = [("backend_id", "=", backend.id)]
+        return self.shopinvader_bind_ids.filtered_domain(domain)
