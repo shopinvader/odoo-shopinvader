@@ -4,8 +4,9 @@
 
 import logging
 
-from odoo.addons.shopinvader.controllers.main import InvaderController
 from odoo.http import request
+
+from odoo.addons.shopinvader.controllers.main import InvaderController
 
 _logger = logging.getLogger(__name__)
 

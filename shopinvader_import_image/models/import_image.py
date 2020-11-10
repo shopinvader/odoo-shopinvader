@@ -17,9 +17,10 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 
 from odoo import _, api, exceptions, fields, models
-from odoo.addons.queue_job.job import job
 from odoo.tools import date_utils
 from odoo.tools.pycompat import csv_reader
+
+from odoo.addons.queue_job.job import job
 
 _logger = logging.getLogger(__name__)
 

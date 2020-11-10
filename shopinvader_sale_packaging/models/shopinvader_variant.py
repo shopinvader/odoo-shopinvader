@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, models
+
 from odoo.addons.base_sparse_field.models.fields import Serialized
 
 
