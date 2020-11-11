@@ -55,3 +55,11 @@ class TestPartnerAutoBind(CommonCase):
         self.assertEquals(1, len(self.partner_auto.shopinvader_bind_ids))
         news = bus_bus.search(domain) - existing
         self.assertEqual(0, len(news))
+        vals = {
+            "name": "Test Contact partner 2",
+            "customer": True,
+            "email": "test_contact@test.com",
+            "parent_id": self.partner_auto.id,
+        }
+        self.contact = self.partner_obj.create(vals)
+        self.assertEquals(0, len(self.contact.shopinvader_bind_ids))

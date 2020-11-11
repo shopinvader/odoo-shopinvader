@@ -57,6 +57,8 @@ class PartnerEventListener(Component):
         )
 
     def _check_partner(self, record, warn=True):
+        if record.parent_id:
+            return False
         if not record.email:
             if warn:
                 self.env.user.notify_warning(
