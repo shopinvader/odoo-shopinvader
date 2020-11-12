@@ -20,25 +20,25 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.1.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 13.0.2.7.1 | Shopinvader
+[shopinvader](shopinvader/) | 13.0.2.7.2 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.1.1 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.1 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.1.3.0 | Enable registration of multiple users per each company customer.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.2.1.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch Connector
-[shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.0.1 | Guest mode for Shopinvader
+[shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.0.2 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.2.0.0 | Import product images
 [shopinvader_lead](shopinvader_lead/) | 13.0.1.0.0 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 13.0.1.0.3 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.1 | This addons is used to push the initial algolia configuration to locomotive
-[shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 13.0.1.0.1 | Shopinvader guest mode for locomotive
-[shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.0.1 | Synchronize wishlist details to Locomotive users record.
+[shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 13.0.1.0.2 | Shopinvader guest mode for locomotive
+[shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.0.2 | Synchronize wishlist details to Locomotive users record.
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_media](shopinvader_product_media/) | 13.0.1.0.0 | Index storage media data into external search engine
-[shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.2 | Shopinvader Product Link
+[shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.3 | Shopinvader Product Link
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.0 | Shopinvader Sale Packaging
