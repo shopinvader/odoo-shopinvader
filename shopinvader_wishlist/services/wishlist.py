@@ -85,6 +85,11 @@ class WishlistService(Component):
         self._move_items(record, params)
         return self._to_json_one(record)
 
+    def replace_items(self, _id, **params):
+        record = self._get(_id)
+        self._replace_items(record, params)
+        return self._to_json_one(record)
+
     def _post_create(self, record):
         pass
 
@@ -215,6 +220,34 @@ class WishlistService(Component):
                 "required": True,
                 "type": "integer",
             }
+        }
+
+    def _validator_replace_items(self):
+        return {
+            "lines": {
+                "type": "list",
+                "required": True,
+                "schema": {
+                    "type": "dict",
+                    "schema": self._validator_replace_item(),
+                },
+            }
+        }
+
+    def _validator_replace_item(self):
+        return {
+            # the item to replace
+            "product_id": {
+                "coerce": to_int,
+                "required": True,
+                "type": "integer",
+            },
+            # replace with this
+            "replacement_product_id": {
+                "coerce": to_int,
+                "required": True,
+                "type": "integer",
+            },
         }
 
     def _get_base_search_domain(self):
@@ -349,6 +382,41 @@ class WishlistService(Component):
             move_to_wl.write({"set_line_ids": values})
         # delete all old records
         to_delete.unlink()
+
+    def _replace_items(self, record, params):
+        # get all lines
+        replace_lines = sorted(params["lines"], key=lambda x: x["product_id"])
+        product_ids = [x["product_id"] for x in replace_lines]
+        set_lines = record.set_line_ids.filtered(
+            lambda x: x.product_id.id in product_ids
+        )
+        lines_by_pid = {line.product_id.id: line.id for line in set_lines}
+        new_values = []
+        for line in replace_lines:
+            line_id = lines_by_pid.get(line["product_id"])
+            if not line_id:
+                continue
+            new_values.append((line_id, line["replacement_product_id"]))
+
+        # Update all lines at once to avoid tons of writes and tons of sync events
+        # TODO: probably this should be applied to all writes on lines.
+        # pylint: disable=sql-injection
+        query = """
+            UPDATE
+                product_set_line AS set_line
+            SET
+                product_id = c.product_id
+            FROM (VALUES {})
+                AS c(id, product_id)
+            WHERE c.id = set_line.id;
+        """.format(
+            ",".join(["({}, {})".format(*x) for x in new_values])
+        )
+        self.env.cr.execute(query)
+        set_lines.invalidate_cache(["product_id", "shopinvader_variant_id"])
+        set_lines.recompute()
+        record.invalidate_cache(["set_line_ids"])
+        return set_lines
 
     def _prepare_item(self, record, params):
         return {
