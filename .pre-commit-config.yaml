@@ -16,19 +16,17 @@ exclude: >
       shopinvader_demo_app|
       shopinvader_guest_mode|
       shopinvader_invoice|
-      shopinvader_lead|
       shopinvader_locomotive_contact_company|
       shopinvader_locomotive_elasticsearch|
-      shopinvader_locomotive_guest_mode|
       shopinvader_locomotive_reset_password|
       shopinvader_multi_category|
       shopinvader_partner_vat|
       shopinvader_pending_cart_reminder|
       shopinvader_product_media|
       shopinvader_product_new|
+      shopinvader_product_stock_assortment|
       shopinvader_product_stock|
       shopinvader_product_stock_state|
-      shopinvader_product_template_multi_link|
       shopinvader_promotion_rule|
       shopinvader_quotation|
       shopinvader_sale_profile|
