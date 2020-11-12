@@ -9,11 +9,7 @@ class BackendCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super(BackendCase, cls).setUpClass()
-        cls.lang_fr = cls.env.ref("base.lang_fr")
-        wizard = cls.env["base.language.install"].create(
-            {"lang": cls.lang_fr.code}
-        )
-        wizard.lang_install()
+        cls.lang_fr = cls._install_lang(cls, "base.lang_fr")
 
     def _all_products_count(self):
         return self.env["product.template"].search_count(

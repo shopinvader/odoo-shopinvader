@@ -22,18 +22,46 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderWishlistSync, cls).setUpClass()
+        # recreate all records to make sure there's isolation
+        cls.partner1 = cls.env["shopinvader.partner"].create(
+            {
+                "name": "John",
+                "email": "john@test.com",
+                "backend_id": cls.backend.id,
+                "external_id": "john",
+            }
+        )
+        cls.partner2 = cls.env["shopinvader.partner"].create(
+            {
+                "name": "Mike",
+                "email": "mike@test.com",
+                "backend_id": cls.backend.id,
+                "external_id": "mike",
+            }
+        )
         cls.prod_set1 = cls.env.ref("shopinvader_wishlist.wishlist_1")
-        cls.prod_set1.shopinvader_backend_id = cls.backend
-        cls.prod_set2 = cls.prod_set1.with_context(
-            connector_no_export=True
-        ).copy({"name": "List 2"})
-        cls.prod1 = cls.prod_set1.set_line_ids[0].product_id
-        cls.prod2 = cls.env.ref("product.product_product_4d")
-        cls.prod3 = cls.env.ref("product.product_product_4c")
+        cls.prod_set1.with_context(connector_no_export=True).write(
+            {
+                "set_line_ids": [(5, 0, 0)],
+                "shopinvader_backend_id": cls.backend.id,
+                "partner_id": cls.partner1.record_id.id,
+            }
+        )
+        cls.prod_set2 = (
+            cls.prod_set1.with_context(connector_no_export=True)
+            .copy({"name": "List 2"})
+            .with_context(connector_no_export=None)
+        )
+        cls.prod1 = cls.env["product.product"].create({"name": "P1"})
+        cls.prod2 = cls.env["product.product"].create({"name": "P2"})
+        cls.prod3 = cls.env["product.product"].create({"name": "P3"})
+        cls._bind_products(
+            cls, cls.prod1 + cls.prod2 + cls.prod3, backend=cls.backend
+        )
 
     def test_create_wishlist(self):
-        partner = self.env.ref("shopinvader.partner_2")
-        partner_binding = partner.shopinvader_bind_ids[0]
+        partner_binding = self.partner2
+        partner = self.partner2.record_id
         self._init_job_counter()
         prod_set3 = self.env["product.set"].create(
             {
@@ -115,8 +143,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
                 ]
             }
         )
-        self._check_nbr_job_created(2)
-        partner_binding = self.prod_set1.partner_id.shopinvader_bind_ids[0]
+        self._check_nbr_job_created(3)
         expected_wl = {
             str(self.prod_set1.id): {
                 "id": self.prod_set1.id,
@@ -128,11 +155,35 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
             },
         }
         expected_prods = {
-            str(self.prod1.id): [self.prod_set1.id],
             str(self.prod2.id): [self.prod_set1.id],
             str(self.prod3.id): [self.prod_set1.id, self.prod_set2.id],
         }
-        self._test_export(partner_binding, expected_wl, expected_prods)
+        self._test_export(self.partner1, expected_wl, expected_prods)
+
+        # another round: add prod1 to set2
+        self._init_job_counter()
+        self.prod_set2.write(
+            {
+                "set_line_ids": [
+                    (
+                        0,
+                        0,
+                        {
+                            "product_set_id": self.prod_set2.id,
+                            "product_id": self.prod1.id,
+                            "quantity": 1,
+                        },
+                    )
+                ]
+            }
+        )
+        self._check_nbr_job_created(1)
+        expected_prods = {
+            str(self.prod1.id): [self.prod_set2.id],
+            str(self.prod2.id): [self.prod_set1.id],
+            str(self.prod3.id): [self.prod_set1.id, self.prod_set2.id],
+        }
+        self._test_export(self.partner1, expected_wl, expected_prods)
 
     def _test_export(self, partner_binding, expected_wl, expected_prods):
         with requests_mock.mock() as m:
@@ -158,13 +209,19 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
         self._init_job_counter()
         self.env["product.set.line"].create(
             {
+                "product_set_id": self.prod_set2.id,
+                "product_id": self.prod1.id,
+                "quantity": 1,
+            }
+        )
+        self.env["product.set.line"].create(
+            {
                 "product_set_id": self.prod_set1.id,
                 "product_id": self.prod3.id,
                 "quantity": 1,
             }
         )
-        self._check_nbr_job_created(1)
-        partner_binding = self.prod_set1.partner_id.shopinvader_bind_ids[0]
+        self._check_nbr_job_created(2)
         expected_wl = {
             str(self.prod_set1.id): {
                 "id": self.prod_set1.id,
@@ -176,18 +233,22 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
             },
         }
         expected_prods = {
-            str(self.prod1.id): [self.prod_set1.id],
+            str(self.prod1.id): [self.prod_set2.id],
             str(self.prod3.id): [self.prod_set1.id],
         }
-        self._test_export(partner_binding, expected_wl, expected_prods)
+        self._test_export(self.partner1, expected_wl, expected_prods)
 
     def test_delete_line_directly(self):
+        set_line = self.env["product.set.line"].create(
+            {
+                "product_set_id": self.prod_set1.id,
+                "product_id": self.prod3.id,
+                "quantity": 1,
+            }
+        )
         self._init_job_counter()
-        self.prod_set1.set_line_ids.filtered(
-            lambda x: x.product_id == self.prod1
-        ).unlink()
+        set_line.unlink()
         self._check_nbr_job_created(1)
-        partner_binding = self.prod_set1.partner_id.shopinvader_bind_ids[0]
         expected_wl = {
             str(self.prod_set1.id): {
                 "id": self.prod_set1.id,
@@ -199,4 +260,4 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
             },
         }
         expected_prods = {}
-        self._test_export(partner_binding, expected_wl, expected_prods)
+        self._test_export(self.partner1, expected_wl, expected_prods)

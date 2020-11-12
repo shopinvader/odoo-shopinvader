@@ -17,10 +17,16 @@ from odoo.tests import SavepointCase
 from .. import shopinvader_response
 
 
-def _install_lang_odoo(env, lang_xml_id):
+def _install_lang_odoo(env, lang_xml_id, full_install=False):
     lang = env.ref(lang_xml_id)
-    wizard = env["base.language.install"].create({"lang": lang.code})
-    wizard.lang_install()
+
+    # Full install can be very expensive as it reloads EVERY translation
+    # for EVERY installed module. 99.999% you don't need it for tests.
+    if full_install:
+        wizard = env["base.language.install"].create({"lang": lang.code})
+        wizard.lang_install()
+    else:
+        lang.active = True
     return lang
 
 

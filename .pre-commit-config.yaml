@@ -16,19 +16,17 @@ exclude: >
       shopinvader_demo_app|
       shopinvader_guest_mode|
       shopinvader_invoice|
-      shopinvader_lead|
       shopinvader_locomotive_contact_company|
       shopinvader_locomotive_elasticsearch|
-      shopinvader_locomotive_guest_mode|
       shopinvader_locomotive_reset_password|
       shopinvader_multi_category|
       shopinvader_partner_vat|
       shopinvader_pending_cart_reminder|
       shopinvader_product_media|
       shopinvader_product_new|
+      shopinvader_product_stock_assortment|
       shopinvader_product_stock|
       shopinvader_product_stock_state|
-      shopinvader_product_template_multi_link|
       shopinvader_promotion_rule|
       shopinvader_quotation|
       shopinvader_sale_profile|
@@ -76,17 +74,16 @@ repos:
       args: ["--rcfile=.pylintrc-mandatory"]
       additional_dependencies: ["pylint-odoo==3.1.0"]
 - repo: https://github.com/asottile/pyupgrade
-  rev: v1.6.1
+  rev: v1.26.2
   hooks:
-  - id: pyupgrade
-    language_version: python3
-- repo: https://github.com/asottile/seed-isort-config
-  rev: v1.3.0
-  hooks:
-  - id: seed-isort-config
-    language_version: python3
+    - id: pyupgrade
 - repo: https://github.com/pre-commit/mirrors-isort
-  rev: v4.3.4
+  rev: v4.3.21
   hooks:
-  - id: isort
-    language_version: python3
+    - id: isort
+      name: isort except __init__.py
+      exclude: /__init__\.py$
+- repo: https://github.com/acsone/setuptools-odoo
+  rev: 2.5.2
+  hooks:
+    - id: setuptools-odoo-make-default
