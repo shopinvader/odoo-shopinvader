@@ -38,8 +38,8 @@ addon | version | summary
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_media](shopinvader_product_media/) | 13.0.1.0.0 | Index storage media data into external search engine
-[shopinvader_product_stock](shopinvader_product_stock/) | 13.0.1.0.0 | This module is used to choose a stock field during theexport (by backend)
-[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 13.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
+[shopinvader_product_stock](shopinvader_product_stock/) | 13.0.1.0.1 | This module is used to choose a stock field during theexport (by backend)
+[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 13.0.1.0.1 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.3 | Shopinvader Product Link
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
