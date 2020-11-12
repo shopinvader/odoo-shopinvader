@@ -12,69 +12,45 @@ class TestStockMove(StockCommonCase):
     """
 
     def test_create_move(self):
-        """
-        Test the function create on stock.move who should not create a
-        new queue.job
-        :return:
-        """
+        """create should not create a new job."""
         job = self.job_counter()
-        self._create_incomming_move()
+        self._create_incoming_move()
         self.assertEqual(job.count_created(), 0)
 
     def test_action_cancel(self):
-        """
-        Test the function action_cancel() on stock.move who should create a
-        new queue.job
-        :return:
-        """
+        """action_cancel should create a new job."""
         job = self.job_counter()
-        move = self._create_incomming_move()
+        move = self._create_incoming_move()
         move._action_cancel()
         self.assertEqual(job.count_created(), 1)
 
     def test_action_confirm(self):
-        """
-        Test the function action_confirm() on stock.move who should create a
-        new queue.job
-        :return:
-        """
+        """action_confirm should create a new job."""
         job = self.job_counter()
-        move = self._create_incomming_move()
+        move = self._create_incoming_move()
         move._action_confirm()
         self.assertEqual(job.count_created(), 1)
 
     def test_action_done(self):
-        """
-        Test the function action_done() on stock.move who should create a
-        new queue.job
-        :return:
-        """
+        """action_done should create a new job."""
         job = self.job_counter()
-        move = self._create_incomming_move()
+        move = self._create_incoming_move()
         move._action_done()
         self.assertEqual(job.count_created(), 1)
 
-    def test_action_confirm_not_binded(self):
-        """
-        Test the function action_confirm() on stock.move with a not binded
-        product should not create a new queue.job
-        :return:
-        """
+    def test_action_confirm_not_bound(self):
+        """action_confirm for non bound products should not create a job."""
         job = self.job_counter()
         self.product.shopinvader_bind_ids.unlink()
-        move = self._create_incomming_move()
+        move = self._create_incoming_move()
         move._action_confirm()
         self.assertEqual(job.count_created(), 0)
 
     def test_duplicated_action_done(self):
-        """
-        Test the function action_done() on stock.move who should create a
-        new queue.job
-        :return:
-        """
+        """action_done should create a new job."""
         job = self.job_counter()
-        move = self._create_incomming_move()
+        move = self._create_incoming_move()
         move._action_done()
-        move = self._create_incomming_move()
+        move = self._create_incoming_move()
         move._action_done()
         self.assertEqual(job.count_created(), 1)
