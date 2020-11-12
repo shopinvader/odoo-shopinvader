@@ -6,9 +6,7 @@ from odoo import _, api, exceptions, fields, models
 
 
 class ShopinvaderSaleProfile(models.Model):
-    """
-    Model to represent a customer sale profile with a specific pricelist
-    per backend.
+    """Represent a customer sale profile with a specific pricelist  per backend.
     """
 
     _name = "shopinvader.sale.profile"
@@ -47,7 +45,6 @@ class ShopinvaderSaleProfile(models.Model):
         )
     ]
 
-    @api.multi
     @api.constrains("default", "backend_id")
     def _check_default(self):
         """
@@ -74,7 +71,6 @@ class ShopinvaderSaleProfile(models.Model):
                     message = _("Only one default profile is authorized")
                     raise exceptions.ValidationError(message)
 
-    @api.multi
     @api.constrains("backend_id", "pricelist_id", "fiscal_position_ids")
     def _check_unique_pricelist_fposition(self):
         """

@@ -27,7 +27,6 @@ exclude: >
       shopinvader_product_stock_state|
       shopinvader_promotion_rule|
       shopinvader_quotation|
-      shopinvader_sale_profile|
       shopinvader_sale_report
     )/
   )

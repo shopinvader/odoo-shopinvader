@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
@@ -19,9 +18,6 @@ except (ImportError, IOError) as err:
 
 
 class TestShopinvaderPartner(CommonShopinvaderPartner):
-    def setUp(self):
-        super(TestShopinvaderPartner, self).setUp()
-
     def _get_shopinvader_partner(self, shopinvader_partner, external_id):
         with requests_mock.mock() as m:
             m.post(
