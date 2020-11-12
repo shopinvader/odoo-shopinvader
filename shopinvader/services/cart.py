@@ -468,15 +468,15 @@ class CartService(Component):
             vals[
                 "analytic_account_id"
             ] = self.shopinvader_backend.account_analytic_id.id
-        if self.shopinvader_backend.pricelist_id:
-            # We must always force the pricelist. In the case of sale_profile
-            # the pricelist is not set on the backend
-            vals.update(
-                {"pricelist_id": self.shopinvader_backend.pricelist_id.id}
-            )
+        pricelist = self._get_pricelist(partner)
+        if pricelist:
+            vals["pricelist_id"] = pricelist.id
         if self.shopinvader_backend.sequence_id:
             vals["name"] = self.shopinvader_backend.sequence_id._next()
         return vals
+
+    def _get_pricelist(self, partner):
+        return self.shopinvader_backend._get_cart_pricelist(partner)
 
     def _get_onchange_trigger_fields(self):
         return ["partner_id", "partner_shipping_id", "partner_invoice_id"]

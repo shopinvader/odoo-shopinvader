@@ -244,7 +244,6 @@ class AnonymousCartCase(CartCase, CartClearTest):
             data.get("lines").get("items")[0].get("amount").get("total"),
             expected_price,
         )
-        return
 
     def test_cart_robustness(self):
         """
@@ -302,6 +301,21 @@ class CommonConnectedCartCase(CartCase):
 
 
 class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
+    def test_cart_create(self):
+        self.cart.unlink()
+        cart = self.service._get()
+        self.assertRecordValues(
+            cart,
+            [
+                {
+                    "partner_id": self.partner.id,
+                    "partner_shipping_id": self.partner.id,
+                    "partner_invoice_id": self.partner.id,
+                    "pricelist_id": self.backend.pricelist_id.id,
+                }
+            ],
+        )
+
     def test_set_shipping_address_no_default_invocing(self):
         cart = self.cart
         self.backend.cart_checkout_address_policy = "no_defaults"

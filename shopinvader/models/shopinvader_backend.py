@@ -491,3 +491,14 @@ class ShopinvaderBackend(models.Model):
             self._get_id_from_auth_api_key.clear_cache(self.env[self._name])
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)
+
+    def _get_cart_pricelist(self, partner):
+        """Retrieve pricelist to be used for the cart.
+
+        NOTE: if you change this behavior be aware that
+        the prices displayed on the cart might differ
+        from the ones showed on product details.
+        This is because product info comes from indexes
+        which are completely agnostic in regard to specific partner info.
+        """
+        return self.pricelist_id
