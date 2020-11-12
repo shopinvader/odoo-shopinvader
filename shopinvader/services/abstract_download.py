@@ -4,15 +4,14 @@ import mimetypes
 import time
 
 from odoo import _
-from odoo.exceptions import MissingError
-from odoo.http import content_disposition, request
-from odoo.tools.safe_eval import safe_eval
-
 from odoo.addons.base_rest.components.service import (
     skip_secure_response,
     to_int,
 )
 from odoo.addons.component.core import AbstractComponent
+from odoo.exceptions import MissingError
+from odoo.http import content_disposition, request
+from odoo.tools.safe_eval import safe_eval
 
 
 class AbstractDownload(AbstractComponent):

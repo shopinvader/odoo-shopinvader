@@ -6,7 +6,6 @@
 import logging
 
 from odoo import api, fields, models
-
 from odoo.addons.base_url.models.abstract_url import get_model_ref
 
 _logger = logging.getLogger(__name__)

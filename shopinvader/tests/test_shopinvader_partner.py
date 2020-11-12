@@ -3,11 +3,9 @@
 
 from datetime import datetime
 
-from psycopg2 import IntegrityError
-
-from odoo.tools import mute_logger
-
 from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.tools import mute_logger
+from psycopg2 import IntegrityError
 
 
 class TestShopinvaderPartner(SavepointComponentCase):

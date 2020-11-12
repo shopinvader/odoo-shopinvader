@@ -3,16 +3,14 @@
 
 import json
 
-from vcr_unittest import VCRMixin
-
-from odoo.tools import mute_logger
-
 from odoo.addons.connector_elasticsearch.components.adapter import (
     ElasticsearchAdapter,
 )
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBase,
 )
+from odoo.tools import mute_logger
+from vcr_unittest import VCRMixin
 
 
 class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):

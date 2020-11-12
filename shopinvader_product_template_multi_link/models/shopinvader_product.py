@@ -9,7 +9,6 @@
 from collections import defaultdict
 
 from odoo import models
-
 from odoo.addons.base_sparse_field.models.fields import Serialized
 from odoo.addons.http_routing.models.ir_http import slugify
 

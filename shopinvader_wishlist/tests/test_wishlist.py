@@ -3,9 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import mock
-from werkzeug.exceptions import NotFound
-
 from odoo.addons.shopinvader.tests.common import CommonCase
+from werkzeug.exceptions import NotFound
 
 
 class CommonWishlistCase(CommonCase):

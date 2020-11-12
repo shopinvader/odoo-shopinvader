@@ -7,7 +7,6 @@ import unittest
 from uuid import uuid4
 
 import requests
-
 from odoo.tools import mute_logger
 
 from .common import ShopinvaderRestCase

@@ -7,10 +7,9 @@
 import logging
 
 from odoo import _
+from odoo.addons.base_rest.controllers import main
 from odoo.exceptions import MissingError
 from odoo.http import request, route
-
-from odoo.addons.base_rest.controllers import main
 
 _logger = logging.getLogger(__name__)
 

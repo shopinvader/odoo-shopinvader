@@ -4,13 +4,11 @@
 
 from collections import defaultdict
 
-from werkzeug.exceptions import NotFound
-
 from odoo import _, exceptions
-from odoo.osv import expression
-
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+from odoo.osv import expression
+from werkzeug.exceptions import NotFound
 
 
 class WishlistService(Component):

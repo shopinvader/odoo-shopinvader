@@ -5,13 +5,11 @@
 import logging
 
 from cerberus import Validator
-from werkzeug.exceptions import NotFound
-
-from odoo.exceptions import UserError
-from odoo.tools.translate import _
-
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+from odoo.exceptions import UserError
+from odoo.tools.translate import _
+from werkzeug.exceptions import NotFound
 
 _logger = logging.getLogger(__name__)
 
