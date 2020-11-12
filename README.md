@@ -38,6 +38,8 @@ addon | version | summary
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_media](shopinvader_product_media/) | 13.0.1.0.0 | Index storage media data into external search engine
+[shopinvader_product_stock](shopinvader_product_stock/) | 13.0.1.0.0 | This module is used to choose a stock field during theexport (by backend)
+[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 13.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.3 | Shopinvader Product Link
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
@@ -53,7 +55,6 @@ addon | version | summary
 --- | --- | ---
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
-[product_stock_state](product_stock_state/) | 10.0.1.0.0 (unported) | Compute the state stock based onthe stock level and sale_ok field
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
@@ -66,9 +67,7 @@ addon | version | summary
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 (unported) | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
-[shopinvader_product_stock](shopinvader_product_stock/) | 12.0.2.0.0 (unported) | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 13.0.1.0.0 (unported) | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
-[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 10.0.1.0.0 (unported) | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 (unported) | Shopinvader Quotation
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 12.0.1.0.2 (unported) | ShopInvader - Sale profile
