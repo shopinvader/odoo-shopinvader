@@ -28,7 +28,7 @@ class CommonCase(SavepointCase, ComponentMixin):
     def setUpClass(cls):
         super(CommonCase, cls).setUpClass()
         cls.setUpComponent()
-        cls.env = cls.env(context={"lang": "en_US"})
+        cls.env = cls.env(context={"lang": "en_US", "tracking_disable": True})
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.product_1 = cls.env.ref("product.product_product_4b")
         cls.precision = cls.env["decimal.precision"].precision_get(
