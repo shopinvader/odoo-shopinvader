@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "ShopInvader - Sale profile",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.1.0",
     "depends": ["base", "shopinvader"],
     "author": "Akretion,ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
