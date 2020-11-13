@@ -21,7 +21,7 @@ addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.1.1 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 13.0.2.8.0 | Shopinvader
-[shopinvader_algolia](shopinvader_algolia/) | 13.0.1.1.1 | Shopinvader Algolia Connector
+[shopinvader_algolia](shopinvader_algolia/) | 13.0.1.2.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.1.0.1 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.1.3.0 | Enable registration of multiple users per each company customer.
@@ -47,7 +47,7 @@ addon | version | summary
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.0 | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.1.0 | ShopInvader - Sale profile
-[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.2.2 | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.3.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 13.0.2.1.0 | Handle shop wishlist
 
 
