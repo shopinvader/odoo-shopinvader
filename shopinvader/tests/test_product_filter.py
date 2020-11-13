@@ -2,6 +2,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import exceptions
+from odoo.tools import mute_logger
 
 from .common import CommonCase
 
@@ -63,10 +64,12 @@ class TestProductFilter(CommonCase):
             "variant_attributes.test_attribute_fr",
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_delete_field_delete_filter_cascade(self):
         self.shopinvader_product_field.unlink()
         self.assertFalse(self.filter_on_field.exists())
 
+    @mute_logger("odoo.models.unlink")
     def test_delete_attribute_delete_filter_cascade(self):
         self.variant_attribute.unlink()
         self.assertFalse(self.filter_on_attr.exists())

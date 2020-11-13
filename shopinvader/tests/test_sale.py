@@ -4,6 +4,7 @@
 
 from odoo import fields
 from odoo.exceptions import MissingError
+from odoo.tools import mute_logger
 
 from .common import CommonCase, CommonTestDownload
 
@@ -81,6 +82,7 @@ class SaleCase(CommonCase, CommonTestDownload):
             {"notification_ids": [(0, 0, values)]}
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_ask_email_invoice(self):
         """
         Test the ask_email when not logged.

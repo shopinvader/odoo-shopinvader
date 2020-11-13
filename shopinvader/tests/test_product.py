@@ -6,6 +6,7 @@ from contextlib import contextmanager
 from uuid import uuid4
 
 from odoo import fields
+from odoo.tools import mute_logger
 
 from .common import ProductCommonCase
 
@@ -377,6 +378,7 @@ class ProductCase(ProductCommonCase):
         self.assertFalse(product_product.shopinvader_bind_ids.active)
         return True
 
+    @mute_logger("odoo.models.unlink")
     def test_create_product_binding4(self):
         """
         Test the creation of a product.template.

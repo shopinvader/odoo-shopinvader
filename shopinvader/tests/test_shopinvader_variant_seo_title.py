@@ -2,9 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from uuid import uuid4
 
+from odoo.tools import mute_logger
+
 from .common import ProductCommonCase
 
 
+@mute_logger("odoo.models.unlink")
 class TestShopinvaderVariantTest(ProductCommonCase):
     """
     Tests for shopinvader.variant about seo_title field

@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields
+from odoo.tools import mute_logger
 
 from .common import CommonCase
 
@@ -82,10 +83,12 @@ class CartClearTest(object):
             self.assertEquals(cart.state, "cancel")
         return True
 
+    @mute_logger("odoo.models.unlink")
     def test_cart_clear(self):
         self.backend.write({"clear_cart_options": "clear"})
         self._check_clear_cart_result(self.cart)
 
+    @mute_logger("odoo.models.unlink")
     def test_cart_delete(self):
         self.backend.write({"clear_cart_options": "delete"})
         self._check_clear_cart_result(self.cart)
@@ -301,6 +304,7 @@ class CommonConnectedCartCase(CartCase):
 
 
 class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
+    @mute_logger("odoo.models.unlink")
     def test_cart_create(self):
         self.cart.unlink()
         cart = self.service._get()
@@ -436,6 +440,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
             self.backend.account_analytic_id, cart_bis.analytic_account_id
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_cart_delete_robustness(self):
         """
         If for some reason, the cart does not exist anymore but

@@ -2,6 +2,8 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.tools import mute_logger
+
 from .common import CommonCase
 
 
@@ -30,6 +32,7 @@ class BackendCase(CommonCase):
             self._all_products_count(), self._all_products_binding_count()
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_rebind_all_product(self):
         self._bind_all_product()
         self.env["shopinvader.variant"].search([], limit=1).unlink()
@@ -90,6 +93,7 @@ class BackendCase(CommonCase):
             "categ_lvl4": categ_lvl4,
         }
 
+    @mute_logger("odoo.models.unlink")
     def test_bind_all_product_and_autobind_category(self):
         self.env["shopinvader.category"].search([]).unlink()
         self.backend.category_binding_level = 2
@@ -101,6 +105,7 @@ class BackendCase(CommonCase):
             len(expected), self.env["shopinvader.category"].search_count([])
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_bind_all_product_and_autobind_category_root_level(self):
         self.backend.category_root_binding_level = 1
         self.backend.category_binding_level = 3
@@ -131,6 +136,7 @@ class BackendCase(CommonCase):
             self.env["shopinvader.category"].search_count([]),
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_rebind_all_category(self):
         self._bind_all_category()
         self.env["shopinvader.category"].search([], limit=1).unlink()

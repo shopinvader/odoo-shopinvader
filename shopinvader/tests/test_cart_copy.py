@@ -1,6 +1,7 @@
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo.exceptions import UserError
+from odoo.tools import mute_logger
 
 from .test_cart import CommonConnectedCartCase
 
@@ -12,6 +13,7 @@ class TestCartCopy(CommonConnectedCartCase):
         cls.product_copy = cls.env.ref("product.product_product_24")
         cls.product_copy.list_price = 500.0
 
+    @mute_logger("odoo.models.unlink")
     def test_cart_copy(self):
         # Copy existing cart
         # Check if we return a new one with new values
@@ -26,6 +28,7 @@ class TestCartCopy(CommonConnectedCartCase):
         )
         self.assertEquals(500.0, line.price_unit)
 
+    @mute_logger("odoo.models.unlink")
     def test_cart_copy_does_not_exist(self):
         cart_id = self.cart.id
         self.cart.unlink()
