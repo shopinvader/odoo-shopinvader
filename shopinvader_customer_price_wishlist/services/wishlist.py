@@ -21,11 +21,9 @@ class WishlistService(Component):
     # we could avoid this module completely.
     def _json_parser_product(self):
         res = super()._json_parser_product()
-        res = [x for x in res if x == "price"]
+        res = [x for x in res if x != "price"]
         res.append(("price", self._json_parser_product_price))
         return res
 
     def _json_parser_product_price(self, rec, fname):
-        return self.customer_price_service._get_price(
-            rec, fname
-        )
+        return self.customer_price_service._get_price(rec, fname)

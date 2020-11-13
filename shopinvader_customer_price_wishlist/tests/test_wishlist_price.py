@@ -40,13 +40,17 @@ class WishlistCase(CommonWishlistCase):
         expected_price = self.s_variant._get_price(
             self.base_pricelist, fposition=self.fiscal_pos1
         )
-        self.assertEqual(res_line["product"]["price"], expected_price)
+        self.assertEqual(
+            res_line["product"]["price"]["default"], expected_price
+        )
         # change partner
         self.wishlist_service.work.partner = self.partner2
         res_line = self.wishlist_service._to_json_one(self.prod_set)["lines"][
             0
         ]
-        self.assertEqual(res_line["product"]["price"], expected_price)
+        self.assertEqual(
+            res_line["product"]["price"]["default"], expected_price
+        )
 
     def test_jsonify_custom_pricelist(self):
         self.partner.property_product_pricelist = self.discount_pricelist
@@ -54,7 +58,9 @@ class WishlistCase(CommonWishlistCase):
             self.discount_pricelist, fposition=self.fiscal_pos1
         )
         res_line = self._get_line_data()
-        self.assertEqual(res_line["product"]["price"], expected_price)
+        self.assertEqual(
+            res_line["product"]["price"]["default"], expected_price
+        )
 
         # change partner
         self.wishlist_service.work.partner = self.partner2
@@ -62,4 +68,6 @@ class WishlistCase(CommonWishlistCase):
         expected_price = self.s_variant._get_price(
             self.base_pricelist, fposition=self.fiscal_pos1
         )
-        self.assertEqual(res_line["product"]["price"], expected_price)
+        self.assertEqual(
+            res_line["product"]["price"]["default"], expected_price
+        )
