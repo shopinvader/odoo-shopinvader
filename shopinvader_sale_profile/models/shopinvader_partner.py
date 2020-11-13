@@ -18,6 +18,19 @@ class ShopinvaderPartner(models.Model):
         "fiscal position (country, zip, vat, account position,...)",
     )
 
+    def _compute_role_depends(self):
+        return super()._compute_role_depends() + (
+            "backend_id.use_sale_profile",
+            "sale_profile_id",
+        )
+
+    def _get_role(self):
+        # Override to use the sale profile role/code when required
+        role = super()._get_role()
+        if self.backend_id.use_sale_profile and self.sale_profile_id:
+            role = self.sale_profile_id.code
+        return role
+
     @api.depends(
         "record_id.country_id",
         "country_id",

@@ -15,7 +15,7 @@ class ShopinvaderPartnerExportMapper(Component):
 
     @mapping
     def role(self, record):
-        return {"role": "default"}
+        return {"role": record.role}
 
     @mapping
     def name(self, record):

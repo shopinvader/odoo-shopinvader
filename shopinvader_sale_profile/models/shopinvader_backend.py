@@ -39,3 +39,15 @@ class ShopinvaderBackend(models.Model):
                     "pricelist at the same time."
                 )
             )
+
+    def _get_customer_default_pricelist(self):
+        """Override to use default profile pricelist when needed.
+        """
+        pricelist = super()._get_customer_default_pricelist()
+        if self.use_sale_profile:
+            # TODO: shall we override `_selection_default_role`
+            # to list all profiles' code and pick the profile usin its code?
+            profile = self.sale_profile_ids.filtered("default")
+            if profile and profile.pricelist_id:
+                pricelist = profile.pricelist_id
+        return pricelist

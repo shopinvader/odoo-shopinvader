@@ -1,5 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from contextlib import contextmanager
@@ -222,6 +224,10 @@ class ShopinvaderBackend(models.Model):
         help="Select a specific report for invoice download, if none are selected "
         "default shopinvader implementation is used.",
     )
+    customer_default_role = fields.Selection(
+        selection="_selection_default_role",
+        default=lambda self: self._default_customer_default_role()
+    )
 
     _sql_constraints = [
         (
@@ -246,6 +252,12 @@ class ShopinvaderBackend(models.Model):
     @api.model
     def _default_partner_industry_ids(self):
         return self.env["res.partner.industry"].search([])
+
+    def _selection_default_role(self):
+        return [("default", "Default")]
+
+    def _default_customer_default_role(self):
+        return "default"
 
     def _get_invoice_report_id_domain(self):
         return [

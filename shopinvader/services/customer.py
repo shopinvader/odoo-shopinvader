@@ -117,5 +117,9 @@ class CustomerService(Component):
 
     def _prepare_create_response(self, binding):
         response = self._assign_cart_and_get_store_cache()
-        response["data"] = {"id": self.partner.id, "name": self.partner.name}
+        response["data"] = {
+            "id": self.partner.id,
+            "name": self.partner.name,
+            "role": binding.role,
+        }
         return response
