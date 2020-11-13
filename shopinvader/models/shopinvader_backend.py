@@ -492,7 +492,7 @@ class ShopinvaderBackend(models.Model):
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)
 
-    def _get_cart_pricelist(self, partner):
+    def _get_cart_pricelist(self, partner=None):
         """Retrieve pricelist to be used for the cart.
 
         NOTE: if you change this behavior be aware that
@@ -502,3 +502,8 @@ class ShopinvaderBackend(models.Model):
         which are completely agnostic in regard to specific partner info.
         """
         return self.pricelist_id
+
+    def _get_customer_default_pricelist(self):
+        """Retrieve pricelist to be used for brand new customer record.
+        """
+        return self._get_cart_pricelist()

@@ -64,12 +64,12 @@ class CustomerService(Component):
     def _prepare_params(self, params, mode="create"):
         address = self.component(usage="addresses")
         params = address._prepare_params(params, mode=mode)
+        pricelist = self.shopinvader_backend._get_customer_default_pricelist()
         # fmt: off
         params.update(
             {
                 "backend_id": self.shopinvader_backend.id,
-                "property_product_pricelist": self.shopinvader_backend.
-                pricelist_id.id,
+                "property_product_pricelist": pricelist.id if pricelist else None,
             }
         )
         # fmt: on
