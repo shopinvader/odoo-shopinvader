@@ -13,7 +13,7 @@ class ActionServerCase(ProductCommonCase, JobMixin):
         bindings = self.env["shopinvader.product"].search([], limit=4)
         variant_length = len(bindings.mapped("shopinvader_variant_ids"))
         action = self.env.ref(
-            "shopinvader_search_engine.action_recompute_shopinvader_product"
+            "shopinvader_search_engine.action_recompute_shopinvader_product_on_template"
         )
         action_context = action.with_context(
             active_model="product.template",

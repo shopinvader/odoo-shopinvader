@@ -12,7 +12,10 @@
     "category": "Generic Modules",
     # "post_init_hook": "post_init_hook",
     "depends": ["shopinvader_search_engine", "connector_algolia"],
-    "data": ["data/ir_export_product.xml"],
+    "data": [
+        "data/ir_export_product.xml",
+        "views/shopinvader_variant_view.xml",
+    ],
     "demo": ["demo/backend_demo.xml", "demo/product_demo.xml"],
     "external_dependencies": {"python": ["vcrpy_unittest"]},
     "installable": True,
