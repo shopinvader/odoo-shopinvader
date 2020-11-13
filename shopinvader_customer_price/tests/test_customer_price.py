@@ -28,7 +28,7 @@ class CommonCustomerPriceCase(ProductCommonCase):
         expected = {
             "id": s_variant.id,
             "objectID": s_variant.record_id.id,
-            "price": expected_price,
+            "price": {"default": expected_price},
         }
         self.assertEqual(res, expected)
 
