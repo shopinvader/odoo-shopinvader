@@ -36,6 +36,21 @@ class ShopinvaderProductLinkMixin(models.AbstractModel):
     def _get_product_links(self):
         return self.product_template_link_ids
 
+    def _get_product_template_linked(self, links):
+        left_links = links.filtered(
+            lambda x: x.left_product_tmpl_id != self.record_id
+        )
+        right_links = links.filtered(
+            lambda x: x.left_product_tmpl_id == self.record_id
+        )
+        left_link_tmpl_ids = left_links.mapped("left_product_tmpl_id").ids
+        right_link_tmpl_ids = right_links.mapped("right_product_tmpl_id").ids
+        linked_tmpl_ids = set(left_link_tmpl_ids).union(
+            set(right_link_tmpl_ids)
+        )
+
+        return self.env["product.template"].browse(linked_tmpl_ids)
+
     def _get_product_links_by_type(self, links):
         """Retrieve variants as list of ids by link type.
 
@@ -50,54 +65,24 @@ class ShopinvaderProductLinkMixin(models.AbstractModel):
             grouped[code] |= link
         res = {}
         for code, links in grouped.items():
-            res[code] = [self._get_product_link_data(x) for x in links]
+            linked_tmpl = self._get_product_template_linked(links)
+
+            bindings = linked_tmpl.mapped("shopinvader_bind_ids")
+            bindings = bindings.filtered(
+                lambda x: x.backend_id == self.backend_id
+                and x.lang_id == self.lang_id
+            )
+            variants = bindings.mapped("shopinvader_variant_ids").filtered(
+                lambda x: x.main
+            )
+            res[code] = [{"id": variant.record_id.id} for variant in variants]
         return res
 
     def _product_link_code(self, link):
         """Normalize link code, default to `generic` when missing."""
         return slugify(link.type_id.code or "generic").replace("-", "_")
 
-    def _get_product_link_data(self, link):
-        target = self._product_link_target(link)
-        variant = self._product_link_target_variant(target)
-        if variant:
-            return {"id": variant.record_id.id}
-        return {}
-
-    def _product_link_target(self, link):
-        """Retrieve the target of the link."""
-        raise NotImplementedError()
-
-    def _product_link_target_variant(self, target):
-        """Retrieve variant ids for given target product
-
-        :return: set
-        """
-        raise NotImplementedError()
-
 
 class ShopinvaderProduct(models.Model):
     _name = "shopinvader.product"
     _inherit = ["shopinvader.product", "shopinvader.product.link.mixin"]
-
-    def _product_link_target(self, link):
-        if link.left_product_tmpl_id != self.record_id:
-            return link.left_product_tmpl_id
-        else:
-            return link.right_product_tmpl_id
-
-    def _product_link_target_variant(self, target):
-        """Retrieve variant for given template
-
-        :return: set
-        """
-        for shopinvader_variant in target.mapped(
-            "shopinvader_bind_ids.shopinvader_variant_ids"
-        ):
-            # Get bindings of the correct backend and lang, pick only the main one
-            if (
-                shopinvader_variant.backend_id == self.backend_id
-                and shopinvader_variant.lang_id == self.lang_id
-                and shopinvader_variant.main
-            ):
-                return shopinvader_variant
