@@ -52,5 +52,5 @@ class ShopinvaderBackend(models.Model):
         return (
             self.env["account.fiscal.position"].browse(fpos_id)
             if fpos_id
-            else None
+            else self.env["account.fiscal.position"].browse()
         )
