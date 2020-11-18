@@ -30,11 +30,12 @@ class ShopinvaderBackend(models.Model):
             return pricelist.id
         return None
 
-    def _get_cart_pricelist(self, partner):
+    def _get_cart_pricelist(self, partner=None):
         pricelist = super()._get_cart_pricelist(partner)
-        pricelist_id = self._get_cart_pricelist_id(partner)
-        if pricelist_id:
-            return self.env["product.pricelist"].browse(pricelist_id)
+        if partner:
+            pricelist_id = self._get_cart_pricelist_id(partner)
+            if pricelist_id:
+                return self.env["product.pricelist"].browse(pricelist_id)
         return pricelist
 
     @tools.ormcache("partner.id", "self.company_id.id")
