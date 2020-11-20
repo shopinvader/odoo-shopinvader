@@ -270,7 +270,8 @@ class CarrierCase(CommonCarrierCase):
         belgium = self.env.ref("base.be")
         partner = self.cart.partner_id
         partner.write({"country_id": french_country.id})
-        self.assertFalse(self.cart.carrier_id)
+        self.cart.carrier_id = False
+
         # Force load every fields
         self.cart.read()
         cart_values_before = self.cart._convert_to_write(self.cart._cache)
