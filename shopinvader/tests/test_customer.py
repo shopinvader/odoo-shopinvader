@@ -4,6 +4,8 @@
 
 import logging
 
+from odoo.tools import mute_logger
+
 from .common import CommonCase
 from .test_address import _check_partner_data
 
@@ -84,6 +86,7 @@ class TestCustomer(TestCustomerCommon):
         SaleOrder = self.env["sale.order"]
         self.assertFalse(SaleOrder.search(sale_domain))
 
+    @mute_logger("odoo.models.unlink")
     def test_sign_in_no_create_cart(self):
         """
         Customer sign-in should not create an empty cart

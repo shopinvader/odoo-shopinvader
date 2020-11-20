@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import exceptions
+from odoo.tools import mute_logger
 
 from .common import CommonCase
 
@@ -44,6 +45,7 @@ class ItemCaseMixin(object):
         self.assertEqual(line["product"]["id"], product_id)
         self.assertEqual(line["qty"], qty)
 
+    @mute_logger("odoo.models.unlink")
     def remove_cart(self):
         self.cart.unlink()
         self.shopinvader_session.pop("cart_id")
@@ -103,6 +105,7 @@ class AbstractItemCase(ItemCaseMixin):
         # A new line has been created on a new cart...
         self.assertNotEqual(self.cart.id, cart["id"])
 
+    @mute_logger("odoo.models.unlink")
     def test_delete_item(self):
         cart = self.service.search()["data"]
         cart_id = cart["id"]
@@ -138,6 +141,7 @@ class AbstractItemCase(ItemCaseMixin):
             cart["lines"]["items"][0], self.product_1.id, 2
         )
 
+    @mute_logger("odoo.models.unlink")
     def test_add_item_with_product_not_allowed(self):
         self.remove_cart()
         # drop bindings and try to add the product

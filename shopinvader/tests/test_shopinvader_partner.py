@@ -35,6 +35,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
                 }
             )
 
+    @mute_logger("odoo.models.unlink")
     def test_partner_duplicate(self):
         """
         Test that the partner are duplicated if we create 2 binding with the
