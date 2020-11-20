@@ -40,7 +40,9 @@ class ShopinvaderSiteExportMapper(Component):
     def country(self, record):
         return {
             "available_countries": self._m2m_to_external(
-                record, "allowed_country_ids", ["id", "name"]
+                record,
+                "allowed_country_ids",
+                ["id", "name", ("state_ids:states", ["code", "name"])],
             )
         }
 
