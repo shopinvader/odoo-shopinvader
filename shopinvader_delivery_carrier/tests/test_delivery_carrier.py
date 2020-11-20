@@ -9,11 +9,15 @@ class TestDeliveryCarrier(CommonCarrierCase):
         super(CommonCarrierCase, self).setUp()
         self.carrier_service = self.service.component("delivery_carrier")
 
+    def _check_response(self, res, expected):
+        expected.update({"count": expected["size"], "rows": expected["data"]})
+        self.assertDictEqual(res, expected)
+
     def test_search_all(self):
         res = self.carrier_service.search()
         expected = {
-            "count": 2,
-            "rows": [
+            "size": 2,
+            "data": [
                 {
                     "price": 0.0,
                     "description": self.free_carrier.name or None,
@@ -30,13 +34,13 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 },
             ],
         }
-        self.assertDictEqual(res, expected)
+        self._check_response(res, expected)
 
     def test_search_current_cart(self):
         res = self.carrier_service.search(target="current_cart")
         expected = {
-            "count": 2,
-            "rows": [
+            "size": 2,
+            "data": [
                 {
                     "price": 0.0,
                     "description": self.free_carrier.name or None,
@@ -53,7 +57,7 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 },
             ],
         }
-        self.assertDictEqual(res, expected)
+        self._check_response(res, expected)
 
     def test_search_current_cart_country(self):
         partner_country = self.cart.partner_id.country_id
@@ -64,8 +68,8 @@ class TestDeliveryCarrier(CommonCarrierCase):
         }
         res = self.carrier_service.dispatch("search", params=self.params)
         expected = {
-            "count": 1,
-            "rows": [
+            "size": 1,
+            "data": [
                 {
                     "price": 0.0,
                     "description": self.free_carrier.name or None,
@@ -75,7 +79,7 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 }
             ],
         }
-        self.assertDictEqual(res, expected)
+        self._check_response(res, expected)
         # Check if partner country hasn't been modified
         self.assertEquals(partner_country, self.cart.partner_id.country_id)
 
@@ -94,8 +98,8 @@ class TestDeliveryCarrier(CommonCarrierCase):
             "country_id": self.env.ref("base.fr").id,
         }
         res = self.carrier_service.dispatch("search", params=self.params)
-        expected = {"count": 0, "rows": []}
-        self.assertDictEqual(res, expected)
+        expected = {"size": 0, "data": []}
+        self._check_response(res, expected)
         # Check if partner zip hasn't been modified
         self.assertEquals(partner_zip, self.cart.partner_id.zip)
 
@@ -115,8 +119,8 @@ class TestDeliveryCarrier(CommonCarrierCase):
         }
         res = self.carrier_service.dispatch("search", params=self.params)
         expected = {
-            "count": 1,
-            "rows": [
+            "size": 1,
+            "data": [
                 {
                     "price": 0.0,
                     "description": self.poste_carrier.name or None,
@@ -126,4 +130,4 @@ class TestDeliveryCarrier(CommonCarrierCase):
                 }
             ],
         }
-        self.assertDictEqual(res, expected)
+        self._check_response(res, expected)
