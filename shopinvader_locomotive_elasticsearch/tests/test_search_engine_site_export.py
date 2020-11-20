@@ -24,7 +24,9 @@ class TestSiteSearchEngineExport(Base):
             },
         ]
         cls.expected_settings["indices"] = json.dumps(cls.indexes)
-        cls.expected_settings["url"] = "http://127.0.0.1:9200"
+        cls.expected_settings["url"] = cls.env.ref(
+            "connector_elasticsearch.backend_1"
+        ).es_server_host
 
     @classmethod
     def _setup_search_engine(cls):
