@@ -318,7 +318,8 @@ class CarrierCase(CommonCarrierCase):
         cart_ship = cart.get("shipping")
 
         total_without_shipping = (
-            cart_amount["total"] - cart_ship["amount"]["total"]
+            cart_amount["total_without_discount"]
+            - cart_ship["amount"]["total"]
         )
         untaxed_without_shipping = (
             cart_amount["untaxed"] - cart_ship["amount"]["untaxed"]

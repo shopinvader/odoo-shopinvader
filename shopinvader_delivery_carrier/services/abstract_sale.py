@@ -39,7 +39,9 @@ class AbstractSaleService(AbstractComponent):
         shipping_amounts = self._convert_shipping(sale).get("amount", {})
         tax = result.get("tax", 0) - shipping_amounts.get("tax", 0)
         untaxed = result.get("untaxed", 0) - shipping_amounts.get("untaxed", 0)
-        total = result.get("total", 0) - shipping_amounts.get("total", 0)
+        total = result.get("total_without_discount", 0) - shipping_amounts.get(
+            "total", 0
+        )
         precision = sale.currency_id.decimal_places
         total_without_shipping_without_discount = total - sale.discount_total
         result.update(
