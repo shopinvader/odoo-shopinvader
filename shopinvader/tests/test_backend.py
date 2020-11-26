@@ -38,3 +38,9 @@ class BackendCase(CommonCase):
         self._bind_all_category()
         self.env["shopinvader.category"].search([], limit=1).unlink()
         self.assertEqual(*self._bind_all_category())
+
+    def test_agnostic_response(self):
+        with self.work_on_services(partner=None) as work:
+            self.service = work.component(usage="cart")
+            res = self.service.dispatch("ping")
+            self.assertEquals("Hello World!", res)

@@ -10,6 +10,20 @@ _test_mode = False
 threadLocal = threading.local()
 
 
+def shopinvader_agnostic(func):
+    """
+    Used to decorate methods that are used typically when they cannot contain
+    other information but the one returned by that method.
+
+    Typically, used for webhooks or...
+
+    :param func:
+    :return:
+    """
+    func.shopinvader_agnostic = True
+    return func
+
+
 class ShopinvaderResponse(object):
     """
     A response object used to enrich the response returned by a shopinvader

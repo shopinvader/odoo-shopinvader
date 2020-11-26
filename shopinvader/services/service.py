@@ -5,6 +5,11 @@
 
 
 from odoo import _
+from odoo.addons.base_rest.components.service import (
+    skip_secure_response,
+    to_int,
+)
+from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
 from odoo.tools import frozendict
@@ -13,6 +18,7 @@ from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import AbstractComponent
 
 from .. import shopinvader_response
+from ..shopinvader_response import shopinvader_agnostic
 
 
 class BaseShopinvaderService(AbstractComponent):
@@ -181,6 +187,17 @@ class BaseShopinvaderService(AbstractComponent):
             logged = True
         return logged
 
+    def _validator_ping(self):
+        return {}
+
+    def _validator_return_ping(self):
+        return {}
+
+    @shopinvader_agnostic
+    @skip_secure_response
+    def ping(self):
+        return "Hello World!"
+
     @property
     def shopinvader_response(self):
         """
@@ -193,6 +210,10 @@ class BaseShopinvaderService(AbstractComponent):
         res = super(BaseShopinvaderService, self).dispatch(
             method_name, _id=_id, params=params
         )
+        # Don't enrich response with shopinvader store_cache and session
+        func = getattr(self, method_name, None)
+        if hasattr(func, "shopinvader_agnostic"):
+            return res
         store_cache = self.shopinvader_response.store_cache
         if store_cache:
             values = res.get("store_cache", {})
