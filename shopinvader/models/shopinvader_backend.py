@@ -65,8 +65,11 @@ class ShopinvaderBackend(models.Model):
         copy=False,
     )
     lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
-    pricelist_id = fields.Many2one("product.pricelist", string="Pricelist")
-
+    pricelist_id = fields.Many2one(
+        "product.pricelist",
+        string="Pricelist",
+        default=lambda self: self._default_pricelist_id(),
+    )
     account_analytic_id = fields.Many2one(
         comodel_name="account.analytic.account",
         string="Analytic account",
@@ -244,6 +247,10 @@ class ShopinvaderBackend(models.Model):
     @api.model
     def _default_company_id(self):
         return self.env.company
+
+    @api.model
+    def _default_pricelist_id(self):
+        return self.env.ref("product.list0")
 
     @api.model
     def _default_partner_title_ids(self):
@@ -513,7 +520,8 @@ class ShopinvaderBackend(models.Model):
         This is because product info comes from indexes
         which are completely agnostic in regard to specific partner info.
         """
-        return self.pricelist_id
+        # There must be a pricelist somehow: safe fallback to default Odoo one
+        return self.pricelist_id or self._default_pricelist_id()
 
     def _get_customer_default_pricelist(self):
         """Retrieve pricelist to be used for brand new customer record.
