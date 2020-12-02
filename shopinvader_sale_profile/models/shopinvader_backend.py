@@ -50,6 +50,12 @@ class ShopinvaderBackend(models.Model):
         pricelist = super()._get_cart_pricelist(partner)
         if not self.use_sale_profile:
             return pricelist
+        profile_pricelist = self._get_profile_pricelist(partner)
+        if profile_pricelist:
+            return profile_pricelist
+        return pricelist
+
+    def _get_profile_pricelist(self, partner=None):
         default_profile_pricelist = self._get_default_profile_pricelist()
         # TODO: we should receive shopinvader.partner all around
         invader_partner = (
@@ -61,9 +67,7 @@ class ShopinvaderBackend(models.Model):
             # If the partner has been created via shopinvader this will match
             # property_product_pricelist already
             return invader_partner.sale_profile_id.pricelist_id
-        elif (invader_partner and not pricelist) or not invader_partner:
-            return default_profile_pricelist or pricelist
-        return pricelist
+        return default_profile_pricelist
 
     def _get_default_profile_pricelist(self):
         # TODO: shall we override `_selection_default_role`
