@@ -33,10 +33,16 @@ class ShopinvaderBackend(models.Model):
     def _get_cart_pricelist(self, partner=None):
         pricelist = super()._get_cart_pricelist(partner)
         if partner:
-            pricelist_id = self._get_cart_pricelist_id(partner)
-            if pricelist_id:
-                return self.env["product.pricelist"].browse(pricelist_id)
+            pricelist = self._get_partner_pricelist(partner) or pricelist
         return pricelist
+
+    def _get_partner_pricelist(self, partner):
+        pricelist_id = self._get_cart_pricelist_id(partner)
+        if pricelist_id:
+            return self.env["product.pricelist"].browse(pricelist_id)
+        elif partner.property_product_pricelist:
+            # Fallback to std partner pricelist
+            return partner.property_product_pricelist
 
     @tools.ormcache("partner.id", "self.company_id.id")
     def _get_fiscal_position_id(self, partner):
