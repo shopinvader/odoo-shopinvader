@@ -50,6 +50,19 @@ class CommonMixin(ComponentMixin):
             params["shopinvader_session"] = {}
         if not params.get("partner_user") and params.get("partner"):
             params["partner_user"] = params["partner"]
+        if params.get("partner_user"):
+            params["invader_partner"] = params[
+                "partner_user"
+            ]._get_invader_partner(self.backend)
+        # Safe defaults as these keys are mandatory for work ctx
+        if "partner" not in params:
+            params["partner"] = self.env["res.partner"].browse()
+        if "partner_user" not in params:
+            params["partner_user"] = self.env["res.partner"].browse()
+        if "invader_partner" not in params:
+            params["invader_partner"] = self.env[
+                "shopinvader.partner"
+            ].browse()
         collection = _PseudoCollection("shopinvader.backend", self.env)
         yield WorkContext(
             model_name="rest.service.registration",

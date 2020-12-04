@@ -31,10 +31,7 @@ class BaseShopinvaderService(AbstractComponent):
 
     @property
     def invader_partner(self):
-        partner = self.partner
-        if partner:
-            return partner._get_invader_partner(self.shopinvader_backend)
-        return self.env["shopinvader.partner"].browse()
+        return self.work.invader_partner
 
     @property
     def partner_user(self):
