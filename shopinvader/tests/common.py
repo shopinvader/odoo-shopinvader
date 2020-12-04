@@ -98,6 +98,14 @@ class CommonMixin(ComponentMixin):
     def _install_lang(self, lang_xml_id):
         return _install_lang_odoo(self.env, lang_xml_id)
 
+    @staticmethod
+    def _create_invader_partner(env, **kw):
+        values = {
+            "backend_id": env.ref("shopinvader.backend_1").id,
+        }
+        values.update(kw)
+        return env["shopinvader.partner"].create(values)
+
 
 class CommonCase(SavepointCase, CommonMixin):
 
