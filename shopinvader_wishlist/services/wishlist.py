@@ -53,15 +53,7 @@ class WishlistService(Component):
         record = self._get(_id)
         cart_service = self.component(usage="cart")
         cart = cart_service._get()
-        wizard = self.env["product.set.add"].create(
-            {
-                "order_id": cart.id,
-                "partner_id": self.partner_user.id,
-                "product_set_id": record.id,
-                "skip_existing_products": True,
-            }
-        )
-        wizard.add_set()
+        self._add_to_cart(record, cart)
         # return new cart
         return cart_service._to_json(cart)
 
@@ -221,6 +213,19 @@ class WishlistService(Component):
         if not self._is_logged_in():
             return expression.FALSE_DOMAIN
         return self._default_domain_for_partner_records()
+
+    def _get_add_to_cart_wizard(self, record, cart):
+        return self.env["product.set.add"].create(
+            {
+                "order_id": cart.id,
+                "product_set_id": record.id,
+                "skip_existing_products": True,
+            }
+        )
+
+    def _add_to_cart(self, record, cart):
+        wizard = self._get_add_to_cart_wizard(record, cart)
+        return wizard.add_set()
 
     def _prepare_params(self, params, mode="create"):
         if mode == "create":
