@@ -24,6 +24,10 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         cls.location_stock = cls.env.ref("stock.stock_location_stock")
         cls.location_cust = cls.env.ref("stock.stock_location_customers")
         cls.precision = 2
+        cls.backend.delivery_order_states = ""
+        cls._create_invader_partner(
+            cls.env, record_id=cls.partner.id, external_id=cls.partner.id
+        )
 
     def setUp(self, *args, **kwargs):
         super(TestDeliveryService, self).setUp(*args, **kwargs)
@@ -143,7 +147,6 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         result = self.service_guest.dispatch("search")
         data = result.get("data", [])
         self.assertFalse(data)
-        return
 
     def test_get_picking_logged_without_sale(self):
         """
@@ -167,7 +170,6 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, picking)
-        return
 
     def _fill_picking_optional_values(self, pickings):
         """
@@ -206,7 +208,6 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, picking)
-        return
 
     def test_get_multi_picking(self):
         """
@@ -236,7 +237,23 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, pickings)
-        return
+
+    def test_get_multi_picking_no_state_match(self):
+        self.backend.delivery_order_states = "assigned|done"
+        picking1 = self._create_picking(
+            partner=self.service.partner, sale=True
+        )
+        picking2 = self._create_picking(
+            partner=self.service.partner, sale=True
+        )
+        pickings = picking1 | picking2
+        result = self.service.dispatch("search")
+        data = result.get("data", [])
+        self._check_data_content(data, pickings.browse())
+        picking1.state = "done"
+        result = self.service.dispatch("search")
+        data = result.get("data", [])
+        self._check_data_content(data, picking1)
 
     def test_picking_download(self):
         """
