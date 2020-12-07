@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -13,4 +12,5 @@
     "depends": ["sale", "shopinvader"],
     "data": ["views/sale_order.xml"],
     "demo": [],
+    "installable": False,
 }
