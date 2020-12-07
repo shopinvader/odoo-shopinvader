@@ -1,0 +1,7 @@
+<odoo noupdate="1">
+    <record id="job_function_shopinvader_backend_manage_cart_expiry" model="queue.job.function">
+        <field name="model_id" ref="model_shopinvader_backend" />
+        <field name="method">manage_cart_expiry</field>
+        <field name="channel_id" ref="shopinvader.channel_shopinvader" />
+    </record>
+</odoo>

@@ -17,7 +17,6 @@ from urllib.request import urlopen
 from zipfile import ZipFile
 
 from odoo import _, api, exceptions, fields, models
-from odoo.addons.queue_job.job import job
 from odoo.tools import date_utils
 from odoo.tools.pycompat import csv_reader
 
@@ -204,7 +203,6 @@ class ProductImageImportWizard(models.Model):
                 "yes" if is_last_chunk else "no",
             )
 
-    @job(default_channel="root.shopinvader.import.images")
     def do_import(self, lines=None, last_chunk=False):
         lines = lines or self._get_lines()
         report = self._do_import(

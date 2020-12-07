@@ -4,7 +4,6 @@
 from datetime import timedelta
 
 from odoo import _, api, fields, models
-from odoo.addons.queue_job.job import job
 from odoo.osv import expression
 
 
@@ -53,7 +52,6 @@ class ShopinvaderBackend(models.Model):
         ]
         return domain
 
-    @job(default_channel="root.shopinvader")
     def manage_cart_expiry(self):
         self.ensure_one()
         cart_expired = self.env["sale.order"].search(

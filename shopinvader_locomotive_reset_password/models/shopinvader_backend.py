@@ -5,7 +5,6 @@
 from datetime import timedelta
 
 from odoo import api, fields, models
-from odoo.addons.queue_job.job import job
 
 
 class ShopinvaderBackend(models.Model):
@@ -43,8 +42,7 @@ class ShopinvaderBackend(models.Model):
     def _get_default_token_validity(self):
         return "6-hours"
 
-    @job(default_channel="root.shopinvader")
-    def _reset_expired_password(self):
+    def reset_expired_password(self):
         self.ensure_one()
         partners = self.env["shopinvader.partner"].search(
             self._get_expired_password_domain()
@@ -64,7 +62,7 @@ class ShopinvaderBackend(models.Model):
         for backend in self.env["shopinvader.backend"].search(
             [("password_validity", ">", 0)]
         ):
-            backend.with_delay()._reset_expired_password()
+            backend.with_delay().reset_expired_password()
 
     @api.multi
     def _get_expired_password_domain(self):

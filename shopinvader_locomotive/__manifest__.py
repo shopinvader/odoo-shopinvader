@@ -17,7 +17,11 @@
         "queue_job",
         "shopinvader",
     ],
-    "data": ["views/shopinvader_backend_view.xml", "data/ir_cron.xml"],
+    "data": [
+        "views/shopinvader_backend_view.xml",
+        "data/ir_cron.xml",
+        "data/queue_job_function_data.xml",
+    ],
     "demo": ["demo/backend_demo.xml"],
     "external_dependencies": {"python": ["locomotivecms"]},
     "installable": True,

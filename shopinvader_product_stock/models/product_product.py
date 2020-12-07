@@ -4,15 +4,14 @@
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from odoo import models
-from odoo.addons.queue_job.job import job
 
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    @job(default_channel="root.search_engine.synchronize_stock")
-    def _synchronize_all_binding_stock_level(self):
+    def synchronize_all_binding_stock_level(self):
         """Compute new stock information and update index data.
 
         If data changed and binding is in done state it forces it to 'to_update'.

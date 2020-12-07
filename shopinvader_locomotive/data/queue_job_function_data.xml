@@ -1,0 +1,12 @@
+<odoo noupdate="1">
+    <record id="job_function_locomotive_binding_export_record" model="queue.job.function">
+        <field name="model_id" ref="model_locomotive_binding" />
+        <field name="method">export_record</field>
+        <field name="channel_id" ref="shopinvader.channel_shopinvader" />
+    </record>
+    <record id="job_function_locomotive_binding_export_delete_record" model="queue.job.function">
+        <field name="model_id" ref="model_locomotive_binding" />
+        <field name="method">export_delete_record</field>
+        <field name="channel_id" ref="shopinvader.channel_shopinvader" />
+    </record>
+</odoo>

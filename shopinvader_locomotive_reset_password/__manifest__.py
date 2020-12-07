@@ -21,6 +21,7 @@
         "views/partner_view.xml",
         "data/mail_template.xml",
         "data/ir_cron.xml",
+        "data/queue_job_function_data.xml",
     ],
     "demo": ["demo/shopinvader_backend.xml"],
 }

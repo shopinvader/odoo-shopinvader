@@ -20,6 +20,11 @@
         "connector_search_engine",
         "shopinvader_search_engine",
     ],
-    "data": ["views/shopinvader_backend.xml", "data/ir_export_product.xml"],
+    "data": [
+        "views/shopinvader_backend.xml",
+        "data/ir_export_product.xml",
+        "data/queue_job_channel_data.xml",
+        "data/queue_job_function_data.xml",
+    ],
     "external_dependencies": {"python": ["slugify"]},
 }
