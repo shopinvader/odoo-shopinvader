@@ -9,5 +9,5 @@ openupgradelib @ git+https://github.com/OCA/openupgradelib.git
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
 
-odoo14-addon-base-rest @ git+https://github.com/OCA/rest-framework@refs/pull/71/head#subdirectory=setup/base_rest
-odoo14-addon-datamodel @ git+https://github.com/OCA/rest-framework.git@refs/pull/71#subdirectory=setup/datamodel
+odoo13-addon-base-rest @ git+https://github.com/OCA/rest-framework@refs/pull/71/head#subdirectory=setup/base_rest
+odoo13-addon-datamodel @ git+https://github.com/OCA/rest-framework.git@refs/pull/71#subdirectory=setup/datamodel
