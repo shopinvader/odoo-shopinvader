@@ -69,9 +69,7 @@ def get(raise_if_not_found=True):
         current_local = threadLocal
     try:
         if not hasattr(current_local, "_shopinvader_response"):
-            setattr(
-                current_local, "_shopinvader_response", ShopinvaderResponse()
-            )
+            current_local._shopinvader_response = ShopinvaderResponse()
     except RuntimeError:
         if raise_if_not_found:
             raise

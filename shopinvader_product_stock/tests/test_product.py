@@ -14,12 +14,16 @@ class TestProductProduct(StockCommonCase):
 
     def _expectect_qty_by_wh(self, warehouse_recs, prod):
         res = {
-            "global": {"qty": prod.with_context(warehouse=list(warehouse_recs.ids)).qty_available},
+            "global": {
+                "qty": prod.with_context(
+                    warehouse=list(warehouse_recs.ids)
+                ).qty_available
+            },
         }
         for wh in warehouse_recs:
             key = self.shopinvader_backend._make_warehouse_key(wh)
             res[key] = {
-                "qty":prod.with_context(warehouse=wh.id).qty_available
+                "qty": prod.with_context(warehouse=wh.id).qty_available
             }
         return res
 
@@ -116,16 +120,15 @@ class TestProductProduct(StockCommonCase):
 
     def test_multi_warehouse(self):
         warehouses = self.warehouse_1 + self.warehouse_2
-        self.shopinvader_backend.write({"warehouse_ids": [(6, 0, warehouses.ids)]})
+        self.shopinvader_backend.write(
+            {"warehouse_ids": [(6, 0, warehouses.ids)]}
+        )
 
         shopinvader_product = self.product.shopinvader_bind_ids
         shopinvader_product.recompute_json()
         shopinvader_product.sync_state = "to_update"
         expected = self._expectect_qty_by_wh(warehouses, self.product)
-        self.assertEqual(
-            shopinvader_product.data["stock"],
-            expected
-        )
+        self.assertEqual(shopinvader_product.data["stock"], expected)
 
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
@@ -136,7 +139,4 @@ class TestProductProduct(StockCommonCase):
         with self.se_adapter_fake.mocked_calls():
             self.perform_jobs(jobs)
         expected = self._expectect_qty_by_wh(warehouses, self.product)
-        self.assertEqual(
-            shopinvader_product.data["stock"],
-            expected
-        )
+        self.assertEqual(shopinvader_product.data["stock"], expected)

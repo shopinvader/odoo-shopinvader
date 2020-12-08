@@ -50,7 +50,7 @@ class ShopinvaderBackend(models.Model):
         selection="_selection_stock_level_config",
         default="only_qty",
         required=True,
-        help="Define stock level export policy"
+        help="Define stock level export policy",
     )
 
     def _default_stock_field_id(self):
@@ -66,7 +66,7 @@ class ShopinvaderBackend(models.Model):
 
     def _get_warehouse_list_for_export(self):
         """Get list of warehouse to be used for exporting stock level.
-        
+
         A global key "global" is added with the list of all warehouse ids.
 
         :return: dict with warehouse code as key and warehouse_ids as value """
@@ -76,6 +76,6 @@ class ShopinvaderBackend(models.Model):
             for warehouse in self.warehouse_ids:
                 result[self._make_warehouse_key(warehouse)] = [warehouse.id]
         return result
-    
+
     def _make_warehouse_key(self, wh):
         return slugify(wh.code)

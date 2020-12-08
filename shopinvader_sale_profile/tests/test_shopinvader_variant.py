@@ -11,10 +11,10 @@ class TestShopinvaderVariant(ProductCommonCase):
     """
 
     def _check_price(self, computed_price, expected_price):
-        for key, expected_dict in expected_price.items():
+        for key, expected_value in expected_price.items():
             self.assertIn(key, computed_price.keys())
             price_value = computed_price[key]
-            for value_key, expected_value in price_value.items():
+            for value_key, expected_value in expected_value.items():
                 self.assertEqual(expected_value, price_value[value_key])
 
     def test_price_with_sale_profile(self):

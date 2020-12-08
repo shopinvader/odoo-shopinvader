@@ -9,6 +9,7 @@ from .common import CommonCase
 
 
 class ItemCaseMixin(object):
+    @classmethod
     def _setup_products(cls):
         cls.product_1 = cls.env.ref("product.product_product_4b")
         cls.product_2 = cls.env.ref("product.product_product_13")
@@ -55,7 +56,7 @@ class AbstractItemCase(ItemCaseMixin):
     @classmethod
     def setUpClass(cls):
         super(AbstractItemCase, cls).setUpClass()
-        AbstractItemCase._setup_products(cls)
+        cls._setup_products()
 
     def test_add_item_without_cart(self):
         self.remove_cart()

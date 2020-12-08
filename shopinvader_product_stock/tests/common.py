@@ -7,13 +7,10 @@
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBaseFake,
 )
-
 from odoo.addons.queue_job.tests.common import JobMixin
-from odoo_test_helper import FakeModelLoader
 
 
 class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
-
     @classmethod
     def setUpClass(cls):
         super(StockCommonCase, cls).setUpClass()
@@ -30,7 +27,9 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
         cls.loc_1 = cls.warehouse_1.lot_stock_id
         cls.warehouse_2 = ref("stock.stock_warehouse_shop0")
         cls.loc_2 = cls.warehouse_2.lot_stock_id
-        cls.product = cls.env["product.product"].create({"name": "Stock prod 1", "type": "product"})
+        cls.product = cls.env["product.product"].create(
+            {"name": "Stock prod 1", "type": "product"}
+        )
         cls.shopinvader_backend.bind_all_product()
         cls.index = cls.env["se.index"].create(
             {
@@ -55,18 +54,19 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
         cls.loc_supplier = cls.env.ref("stock.stock_location_suppliers")
         cls.picking_type_in = cls.env.ref("stock.picking_type_in")
 
-
     def _add_stock_to_product(self, product, location, qty):
         """Set the stock quantity of the product.
 
         :param product: product.product recordset
         :param qty: float
         """
-        self.env['stock.quant'].with_context(inventory_mode=True).create({
-            'product_id': product.id,
-            'location_id': location.id,
-            'inventory_quantity': qty,
-        })
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
+            {
+                "product_id": product.id,
+                "location_id": location.id,
+                "inventory_quantity": qty,
+            }
+        )
 
     def _create_incoming_move(self):
         location_dest = self.picking_type_in.default_location_dest_id
