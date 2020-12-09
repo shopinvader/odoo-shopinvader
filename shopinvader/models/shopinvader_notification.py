@@ -19,7 +19,9 @@ class ShopinvaderNotification(models.Model):
         string="Notification Type",
         required=True,
     )
-    model_id = fields.Many2one("ir.model", "Model", required=True)
+    model_id = fields.Many2one(
+        "ir.model", "Model", required=True, ondelete="cascade"
+    )
     template_id = fields.Many2one(
         "mail.template", "Mail Template", required=True
     )
