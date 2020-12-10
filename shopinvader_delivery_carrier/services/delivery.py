@@ -63,12 +63,17 @@ class DeliveryService(Component):
         )
 
     def _get_allowed_picking_domain(self):
-        """
-        Get every picking states allowed to return on the service.
-        Hook to set required domain for pickings
+        """Domain to filter stock pickings.
+
         :return: list of tuples
         """
-        return []
+        states = self.shopinvader_backend._get_visible_delivery_order_states()
+        domain = [
+            ("picking_type_id.code", "=", "outgoing"),
+        ]
+        if states:
+            domain.append(("state", "in", states))
+        return domain
 
     def _validator_return_search(self):
         """
@@ -161,8 +166,8 @@ class DeliveryService(Component):
         return res
 
     def _get_base_search_domain(self):
-        """
-        Get every stock.picking OUT related to current user.
+        """Get every stock.picking OUT related to current user.
+
         If the current user is the anonymous one, it'll return an invalid
         domain (to have 0 picking as result)
         :return:
@@ -170,10 +175,8 @@ class DeliveryService(Component):
         if not self._is_logged_in():
             return expression.FALSE_DOMAIN
         sale_service = self.component(usage="sales")
-        sale_obj = self.env[sale_service._expose_model]
         sale_domain = sale_service._get_base_search_domain()
-        sale_domain = expression.AND(
-            [sale_domain, self._get_allowed_picking_domain()]
-        )
-        pickings = sale_obj.search(sale_domain).mapped("picking_ids")
-        return [("id", "in", pickings.ids)]
+        sales = self.env[sale_service._expose_model].search(sale_domain)
+        return [
+            ("sale_id", "in", sales.ids)
+        ] + self._get_allowed_picking_domain()

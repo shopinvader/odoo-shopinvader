@@ -1,4 +1,5 @@
-# Copyright 2020 Camptocamp SA
+# Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo.addons.component.core import Component
 
@@ -13,10 +14,13 @@ class SaleService(Component):
         return res
 
     def _convert_deliveries(self, sale):
+        deliveries = sale.sudo().picking_ids
+        if not deliveries:
+            return []
         res = []
-        for picking in sale.sudo().picking_ids.filtered(
-            lambda l: l.state in ["assigned", "done"]
-        ):
+        delivery_service = self.component(usage="delivery")
+        domain = delivery_service._get_allowed_picking_domain()
+        for picking in deliveries.filtered_domain(domain):
             res.append(self._convert_one_delivery(picking))
         return res
 
