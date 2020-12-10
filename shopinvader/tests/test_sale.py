@@ -100,7 +100,7 @@ class SaleCase(CommonCase, CommonTestDownload):
             notif, invoice._name, invoice.id
         )
         domain = [("name", "=", description), ("date_created", ">=", now)]
-        self.service.dispatch("ask_email_invoice", _id=self.sale.id)
+        self.service.dispatch("ask_email_invoice", self.sale.id)
         self.assertEquals(self.env["queue.job"].search_count(domain), 1)
 
     def _make_payment(self, invoice):
