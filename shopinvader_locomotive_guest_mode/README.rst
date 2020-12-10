@@ -7,14 +7,17 @@ Shopinvader Locomotive Guest Mode
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
+    :target: https://odoo-community.org/page/development-status
+    :alt: Production/Stable
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge2| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
+.. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
     :target: https://github.com/shopinvader/odoo-shopinvader/tree/13.0/shopinvader_locomotive_guest_mode
     :alt: shopinvader/odoo-shopinvader
 
-|badge1| |badge2| 
+|badge1| |badge2| |badge3| 
 
 This addon is used to support the Guest Mode for Shopinvader into locomotive.
 
