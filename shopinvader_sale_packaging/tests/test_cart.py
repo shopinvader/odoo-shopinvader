@@ -10,7 +10,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        ItemCaseMixin._setup_products(cls)
+        cls._setup_products()
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.cart = cls.env.ref("shopinvader.sale_order_2")
         cls.pkg_box = cls.env["product.packaging"].create(

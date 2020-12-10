@@ -4,7 +4,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from collections import defaultdict
-from odoo import api, fields, models
+
+from odoo import models
 from odoo.addons.base_sparse_field.models.fields import Serialized
 
 

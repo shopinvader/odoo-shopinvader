@@ -24,8 +24,8 @@ from odoo.tools.pycompat import csv_reader
 _logger = logging.getLogger(__name__)
 
 try:
-    import validators
     import magic
+    import validators
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
@@ -220,7 +220,7 @@ class ProductImageImportWizard(models.Model):
         prev_report = self.report or {}
         for k, v in report.items():
             if k in extendable_keys and prev_report.get(k):
-                report[k] = sorted(set(prev_report[k] + report[k]))
+                report[k] = sorted(set(prev_report[k] + v))
 
         # Lock as writing can come from several jobs
         sql = "SELECT id FROM %s WHERE ID IN %%s FOR UPDATE" % self._table

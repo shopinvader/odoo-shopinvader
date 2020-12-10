@@ -19,7 +19,8 @@ class TestProductProduct(StockCommonCase):
 
     def test_out_of_stock(self):
         self.assertEqual(
-            self.shopinvader_product.stock_data, {"global": {"state": "out_of_stock"}}
+            self.shopinvader_product.stock_data,
+            {"global": {"state": "out_of_stock"}},
         )
 
     def test_in_limited_stock(self):
@@ -33,14 +34,16 @@ class TestProductProduct(StockCommonCase):
         self.company.stock_state_threshold = 0
         self._add_stock_to_product(self.product, self.loc_1, 20)
         self.assertEqual(
-            self.shopinvader_product.stock_data, {"global": {"state": "in_stock"}}
+            self.shopinvader_product.stock_data,
+            {"global": {"state": "in_stock"}},
         )
 
     def test_resupplying(self):
         move = self._create_incoming_move()
         move._action_confirm()
         self.assertEqual(
-            self.shopinvader_product.stock_data, {"global": {"state": "resupplying"}}
+            self.shopinvader_product.stock_data,
+            {"global": {"state": "resupplying"}},
         )
 
     def test_config_only_qty(self):
