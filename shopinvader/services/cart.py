@@ -460,9 +460,13 @@ class CartService(Component):
             "typology": "cart",
             "partner_id": partner.id,
             "partner_shipping_id": partner.id,
-            "partner_invoice_id": partner.id,
             "shopinvader_backend_id": self.shopinvader_backend.id,
         }
+        if (
+            self.shopinvader_backend.cart_checkout_address_policy
+            == "invoice_defaults_to_shipping"
+        ):
+            vals["partner_invoice_id"] = vals["partner_shipping_id"]
         vals.update(self.env["sale.order"].play_onchanges(vals, vals.keys()))
         if self.shopinvader_backend.account_analytic_id.id:
             vals[
