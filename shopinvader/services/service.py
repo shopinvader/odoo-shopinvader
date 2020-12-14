@@ -156,11 +156,11 @@ class BaseShopinvaderService(AbstractComponent):
         return []
 
     def _default_domain_for_partner_records(
-        self, partner_field="partner_id", with_backend=True
+        self, partner_field="partner_id", operator="=", with_backend=True, **kw
     ):
         """Domain to filter records bound to current partner and backend.
         """
-        domain = [(partner_field, "child_of", self.partner.id)]
+        domain = [(partner_field, operator, self.partner.id)]
         if with_backend:
             domain.append(
                 ("shopinvader_backend_id", "=", self.shopinvader_backend.id)

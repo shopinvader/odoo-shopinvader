@@ -110,8 +110,8 @@ class ShopinvaderPartner(models.Model):
             partner.assign_invader_user_token()
         return binding
 
-    def _make_partner_domain(self, partner_field):
-        """Build partner domain for current shopinvader partner.
+    def _make_partner_domain(self, partner_field, operator="="):
+        """Make domain for records related to current shopinvader partner.
 
         Domain is built considering backend's policy.
         Main users can see all records but simple users
@@ -127,16 +127,71 @@ class ShopinvaderPartner(models.Model):
         related_partner = self[policy_field]
         main_account = self.main_partner_id
         # Normally see records owned by the same user
-        partner_domains = [[(partner_field, "=", self.record_id.id)]]
+        partner_domains = [[(partner_field, operator, self.record_id.id)]]
         if related_partner and not self.record_id == related_partner:
             # See records from its related_partner (normally the parent)
             # but not other belonging to other users (like w/ child_of)
-            partner_domains.append([(partner_field, "=", related_partner.id)])
+            partner_domains.append(
+                [(partner_field, operator, related_partner.id)]
+            )
             if main_account and main_account != related_partner:
                 # See records from parent main account
                 # NOTE: if main_account is the company,
                 # they see records from the company as well.
-                partner_domains.append([(partner_field, "=", main_account.id)])
+                partner_domains.append(
+                    [(partner_field, operator, main_account.id)]
+                )
+        return expression.OR(partner_domains)
+
+    def _make_address_domain(self):
+        """Make domain for addresses related to current shopinvader partner.
+
+        Admin users and main account users will see every address
+        included the ones having a bound shopinvader user.
+
+        Normal users will see their own addresses
+        + the ones from their direct parent.
+
+        If the policy is set to `main account`
+        and the main account differs from the parent account
+        they'll be able to see main account addresses too.
+        """
+        # Main users can always see everything down their hierarchy
+        if self._is_admin_account() or self._is_main_account():
+            return [
+                ("id", "child_of", self.record_id.id),
+            ]
+
+        # Change partner domain based on backend policy
+        policy_field = self.backend_id.multi_user_records_policy
+        related_partner = self[policy_field]
+        main_account = self.main_partner_id
+
+        def _make_parent_domain_leaf(partner):
+            # children records which are not users themselves
+            return [
+                ("parent_id", "=", partner.id),
+                ("shopinvader_bind_ids", "=", False),
+            ]
+
+        specific_ids = [self.record_id.id]
+        partner_domains = [_make_parent_domain_leaf(self.record_id)]
+
+        if self.record_id != related_partner:
+            if related_partner:
+                # See records from its related_partner (normally the parent)
+                # but not other belonging to other users (like w/ child_of)
+                partner_domains.append(
+                    _make_parent_domain_leaf(related_partner)
+                )
+                specific_ids.append(related_partner.id)
+
+            if main_account and main_account != related_partner:
+                partner_domains.append(_make_parent_domain_leaf(main_account))
+                specific_ids.append(main_account.id)
+
+        # Always include these IDS
+        partner_domains.append([("id", "in", specific_ids)])
         return expression.OR(partner_domains)
 
     def _is_admin_account(self):

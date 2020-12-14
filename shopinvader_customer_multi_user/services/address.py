@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.core import Component
+from odoo.osv import expression
 
 
 class AddressService(Component):
@@ -17,3 +18,21 @@ class AddressService(Component):
         # if the shop partner is the same as the profile one
         # then we want to cache it.
         return needed or shop_partner == partner
+
+    def _default_domain_for_partner_records(
+        self, partner_field="partner_id", operator="=", with_backend=True, **kw
+    ):
+        if not self.shopinvader_backend.customer_multi_user:
+            return super()._default_domain_for_partner_records(
+                partner_field=partner_field,
+                operator=operator,
+                with_backend=with_backend,
+                **kw
+            )
+        # Complete override of domain generation as there's complex logic
+        # which is delegated completely to `_make_address_domain`
+        domains = [
+            [("type", "in", ("delivery", "invoice", "contact", "other"))],
+            self.invader_partner._make_address_domain(),
+        ]
+        return expression.AND(domains)
