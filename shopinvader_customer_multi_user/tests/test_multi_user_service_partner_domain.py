@@ -138,7 +138,6 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
 
     # Company can see always everything
     def test_user_company__record_id(self):
-        self.assertEqual(self.backend.multi_user_records_policy, "record_id")
         partner = self.company
         self._test_address(
             partner,
@@ -195,7 +194,6 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
     def test_user_direct_child_of_company__record_id(self):
         """Direct child sees only its own records.
         """
-        self.assertEqual(self.backend.multi_user_records_policy, "record_id")
         partner = self.user_binding.record_id
         self._test_user_direct_child_of_company__record_id(partner)
         partner = self.user_binding2.record_id

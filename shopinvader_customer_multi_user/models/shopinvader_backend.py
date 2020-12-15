@@ -53,7 +53,7 @@ class ShopinvaderBackend(models.Model):
             ("parent_id", "View parent partner records"),
             ("record_id", "View current partner records only"),
         ],
-        default="record_id",
+        default="main_partner_id",
         help="This affects the behavior of every endpoint "
         "which lists partner related records, directy or indirectly.\n"
         "\n`View main partner records`: "
