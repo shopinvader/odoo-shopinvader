@@ -13,10 +13,10 @@ class ShopinvaderVariant(models.Model):
         return self.product_variant_link_ids
 
     def _product_link_target(self, link):
-        if link.left_product_id != self.record_id:
-            return link.left_product_id
-        else:
+        if link.left_product_id == self.record_id:
             return link.right_product_id
+        elif link.type_id.is_symmetric:
+            return link.left_product_id
 
     def _product_link_target_variant(self, target):
         return target._get_invader_variant(self.backend_id, self.lang_id.code)

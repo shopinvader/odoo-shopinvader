@@ -30,6 +30,12 @@ class ProductVariantLinkCaseBase(ProductLinkCaseBase):
                 "right_product_id": cls.variant_3_2.id,
             }
         )
+        cls.link_one_way_3_2.write(
+            {
+                "left_product_id": cls.variant_3_2.id,
+                "right_product_id": cls.variant_2_2.id,
+            }
+        )
 
 
 class ProductLinkCase(ProductVariantLinkCaseBase):
@@ -64,6 +70,7 @@ class ProductLinkCase(ProductVariantLinkCaseBase):
             "cross_selling": [
                 {"id": self.variant_1_2.id},
                 {"id": self.variant_2_2.id},
-            ]
+            ],
+            "one_way": [{"id": self.variant_2_2.id}],
         }
         self.assertEqual(self.shopinvader_variant_3_2.product_links, expected)
