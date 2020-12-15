@@ -17,10 +17,10 @@ class ShopinvaderProduct(models.Model):
     ]
 
     def _product_link_target(self, link):
-        if link.left_product_tmpl_id != self.record_id:
-            return link.left_product_tmpl_id
-        else:
+        if link.left_product_tmpl_id == self.record_id:
             return link.right_product_tmpl_id
+        elif link.type_id.is_symmetric:
+            return link.left_product_tmpl_id
 
     def _product_link_target_variant(self, target):
         """Retrieve variant for given template
