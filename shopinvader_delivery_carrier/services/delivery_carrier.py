@@ -98,7 +98,7 @@ class DeliveryCarrierService(Component):
 
     # Services implementation
 
-    def _search(self, cart, **params):
+    def _search(self, cart=False, **params):
         """
         Search for delivery carriers
         :param: cart: if provided, the list will be limited to the carrier
