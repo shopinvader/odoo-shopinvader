@@ -96,7 +96,7 @@ class ShopinvaderProduct(models.Model):
                 domain = record._get_parent_category_domain(product_category)
                 parents = self.env["shopinvader.category"].search(domain)
                 categories |= parents
-            record.shopinvader_categ_ids = parents
+            record.shopinvader_categ_ids = categories
 
     def _prepare_shopinvader_variant(self, variant):
         values = {"record_id": variant.id, "shopinvader_product_id": self.id}
