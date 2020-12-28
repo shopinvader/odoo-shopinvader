@@ -1,2 +1,1 @@
-from . import lead
-from . import notification
+from . import lead, notification

@@ -1,2 +1,1 @@
-from . import customer
-from . import guest_service
+from . import customer, guest_service

@@ -1,2 +1,1 @@
-from . import exporter
-from . import deleter
+from . import deleter, exporter

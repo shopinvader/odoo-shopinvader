@@ -1,3 +1,1 @@
-from . import models
-from . import services
-from . import wizard
+from . import models, services, wizard

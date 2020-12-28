@@ -3,13 +3,15 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from . import core
-from . import exporter
-from . import deleter
-from . import adapter
-from . import binder
-from . import mapper
-from . import event_listeners
-from . import shopinvader_partner_adapter
-from . import shopinvader_partner_export_mapper
-from . import shopinvader_site_export_mapper
+from . import (
+    adapter,
+    binder,
+    core,
+    deleter,
+    event_listeners,
+    exporter,
+    mapper,
+    shopinvader_partner_adapter,
+    shopinvader_partner_export_mapper,
+    shopinvader_site_export_mapper,
+)

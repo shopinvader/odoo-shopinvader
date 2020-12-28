@@ -1,5 +1,7 @@
-from . import shopinvader_backend
-from . import shopinvader_image_mixin
-from . import shopinvader_image_resize
-from . import shopinvader_category
-from . import shopinvader_variant
+from . import (
+    shopinvader_backend,
+    shopinvader_category,
+    shopinvader_image_mixin,
+    shopinvader_image_resize,
+    shopinvader_variant,
+)

@@ -1,3 +1,5 @@
-from . import test_shopinvader_partner
-from . import test_backend
-from . import test_search_engine_site_export
+from . import (
+    test_backend,
+    test_search_engine_site_export,
+    test_shopinvader_partner,
+)

@@ -1,2 +1,4 @@
-from . import shopinvader_site_export_mapper
-from . import shopinvader_binging_event_listeners
+from . import (
+    shopinvader_binging_event_listeners,
+    shopinvader_site_export_mapper,
+)

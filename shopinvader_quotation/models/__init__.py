@@ -1,3 +1,1 @@
-from . import product
-from . import sale
-from . import shopinvader_notification
+from . import product, sale, shopinvader_notification

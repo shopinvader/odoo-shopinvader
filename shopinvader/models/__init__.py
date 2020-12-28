@@ -2,21 +2,23 @@
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from . import seo_title_mixin
-from . import product_filter
-from . import product_product
-from . import product_template
-from . import product_category
-from . import sale
-from . import url
-from . import account_invoice
-from . import shopinvader_backend
-from . import shopinvader_binding
-from . import shopinvader_cart_step
-from . import shopinvader_partner
-from . import shopinvader_notification
-from . import shopinvader_category
-from . import shopinvader_product
-from . import shopinvader_variant
-from . import shopinvader_config_settings
-from . import res_partner
+from . import (
+    account_invoice,
+    product_category,
+    product_filter,
+    product_product,
+    product_template,
+    res_partner,
+    sale,
+    seo_title_mixin,
+    shopinvader_backend,
+    shopinvader_binding,
+    shopinvader_cart_step,
+    shopinvader_category,
+    shopinvader_config_settings,
+    shopinvader_notification,
+    shopinvader_partner,
+    shopinvader_product,
+    shopinvader_variant,
+    url,
+)

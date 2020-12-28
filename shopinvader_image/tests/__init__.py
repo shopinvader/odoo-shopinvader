@@ -1,2 +1,1 @@
-from . import test_getting_image
-from . import test_cart
+from . import test_cart, test_getting_image

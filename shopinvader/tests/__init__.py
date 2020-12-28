@@ -1,19 +1,21 @@
-from . import test_controller
-from . import test_backend
-from . import test_cart
-from . import test_cart_copy
-from . import test_cart_item
-from . import test_address
-from . import test_partner_validation
-from . import test_product
-from . import test_sale
-from . import test_shopinvader_variant_binding_wizard
-from . import test_shopinvader_category_binding_wizard
-from . import test_customer
-from . import test_shopinvader_partner
-from . import test_shopinvader_variant_seo_title
-from . import test_res_partner
-from . import test_invoice
-from . import test_shopinvader_partner_binding
-from . import test_notification
-from . import test_salesman_notification
+from . import (
+    test_address,
+    test_backend,
+    test_cart,
+    test_cart_copy,
+    test_cart_item,
+    test_controller,
+    test_customer,
+    test_invoice,
+    test_notification,
+    test_partner_validation,
+    test_product,
+    test_res_partner,
+    test_sale,
+    test_salesman_notification,
+    test_shopinvader_category_binding_wizard,
+    test_shopinvader_partner,
+    test_shopinvader_partner_binding,
+    test_shopinvader_variant_binding_wizard,
+    test_shopinvader_variant_seo_title,
+)

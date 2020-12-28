@@ -1,4 +1,6 @@
-from . import shopinvader_product
-from . import shopinvader_category
-from . import shopinvader_variant
-from . import se_index
+from . import (
+    se_index,
+    shopinvader_category,
+    shopinvader_product,
+    shopinvader_variant,
+)
