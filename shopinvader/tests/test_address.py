@@ -28,14 +28,14 @@ class CommonAddressCase(CommonCase):
         with self.work_on_services(partner=self.partner) as work:
             self.address_service = work.component(usage="addresses")
 
-    def check_data(cls, address, data):
+    def check_data(self, address, data):
         for key in data:
             if key == "partner_email":
                 continue
             elif key == "country":
-                cls.assertEqual(address.country_id.id, data[key]["id"])
+                self.assertEqual(address.country_id.id, data[key]["id"])
             else:
-                cls.assertEqual(address[key], data[key])
+                self.assertEqual(address[key], data[key])
 
 
 class AddressTestCase(object):
