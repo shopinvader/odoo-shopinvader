@@ -2,6 +2,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import fields, models
+from odoo.addons.shopinvader.models.tools import sanitize_attr_name
 
 
 class ShopinvaderVariant(models.Model):
@@ -17,8 +18,15 @@ class ShopinvaderVariant(models.Model):
     # shopinvader_product_stock_variant_selector
     # should inherit this method
     def _prepare_selector_value(self, variant, value):
+        # Get the compute attribute name
+        sanitized_key = sanitize_attr_name(value.attribute_id)
+        name = (
+            variant.variant_attributes[sanitized_key]
+            if sanitized_key in variant.variant_attributes
+            else value.name
+        )
         return {
-            "name": value.name,
+            "name": name,
             "sku": variant.default_code or "",
             "available": variant.active,
             "selected": variant == self,
