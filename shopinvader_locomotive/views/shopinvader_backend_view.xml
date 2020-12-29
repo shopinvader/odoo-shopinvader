@@ -7,7 +7,7 @@
         <field name="model">shopinvader.backend</field>
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
-            <page name="developper" position="inside">
+            <page name="developer" position="inside">
                 <group name="locomotive" string="LocomotiveCMS">
                     <span
                     >Synchronize metadata push data managed by odoo and used into locomotive.

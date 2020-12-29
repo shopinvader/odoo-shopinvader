@@ -161,8 +161,8 @@
                                 />
                             </group>
                         </page>
-                        <page name="developper" string="Developper">
-                            <group name="developper" colspan="4">
+                        <page name="developer" string="Developer">
+                            <group name="developer" colspan="4">
                                 <group
                                     name="product"
                                     string="Product"
