@@ -8,7 +8,7 @@
         <field name="inherit_id"
                ref="shopinvader.shopinvader_backend_view_form"/>
         <field name="arch" type="xml">
-            <page name="developper" position="inside">
+            <page name="developer" position="inside">
                 <group name="locomotive" string="LocomotiveCMS">
                     <span>Synchronize metadata push data managed by odoo and used into locomotive.
                         For ex: countries, currencies. If some required metadata
