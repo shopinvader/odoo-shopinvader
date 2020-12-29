@@ -23,3 +23,21 @@ class ShopinvaderVariant(models.Model):
                     ] = att_value.shopinvader_alias
             record.variant_attributes = variant_attributes
         return res  # res is None, thank you pylint.
+
+    def _prepare_variant_name_and_short_name(self):
+        # Override short name to take into account alias
+        short_name = self._prepare_attribute_alias_short_name()
+        full_name = self.shopinvader_display_name
+        if short_name:
+            full_name += " (%s)" % short_name
+        return full_name, short_name
+
+    def _prepare_attribute_alias_short_name(self):
+        self.ensure_one()
+        short_name = ""
+        attributes = []
+        for key in self.variant_attributes:
+            attributes.append(self.variant_attributes[key])
+        if attributes:
+            short_name = ", ".join(attributes)
+        return short_name
