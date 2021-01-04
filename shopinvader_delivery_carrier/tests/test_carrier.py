@@ -143,7 +143,7 @@ class CarrierCase(CommonCarrierCase):
             )
         self.assertEqual(self.cart.partner_id, partner)
         self.assertEqual(french_country, partner.country_id)
-        self._check_carriers(result, country=belgium)
+        self._check_carriers(result, belgium)
 
     def test_get_cart_price_by_country_anonymous(self):
         """
@@ -208,7 +208,7 @@ class CarrierCase(CommonCarrierCase):
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
         params = {"country_id": belgium.id, "target": "current_cart"}
         result = self.carrier_service.dispatch("search", params=params)
-        self._check_carriers(result, country=belgium)
+        self._check_carriers(result, belgium)
         self.assertEqual(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
@@ -260,7 +260,7 @@ class CarrierCase(CommonCarrierCase):
         self.service.shopinvader_session.update({"cart_id": self.cart.id})
         params = {"country_id": belgium.id, "target": "current_cart"}
         result = self.carrier_service.dispatch("search", params=params)
-        self._check_carriers(result, country=belgium)
+        self._check_carriers(result, belgium)
         self.assertEqual(self.cart.name, cart_values_before.get("name", ""))
         self.cart.read()
         cart_values_after = self.cart._convert_to_write(self.cart._cache)
