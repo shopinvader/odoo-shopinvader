@@ -27,7 +27,7 @@ addon | version | summary
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 | Shopinvader Display category image for product
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.1.3.1 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.0.1 | Integrate customer multi user and wishlist.
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.2.2.1 | Carrier integration for Shopinvader
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.2.3.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.0.2 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
@@ -49,7 +49,7 @@ addon | version | summary
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.0 | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.1.0 | ShopInvader - Sale profile
-[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.3.0 | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.4.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 13.0.2.1.1 | Handle shop wishlist
 
 
