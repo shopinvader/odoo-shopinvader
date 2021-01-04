@@ -10,4 +10,3 @@ unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
 
 odoo13-addon-base-rest @ git+https://github.com/OCA/rest-framework@refs/pull/71/head#subdirectory=setup/base_rest
-odoo13-addon-datamodel @ git+https://github.com/OCA/rest-framework@refs/pull/71/head#subdirectory=setup/datamodel
