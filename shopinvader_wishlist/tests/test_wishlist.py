@@ -14,6 +14,9 @@ class CommonWishlistCase(CommonCase):
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.prod1 = cls.env.ref("product.product_product_11")
         cls.prod2 = cls.env.ref("product.product_product_13")
+        cls.prod3 = cls.env.ref("product.product_product_10")
+        cls.prod4 = cls.env.ref("product.product_product_9")
+        cls.prod5 = cls.env.ref("product.product_product_20")
         cls.wl_params = {
             "name": "My new wishlist :)",
             "ref": "MY_NEW",
@@ -105,6 +108,42 @@ class WishlistCase(CommonWishlistCase):
         self.assertIn(prod1, move_to_set1.mapped("set_line_ids.product_id"))
         self.assertIn(prod2, move_to_set1.mapped("set_line_ids.product_id"))
         self.assertIn(prod3, move_to_set2.mapped("set_line_ids.product_id"))
+
+    def test_replace_items(self):
+        for line in self.wl_params["lines"]:
+            self.prod_set.set_line_ids.create(
+                dict(line, product_set_id=self.prod_set.id)
+            )
+        prod1 = self.prod_set.set_line_ids[0].product_id
+        prod2 = self.prod_set.set_line_ids[1].product_id
+        prod3 = self.prod_set.set_line_ids[2].product_id
+        self.wishlist_service.dispatch(
+            "replace_items",
+            self.prod_set.id,
+            params={
+                "lines": [
+                    {
+                        "product_id": prod1.id,
+                        "replacement_product_id": self.prod3.id,
+                    },
+                    {
+                        "product_id": prod2.id,
+                        "replacement_product_id": self.prod4.id,
+                    },
+                    {
+                        "product_id": prod3.id,
+                        "replacement_product_id": self.prod5.id,
+                    },
+                ]
+            },
+        )
+        set_products = self.prod_set.mapped("set_line_ids.product_id")
+        self.assertNotIn(prod1, set_products)
+        self.assertNotIn(prod2, set_products)
+        self.assertNotIn(prod3, set_products)
+        self.assertIn(self.prod3, set_products)
+        self.assertIn(self.prod4, set_products)
+        self.assertIn(self.prod5, set_products)
 
     def test_search(self):
         res = self.wishlist_service.dispatch(

@@ -18,18 +18,24 @@ class ShopinvaderWishlistListener(Component):
     def _get_fields_to_export(self):
         return ["name", "ref", "typology"]
 
-    @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
-    def on_record_create(self, record, fields=None):
+    def _skip_if(self, record, fields=None):
         fields_to_export = self._get_fields_to_export()
-        if not set(fields_to_export).intersection(set(fields)):
-            return
+        return not set(fields_to_export).intersection(
+            set(fields or [])
+        ) and not record.env.context.get("_force_export")
+
+    @skip_if(
+        lambda self, record, **kwargs: self.no_connector_export(record)
+        or self._skip_if(record, **kwargs)
+    )
+    def on_record_create(self, record, fields=None):
         self._export_partner_info(record, fields=fields)
 
-    @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
+    @skip_if(
+        lambda self, record, **kwargs: self.no_connector_export(record)
+        or self._skip_if(record, **kwargs)
+    )
     def on_record_write(self, record, fields=None):
-        fields_to_export = self._get_fields_to_export()
-        if not set(fields_to_export).intersection(set(fields)):
-            return
         self._export_partner_info(record, fields=fields)
 
     def on_record_unlink(self, record, fields=None):
@@ -59,18 +65,24 @@ class ShopinvaderWishlistLineListener(Component):
             "discount",
         ]
 
-    @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
-    def on_record_create(self, record, fields=None):
+    def _skip_if(self, record, fields=None):
         fields_to_export = self._get_fields_to_export()
-        if not set(fields_to_export).intersection(set(fields)):
-            return
+        return not set(fields_to_export).intersection(
+            set(fields or [])
+        ) and not record.env.context.get("_force_export")
+
+    @skip_if(
+        lambda self, record, **kwargs: self.no_connector_export(record)
+        or self._skip_if(record, **kwargs)
+    )
+    def on_record_create(self, record, fields=None):
         self._export_partner_info(record, fields=fields)
 
-    @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
+    @skip_if(
+        lambda self, record, **kwargs: self.no_connector_export(record)
+        or self._skip_if(record, **kwargs)
+    )
     def on_record_write(self, record, fields=None):
-        fields_to_export = self._get_fields_to_export()
-        if not set(fields_to_export).intersection(set(fields)):
-            return
         self._export_partner_info(record, fields=fields)
 
     def on_record_unlink(self, record, fields=None):
