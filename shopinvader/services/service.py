@@ -233,8 +233,8 @@ class BaseShopinvaderService(AbstractComponent):
         """
         return shopinvader_response.get()
 
-    def dispatch(self, method_name, _id=None, params=None):
-        res = super().dispatch(method_name, _id=_id, params=params)
+    def dispatch(self, method_name, *args, params=None):
+        res = super().dispatch(method_name, *args, params=params)
         store_cache = self.shopinvader_response.store_cache
         if store_cache:
             values = res.get("store_cache", {})

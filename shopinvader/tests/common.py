@@ -7,7 +7,7 @@ from contextlib import contextmanager
 
 import mock
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
-from odoo.addons.base_rest.tests.common import BaseRestCase
+from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
@@ -30,7 +30,7 @@ def _install_lang_odoo(env, lang_xml_id, full_install=False):
     return lang
 
 
-class CommonMixin(ComponentMixin):
+class CommonMixin(RegistryMixin, ComponentMixin):
     @staticmethod
     def _setup_backend(cls):
         cls.env = cls.env(context={"lang": "en_US"})
@@ -122,6 +122,7 @@ class CommonCase(SavepointCase, CommonMixin):
         )
         CommonMixin._setup_backend(cls)
         cls.setUpComponent()
+        cls.setUpRegistry()
 
     def setUp(self):
         SavepointCase.setUp(self)
