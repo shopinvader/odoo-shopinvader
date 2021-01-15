@@ -38,8 +38,6 @@ class CommonMixin(RegistryMixin, ComponentMixin):
         cls.backend.bind_all_product()
         cls.shopinvader_session = {}
         cls.existing_jobs = cls.env["queue.job"].browse()
-        cls.setUpComponent()
-        cls.setUpRegistry()
 
     @contextmanager
     def work_on_services(self, **params):
@@ -123,6 +121,8 @@ class CommonCase(SavepointCase, CommonMixin):
             )
         )
         CommonMixin._setup_backend(cls)
+        cls.setUpComponent()
+        cls.setUpRegistry()
 
     def setUp(self):
         SavepointCase.setUp(self)

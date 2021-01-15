@@ -8,5 +8,3 @@ vcrpy-unittest
 openupgradelib @ git+https://github.com/OCA/openupgradelib.git
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
-
-odoo13-addon-base-rest @ git+https://github.com/OCA/rest-framework@refs/pull/71/head#subdirectory=setup/base_rest
