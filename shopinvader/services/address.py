@@ -144,7 +144,10 @@ class AddressService(Component):
 
     def _get_base_search_domain(self):
         return self._default_domain_for_partner_records(
-            partner_field="id", with_backend=False
+            # NOTE: here we must use `child_of` as default operator
+            partner_field="id",
+            operator="child_of",
+            with_backend=False,
         )
 
     def _json_parser(self):
