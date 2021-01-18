@@ -19,7 +19,7 @@ def wrap_integrity_error(method):
         except psycopg2.IntegrityError as inst:
             constrains = {
                 "unique_shopinvader_partner_email": _(
-                    "Only one active binging with the same email is "
+                    "Only one active binding with the same email is "
                     "allowed by backend."
                 )
             }

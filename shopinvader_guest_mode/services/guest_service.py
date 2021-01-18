@@ -32,7 +32,7 @@ class GuestService(Component):
 
     def register(self, email, external_id):
         """
-        Called to transform a guest account into a registered curtomer account
+        Called to transform a guest account into a registered customer account
         :param email:
         :param external_id:
         """
