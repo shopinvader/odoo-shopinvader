@@ -1,0 +1,13 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.1.2
+_src_path: https://github.com/OCA/oca-addons-repo-template.git
+dependency_installation_mode: PIP
+generate_requirements_txt: false
+include_wkhtmltopdf: false
+odoo_version: 14.0
+rebel_module_groups: []
+repo_description: Web alternative solution based on locomotivecms
+repo_name: ShopInvader
+repo_slug: odoo-shopinvader
+travis_apt_packages: []
+travis_apt_sources: []
