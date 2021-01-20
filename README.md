@@ -74,6 +74,7 @@ addon | version | summary
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 13.0.1.0.0 (unported) | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 (unported) | Shopinvader Quotation
+[shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) | This module adds information fields for customers and vendors.
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
 
 [//]: # (end addons)
