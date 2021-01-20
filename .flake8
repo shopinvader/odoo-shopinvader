@@ -8,8 +8,3 @@ select = C,E,F,W,B,B9
 # E501: flake8 line length (covered by bugbear B950)
 # W503: line break before binary operator (black behaviour)
 ignore = E203,E501,W503
-exclude =
-  ./.git
-  ./src
-  ./venv*
-  .eggs/

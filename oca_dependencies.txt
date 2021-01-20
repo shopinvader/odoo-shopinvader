@@ -1,15 +1,1 @@
-storage
-rest-framework
-connector
-queue
-server-auth
-server-env
-e-commerce
-search-engine
-server-tools
-sale-workflow
-product-attribute
-partner-contact
-e-commerce
-odoo-misc https://github.com/shopinvader/odoo-misc 13.0
-social
+# See https://github.com/OCA/odoo-community.org/blob/master/website/Contribution/CONTRIBUTING.rst#oca_dependencies-txt
