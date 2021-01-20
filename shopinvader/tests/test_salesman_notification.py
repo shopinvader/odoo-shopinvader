@@ -22,6 +22,7 @@ class TestCustomer(CommonCase):
         }
         # validation is not active
         cls.backend.validate_customers = False
+        cls.partner = cls.env.ref("shopinvader.partner_1")
 
     def setUp(self):
         super().setUp()
@@ -50,12 +51,12 @@ class TestCustomer(CommonCase):
         res = self.customer_service.dispatch("create", params=data)["data"]
         return self.env["res.partner"].browse(res["id"])
 
-    def _create_address(self, **kw):
+    def _create_address(self, partner=None, **kw):
         data = dict(self.base_data)
         data.update(kw)
-        res = self.address_service(
-            partner=self.env.ref("shopinvader.partner_1")
-        ).dispatch("create", params=data)["data"]
+        res = self.address_service(partner=partner or self.partner).dispatch(
+            "create", params=data
+        )["data"]
         new_address = [x for x in res if x["name"] == kw["name"]][0]
         return self.env["res.partner"].browse(new_address["id"])
 
@@ -89,7 +90,9 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(partner, partner.id, name="Somewhere else")
+        self._update_partner(
+            partner.parent_id, partner.id, name="Somewhere else"
+        )
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_company(self):
@@ -121,7 +124,9 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(partner, partner.id, name="Somewhere else")
+        self._update_partner(
+            partner.parent_id, partner.id, name="Somewhere else"
+        )
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_user(self):
@@ -154,7 +159,9 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(partner, partner.id, name="Somewhere else")
+        self._update_partner(
+            partner.parent_id, partner.id, name="Somewhere else"
+        )
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_company_and_user(self):
@@ -190,7 +197,9 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(partner, partner.id, name="Somewhere else")
+        self._update_partner(
+            partner.parent_id, partner.id, name="Somewhere else"
+        )
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_address(self):
@@ -218,5 +227,5 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertEqual(self._find_activity(partner.parent_id), 1)
         # address update -> yes
-        self._update_partner(partner, partner.id, name="Pippo")
+        self._update_partner(partner.parent_id, partner.id, name="Pippo")
         self.assertEqual(self._find_activity(partner.parent_id), 2)

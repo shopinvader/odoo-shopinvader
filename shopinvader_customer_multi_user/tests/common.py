@@ -20,6 +20,7 @@ class TestMultiUserCommon(TestCustomerCommon):
             external_id="simple-user",
             email="simpleuser@test.com",
         )
+        cls.backend.multi_user_records_policy = "record_id"
 
     @staticmethod
     def _create_partner(env, **kw):
