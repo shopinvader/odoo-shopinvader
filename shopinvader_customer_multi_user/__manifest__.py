@@ -5,7 +5,7 @@
     "name": "Shopinvader Customer Multi User",
     "summary": """
         Enable registration of multiple users per each company customer.""",
-    "version": "13.0.2.0.0",
+    "version": "13.0.2.1.0",
     "license": "AGPL-3",
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
