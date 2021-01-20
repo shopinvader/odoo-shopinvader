@@ -46,7 +46,7 @@ addon | version | summary
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.3 | Shopinvader Product Link
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
-[shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.0 | Shopinvader Sale Packaging
+[shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.1 | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.1.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.4.0 | Shopinvader Catalog Search Engine Connector
