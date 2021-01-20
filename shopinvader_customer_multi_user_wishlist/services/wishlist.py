@@ -20,7 +20,7 @@ class WishlistService(Component):
         # Make sure that if they can see the wishlist
         # they can also add it to a cart.
         # Validate wishlist partner based on partner domain
-        invader_partner = self.invader_partner
+        invader_partner = self.invader_partner_user
         possible_partners = (
             self.partner_user
             | invader_partner.parent_id
