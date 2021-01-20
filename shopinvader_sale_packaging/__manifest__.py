@@ -17,4 +17,5 @@
         "stock_packaging_calculator",
     ],
     "data": ["data/ir_export_product.xml"],
+    "installable": False,
 }

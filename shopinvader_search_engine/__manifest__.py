@@ -22,6 +22,6 @@
         "views/product_category_view.xml",
         "data/ir_export_product.xml",
     ],
-    "installable": True,
+    "installable": False,
     "application": True,
 }

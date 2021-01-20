@@ -11,7 +11,7 @@
     "author": " Akretion",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "depends": ["shopinvader"],
     "data": ["data/ir_export_product.xml"],
     "demo": ["demo/product_demo.xml"],

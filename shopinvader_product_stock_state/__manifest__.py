@@ -10,6 +10,6 @@
     "website": "https://akretion.com",
     "author": "Akretion",
     "license": "AGPL-3",
-    "installable": True,
+    "installable": False,
     "depends": ["product_stock_state", "shopinvader_product_stock"],
 }

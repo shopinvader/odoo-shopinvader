@@ -20,4 +20,5 @@
         "data/email_template.xml",
         "data/shopinvader_notification.xml",
     ],
+    "installable": False,
 }
