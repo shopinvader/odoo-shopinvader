@@ -58,6 +58,8 @@
         "data/ir_export_category.xml",
         "data/cart_step.xml",
         "data/mail_activity_data.xml",
+        "data/queue_job_channel_data.xml",
+        "data/queue_job_function_data.xml",
     ],
     "demo": [
         "demo/account_demo.xml",

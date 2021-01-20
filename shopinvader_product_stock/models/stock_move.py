@@ -31,7 +31,7 @@ class StockMove(models.Model):
             )
             products.with_delay(
                 description=description, identity_key=identity_exact
-            )._synchronize_all_binding_stock_level()
+            ).synchronize_all_binding_stock_level()
         return True
 
     def _action_cancel(self):

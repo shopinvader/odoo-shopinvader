@@ -3,7 +3,6 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import api, fields, models
-from odoo.addons.queue_job.job import job
 from odoo.tools.translate import _
 
 
@@ -104,7 +103,6 @@ class ShopinvaderNotification(models.Model):
             else:
                 return {"domain": {"model_id": []}}
 
-    @job(default_channel="root.shopinvader.notification")
     def send(self, record_id):
         self.ensure_one()
         return (

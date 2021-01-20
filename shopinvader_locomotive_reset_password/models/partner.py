@@ -5,7 +5,6 @@
 import uuid
 
 from odoo import fields, models
-from odoo.addons.queue_job.job import job
 
 
 class ShopinvaderPartner(models.Model):
@@ -28,8 +27,7 @@ class ShopinvaderPartner(models.Model):
             .send_mail(self.id)
         )
 
-    @job(default_channel="root.shopinvader")
-    def _reset_password(self, template_id, date_validity):
+    def reset_password(self, template_id, date_validity):
         self.ensure_one()
         self.write(
             {

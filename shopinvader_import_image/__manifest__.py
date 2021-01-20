@@ -17,6 +17,8 @@
     "external_dependencies": {"python": ["python-magic", "validators"]},
     "data": [
         "data/ir_cron.xml",
+        "data/queue_job_channel_data.xml",
+        "data/queue_job_function_data.xml",
         "security/ir_model_access.xml",
         "views/import_product_image_view.xml",
         "views/report_html.xml",
