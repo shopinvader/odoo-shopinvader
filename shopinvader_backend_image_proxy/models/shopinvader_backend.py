@@ -2,8 +2,17 @@
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# pylint: disable=missing-manifest-dependency,missing-import-error
+import logging
+
 from odoo import api, fields, models
-from urlparse import ParseResult, urljoin, urlparse
+
+_logger = logging.getLogger(__name__)
+try:
+    # urlparse is in stdlib, no external dependencies are required
+    from urlparse import ParseResult, urljoin, urlparse
+except (ImportError, IOError) as err:
+    _logger.debug(err)
 
 
 class ShopinvaderBackend(models.Model):

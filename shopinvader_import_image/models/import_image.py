@@ -28,15 +28,15 @@ import os
 import sys
 from zipfile import ZipFile
 
-import StringIO
-import urllib2
 from odoo import _, api, exceptions, fields, models
 
 _logger = logging.getLogger(__name__)
 
 try:
-    import validators
     import magic
+    import StringIO
+    import urllib2
+    import validators
 except (ImportError, IOError) as err:
     _logger.debug(err)
 
