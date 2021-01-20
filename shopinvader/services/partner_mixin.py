@@ -26,6 +26,8 @@ class PartnerServiceMixin(AbstractComponent):
             "res.partner",
             partner=self.partner,
             partner_user=self.partner_user,
+            invader_partner=self.invader_partner,
+            invader_partner_user=self.invader_partner_user,
             service_work=self.work,
         ) as work:
             return work.component(usage="access.info")

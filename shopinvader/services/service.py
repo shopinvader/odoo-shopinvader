@@ -45,6 +45,10 @@ class BaseShopinvaderService(AbstractComponent):
         return getattr(self.work, "partner_user", self.partner)
 
     @property
+    def invader_partner_user(self):
+        return self.work.invader_partner_user
+
+    @property
     def shopinvader_session(self):
         return self.work.shopinvader_session
 
