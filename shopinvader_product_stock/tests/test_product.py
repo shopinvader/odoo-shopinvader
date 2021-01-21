@@ -87,16 +87,16 @@ class TestProductProduct(StockCommonCase):
             "shopinvader_product_stock."
             "ir_exp_shopinvader_variant_stock_data"
         )
-        export_line.alias = "stock_data:custom_stock"
+        export_line.target = "stock_data:custom_stock"
         self._test_update_stock_with_key("custom_stock")
 
-    def test_update_stock_without_alias(self):
+    def test_update_stock_without_target(self):
         """Recompute product should update binding using the name as key."""
         export_line = self.env.ref(
             "shopinvader_product_stock."
             "ir_exp_shopinvader_variant_stock_data"
         )
-        export_line.alias = None
+        export_line.target = None
         self._test_update_stock_with_key("stock_data")
 
     def test_update_stock_without_key(self):

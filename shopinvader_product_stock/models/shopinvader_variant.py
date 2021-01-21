@@ -22,8 +22,8 @@ class ShopinvaderVariant(models.Model):
                 ("name", "=", "stock_data"),
             ]
         )
-        if line.alias:
-            return line.alias.split(":")[1]
+        if line.target:
+            return line.target.split(":")[1]
         else:
             return line.name
 

@@ -3,14 +3,14 @@
 
     <record id="ir_exp_shopinvader_variant_brand_name" model="ir.exports.line">
         <field name="name">product_brand_id/name</field>
-        <field name="alias">product_brand_id:brand/name</field>
+        <field name="target">product_brand_id:brand/name</field>
         <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     </record>
 
     <!-- need product_default_variant_code
     <record id="ir_exp_shopinvader_variant_model_sku" model="ir.exports.line">
         <field name="name">shopinvader_product_id/code_prefix</field>
-        <field name="alias">shopinvader_product_id:model/code_prefix:sku</field>
+        <field name="target">shopinvader_product_id:model/code_prefix:sku</field>
         <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     </record>
     -->
