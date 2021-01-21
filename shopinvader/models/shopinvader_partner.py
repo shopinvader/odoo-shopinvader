@@ -101,12 +101,10 @@ class ShopinvaderPartner(models.Model):
 
     @api.model
     def _is_same_partner_value(self, partner, vals):
-        """ we check if one of the given value is different than values
-            of the given partner
+        """we check if one of the given value is different than values
+        of the given partner
         """
-        keys_to_check = self._is_same_partner_value_keys_to_check(
-            partner, vals
-        )
+        keys_to_check = self._is_same_partner_value_keys_to_check(partner, vals)
         data = partner._convert_to_write(partner._cache)
         for key in keys_to_check:
             if data[key] != vals[key]:

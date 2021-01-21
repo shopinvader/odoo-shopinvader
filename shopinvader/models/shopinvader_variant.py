@@ -24,9 +24,7 @@ class ShopinvaderVariant(models.Model):
     record_id = fields.Many2one(
         "product.product", required=True, ondelete="cascade", index=True
     )
-    object_id = fields.Integer(
-        compute="_compute_object_id", store=True, index=True
-    )
+    object_id = fields.Integer(compute="_compute_object_id", store=True, index=True)
     variant_count = fields.Integer(
         related="product_variant_count", string="Shopinvader Variant Count"
     )
@@ -38,9 +36,7 @@ class ShopinvaderVariant(models.Model):
         compute="_compute_redirect_url_key", string="Redirect Url Keys"
     )
     active = fields.Boolean(default=True)
-    price = fields.Serialized(
-        compute="_compute_price", string="Shopinvader Price"
-    )
+    price = fields.Serialized(compute="_compute_price", string="Shopinvader Price")
     short_name = fields.Char(compute="_compute_names")
     full_name = fields.Char(compute="_compute_names")
 
@@ -58,8 +54,7 @@ class ShopinvaderVariant(models.Model):
     def _compute_attribute_value_ids(self):
         for record in self:
             record.attribute_value_ids = record.mapped(
-                "product_template_attribute_value_ids."
-                "product_attribute_value_id"
+                "product_template_attribute_value_ids." "product_attribute_value_id"
             )
 
     @contextmanager
@@ -90,9 +85,7 @@ class ShopinvaderVariant(models.Model):
                 continue
             # If every variants of the product are disabled
             # (The product is enable; checked by previous IF).
-            if all(
-                [not v.active for v in shopinv_product.shopinvader_variant_ids]
-            ):
+            if all([not v.active for v in shopinv_product.shopinvader_variant_ids]):
                 to_inactivate_ids.add(shopinv_product.id)
         if to_activate_ids:
             self.env["shopinvader.product"].browse(to_activate_ids).write(
@@ -126,8 +119,7 @@ class ShopinvaderVariant(models.Model):
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()
         attributes = self.mapped(
-            "product_template_attribute_value_ids."
-            "product_attribute_value_id"
+            "product_template_attribute_value_ids." "product_attribute_value_id"
         )
         short_name = ", ".join(attributes.mapped("name"))
         full_name = self.shopinvader_display_name
@@ -220,9 +212,7 @@ class ShopinvaderVariant(models.Model):
                 "Product Price"
             )
             if (
-                float_compare(
-                    new_list_price, value, precision_digits=product_precision
-                )
+                float_compare(new_list_price, value, precision_digits=product_precision)
                 == 0
             ):
                 # Both prices are equals. Product is wihout discount, avoid
@@ -230,21 +220,14 @@ class ShopinvaderVariant(models.Model):
                 return res
             discount = (new_list_price - value) / new_list_price * 100
             # apply the right precision on discount
-            dicount_precision = self.env["decimal.precision"].precision_get(
-                "Discount"
-            )
+            dicount_precision = self.env["decimal.precision"].precision_get("Discount")
             discount = float_round(discount, dicount_precision)
-            res.update(
-                {"original_value": new_list_price, "discount": discount}
-            )
+            res.update({"original_value": new_list_price, "discount": discount})
         return res
 
     def _compute_main_product(self):
         for record in self:
-            if (
-                record.record_id
-                == record.product_tmpl_id.product_variant_ids[0]
-            ):
+            if record.record_id == record.product_tmpl_id.product_variant_ids[0]:
                 record.main = True
             else:
                 record.main = False

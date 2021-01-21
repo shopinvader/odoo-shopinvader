@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
         <record id="shopinvader_partner_view_form" model="ir.ui.view">
@@ -6,12 +6,15 @@
         <field name="arch" type="xml">
             <form string="Shopinvader Partner">
                 <group name="main">
-                    <field name="record_id" invisible="not context.get('shopinvader_partner_main_view')"/>
-                    <field name="partner_email"/>
-                    <field name="backend_id"/>
-                    <field name="external_id"/>
-                    <field name="create_date" readonly="1"/>
-                    <field name="sync_date"/>
+                    <field
+                        name="record_id"
+                        invisible="not context.get('shopinvader_partner_main_view')"
+                    />
+                    <field name="partner_email" />
+                    <field name="backend_id" />
+                    <field name="external_id" />
+                    <field name="create_date" readonly="1" />
+                    <field name="sync_date" />
                 </group>
             </form>
         </field>
@@ -22,13 +25,16 @@
         <field name="model">shopinvader.partner</field>
         <field name="arch" type="xml">
             <tree string="Shopinvader Partner">
-                <field name="record_id" invisible="not context.get('shopinvader_partner_main_view')"/>
-                <field name="partner_email"/>
-                <field name="backend_id"/>
-                <field name="external_id"/>
-                <field name="create_date" readonly="1"/>
-                <field name="sync_date"/>
-                <field name="shopinvader_enabled"/>
+                <field
+                    name="record_id"
+                    invisible="not context.get('shopinvader_partner_main_view')"
+                />
+                <field name="partner_email" />
+                <field name="backend_id" />
+                <field name="external_id" />
+                <field name="create_date" readonly="1" />
+                <field name="sync_date" />
+                <field name="shopinvader_enabled" />
             </tree>
         </field>
     </record>
@@ -37,13 +43,23 @@
         <field name="model">shopinvader.partner</field>
         <field name="arch" type="xml">
             <search string="Shopinvader Partner">
-                <field name="name"/>
-                <field name="email"/>
-                <field name="external_id"/>
-                <field name="shopinvader_enabled"/>
+                <field name="name" />
+                <field name="email" />
+                <field name="external_id" />
+                <field name="shopinvader_enabled" />
                 <group string="Group By">
-                    <filter name="group_by_backend_id" string="Backend" domain="[]" context="{'group_by':'backend_id'}"/>
-                    <filter name="group_by_shopinvader_enabled" string="Enabled" domain="[]" context="{'group_by':'shopinvader_enabled'}"/>
+                    <filter
+                        name="group_by_backend_id"
+                        string="Backend"
+                        domain="[]"
+                        context="{'group_by':'backend_id'}"
+                    />
+                    <filter
+                        name="group_by_shopinvader_enabled"
+                        string="Enabled"
+                        domain="[]"
+                        context="{'group_by':'shopinvader_enabled'}"
+                    />
                 </group>
             </search>
         </field>
@@ -52,29 +68,37 @@
     <record model="ir.actions.act_window" id="act_open_shopinvader_partner_view">
         <field name="name">Shopinvader Partner</field>
         <field name="res_model">shopinvader.partner</field>
-        <field name="search_view_id" ref="shopinvader_partner_view_search"/>
+        <field name="search_view_id" ref="shopinvader_partner_view_search" />
         <field name="domain">[]</field>
         <field name="context">{'shopinvader_partner_main_view': True}</field>
     </record>
 
-    <record model="ir.actions.act_window.view" id="act_open_shopinvader_partner_view_tree">
-        <field name="act_window_id" ref="act_open_shopinvader_partner_view"/>
-        <field name="sequence" eval="10"/>
+    <record
+        model="ir.actions.act_window.view"
+        id="act_open_shopinvader_partner_view_tree"
+    >
+        <field name="act_window_id" ref="act_open_shopinvader_partner_view" />
+        <field name="sequence" eval="10" />
         <field name="view_mode">tree</field>
-        <field name="view_id" ref="shopinvader_partner_view_tree"/>
+        <field name="view_id" ref="shopinvader_partner_view_tree" />
     </record>
 
-    <record model="ir.actions.act_window.view" id="act_open_shopinvader_partner_view_form">
-        <field name="act_window_id" ref="act_open_shopinvader_partner_view"/>
-        <field name="sequence" eval="20"/>
+    <record
+        model="ir.actions.act_window.view"
+        id="act_open_shopinvader_partner_view_form"
+    >
+        <field name="act_window_id" ref="act_open_shopinvader_partner_view" />
+        <field name="sequence" eval="20" />
         <field name="view_mode">form</field>
-        <field name="view_id" ref="shopinvader_partner_view_form"/>
+        <field name="view_id" ref="shopinvader_partner_view_form" />
     </record>
 
-    <menuitem id="menu_shopinvader_partner"
-              name="Partner"
-              parent="menu_shopinvader_root"
-              sequence="50"
-              action="act_open_shopinvader_partner_view"/>
+    <menuitem
+        id="menu_shopinvader_partner"
+        name="Partner"
+        parent="menu_shopinvader_root"
+        sequence="50"
+        action="act_open_shopinvader_partner_view"
+    />
 
 </odoo>

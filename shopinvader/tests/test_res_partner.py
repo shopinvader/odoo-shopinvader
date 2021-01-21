@@ -3,8 +3,9 @@
 
 from datetime import datetime
 
-from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.exceptions import ValidationError
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestResPartner(SavepointComponentCase):
@@ -16,9 +17,7 @@ class TestResPartner(SavepointComponentCase):
         cls.unique_email = datetime.now().isoformat() + "@test.com"
 
     def test_unique_email_partner(self):
-        self.assertTrue(
-            self.shopinvader_config.is_partner_duplication_allowed()
-        )
+        self.assertTrue(self.shopinvader_config.is_partner_duplication_allowed())
         partner_1 = self.env["res.partner"].create(
             {"email": self.unique_email, "name": "test partner"}
         )
@@ -29,9 +28,7 @@ class TestResPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertFalse(
-            self.shopinvader_config.is_partner_duplication_allowed()
-        )
+        self.assertFalse(self.shopinvader_config.is_partner_duplication_allowed())
         # once you've changed the config to dispable duplicate partner
         # it's no more possible to create a partner with the same email
         with self.assertRaises(ValidationError), self.cr.savepoint():

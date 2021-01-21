@@ -1,37 +1,55 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <record id="res_partner_view_form" model="ir.ui.view">
         <field name="model">res.partner</field>
-        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="inherit_id" ref="base.view_partner_form" />
         <field name="arch" type="xml">
             <notebook position="inside">
                 <page name="shopinvader" string="Shopinvader">
                     <group name="extras">
                         <div name="shopinvader_enabled">
                             <label for="shopinvader_enabled" />
-                            <field name="shopinvader_enabled" nolabel="1" readonly="1"/>
-                            <button name="action_enable_for_shop" type="object"
-                                    string="Enable customer" attrs="{'invisible': [('shopinvader_enabled','=',True)]}"/>
+                            <field
+                                name="shopinvader_enabled"
+                                nolabel="1"
+                                readonly="1"
+                            />
+                            <button
+                                name="action_enable_for_shop"
+                                type="object"
+                                string="Enable customer"
+                                attrs="{'invisible': [('shopinvader_enabled','=',True)]}"
+                            />
                         </div>
                     </group>
                     <field name="shopinvader_bind_ids">
                         <tree editable="bottom">
-                            <field name="backend_id"/>
-                            <field name="external_id" readonly="True"/>
-                            <field name="create_date" readonly="True"/>
-                            <field name="sync_date" readonly="True"/>
+                            <field name="backend_id" />
+                            <field name="external_id" readonly="True" />
+                            <field name="create_date" readonly="True" />
+                            <field name="sync_date" readonly="True" />
                         </tree>
                     </field>
                 </page>
             </notebook>
             <!-- add validation button to address kanban -->
-            <xpath expr="//field[@name='child_ids']/kanban/field[@name='display_name']" position="after">
+            <xpath
+                expr="//field[@name='child_ids']/kanban/field[@name='display_name']"
+                position="after"
+            >
                 <field name="shopinvader_enabled" />
             </xpath>
-            <xpath expr="//field[@name='child_ids']/kanban//div[hasclass('o_kanban_image')]" position="before">
+            <xpath
+                expr="//field[@name='child_ids']/kanban//div[hasclass('o_kanban_image')]"
+                position="before"
+            >
                 <div t-if="!record.shopinvader_enabled.raw_value" class="float-right">
-                    <button name="action_enable_for_shop" type="object" class="btn btn-warning btn-sm">Shop: enable address</button>
+                    <button
+                        name="action_enable_for_shop"
+                        type="object"
+                        class="btn btn-warning btn-sm"
+                    >Shop: enable address</button>
                 </div>
             </xpath>
         </field>

@@ -7,9 +7,10 @@
 import logging
 
 from odoo import _
-from odoo.addons.base_rest.controllers import main
 from odoo.exceptions import MissingError
 from odoo.http import request, route
+
+from odoo.addons.base_rest.controllers import main
 
 _logger = logging.getLogger(__name__)
 
@@ -23,9 +24,7 @@ class InvaderController(main.RestController):
     @route(["/shopinvader/<service>/<int:_id>/download"], methods=["GET"])
     def service_download(self, service, _id=None, **params):
         params["id"] = _id
-        return self._process_method(
-            service, "download", _id=_id, params=params
-        )
+        return self._process_method(service, "download", _id=_id, params=params)
 
     @classmethod
     def _get_partner_from_headers(cls, headers):
@@ -42,9 +41,7 @@ class InvaderController(main.RestController):
                 if len(partner) > 1:
                     _logger.warning(
                         "More than one shopinvader.partner found for:"
-                        " backend_id={} email={}".format(
-                            backend.id, partner_email
-                        )
+                        " backend_id={} email={}".format(backend.id, partner_email)
                     )
                 # Could be because the email is not related to a partner or
                 # because the partner is inactive
@@ -57,9 +54,7 @@ class InvaderController(main.RestController):
             ("partner_email", "=", partner_email),
             ("backend_id", "=", backend.id),
         ]
-        return request.env["shopinvader.partner"].search(
-            partner_domain, limit=2
-        )
+        return request.env["shopinvader.partner"].search(partner_domain, limit=2)
 
     @classmethod
     def _validate_partner(cls, backend, partner):
@@ -92,9 +87,7 @@ class InvaderController(main.RestController):
         * shopinvader_backend: current shopinvader backend (matching API key)
         """
         res = super(InvaderController, self)._get_component_context()
-        res[
-            "shopinvader_backend"
-        ] = self._get_shopinvader_backend_from_request()
+        res["shopinvader_backend"] = self._get_shopinvader_backend_from_request()
         headers = request.httprequest.environ
         # TODO: all services should rely on shopinvader partner
         # rather than the real partner
@@ -104,7 +97,5 @@ class InvaderController(main.RestController):
         res["partner_user"] = partner
         # The partner user for the main account or for sale order may differ.
         res["partner"] = partner.get_shop_partner(res["shopinvader_backend"])
-        res[
-            "shopinvader_session"
-        ] = self._get_shopinvader_session_from_headers(headers)
+        res["shopinvader_session"] = self._get_shopinvader_session_from_headers(headers)
         return res

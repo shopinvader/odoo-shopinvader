@@ -1,18 +1,21 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 Akretion
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
-    <menuitem id="menu_shopinvader_root"
-              name="Shopinvader"
-              sequence="10"
-              web_icon="shopinvader,static/description/icon.png"
-              groups="group_shopinvader_manager"/>
-    <menuitem id="menu_shopinvader_config"
-              name="Configuration"
-              sequence="100"
-              parent="menu_shopinvader_root"
-              groups="group_shopinvader_manager"/>
+    <menuitem
+        id="menu_shopinvader_root"
+        name="Shopinvader"
+        sequence="10"
+        web_icon="shopinvader,static/description/icon.png"
+        groups="group_shopinvader_manager"
+    />
+    <menuitem
+        id="menu_shopinvader_config"
+        name="Configuration"
+        sequence="100"
+        parent="menu_shopinvader_root"
+        groups="group_shopinvader_manager"
+    />
 
 </odoo>

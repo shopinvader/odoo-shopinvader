@@ -3,9 +3,11 @@
 
 from datetime import datetime
 
-from odoo.addons.component.tests.common import SavepointComponentCase
-from odoo.tools import mute_logger
 from psycopg2 import IntegrityError
+
+from odoo.tools import mute_logger
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestShopinvaderPartner(SavepointComponentCase):
@@ -42,9 +44,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         email (after having removed the first binding)
         :return:
         """
-        self.assertTrue(
-            self.shopinvader_config.is_partner_duplication_allowed()
-        )
+        self.assertTrue(self.shopinvader_config.is_partner_duplication_allowed())
         # we create a first binding
         binding = self.env["shopinvader.partner"].create(
             {
@@ -54,9 +54,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             }
         )
         # a partner has been created for this binding
-        res = self.env["res.partner"].search(
-            [("email", "=", self.unique_email)]
-        )
+        res = self.env["res.partner"].search([("email", "=", self.unique_email)])
         self.assertEqual(binding.record_id, res)
         # if we remove the partner and create a new binding with the same email
         # a new partner will be created
@@ -68,9 +66,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
                 "backend_id": self.backend.id,
             }
         )
-        res = self.env["res.partner"].search(
-            [("email", "=", self.unique_email)]
-        )
+        res = self.env["res.partner"].search([("email", "=", self.unique_email)])
         self.assertEqual(len(res), 2)
 
     def test_partner_no_duplicate(self):
@@ -86,9 +82,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertFalse(
-            self.shopinvader_config.is_partner_duplication_allowed()
-        )
+        self.assertFalse(self.shopinvader_config.is_partner_duplication_allowed())
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
@@ -116,9 +110,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertFalse(
-            self.shopinvader_config.is_partner_duplication_allowed()
-        )
+        self.assertFalse(self.shopinvader_config.is_partner_duplication_allowed())
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
@@ -141,7 +133,5 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.assertEqual(child.street, "my street")
 
         # only one partner should exists with this email
-        res = self.env["res.partner"].search(
-            [("email", "=", self.unique_email)]
-        )
+        res = self.env["res.partner"].search([("email", "=", self.unique_email)])
         self.assertEqual(len(res), 1)

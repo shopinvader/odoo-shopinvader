@@ -23,9 +23,7 @@ class ShopinvaderCategoryUnbindingWizard(models.TransientModel):
         )
         shopinvader_category_ids = self.env.context.get("active_ids")
         if shopinvader_category_ids:
-            result.update(
-                {"shopinvader_category_ids": shopinvader_category_ids}
-            )
+            result.update({"shopinvader_category_ids": shopinvader_category_ids})
         return result
 
     def action_unbind_categories(self):

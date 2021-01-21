@@ -4,14 +4,12 @@ import mimetypes
 import time
 
 from odoo import _
-from odoo.addons.base_rest.components.service import (
-    skip_secure_response,
-    to_int,
-)
-from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError
 from odoo.http import content_disposition, request
 from odoo.tools.safe_eval import safe_eval
+
+from odoo.addons.base_rest.components.service import skip_secure_response, to_int
+from odoo.addons.component.core import AbstractComponent
 
 
 class AbstractDownload(AbstractComponent):
@@ -108,9 +106,7 @@ class AbstractDownload(AbstractComponent):
         ]
         return self.env["ir.actions.report"].search(domain)
 
-    def _get_binary_content_filename(
-        self, target, report, extension, params=None
-    ):
+    def _get_binary_content_filename(self, target, report, extension, params=None):
         """
         Build the filename
         :param target: recordset

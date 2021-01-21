@@ -30,9 +30,7 @@ class ShopinvaderProduct(models.Model):
         string="Shopinvader Name",
         help="Name for shopinvader, if not set the product name will be used.",
     )
-    shopinvader_display_name = fields.Char(
-        compute="_compute_name", readonly=True
-    )
+    shopinvader_display_name = fields.Char(compute="_compute_name", readonly=True)
     shopinvader_categ_ids = fields.Many2many(
         comodel_name="shopinvader.category",
         compute="_compute_shopinvader_category",
@@ -66,12 +64,12 @@ class ShopinvaderProduct(models.Model):
         )
 
     def _inverse_active(self):
-        self.filtered(lambda p: not p.active).mapped(
-            "shopinvader_variant_ids"
-        ).write({"active": False})
-        self.filtered(lambda p: p.active).mapped(
-            "shopinvader_variant_ids"
-        ).write({"active": True})
+        self.filtered(lambda p: not p.active).mapped("shopinvader_variant_ids").write(
+            {"active": False}
+        )
+        self.filtered(lambda p: p.active).mapped("shopinvader_variant_ids").write(
+            {"active": True}
+        )
 
     def _get_categories(self):
         self.ensure_one()
@@ -85,9 +83,7 @@ class ShopinvaderProduct(models.Model):
             ("lang_id", "=", self.lang_id.id),
         ]
 
-    @api.depends(
-        "categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id"
-    )
+    @api.depends("categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id")
     def _compute_shopinvader_category(self):
         for record in self:
             categories = self.env["shopinvader.category"]

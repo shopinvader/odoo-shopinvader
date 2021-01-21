@@ -30,9 +30,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        res = super(ShopinvaderVariantBindingWizard, self).default_get(
-            fields_list
-        )
+        res = super(ShopinvaderVariantBindingWizard, self).default_get(fields_list)
         backend_id = self.env.context.get("active_id", False)
         if backend_id:
             backend = self.env["shopinvader.backend"].browse(backend_id)
@@ -86,9 +84,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
                 binded_products = binded_templates[product.product_tmpl_id]
                 for lang_id in wizard._get_langs_to_bind():
                     for shopinvader_product in binded_products[lang_id]:
-                        binded_variants = (
-                            shopinvader_product.shopinvader_variant_ids
-                        )
+                        binded_variants = shopinvader_product.shopinvader_variant_ids
                         bind_record = binded_variants.filtered(
                             lambda p: p.record_id == product
                         )

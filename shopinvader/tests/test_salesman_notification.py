@@ -61,9 +61,7 @@ class TestCustomer(CommonCase):
         return self.env["res.partner"].browse(new_address["id"])
 
     def _update_partner(self, partner, rec_id, **kw):
-        self.address_service(partner=partner).dispatch(
-            "update", rec_id, params=kw
-        )
+        self.address_service(partner=partner).dispatch("update", rec_id, params=kw)
 
     def test_notify_none(self):
         # set none
@@ -90,9 +88,7 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(
-            partner.parent_id, partner.id, name="Somewhere else"
-        )
+        self._update_partner(partner.parent_id, partner.id, name="Somewhere else")
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_company(self):
@@ -124,9 +120,7 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(
-            partner.parent_id, partner.id, name="Somewhere else"
-        )
+        self._update_partner(partner.parent_id, partner.id, name="Somewhere else")
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_user(self):
@@ -159,9 +153,7 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(
-            partner.parent_id, partner.id, name="Somewhere else"
-        )
+        self._update_partner(partner.parent_id, partner.id, name="Somewhere else")
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_company_and_user(self):
@@ -197,9 +189,7 @@ class TestCustomer(CommonCase):
         partner = self._create_address(name="John Doe")
         self.assertFalse(self._find_activity(partner.parent_id))
         # address update -> none
-        self._update_partner(
-            partner.parent_id, partner.id, name="Somewhere else"
-        )
+        self._update_partner(partner.parent_id, partner.id, name="Somewhere else")
         self.assertFalse(self._find_activity(partner.parent_id))
 
     def test_notify_address(self):

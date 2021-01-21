@@ -28,12 +28,8 @@ class ProductProductEventListener(Component):
         :param fields: list of str
         :return:
         """
-        shopinv_products = record.mapped(
-            "product_tmpl_id.shopinvader_bind_ids"
-        )
-        shopinv_variants = self._launch_shopinvader_variant_creation(
-            shopinv_products
-        )
+        shopinv_products = record.mapped("product_tmpl_id.shopinvader_bind_ids")
+        shopinv_variants = self._launch_shopinvader_variant_creation(shopinv_products)
         # If at least 1 is True, force False
         if any(shopinv_variants.mapped("active")):
             shopinv_variants.write({"active": False})

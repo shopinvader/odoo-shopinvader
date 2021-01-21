@@ -20,9 +20,7 @@ class ResPartner(models.Model):
         store=True,
     )
     # In europe we use more the opt_in
-    opt_in = fields.Boolean(
-        compute="_compute_opt_in", inverse="_inverse_opt_in"
-    )
+    opt_in = fields.Boolean(compute="_compute_opt_in", inverse="_inverse_opt_in")
     shopinvader_enabled = fields.Boolean(
         string="Shop enabled",
         default=True,
@@ -54,15 +52,10 @@ class ResPartner(models.Model):
         """
         )
         duplicate_emails = {r[0] for r in self.env.cr.fetchall()}
-        invalid_emails = [
-            e for e in self.mapped("email") if e in duplicate_emails
-        ]
+        invalid_emails = [e for e in self.mapped("email") if e in duplicate_emails]
         if invalid_emails:
             raise ValidationError(
-                _(
-                    "Email must be unique: The following "
-                    "mails are not unique: %s"
-                )
+                _("Email must be unique: The following " "mails are not unique: %s")
                 % ", ".join(invalid_emails)
             )
 
@@ -109,9 +102,7 @@ class ResPartner(models.Model):
         return True
 
     def addr_type_display(self):
-        return self._fields["address_type"].convert_to_export(
-            self.address_type, self
-        )
+        return self._fields["address_type"].convert_to_export(self.address_type, self)
 
     def action_enable_for_shop(self):
         self.write({"shopinvader_enabled": True})
@@ -123,9 +114,7 @@ class ResPartner(models.Model):
                 recipient = partner
             elif partner.address_type == "address":
                 notif_type = "address_validated"
-                backends = partner.mapped(
-                    "parent_id.shopinvader_bind_ids.backend_id"
-                )
+                backends = partner.mapped("parent_id.shopinvader_bind_ids.backend_id")
                 recipient = partner.parent_id
             recipient._shopinvader_notify(backends, notif_type)
             name = partner.name or partner.contact_address.replace("\n", " | ")
