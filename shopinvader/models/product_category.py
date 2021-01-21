@@ -15,9 +15,7 @@ class ProductCategory(models.Model):
         string="Shopinvader Binding",
         context={"active_test": False},
     )
-    filter_ids = fields.Many2many(
-        comodel_name="product.filter", string="Filter"
-    )
+    filter_ids = fields.Many2many(comodel_name="product.filter", string="Filter")
     active = fields.Boolean(default=True, inverse="_inverse_active")
 
     def _inverse_active(self):
@@ -91,9 +89,7 @@ class ProductCategory(models.Model):
                         domain = expression.AND(domain)
                     else:
                         domain = expression.OR(domain)
-            categories = self.search(
-                expression.AND([domain, args]), limit=limit
-            )
+            categories = self.search(expression.AND([domain, args]), limit=limit)
         else:
             categories = self.search(args, limit=limit)
         return categories.name_get()

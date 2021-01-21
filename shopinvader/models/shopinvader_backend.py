@@ -7,9 +7,10 @@
 from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
+from odoo.http import request
+
 from odoo.addons.base_sparse_field.models.fields import Serialized
 from odoo.addons.server_environment import serv_config
-from odoo.http import request
 
 
 class ShopinvaderBackend(models.Model):
@@ -46,10 +47,7 @@ class ShopinvaderBackend(models.Model):
     anonymous_partner_id = fields.Many2one(
         "res.partner",
         "Anonymous Partner",
-        help=(
-            "Provide partner settings for unlogged users "
-            "(i.e. fiscal position)"
-        ),
+        help=("Provide partner settings for unlogged users " "(i.e. fiscal position)"),
         required=True,
         default=lambda self: self.env.ref("shopinvader.anonymous"),
     )
@@ -76,9 +74,7 @@ class ShopinvaderBackend(models.Model):
         help="This analytic account will be used to fill the "
         "field on the sale order created.",
     )
-    filter_ids = fields.Many2many(
-        comodel_name="product.filter", string="Filter"
-    )
+    filter_ids = fields.Many2many(comodel_name="product.filter", string="Filter")
     use_shopinvader_product_name = fields.Boolean(
         string="Use Shopinvader product display name",
         help="If checked, use the specific shopinvader display name for "
@@ -292,17 +288,12 @@ class ShopinvaderBackend(models.Model):
         to_count = self._to_compute_nbr_content()
         domain = [("backend_id", "in", self.ids)]
         for odoo_field, odoo_model in to_count.items():
-            if (
-                odoo_model in self.env
-                and self.env[odoo_model]._is_an_ordinary_table()
-            ):
+            if odoo_model in self.env and self.env[odoo_model]._is_an_ordinary_table():
                 target_model_obj = self.env[odoo_model]
                 result = target_model_obj.read_group(
                     domain, ["backend_id"], ["backend_id"], lazy=False
                 )
-                result = {
-                    data["backend_id"][0]: data["__count"] for data in result
-                }
+                result = {data["backend_id"][0]: data["__count"] for data in result}
                 for record in self:
                     record[odoo_field] = result.get(record.id, 0)
 
@@ -363,9 +354,7 @@ class ShopinvaderBackend(models.Model):
             ]
         )
         for backend in backends:
-            shopinv_variants = all_products.filtered(
-                lambda p: p.backend_id == backend
-            )
+            shopinv_variants = all_products.filtered(lambda p: p.backend_id == backend)
             products = shopinv_variants.mapped("record_id")
             categories = backend._get_related_categories(products)
             if categories:
@@ -403,9 +392,7 @@ class ShopinvaderBackend(models.Model):
         root_lvl = self.category_root_binding_level
         if not root_lvl:
             return self.env["product.category"].browse()
-        categories = self.env["product.category"].search(
-            [("parent_id", "=", False)]
-        )
+        categories = self.env["product.category"].search([("parent_id", "=", False)])
         lvl = root_lvl - 1  # the limit is inclusive
         while lvl:
             categories += categories.mapped("child_id")
@@ -419,9 +406,7 @@ class ShopinvaderBackend(models.Model):
             if to_exclude:
                 domain = [("id", "not in", to_exclude.ids)]
         # TODO: we should exclude levels from `category_binding_level` as well
-        self._bind_all_content(
-            "product.category", "shopinvader.category", domain
-        )
+        self._bind_all_content("product.category", "shopinvader.category", domain)
 
     def _send_notification(self, notification, record):
         self.ensure_one()
@@ -450,9 +435,7 @@ class ShopinvaderBackend(models.Model):
             if section.startswith("api_key_") and serv_config.has_option(
                 section, "key"
             ):
-                if tools.consteq(
-                    auth_api_key, serv_config.get(section, "key")
-                ):
+                if tools.consteq(auth_api_key, serv_config.get(section, "key")):
                     return section
         return None
 
@@ -468,21 +451,13 @@ class ShopinvaderBackend(models.Model):
 
     def _bind_langs(self, lang_ids):
         self.ensure_one()
-        self.env["shopinvader.variant.binding.wizard"].bind_langs(
-            self, lang_ids
-        )
-        self.env["shopinvader.category.binding.wizard"].bind_langs(
-            self, lang_ids
-        )
+        self.env["shopinvader.variant.binding.wizard"].bind_langs(self, lang_ids)
+        self.env["shopinvader.category.binding.wizard"].bind_langs(self, lang_ids)
 
     def _unbind_langs(self, lang_ids):
         self.ensure_one()
-        self.env["shopinvader.variant.unbinding.wizard"].unbind_langs(
-            self, lang_ids
-        )
-        self.env["shopinvader.category.unbinding.wizard"].unbind_langs(
-            self, lang_ids
-        )
+        self.env["shopinvader.variant.unbinding.wizard"].unbind_langs(self, lang_ids)
+        self.env["shopinvader.category.unbinding.wizard"].unbind_langs(self, lang_ids)
 
     @contextmanager
     def _keep_binding_sync_with_langs(self):
@@ -514,13 +489,11 @@ class ShopinvaderBackend(models.Model):
         return self.pricelist_id or self._default_pricelist_id()
 
     def _get_customer_default_pricelist(self):
-        """Retrieve pricelist to be used for brand new customer record.
-        """
+        """Retrieve pricelist to be used for brand new customer record."""
         return self._get_backend_pricelist()
 
     def _get_partner_pricelist(self, partner):
-        """Retrieve pricelist for given res.partner record.
-        """
+        """Retrieve pricelist for given res.partner record."""
         # Normally we should return partner.property_product_pricelist
         # but by default the shop must use the same pricelist for all customers
         # because products' prices are computed only by backend pricelist.

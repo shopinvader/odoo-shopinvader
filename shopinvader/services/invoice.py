@@ -1,12 +1,12 @@
 # Copyright 2019 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from odoo.addons.component.core import Component
 from odoo.osv import expression
+
+from odoo.addons.component.core import Component
 
 
 class InvoiceService(Component):
-    """Shopinvader service to expose invoices.
-    """
+    """Shopinvader service to expose invoices."""
 
     _inherit = [
         "shopinvader.abstract.mail.service",
@@ -107,9 +107,7 @@ class InvoiceService(Component):
         return invoices
 
     def _get_sale_order_domain(self):
-        return self._default_domain_for_partner_records() + [
-            ("typology", "=", "sale")
-        ]
+        return self._default_domain_for_partner_records() + [("typology", "=", "sale")]
 
     def _get_report_action(self, target, params=None):
         """Get the action/dict to generate the report.

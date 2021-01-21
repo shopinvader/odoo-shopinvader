@@ -34,9 +34,7 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        result = super(ShopinvaderCategoryBindingWizard, self).default_get(
-            fields_list
-        )
+        result = super(ShopinvaderCategoryBindingWizard, self).default_get(fields_list)
         backend_id = self.env.context.get("active_id")
         if backend_id:
             backend = self.env["shopinvader.backend"].browse(backend_id)
@@ -67,20 +65,15 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
                 lambda x: x.parent_id.id not in categories.ids
             )
         else:
-            cat_to_bind = categories.filtered(
-                lambda x: x.parent_id.id in parent_ids
-            )
+            cat_to_bind = categories.filtered(lambda x: x.parent_id.id in parent_ids)
         cat_to_bind = cat_to_bind.with_context(active_test=False)
         if cat_to_bind:
             for category in cat_to_bind:
                 binded_categories = category.shopinvader_bind_ids
                 bind_record = binded_categories.filtered(
-                    lambda p: p.backend_id.id == backend.id
-                    and p.lang_id.id == lang.id
+                    lambda p: p.backend_id.id == backend.id and p.lang_id.id == lang.id
                 )
-                bind_record = bind_record.with_prefetch(
-                    binded_categories._prefetch_ids
-                )
+                bind_record = bind_record.with_prefetch(binded_categories._prefetch_ids)
                 if not bind_record:
                     data = {
                         "record_id": category.id,
@@ -95,9 +88,7 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
     def action_bind_categories(self):
         for wizard in self:
             if wizard.child_autobinding:
-                categ_ids = wizard.with_context(
-                    active_test=False
-                ).product_category_ids
+                categ_ids = wizard.with_context(active_test=False).product_category_ids
                 for categ_id in categ_ids:
                     childs_cat = self.env["product.category"].search(
                         [("id", "child_of", categ_id.id)]
@@ -106,9 +97,7 @@ class ShopinvaderCategoryBindingWizard(models.TransientModel):
                         wizard.product_category_ids += childs_cat
             backend = wizard.backend_id
             for lang in wizard._get_langs_to_bind():
-                self._bind_categories(
-                    backend, lang, wizard.product_category_ids
-                )
+                self._bind_categories(backend, lang, wizard.product_category_ids)
 
     @api.model
     def bind_langs(self, backend, lang_ids):

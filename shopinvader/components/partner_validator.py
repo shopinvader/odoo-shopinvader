@@ -21,9 +21,7 @@ class PartnerValidator(Component):
         if self.backend.validate_customers:
             validator = getattr(
                 self,
-                "_validate_partner_{}".format(
-                    self.backend.validate_customers_type
-                ),
+                "_validate_partner_{}".format(self.backend.validate_customers_type),
                 lambda partner: True,
             )
             validator(partner)
@@ -36,10 +34,7 @@ class PartnerValidator(Component):
             pass
 
     def _validate_partner_address(self, partner):
-        if (
-            not partner.shopinvader_enabled
-            and not partner.address_type == "address"
-        ):
+        if not partner.shopinvader_enabled and not partner.address_type == "address":
             # raise PartnerNotValidatedError(
             #     "Address found but not validated yet."
             # )

@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record model="ir.ui.view" id="shopinvader_config_settings_form_view">
@@ -10,11 +9,22 @@
         <field name="arch" type="xml">
             <form string="Configure Warehouse" class="oe_form_configuration">
                 <header>
-                    <button string="Apply" type="object" name="execute" class="oe_highlight"/>
-                    <button string="Cancel" type="object" name="cancel" class="oe_link" special="cancel"/>
+                    <button
+                        string="Apply"
+                        type="object"
+                        name="execute"
+                        class="oe_highlight"
+                    />
+                    <button
+                        string="Cancel"
+                        type="object"
+                        name="cancel"
+                        class="oe_link"
+                        special="cancel"
+                    />
                 </header>
                 <group string="General" name="general">
-                    <field name="no_partner_duplicate"/>
+                    <field name="no_partner_duplicate" />
                 </group>
             </form>
         </field>
@@ -31,9 +41,9 @@
 
     <record model="ir.ui.menu" id="shopinvader_config_settings_menu">
         <field name="name">Shopinvader Config Settings</field>
-        <field name="parent_id" ref="menu_shopinvader_config"/>
-        <field name="action" ref="shopinvader_config_settings_act_window"/>
-        <field name="sequence" eval="-1"/>
+        <field name="parent_id" ref="menu_shopinvader_config" />
+        <field name="action" ref="shopinvader_config_settings_act_window" />
+        <field name="sequence" eval="-1" />
     </record>
 
 </odoo>

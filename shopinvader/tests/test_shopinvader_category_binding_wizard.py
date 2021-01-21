@@ -9,9 +9,7 @@ class TestShopinvaderCategoryBindingWizard(TestShopinvaderCategoryBase):
     def setUpClass(cls):
         super(TestShopinvaderCategoryBindingWizard, cls).setUpClass()
         cls.bind_wizard_model = cls.env["shopinvader.category.binding.wizard"]
-        cls.unbind_wizard_model = cls.env[
-            "shopinvader.category.unbinding.wizard"
-        ]
+        cls.unbind_wizard_model = cls.env["shopinvader.category.unbinding.wizard"]
 
     def test_category_binding(self):
         """
@@ -83,9 +81,7 @@ class TestShopinvaderCategoryBindingWizard(TestShopinvaderCategoryBase):
         self.assertTrue(bind_record_bk2.exists())
 
         # The binding record should still exist but inactive
-        bind_record = category_bind_model.with_context(
-            active_test=False
-        ).search(domain)
+        bind_record = category_bind_model.with_context(active_test=False).search(domain)
 
         self.assertEqual(len(bind_record), 1)
 
@@ -178,9 +174,7 @@ class TestShopinvaderCategoryBindingWizard(TestShopinvaderCategoryBase):
             # Still exists
             self.assertTrue(shopinv_categ.exists())
         # The binding record should still exist but inactive
-        bind_record = category_bind_model.with_context(
-            active_test=False
-        ).search(domain)
+        bind_record = category_bind_model.with_context(active_test=False).search(domain)
 
         self.assertEqual(len(bind_record), 2)
 

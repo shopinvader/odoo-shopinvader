@@ -6,13 +6,15 @@
 from contextlib import contextmanager
 
 import mock
+
+from odoo.exceptions import MissingError
+from odoo.tests import SavepointCase
+
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
-from odoo.exceptions import MissingError
-from odoo.tests import SavepointCase
 
 from .. import shopinvader_response
 
@@ -51,23 +53,19 @@ class CommonMixin(RegistryMixin, ComponentMixin):
         if not params.get("partner_user") and params.get("partner"):
             params["partner_user"] = params["partner"]
         if params.get("partner_user"):
-            params["invader_partner"] = params[
-                "partner_user"
-            ]._get_invader_partner(self.backend)
+            params["invader_partner"] = params["partner_user"]._get_invader_partner(
+                self.backend
+            )
         # Safe defaults as these keys are mandatory for work ctx
         if "partner" not in params:
             params["partner"] = self.env["res.partner"].browse()
         if "partner_user" not in params:
             params["partner_user"] = self.env["res.partner"].browse()
         if "invader_partner" not in params:
-            params["invader_partner"] = self.env[
-                "shopinvader.partner"
-            ].browse()
+            params["invader_partner"] = self.env["shopinvader.partner"].browse()
         collection = _PseudoCollection("shopinvader.backend", self.env)
         yield WorkContext(
-            model_name="rest.service.registration",
-            collection=collection,
-            **params
+            model_name="rest.service.registration", collection=collection, **params
         )
 
     def _init_job_counter(self):
@@ -116,9 +114,7 @@ class CommonCase(SavepointCase, CommonMixin):
     def setUpClass(cls):
         super(CommonCase, cls).setUpClass()
         cls.env = cls.env(
-            context=dict(
-                cls.env.context, tracking_disable=cls.tracking_disable
-            )
+            context=dict(cls.env.context, tracking_disable=cls.tracking_disable)
         )
         CommonMixin._setup_backend(cls)
         cls.setUpComponent()
@@ -141,18 +137,14 @@ class CommonCase(SavepointCase, CommonMixin):
         :param field: str
         :return: str
         """
-        return record._fields.get(field).convert_to_export(
-            record[field], record
-        )
+        return record._fields.get(field).convert_to_export(record[field], record)
 
 
 class ProductCommonCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.template = cls.env.ref(
-            "product.product_product_4_product_template"
-        )
+        cls.template = cls.env.ref("product.product_product_4_product_template")
         cls.variant = cls.env.ref("product.product_product_4b")
         cls.template.taxes_id = cls.env.ref("shopinvader.tax_1")
         cls.shopinvader_variants = cls.env["shopinvader.variant"].search(
@@ -217,8 +209,7 @@ class CommonTestDownload(object):
         :return:
         """
         with mock.patch(
-            "odoo.addons.shopinvader.services."
-            "abstract_download.content_disposition"
+            "odoo.addons.shopinvader.services." "abstract_download.content_disposition"
         ) as mocked_cd, mock.patch(
             "odoo.addons.shopinvader.services.abstract_download.request"
         ) as mocked_request:
@@ -229,9 +220,7 @@ class CommonTestDownload(object):
             self.assertEqual(1, make_response.call_count)
             content, headers = make_response.call_args[0]
             self.assertTrue(content)
-            self.assertIn(
-                ("Content-Disposition", "attachment; filename=test"), headers
-            )
+            self.assertIn(("Content-Disposition", "attachment; filename=test"), headers)
 
     def _test_download_not_owner(self, service, target):
         """

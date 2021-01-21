@@ -6,10 +6,11 @@
 import logging
 
 from odoo import _
-from odoo.addons.base_rest.components.service import to_int
-from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
+
+from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.component.core import AbstractComponent
 
 from .. import shopinvader_response
 
@@ -146,8 +147,7 @@ class BaseShopinvaderService(AbstractComponent):
         record = self.env[self._expose_model].search(domain)
         if not record:
             raise MissingError(
-                _("The record %s %s does not exist")
-                % (self._expose_model, _id)
+                _("The record %s %s does not exist") % (self._expose_model, _id)
             )
         else:
             return record
@@ -158,13 +158,10 @@ class BaseShopinvaderService(AbstractComponent):
     def _default_domain_for_partner_records(
         self, partner_field="partner_id", operator="=", with_backend=True, **kw
     ):
-        """Domain to filter records bound to current partner and backend.
-        """
+        """Domain to filter records bound to current partner and backend."""
         domain = [(partner_field, operator, self.partner.id)]
         if with_backend:
-            domain.append(
-                ("shopinvader_backend_id", "=", self.shopinvader_backend.id)
-            )
+            domain.append(("shopinvader_backend_id", "=", self.shopinvader_backend.id))
         return domain
 
     def _get_selection_label(self, record, field):
@@ -177,14 +174,10 @@ class BaseShopinvaderService(AbstractComponent):
         if field not in record._fields:
             return ""
         # convert_to_export(...) give the label of the selection (translated).
-        return record._fields.get(field).convert_to_export(
-            record[field], record
-        )
+        return record._fields.get(field).convert_to_export(record[field], record)
 
     def _get_openapi_default_parameters(self):
-        defaults = super(
-            BaseShopinvaderService, self
-        )._get_openapi_default_parameters()
+        defaults = super(BaseShopinvaderService, self)._get_openapi_default_parameters()
         defaults.append(
             {
                 "name": "API-KEY",

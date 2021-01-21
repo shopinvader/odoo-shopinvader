@@ -6,16 +6,16 @@
 # pylint: disable=method-required-super, consider-merging-classes-inherited
 
 from odoo import _
+from odoo.exceptions import AccessError
+
 from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
-from odoo.exceptions import AccessError
 
 from .. import shopinvader_response
 
 
 class AddressService(Component):
-    """Shopinvader service to create and edit customers' addresses.
-    """
+    """Shopinvader service to create and edit customers' addresses."""
 
     _inherit = [
         "base.shopinvader.service",
@@ -221,7 +221,7 @@ class AddressService(Component):
             params["title"] = params.get("title")["id"]
 
         if mode == "create":
-            params[
-                "shopinvader_enabled"
-            ] = self.partner_validator.enabled_by_params(params, "address")
+            params["shopinvader_enabled"] = self.partner_validator.enabled_by_params(
+                params, "address"
+            )
         return params

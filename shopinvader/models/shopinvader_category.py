@@ -6,6 +6,7 @@
 import logging
 
 from odoo import api, fields, models
+
 from odoo.addons.base_url.models.abstract_url import get_model_ref
 
 _logger = logging.getLogger(__name__)
@@ -22,9 +23,7 @@ class ShopinvaderCategory(models.Model):
         "product.category", required=True, ondelete="cascade", index=True
     )
     # TODO: Is this really needed? Both fields are indexed.
-    object_id = fields.Integer(
-        compute="_compute_object_id", store=True, index=True
-    )
+    object_id = fields.Integer(compute="_compute_object_id", store=True, index=True)
     sequence = fields.Integer()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
@@ -96,9 +95,7 @@ class ShopinvaderCategory(models.Model):
             )
 
     def _post_process_url_key(self, key):
-        path_bits = [
-            super(ShopinvaderCategory, self)._post_process_url_key(key)
-        ]
+        path_bits = [super(ShopinvaderCategory, self)._post_process_url_key(key)]
         if self.parent_id and self.shopinvader_parent_id.active:
             parent_key = self.shopinvader_parent_id.automatic_url_key
             if parent_key:
