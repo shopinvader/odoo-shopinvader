@@ -39,9 +39,7 @@ class TestProductProduct(StockCommonCase, UtilsMixin):
 
     def _test_update_stock_with_key(self, key_stock, sync_immediatly=True):
         shopinvader_product = self.product.shopinvader_bind_ids
-        self._refresh_json_data(
-            shopinvader_product, backend=self.shopinvader_backend
-        )
+        self._refresh_json_data(shopinvader_product, backend=self.shopinvader_backend)
         shopinvader_product.sync_state = "to_update"
         self.assertEqual(
             shopinvader_product.data[key_stock], {u"global": {u"qty": 0.0}}
@@ -103,9 +101,7 @@ class TestProductProduct(StockCommonCase, UtilsMixin):
         export_line.unlink()
 
         shopinvader_product = self.product.shopinvader_bind_ids
-        self._refresh_json_data(
-            shopinvader_product, backend=self.shopinvader_backend
-        )
+        self._refresh_json_data(shopinvader_product, backend=self.shopinvader_backend)
         shopinvader_product.sync_state = "to_update"
         self.assertNotIn("stock", shopinvader_product.data)
 
@@ -120,9 +116,7 @@ class TestProductProduct(StockCommonCase, UtilsMixin):
         self.shopinvader_backend.write({"warehouse_ids": [(6, 0, warehouses.ids)]})
 
         shopinvader_product = self.product.shopinvader_bind_ids
-        self._refresh_json_data(
-            shopinvader_product, backend=self.shopinvader_backend
-        )
+        self._refresh_json_data(shopinvader_product, backend=self.shopinvader_backend)
         shopinvader_product.sync_state = "to_update"
         expected = self._expectect_qty_by_wh(warehouses, self.product)
         self.assertEqual(shopinvader_product.data["stock"], expected)
