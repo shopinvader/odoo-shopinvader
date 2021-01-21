@@ -2,9 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.shopinvader.tests.common import CommonCase
-from odoo.addons.shopinvader.tests.test_notification import (
-    NotificationCaseMixin,
-)
+from odoo.addons.shopinvader.tests.test_notification import NotificationCaseMixin
 
 
 class NotificationPickingCase(CommonCase, NotificationCaseMixin):
@@ -25,9 +23,7 @@ class NotificationPickingCase(CommonCase, NotificationCaseMixin):
         self.picking.action_done()
         self._check_nbr_job_created(1)
         self._perform_created_job()
-        self._check_notification(
-            "stock_picking_outgoing_validated", self.picking
-        )
+        self._check_notification("stock_picking_outgoing_validated", self.picking)
 
     def test_picking_notification2(self):
         """

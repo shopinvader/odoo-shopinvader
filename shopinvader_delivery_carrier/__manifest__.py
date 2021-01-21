@@ -11,7 +11,7 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,
-    "installable": False,
+    "installable": True,
     "external_dependencies": {"python": [], "bin": []},
     "depends": [
         "delivery",

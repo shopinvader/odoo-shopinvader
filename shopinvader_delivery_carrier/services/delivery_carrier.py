@@ -35,9 +35,7 @@ class DeliveryCarrierService(Component):
         delivery_carriers = self._search(cart=cart, **params)
         vals = {
             "size": len(delivery_carriers),
-            "data": [
-                self._prepare_carrier(dc, cart) for dc in delivery_carriers
-            ],
+            "data": [self._prepare_carrier(dc, cart) for dc in delivery_carriers],
         }
         # TODO DEPRECATED this old API is deprecated
         #  keep returing the result but this should be not used anymore

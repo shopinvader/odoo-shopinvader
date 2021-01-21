@@ -9,18 +9,14 @@ class SaleCase(CommonCase):
     def setUpClass(cls):
         super().setUpClass()
         product_model = cls.env["product.product"]
-        product = product_model.create(
-            {"name": "Unittest P1", "type": "product"}
-        )
+        product = product_model.create({"name": "Unittest P1", "type": "product"})
         cls.sale = cls.env.ref("shopinvader.sale_order_2")
         cls.sale.order_line[0].product_id = product
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.stock_loc = cls.env.ref("stock.stock_location_stock")
         cls.customer_loc = cls.env.ref("stock.stock_location_customers")
         cls.wh_main = cls.env.ref("stock.warehouse0")
-        cls.env["stock.quant"]._update_available_quantity(
-            product, cls.stock_loc, 10
-        )
+        cls.env["stock.quant"]._update_available_quantity(product, cls.stock_loc, 10)
 
         with cls.work_on_services(cls, partner=cls.partner) as work:
             cls.service = work.component(usage="sales")

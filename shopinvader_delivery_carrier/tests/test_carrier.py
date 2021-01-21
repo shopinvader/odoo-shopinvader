@@ -52,22 +52,16 @@ class CarrierCase(CommonCarrierCase):
 
         # Check totals without shipping prices
         cart_amount = cart.get("amount")
-        total_without_shipping = (
-            cart_amount["total"] - cart_ship["amount"]["total"]
-        )
+        total_without_shipping = cart_amount["total"] - cart_ship["amount"]["total"]
         untaxed_without_shipping = (
             cart_amount["untaxed"] - cart_ship["amount"]["untaxed"]
         )
         tax_without_shipping = cart_amount["tax"] - cart_ship["amount"]["tax"]
-        self.assertEqual(
-            cart_amount["total_without_shipping"], total_without_shipping
-        )
+        self.assertEqual(cart_amount["total_without_shipping"], total_without_shipping)
         self.assertEqual(
             cart_amount["untaxed_without_shipping"], untaxed_without_shipping
         )
-        self.assertEqual(
-            cart_amount["tax_without_shipping"], tax_without_shipping
-        )
+        self.assertEqual(cart_amount["tax_without_shipping"], tax_without_shipping)
 
         # Check Selected carrier
         self.assertEqual(
@@ -188,8 +182,7 @@ class CarrierCase(CommonCarrierCase):
         """
         available_carriers = self.backend.carrier_ids
         available_carriers = available_carriers.filtered(
-            lambda c, country=country: country in c.country_ids
-            or not c.country_ids
+            lambda c, country=country: country in c.country_ids or not c.country_ids
         )
         carrier_rows = result.get("rows")
         self.assertEqual(len(available_carriers), len(carrier_rows))
@@ -248,9 +241,7 @@ class CarrierCase(CommonCarrierCase):
             # anymore.
             # But should still similar!
             if not order_line:
-                order_line = self.cart.order_line.filtered(
-                    lambda l: l.is_delivery
-                )
+                order_line = self.cart.order_line.filtered(lambda l: l.is_delivery)
             order_line.read()
             self.assertDictEqual(
                 order_line._convert_to_write(order_line._cache), line_values
@@ -311,22 +302,16 @@ class CarrierCase(CommonCarrierCase):
         cart_amount = cart.get("amount")
         cart_ship = cart.get("shipping")
 
-        total_without_shipping = (
-            cart_amount["total"] - cart_ship["amount"]["total"]
-        )
+        total_without_shipping = cart_amount["total"] - cart_ship["amount"]["total"]
         untaxed_without_shipping = (
             cart_amount["untaxed"] - cart_ship["amount"]["untaxed"]
         )
         tax_without_shipping = cart_amount["tax"] - cart_ship["amount"]["tax"]
-        self.assertEqual(
-            cart_amount["total_without_shipping"], total_without_shipping
-        )
+        self.assertEqual(cart_amount["total_without_shipping"], total_without_shipping)
         self.assertEqual(
             cart_amount["untaxed_without_shipping"], untaxed_without_shipping
         )
-        self.assertEqual(
-            cart_amount["tax_without_shipping"], tax_without_shipping
-        )
+        self.assertEqual(cart_amount["tax_without_shipping"], tax_without_shipping)
 
         total_without_shipping_without_discount = (
             total_without_shipping - cart_amount["discount_total"]
