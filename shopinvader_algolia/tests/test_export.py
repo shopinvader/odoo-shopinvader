@@ -8,9 +8,7 @@ import json
 import os
 
 from odoo.addons.connector_algolia.components.adapter import AlgoliaAdapter
-from odoo.addons.connector_search_engine.tests.test_all import (
-    TestBindingIndexBase,
-)
+from odoo.addons.connector_search_engine.tests.test_all import TestBindingIndexBase
 from odoo.addons.shopinvader.tests.common import _install_lang_odoo
 
 try:

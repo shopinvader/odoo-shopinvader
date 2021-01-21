@@ -4,3 +4,4 @@ locomotivecms
 python-slugify
 slugify
 unidecode
+vcrpy_unittest
