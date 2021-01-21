@@ -24,7 +24,7 @@
     ],
     "demo": ["demo/backend_demo.xml"],
     "external_dependencies": {"python": ["locomotivecms"]},
-    "installable": False,
+    "installable": True,
     "auto_install": False,
     "application": False,
 }
