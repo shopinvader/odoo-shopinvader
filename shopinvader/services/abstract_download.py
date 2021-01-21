@@ -1,12 +1,11 @@
 # Copyright 2020 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import mimetypes
-import time
 
 from odoo import _
 from odoo.exceptions import MissingError
 from odoo.http import content_disposition, request
-from odoo.tools.safe_eval import safe_eval
+from odoo.tools.safe_eval import safe_eval, time
 
 from odoo.addons.base_rest.components.service import skip_secure_response, to_int
 from odoo.addons.component.core import AbstractComponent
@@ -75,7 +74,7 @@ class AbstractDownload(AbstractComponent):
         report_name = target_report_def.get("report_name")
         report_type = target_report_def.get("report_type")
         report = self._get_report(report_name, report_type)
-        content, extension = report.render(
+        content, extension = report._render(
             target.ids, data={"report_type": report_type}
         )
         filename = self._get_binary_content_filename(

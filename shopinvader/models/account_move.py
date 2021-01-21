@@ -11,10 +11,10 @@ class AccountMove(models.Model):
         "shopinvader.backend", "Shopinvader Backend"
     )
 
-    def post(self):
-        res = super(AccountMove, self).post()
+    def _post(self, soft=False):
+        res = super(AccountMove, self)._post(soft=soft)
         for record in self:
             backend = record.shopinvader_backend_id
-            if record.type == "out_invoice" and backend:
+            if record.move_type == "out_invoice" and backend:
                 backend._send_notification("invoice_open", record)
         return res

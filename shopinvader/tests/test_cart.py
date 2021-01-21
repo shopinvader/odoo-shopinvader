@@ -59,24 +59,24 @@ class CartClearTest(object):
         clear_option = self.backend.clear_cart_options
         if clear_option == "clear":
             self.assertFalse(new_carts)
-            self.assertEquals(cart_id, cart.exists().id)
+            self.assertEqual(cart_id, cart.exists().id)
             self.assertIsInstance(session, dict)
-            self.assertEquals(session.get("cart_id"), cart_id)
+            self.assertEqual(session.get("cart_id"), cart_id)
             self.assertFalse(cart.order_line)
         elif clear_option == "delete":
             self.assertFalse(cart.exists())
             self.assertIsInstance(session, dict)
-            self.assertEquals(session.get("cart_id"), 0)
+            self.assertEqual(session.get("cart_id"), 0)
         elif clear_option == "cancel":
             # We only check that the previous cart is cancelled.
             # The new cart will be created if the customer add a new item.
             # Test the creation of new cart is not the goal of this test.
-            self.assertEquals(len(new_carts), 0)
+            self.assertEqual(len(new_carts), 0)
             self.assertIsInstance(session, dict)
             self.assertFalse(session.get("cart_id"))
             # The previous should exists
-            self.assertEquals(cart_id, cart.exists().id)
-            self.assertEquals(cart.state, "cancel")
+            self.assertEqual(cart_id, cart.exists().id)
+            self.assertEqual(cart.state, "cancel")
         return True
 
     @mute_logger("odoo.models.unlink")
@@ -134,7 +134,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
         description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
         # It should not create any queue job because the user is not logged
-        self.assertEquals(self.env["queue.job"].search_count(domain), 0)
+        self.assertEqual(self.env["queue.job"].search_count(domain), 0)
 
     def test_cart_pricelist_apply(self):
         """
@@ -360,7 +360,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         notif = "cart_send_email"
         description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
-        self.assertEquals(self.env["queue.job"].search_count(domain), 1)
+        self.assertEqual(self.env["queue.job"].search_count(domain), 1)
 
     def test_ask_email2(self):
         """
@@ -376,7 +376,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         notif = "cart_send_email"
         description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
-        self.assertEquals(self.env["queue.job"].search_count(domain), 0)
+        self.assertEqual(self.env["queue.job"].search_count(domain), 0)
 
     def test_ask_email3(self):
         """
@@ -392,7 +392,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         notif = "cart_send_email"
         description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
-        self.assertEquals(self.env["queue.job"].search_count(domain), 0)
+        self.assertEqual(self.env["queue.job"].search_count(domain), 0)
 
     def test_cart_robustness(self):
         """

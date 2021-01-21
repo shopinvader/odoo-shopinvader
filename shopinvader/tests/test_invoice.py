@@ -1,6 +1,5 @@
 # Copyright 2019 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
-from odoo import fields
 
 from .common import CommonCase, CommonTestDownload
 
@@ -33,24 +32,6 @@ class TestInvoice(CommonCase, CommonTestDownload):
         with self.work_on_services(partner=self.partner) as work:
             self.sale_service = work.component(usage="sales")
             self.invoice_service = work.component(usage="invoice")
-
-    def _make_payment(self, invoice):
-        """
-        Make the invoice payment
-        :param invoice: account.invoice recordset
-        :return: bool
-        """
-        invoice.post()
-        ctx = {"active_ids": invoice.ids}
-        wizard_obj = self.register_payments_obj.with_context(ctx)
-        register_payments = wizard_obj.create(
-            {
-                "payment_date": fields.Date.today(),
-                "journal_id": self.bank_journal_euro.id,
-                "payment_method_id": self.payment_method_manual_in.id,
-            }
-        )
-        register_payments.create_payments()
 
     def _confirm_and_invoice_sale(self, sale):
         sale.action_confirm()
@@ -136,8 +117,8 @@ class TestInvoice(CommonCase, CommonTestDownload):
         # and only paid invoice are accessible
         self.assertFalse(self.backend.invoice_access_open)
         # Invoices are open, none of them is included
-        self.invoice.post()
-        self.non_sale_invoice.post()
+        self.invoice._post()
+        self.non_sale_invoice._post()
         domain = self.invoice_service._get_base_search_domain()
         self.assertNotIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertNotIn(self.invoice, self.invoice_obj.search(domain))
@@ -155,8 +136,8 @@ class TestInvoice(CommonCase, CommonTestDownload):
         # and only paid invoice are accessible
         self.assertFalse(self.backend.invoice_access_open)
         # Invoices are open, none of them is included
-        self.invoice.post()
-        self.non_sale_invoice.post()
+        self.invoice._post()
+        self.non_sale_invoice._post()
         domain = self.invoice_service._get_base_search_domain()
         self.assertNotIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertNotIn(self.invoice, self.invoice_obj.search(domain))
@@ -173,8 +154,8 @@ class TestInvoice(CommonCase, CommonTestDownload):
         self.backend.invoice_linked_to_sale_only = False
         # and open invoices enabled as well
         self.backend.invoice_access_open = True
-        self.invoice.post()
-        self.non_sale_invoice.post()
+        self.invoice._post()
+        self.non_sale_invoice._post()
         domain = self.invoice_service._get_base_search_domain()
         self.assertIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertIn(self.invoice, self.invoice_obj.search(domain))

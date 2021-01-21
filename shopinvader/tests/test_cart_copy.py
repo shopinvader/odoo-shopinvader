@@ -20,13 +20,13 @@ class TestCartCopy(CommonConnectedCartCase):
         result = self.service.dispatch("copy", params={"id": self.cart.id})
         cart_data = result.get("data")
         new_id = cart_data.get("id")
-        self.assertNotEquals(new_id, self.cart.id)
+        self.assertNotEqual(new_id, self.cart.id)
         copy_cart = self.env["sale.order"].browse(new_id)
-        self.assertEquals("cart", copy_cart.typology)
+        self.assertEqual("cart", copy_cart.typology)
         line = copy_cart.order_line.filtered(
             lambda l: l.product_id == self.product_copy
         )
-        self.assertEquals(500.0, line.price_unit)
+        self.assertEqual(500.0, line.price_unit)
 
     @mute_logger("odoo.models.unlink")
     def test_cart_copy_does_not_exist(self):

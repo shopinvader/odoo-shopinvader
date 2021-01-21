@@ -52,7 +52,7 @@ class CommonInvoiceCase(CommonCase):
                 current_data.get("date_invoice"), invoice.date_invoice
             )
             self.assertEquals(current_data.get("state"), invoice.state)
-            self.assertEquals(current_data.get("type"), invoice.type)
+            self.assertEquals(current_data.get("type"), invoice.move_type)
             self.assertEquals(current_data.get("state_label"), state_label)
             self.assertEquals(current_data.get("type_label"), type_label)
             self.assertEquals(

@@ -7,6 +7,7 @@ from contextlib import contextmanager
 
 import mock
 
+from odoo import fields
 from odoo.exceptions import MissingError
 from odoo.tests import SavepointCase
 
@@ -17,6 +18,7 @@ from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
 
 from .. import shopinvader_response
+from ..services import abstract_download
 
 
 def _install_lang_odoo(env, lang_xml_id, full_install=False):
@@ -210,15 +212,14 @@ class CommonTestDownload(object):
         """
         with mock.patch(
             "odoo.addons.shopinvader.services." "abstract_download.content_disposition"
-        ) as mocked_cd, mock.patch(
-            "odoo.addons.shopinvader.services.abstract_download.request"
-        ) as mocked_request:
+        ) as mocked_cd:
+            request = mock.MagicMock()
+            abstract_download.request = request
             mocked_cd.return_value = "attachment; filename=test"
-            make_response = mock.MagicMock()
-            mocked_request.make_response = make_response
+            # mocked_request.make_response = make_response
             service.download(target.id)
-            self.assertEqual(1, make_response.call_count)
-            content, headers = make_response.call_args[0]
+            self.assertEqual(1, request.make_response.call_count)
+            content, headers = request.make_response.call_args[0]
             self.assertTrue(content)
             self.assertIn(("Content-Disposition", "attachment; filename=test"), headers)
 
@@ -236,3 +237,21 @@ class CommonTestDownload(object):
         :return:
         """
         self._test_download_not_allowed(service, target)
+
+    def _make_payment(self, invoice):
+        """
+        Make the invoice payment
+        :param invoice: account.invoice recordset
+        :return: bool
+        """
+        invoice._post()
+        ctx = {"active_ids": invoice.ids, "active_model": "account.move"}
+        wizard_obj = self.register_payments_obj.with_context(ctx)
+        register_payments = wizard_obj.create(
+            {
+                "payment_date": fields.Date.today(),
+                "journal_id": self.bank_journal_euro.id,
+                "payment_method_id": self.payment_method_manual_in.id,
+            }
+        )
+        register_payments._create_payments()

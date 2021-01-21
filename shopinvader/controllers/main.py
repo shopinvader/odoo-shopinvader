@@ -24,7 +24,7 @@ class InvaderController(main.RestController):
     @route(["/shopinvader/<service>/<int:_id>/download"], methods=["GET"])
     def service_download(self, service, _id=None, **params):
         params["id"] = _id
-        return self._process_method(service, "download", _id=_id, params=params)
+        return self._process_method(service, "download", _id, params)
 
     @classmethod
     def _get_partner_from_headers(cls, headers):
