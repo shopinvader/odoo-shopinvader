@@ -55,10 +55,12 @@
         </function>
 
     <record id="product_product_chair_vortex_white" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_chair_vortex" />
         <field name="default_code">VORCHAIR-001</field>
     </record>
 
     <record id="product_product_chair_vortex_blue" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_chair_vortex" />
         <field name="default_code">VORCHAIR-002</field>
     </record>
 
@@ -132,22 +134,27 @@
         </function>
 
     <record id="product_product_armchair_mid_century_blue" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_armchair_mid_century" />
         <field name="default_code">B00RX-001</field>
     </record>
 
     <record id="product_product_armchair_mid_century_grey" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_armchair_mid_century" />
         <field name="default_code">B00RX-002</field>
     </record>
 
     <record id="product_product_armchair_mid_century_yellow" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_armchair_mid_century" />
         <field name="default_code">B00RX-003</field>
     </record>
 
     <record id="product_product_armchair_mid_century_red" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_armchair_mid_century" />
         <field name="default_code">B00RX-004</field>
     </record>
 
     <record id="product_product_table_walmut" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_armchair_mid_century" />
         <field
             name="name"
         >Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture
@@ -235,19 +242,22 @@
 
 
     <record id="product_product_chair_mid_century_blue" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_chair_mid_century" />
         <field name="default_code">MIDCHAIR-001</field>
     </record>
 
     <record id="product_product_chair_mid_century_white" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_chair_mid_century" />
         <field name="default_code">B01E4IL4TY</field>
     </record>
 
-
     <record id="product_product_chair_mid_century_black" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_chair_mid_century" />
         <field name="default_code">MIDCHAIR-002</field>
     </record>
 
     <record id="product_product_chair_mid_century_red" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_chair_mid_century" />
         <field name="default_code">re</field>
     </record>
 
@@ -303,6 +313,10 @@
         id="product_product_tv_cabinet_concept_design_white"
         model="product.product"
     >
+        <field
+            name="product_tmpl_id"
+            ref="product_template_tv_cabinet_concept_design"
+        />
         <field name="default_code">B011RACHQ6</field>
     </record>
 
@@ -351,6 +365,7 @@
         </function>
 
     <record id="product_product_coffee_table_caftman_brown" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_coffee_table_caftman" />
         <field name="default_code">SAUDERTABLE-001</field>
     </record>
 
@@ -412,6 +427,7 @@
         </function>
 
     <record id="product_product_tv_stand_wood_and_glass_white" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_tv_stand_wood_and_glass" />
         <field name="default_code">C</field>
     </record>
 
@@ -473,6 +489,7 @@
         </function>
 
     <record id="product_product_tv_cabinet_cmcharper_brown" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_tv_cabinet_cmcharper" />
         <field name="default_code">HARPTV-001</field>
     </record>
 
@@ -528,10 +545,12 @@
         </function>
 
     <record id="product_product_tv_cabinet_shaker_wood_brown" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_tv_cabinet_shaker_wood" />
         <field name="default_code">CDAPMAK9-B</field>
     </record>
 
     <record id="product_product_tv_cabinet_shaker_wood_grey" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_tv_cabinet_shaker_wood" />
         <field name="default_code">CDAPMAK9-G</field>
     </record>
 
@@ -580,6 +599,7 @@
         </function>
 
     <record id="product_product_tv_cabinet_mid_century_brown" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_tv_cabinet_mid_century" />
         <field name="default_code">TABLEMID-001</field>
     </record>
 
@@ -628,6 +648,7 @@
         </function>
 
     <record id="product_product_round_table_mid_century_white" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_round_table_mid_century" />
         <field name="default_code">/</field>
     </record>
 
@@ -692,14 +713,17 @@
         </function>
 
     <record id="product_product_thelma_red" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_thelma" />
         <field name="default_code">THELMA-RED</field>
     </record>
 
     <record id="product_product_thelma_grey" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_thelma" />
         <field name="default_code">THELMA-GREY</field>
     </record>
 
     <record id="product_product_thelma_black" model="product.product">
+        <field name="product_tmpl_id" ref="product_template_thelma" />
         <field name="default_code">THELMA-BLACK</field>
     </record>
 

@@ -16,7 +16,19 @@ class NotificationCaseMixin(object):
                 ("notification_type", "=", notif_type),
             ]
         )
-        vals = notif.template_id.generate_email(record.id)
+        vals = notif.template_id.generate_email(
+            record.id,
+            [
+                "subject",
+                "body_html",
+                "email_from",
+                "email_to",
+                "partner_to",
+                "email_cc",
+                "reply_to",
+                "scheduled_date",
+            ],
+        )
         message = self.env["mail.message"].search(
             [
                 ("subject", "=", vals["subject"]),
@@ -55,7 +67,7 @@ class NotificationCartCase(CommonCase, NotificationCaseMixin):
             line.qty_delivered = line.product_uom_qty
         self.cart._create_invoices()
         self._init_job_counter()
-        self.cart.invoice_ids.post()
+        self.cart.invoice_ids._post()
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification("invoice_open", self.cart.invoice_ids[0])

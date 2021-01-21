@@ -78,7 +78,7 @@ class BackendCase(CommonCase):
     @mute_logger("odoo.models.unlink")
     def test_bind_all_product_and_autobind_category(self):
         self.env["shopinvader.category"].search([]).unlink()
-        self.backend.category_binding_level = 2
+        self.backend.category_binding_level = 3
         records = self._setup_bind_all_products()
         self._bind_all_product([("id", "in", records["all_prods"].ids)])
         # count all categs because they are assigned directly to products

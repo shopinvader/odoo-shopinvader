@@ -82,7 +82,7 @@ class InvoiceService(Component):
     def _get_domain_state(self):
         domain_state = [("state", "in", self._get_allowed_invoice_states())]
         domain_payment_state = [
-            ("invoice_payment_state", "in", self._get_allowed_payment_states())
+            ("payment_state", "in", self._get_allowed_payment_states())
         ]
         return expression.AND([domain_state, domain_payment_state])
 
@@ -101,7 +101,7 @@ class InvoiceService(Component):
             invoices = self.env["account.move"].search(
                 [
                     ("partner_id", "=", self.partner.id),
-                    ("type", "in", ["out_invoice", "out_refund"]),
+                    ("move_type", "in", ["out_invoice", "out_refund"]),
                 ]
             )
         return invoices

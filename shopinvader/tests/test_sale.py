@@ -97,25 +97,7 @@ class SaleCase(CommonCase, CommonTestDownload):
         description = "Notify {} for {},{}".format(notif, invoice._name, invoice.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
         self.service.dispatch("ask_email_invoice", self.sale.id)
-        self.assertEquals(self.env["queue.job"].search_count(domain), 1)
-
-    def _make_payment(self, invoice):
-        """
-        Make the invoice payment
-        :param invoice: account.invoice recordset
-        :return: bool
-        """
-        invoice.post()
-        ctx = {"active_ids": invoice.ids}
-        wizard_obj = self.register_payments_obj.with_context(ctx)
-        register_payments = wizard_obj.create(
-            {
-                "payment_date": fields.Date.today(),
-                "journal_id": self.bank_journal_euro.id,
-                "payment_method_id": self.payment_method_manual_in.id,
-            }
-        )
-        register_payments.create_payments()
+        self.assertEqual(self.env["queue.job"].search_count(domain), 1)
 
     def test_invoice_01(self):
         """
@@ -127,7 +109,7 @@ class SaleCase(CommonCase, CommonTestDownload):
             * No invoice information returned
         """
         self._confirm_and_invoice_sale()
-        self.assertNotEqual(self.invoice.invoice_payment_state, "paid")
+        self.assertNotEqual(self.invoice.payment_state, "paid")
         res = self.service.get(self.sale.id)
         self.assertFalse(res["invoices"])
 
@@ -142,7 +124,7 @@ class SaleCase(CommonCase, CommonTestDownload):
         """
         self._confirm_and_invoice_sale()
         self._make_payment(self.invoice)
-        self.assertEqual(self.invoice.invoice_payment_state, "paid")
+        self.assertEqual(self.invoice.payment_state, "paid")
         res = self.service.get(self.sale.id)
         self.assertTrue(res)
         self.assertEqual(

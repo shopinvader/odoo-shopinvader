@@ -64,9 +64,9 @@ class ProductCase(ProductCommonCase):
                 lambda u: u not in existing_urls
             )
             if shopinv_variant_names.get(shopinv_variant) != shopinv_variant.name:
-                self.assertEquals(len(new_url), 1)
+                self.assertEqual(len(new_url), 1)
             else:
-                self.assertEquals(len(new_url), 0)
+                self.assertEqual(len(new_url), 0)
 
     def test_product_name_url(self):
         """
@@ -505,7 +505,7 @@ class ProductCase(ProductCommonCase):
             while parent and parent.active:
                 level += 1
                 parent = parent.shopinvader_parent_id
-            self.assertEquals(shopinv_categ.level, level)
+            self.assertEqual(shopinv_categ.level, level)
         return True
 
     def test_product_category_auto_bind(self):
@@ -536,7 +536,7 @@ class ProductCase(ProductCommonCase):
         self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 0})
         self.backend.bind_all_product()
-        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        self.assertEqual(existing_binded_categs, shopinv_categ_obj.search([]))
         # New categories shouldn't be binded due to binded level set to 0
         self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 2})
@@ -553,7 +553,7 @@ class ProductCase(ProductCommonCase):
         )
         self._check_category_level(existing_binded_categs)
         # Ensure no others categories are binded
-        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        self.assertEqual(existing_binded_categs, shopinv_categ_obj.search([]))
         # categ_child and categ_parent should be binded but not the categ
         # grand_parent due to binding_level defined on 2
         binded_categs = shopinv_categ_obj.search(
@@ -592,7 +592,7 @@ class ProductCase(ProductCommonCase):
         self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 0})
         wizard.bind_products()
-        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        self.assertEqual(existing_binded_categs, shopinv_categ_obj.search([]))
         # New categories shouldn't be binded due to binded level set to 0
         self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 2})
@@ -607,7 +607,7 @@ class ProductCase(ProductCommonCase):
         )
         self._check_category_level(existing_binded_categs)
         # Ensure no others categories are binded
-        self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
+        self.assertEqual(existing_binded_categs, shopinv_categ_obj.search([]))
         # categ_child and categ_parent should be binded but not the categ
         # grand_parent due to binding_level defined on 2
         binded_categs = shopinv_categ_obj.search(
@@ -668,11 +668,11 @@ class ProductCase(ProductCommonCase):
         )
         self.assertIn(bind_categ, bind_product.shopinvader_categ_ids)
         urls = bind_product.url_url_ids
-        self.assertEqual(urls.mapped("model_id"), bind_product)
+        self.assertEqual(urls.model_id, bind_product)
         bind_product.write({"active": False})
-        self.assertEqual(urls.mapped("model_id"), bind_categ)
+        self.assertEqual(urls.model_id, bind_categ)
         bind_product.write({"active": True})
-        self.assertEqual(urls.mapped("model_id"), bind_product)
+        self.assertEqual(urls.model_id, bind_product)
 
     def test_product_url2(self):
         """
@@ -728,11 +728,11 @@ class ProductCase(ProductCommonCase):
         self.assertIn(bind_categ_all, bind_product.shopinvader_categ_ids)
         self.assertIn(bind_categ2, bind_product.shopinvader_categ_ids)
         urls = bind_product.url_url_ids
-        self.assertEqual(urls.mapped("model_id"), bind_product)
+        self.assertEqual(urls.model_id, bind_product)
         bind_product.write({"active": False})
-        self.assertEqual(urls.mapped("model_id"), bind_categ2)
+        self.assertEqual(urls.model_id, bind_categ2)
         bind_product.write({"active": True})
-        self.assertEqual(urls.mapped("model_id"), bind_product)
+        self.assertEqual(urls.model_id, bind_product)
         self.assertFalse(bind_product.is_urls_sync_required)
 
     @contextmanager
@@ -776,7 +776,7 @@ class ProductCase(ProductCommonCase):
         if category:
             for url in shopinv_product.url_url_ids:
                 self.assertTrue(url.redirect)
-                self.assertEquals(url.model_id, category)
+                self.assertEqual(url.model_id, category)
         return True
 
     def test_unbind_variant(self):
@@ -788,7 +788,7 @@ class ProductCase(ProductCommonCase):
         :return:
         """
         shopinv_product = self.shopinvader_variants.mapped("shopinvader_product_id")
-        self.assertEquals(len(shopinv_product), 1)
+        self.assertEqual(len(shopinv_product), 1)
         self.assertGreaterEqual(len(self.shopinvader_variants), 1)
         # Init: every variants and shopinv product are active True
         self.shopinvader_variants.write({"active": True})
