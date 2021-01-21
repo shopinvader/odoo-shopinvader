@@ -26,9 +26,9 @@ class StockPicking(models.Model):
         all_move_lines = picking_outgoing.mapped("move_lines")
         backends = picking_outgoing._get_related_backends()
 
-        def filter_line(l, b):
-            lbackend = l.sale_line_id.order_id.shopinvader_backend_id
-            return lbackend == b
+        def filter_line(line, backend):
+            line_backend = line.sale_line_id.order_id.shopinvader_backend_id
+            return line_backend == backend
 
         for backend in backends:
             move_lines = all_move_lines.filtered(lambda l, b=backend: filter_line(l, b))
@@ -47,11 +47,11 @@ class StockPicking(models.Model):
         backends = move_lines.mapped("sale_line_id.order_id.shopinvader_backend_id")
         return backends
 
-    def action_done(self):
+    def _action_done(self):
         """
         Inherit to update the invoice state if necessary
         :return:
         """
-        result = super(StockPicking, self).action_done()
+        result = super(StockPicking, self)._action_done()
         self._notify_backend("stock_picking_outgoing_validated")
         return result

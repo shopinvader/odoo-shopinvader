@@ -77,8 +77,8 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
                     serv_date_order_string,
                     fields.Datetime.to_string(date_order_ts),
                 )
-                self.assertEquals(sale_dict.get("sale_id"), picking.sale_id.id)
-                self.assertEquals(sale_dict.get("name"), picking.sale_id.name)
+                self.assertEqual(sale_dict.get("sale_id"), picking.sale_id.id)
+                self.assertEqual(sale_dict.get("name"), picking.sale_id.name)
             else:
                 self.assertFalse(sale_dict)
         return True

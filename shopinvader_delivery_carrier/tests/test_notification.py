@@ -20,7 +20,7 @@ class NotificationPickingCase(CommonCase, NotificationCaseMixin):
         :return:
         """
         self._init_job_counter()
-        self.picking.action_done()
+        self.picking._action_done()
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification("stock_picking_outgoing_validated", self.picking)
@@ -36,7 +36,7 @@ class NotificationPickingCase(CommonCase, NotificationCaseMixin):
         # Remove the link with procurement/sales
         picking.move_lines.write({"sale_line_id": False})
         self._init_job_counter()
-        picking.action_done()
+        picking._action_done()
         self._check_nbr_job_created(0)
 
     def test_picking_notification3(self):
@@ -48,5 +48,5 @@ class NotificationPickingCase(CommonCase, NotificationCaseMixin):
         """
         self.picking.picking_type_id.write({"code": "internal"})
         self._init_job_counter()
-        self.picking.action_done()
+        self.picking._action_done()
         self._check_nbr_job_created(0)
