@@ -20,7 +20,6 @@ exclude: |
   ^shopinvader_import_image/|
   ^shopinvader_invoice/|
   ^shopinvader_lead/|
-  ^shopinvader_locomotive/|
   ^shopinvader_locomotive_algolia/|
   ^shopinvader_locomotive_contact_company/|
   ^shopinvader_locomotive_elasticsearch/|

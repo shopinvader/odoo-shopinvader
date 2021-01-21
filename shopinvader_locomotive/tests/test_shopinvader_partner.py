@@ -41,9 +41,7 @@ class CommonShopinvaderPartner(LocoCommonCase):
         # the creation of a user account into locomotive
         self._check_nbr_job_created(1)
         with requests_mock.mock() as m:
-            m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
-            )
+            m.post(self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
             res = m.post(
                 self.base_url + "/content_types/customers/entries",
                 json={"_id": external_id},
@@ -79,9 +77,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         # of a user account into locomotive
         self._check_nbr_job_created(1)
         with requests_mock.mock() as m:
-            m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
-            )
+            m.post(self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
             m.delete(
                 self.base_url
                 + "/content_types/customers/entries/5a953d6aae1c744cfcfb3cd3",
@@ -127,9 +123,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         # As we updated a field to export, a job should be created
         self._check_nbr_job_created(1)
         with requests_mock.mock() as m:
-            m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
-            )
+            m.post(self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
             m.put(
                 self.base_url
                 + "/content_types/customers/entries/5a953d6aae1c744cfcfb3cd3",
