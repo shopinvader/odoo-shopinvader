@@ -4,9 +4,7 @@
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.connector_search_engine.tests.test_all import (
-    TestBindingIndexBaseFake,
-)
+from odoo.addons.connector_search_engine.tests.test_all import TestBindingIndexBaseFake
 from odoo.addons.queue_job.tests.common import JobMixin
 
 
@@ -35,9 +33,7 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
             {
                 "name": "test-product-index",
                 "backend_id": cls.backend_specific.se_backend_id.id,
-                "exporter_id": ref(
-                    "shopinvader.ir_exp_shopinvader_variant"
-                ).id,
+                "exporter_id": ref("shopinvader.ir_exp_shopinvader_variant").id,
                 "lang_id": ref("base.lang_en").id,
                 "model_id": ref("shopinvader.model_shopinvader_variant").id,
             }
