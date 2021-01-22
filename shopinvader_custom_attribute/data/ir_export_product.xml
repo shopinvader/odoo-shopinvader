@@ -13,7 +13,7 @@
 
     <record id="ir_exp_shopinvader_attribute_set" model="ir.exports.line">
         <field name="name">attribute_set_id/name</field>
-        <field name="alias">attribute_set_id:attribute_set/name</field>
+        <field name="target">attribute_set_id:attribute_set/name</field>
         <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     </record>
 

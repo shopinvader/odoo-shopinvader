@@ -8,13 +8,13 @@
 
     <record id="ir_exp_shopinvader_variant_object_id" model="ir.exports.line">
         <field name="name">object_id</field>
-        <field name="alias">object_id:objectID</field>
+        <field name="target">object_id:objectID</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
     <record id="ir_exp_shopinvader_variant_model_name" model="ir.exports.line">
         <field name="name">shopinvader_product_id/shopinvader_display_name</field>
-        <field name="alias">shopinvader_product_id:model/shopinvader_display_name:name</field>
+        <field name="target">shopinvader_product_id:model/shopinvader_display_name:name</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
@@ -45,7 +45,7 @@
 
     <record id="ir_exp_shopinvader_name" model="ir.exports.line">
         <field name="name">full_name</field>
-        <field name="alias">full_name:name</field>
+        <field name="target">full_name:name</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
@@ -76,31 +76,31 @@
 
     <record id="ir_exp_shopinvader_variant_categs_id" model="ir.exports.line">
         <field name="name">shopinvader_categ_ids/object_id</field>
-        <field name="alias">shopinvader_categ_ids:categories/object_id:id</field>
+        <field name="target">shopinvader_categ_ids:categories/object_id:id</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
     <record id="ir_exp_shopinvader_variant_categs_name" model="ir.exports.line">
         <field name="name">shopinvader_categ_ids/name</field>
-        <field name="alias">shopinvader_categ_ids:categories/name</field>
+        <field name="target">shopinvader_categ_ids:categories/name</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
     <record id="ir_exp_shopinvader_variant_categs_url_key" model="ir.exports.line">
         <field name="name">shopinvader_categ_ids/url_key</field>
-        <field name="alias">shopinvader_categ_ids:categories/url_key</field>
+        <field name="target">shopinvader_categ_ids:categories/url_key</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
     <record id="ir_exp_shopinvader_variant_categs_parent_id" model="ir.exports.line">
         <field name="name">shopinvader_categ_ids/level</field>
-        <field name="alias">shopinvader_categ_ids:categories/level</field>
+        <field name="target">shopinvader_categ_ids:categories/level</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 
     <record id="ir_exp_shopinvader_variant_default_code" model="ir.exports.line">
         <field name="name">default_code</field>
-        <field name="alias">default_code:sku</field>
+        <field name="target">default_code:sku</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant"/>
     </record>
 

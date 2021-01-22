@@ -3,25 +3,25 @@
 
 <record id="ir_exp_shopinvader_variant_media_name" model="ir.exports.line">
     <field name="name">variant_media_ids/name</field>
-    <field name="alias">variant_media_ids:media/name</field>
+    <field name="target">variant_media_ids:media/name</field>
     <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
 </record>
 
 <record id="ir_exp_shopinvader_variant_media_url" model="ir.exports.line">
     <field name="name">variant_media_ids/url</field>
-    <field name="alias">variant_media_ids:media/url</field>
+    <field name="target">variant_media_ids:media/url</field>
     <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
 </record>
 
 <record id="ir_exp_shopinvader_variant_media_type_name" model="ir.exports.line">
     <field name="name">variant_media_ids/media_type_id/name</field>
-    <field name="alias">variant_media_ids:media/media_type_id:type/name</field>
+    <field name="target">variant_media_ids:media/media_type_id:type/name</field>
     <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
 </record>
 
 <record id="ir_exp_shopinvader_variant_media_type_code" model="ir.exports.line">
     <field name="name">variant_media_ids/media_type_id/code</field>
-    <field name="alias">variant_media_ids:media/media_type_id:type/code</field>
+    <field name="target">variant_media_ids:media/media_type_id:type/code</field>
     <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
 </record>
 

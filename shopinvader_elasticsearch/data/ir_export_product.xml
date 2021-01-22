@@ -3,7 +3,7 @@
 
     <record id="ir_exp_shopinvader_hierarchical_categories" model="ir.exports.line">
         <field name="name">hierarchical_categories</field>
-        <field name="alias">hierarchical_categories:hierarchicalCategories</field>
+        <field name="target">hierarchical_categories:hierarchicalCategories</field>
         <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
     </record>
 
