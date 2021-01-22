@@ -36,7 +36,6 @@ exclude: |
   ^shopinvader_product_media/|
   ^shopinvader_product_new/|
   ^shopinvader_product_stock_assortment/|
-  ^shopinvader_product_stock_state/|
   ^shopinvader_product_template_multi_link/|
   ^shopinvader_product_variant_multi_link/|
   ^shopinvader_product_variant_selector/|
