@@ -48,9 +48,7 @@ class TestProductProduct(StockCommonCase):
 
     def test_config_only_qty(self):
         self.shopinvader_backend.stock_level_config = "only_qty"
-        self.assertEqual(
-            self.shopinvader_product.stock_data, {"global": {"qty": 0.00}}
-        )
+        self.assertEqual(self.shopinvader_product.stock_data, {"global": {"qty": 0.00}})
 
     def test_config_only_state(self):
         self.shopinvader_backend.stock_level_config = "only_state"
