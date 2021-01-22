@@ -5,7 +5,7 @@
 
 {
     "name": "Shopinvader Algolia Connector",
-    "version": "13.0.1.2.1",
+    "version": "13.0.1.2.2",
     "author": "Akretion",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
