@@ -10,9 +10,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
     _description = "Shopinvader Image Mixin"
     _image_field = None
 
-    images = fields.Serialized(
-        compute="_compute_image", string="Shopinvader Image"
-    )
+    images = fields.Serialized(compute="_compute_image", string="Shopinvader Image")
 
     def _compute_image(self):
         # Note: this computed field depend on the lang used in the context
@@ -31,9 +29,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
     def _get_image_data_for_record(self):
         self.ensure_one()
         res = []
-        resizes = self.backend_id[
-            "%s_resize_ids" % self._name.replace(".", "_")
-        ]
+        resizes = self.backend_id["%s_resize_ids" % self._name.replace(".", "_")]
         for image_relation in self[self._image_field]:
             url_key = self._get_image_url_key(image_relation)
             image_data = {}
