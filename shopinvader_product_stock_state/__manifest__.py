@@ -5,7 +5,7 @@
     "name": "Shopinvader Product Stock State",
     "summary": "This module is used to choose a stock state during the"
     "export (by backend)",
-    "version": "13.0.1.0.1",
+    "version": "14.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
