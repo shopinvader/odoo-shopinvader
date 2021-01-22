@@ -10,9 +10,7 @@ class ShopinvaderVariant(models.Model):
     _name = "shopinvader.variant"
     _description = "Shopinvader Variant"
 
-    index_id = fields.Many2one(
-        compute="_compute_index", store=True, required=False
-    )
+    index_id = fields.Many2one(compute="_compute_index", store=True, required=False)
 
     @api.depends(
         "backend_id.se_backend_id",

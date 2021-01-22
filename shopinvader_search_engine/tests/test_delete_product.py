@@ -23,9 +23,7 @@ class BindingCase(SavepointCase):
                 }
             )
         )
-        cls.shopinvader_variant = (
-            cls.shopinvader_product.shopinvader_variant_ids
-        )
+        cls.shopinvader_variant = cls.shopinvader_product.shopinvader_variant_ids
 
 
 class BindingDoneCase(BindingCase):
