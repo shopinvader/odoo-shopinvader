@@ -54,7 +54,7 @@ class TestPartnerAccessInfo(CommonCase):
         self.assertTrue(info.is_owner(self.partner.id))
 
         # partner is enabled, can do everything
-        self.partner.shopinvader_enabled = True
+        self.invader_partner.state = "active"
         expected = {
             "addresses": {"create": True},
             "cart": {"add_item": True, "update_item": True},
@@ -62,7 +62,7 @@ class TestPartnerAccessInfo(CommonCase):
         self.assertEqual(info.permissions(), expected)
 
         # partner is disabled, can do nothing
-        self.partner.shopinvader_enabled = False
+        self.invader_partner.state = "inactive"
         expected = {
             "addresses": {"create": False},
             "cart": {"add_item": False, "update_item": False},
@@ -107,10 +107,10 @@ class TestPartnerAccessInfo(CommonCase):
         self.assertTrue(info.is_owner(self.contact.id))
 
         # no matter if the partner user is enabled
-        self.contact.shopinvader_enabled = True
+        self.invader_contact.state = "active"
 
         # partner is enabled, can do everything
-        self.partner.shopinvader_enabled = True
+        self.invader_partner.state = "active"
         expected = {
             "addresses": {"create": True},
             "cart": {"add_item": True, "update_item": True},
@@ -118,7 +118,7 @@ class TestPartnerAccessInfo(CommonCase):
         self.assertEqual(info.permissions(), expected)
 
         # partner is disabled, can do nothing
-        self.partner.shopinvader_enabled = False
+        self.invader_partner.state = "inactive"
         expected = {
             "addresses": {"create": False},
             "cart": {"add_item": False, "update_item": False},
