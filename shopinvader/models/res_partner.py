@@ -1,10 +1,14 @@
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2021 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
+from .shopinvader_partner import STATE_ACTIVE, STATE_PENDING
 
 
 class ResPartner(models.Model):
@@ -13,6 +17,14 @@ class ResPartner(models.Model):
     shopinvader_bind_ids = fields.One2many(
         "shopinvader.partner", "record_id", string="Shopinvader Binding"
     )
+    # TODO: this field should be renamed to `shopinvader_type`
+    # and should be valued like:
+    # - profile = main account
+    # - address = just an address
+    #   that belongs to a partner with shopinvader_type == 'profile'
+    # - user or childuser = has a shop user and is child of a profile
+    # This way we can get rid of many computations like
+    # `parent_has_shopinvader_user` or `has_shopinvader_user`
     address_type = fields.Selection(
         selection=[("profile", "Profile"), ("address", "Address")],
         string="Shopinvader Address Type",
@@ -21,14 +33,136 @@ class ResPartner(models.Model):
     )
     # In europe we use more the opt_in
     opt_in = fields.Boolean(compute="_compute_opt_in", inverse="_inverse_opt_in")
-    shopinvader_enabled = fields.Boolean(
+    is_shopinvader_active = fields.Boolean(
         string="Shop enabled",
-        default=True,
-        help="Enable user account on the frontend. "
-        "If this is disabled the user cannot log in on all the websites. "
-        "This behavior must be enabled on the backend "
-        "via 'Validate customers' flag.",
+        help="This address is enabled to be used for Shopinvader.",
     )
+    parent_has_shopinvader_user = fields.Boolean(
+        help="This partner belongs to Shopinvader user.",
+        compute="_compute_parent_has_shopinvader_user",
+        compute_sudo=True,
+        store=True,
+    )
+    has_shopinvader_user = fields.Boolean(
+        help="This partner has at least a Shopinvader user.",
+        compute="_compute_has_shopinvader_user",
+        compute_sudo=True,
+    )
+    has_shopinvader_user_active = fields.Boolean(
+        help="This partner has at least a Shopinvader active user.",
+        compute="_compute_has_shopinvader_user",
+        compute_sudo=True,
+        store=True,
+    )
+    has_shopinvader_user_to_validate = fields.Boolean(
+        help="This partner has at least a Shopinvader user to be validated.",
+        compute="_compute_has_shopinvader_user",
+        compute_sudo=True,
+        store=True,
+    )
+    has_shopinvader_address_to_validate = fields.Boolean(
+        help="This partner has at least an address to validate for Shopinvader.",
+        compute="_compute_has_shopinvader_address_to_validate",
+        compute_sudo=True,
+    )
+    display_validate_address = fields.Boolean(
+        help="Tech field to be used in views to display/hide validate action.",
+        compute="_compute_display_flags",
+        compute_sudo=True,
+    )
+
+    @api.depends("is_blacklisted")
+    def _compute_opt_in(self):
+        for record in self:
+            record.opt_in = not record.is_blacklisted
+
+    def _inverse_opt_in(self):
+        blacklist_model = self.env["mail.blacklist"]
+        for record in self:
+            if record.opt_in:
+                blacklist_model._remove(record.email)
+            else:
+                blacklist_model._add(record.email)
+
+    @api.depends("parent_id.shopinvader_bind_ids")
+    def _compute_parent_has_shopinvader_user(self):
+        for record in self:
+            record.parent_has_shopinvader_user = bool(
+                record.parent_id.shopinvader_bind_ids
+            )
+
+    @api.depends("shopinvader_bind_ids.state")
+    def _compute_has_shopinvader_user(self):
+        for record in self:
+            record.has_shopinvader_user = bool(record.shopinvader_bind_ids)
+            record.has_shopinvader_user_active = any(
+                record.shopinvader_bind_ids.filtered(
+                    lambda x: x.state == STATE_ACTIVE
+                )
+            )
+            record.has_shopinvader_user_to_validate = any(
+                record.shopinvader_bind_ids.filtered(
+                    lambda x: x.state == STATE_PENDING
+                )
+            )
+
+    @api.depends(
+        "has_shopinvader_user_active",
+        "child_ids.address_type",
+        "child_ids.is_shopinvader_active",
+    )
+    def _compute_has_shopinvader_address_to_validate(self):
+        addresses_to_validate = self.read_group(
+            [
+                ("parent_id", "child_of", self.ids),
+                ("parent_id.has_shopinvader_user_active", "=", True),
+                ("shopinvader_bind_ids", "=", False),
+                ("address_type", "=", "address"),
+                ("is_shopinvader_active", "=", False),
+            ],
+            ["parent_id"],
+            ["parent_id"],
+        )
+        by_parent = {
+            x["parent_id"][0]: x["parent_id_count"]
+            for x in addresses_to_validate
+            if x["parent_id"]
+        }
+        for record in self:
+            record.has_shopinvader_address_to_validate = bool(
+                by_parent.get(record.id)
+            )
+
+    def _compute_display_flags(self):
+        for record in self:
+            record.display_validate_address = (
+                record._display_validate_address()
+            )
+
+    def _display_validate_address(self):
+        if self.has_shopinvader_user:
+            # this is a user, no address
+            return False
+        has_parent = self._get_has_shopinvader_parent()
+        return has_parent and self.address_type == "address"
+
+    def _get_has_shopinvader_parent(self):
+        has_shopinvader_user = self.parent_has_shopinvader_user
+        if has_shopinvader_user:
+            return True
+        parent = self.parent_id
+        while parent and not has_shopinvader_user:
+            parent = parent.parent_id
+            has_shopinvader_user = parent.parent_has_shopinvader_user
+        return has_shopinvader_user
+
+    @api.depends("parent_id")
+    def _compute_address_type(self):
+        for partner in self:
+            if partner.parent_id:
+                partner.address_type = "address"
+            else:
+                partner.address_type = "profile"
 
     @api.constrains("email")
     def _check_unique_email(self):
@@ -59,27 +193,6 @@ class ResPartner(models.Model):
                 % ", ".join(invalid_emails)
             )
 
-    @api.depends("is_blacklisted")
-    def _compute_opt_in(self):
-        for record in self:
-            record.opt_in = not record.is_blacklisted
-
-    def _inverse_opt_in(self):
-        blacklist_model = self.env["mail.blacklist"]
-        for record in self:
-            if record.opt_in:
-                blacklist_model._remove(record.email)
-            else:
-                blacklist_model._add(record.email)
-
-    @api.depends("parent_id")
-    def _compute_address_type(self):
-        for partner in self:
-            if partner.parent_id:
-                partner.address_type = "address"
-            else:
-                partner.address_type = "profile"
-
     def write(self, vals):
         super(ResPartner, self).write(vals)
         if "country_id" in vals:
@@ -104,29 +217,30 @@ class ResPartner(models.Model):
     def addr_type_display(self):
         return self._fields["address_type"].convert_to_export(self.address_type, self)
 
-    def action_enable_for_shop(self):
-        self.write({"shopinvader_enabled": True})
-        # TODO: maybe better to hook to an event?
-        for partner in self:
-            if partner.address_type == "profile":
-                notif_type = "customer_validated"
-                backends = partner.mapped("shopinvader_bind_ids.backend_id")
-                recipient = partner
-            elif partner.address_type == "address":
-                notif_type = "address_validated"
-                backends = partner.mapped("parent_id.shopinvader_bind_ids.backend_id")
-                recipient = partner.parent_id
-            recipient._shopinvader_notify(backends, notif_type)
-            name = partner.name or partner.contact_address.replace("\n", " | ")
-            msg_body = _("Shop {addr_type} '{name}' validated").format(
-                addr_type=partner.addr_type_display().lower(), name=name
-            )
-            recipient.message_post(body=msg_body)
+    def action_shopinvader_validate_customer(self):
+        return self.shopinvader_bind_ids.action_shopinvader_validate()
 
-    def _shopinvader_notify(self, backends, notif_type):
-        self.ensure_one()
-        for backend in backends:
-            backend._send_notification(notif_type, self)
+    def action_shopinvader_validate_address(self):
+        wiz = self._get_shopinvader_validate_address_wizard()
+        action = self.env.ref(
+            "shopinvader.shopinvader_address_validate_act_window"
+        )
+        action_data = action.read()[0]
+        action_data["res_id"] = wiz.id
+        return action_data
+
+    def _get_shopinvader_validate_address_wizard(self, **kw):
+        ids = self.ids
+        if self.env.context.get("validate_all"):
+            ids = self.child_ids.filtered_domain(
+                [
+                    ("has_shopinvader_user", "=", False),
+                    ("address_type", "=", "address"),
+                    ("is_shopinvader_active", "=", False),
+                ]
+            ).ids
+        vals = dict(partner_ids=ids, **kw)
+        return self.env["shopinvader.address.validate"].create(vals)
 
     def get_shop_partner(self, backend):
         """Retrieve current partner customer account.
