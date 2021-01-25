@@ -7,11 +7,11 @@
     "summary": """
         This addons is used to push the initial algolia configuration
         to locomotive""",
-    "version": "13.0.1.0.1",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "Camptcamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["component", "shopinvader_locomotive", "shopinvader_algolia"],
     "data": ["views/se_backend_algolia.xml"],
-    "installable": False,
+    "installable": True,
 }
