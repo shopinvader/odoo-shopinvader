@@ -17,7 +17,6 @@ class ShopinvaderBackend(models.Model):
         "Example: my.website.com"
     )
 
-    @api.multi
     def _replace_by_proxy(self, url):
         """
         This function is used to replace the website (into url parameter)
