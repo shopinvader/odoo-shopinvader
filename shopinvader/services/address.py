@@ -71,6 +71,9 @@ class AddressService(Component):
         return partner.address_type == "profile"
 
     # Validator
+    def _get_allowed_type(self):
+        return ["contact", "invoice", "delivery", "other", "private"]
+
     def _validator_search(self):
         validator = self._default_validator_search()
         validator.pop("domain", {})
@@ -78,8 +81,12 @@ class AddressService(Component):
 
     def _validator_create(self):
         res = {
-            "type": {"type": "string", "default": "other"},
             "name": {"type": "string", "required": True},
+            "type": {
+                "type": "string",
+                "allowed": self._get_allowed_type(),
+                "default": "contact",
+            },
             "street": {"type": "string", "required": True, "empty": False},
             "street2": {"type": "string", "nullable": True},
             "zip": {"type": "string", "required": True, "empty": False},
