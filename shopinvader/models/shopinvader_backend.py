@@ -229,7 +229,7 @@ class ShopinvaderBackend(models.Model):
     )
     customer_default_role = fields.Selection(
         selection="_selection_default_role",
-        default=lambda self: self._default_customer_default_role()
+        default=lambda self: self._default_customer_default_role(),
     )
 
     _sql_constraints = [
@@ -511,6 +511,21 @@ class ShopinvaderBackend(models.Model):
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)
 
+    def _get_backend_pricelist(self):
+        """The pricelist configure by this backend."""
+        # There must be a pricelist somehow: safe fallback to default Odoo one
+        return self.pricelist_id or self._default_pricelist_id()
+
+    def _get_customer_default_pricelist(self):
+        """Retrieve pricelist to be used for brand new customer record.
+        """
+        return self._get_backend_pricelist()
+
+    def _get_partner_pricelist(self, partner):
+        """Retrieve pricelist for given res.partner record.
+        """
+        return partner.property_product_pricelist
+
     def _get_cart_pricelist(self, partner=None):
         """Retrieve pricelist to be used for the cart.
 
@@ -520,10 +535,7 @@ class ShopinvaderBackend(models.Model):
         This is because product info comes from indexes
         which are completely agnostic in regard to specific partner info.
         """
-        # There must be a pricelist somehow: safe fallback to default Odoo one
-        return self.pricelist_id or self._default_pricelist_id()
-
-    def _get_customer_default_pricelist(self):
-        """Retrieve pricelist to be used for brand new customer record.
-        """
-        return self._get_cart_pricelist()
+        pricelist = self._get_backend_pricelist()
+        if partner:
+            pricelist = self._get_partner_pricelist(partner) or pricelist
+        return pricelist
