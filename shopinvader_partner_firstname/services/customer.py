@@ -1,4 +1,4 @@
-# coding: utf-8
+# -*- coding: utf-8 -*-
 # Copyright 2019 Camptocamp (http://www.camptocamp.com)
 # Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -10,7 +10,7 @@ class CustomerService(Component):
     _inherit = "shopinvader.customer.service"
 
     def _validator_create(self):
-        schema = super()._validator_create()
+        schema = super(CustomerService, self)._validator_create()
         schema.update(
             {
                 # TODO: now all the fields are not required.
@@ -28,7 +28,9 @@ class CustomerService(Component):
         return schema
 
     def _prepare_params(self, params, mode="create"):
-        params = super()._prepare_params(params, mode=mode)
+        params = super(CustomerService, self)._prepare_params(
+            params, mode=mode
+        )
         # make sure name is not passed to create, even empty,
         # otherwise partner creation will be broken
         if params.get("firstname") and params.get("lastname"):
@@ -40,6 +42,6 @@ class AddressService(Component):
     _inherit = "shopinvader.address.service"
 
     def _json_parser(self):
-        parser = super()._json_parser()
+        parser = super(AddressService, self)._json_parser()
         parser.extend(["firstname", "lastname"])
         return parser
