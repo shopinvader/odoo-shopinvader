@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "13.0.6.2.0",
+    "version": "13.0.6.3.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
@@ -40,6 +40,8 @@
         "wizards/shopinvader_category_binding_wizard.xml",
         "wizards/shopinvader_category_unbinding_wizard.xml",
         "wizards/shopinvader_partner_binding.xml",
+        "wizards/shopinvader_address_validate.xml",
+        "wizards/shopinvader_partner_validate.xml",
         "views/shopinvader_menu.xml",
         "views/shopinvader_product_view.xml",
         "views/shopinvader_variant_view.xml",

@@ -71,12 +71,12 @@ class PartnerAccess(Component):
             # scope: permissions
             "addresses": {
                 # can create addresses only if profile partner is enabled
-                "create": self.partner.shopinvader_enabled
+                "create": self.invader_partner.is_shopinvader_active,
             },
             "cart": {
                 # can hit the button to add to cart
-                "add_item": self.partner.shopinvader_enabled,
+                "add_item": self.invader_partner.is_shopinvader_active,
                 # can go on w/ checkout steps
-                "update_item": self.partner.shopinvader_enabled,
+                "update_item": self.invader_partner.is_shopinvader_active,
             },
         }
