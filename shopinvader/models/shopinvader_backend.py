@@ -227,9 +227,8 @@ class ShopinvaderBackend(models.Model):
         help="Select a specific report for invoice download, if none are selected "
         "default shopinvader implementation is used.",
     )
-    customer_default_role = fields.Selection(
-        selection="_selection_default_role",
-        default=lambda self: self._default_customer_default_role(),
+    customer_default_role = fields.Char(
+        compute="_compute_customer_default_role",
     )
 
     _sql_constraints = [
@@ -260,11 +259,9 @@ class ShopinvaderBackend(models.Model):
     def _default_partner_industry_ids(self):
         return self.env["res.partner.industry"].search([])
 
-    def _selection_default_role(self):
-        return [("default", "Default")]
-
-    def _default_customer_default_role(self):
-        return "default"
+    def _compute_customer_default_role(self):
+        for rec in self:
+            rec.customer_default_role = "default"
 
     def _get_invoice_report_id_domain(self):
         return [
