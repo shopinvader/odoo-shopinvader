@@ -25,6 +25,7 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
             yield mocked_request
 
     def test_partner_ctx_default_multi_disabled(self):
+        self.backend.customer_multi_user = False
         ctrl = InvaderController()
         with self._get_mocked_request(self.company):
             ctx = ctrl._get_component_context()
@@ -37,7 +38,6 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
         self.assertEqual(ctx["partner"], self.user_binding.record_id)
 
     def test_partner_ctx_default_multi_enabled(self):
-        self.backend.customer_multi_user = True
         ctrl = InvaderController()
         with self._get_mocked_request(self.company):
             ctx = ctrl._get_component_context()
@@ -50,7 +50,6 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
         self.assertEqual(ctx["partner"], self.user_binding.main_partner_id)
 
     def test_partner_ctx_default_multi_enabled_user_partner(self):
-        self.backend.customer_multi_user = True
         self.backend.multi_user_profile_policy = "record_id"
         ctrl = InvaderController()
         with self._get_mocked_request(self.company):
