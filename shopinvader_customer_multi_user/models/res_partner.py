@@ -39,7 +39,7 @@ class ResPartner(models.Model):
         )
     ]
 
-    @api.depends("shopinvader_bind_ids")
+    @api.depends("shopinvader_bind_ids.is_invader_user")
     def _compute_has_invader_user(self):
         for rec in self:
             rec.has_invader_user = any(

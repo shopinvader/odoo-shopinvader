@@ -34,6 +34,6 @@ class AddressService(Component):
         # which is delegated completely to `_make_address_domain`
         domains = [
             [("type", "in", ("delivery", "invoice", "contact", "other"))],
-            self.invader_partner._make_address_domain(),
+            self.invader_partner_user._make_address_domain(),
         ]
         return expression.AND(domains)

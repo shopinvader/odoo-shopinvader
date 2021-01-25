@@ -14,24 +14,6 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         super().setUpClass()
         # Enable multi-user
         cls.backend.customer_multi_user = True
-        # Create 2 more users so that we have
-        # 1 company user with 3 simple users
-        # and user 3 is a child of user 2.
-        cls.user_binding2 = cls._create_partner(
-            cls.env,
-            name="Simple user 2",
-            parent_id=cls.company.id,
-            external_id="simple-user-2",
-            email="simpleuser2@test.com",
-        )
-        cls.user_binding3 = cls._create_partner(
-            cls.env,
-            name="Simple user 3",
-            parent_id=cls.user_binding2.record_id.id,
-            main_partner_id=cls.user_binding2.record_id.id,
-            external_id="simple-user-3",
-            email="simpleuser3@test.com",
-        )
         cls.all_bindings = (
             cls.user_binding + cls.user_binding2 + cls.user_binding3
         )
@@ -97,7 +79,9 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
 
     def _get_service(self, partner, usage):
         with self.work_on_services(
-            partner=partner, shopinvader_session=self.shopinvader_session
+            partner=partner.get_shop_partner(self.backend),
+            partner_user=partner,
+            shopinvader_session=self.shopinvader_session,
         ) as work:
             return work.component(usage=usage)
 
@@ -110,11 +94,14 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
             [x["id"] for x in found],
             expected.ids,
             """
+            For partner:
+                {partner.name}
             Expected:
                 {expected}
             Found:
                 {found}
             """.format(
+                partner=partner,
                 expected=" + ".join(
                     ["%s (%d)" % (x.name, x.id) for x in expected]
                 ),
@@ -288,7 +275,9 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
             self.user_binding.record_id,
             expected_addresses=expected_addresses,
         )
-
+        self.assertEqual(
+            self.user_binding3.main_partner_id, self.user_binding2.record_id
+        )
         partner = self.user_binding3.record_id
         expected_addresses = (
             partner

@@ -26,11 +26,10 @@ class TestMultiUserToken(TestMultiUserCommon):
         return tokens
 
     def test_token_auto_gen_disabled(self):
-        self.assertFalse(self.backend.customer_multi_user)
+        self.backend.customer_multi_user = False
         tokens = self._generate_random_companies()
         self.assertEqual(len(tokens), 0)
 
     def test_token_auto_gen(self):
-        self.backend.customer_multi_user = True
         tokens = self._generate_random_companies()
         self.assertEqual(len(tokens), 5)

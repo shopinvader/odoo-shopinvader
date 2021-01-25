@@ -10,6 +10,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
     """
 
     def test_get_shop_partner_default(self):
+        self.backend.customer_multi_user = False
         self.assertEqual(
             self.company.get_shop_partner(self.backend), self.company
         )
@@ -36,13 +37,13 @@ class TestMultiUserPartner(TestMultiUserCommon):
         )
 
     def test_is_invader_user(self):
+        self.backend.customer_multi_user = False
         self.assertFalse(self.company_binding.is_invader_user)
         self.assertFalse(self.company.has_invader_user)
         self.assertTrue(self.user_binding.is_invader_user)
         self.assertTrue(self.user_binding.record_id.has_invader_user)
 
     def test_get_shop_partner_multi_enabled_company(self):
-        self.backend.customer_multi_user = True
         self.assertEqual(
             self.backend.multi_user_profile_policy, "main_partner_id"
         )
@@ -55,7 +56,6 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(customer_partner, self.company)
 
     def test_get_shop_partner_multi_enabled_simple_user(self):
-        self.backend.customer_multi_user = True
         self.assertEqual(
             self.backend.multi_user_profile_policy, "main_partner_id"
         )
@@ -74,12 +74,10 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(customer_partner, self.user_binding.record_id)
 
     def test_main_partner_recompute(self):
-        self.backend.customer_multi_user = True
         self.assertEqual(self.user_binding.main_partner_id, self.company)
 
         new_parent = self.env["res.partner"].create({"name": "New parent"})
         self.user_binding.parent_id = new_parent
-        # gets recomputed on new parent
         self.assertEqual(self.user_binding.main_partner_id, new_parent)
 
         self.backend.multi_user_main_partner_domain = (
@@ -97,7 +95,6 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(self.user_binding.main_partner_id, new_parent)
 
     def test_main_partner_manual(self):
-        self.backend.customer_multi_user = True
         self.assertEqual(self.user_binding.main_partner_id, self.company)
         custom_partner = self.env["res.partner"].create({"name": "Custom"})
 
