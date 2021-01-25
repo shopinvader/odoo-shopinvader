@@ -76,6 +76,11 @@ class DeliveryCarrierService(Component):
                             "required": False,
                             "nullable": True,
                         },
+                        "code": {
+                            "type": "string",
+                            "required": False,
+                            "nullable": True,
+                        },
                         "description": {
                             "type": "string",
                             "required": False,
@@ -149,4 +154,4 @@ class DeliveryCarrierService(Component):
 
     @property
     def _json_parser_carrier(self):
-        return ["id", "name", "name:description"]
+        return ["id", "name", "code", "description"]

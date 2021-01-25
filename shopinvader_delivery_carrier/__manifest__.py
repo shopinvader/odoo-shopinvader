@@ -18,6 +18,7 @@
         "queue_job",
         "shopinvader",
         "sale_shipping_info_helper",
+        "delivery_carrier_info",
     ],
     "data": ["views/backend_view.xml", "data/cart_step.xml"],
     "demo": [
