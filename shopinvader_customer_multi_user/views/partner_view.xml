@@ -8,13 +8,10 @@
       <field name="shopinvader_bind_ids" position="after">
         <group name="multi_user" string="Multi user">
           <field name="has_invader_user" />
-          <field name="invader_user_token" />
-          <button
-                        name="action_regenerate_invader_user_token"
-                        type="object"
-                        string="Re-generate token"
-                        attrs="{'invisible': [('invader_user_token','=',False)]}"
-                    />
+          <field name="invader_user_token"/>
+          <button name="action_regenerate_invader_user_token" type="object"
+                  string="Re-generate token"
+                  attrs="{'invisible': [('invader_user_token','=',False)]}"/>
         </group>
       </field>
       <xpath
