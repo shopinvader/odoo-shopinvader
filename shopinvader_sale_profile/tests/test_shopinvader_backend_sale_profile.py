@@ -12,11 +12,11 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
 
     def test_get_pricelist_default(self):
         self.assertFalse(self.backend.use_sale_profile)
-        expected = self.backend.pricelist_id
+        expected = self.backend._default_pricelist_id()
         self.assertEqual(self.backend._get_cart_pricelist(), expected)
 
-    def test_get_pricelist(self):
-        self.backend.write({"use_sale_profile": True, "pricelist_id": False})
+    def test_compute_pricelist(self):
+        self.backend.write({"use_sale_profile": True})
         profile1 = self.env.ref(
             "shopinvader_sale_profile.shopinvader_sale_profile_1"
         )
@@ -25,6 +25,21 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
         )
         self.assertNotEqual(profile1.pricelist_id, profile2.pricelist_id)
         self.assertTrue(profile1.default)
+        expected = profile1.pricelist_id
+        self.assertEqual(self.backend.pricelist_id, expected)
+        profile1.default = False
+        profile2.default = True
+        expected = profile2.pricelist_id
+        self.assertEqual(self.backend.pricelist_id, expected)
+
+    def test_get_pricelist(self):
+        self.backend.write({"use_sale_profile": True})
+        profile1 = self.env.ref(
+            "shopinvader_sale_profile.shopinvader_sale_profile_1"
+        )
+        profile2 = self.env.ref(
+            "shopinvader_sale_profile.shopinvader_sale_profile_2"
+        )
         expected = profile1.pricelist_id
         self.assertEqual(self.backend._get_cart_pricelist(), expected)
         profile1.default = False
@@ -38,7 +53,7 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
         self.assertEqual(self.backend._get_cart_pricelist(partner), expected)
 
     def test_get_pricelist_partner(self):
-        self.backend.write({"use_sale_profile": True, "pricelist_id": False})
+        self.backend.write({"use_sale_profile": True})
         profile1 = self.env.ref(
             "shopinvader_sale_profile.shopinvader_sale_profile_1"
         )
@@ -65,9 +80,12 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
             )
 
     def test_get_pricelist_partner_no_profile(self):
-        self.backend.write({"use_sale_profile": True, "pricelist_id": False})
+        self.backend.write({"use_sale_profile": True})
         profile1 = self.env.ref(
             "shopinvader_sale_profile.shopinvader_sale_profile_1"
+        )
+        profile2 = self.env.ref(
+            "shopinvader_sale_profile.shopinvader_sale_profile_2"
         )
         partner = self.env.ref("shopinvader.partner_2")
         invader_partner = partner._get_invader_partner(self.backend)
@@ -83,7 +101,8 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
                 self.backend._get_cart_pricelist(partner), expected
             )
             profile1.default = False
+            profile2.default = True
+            expected = profile2.pricelist_id
             self.assertEqual(
-                self.backend._get_cart_pricelist(partner),
-                self.backend._default_pricelist_id(),
+                self.backend._get_cart_pricelist(partner), expected,
             )

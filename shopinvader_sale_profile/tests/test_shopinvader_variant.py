@@ -22,7 +22,7 @@ class TestShopinvaderVariant(ProductCommonCase):
         Test if price field is correctly computed
         :return: bool
         """
-        self.backend.write({"use_sale_profile": True, "pricelist_id": False})
+        self.backend.write({"use_sale_profile": True})
         # Expecting values
         expected_price = {
             "public_tax_exc": {"tax_included": False, "value": 652.17},

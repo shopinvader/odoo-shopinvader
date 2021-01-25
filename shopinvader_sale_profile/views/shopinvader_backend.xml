@@ -22,7 +22,7 @@
                 </group>
             </group>
             <field name="pricelist_id" position="attributes">
-                <attribute name="attrs">{'invisible': [('use_sale_profile', '=', True)], 'required': [('use_sale_profile', '=', False)]}</attribute>
+                <attribute name="attrs">{'readonly': [('use_sale_profile', '=', True)], 'required': [('use_sale_profile', '=', False)]}</attribute>
                 <attribute name="required">False</attribute>
             </field>
             <field name="pricelist_id" position="before">

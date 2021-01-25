@@ -521,7 +521,12 @@ class ShopinvaderBackend(models.Model):
     def _get_partner_pricelist(self, partner):
         """Retrieve pricelist for given res.partner record.
         """
-        return partner.property_product_pricelist
+        # Normally we should return partner.property_product_pricelist
+        # but by default the shop must use the same pricelist for all customers
+        # because products' prices are computed only by backend pricelist.
+        # Nevertheless, this is a good point to hook to
+        # if a different behavior per partner is required.
+        return None
 
     def _get_cart_pricelist(self, partner=None):
         """Retrieve pricelist to be used for the cart.
