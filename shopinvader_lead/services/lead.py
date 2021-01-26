@@ -8,10 +8,14 @@ from odoo.addons.component.core import Component
 
 
 class LeadService(Component):
+    """Shopinvader service to expose crm.lead features.
+    """
+
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.lead.service"
     _usage = "lead"
     _expose_model = "crm.lead"
+    _description = __doc__
 
     # The following methods are 'public' and can be called from the controller.
     # All params are untrusted so please check it by using the decorator

@@ -5,6 +5,9 @@ from odoo.osv import expression
 
 
 class InvoiceService(Component):
+    """Shopinvader service to expose invoices.
+    """
+
     _inherit = [
         "shopinvader.abstract.mail.service",
         "abstract.shopinvader.download",
@@ -12,7 +15,7 @@ class InvoiceService(Component):
     _name = "shopinvader.invoice.service"
     _usage = "invoice"
     _expose_model = "account.move"
-    _description = "Service providing a method to download invoices"
+    _description = __doc__
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !

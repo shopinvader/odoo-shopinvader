@@ -7,6 +7,9 @@ from odoo.osv import expression
 
 
 class SaleService(Component):
+    """Shopinvader service to expose sale orders records.
+    """
+
     _inherit = [
         "shopinvader.abstract.sale.service",
         "abstract.shopinvader.download",
@@ -14,6 +17,7 @@ class SaleService(Component):
     _name = "shopinvader.sale.service"
     _usage = "sales"
     _expose_model = "sale.order"
+    _description = __doc__
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !

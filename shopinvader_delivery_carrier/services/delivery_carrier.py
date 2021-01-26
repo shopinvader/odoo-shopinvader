@@ -8,13 +8,13 @@ from odoo.addons.component.core import Component
 
 
 class DeliveryCarrierService(Component):
+    """Shopinvader service to retrieve delivery carrier information.
+    """
+
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.delivery.carrier.service"
     _usage = "delivery_carrier"
-    _description = """
-        This service allows you to retrieve the informations of available
-        delivery carriers.
-    """
+    _description = __doc__
 
     # Public services:
 

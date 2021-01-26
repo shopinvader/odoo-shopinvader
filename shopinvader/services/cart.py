@@ -15,9 +15,13 @@ _logger = logging.getLogger(__name__)
 
 
 class CartService(Component):
+    """Shopinvader service to provide e-commerce cart features.
+    """
+
     _inherit = "shopinvader.abstract.sale.service"
     _name = "shopinvader.cart.service"
     _usage = "cart"
+    _description = __doc__
 
     @property
     def cart_id(self):
@@ -26,8 +30,8 @@ class CartService(Component):
     # The following method are 'public' and can be called from the controller.
 
     def search(self):
-        """Return the cart that have been set in the session or
-           search an existing cart for the current partner"""
+        """Retrieve cart from session or existing cart for current customer.
+        """
         if not self.cart_id:
             return {}
         return self._to_json(self._get())

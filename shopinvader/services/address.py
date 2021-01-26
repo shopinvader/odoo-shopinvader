@@ -12,6 +12,9 @@ from odoo.exceptions import AccessError
 
 
 class AddressService(Component):
+    """Shopinvader service to create and edit customers' addresses.
+    """
+
     _inherit = [
         "base.shopinvader.service",
         "shopinvader.partner.service.mixin",
@@ -19,6 +22,7 @@ class AddressService(Component):
     _name = "shopinvader.address.service"
     _usage = "addresses"
     _expose_model = "res.partner"
+    _description = __doc__
 
     # The following method are 'public' and can be called from the controller.
 

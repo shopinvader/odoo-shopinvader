@@ -9,12 +9,16 @@ from odoo.addons.component.core import Component
 
 
 class CustomerService(Component):
+    """Shopinvader service to create and edit customers.
+    """
+
     _inherit = [
         "base.shopinvader.service",
         "shopinvader.partner.service.mixin",
     ]
     _name = "shopinvader.customer.service"
     _usage = "customer"
+    _description = __doc__
 
     # The following method are 'public' and can be called from the controller.
     def get(self):
