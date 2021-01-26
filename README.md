@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.1.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 13.0.4.3.0 | Shopinvader
+[shopinvader](shopinvader/) | 13.0.4.4.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.2.2 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
@@ -34,10 +34,10 @@ addon | version | summary
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.3.0.0 | Import product images
 [shopinvader_lead](shopinvader_lead/) | 13.0.1.0.0 | Shopinvader Lead Management
-[shopinvader_locomotive](shopinvader_locomotive/) | 13.0.2.0.0 | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive](shopinvader_locomotive/) | 13.0.2.1.0 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.1 | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 13.0.1.0.2 | Shopinvader guest mode for locomotive
-[shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 13.0.1.1.0 | Synchronize the sale profile info to customer record on Locomotive
+[shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 13.0.1.2.0 | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.1.0 | Synchronize wishlist details to Locomotive users record.
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
@@ -49,7 +49,7 @@ addon | version | summary
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.1 | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 | Add packaging information to wishlists
-[shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.1.0 | ShopInvader - Sale profile
+[shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.2.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.4.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 13.0.2.2.0 | Handle shop wishlist
 
