@@ -9,7 +9,7 @@
     "version": "12.0.1.1.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
-    "website": "https://acsone.eu/",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
         "component",
         "shopinvader_locomotive",

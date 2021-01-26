@@ -7,7 +7,7 @@
     "name": "Shopinvader Demo App",
     "version": "12.0.2.0.4",
     "author": "ACSONE SA/NV",
-    "website": "https://acsone.eu/",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "category": "Generic Modules",
     "depends": [
