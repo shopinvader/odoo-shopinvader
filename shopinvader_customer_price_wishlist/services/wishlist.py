@@ -17,22 +17,11 @@ class WishlistService(Component):
         self._customer_price_service = self.component(usage="customer_price")
         return self._customer_price_service
 
-    # TODO: if we had a centralized way to retrieve prices for customers
-    # we could avoid this module completely.
-    def _json_parser_product(self):
-        res = super()._json_parser_product()
-        res = [x for x in res if x != "price"]
-        res.append(("price", self._json_parser_product_price))
-        return res
-
     def _json_parser_product_price(self, rec, fname):
         return self.customer_price_service._get_price(rec, fname)
 
-    # FIXME: this method does not exist in 13.0. It will be introduced by
-    # https://github.com/shopinvader/odoo-shopinvader/pull/783
-    # If you want to use all recent features this is required to not break it.
-    # It's harmless as it's called only when used w/ #783.
-    # When #783 will be merged, `_json_parser_product` must be dropped.
+    # TODO: if we had a centralized way to retrieve prices for customers
+    # we could avoid this module completely.
     def _json_parser_product_data(self, rec, fname):
         res = super()._json_parser_product_data(rec, fname)
         res["price"] = self._json_parser_product_price(
