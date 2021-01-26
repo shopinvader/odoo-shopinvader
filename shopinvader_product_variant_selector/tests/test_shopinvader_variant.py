@@ -19,9 +19,7 @@ class ShopinvaderVariantCase(SavepointCase):
 
     @classmethod
     def mref(cls, key):
-        return cls.env.ref(
-            "shopinvader_product_variant_selector.{}".format(key)
-        )
+        return cls.env.ref("shopinvader_product_variant_selector.{}".format(key))
 
     def _configure_and_get_variant(self, code):
         self.template._create_variant_ids()
@@ -33,22 +31,18 @@ class ShopinvaderVariantCase(SavepointCase):
             }
         )
         for variant in self.template.product_variant_ids:
-            values = variant.mapped(
-                "product_template_attribute_value_ids"
-            ).sorted(lambda s: s.attribute_id.sequence)
+            values = variant.mapped("product_template_attribute_value_ids").sorted(
+                lambda s: s.attribute_id.sequence
+            )
             variant.default_code = "-".join(values.mapped("name"))
-        for variant in self.template.mapped(
-            "product_variant_ids.shopinvader_bind_ids"
-        ):
+        for variant in self.template.mapped("product_variant_ids.shopinvader_bind_ids"):
             if variant.default_code == code:
                 # We volontary return a new browse record to avoid useless
                 # recompute linked to the prefetch
                 return self.env["shopinvader.variant"].browse(variant.id)
 
     def _inactive_variant(self, codes):
-        for variant in self.template.mapped(
-            "product_variant_ids.shopinvader_bind_ids"
-        ):
+        for variant in self.template.mapped("product_variant_ids.shopinvader_bind_ids"):
             if variant.default_code in codes:
                 variant.active = False
 
