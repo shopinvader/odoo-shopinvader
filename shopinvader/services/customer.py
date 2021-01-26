@@ -50,9 +50,9 @@ class CustomerService(Component):
         )
         return schema
 
-    def _prepare_params(self, params):
+    def _prepare_params(self, params, mode="create"):
         address = self.component(usage="addresses")
-        params = address._prepare_params(params)
+        params = address._prepare_params(params, mode=mode)
         # fmt: off
         params.update(
             {
@@ -62,8 +62,9 @@ class CustomerService(Component):
             }
         )
         # fmt: on
-        if params.get("vat"):
-            params["is_company"] = True
+        if mode == "create":
+            if params.get("vat"):
+                params["is_company"] = True
         return params
 
     def _send_welcome_message(self, binding):
