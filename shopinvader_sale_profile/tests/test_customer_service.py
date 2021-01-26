@@ -33,7 +33,7 @@ class TestShopInvaderCustomerService(CommonCase):
             "phone": "0485485454",
             "external_id": "D5CdkqOEL",
         }
-        self.backend.write({"use_sale_profile": True, "pricelist_id": False})
+        self.backend.write({"use_sale_profile": True})
         session = self.shopinvader_session
         with self.work_on_services(
             partner=None, shopinvader_session=session

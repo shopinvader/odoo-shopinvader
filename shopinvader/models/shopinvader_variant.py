@@ -150,8 +150,9 @@ class ShopinvaderVariant(models.Model):
         self.ensure_one()
         res = {}
         pricelist = self.backend_id.pricelist_id
+        default_role = self.backend_id.customer_default_role
         if pricelist:
-            res["default"] = self._get_price(
+            res[default_role] = self._get_price(
                 pricelist, None, self.backend_id.company_id
             )
         return res

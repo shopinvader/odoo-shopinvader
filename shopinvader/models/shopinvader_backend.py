@@ -1,5 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from contextlib import contextmanager
@@ -63,8 +65,11 @@ class ShopinvaderBackend(models.Model):
         copy=False,
     )
     lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
-    pricelist_id = fields.Many2one("product.pricelist", string="Pricelist")
-
+    pricelist_id = fields.Many2one(
+        "product.pricelist",
+        string="Pricelist",
+        default=lambda self: self._default_pricelist_id(),
+    )
     account_analytic_id = fields.Many2one(
         comodel_name="account.analytic.account",
         string="Analytic account",
@@ -222,6 +227,9 @@ class ShopinvaderBackend(models.Model):
         help="Select a specific report for invoice download, if none are selected "
         "default shopinvader implementation is used.",
     )
+    customer_default_role = fields.Char(
+        compute="_compute_customer_default_role",
+    )
 
     _sql_constraints = [
         (
@@ -240,12 +248,20 @@ class ShopinvaderBackend(models.Model):
         return self.env.company
 
     @api.model
+    def _default_pricelist_id(self):
+        return self.env.ref("product.list0")
+
+    @api.model
     def _default_partner_title_ids(self):
         return self.env["res.partner.title"].search([])
 
     @api.model
     def _default_partner_industry_ids(self):
         return self.env["res.partner.industry"].search([])
+
+    def _compute_customer_default_role(self):
+        for rec in self:
+            rec.customer_default_role = "default"
 
     def _get_invoice_report_id_domain(self):
         return [
@@ -492,7 +508,27 @@ class ShopinvaderBackend(models.Model):
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)
 
-    def _get_cart_pricelist(self, partner):
+    def _get_backend_pricelist(self):
+        """The pricelist configure by this backend."""
+        # There must be a pricelist somehow: safe fallback to default Odoo one
+        return self.pricelist_id or self._default_pricelist_id()
+
+    def _get_customer_default_pricelist(self):
+        """Retrieve pricelist to be used for brand new customer record.
+        """
+        return self._get_backend_pricelist()
+
+    def _get_partner_pricelist(self, partner):
+        """Retrieve pricelist for given res.partner record.
+        """
+        # Normally we should return partner.property_product_pricelist
+        # but by default the shop must use the same pricelist for all customers
+        # because products' prices are computed only by backend pricelist.
+        # Nevertheless, this is a good point to hook to
+        # if a different behavior per partner is required.
+        return None
+
+    def _get_cart_pricelist(self, partner=None):
         """Retrieve pricelist to be used for the cart.
 
         NOTE: if you change this behavior be aware that
@@ -501,4 +537,7 @@ class ShopinvaderBackend(models.Model):
         This is because product info comes from indexes
         which are completely agnostic in regard to specific partner info.
         """
-        return self.pricelist_id
+        pricelist = self._get_backend_pricelist()
+        if partner:
+            pricelist = self._get_partner_pricelist(partner) or pricelist
+        return pricelist

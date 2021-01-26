@@ -64,12 +64,12 @@ class CustomerService(Component):
     def _prepare_params(self, params, mode="create"):
         address = self.component(usage="addresses")
         params = address._prepare_params(params, mode=mode)
+        pricelist = self.shopinvader_backend._get_customer_default_pricelist()
         # fmt: off
         params.update(
             {
                 "backend_id": self.shopinvader_backend.id,
-                "property_product_pricelist": self.shopinvader_backend.
-                pricelist_id.id,
+                "property_product_pricelist": pricelist.id if pricelist else None,
             }
         )
         # fmt: on
@@ -117,5 +117,9 @@ class CustomerService(Component):
 
     def _prepare_create_response(self, binding):
         response = self._assign_cart_and_get_store_cache()
-        response["data"] = {"id": self.partner.id, "name": self.partner.name}
+        response["data"] = {
+            "id": self.partner.id,
+            "name": self.partner.name,
+            "role": binding.role,
+        }
         return response

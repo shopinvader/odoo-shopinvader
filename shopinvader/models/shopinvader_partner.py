@@ -1,5 +1,7 @@
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
@@ -21,6 +23,7 @@ class ShopinvaderPartner(models.Model):
         store=True,
         string="Partner Email",
     )
+    role = fields.Char(compute="_compute_role")
 
     _sql_constraints = [
         (
@@ -34,6 +37,17 @@ class ShopinvaderPartner(models.Model):
             "An email must be uniq per backend.",
         ),
     ]
+
+    def _compute_role_depends(self):
+        return ("backend_id", "backend_id.customer_default_role")
+
+    @api.depends(lambda self: self._compute_role_depends())
+    def _compute_role(self):
+        for rec in self:
+            rec.role = rec._get_role()
+
+    def _get_role(self):
+        return self.backend_id.customer_default_role
 
     @api.model
     def create(self, vals):
