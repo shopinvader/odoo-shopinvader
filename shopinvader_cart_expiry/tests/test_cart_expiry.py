@@ -15,7 +15,7 @@ class TestCartExpiry(CartCase):
     """
 
     def setUp(self):
-        super(TestCartExpiry, self).setUp()
+        super().setUp()
         self.sale_obj = self.env["sale.order"]
         self.partner = self.env.ref("shopinvader.partner_1")
         self.sale = self.env.ref("shopinvader.sale_order_2")
