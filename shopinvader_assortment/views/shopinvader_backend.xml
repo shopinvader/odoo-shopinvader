@@ -1,29 +1,40 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record model="ir.ui.view" id="shopinvader_backend_form_view">
         <field name="name">shopinvader.backend.form (in shopinvader_assortment)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
-            <button name="%(shopinvader.shopinvader_variant_binding_wizard_act_window)d" position="attributes">
-                <attribute name="attrs">{'invisible': [('product_manual_binding', '=', False)]}</attribute>
+            <button
+                name="%(shopinvader.shopinvader_variant_binding_wizard_act_window)d"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'invisible': [('product_manual_binding', '=', False)]}</attribute>
             </button>
-            <button name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d" position="attributes">
-                <attribute name="attrs">{'invisible': [('product_manual_binding', '=', False)]}</attribute>
+            <button
+                name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d"
+                position="attributes"
+            >
+                <attribute
+                    name="attrs"
+                >{'invisible': [('product_manual_binding', '=', False)]}</attribute>
             </button>
             <page name="products" position="inside">
                 <group name="product_assortment" string="Assortment">
-                    <field name="product_manual_binding"/>
-                    <field name="product_assortment_id"
-                           attrs="{'invisible': [('product_manual_binding', '=', True)],
+                    <field name="product_manual_binding" />
+                    <field
+                        name="product_assortment_id"
+                        attrs="{'invisible': [('product_manual_binding', '=', True)],
                                    'required': [('product_manual_binding', '!=', True)]}"
-                           context="{'form_view_ref': 'product_assortment.product_assortment_view_form',
+                        context="{'form_view_ref': 'product_assortment.product_assortment_view_form',
                                      'product_assortment': True,
-                                     'default_is_assortment': 1}"/>
+                                     'default_is_assortment': 1}"
+                    />
                 </group>
             </page>
         </field>

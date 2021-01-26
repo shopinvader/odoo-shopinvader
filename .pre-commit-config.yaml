@@ -4,7 +4,6 @@ exclude: |
   ^partner_contact_company/|
   ^product_online_category/|
   ^shopinvader_algolia/|
-  ^shopinvader_assortment/|
   ^shopinvader_backend_image_proxy/|
   ^shopinvader_cart_expiry/|
   ^shopinvader_category_image_for_product/|
