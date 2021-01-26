@@ -9,8 +9,7 @@ from .common import TestMultiUserCommon
 
 
 class TestMultiUserServiceCtx(TestMultiUserCommon):
-    """Test interaction with service component context.
-    """
+    """Test interaction with service component context."""
 
     # TODO: would be nice to have this in core module (or base_rest)
     # to allow full testing of the service stack w/out using HttpTestCase
@@ -19,9 +18,7 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
         mocked_request.request["httprequest"]["environ"][
             "HTTP_PARTNER_EMAIL"
         ] = partner.email
-        mocked_request.request[
-            "auth_api_key_id"
-        ] = self.backend.auth_api_key_id.id
+        mocked_request.request["auth_api_key_id"] = self.backend.auth_api_key_id.id
         return mocked_request
 
     def test_partner_ctx_default_multi_disabled(self):

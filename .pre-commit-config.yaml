@@ -10,7 +10,6 @@ exclude: |
   ^shopinvader_category_image_for_product/|
   ^shopinvader_contact_company/|
   ^shopinvader_custom_attribute/|
-  ^shopinvader_customer_multi_user/|
   ^shopinvader_customer_multi_user_wishlist/|
   ^shopinvader_delivery_carrier/|
   ^shopinvader_demo_app/|

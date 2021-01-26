@@ -12,6 +12,4 @@ def migrate(cr, version):
     cr.execute(
         "UPDATE res_partner SET type = 'contact' WHERE type = 'invalid_client_user'"
     )
-    _logger.info(
-        "Replace res_partner.type = 'invalid_client_user' w/ 'contact'"
-    )
+    _logger.info("Replace res_partner.type = 'invalid_client_user' w/ 'contact'")
