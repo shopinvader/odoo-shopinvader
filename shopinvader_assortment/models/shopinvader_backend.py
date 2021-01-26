@@ -26,9 +26,7 @@ class ShopinvaderBackend(models.Model):
         unbinding_wizard_obj = self.env["shopinvader.variant.unbinding.wizard"]
         assortment_domain = self.product_assortment_id._get_eval_domain()
         assortment_products = product_obj.search(assortment_domain)
-        variants_binded = shopinvader_variant_obj.search(
-            [("backend_id", "=", self.id)]
-        )
+        variants_binded = shopinvader_variant_obj.search([("backend_id", "=", self.id)])
         products_binded = variants_binded.mapped("record_id")
         products_to_bind = assortment_products - products_binded
         products_to_unbind = products_binded - assortment_products
@@ -56,9 +54,7 @@ class ShopinvaderBackend(models.Model):
         if domain is None:
             domain = []
 
-        domain = expression.AND(
-            [domain, [("product_manual_binding", "!=", True)]]
-        )
+        domain = expression.AND([domain, [("product_manual_binding", "!=", True)]])
 
         for backend in self.search(domain):
             backend._autobind_product_from_assortment()
