@@ -19,6 +19,8 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
         self.warehouse_2 = ref("stock.stock_warehouse_shop0")
         self.loc_2 = self.warehouse_2.lot_stock_id
         self.product = ref("product.product_product_4")
+        self.product_other = ref("product.product_product_4d")
+        self.template = self.product.product_tmpl_id
         self.shopinvader_backend.bind_all_product()
         self.index = self.env["se.index"].create(
             {

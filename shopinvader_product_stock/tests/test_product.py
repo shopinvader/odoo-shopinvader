@@ -13,6 +13,33 @@ class TestProductProduct(StockCommonCase):
     Tests for product.product
     """
 
+    def test_prepare_stock_data(self):
+        """Check that on product.product we get the right stock data
+        (not the one from the template)
+        """
+        product_other = self.product_other
+        product = self.product
+
+        bind = "shopinvader_bind_ids"
+        s = lambda p: p[bind]._prepare_stock_data()["qty"]  # noqa
+        q = lambda p, field: p[field.name]  # noqa
+
+        backend = self.product.shopinvader_bind_ids.backend_id
+
+        for fn in ["virtual_available", "qty_available"]:
+            domain_field = [
+                ("model", "=", "product.product"),
+                ("name", "=", fn),
+            ]
+            stock_field = self.env["ir.model.fields"].search(domain_field)
+            backend.product_stock_field_id = stock_field
+
+            self._add_stock_to_product(self.product, self.loc_1, 11)
+            self._add_stock_to_product(self.product_other, self.loc_1, 9)
+
+            self.assertEqual(s(product_other), q(product_other, stock_field))
+            self.assertEqual(s(product), q(product, stock_field))
+
     def test_update_qty_from_wizard(self):
         """
         Test that updating the quantity through an inventory create a

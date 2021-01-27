@@ -28,12 +28,14 @@ class ShopinvaderVariant(models.Model):
 
     def _prepare_stock_data(self):
         self.ensure_one()
-        stock_field = self.backend_id.product_stock_field_id
-        if stock_field.model == "product.template":
-            qty = self[stock_field.name]
-        else:  # "product.product"
-            qty = self.record_id[stock_field.name]
-        return {"qty": qty}
+        stock_field = self.backend_id.product_stock_field_id.name
+        return {"qty": self[stock_field]}
+        # stock_field = self.backend_id.product_stock_field_id
+        # if stock_field.model == "product.template":
+        #     qty = self[stock_field.name]
+        # else:  # "product.product"
+        #     qty = self.record_id[stock_field.name]
+        # return {"qty": qty}
 
     @api.multi
     def _compute_stock_data(self):
