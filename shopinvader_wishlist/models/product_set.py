@@ -1,7 +1,11 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+
 from odoo import _, api, exceptions, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class ProductSet(models.Model):
@@ -22,15 +26,26 @@ class ProductSet(models.Model):
     )
 
     def get_line_by_product(self, product_id=None, invader_variant_id=None):
-        if not product_id and not invader_variant_id:
-            raise exceptions.ValidationError(
-                _("Provide `product_id` or `invader_variant_id`")
-            )
+        # Backward compat
+        _logger.info("DEPRECATED `get_line_by_product`. Use `get_lines_by_products`")
         if product_id:
-            return self.set_line_ids.filtered(lambda x: x.product_id.id == product_id)
+            product_id = [product_id]
+        if invader_variant_id:
+            invader_variant_id = [invader_variant_id]
+        return self.get_lines_by_products(
+            product_ids=product_id, invader_variant_ids=invader_variant_id
+        )
+
+    def get_lines_by_products(self, product_ids=None, invader_variant_ids=None):
+        if not product_ids and not invader_variant_ids:
+            raise exceptions.ValidationError(
+                _("Provide `product_ids` or `invader_variant_id`")
+            )
+        if product_ids:
+            return self.set_line_ids.filtered(lambda x: x.product_id.id in product_ids)
         else:
             return self.set_line_ids.filtered(
-                lambda x: x.shopinvader_variant_id.id == invader_variant_id
+                lambda x: x.shopinvader_variant_id.id in invader_variant_ids
             )
 
 

@@ -11,7 +11,7 @@ from odoo.addons.shopinvader.tests.common import CommonCase
 class CommonWishlistCase(CommonCase):
     @classmethod
     def setUpClass(cls):
-        super(CommonWishlistCase, cls).setUpClass()
+        super().setUpClass()
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.prod1 = cls.env.ref("product.product_product_11")
         cls.prod2 = cls.env.ref("product.product_product_13")
@@ -29,7 +29,7 @@ class CommonWishlistCase(CommonCase):
         }
 
     def setUp(self, *args, **kwargs):
-        super(CommonWishlistCase, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.wishlist_service = work.component(usage="wishlist")
 
@@ -52,7 +52,7 @@ class CommonWishlistCase(CommonCase):
 class WishlistCase(CommonWishlistCase):
     @classmethod
     def setUpClass(cls):
-        super(WishlistCase, cls).setUpClass()
+        super().setUpClass()
         cls.prod_set = cls.env.ref("shopinvader_wishlist.wishlist_1")
         cls.prod_set.shopinvader_backend_id = cls.backend
 
@@ -185,6 +185,26 @@ class WishlistCase(CommonWishlistCase):
             self.wishlist_service.add_to_cart(self.prod_set.id)
             self.assertEqual(cart.order_line[0].product_id, prod)
 
+    def test_add_items_to_cart(self):
+        for line in self.wl_params["lines"]:
+            self.prod_set.set_line_ids.create(
+                dict(line, product_set_id=self.prod_set.id)
+            )
+        self.assertEqual(len(self.prod_set.set_line_ids), 3)
+        with self.work_on_services(partner=self.partner) as work:
+            cart_service = work.component(usage="cart")
+        cart = cart_service._get()
+        # no line yet
+        self.assertFalse(cart.order_line)
+
+        # add only to products to cart
+        prods = self.prod_set.set_line_ids[:2].mapped("product_id")
+        params = {"lines": [{"product_id": x.id} for x in prods]}
+        with mock.patch.object(type(cart_service), "_get") as mocked:
+            mocked.return_value = cart
+            self.wishlist_service.add_items_to_cart(self.prod_set.id, **params)
+            self.assertEqual(cart.mapped("order_line.product_id"), prods)
+
     def test_add_items(self):
         prod1 = self.env.ref("product.product_product_4d")
         prod2 = self.env.ref("product.product_product_11")
@@ -201,7 +221,7 @@ class WishlistCase(CommonWishlistCase):
         params = {"lines": lines_data}
         self.wishlist_service.dispatch("update_items", self.prod_set.id, params=params)
         for line in lines_data:
-            line = self.prod_set.get_line_by_product(product_id=line["product_id"])
+            line = self.prod_set.get_lines_by_products(product_ids=[line["product_id"]])
             self.assertEqual(line.quantity, line["quantity"])
 
     def test_update_items(self):
@@ -228,7 +248,7 @@ class WishlistCase(CommonWishlistCase):
     def test_update_item_order(self):
         prod1 = self.env.ref("product.product_product_4b")
         self._test_update_items(prod1, [{"product_id": prod1.id, "quantity": 1}])
-        line1 = self.prod_set.get_line_by_product(product_id=prod1.id)
+        line1 = self.prod_set.get_lines_by_products(product_ids=prod1.ids)
         line1.sequence = 10
         # Add another line and change order
         prod2 = self.env.ref("product.product_product_4d")
@@ -238,7 +258,7 @@ class WishlistCase(CommonWishlistCase):
         before = self.wishlist_service.dispatch(
             "add_items", self.prod_set.id, params=params
         )
-        line2 = self.prod_set.get_line_by_product(product_id=prod2.id)
+        line2 = self.prod_set.get_lines_by_products(product_ids=prod2.ids)
         self.assertEqual(line1.sequence, 10)
         self.assertEqual(line2.sequence, 0)
         self.assertEqual([x["id"] for x in before["lines"]], [line2.id, line1.id])
@@ -255,7 +275,7 @@ class WishlistCase(CommonWishlistCase):
         prod = self.env.ref("product.product_product_4b")
         self._bind_products(prod)
         self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
-        line = self.prod_set.get_line_by_product(product_id=prod.id)
+        line = self.prod_set.get_lines_by_products(product_ids=prod.ids)
         self.assertEqual(line.quantity, 1)
         params = {"lines": [{"product_id": prod.id}]}
         self.wishlist_service.dispatch("delete_items", self.prod_set.id, params=params)
