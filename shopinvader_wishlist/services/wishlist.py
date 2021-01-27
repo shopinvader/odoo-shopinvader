@@ -12,10 +12,14 @@ from werkzeug.exceptions import NotFound
 
 
 class WishlistService(Component):
+    """Shopinvader service to manage current user's wishlists.
+    """
+
     _name = "shopinvader.wishlist.service"
     _inherit = "base.shopinvader.service"
     _usage = "wishlist"
     _expose_model = "product.set"
+    _description = __doc__
 
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
