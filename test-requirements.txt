@@ -15,3 +15,6 @@ odoo-test-helper
 
 odoo14-addon-connector @ git+https://github.com/nuobit/connector.git@14.0-mig-connector#subdirectory=setup/connector
 odoo14-addon-connector_search_engine @ git+https://github.com/akretion/search-engine.git@14.0-migrate#subdirectory=setup/connector_search_engine
+
+
+odoo14-addon-product_stock_state @ git+https://github.com/OCA/product-attribute.git@refs/pull/715/head#subdirectory=setup/product_stock_state
