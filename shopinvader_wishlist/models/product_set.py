@@ -27,9 +27,7 @@ class ProductSet(models.Model):
                 _("Provide `product_id` or `invader_variant_id`")
             )
         if product_id:
-            return self.set_line_ids.filtered(
-                lambda x: x.product_id.id == product_id
-            )
+            return self.set_line_ids.filtered(lambda x: x.product_id.id == product_id)
         else:
             return self.set_line_ids.filtered(
                 lambda x: x.shopinvader_variant_id.id == invader_variant_id

@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import exceptions
+
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
@@ -72,8 +73,6 @@ class ProductSet(CommonCase):
             self.prod_set.get_line_by_product(invader_variant_id=variant.id),
             line,
         )
-        self.assertEqual(
-            self.prod_set.get_line_by_product(product_id=prod.id), line
-        )
+        self.assertEqual(self.prod_set.get_line_by_product(product_id=prod.id), line)
         with self.assertRaises(exceptions.ValidationError):
             self.prod_set.get_line_by_product()
