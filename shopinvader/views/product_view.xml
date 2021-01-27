@@ -23,14 +23,17 @@
         <field name="inherit_id" ref="product.product_normal_form_view"/>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <field name="shopinvader_bind_ids" position="before">
-                <group>
+            <xpath expr="/form/sheet/notebook" position="inside">
+                <page name="shopinvader" string="ShopInvader">
+                    <group>
                     <group>
                         <field name="is_shopinvader_binded"/>
                     </group>
                     <group></group>
                 </group>
-            </field>
+                    <field name="shopinvader_bind_ids"/>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>
