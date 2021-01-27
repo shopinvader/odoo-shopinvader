@@ -37,7 +37,17 @@ class TestProductProduct(StockCommonCase):
             self._add_stock_to_product(self.product, self.loc_1, 11)
             self._add_stock_to_product(self.product_other, self.loc_1, 9)
 
-            self.assertEqual(s(product_other), q(product_other, stock_field))
+            d = s(product_other)
+            b = product_other.shopinvader_bind_ids
+            f = b._fields[fn]
+            if d == 20:
+                assert f.related_field.model_name == "shopinvader.product"
+                g = f.related_field
+                assert g.related_field.model_name == "product.template"
+            if d == 9:
+                assert f.related_field.model_name == "product.product"
+
+            self.assertEqual(d, q(product_other, stock_field))
             self.assertEqual(s(product), q(product, stock_field))
 
     def test_update_qty_from_wizard(self):
