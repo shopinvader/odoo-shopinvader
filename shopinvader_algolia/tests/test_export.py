@@ -79,7 +79,7 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         )
         request_data = json.loads(request.body.decode("utf-8"))["requests"]
         self.assertEqual(len(request_data), 1)
-        self.assertEqual(request_data[0]["action"], "addObject")
+        self.assertEqual(request_data[0]["action"], "updateObject")
         self.assertEqual(request_data[0]["body"], si_variant.data)
 
     def test_20_recompute_all_products(self):
@@ -104,7 +104,7 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         self.assertEqual(
             len(request_data), binding_nbr, "All bindings should be exported"
         )
-        self.assertEqual(request_data[0]["action"], "addObject")
+        self.assertEqual(request_data[0]["action"], "updateObject")
 
     def test_20_export_all_products(self):
         self._test_export_all_binding(self.index_product)
