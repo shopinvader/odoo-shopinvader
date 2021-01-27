@@ -1,7 +1,7 @@
 {
     "name": "Shopinvader Lead",
     "summary": "Shopinvader Lead Management",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
