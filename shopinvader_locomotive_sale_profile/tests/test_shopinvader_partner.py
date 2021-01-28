@@ -35,7 +35,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             self.data, u"5a953d6aae1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
-        self.assertEquals("default", role)
+        self.assertEqual("default", role)
         # Use Sale profile from now
         self._init_job_counter()
         self.backend.pricelist_id = False
@@ -47,7 +47,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             shop_partner, u"5a953d6aae1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
-        self.assertEquals("public_tax_inc", role)
+        self.assertEqual("public_tax_inc", role)
 
     def test_profile_no_fiscal_pos(self):
         pricelist = self.env["product.pricelist"].create({"name": "TEST profile"})
@@ -76,4 +76,4 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             shop_partner, u"5a953dmpefe1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
-        self.assertEquals(role, profile.code)
+        self.assertEqual(role, profile.code)
