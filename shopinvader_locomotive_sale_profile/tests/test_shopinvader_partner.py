@@ -20,14 +20,10 @@ except (ImportError, IOError) as err:
 class TestShopinvaderPartner(CommonShopinvaderPartner):
     def _get_shopinvader_partner(self, shopinvader_partner, external_id):
         with requests_mock.mock() as m:
-            m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
-            )
+            m.post(self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
             # Request to modify / fake json arg
             res = m.put(
-                self.base_url
-                + "/content_types/customers/entries/"
-                + external_id,
+                self.base_url + "/content_types/customers/entries/" + external_id,
                 json={"test": 1},
             )
             self._perform_created_job()
@@ -54,9 +50,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         self.assertEquals("public_tax_inc", role)
 
     def test_profile_no_fiscal_pos(self):
-        pricelist = self.env["product.pricelist"].create(
-            {"name": "TEST profile"}
-        )
+        pricelist = self.env["product.pricelist"].create({"name": "TEST profile"})
         profile = self.env["shopinvader.sale.profile"].create(
             {
                 "code": "NoFPos",
