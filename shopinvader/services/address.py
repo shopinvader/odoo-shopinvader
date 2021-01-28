@@ -290,6 +290,7 @@ class AddressService(Component):
                 "schema": {
                     "id": {"type": "integer"},
                     "name": {"type": "string"},
+                    "code": {"type": "string"},
                 },
             },
             "title": {
