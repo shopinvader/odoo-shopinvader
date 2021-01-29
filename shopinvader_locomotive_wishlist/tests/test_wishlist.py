@@ -3,19 +3,15 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import mock
-from odoo.addons.shopinvader_wishlist.tests.test_wishlist import (
-    CommonWishlistCase,
-)
+
+from odoo.addons.shopinvader_wishlist.tests.test_wishlist import CommonWishlistCase
 
 MOD_PATH = "odoo.addons.shopinvader_locomotive_wishlist"
-MOCK_PATH = (
-    MOD_PATH + ".components.event_listeners.ShopinvaderWishlistListener"
-)
+MOCK_PATH = MOD_PATH + ".components.event_listeners.ShopinvaderWishlistListener"
 
 
 class TestWishlistCase(CommonWishlistCase):
-    """Make sure our event listener is called.
-    """
+    """Make sure our event listener is called."""
 
     @classmethod
     def setUpClass(cls):
@@ -52,9 +48,7 @@ class TestWishlistCase(CommonWishlistCase):
                 ]
             },
         )
-        mocked_export_partner_info.assert_called_with(
-            self.prod_set, fields=None
-        )
+        mocked_export_partner_info.assert_called_with(self.prod_set, fields=None)
         self.assertIn(
             "_force_export",
             mocked_export_partner_info.call_args[0][0].env.context,
