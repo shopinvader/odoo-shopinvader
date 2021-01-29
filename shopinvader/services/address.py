@@ -81,6 +81,7 @@ class AddressService(Component):
             "zip": {"type": "string", "required": True, "empty": False},
             "city": {"type": "string", "required": True, "empty": False},
             "phone": {"type": "string", "nullable": True, "empty": False},
+            "mobile": {"type": "string", "nullable": True, "empty": False},
             "state": {
                 "type": "dict",
                 "schema": {
@@ -133,6 +134,7 @@ class AddressService(Component):
             "zip",
             "city",
             "phone",
+            "mobile",
             "opt_in",
             "opt_out",
             "vat",
