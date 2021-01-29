@@ -11,7 +11,9 @@ class ShopinvaderImageMixin(models.AbstractModel):
     _image_field = None
 
     images = fields.Serialized(
-        compute="_compute_image", string="Shopinvader Image"
+        compute="_compute_image",
+        string="Shopinvader Image",
+        compute_sudo=True,
     )
 
     def _compute_image(self):
