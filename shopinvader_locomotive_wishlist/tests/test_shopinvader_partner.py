@@ -21,7 +21,7 @@ except (ImportError, IOError) as err:
 class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
     @classmethod
     def setUpClass(cls):
-        super(TestShopinvaderWishlistSync, cls).setUpClass()
+        super().setUpClass()
         # recreate all records to make sure there's isolation
         cls.partner1 = cls.env["shopinvader.partner"].create(
             {
