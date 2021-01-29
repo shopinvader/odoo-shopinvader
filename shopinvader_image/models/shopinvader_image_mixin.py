@@ -14,7 +14,11 @@ class ShopinvaderImageMixin(models.AbstractModel):
     _description = "Shopinvader Image Mixin"
     _image_field = None
 
-    images = Serialized(compute="_compute_images", string="Shopinvader Image")
+    images = Serialized(
+        compute="_compute_images",
+        string="Shopinvader Image",
+        compute_sudo=True,
+    )
     # Tech field to store images data.
     # It cannot be computed because the computation
     # might required generating thumbs
