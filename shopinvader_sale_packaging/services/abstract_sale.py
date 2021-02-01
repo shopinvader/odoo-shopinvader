@@ -21,7 +21,9 @@ class AbstractSaleService(AbstractComponent):
         if line.product_packaging:
             pkg_vals.update(
                 {
-                    "packaging": line.product_packaging.jsonify(["id", "name"])[0],
+                    "packaging": line.product_packaging.jsonify(
+                        ["id", "name"], one=True
+                    ),
                     "packaging_qty": line.product_packaging_qty,
                     "packaging_by_qty": self._packaging_info_by_qty(
                         line.product_id, line.product_uom_qty
