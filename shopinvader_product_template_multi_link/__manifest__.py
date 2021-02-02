@@ -7,7 +7,7 @@
 {
     "name": "Shopinvader Product Link",
     "summary": "Shopinvader Product Link",
-    "version": "13.0.1.0.3",
+    "version": "13.0.1.0.4",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,GRAP,Camptocamp",
