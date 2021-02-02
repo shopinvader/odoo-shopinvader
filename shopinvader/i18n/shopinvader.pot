@@ -619,7 +619,7 @@ msgstr ""
 
 #. module: shopinvader
 #: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
-msgid "Developper"
+msgid "Developer"
 msgstr ""
 
 #. module: shopinvader

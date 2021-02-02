@@ -124,8 +124,8 @@
                                 <field name="invoice_report_id" options="{'no_create': True, 'no_open': True}"/>
                             </group>
                         </page>
-                        <page name="developper" string="Developper">
-                            <group name="developper" colspan="4">
+                        <page name="developer" string="Developer">
+                            <group name="developer" colspan="4">
                                 <group name="product" string="Product" col="10" colspan="4">
                                     <field name="nbr_product"/>
                                     <button
