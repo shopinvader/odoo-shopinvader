@@ -9,6 +9,7 @@
 from collections import defaultdict
 
 from odoo import models
+
 from odoo.addons.base_sparse_field.models.fields import Serialized
 from odoo.addons.http_routing.models.ir_http import slugify
 
@@ -88,9 +89,7 @@ class ShopinvaderProduct(models.Model):
 
         :return: set
         """
-        for (
-            shopinvader_variant
-        ) in target.shopinvader_bind_ids.shopinvader_variant_ids:
+        for shopinvader_variant in target.shopinvader_bind_ids.shopinvader_variant_ids:
             # Get bindings of the correct backend and lang, pick only the main one
             if (
                 shopinvader_variant.backend_id == self.backend_id
