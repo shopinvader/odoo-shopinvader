@@ -9,3 +9,8 @@ openupgradelib @ git+https://github.com/OCA/openupgradelib.git
 
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
+
+
+### Pending PRs
+
+odoo14-addon-product_template_multi_link @ git+https://github.com/akretion/e-commerce.git@14.0-mig-product_template_multi_link#subdirectory=setup/product_template_multi_link
