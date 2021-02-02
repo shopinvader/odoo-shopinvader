@@ -4,7 +4,7 @@
 {
     "name": "Shopinvader Product Variant Link",
     "summary": "Integrate product_variant_multi_link with Shopinvader",
-    "version": "13.0.1.0.1",
+    "version": "13.0.1.0.2",
     "category": "e-commerce",
     "website": "https://shopinvader.com",
     "author": "Camptocamp",
