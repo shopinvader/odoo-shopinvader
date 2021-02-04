@@ -9,7 +9,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp",
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "depends": [
         "shopinvader_product_template_multi_link",
