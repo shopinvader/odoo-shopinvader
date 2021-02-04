@@ -1,8 +1,12 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2021 Camptocamp SA (http://www.camptocamp.com)
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
+
+from odoo.addons.base_sparse_field.models.fields import Serialized
 
 
 class ShopinvaderImageMixin(models.AbstractModel):
@@ -10,13 +14,51 @@ class ShopinvaderImageMixin(models.AbstractModel):
     _description = "Shopinvader Image Mixin"
     _image_field = None
 
-    images = fields.Serialized(compute="_compute_image", string="Shopinvader Image")
+    images = Serialized(compute="_compute_images", string="Shopinvader Image")
+    # Tech field to store images data.
+    # It cannot be computed because the computation
+    # might required generating thumbs
+    # which requires access to the storage files
+    # which requires components registry to be available
+    # which is not the case when Odoo starts.
+    images_stored = Serialized()
+    images_store_hash = fields.Char()
 
-    def _compute_image(self):
-        # Note: this computed field depend on the lang used in the context
-        # as the name of the record is used for generating the thumbnail
+    def _compute_images(self):
+        # Force computation if needed
+        self.filtered(lambda x: x._images_must_recompute())._compute_images_stored()
         for record in self:
-            record.images = record._get_image_data_for_record()
+            record.images = record.images_stored
+
+    def _compute_images_stored(self):
+        for record in self:
+            record.images_stored = record._get_image_data_for_record()
+            record.images_store_hash = record._get_images_store_hash()
+
+    def _images_must_recompute(self):
+        return self.images_store_hash != self._get_images_store_hash()
+
+    @property
+    def _resize_scales_field(self):
+        return "%s_resize_ids" % self._name.replace(".", "_")
+
+    def _resize_scales(self):
+        return self.backend_id[self._resize_scales_field]
+
+    def _get_images_store_hash(self):
+        return str(hash(self._get_images_store_hash_tuple()))
+
+    def _get_images_store_hash_tuple(self):
+        resize_scales = tuple(
+            self._resize_scales().mapped(lambda r: (r.key, r.size_x, r.size_y))
+        )
+        images_timestamp = self[self._image_field].mapped("image_id.write_date")
+        # fmt: off
+        # FIXME: may vary by _get_image_url_key -> is this needed for real?
+        url_key = (self.display_name, )
+        # fmt: on
+        # TODO: any other bit to consider here?
+        return resize_scales + tuple(images_timestamp) + url_key
 
     def _get_image_url_key(self, image_relation):
         # You can inherit this method to change the name of the image of
@@ -29,7 +71,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
     def _get_image_data_for_record(self):
         self.ensure_one()
         res = []
-        resizes = self.backend_id["%s_resize_ids" % self._name.replace(".", "_")]
+        resizes = self._resize_scales()
         for image_relation in self[self._image_field]:
             url_key = self._get_image_url_key(image_relation)
             image_data = {}
