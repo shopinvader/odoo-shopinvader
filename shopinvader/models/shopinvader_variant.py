@@ -4,6 +4,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from contextlib import contextmanager
+from itertools import groupby
 
 from odoo import api, fields, models
 from odoo.tools import float_compare, float_round
@@ -232,11 +233,34 @@ class ShopinvaderVariant(models.Model):
         return res
 
     def _compute_main_product(self):
+        # Respect same order.
+        order_by = [
+            x.strip() for x in self.env["product.product"]._order.split(",")
+        ]
+        fields_to_read = ["tmpl_record_id"] + order_by
+        tmpl_ids = self.mapped("tmpl_record_id").ids
+        # Use sudo to bypass permissions (we don't care)
+        _variants = self.sudo().search(
+            [("tmpl_record_id", "in", tmpl_ids)], order="tmpl_record_id"
+        )
+        # Use `load=False` to not load template name
+        variants = _variants.read(fields_to_read, load=False)
+        var_by_tmpl = groupby(variants, lambda x: x["tmpl_record_id"])
+
+        def pick_1st_variant(prods):
+            # NOTE: if the order is changed by adding `asc/desc` this can be broken
+            # but it's very unlikely that the default order for product.product
+            # will be changed.
+            ordered = sorted(prods, key=lambda var: [var[x] for x in order_by])
+            return ordered[0].get("id") if ordered else None
+
+        main_by_tmpl = {
+            tmpl: pick_1st_variant(prods) for tmpl, prods in var_by_tmpl
+        }
         for record in self:
-            if record.record_id == record.product_tmpl_id.product_variant_ids[0]:
-                record.main = True
-            else:
-                record.main = False
+            record.main = (
+                main_by_tmpl.get(record.tmpl_record_id.id) == record.id
+            )
 
     def get_shop_data(self):
         """Return product data for the shop."""
