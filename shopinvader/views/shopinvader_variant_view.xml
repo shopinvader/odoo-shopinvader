@@ -66,13 +66,13 @@
             <form>
                 <sheet>
                     <group name="variant">
-                            <field name="name" />
-                            <field name="shopinvader_product_id" />
-                            <field name="lang_id" />
-                            <field name="default_code" />
-                            <field name="backend_id" />
-                            <field name="tmpl_record_id" />
-                            <field name="record_id" />
+                        <field name="name" />
+                        <field name="shopinvader_product_id" />
+                        <field name="lang_id" />
+                        <field name="default_code" />
+                        <field name="backend_id" />
+                        <field name="tmpl_record_id" />
+                        <field name="record_id" />
                     </group>
                 </sheet>
             </form>
