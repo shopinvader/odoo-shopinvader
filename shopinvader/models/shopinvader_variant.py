@@ -1,5 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2021 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from contextlib import contextmanager
 
@@ -21,10 +23,19 @@ class ShopinvaderVariant(models.Model):
     shopinvader_product_id = fields.Many2one(
         "shopinvader.product", required=True, ondelete="cascade", index=True
     )
-    record_id = fields.Many2one(
-        "product.product", required=True, ondelete="cascade", index=True
+    tmpl_record_id = fields.Many2one(
+        string="Product template",
+        related="shopinvader_product_id.record_id",
+        store=True,
+        index=True,
     )
-    object_id = fields.Integer(compute="_compute_object_id", store=True, index=True)
+    record_id = fields.Many2one(
+        string="Product",
+        comodel_name="product.product",
+        required=True,
+        ondelete="cascade",
+        index=True,
+    )
     variant_count = fields.Integer(
         related="product_variant_count", string="Shopinvader Variant Count"
     )
@@ -148,11 +159,6 @@ class ShopinvaderVariant(models.Model):
                 pricelist, None, self.backend_id.company_id
             )
         return res
-
-    @api.depends("record_id")
-    def _compute_object_id(self):
-        for record in self:
-            record.object_id = record.record_id.id
 
     def _compute_redirect_url_key(self):
         for record in self:
