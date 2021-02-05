@@ -12,10 +12,15 @@
                 <field name="name" string="Product" />
                 <field name="backend_id" string="Shopinvader Backend"/>
                 <field name="lang_id" string="Lang"/>
+                <field name="default_code" string="Code"/>
+                <field name="record_id" string="Name"/>
+                <field name="tmpl_record_id" string="Template" />
                 <separator/>
                 <group expand="0" string="Group By">
                     <filter string="Backend" name="group_by_backend_id" domain="[]" context="{'group_by':'backend_id'}"/>
                     <filter string="Lang" name="group_by_lang_id" domain="[]" context="{'group_by':'lang_id'}"/>
+                    <filter string="Record" name="group_by_record_id" domain="[]" context="{'group_by':'record_id'}"/>
+                    <filter string="Template" name="group_by_tmpl_record_id" domain="[]" context="{'group_by':'tmpl_record_id'}"/>
                 </group>
             </search>
         </field>
@@ -30,6 +35,7 @@
                 <field name="lang_id"/>
                 <field name="default_code"/>
                 <field name="name"/>
+                <field name="tmpl_record_id"/>
              </tree>
         </field>
     </record>
@@ -46,6 +52,7 @@
                             <field name="lang_id"/>
                             <field name="default_code"/>
                             <field name="backend_id"/>
+                            <field name="tmpl_record_id"/>
                             <field name="record_id"/>
                     </group>
                 </sheet>
