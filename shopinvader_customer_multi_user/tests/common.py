@@ -39,6 +39,7 @@ class TestMultiUserCommon(TestCustomerCommon):
             email="simpleuser3@test.com",
         )
         cls.backend.multi_user_records_policy = "record_id"
+        cls.backend.customer_multi_user = True
 
     @staticmethod
     def _create_partner(env, **kw):
@@ -74,6 +75,7 @@ class TestUserManagementCommmon(TestMultiUserCommon):
                     "name": x.name,
                     "parent_id": x.parent_id.id,
                     "state": x.state,
+                    "can_manage_users": x.can_manage_users,
                 }
                 for x in expected.sorted("email")
             ],
@@ -82,7 +84,7 @@ class TestUserManagementCommmon(TestMultiUserCommon):
     def _test_create(self, service, params, expected_parent=None):
         partner = expected_parent or service.partner_user
         count_before = len(partner.child_ids)
-        res = service.dispatch("create", params)["data"]
+        res = service.dispatch("create", params=params)["data"]
         self.assertEqual(len(partner.child_ids), count_before + 1)
         new_partner = partner.child_ids.filtered_domain(
             [("email", "=", params["email"])]
@@ -93,6 +95,7 @@ class TestUserManagementCommmon(TestMultiUserCommon):
             parent_id=partner.id,
             state="active",
             id=invader_partner.id,
+            can_manage_users=invader_partner.can_manage_users,
         )
         self.assertEqual(res, expected)
         return invader_partner
