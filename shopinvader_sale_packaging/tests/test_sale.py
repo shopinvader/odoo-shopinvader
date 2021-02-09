@@ -25,7 +25,7 @@ class TestSaleOrderPackaging(CommonCase):
         cls.sale.action_confirm()
         cls.partner = cls.env.ref("shopinvader.partner_1")
         # This module adds new keys: recompute
-        cls._recompute_json(cls, cls.sale.mapped("order_line.product_id"))
+        cls._refresh_json_data(cls, cls.sale.mapped("order_line.product_id"))
 
     def setUp(self):
         super().setUp()

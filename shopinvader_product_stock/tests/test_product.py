@@ -4,12 +4,12 @@
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
+from odoo.addons.shopinvader.tests.common import UtilsMixin
 
 from .common import StockCommonCase
 
 
-class TestProductProduct(StockCommonCase):
+class TestProductProduct(StockCommonCase, UtilsMixin):
     """Tests for product stock info."""
 
     def _expectect_qty_by_wh(self, warehouse_recs, prod):
@@ -41,7 +41,9 @@ class TestProductProduct(StockCommonCase):
 
     def _test_update_stock_with_key(self, key_stock, sync_immediatly=True):
         shopinvader_product = self.product.shopinvader_bind_ids
-        shopinvader_product.recompute_json()
+        self._refresh_json_data(
+            shopinvader_product, backend=self.shopinvader_backend
+        )
         shopinvader_product.sync_state = "to_update"
         self.assertEqual(
             shopinvader_product.data[key_stock], {u"global": {u"qty": 0.0}}
@@ -108,7 +110,9 @@ class TestProductProduct(StockCommonCase):
         export_line.unlink()
 
         shopinvader_product = self.product.shopinvader_bind_ids
-        shopinvader_product.recompute_json()
+        self._refresh_json_data(
+            shopinvader_product, backend=self.shopinvader_backend
+        )
         shopinvader_product.sync_state = "to_update"
         self.assertNotIn("stock", shopinvader_product.data)
 
@@ -125,7 +129,9 @@ class TestProductProduct(StockCommonCase):
         )
 
         shopinvader_product = self.product.shopinvader_bind_ids
-        shopinvader_product.recompute_json()
+        self._refresh_json_data(
+            shopinvader_product, backend=self.shopinvader_backend
+        )
         shopinvader_product.sync_state = "to_update"
         expected = self._expectect_qty_by_wh(warehouses, self.product)
         self.assertEqual(shopinvader_product.data["stock"], expected)

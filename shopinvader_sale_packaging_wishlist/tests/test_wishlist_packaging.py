@@ -19,7 +19,7 @@ class WishlistCase(CommonWishlistCase):
             {"name": "PKG TEST", "product_id": cls.prod1.id, "qty": 4}
         )
         # Make sure our products' data is up to date
-        cls._recompute_json(
+        cls._refresh_json_data(
             cls, cls.prod_set.mapped("set_line_ids.product_id")
         )
 

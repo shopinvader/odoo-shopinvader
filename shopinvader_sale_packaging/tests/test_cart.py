@@ -25,7 +25,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
             {"name": "Pallet", "product_id": cls.product_1.id, "qty": 2000}
         )
         # This module adds new keys: recompute
-        cls._recompute_json(
+        cls._refresh_json_data(
             cls, cls.cart.mapped("order_line.product_id") + cls.product_1
         )
 
