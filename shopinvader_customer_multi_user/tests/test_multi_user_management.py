@@ -47,14 +47,14 @@ class TestUserManagement(TestUserManagementCommmon):
             with self.assertRaisesRegex(
                 exceptions.AccessError, "User not allowed"
             ):
-                service.dispatch("create", params)
+                service.dispatch("create", params=params)
 
     def test_update_as_admin(self):
         service = self._get_service(self.company)
         params = {
             "name": self.user_binding.name + " UPDATED",
         }
-        service.dispatch("update", self.user_binding.id, params)["data"]
+        service.dispatch("update", self.user_binding.id, params=params)["data"]
         partner = self.company.child_ids.filtered_domain(
             [("email", "=", self.user_binding.email)]
         )
