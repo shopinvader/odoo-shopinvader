@@ -22,8 +22,10 @@ class ShopinvaderCategory(models.Model):
     record_id = fields.Many2one(
         "product.category", required=True, ondelete="cascade", index=True
     )
-    # TODO: Is this really needed? Both fields are indexed.
-    object_id = fields.Integer(compute="_compute_object_id", store=True, index=True)
+    # TODO: get rid of this as done for shopinvader.variant
+    object_id = fields.Integer(
+        compute="_compute_object_id", store=True, index=True
+    )
     sequence = fields.Integer()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
