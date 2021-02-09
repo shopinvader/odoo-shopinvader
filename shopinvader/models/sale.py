@@ -16,7 +16,9 @@ class SaleOrder(models.Model):
     typology = fields.Selection(
         [("sale", "Sale"), ("cart", "Cart")], default="sale"
     )
-    shopinvader_backend_id = fields.Many2one("shopinvader.backend", "Backend")
+    shopinvader_backend_id = fields.Many2one(
+        "shopinvader.backend", "Backend", readonly=True
+    )
     current_step_id = fields.Many2one(
         "shopinvader.cart.step", "Current Cart Step", readonly=True
     )

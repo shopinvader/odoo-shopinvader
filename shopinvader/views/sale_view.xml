@@ -11,9 +11,9 @@
                 <field name="current_step_id" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
                 <field name="done_step_ids" widget="many2many_tags" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
             </field>
-            <!-- field name="company_id" position="before">
+            <xpath expr="//page[@name='other_information']//group[@name='sales_person']" position="inside">
                 <field name="shopinvader_backend_id"/>
-            </field -->
+            </xpath>
         </field>
     </record>
 
