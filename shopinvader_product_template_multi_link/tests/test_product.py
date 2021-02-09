@@ -153,4 +153,6 @@ class ProductLinkCase(ProductLinkCaseBase):
     def test_link_json_data(self):
         exporter = self.env.ref("shopinvader.ir_exp_shopinvader_variant")
         parser = exporter.get_json_parser()
-        self.assertIn("links", self.shopinvader_variant_2_2.jsonify(parser, one=True))
+        self.assertIn(
+            "links", self.shopinvader_variant_2_2.jsonify(parser, one=True)
+        )
