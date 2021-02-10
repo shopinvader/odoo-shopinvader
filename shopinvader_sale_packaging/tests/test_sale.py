@@ -24,6 +24,8 @@ class TestSaleOrderPackaging(CommonCase):
         )
         cls.sale.action_confirm()
         cls.partner = cls.env.ref("shopinvader.partner_1")
+        # This module adds new keys: recompute
+        cls._refresh_json_data(cls, cls.sale.mapped("order_line.product_id"))
 
     def setUp(self):
         super().setUp()
@@ -47,3 +49,4 @@ class TestSaleOrderPackaging(CommonCase):
                 self.assertEqual(line["packaging"], None)
                 self.assertEqual(line["packaging_qty"], 0.0)
                 self.assertEqual(line["qty"], self.sale_line2.product_uom_qty)
+            self.assertIn("sell_only_by_packaging", line["product"])
