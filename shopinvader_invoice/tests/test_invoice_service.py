@@ -26,9 +26,7 @@ class TestInvoiceServiceAnonymous(CommonInvoiceCase):
         invoice = self._create_invoice(
             partner=self.backend.anonymous_partner_id, validate=True
         )
-        self.assertEquals(
-            invoice.partner_id, self.backend.anonymous_partner_id
-        )
+        self.assertEquals(invoice.partner_id, self.backend.anonymous_partner_id)
         result = self.service_guest.dispatch("search")
         data = result.get("data", [])
         self.assertFalse(data)

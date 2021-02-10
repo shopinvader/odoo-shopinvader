@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
+
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
@@ -28,9 +28,7 @@ class CommonInvoiceCase(CommonCase):
         self.precision = 2
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="invoice")
-        with self.work_on_services(
-            partner=self.backend.anonymous_partner_id
-        ) as work:
+        with self.work_on_services(partner=self.backend.anonymous_partner_id) as work:
             self.service_guest = work.component(usage="invoice")
 
     def _check_data_content(self, data, invoices):
@@ -48,23 +46,17 @@ class CommonInvoiceCase(CommonCase):
             type_label = self._get_selection_label(invoice, "type")
             self.assertEquals(current_data.get("invoice_id"), invoice.id)
             self.assertEquals(current_data.get("number"), invoice.number)
-            self.assertEquals(
-                current_data.get("date_invoice"), invoice.date_invoice
-            )
+            self.assertEquals(current_data.get("date_invoice"), invoice.date_invoice)
             self.assertEquals(current_data.get("state"), invoice.state)
             self.assertEquals(current_data.get("type"), invoice.type)
             self.assertEquals(current_data.get("state_label"), state_label)
             self.assertEquals(current_data.get("type_label"), type_label)
-            self.assertEquals(
-                current_data.get("amount_total"), invoice.amount_total
-            )
+            self.assertEquals(current_data.get("amount_total"), invoice.amount_total)
             self.assertEquals(
                 current_data.get("amount_total_signed"),
                 invoice.amount_total_signed,
             )
-            self.assertEquals(
-                current_data.get("amount_tax"), invoice.amount_tax
-            )
+            self.assertEquals(current_data.get("amount_tax"), invoice.amount_tax)
             self.assertEquals(
                 current_data.get("amount_untaxed"), invoice.amount_untaxed
             )
@@ -118,9 +110,7 @@ class CommonInvoiceCase(CommonCase):
             register_payments.write({"amount": amount})
         register_payments.create_payment()
 
-    def _create_invoice(
-        self, partner=False, inv_type="out_invoice", validate=False
-    ):
+    def _create_invoice(self, partner=False, inv_type="out_invoice", validate=False):
         """
         Create a new invoice
         :param partner: res.partner
@@ -163,7 +153,5 @@ class CommonInvoiceCase(CommonCase):
         :return: str
         """
         technical_type = invoice[field]
-        type_dict = dict(
-            invoice._fields.get(field)._description_selection(invoice.env)
-        )
+        type_dict = dict(invoice._fields.get(field)._description_selection(invoice.env))
         return type_dict.get(technical_type, technical_type)
