@@ -4,10 +4,8 @@
 
 from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.addons.shopinvader.tests.test_cart_item import ItemCaseMixin
-from odoo.tests import tagged
 
 
-@tagged("post_install", "-at_install")
 class ConnectedItemCase(ItemCaseMixin, CommonCase):
     @classmethod
     def setUpClass(cls):

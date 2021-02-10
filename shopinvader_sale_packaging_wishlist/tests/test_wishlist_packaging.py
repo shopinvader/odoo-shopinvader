@@ -5,10 +5,8 @@
 from odoo.addons.shopinvader_wishlist.tests.test_wishlist import (
     CommonWishlistCase,
 )
-from odoo.tests import tagged
 
 
-@tagged("post_install", "-at_install")
 class WishlistCase(CommonWishlistCase):
     @classmethod
     def setUpClass(cls):
