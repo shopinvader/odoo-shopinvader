@@ -12,9 +12,9 @@ class CommonInvoiceCase(CommonCase):
 
     def setUp(self, *args, **kwargs):
         super(CommonInvoiceCase, self).setUp(*args, **kwargs)
-        self.invoice_obj = self.env["account.invoice"]
+        self.invoice_obj = self.env["account.move"]
         self.journal_obj = self.env["account.journal"]
-        self.register_payments_obj = self.env["account.register.payments"]
+        self.register_payments_obj = self.env["account.payment.register"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.partner = self.env.ref("shopinvader.partner_1")
         self.partner2 = self.env.ref("shopinvader.partner_2")
@@ -35,36 +35,37 @@ class CommonInvoiceCase(CommonCase):
         """
         Check data based on given invoices
         :param data: list
-        :param invoices: account.invoice recordset
+        :param invoices: account.move recordset
         :return: bool
         """
         # To have them into correct order
         invoices = invoices.search([("id", "in", invoices.ids)])
-        self.assertEquals(len(data), len(invoices))
+        self.assertEqual(len(data), len(invoices))
         for current_data, invoice in zip(data, invoices):
-            state_label = self._get_selection_label(invoice, "state")
-            type_label = self._get_selection_label(invoice, "type")
-            self.assertEquals(current_data.get("invoice_id"), invoice.id)
-            self.assertEquals(current_data.get("number"), invoice.number)
-            self.assertEquals(current_data.get("date_invoice"), invoice.date_invoice)
-            self.assertEquals(current_data.get("state"), invoice.state)
-            self.assertEquals(current_data.get("type"), invoice.type)
-            self.assertEquals(current_data.get("state_label"), state_label)
-            self.assertEquals(current_data.get("type_label"), type_label)
-            self.assertEquals(current_data.get("amount_total"), invoice.amount_total)
-            self.assertEquals(
+            state_label = self._get_selection_label(invoice, "payment_state")
+            type_label = self._get_selection_label(invoice, "move_type")
+            self.assertEqual(current_data.get("invoice_id"), invoice.id)
+            self.assertEqual(current_data.get("number"), invoice.payment_reference)
+            self.assertEqual(
+                current_data.get("date_invoice"),
+                fields.Date.to_string(invoice.invoice_date),
+            )
+            self.assertEqual(current_data.get("state"), invoice.payment_state)
+            self.assertEqual(current_data.get("type"), invoice.move_type)
+            self.assertEqual(current_data.get("state_label"), state_label)
+            self.assertEqual(current_data.get("type_label"), type_label)
+            self.assertEqual(current_data.get("amount_total"), invoice.amount_total)
+            self.assertEqual(
                 current_data.get("amount_total_signed"),
                 invoice.amount_total_signed,
             )
-            self.assertEquals(current_data.get("amount_tax"), invoice.amount_tax)
-            self.assertEquals(
-                current_data.get("amount_untaxed"), invoice.amount_untaxed
-            )
-            self.assertEquals(
+            self.assertEqual(current_data.get("amount_tax"), invoice.amount_tax)
+            self.assertEqual(current_data.get("amount_untaxed"), invoice.amount_untaxed)
+            self.assertEqual(
                 current_data.get("amount_untaxed_signed"),
                 invoice.amount_total_signed,
             )
-            self.assertEquals(current_data.get("amount_due"), invoice.residual)
+            self.assertEqual(current_data.get("amount_due"), invoice.amount_residual)
         return True
 
     def _confirm_and_invoice_sale(self, sale, validate=True, payment=True):
@@ -74,16 +75,14 @@ class CommonInvoiceCase(CommonCase):
         :param sale: sale.order recordset
         :param validate: bool
         :param payment: bool
-        :return: account.invoice
+        :return: account.move
         """
         sale.action_confirm()
         for line in sale.order_line:
             line.write({"qty_delivered": line.product_uom_qty})
-        invoice_id = sale.action_invoice_create()
-        invoice = self.env["account.invoice"].browse(invoice_id)
+        invoice = sale._create_invoices()
         if validate:
-            invoice.action_invoice_open()
-            invoice.action_move_create()
+            invoice._post()
             if payment:
                 self._make_payment(invoice)
         return invoice
@@ -91,7 +90,7 @@ class CommonInvoiceCase(CommonCase):
     def _make_payment(self, invoice, journal=False, amount=False):
         """
         Make payment for given invoice
-        :param invoice: account.invoice recordset
+        :param invoice: account.move recordset
         :param amount: float
         :return: bool
         """
@@ -108,7 +107,7 @@ class CommonInvoiceCase(CommonCase):
             register_payments.write({"journal_id": journal.id})
         if amount:
             register_payments.write({"amount": amount})
-        register_payments.create_payment()
+        register_payments.action_create_payments()
 
     def _create_invoice(self, partner=False, inv_type="out_invoice", validate=False):
         """
@@ -124,8 +123,8 @@ class CommonInvoiceCase(CommonCase):
             "partner_id": partner.id,
             "partner_shipping_id": partner.id,
             "shopinvader_backend_id": self.backend.id,
-            "date_invoice": fields.Date.today(),
-            "type": inv_type,
+            "invoice_date": fields.Date.today(),
+            "move_type": inv_type,
             "invoice_line_ids": [
                 (
                     0,
@@ -142,13 +141,13 @@ class CommonInvoiceCase(CommonCase):
         }
         invoice = self.invoice_obj.create(values)
         if validate:
-            invoice.action_invoice_open()
+            invoice._post()
         return invoice
 
     def _get_selection_label(self, invoice, field):
         """
         Get the translated label of the invoice selection field
-        :param invoice: account.invoice recordset
+        :param invoice: account.move recordset
         :param field: str
         :return: str
         """
