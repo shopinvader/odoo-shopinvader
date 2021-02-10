@@ -86,21 +86,21 @@ class InvoiceService(Component):
 
     def _get_parser_invoice(self):
         """
-        Get the parser of account.invoice
+        Get the parser of account.move
         :return: list
         """
         to_parse = [
             "id:invoice_id",
-            "number",
-            "date_invoice",
+            "payment_reference:number",
+            "invoice_date:date_invoice",
             "amount_total",
             "amount_total_signed",
             "amount_tax",
             "amount_untaxed",
             "amount_untaxed_signed",
-            "state",
-            "type",
-            "residual:amount_due",
+            "payment_state:state",
+            "move_type:type",
+            "amount_residual:amount_due",
         ]
         return to_parse
 
@@ -110,8 +110,8 @@ class InvoiceService(Component):
         values = invoice.jsonify(parser, one=True)
         values.update(
             {
-                "type_label": self._get_selection_label(invoice, "type"),
-                "state_label": self._get_selection_label(invoice, "state"),
+                "type_label": self._get_selection_label(invoice, "move_type"),
+                "state_label": self._get_selection_label(invoice, "payment_state"),
             }
         )
         return values
