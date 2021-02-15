@@ -31,6 +31,17 @@ class ShopinvaderBackend(models.Model):
     currency_ids = fields.Many2many(
         comodel_name="res.currency", string="Currency"
     )
+    visible_filter_ids = fields.Many2many(
+        comodel_name="product.filter", compute="_compute_visible_filter_ids"
+    )
+
+    @api.depends_context("lang")
+    @api.depends("filter_ids.visible")
+    def _compute_visible_filter_ids(self):
+        for rec in self:
+            rec.visible_filter_ids = rec.filter_ids.filtered(
+                lambda x: x.visible
+            )
 
     @property
     def _server_env_fields(self):

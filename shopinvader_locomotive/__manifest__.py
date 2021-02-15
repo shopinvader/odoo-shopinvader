@@ -19,6 +19,7 @@
     ],
     "data": [
         "views/shopinvader_backend_view.xml",
+        "views/product_filter_view.xml",
         "data/ir_cron.xml",
         "data/queue_job_function_data.xml",
     ],
