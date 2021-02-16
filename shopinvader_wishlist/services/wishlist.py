@@ -312,7 +312,7 @@ class WishlistService(Component):
 
     def _get_existing_line(self, record, params, raise_if_not_found=False):
         product_id = params["product_id"]
-        line = record.get_line_by_product(product_id=product_id)
+        line = record.get_lines_by_products(product_ids=[product_id])
         if not line and raise_if_not_found:
             raise NotFound(
                 "No product found with id %s" % params["product_id"]

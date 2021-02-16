@@ -57,8 +57,31 @@ class ProductSet(CommonCase):
     #     )
     #     self.assertEqual(line.shopinvader_variant_id, variant_en)
 
-    def test_get_line_by_product(self):
+    def test_get_lines_by_products(self):
         # ensure we can create a line from the product and we get the variant
+        prod = self.env.ref("product.product_product_4d")
+        line = self.prod_set.set_line_ids.create(
+            {
+                "product_set_id": self.prod_set.id,
+                "product_id": prod.id,
+                "quantity": 1,
+            }
+        )
+        variant = prod.shopinvader_bind_ids[0]
+        self.assertEqual(
+            self.prod_set.get_lines_by_products(
+                invader_variant_ids=variant.ids
+            ),
+            line,
+        )
+        self.assertEqual(
+            self.prod_set.get_lines_by_products(product_ids=prod.ids), line
+        )
+        with self.assertRaises(exceptions.ValidationError):
+            self.prod_set.get_lines_by_products()
+
+    def test_get_line_by_product_backward_compat(self):
+        # ensure old method `get_line_by_product` works
         prod = self.env.ref("product.product_product_4d")
         line = self.prod_set.set_line_ids.create(
             {

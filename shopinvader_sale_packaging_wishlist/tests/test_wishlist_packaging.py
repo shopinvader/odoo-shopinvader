@@ -40,7 +40,7 @@ class WishlistCase(CommonWishlistCase):
         self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
         self._bind_products(prod)
         # This line has no package
-        line = self.prod_set.get_line_by_product(product_id=prod.id)
+        line = self.prod_set.get_lines_by_products(product_ids=prod.ids)
         self.assertEqual(line.quantity, 1)
         # Add package and package qty
         params = {
