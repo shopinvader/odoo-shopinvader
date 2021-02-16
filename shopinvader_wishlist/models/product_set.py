@@ -1,7 +1,11 @@
 # Copyright 2019 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+
 from odoo import _, api, exceptions, fields, models
+
+_logger = logging.getLogger(__name__)
 
 
 class ProductSet(models.Model):
@@ -17,7 +21,7 @@ class ProductSet(models.Model):
     def get_line_by_product(self, product_id=None, invader_variant_id=None):
         if not product_id and not invader_variant_id:
             raise exceptions.ValidationError(
-                _("Provide `product_id` or `invader_variant_id`")
+                _("Provide `product_ids` or `invader_variant_id`")
             )
         if product_id:
             return self.set_line_ids.filtered(

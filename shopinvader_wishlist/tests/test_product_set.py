@@ -59,7 +59,7 @@ class ProductSet(CommonCase):
             line.with_context(lang="en_US").shopinvader_variant_id, variant_fr
         )
 
-    def test_get_line_by_product(self):
+    def test_get_lines_by_products(self):
         # ensure we can create a line from the product and we get the variant
         prod = self.env.ref("product.product_product_4d")
         line = self.prod_set.set_line_ids.create(

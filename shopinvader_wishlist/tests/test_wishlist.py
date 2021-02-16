@@ -258,7 +258,7 @@ class WishlistCase(CommonWishlistCase):
         before = self.wishlist_service.dispatch(
             "add_items", self.prod_set.id, params=params
         )
-        line2 = self.prod_set.get_line_by_product(product_id=prod2.id)
+        line2 = self.prod_set.get_lines_by_products(product_ids=prod2.ids)
         self.assertEqual(line1.sequence, 10)
         self.assertEqual(line2.sequence, 0)
         self.assertEqual(
@@ -279,7 +279,7 @@ class WishlistCase(CommonWishlistCase):
         prod = self.env.ref("product.product_product_4b")
         self._bind_products(prod)
         self.assertIn(prod, self.prod_set.mapped("set_line_ids.product_id"))
-        line = self.prod_set.get_line_by_product(product_id=prod.id)
+        line = self.prod_set.get_lines_by_products(product_ids=prod.ids)
         self.assertEqual(line.quantity, 1)
         params = {"lines": [{"product_id": prod.id}]}
         self.wishlist_service.dispatch(
