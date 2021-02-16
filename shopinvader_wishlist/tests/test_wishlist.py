@@ -187,6 +187,26 @@ class WishlistCase(CommonWishlistCase):
             self.wishlist_service.add_to_cart(self.prod_set.id)
             self.assertEqual(cart.order_line[0].product_id, prod)
 
+    def test_add_items_to_cart(self):
+        for line in self.wl_params["lines"]:
+            self.prod_set.set_line_ids.create(
+                dict(line, product_set_id=self.prod_set.id)
+            )
+        self.assertEqual(len(self.prod_set.set_line_ids), 3)
+        with self.work_on_services(partner=self.partner) as work:
+            cart_service = work.component(usage="cart")
+        cart = cart_service._get()
+        # no line yet
+        self.assertFalse(cart.order_line)
+
+        # add only to products to cart
+        prods = self.prod_set.set_line_ids[:2].mapped("product_id")
+        params = {"lines": [{"product_id": x.id} for x in prods]}
+        with mock.patch.object(type(cart_service), "_get") as mocked:
+            mocked.return_value = cart
+            self.wishlist_service.add_items_to_cart(self.prod_set.id, **params)
+            self.assertEqual(cart.mapped("order_line.product_id"), prods)
+
     def test_add_items(self):
         prod1 = self.env.ref("product.product_product_4d")
         prod2 = self.env.ref("product.product_product_11")
