@@ -75,9 +75,7 @@ class ShopinvaderProduct(models.Model):
         self.ensure_one()
         return self.categ_id
 
-    @api.depends(
-        "categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id"
-    )
+    @api.depends("categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id")
     def _compute_shopinvader_category(self):
         categ_model = self.env["shopinvader.category"]
 
@@ -100,9 +98,7 @@ class ShopinvaderProduct(models.Model):
             ]
             categories = categ_model.search(domain)
             prod_ids = grouped_prods[(backend_id, lang_id)]
-            self.browse(prod_ids).update(
-                {"shopinvader_categ_ids": categories.ids}
-            )
+            self.browse(prod_ids).update({"shopinvader_categ_ids": categories.ids})
 
     def _prepare_shopinvader_variant(self, variant):
         values = {"record_id": variant.id, "shopinvader_product_id": self.id}

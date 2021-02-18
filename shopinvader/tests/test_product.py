@@ -816,12 +816,8 @@ class ProductCase(ProductCommonCase):
         variant_fr = prod.shopinvader_bind_ids.filtered(
             lambda x: x.lang_id.code == "fr_FR"
         )
-        self.assertEqual(
-            prod._get_invader_variant(self.backend, "en_US"), variant_en
-        )
-        self.assertEqual(
-            prod._get_invader_variant(self.backend, "fr_FR"), variant_fr
-        )
+        self.assertEqual(prod._get_invader_variant(self.backend, "en_US"), variant_en)
+        self.assertEqual(prod._get_invader_variant(self.backend, "fr_FR"), variant_fr)
 
     # TODO: split this and other computed field tests to its own class
     def test_main_product(self):
@@ -829,15 +825,13 @@ class ProductCase(ProductCommonCase):
         tmpl = invader_variants[0].product_tmpl_id
         main_variant = tmpl.product_variant_ids[0]
         self.assertTrue(
-            invader_variants.filtered(
-                lambda x: x.record_id == main_variant
-            ).main
+            invader_variants.filtered(lambda x: x.record_id == main_variant).main
         )
         self.assertNotIn(
             True,
-            invader_variants.filtered(
-                lambda x: x.record_id != main_variant
-            ).mapped("main"),
+            invader_variants.filtered(lambda x: x.record_id != main_variant).mapped(
+                "main"
+            ),
         )
         # change order
         tmpl.product_variant_ids[0].default_code = "ZZZZZZZ"
@@ -846,13 +840,11 @@ class ProductCase(ProductCommonCase):
         main_variant1 = tmpl.product_variant_ids[0]
         self.assertNotEqual(main_variant, main_variant1)
         self.assertTrue(
-            invader_variants.filtered(
-                lambda x: x.record_id == main_variant1
-            ).main
+            invader_variants.filtered(lambda x: x.record_id == main_variant1).main
         )
         self.assertNotIn(
             True,
-            invader_variants.filtered(
-                lambda x: x.record_id != main_variant1
-            ).mapped("main"),
+            invader_variants.filtered(lambda x: x.record_id != main_variant1).mapped(
+                "main"
+            ),
         )
