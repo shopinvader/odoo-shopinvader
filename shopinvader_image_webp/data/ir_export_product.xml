@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_exp_shopinvader_variant_images_webp" model="ir.exports.line">
+        <field name="name">images_webp</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+</odoo>

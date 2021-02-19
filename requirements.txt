@@ -1,6 +1,7 @@
 # generated from manifests external_dependencies
 cerberus
 locomotivecms
+Pillow
 python-magic
 python-slugify>=3.0.2
 slugify
