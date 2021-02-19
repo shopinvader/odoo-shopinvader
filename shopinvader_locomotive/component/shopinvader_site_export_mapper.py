@@ -47,11 +47,13 @@ class ShopinvaderSiteExportMapper(Component):
         }
 
     @mapping
-    @changed_by("filter_ids")
+    @changed_by("visible_filter_ids")
     def filters(self, record):
         return {
             "all_filters": self._m2m_to_external(
-                record, "filter_ids", ["name", "display_name:code", "help"]
+                record,
+                "visible_filter_ids",
+                ["name", "display_name:code", "help"],
             )
         }
 

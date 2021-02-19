@@ -377,3 +377,27 @@ class TestBackend(TestBackendCommonCase):
                     "api_url": self.api_url,
                 },
             )
+
+    def test_erp_synchronize_04(self):
+        """Test only visible filters are exported
+        """
+        self.backend.filter_ids.filtered(
+            lambda x: x.display_name == "variant_attributes.color"
+        ).visible = False
+        with mock_site_api(self.base_url, self.site) as mock:
+            self.backend.synchronize_metadata()
+            metafields = self._extract_metafields(
+                mock.request_history[0].json()["site"]["metafields"]
+            )
+            expected_filters = {
+                "en": [
+                    {
+                        "code": "variant_attributes.legs",
+                        "name": "Memory",
+                        "help": "<p>Memory of the product</p>",
+                    },
+                ]
+            }
+            self.assertDictEqual(
+                metafields["_store"]["all_filters"], expected_filters
+            )
