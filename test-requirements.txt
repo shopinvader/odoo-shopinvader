@@ -1,11 +1,9 @@
---extra-index-url=https://wheelhouse.shopinvader.com/simple
-# TODO locomotivecms dep should be in the setup.py of the addon that needs it
-git+https://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
+# TODO these should be on PyPI
+openupgradelib @ git+https://github.com/OCA/openupgradelib.git
+locomotivecms @ git+https://github.com/akretion/locomotivecms-python-client.git
 # test requirements
 requests_mock
 vcrpy
 vcrpy-unittest
-openupgradelib @ git+https://github.com/OCA/openupgradelib.git
-
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
