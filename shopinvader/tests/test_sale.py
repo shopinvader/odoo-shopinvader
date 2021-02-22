@@ -175,7 +175,6 @@ class SaleCase(CommonCase, CommonTestDownload):
                 "typology": "cart",
                 "shopinvader_backend_id": self.backend.id,
                 "date_order": fields.Datetime.now(),
-                "project_id": self.backend.account_analytic_id.id,
             }
         )
         so_line_obj = self.env["sale.order.line"]
