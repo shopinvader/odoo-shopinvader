@@ -61,6 +61,16 @@ class WishlistService(Component):
         # return new cart
         return cart_service._to_json(cart)
 
+    def add_items_to_cart(self, _id, **params):
+        record = self._get(_id)
+        cart_service = self.component(usage="cart")
+        cart = cart_service._get()
+        prod_ids = [x["product_id"] for x in params["lines"]]
+        lines = record.get_lines_by_products(product_ids=prod_ids)
+        self._add_items_to_cart(record, cart, lines)
+        # return new cart
+        return cart_service._to_json(cart)
+
     def add_items(self, _id, **params):
         record = self._get(_id)
         self._add_items(record, params)
@@ -165,6 +175,28 @@ class WishlistService(Component):
             }
         }
 
+    def _validator_add_items_to_cart(self):
+        schema = self._validator_add_to_cart()
+        schema.update(
+            {
+                "lines": {
+                    "type": "list",
+                    "required": True,
+                    "schema": {
+                        "type": "dict",
+                        "schema": {
+                            "product_id": {
+                                "coerce": to_int,
+                                "required": True,
+                                "type": "integer",
+                            },
+                        },
+                    },
+                },
+            }
+        )
+        return schema
+
     def _validator_add_item(self):
         return self._validator_line_schema()
 
@@ -264,6 +296,11 @@ class WishlistService(Component):
         wizard = self._get_add_to_cart_wizard(record, cart)
         return wizard.add_set()
 
+    def _add_items_to_cart(self, record, cart, lines):
+        wizard = self._get_add_to_cart_wizard(record, cart)
+        wizard.product_set_line_ids = lines
+        return wizard.add_set()
+
     def _prepare_params(self, params, mode="create"):
         if mode == "create":
             params["shopinvader_backend_id"] = self.shopinvader_backend.id
@@ -312,7 +349,7 @@ class WishlistService(Component):
 
     def _get_existing_line(self, record, params, raise_if_not_found=False):
         product_id = params["product_id"]
-        line = record.get_line_by_product(product_id=product_id)
+        line = record.get_lines_by_products(product_ids=[product_id])
         if not line and raise_if_not_found:
             raise NotFound(
                 "No product found with id %s" % params["product_id"]
