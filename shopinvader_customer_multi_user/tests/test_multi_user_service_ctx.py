@@ -16,6 +16,8 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
     # to allow full testing of the service stack w/out using HttpTestCase
     def _get_mocked_request(self, partner):
         mocked_request = MockRequest(self.env)
+        if not mocked_request.request["httprequest"].get("environ"):
+            mocked_request.request["httprequest"]["environ"] = {}
         mocked_request.request["httprequest"]["environ"][
             "HTTP_PARTNER_EMAIL"
         ] = partner.email
