@@ -99,6 +99,10 @@ class ShopinvaderPartner(models.Model):
     @api.model
     def create(self, vals):
         binding = super().create(vals)
+        main_partner_id = vals.get("main_partner_id")
+        if main_partner_id:  # force manual value
+            main_partner = self.env["res.partner"].browse(main_partner_id)
+            binding.main_partner_id = main_partner
         # Generate company's invader user token when creating a binding
         partner = binding.record_id
         if (
