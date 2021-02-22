@@ -21,12 +21,14 @@ class InvaderController(main.RestController):
     _collection_name = "shopinvader.backend"
     _default_auth = "api_key"
 
-    @route(["/shopinvader/<service>/<int:_id>/download"], methods=["GET"])
+    @route(
+        ["/shopinvader/<service>/<int:_id>/download"],
+        methods=["GET"],
+        auth=_default_auth,
+    )
     def service_download(self, service, _id=None, **params):
         params["id"] = _id
-        return self._process_method(
-            service, "download", _id=_id, params=params
-        )
+        return self._process_method(service, "download", _id, params=params)
 
     @classmethod
     def _get_partner_from_headers(cls, headers):
