@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="1">
 
   <record id="email_cart_notification" model="mail.template">
@@ -6,8 +6,8 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Cart notification ${object.name}</field>
     <field name="partner_to">${object.partner_id.id}</field>
-    <field name="model_id" ref="sale.model_sale_order"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="sale.model_sale_order" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.partner_id.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="cart_confirmation" />
@@ -18,8 +18,8 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Sale notification ${object.name}</field>
     <field name="partner_to">${object.partner_id.id}</field>
-    <field name="model_id" ref="sale.model_sale_order"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="sale.model_sale_order" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.partner_id.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="sale_confirmation" />
@@ -30,8 +30,8 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Invoice notification ${object.number}</field>
     <field name="partner_to">${object.partner_id.id}</field>
-    <field name="model_id" ref="account.model_account_move"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="account.model_account_move" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.partner_id.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="invoice_confirmation" />
@@ -42,20 +42,25 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Welcome notification ${object.name}</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="new_customer_welcome" />
   </record>
 
-  <record id="email_new_customer_welcome_not_validated_notification" model="mail.template">
+  <record
+        id="email_new_customer_welcome_not_validated_notification"
+        model="mail.template"
+    >
     <field name="name">Shopinvader - Welcome customer not validated notification</field>
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
-    <field name="subject">Welcome notification ${object.name} - Account to be validated</field>
+    <field
+            name="subject"
+        >Welcome notification ${object.name} - Account to be validated</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="new_customer_not_validated" />
@@ -64,10 +69,12 @@
   <record id="email_customer_validated_notification" model="mail.template">
     <field name="name">Shopinvader - Customer validated notification</field>
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
-    <field name="subject">Welcome notification ${object.name} - Account validated</field>
+    <field
+            name="subject"
+        >Welcome notification ${object.name} - Account validated</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="customer_validated" />
@@ -78,8 +85,8 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Notification ${object.name} - Customer modified</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="customer_updated" />
@@ -90,8 +97,8 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Notification ${object.name} - Address created</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="address_created" />
@@ -100,10 +107,12 @@
   <record id="email_address_created_not_validated_notification" model="mail.template">
     <field name="name">Shopinvader - Address created not validated notification</field>
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
-    <field name="subject">Notification ${object.name} - Address created to be validated</field>
+    <field
+            name="subject"
+        >Notification ${object.name} - Address created to be validated</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="address_created_not_validated" />
@@ -114,8 +123,8 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Notification ${object.name} - Address validated</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="address_validated" />
@@ -126,8 +135,8 @@
     <field name="email_from">${(object.user_id.email or '')|safe}</field>
     <field name="subject">Notification ${object.name} - Address modified</field>
     <field name="partner_to">${object.id}</field>
-    <field name="model_id" ref="base.model_res_partner"/>
-    <field name="auto_delete" eval="False"/>
+    <field name="model_id" ref="base.model_res_partner" />
+    <field name="auto_delete" eval="False" />
     <field name="lang">${object.lang}</field>
     <field name="body_type">qweb</field>
     <field name="body_view_id" ref="address_modified" />
