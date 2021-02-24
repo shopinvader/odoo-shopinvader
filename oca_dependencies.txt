@@ -7,9 +7,13 @@ server-env
 e-commerce
 search-engine
 server-tools
-sale-workflow https://github.com/akretion/odoo-shopinvader 12.0-mig_promotion_rule #Do not merge this
 product-attribute
 partner-contact
 e-commerce
 odoo-misc https://github.com/shopinvader/odoo-misc 13.0
 social
+
+# PENDING PRS
+
+# https://github.com/OCA/sale-workflow/pull/1485
+sale-workflow https://github.com/acsone/sale-workflow 13.0-mig-sale_promotion_rule
