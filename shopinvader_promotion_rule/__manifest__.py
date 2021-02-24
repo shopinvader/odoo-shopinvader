@@ -4,7 +4,7 @@
 {
     "name": "Shopvinvader Promotion Rule",
     "summary": "Module to manage Promotion Rule with shopinvader",
-    "version": "12.0.1.0.0",
+    "version": "13.0.1.0.0",
     "category": "Sale",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion, " "ACSONE SA / NV",
