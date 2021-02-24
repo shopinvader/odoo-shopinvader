@@ -46,14 +46,12 @@ class ShopinvaderBackend(models.Model):
 
     @tools.ormcache("partner.id", "self.company_id.id")
     def _get_fiscal_position_id(self, partner):
-        fp_model = self.env["account.fiscal.position"].with_context(
-            force_company=self.company_id.id
-        )
-        fpos_id = fp_model.get_fiscal_position(
+        fp_model = self.env["account.fiscal.position"].with_company(self.company_id.id)
+        fpos = fp_model.get_fiscal_position(
             partner.id,
             delivery_id=partner.id,
         )
-        return fpos_id
+        return fpos.id
 
     def _get_fiscal_position(self, partner):
         fpos_id = self._get_fiscal_position_id(partner)
