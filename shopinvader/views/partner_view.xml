@@ -15,6 +15,12 @@
                             <field name="create_date" readonly="True"/>
                             <field name="sync_date" readonly="True"/>
                             <field name="state" />
+                            <button
+                                name="action_edit_in_form"
+                                type="object"
+                                title="Edit in form"
+                                icon="fa-pencil"
+                            />
                         </tree>
                     </field>
                     <group name="extras">
