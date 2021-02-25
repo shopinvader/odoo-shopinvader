@@ -86,10 +86,11 @@ class ProductCase(ProductCommonCase):
         return
 
     def test_product_get_price(self):
-        # base_price_list doesn't define a tax mapping. We are tax included
-        base_price_list = self.env.ref("product.list0")
+        # self.base_pricelist doesn't define a tax mapping. We are tax included
         fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
-        price = self.shopinvader_variant._get_price(base_price_list, fiscal_position_fr)
+        price = self.shopinvader_variant._get_price(
+            self.base_pricelist, fiscal_position_fr
+        )
         self.assertDictEqual(
             price,
             {
@@ -117,7 +118,7 @@ class ProductCase(ProductCommonCase):
         # excluded
         tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
         price = self.shopinvader_variant._get_price(
-            base_price_list, tax_exclude_fiscal_position
+            self.base_pricelist, tax_exclude_fiscal_position
         )
         self.assertDictEqual(
             price,
@@ -144,12 +145,13 @@ class ProductCase(ProductCommonCase):
     def test_product_get_price_discount_policy(self):
         # Ensure that discount is with 2 digits
         self.env.ref("product.decimal_discount").digits = 2
-        # base_price_list doesn't define a tax mapping. We are tax included
+        # self.base_pricelist doesn't define a tax mapping. We are tax included
         # we modify the discount_policy
-        base_price_list = self.env.ref("product.list0")
-        base_price_list.discount_policy = "without_discount"
+        self.base_pricelist.discount_policy = "without_discount"
         fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
-        price = self.shopinvader_variant._get_price(base_price_list, fiscal_position_fr)
+        price = self.shopinvader_variant._get_price(
+            self.base_pricelist, fiscal_position_fr
+        )
         self.assertDictEqual(
             price,
             {
@@ -181,7 +183,7 @@ class ProductCase(ProductCommonCase):
         # the original value
         tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
         price = self.shopinvader_variant._get_price(
-            base_price_list, tax_exclude_fiscal_position
+            self.base_pricelist, tax_exclude_fiscal_position
         )
         self.assertDictEqual(
             price,
