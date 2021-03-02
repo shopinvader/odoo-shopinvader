@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Wishlist Packaging",
     "summary": """Add packaging information to wishlists""",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
@@ -15,6 +15,6 @@
         "shopinvader_wishlist",
         "sale_product_set_packaging_qty",
     ],
-    "installable": False,
+    "installable": True,
     "auto_install": True,
 }
