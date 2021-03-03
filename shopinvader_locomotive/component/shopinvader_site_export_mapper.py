@@ -32,7 +32,7 @@ class ShopinvaderSiteExportMapper(Component):
             if isinstance(field_value, models.Model):
                 field_value.invalidate_cache()
             for rec in field_value.with_context(lang=lang.code):
-                res[lang.code[0:2]].append(rec.jsonify(parser)[0])
+                res[lang.code[0:2]].append(rec.jsonify(parser, one=True))
         return res
 
     @mapping

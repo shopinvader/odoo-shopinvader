@@ -34,3 +34,7 @@ class ShopinvaderVariant(models.Model):
                 and r.lang_id == i.lang_id
             )
             record.index_id = fields.first(index)
+
+    def _get_shop_data(self):
+        """Use pre-computed index data."""
+        return self.get_export_data()

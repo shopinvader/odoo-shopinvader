@@ -6,9 +6,15 @@
         <field name="resource">shopinvader.variant</field>
     </record>
 
+    <record id="ir_exp_shopinvader_variant_id" model="ir.exports.line">
+        <field name="name">id</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
     <record id="ir_exp_shopinvader_variant_object_id" model="ir.exports.line">
-        <field name="name">object_id</field>
-        <field name="target">object_id:objectID</field>
+        <field name="name">record_id</field>
+        <field name="target">record_id:objectID</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_variant" />
     </record>
 

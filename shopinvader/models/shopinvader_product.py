@@ -75,24 +75,30 @@ class ShopinvaderProduct(models.Model):
         self.ensure_one()
         return self.categ_id
 
-    def _get_parent_category_domain(self, categ):
-        self.ensure_one()
-        return [
-            ("record_id", "parent_of", categ.ids),
-            ("backend_id", "=", self.backend_id.id),
-            ("lang_id", "=", self.lang_id.id),
-        ]
-
     @api.depends("categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id")
     def _compute_shopinvader_category(self):
+        categ_model = self.env["shopinvader.category"]
+
+        def group_key(rec):
+            return rec.backend_id.id, rec.lang_id.id
+
+        grouped_categs = {}
+        grouped_prods = {}
         for record in self:
-            categories = self.env["shopinvader.category"]
-            product_categories = record._get_categories()
-            for product_category in product_categories:
-                domain = record._get_parent_category_domain(product_category)
-                parents = self.env["shopinvader.category"].search(domain)
-                categories |= parents
-            record.shopinvader_categ_ids = categories
+            grouped_categs.setdefault(group_key(record), []).extend(
+                record._get_categories().ids
+            )
+            grouped_prods.setdefault(group_key(record), []).append(record.id)
+
+        for (backend_id, lang_id), categ_ids in grouped_categs.items():
+            domain = [
+                ("record_id", "parent_of", set(categ_ids)),
+                ("backend_id", "=", backend_id),
+                ("lang_id", "=", lang_id),
+            ]
+            categories = categ_model.search(domain)
+            prod_ids = grouped_prods[(backend_id, lang_id)]
+            self.browse(prod_ids).update({"shopinvader_categ_ids": categories.ids})
 
     def _prepare_shopinvader_variant(self, variant):
         values = {"record_id": variant.id, "shopinvader_product_id": self.id}

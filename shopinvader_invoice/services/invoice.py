@@ -107,7 +107,7 @@ class InvoiceService(Component):
     def _to_json_invoice(self, invoice):
         invoice.ensure_one()
         parser = self._get_parser_invoice()
-        values = invoice.jsonify(parser)[0]
+        values = invoice.jsonify(parser, one=True)
         values.update(
             {
                 "type_label": self._get_selection_label(invoice, "type"),

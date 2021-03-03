@@ -298,11 +298,4 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res_line["id"], self.prod_set.set_line_ids[0].id)
         self.assertEqual(res_line["quantity"], 1)
         self.assertEqual(res_line["sequence"], 10)
-        self.assertEqual(res_line["product"]["id"], variant.id)
-        self.assertEqual(res_line["product"]["name"], variant.name)
-        self.assertEqual(res_line["product"]["sku"], variant.default_code)
-        self.assertEqual(res_line["product"]["url_key"], variant.url_key)
-        self.assertEqual(res_line["product"]["objectID"], prod.id)
-        self.assertIn("price", res_line["product"])
-        if "images" in variant._fields:
-            self.assertIn("images", res_line["product"])
+        self.assertEqual(res_line["product"], variant.get_shop_data())
