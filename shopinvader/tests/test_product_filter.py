@@ -54,6 +54,16 @@ class TestProductFilter(CommonCase):
             "x_custom_field",
         )
 
+    def test_product_filter_field_name_with_path(self):
+        self.filter_on_field.path = "x_custom_field.inner_value"
+        self.assertEqual(
+            self.filter_on_field.display_name, "x_custom_field.inner_value"
+        )
+        self.assertEqual(
+            self.filter_on_field.with_context(lang="fr_FR").display_name,
+            "x_custom_field.inner_value",
+        )
+
     def test_product_filter_attribute_name(self):
         self.assertEqual(
             self.filter_on_attr.display_name,
