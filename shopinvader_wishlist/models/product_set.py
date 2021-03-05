@@ -13,13 +13,6 @@ class ProductSet(models.Model):
         help="If you are using this set for shopinvader customer "
         "you must select a backend.",
     )
-    lang_id = fields.Many2one(
-        "res.lang",
-        string="Lang",
-        default=lambda self: self.env["res.lang"]._lang_get(
-            self.env.context.get("lang")
-        ),
-    )
 
     def get_line_by_product(self, product_id=None, invader_variant_id=None):
         if not product_id and not invader_variant_id:
@@ -51,24 +44,18 @@ class ProductSetLine(models.Model):
             if record.shopinvader_variant_id and not record.product_id:
                 record.product_id = record.shopinvader_variant_id.record_id
 
-    @api.depends("product_id", "product_set_id.lang_id")
+    @api.depends("product_id")
+    @api.depends_context("lang")
     def _compute_shopinvader_variant(self):
         for record in self:
             if record.product_id and not record.shopinvader_variant_id:
                 backend = record.product_set_id.shopinvader_backend_id
-                # lang = record.product_set_id.lang_id.code
-                # TMP FIX: apparently the lang is not propagate to the context
-                # from the locomotive request
-                # and we cannot make sure which lang
-                # is going to be used.
-                # Let's rely only on the partner until we solve it.
-                lang = record.product_set_id.partner_id.lang
-                # / FIX
+                lang = self.env.context.get("lang")
                 variant = record.product_id._get_invader_variant(backend, lang)
-                # if not variant:
-                #     lang = record.product_set_id.partner_id.lang
-                #     # try w/ partner lang
-                #     variant = record.product_id._get_invader_variant(
-                #         backend, lang
-                #     )
+                if not variant:
+                    lang = record.product_set_id.partner_id.lang
+                    # try w/ partner lang
+                    variant = record.product_id._get_invader_variant(
+                        backend, lang
+                    )
                 record.shopinvader_variant_id = variant
