@@ -8,7 +8,7 @@
     "password from odoo",
     "version": "10.0.1.0.0",
     "category": "Shopinvader",
-    "website": "www.akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
     "application": False,

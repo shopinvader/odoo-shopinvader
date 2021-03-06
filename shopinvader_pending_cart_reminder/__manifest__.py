@@ -6,7 +6,7 @@
     cart/sale is not confirmed yet.
     Configure the delay and the email template on the backend.""",
     "author": "ACSONE SA/NV",
-    "website": "http://www.shopinvader.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "e-commerce",
     "version": "12.0.1.0.0",
     "license": "AGPL-3",
