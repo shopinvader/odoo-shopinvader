@@ -6,7 +6,7 @@
     "summary": "Shopinvader Check VAT with invader environnement",
     "version": "12.0.1.0.0",
     "category": "e-commerce",
-    "development_status": "Stable/Production",
+    "development_status": "Production/Stable",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
