@@ -28,8 +28,8 @@ class StockPicking(models.Model):
         all_move_lines = picking_outgoing.mapped("move_lines")
         backends = picking_outgoing._get_related_backends()
 
-        def filter_line(l, b):
-            lbackend = l.sale_line_id.order_id.shopinvader_backend_id
+        def filter_line(line, b):
+            lbackend = line.sale_line_id.order_id.shopinvader_backend_id
             return lbackend == b
 
         for backend in backends:
