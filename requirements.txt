@@ -1,10 +1,8 @@
-python-slugify>=3.0.2
+# generated from manifests external_dependencies
 cerberus
-pyquerystring
-parse-accept-language
-unidecode
-algoliasearch<2.0.0
-# shopinvader_import_image
+locomotivecms
 python-magic
+python-slugify>=3.0.2
+slugify
+unidecode
 validators
--e git://github.com/shopinvader/locomotivecms-python-client.git#egg=locomotivecms

@@ -13,7 +13,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     # any module necessary for this one to work correctly
     "depends": ["base"],
-    "external_dependencies": {"python": ["python-slugify"]},
+    "external_dependencies": {"python": ["python-slugify>=3.0.2"]},
     "data": ["views/url_view.xml", "security/ir.model.access.csv"],
     "url": "",
     "installable": True,

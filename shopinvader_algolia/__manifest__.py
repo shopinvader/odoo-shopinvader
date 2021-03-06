@@ -17,7 +17,6 @@
         "views/shopinvader_variant_view.xml",
     ],
     "demo": ["demo/backend_demo.xml", "demo/product_demo.xml"],
-    "external_dependencies": {"python": ["vcrpy_unittest"]},
     "installable": True,
     "application": True,
 }
