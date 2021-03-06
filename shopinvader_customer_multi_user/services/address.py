@@ -2,8 +2,9 @@
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.component.core import Component
 from odoo.osv import expression
+
+from odoo.addons.component.core import Component
 
 
 class AddressService(Component):

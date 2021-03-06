@@ -1,7 +1,8 @@
 # Copyright 2016 Cédric Pigeon
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.tools import mute_logger
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 @mute_logger("odoo.models.unlink")

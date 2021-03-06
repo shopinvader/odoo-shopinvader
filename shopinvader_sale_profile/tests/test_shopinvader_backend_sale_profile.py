@@ -2,6 +2,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import mock
+
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
