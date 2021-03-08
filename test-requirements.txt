@@ -1,4 +1,4 @@
-locomotivecms @ git+https://github.com/akretion/locomotivecms-python-client.git
+locomotivecms @ git+https://github.com/shopinvader/locomotivecms-python-client.git
 # test requirements
 requests_mock
 vcrpy
