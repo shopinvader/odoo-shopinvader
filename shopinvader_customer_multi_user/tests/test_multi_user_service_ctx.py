@@ -2,6 +2,8 @@
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+import contextlib
+
 from odoo.addons.shopinvader.controllers.main import InvaderController
 from odoo.addons.website.tools import MockRequest
 
@@ -14,15 +16,14 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
 
     # TODO: would be nice to have this in core module (or base_rest)
     # to allow full testing of the service stack w/out using HttpTestCase
+    @contextlib.contextmanager
     def _get_mocked_request(self, partner):
-        mocked_request = MockRequest(self.env)
-        mocked_request.request["httprequest"]["environ"][
-            "HTTP_PARTNER_EMAIL"
-        ] = partner.email
-        mocked_request.request[
-            "auth_api_key_id"
-        ] = self.backend.auth_api_key_id.id
-        return mocked_request
+        with MockRequest(self.env) as mocked_request:
+            mocked_request.httprequest.environ.update(
+                {"HTTP_PARTNER_EMAIL": partner.email}
+            )
+            mocked_request.auth_api_key_id = self.backend.auth_api_key_id.id
+            yield mocked_request
 
     def test_partner_ctx_default_multi_disabled(self):
         ctrl = InvaderController()
