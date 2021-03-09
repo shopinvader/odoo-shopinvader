@@ -67,6 +67,10 @@ class TestMembershipService(CommonCase):
                 dts(membership_line.date_cancel),
             )
             self.assertEqual(
+                current_data.get("membership_id").get("id"),
+                membership_line.membership_id.id,
+            )
+            self.assertEquals(
                 current_data.get("membership_id").get("name"),
                 membership_line.membership_id.name,
             )
