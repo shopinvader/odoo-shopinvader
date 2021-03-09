@@ -106,7 +106,10 @@ class MembershipService(Component):
             "membership_id": {
                 "type": "dict",
                 "nullable": True,
-                "schema": {"name": {"type": "string"}},
+                "schema": {
+                    "id": {"type": "integer"},
+                    "name": {"type": "string"},
+                },
             },
             "member_price": {"type": "float"},
             "state": {
@@ -138,7 +141,7 @@ class MembershipService(Component):
             "date_from",
             "date_to",
             "date_cancel",
-            ("membership_id:membership_id", ("name",)),
+            ("membership_id:membership_id", ("id", "name")),
             "member_price",
         ]
         return to_parse
