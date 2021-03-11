@@ -21,6 +21,7 @@ addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 14.0.1.1.0 | Shopinvader
+[shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 
 
 Unported addons
@@ -54,7 +55,6 @@ addon | version | summary
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 13.0.1.2.0 (unported) | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.1.0 (unported) | Synchronize wishlist details to Locomotive users record.
-[shopinvader_multi_category](shopinvader_multi_category/) | 10.0.1.0.0 (unported) | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 (unported) | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 (unported) | Shopinvader Customer firstname/lastname
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
