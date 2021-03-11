@@ -14,6 +14,7 @@ _logger = logging.getLogger(__name__)
 class AbstractSaleService(AbstractComponent):
     _inherit = "shopinvader.abstract.mail.service"
     _name = "shopinvader.abstract.sale.service"
+    _expose_model = "sale.order"
 
     def _convert_one_sale(self, sale):
         sale.ensure_one()

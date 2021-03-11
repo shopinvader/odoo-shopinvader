@@ -19,7 +19,6 @@ class SaleService(Component):
     ]
     _name = "shopinvader.sale.service"
     _usage = "sales"
-    _expose_model = "sale.order"
     _description = __doc__
 
     # The following method are 'public' and can be called from the controller.
