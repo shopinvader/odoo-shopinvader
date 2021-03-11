@@ -13,4 +13,5 @@
     "application": False,
     "installable": True,
     "depends": ["shopinvader", "component", "sale_promotion_rule"],
+    "data": ["views/sale_promotion_rule.xml"],
 }

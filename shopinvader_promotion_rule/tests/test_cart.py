@@ -171,3 +171,43 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
             save_price_with_promo,
             places=self.price_precision_digits,
         )
+
+    def test_promotion_rule_backend_enable(self):
+        """
+        Ensure the _check_valid_shopinvader_backend return the correct value.
+        If promo rules on the backend are not disabled, the result of this
+        function should be True (this case).
+        :return:
+        """
+        self.assertFalse(
+            self.promotion_rule_auto.restriction_shopinvader_backend_ids
+        )
+        self.assertTrue(
+            self.promotion_rule_auto._check_valid_shopinvader_backend(
+                self.cart
+            )
+        )
+        self.assertIn(
+            "shopinvader_backend", self.promotion_rule_auto._get_restrictions()
+        )
+
+    def test_promotion_rule_backend_disabled(self):
+        """
+        Ensure the _check_valid_shopinvader_backend return the correct value.
+        If promo rules on the backend are disabled, the result of this
+        function should be False (this case).
+        :return:
+        """
+        self.promotion_rule_auto.write(
+            {
+                "restriction_shopinvader_backend_ids": [
+                    (6, False, self.cart.shopinvader_backend_id.ids)
+                ]
+            }
+        )
+
+        self.assertFalse(
+            self.promotion_rule_auto._check_valid_shopinvader_backend(
+                self.cart
+            )
+        )

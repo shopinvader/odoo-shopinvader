@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="sale_promotion_rule_form_view">
+        <field name="name">sale.promotion.rule.form (in shopinvader_promotion_rule)</field>
+        <field name="model">sale.promotion.rule</field>
+        <field name="inherit_id" ref="sale_promotion_rule.view_sale_promotion_rule_form"/>
+        <field name="priority" eval="90"/>
+        <field name="arch" type="xml">
+            <group name="condition" position="inside">
+                <field name="restriction_shopinvader_backend_ids" widget="many2many_tags" options="{'no_create': True}"/>
+            </group>
+        </field>
+    </record>
+</odoo>
