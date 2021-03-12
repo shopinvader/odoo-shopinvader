@@ -20,6 +20,19 @@ except ImportError:
 
 
 class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
+
+    DEFAULT_FACET_KEYS = [
+        "categories.id",
+        "Categories.lvl0hierarchical",
+        "Categories.lvl1hierarchical",
+        "Categories.lvl2hierarchical",
+        "main",
+        "redirect_url_key",
+        "url_key",
+        "sku",
+        "price.default.value",
+    ]
+
     @classmethod
     def setUpClass(cls):
         super(TestAlgoliaBackend, cls).setUpClass()
@@ -37,6 +50,13 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         cls.shopinvader_backend.bind_all_category()
         cls.index_product = cls.env.ref("shopinvader_algolia.index_1")
         cls.index_categ = cls.env.ref("shopinvader_algolia.index_2")
+        cls.index_config = cls.env["se.index.config"].create(
+            {"name": "Custom"}
+        )
+        cls.index_config.body = {
+            "attributesForFaceting": ["whatever.you.search"]
+        }
+        cls.index_product.config_id = cls.index_config
 
     def _get_vcr_kwargs(self, **kwargs):
         return {
@@ -121,6 +141,7 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         attr1.with_context(lang="fr_FR").name = attr1.name + " FR"
         attr2.with_context(lang="fr_FR").name = attr2.name + " FR"
         self.shopinvader_backend.filter_ids = filter1 + filter2
+
         settings_en = self.env["shopinvader.variant"]._get_facetting_values(
             self.backend, self.env.ref("base.lang_en")
         )
@@ -129,33 +150,20 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         )
         self.assertEqual(
             settings_en,
-            [
-                "categories.id",
-                "Categories.lvl0hierarchical",
-                "Categories.lvl1hierarchical",
-                "Categories.lvl2hierarchical",
-                "main",
-                "redirect_url_key",
-                "url_key",
-                "sku",
-                "price.default.value",
-                "variant_attributes.legs",
-                "variant_attributes.color",
-            ],
+            self.DEFAULT_FACET_KEYS
+            + ["variant_attributes.legs", "variant_attributes.color"],
         )
         self.assertEqual(
             settings_fr,
-            [
-                "categories.id",
-                "Categories.lvl0hierarchical",
-                "Categories.lvl1hierarchical",
-                "Categories.lvl2hierarchical",
-                "main",
-                "redirect_url_key",
-                "url_key",
-                "sku",
-                "price.default.value",
-                "variant_attributes.legs_fr",
-                "variant_attributes.color_fr",
-            ],
+            self.DEFAULT_FACET_KEYS
+            + ["variant_attributes.legs_fr", "variant_attributes.color_fr"],
+        )
+
+    def test_index_facet_settings_merge(self):
+        # Settings from index config and from _get_facetting_values
+        # should be merged together
+        settings = self.index_product._get_settings()
+        self.assertEqual(
+            sorted(settings["attributesForFaceting"]),
+            sorted(self.DEFAULT_FACET_KEYS + ["whatever.you.search"]),
         )
