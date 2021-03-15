@@ -12,5 +12,5 @@
     "depends": ["shopinvader_search_engine", "connector_elasticsearch"],
     "data": ["data/ir_export_product.xml"],
     "demo": ["demo/index_config_demo.xml", "demo/backend_demo.xml"],
-    "installable": False,
+    "installable": True,
 }
