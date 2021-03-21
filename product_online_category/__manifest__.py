@@ -10,7 +10,7 @@
     "license": "AGPL-3",
     "summary": "Product categories dedicated to online shop",
     "author": "Akretion",
-    "website": "http://www.akretion.com/fr",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["product_multi_category"],
     "data": [],
     "installable": True,

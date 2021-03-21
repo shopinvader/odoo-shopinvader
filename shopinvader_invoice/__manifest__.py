@@ -5,7 +5,7 @@
     "name": "Shopinvader Invoice",
     "summary": """Shopinvader Invoice module""",
     "author": "ACSONE SA/NV",
-    "website": "https://shopinvader.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "shopinvader",
     "version": "10.0.1.2.5",
     "license": "AGPL-3",

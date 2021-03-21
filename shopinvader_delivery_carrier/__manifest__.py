@@ -8,7 +8,7 @@
     "summary": "Carrier integration for Shopinvader",
     "version": "10.0.1.4.3",
     "category": "e-commerce",
-    "website": "https://akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,

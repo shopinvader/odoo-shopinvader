@@ -7,7 +7,7 @@
     "name": "Partner Company",
     "version": "10.0.1.0.1",
     "author": "Akretion",
-    "website": "http://www.akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "category": "Partner",
     "summary": "Partner Company",

@@ -8,7 +8,7 @@
     "summary": "Add the export of Image for Shopinvader",
     "version": "10.0.1.0.4",
     "category": "e-commerce",
-    "website": "https://akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "depends": ["shopinvader", "storage_image_product"],

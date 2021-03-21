@@ -8,7 +8,7 @@
     "name": "Shopinvader Demo App",
     "version": "10.0.1.0.0",
     "author": "Akretion",
-    "website": "www.akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "category": "Generic Modules",
     "depends": [

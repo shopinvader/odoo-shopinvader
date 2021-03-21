@@ -6,7 +6,7 @@
     "summary": """Shopinvader addons to let user define delivery
     instructions""",
     "author": "ACSONE SA/NV",
-    "website": "http://shopinvader.com/",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "e-commerce",
     "version": "10.0.1.0.2",
     "license": "AGPL-3",

@@ -5,7 +5,7 @@
     "name": "Shopinvader sale report",
     "summary": """Shopinvader addons to extend sale report with backend""",
     "author": "ACSONE SA/NV",
-    "website": "http://acsone.eu",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "e-commerce",
     "version": "10.0.1.0.1",
     "license": "AGPL-3",

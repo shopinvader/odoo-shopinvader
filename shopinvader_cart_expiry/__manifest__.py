@@ -5,7 +5,7 @@
     "name": "Shopinvader cart expiry",
     "summary": """Shopinvader module to manage an expiry delay on cart""",
     "author": "ACSONE SA/NV",
-    "website": "http://www.shopinvader.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "e-commerce",
     "version": "10.0.1.1.0",
     "license": "AGPL-3",

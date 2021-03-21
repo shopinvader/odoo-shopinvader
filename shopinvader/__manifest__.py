@@ -8,7 +8,7 @@
     "summary": "Shopinvader",
     "version": "10.0.2.21.1",
     "category": "e-commerce",
-    "website": "https://akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,
