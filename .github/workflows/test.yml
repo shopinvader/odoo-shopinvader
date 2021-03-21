@@ -2,6 +2,8 @@ name: test Odoo addons
 
 on:
   pull_request:
+    branches:
+      - "14.0*"
   push:
     branches:
       - "14.0*"
@@ -9,7 +11,14 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: ghcr.io/sbidoul/oca-ci/py3.6-odoo14.0:latest
+    container: ${{ matrix.container }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - container: ghcr.io/sbidoul/oca-ci/py3.6-odoo14.0:latest
+            makepot: "true"
+          - container: ghcr.io/sbidoul/oca-ci/py3.6-ocb14.0:latest
     services:
       postgres:
         image: postgres:9.6
@@ -19,15 +28,17 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options:
-          --health-cmd pg_isready --health-interval 10s --health-timeout 5s
-          --health-retries 5
     env:
       PIP_EXTRA_INDEX_URL: "https://wheelhouse.shopinvader.com/simple/"
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
       - run: oca_install_addons
       - run: oca_init_test_database
       - run: oca_run_tests
       - uses: codecov/codecov-action@v1
+      - run: |
+          oca_export_and_commit_pot
+          git push https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
+        if: ${{ matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == 'shopinvader' && startsWith(github.ref, 'refs/heads/14.0') }}
