@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_algolia
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_algolia
+#: model:ir.model.fields,field_description:shopinvader_algolia.field_shopinvader_product__hierarchical_categories
+#: model:ir.model.fields,field_description:shopinvader_algolia.field_shopinvader_variant__hierarchical_categories
+msgid "Hierarchical Categories"
+msgstr ""
+
+#. module: shopinvader_algolia
+#: model:ir.model,name:shopinvader_algolia.model_se_index
+msgid "Se Index"
+msgstr ""
+
+#. module: shopinvader_algolia
+#: model:ir.model,name:shopinvader_algolia.model_shopinvader_category
+msgid "Shopinvader Category"
+msgstr ""
+
+#. module: shopinvader_algolia
+#: model:ir.model,name:shopinvader_algolia.model_shopinvader_product
+msgid "Shopinvader Product"
+msgstr ""
+
+#. module: shopinvader_algolia
+#: model:ir.model,name:shopinvader_algolia.model_shopinvader_variant
+msgid "Shopinvader Variant"
+msgstr ""
