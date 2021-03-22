@@ -1,0 +1,266 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_import_image
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__file_csv
+msgid "CSV file"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__csv_delimiter
+msgid "CSV file delimiter"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__csv_header
+msgid "CSV file header"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__chunk_size
+msgid "Chunk Size"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__create_missing_tags
+msgid "Create Missing Tags"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "Created"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__state__done
+msgid "Done"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__done_on
+msgid "Done On"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__source_type__external_storage
+msgid "External storage"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model,name:shopinvader_import_image.model_shopinvader_import_product_image
+msgid "Handle import of shopinvader product images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,help:shopinvader_import_image.field_shopinvader_import_product_image__chunk_size
+msgid "How many lines will be handled in each job."
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "Image file not found"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.actions.act_window,name:shopinvader_import_image.import_image_action
+msgid "Import Product Image"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Import images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Import images again"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.ui.menu,name:shopinvader_import_image.menu_backend_shopinvader_image_import
+#: model:ir.ui.menu,name:shopinvader_import_image.menu_sale_shopinvader_image_import
+msgid "Import product images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_tree_view
+msgid "Import shopinvader product images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__state
+msgid "Import state"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "Invalid CSV file headers found! Expected: %s"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__state__new
+msgid "New"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "No storage backend provided!"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "No zip file provided!"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__options
+msgid "Options"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__overwrite
+msgid "Overwrite image with same name"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__external_csv_path
+msgid "Path to CSV file"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__product_model
+msgid "Product Model"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "Product not found"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__product_model__product_template
+msgid "Product template"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__product_model__product_product
+msgid "Product variants"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,help:shopinvader_import_image.field_shopinvader_import_product_image__external_csv_path
+msgid "Relative path of the CSV file located in the external storage"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__report
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Report"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__report_html
+msgid "Report Html"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__state__scheduled
+msgid "Scheduled"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.actions.server,name:shopinvader_import_image.ir_cron_import_images_cleanup_ir_actions_server
+#: model:ir.cron,cron_name:shopinvader_import_image.ir_cron_import_images_cleanup
+#: model:ir.cron,name:shopinvader_import_image.ir_cron_import_images_cleanup
+msgid "Shopinvader image imports cleanup"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__source_type
+msgid "Source type"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__storage_backend_id
+msgid "Storage Backend"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__source_storage_backend_id
+msgid "Storage Backend with images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "Tags not found"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__source_type__url
+msgid "URL"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__source_zipfile
+msgid "ZIP with images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields.selection,name:shopinvader_import_image.selection__shopinvader_import_product_image__source_type__zip_file
+msgid "Zip file"
+msgstr ""
