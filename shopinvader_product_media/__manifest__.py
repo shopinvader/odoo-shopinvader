@@ -7,7 +7,7 @@
     "summary": "Index storage media data into external search engine",
     "version": "13.0.1.0.1",
     "category": "e-commerce",
-    "website": "https://akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "installable": True,

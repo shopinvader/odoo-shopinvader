@@ -4,6 +4,7 @@
 # pylint: disable=method-required-super, consider-merging-classes-inherited
 
 from odoo import _
+
 from odoo.addons.component.core import AbstractComponent
 
 # TODO: refactor out to a component event the handling of notifications

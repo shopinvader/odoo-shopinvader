@@ -6,13 +6,15 @@
 from contextlib import contextmanager
 
 import mock
+
+from odoo.exceptions import MissingError
+from odoo.tests import SavepointCase
+
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
 from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
-from odoo.exceptions import MissingError
-from odoo.tests import SavepointCase
 
 from .. import shopinvader_response
 

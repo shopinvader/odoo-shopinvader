@@ -6,10 +6,11 @@
 import logging
 
 from odoo import _
-from odoo.addons.base_rest.components.service import to_int
-from odoo.addons.component.core import AbstractComponent
 from odoo.exceptions import MissingError, UserError
 from odoo.osv import expression
+
+from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.component.core import AbstractComponent
 
 from .. import shopinvader_response
 
