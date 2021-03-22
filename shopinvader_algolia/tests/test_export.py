@@ -6,11 +6,12 @@
 import json
 import os
 
+from vcr_unittest import VCRMixin
+
 from odoo.addons.connector_algolia.components.adapter import AlgoliaAdapter
 from odoo.addons.connector_search_engine.tests.test_all import (
     TestBindingIndexBase,
 )
-from vcr_unittest import VCRMixin
 
 
 class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):

@@ -5,6 +5,7 @@
 from datetime import timedelta
 
 from odoo import api, fields, models
+
 from odoo.addons.queue_job.job import job
 
 

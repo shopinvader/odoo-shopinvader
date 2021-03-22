@@ -5,8 +5,9 @@
 from datetime import timedelta
 
 from odoo import fields
-from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.exceptions import ValidationError
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestShopinvaderPartner(SavepointComponentCase):

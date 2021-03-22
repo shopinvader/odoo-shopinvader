@@ -6,6 +6,7 @@
 import uuid
 
 from odoo import fields, models
+
 from odoo.addons.queue_job.job import job
 
 

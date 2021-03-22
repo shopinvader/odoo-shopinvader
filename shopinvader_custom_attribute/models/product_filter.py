@@ -5,6 +5,7 @@
 
 
 from odoo import fields, models
+
 from odoo.addons.shopinvader.models.tools import sanitize_attr_name
 
 

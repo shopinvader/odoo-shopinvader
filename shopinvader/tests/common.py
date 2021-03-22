@@ -6,6 +6,10 @@
 from contextlib import contextmanager
 
 import mock
+
+from odoo.exceptions import MissingError
+from odoo.tests import SavepointCase
+
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase
 from odoo.addons.component.core import WorkContext
@@ -15,8 +19,6 @@ from odoo.addons.server_environment import serv_config
 from odoo.addons.shopinvader.models.track_external_mixin import (
     TrackExternalMixin,
 )
-from odoo.exceptions import MissingError
-from odoo.tests import SavepointCase
 
 from .. import shopinvader_response
 

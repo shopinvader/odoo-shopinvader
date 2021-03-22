@@ -2,8 +2,9 @@
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
 from werkzeug.exceptions import Forbidden, NotFound
+
+from odoo.addons.shopinvader.tests.common import CommonCase
 
 
 class TestGuestService(CommonCase):

@@ -4,8 +4,9 @@
 
 from datetime import datetime
 
-from odoo.addons.component.tests.common import SavepointComponentCase
 from psycopg2 import IntegrityError
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestShopinvaderPartner(SavepointComponentCase):

@@ -5,8 +5,9 @@
 from datetime import timedelta
 
 from odoo import fields
-from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.exceptions import UserError
+
+from odoo.addons.shopinvader.tests.common import CommonCase
 
 
 class TestMembershipService(CommonCase):
