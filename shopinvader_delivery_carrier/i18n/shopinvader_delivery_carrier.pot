@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_delivery_carrier
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_delivery_carrier
+#: model:mail.template,body_html:shopinvader_delivery_carrier.email_picking
+msgid " Thanks for your order "
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model.fields.selection,name:shopinvader_delivery_carrier.selection__shopinvader_backend__delivery_order_states__
+msgid "All"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model.fields.selection,name:shopinvader_delivery_carrier.selection__shopinvader_backend__delivery_order_states__confirmed|waiting|assigned|done
+msgid "All but draft"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model_terms:ir.ui.view,arch_db:shopinvader_delivery_carrier.shopinvader_backend_view_form
+msgid "Carrier"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model.fields,field_description:shopinvader_delivery_carrier.field_shopinvader_backend__carrier_ids
+msgid "Delivery Carrier"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: code:addons/shopinvader_delivery_carrier/models/shopinvader_notification.py:0
+#, python-format
+msgid "Delivery order validated"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model,name:shopinvader_delivery_carrier.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:mail.template,subject:shopinvader_delivery_carrier.email_picking
+msgid "Picking notification ${object.name}"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model.fields.selection,name:shopinvader_delivery_carrier.selection__shopinvader_backend__delivery_order_states__assigned|done
+msgid "Ready and done"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model,name:shopinvader_delivery_carrier.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model,name:shopinvader_delivery_carrier.model_delivery_carrier
+msgid "Shipping Methods"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model.fields,field_description:shopinvader_delivery_carrier.field_sale_order__shopinvader_available_carrier_ids
+msgid "Shopinvader Available Carrier"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model,name:shopinvader_delivery_carrier.model_shopinvader_notification
+msgid "Shopinvader Notification"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: code:addons/shopinvader_delivery_carrier/services/cart.py:0
+#, python-format
+msgid "There is not cart"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: code:addons/shopinvader_delivery_carrier/services/cart.py:0
+#, python-format
+msgid "This delivery method is not available for you order"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model,name:shopinvader_delivery_carrier.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
+#: model:ir.model.fields,field_description:shopinvader_delivery_carrier.field_shopinvader_backend__delivery_order_states
+msgid "Visible delivery order states"
+msgstr ""
