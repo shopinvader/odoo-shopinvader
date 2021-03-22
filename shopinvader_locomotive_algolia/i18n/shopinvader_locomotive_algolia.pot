@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_locomotive_algolia
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_locomotive_algolia
+#: model:ir.model.fields,field_description:shopinvader_locomotive_algolia.field_se_backend_algolia__algolia_api_key
+msgid "API KEY"
+msgstr ""
+
+#. module: shopinvader_locomotive_algolia
+#: model:ir.model.fields,help:shopinvader_locomotive_algolia.field_se_backend_algolia__algolia_api_key
+msgid "Admin API key with rights to write on indexes"
+msgstr ""
+
+#. module: shopinvader_locomotive_algolia
+#: model:ir.model,name:shopinvader_locomotive_algolia.model_se_backend_algolia
+msgid "Algolia Backend"
+msgstr ""
+
+#. module: shopinvader_locomotive_algolia
+#: model:ir.model.fields,field_description:shopinvader_locomotive_algolia.field_se_backend_algolia__algolia_api_key_public
+msgid "Public API KEY"
+msgstr ""
+
+#. module: shopinvader_locomotive_algolia
+#: model:ir.model.fields,help:shopinvader_locomotive_algolia.field_se_backend_algolia__algolia_api_key_public
+msgid "Readonly API key with rights to search only"
+msgstr ""
