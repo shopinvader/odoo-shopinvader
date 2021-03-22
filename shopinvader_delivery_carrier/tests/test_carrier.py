@@ -164,7 +164,7 @@ class CarrierCase(CommonCarrierCase):
         self.assertEquals(nb_lines_after, nb_lines_before)
         # Ensure lines still ok
         self.assertEquals(len(lines), len(self.cart.order_line))
-        for line_id, line_values in lines.iteritems():
+        for line_id, line_values in lines.items():
             order_line = self.cart.order_line.filtered(
                 lambda l, lid=line_id: l.id == lid
             )
@@ -246,7 +246,7 @@ class CarrierCase(CommonCarrierCase):
         self.assertEquals(nb_lines_after, nb_lines_before)
         # Ensure lines still ok
         self.assertEquals(len(lines), len(self.cart.order_line))
-        for line_id, line_values in lines.iteritems():
+        for line_id, line_values in lines.items():
             order_line = self.cart.order_line.filtered(
                 lambda l, lid=line_id: l.id == lid
             )
@@ -298,7 +298,7 @@ class CarrierCase(CommonCarrierCase):
         self.assertEquals(nb_lines_after, nb_lines_before)
         # Ensure lines still ok
         self.assertEquals(len(lines), len(self.cart.order_line))
-        for line_id, line_values in lines.iteritems():
+        for line_id, line_values in lines.items():
             order_line = self.cart.order_line.filtered(
                 lambda l, lid=line_id: l.id == lid
             )
