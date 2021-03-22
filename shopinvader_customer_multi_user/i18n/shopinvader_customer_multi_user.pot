@@ -1,0 +1,202 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_customer_multi_user
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.constraint,message:shopinvader_customer_multi_user.constraint_res_partner_unique_invader_user_token
+msgid "Already exists in database"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_res_partner__has_invader_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_res_users__has_invader_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__has_invader_user
+msgid "At least one backend has an invader user for this partner."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__invader_parent_id
+msgid ""
+"Closest invader partner. In simple multi-user setup it matches the parent "
+"bound partner ."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model,name:shopinvader_customer_multi_user.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_backend__customer_multi_user
+msgid "Customer Multi User"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_partner__has_invader_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_users__has_invader_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__has_invader_user
+msgid "Has an invader user"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_partner__invader_user_token
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_users__invader_user_token
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__invader_user_token
+msgid "Invader User Token"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__invader_parent_id
+msgid "Invader parent"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__is_invader_user
+msgid "Is Invader User"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_partner_view_search
+msgid "Is invader user"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model,name:shopinvader_customer_multi_user.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__shopinvader_backend__multi_user_profile_policy__main_partner_id
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_partner_view_search
+msgid "Main partner"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__main_partner_id
+msgid "Main partner for this account"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_backend__multi_user_main_partner_domain
+msgid "Multi User Main Partner Domain"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_backend__multi_user_profile_policy
+msgid "Multi User Profile Policy"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_backend__multi_user_records_policy
+msgid "Multi User Records Policy"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_backend_form_view
+msgid "Multiple users"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.res_partner_view_form
+msgid "Re-generate token"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model,name:shopinvader_customer_multi_user.model_shopinvader_partner
+msgid "Shopinvader Partner"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__main_partner_id
+msgid ""
+"The main account for the shop might differ from the one of the user.It's "
+"nice to display in the frontend which account the user belongs to.Usually is"
+" the company but depending on the logic it can be another contact in the "
+"hierarchy."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_res_partner__invader_user_token
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_res_users__invader_user_token
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__invader_user_token
+msgid ""
+"The token is automatically generated when a binding to the shop is created."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_backend__multi_user_main_partner_domain
+msgid ""
+"This affects the behavior of `main_partner_id` computation when no specific value is passed.\n"
+"The computation is done by walking up in the hierarchy of partners to get the the uppermost partner.\n"
+"Here you can set - for instance - only delivery partners are considered main partners.\n"
+"The parent record will be always checked against this domain.\n"
+"NOTE: if you change this value existing records won't be affected as the field is stored to allow manual customization."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_backend__multi_user_records_policy
+msgid ""
+"This affects the behavior of every endpoint which lists partner related records, directy or indirectly.\n"
+"\n"
+"`View main partner records`: view all records coming from main partner and its children. Usually this is the main company of the user.\n"
+"`View parent partner records`: view all records coming from parent partner and its children. Usually this is the main company but it can be any sub partner such as a contact or delivery address or invoice address. \n"
+"`View current partner records only`: view only records related to current partner. "
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_backend__multi_user_profile_policy
+msgid ""
+"This affects the behavior of the /customer endpoint as well as the behavior of any service acting on the current partner.\n"
+"\n"
+"`Main partner`: the main profile for the shop frontend will be the main partner (usually the company). \n"
+"This means:\n"
+"* orders will be assigned to the main account\n"
+"* in the profile form you'll see the main account data but you'll be able to edit only if permissions allow to.\n"
+"\n"
+"`User's partner`: the main profile for the shop frontend will be the partner of the current user. \n"
+"This means:\n"
+"* orders will be assigned to the specific partner\n"
+"* in the profile form you'll see the your own account data and you'll be able to edit\n"
+"* profile info will include a reference to the main account inside the `main_account` key."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_backend__customer_multi_user
+msgid ""
+"Turn on this flag to enable multiple users per each partner. Customers will "
+"be able to register as many users as they want by providing their company "
+"token. Every order and every notification will be associated to the main "
+"partner. Simple users can manage their own address and use it for invoicing "
+"or shipping. Addresses must be validated before frontend users can use them."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__shopinvader_backend__multi_user_profile_policy__record_id
+msgid "User's partner"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__shopinvader_backend__multi_user_records_policy__record_id
+msgid "View current partner records only"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__shopinvader_backend__multi_user_records_policy__main_partner_id
+msgid "View main partner records"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__shopinvader_backend__multi_user_records_policy__parent_id
+msgid "View parent partner records"
+msgstr ""
