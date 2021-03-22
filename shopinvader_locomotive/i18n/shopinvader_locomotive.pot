@@ -1,0 +1,184 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_locomotive
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,help:shopinvader_locomotive.field_product_filter__visible
+msgid ""
+"* ON: the filter will be pushed to site settings, therefore it is going to be visible in frontend faceted search;\n"
+"* OFF: the filter will be usable for searching but invisible as filter."
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid ""
+"<span>\n"
+"                        Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid ""
+"<span>Synchronize metadata push data managed by odoo and used into locomotive.\n"
+"                        For ex: countries, currencies. If some required metadata\n"
+"                        (erp url and credentials, search indexes configuration, ...) are not set into locomotive,\n"
+"                        The process will also push default values for these fields. Nevertheless, these specific\n"
+"                        metadatas are not updated by the script if a value is already set into locomotive.\n"
+"                    </span>"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.constraint,message:shopinvader_locomotive.constraint_locomotive_binding_locomotive_uniq
+#: model:ir.model.constraint,message:shopinvader_locomotive.constraint_shopinvader_partner_locomotive_uniq
+msgid "A binding already exists with the same Locomotive ID."
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model,name:shopinvader_locomotive.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__currency_ids
+msgid "Currency"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_locomotive_binding__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "Email"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__handle
+msgid "Handle"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_locomotive_binding__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_locomotive_binding____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__location
+msgid "Location"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model,name:shopinvader_locomotive.model_locomotive_binding
+msgid "Locomotive Binding"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model,name:shopinvader_locomotive.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "Locomotive Credentials"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,help:shopinvader_locomotive.field_shopinvader_backend__location
+msgid "Locomotive URL (see Developers section Locomotive site)"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,help:shopinvader_locomotive.field_shopinvader_backend__handle
+msgid "Locomotive site handle (see Developers section in Locomotive site)"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,help:shopinvader_locomotive.field_shopinvader_backend__password
+msgid "Locomotive user API key (see Developers section in Locomotive site)"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,help:shopinvader_locomotive.field_shopinvader_backend__username
+msgid "Locomotive user email (see Developers section in Locomotive site)"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__password
+msgid "Locomotive's Api key"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "LocomotiveCMS"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: code:addons/shopinvader_locomotive/component/adapter.py:0
+#, python-format
+msgid "No site was found for the handle %s"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model,name:shopinvader_locomotive.model_product_filter
+msgid "Product Filter"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: code:addons/shopinvader_locomotive/component/deleter.py:0
+#, python-format
+msgid "Record %s deleted on Locomotive"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "Reset site settings"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.actions.server,name:shopinvader_locomotive.ir_cron_synchronize_currency_ir_actions_server
+#: model:ir.cron,cron_name:shopinvader_locomotive.ir_cron_synchronize_currency
+#: model:ir.cron,name:shopinvader_locomotive.ir_cron_synchronize_currency
+msgid "Shopinvader Locomotive: Synchronize currency"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model,name:shopinvader_locomotive.model_shopinvader_partner
+msgid "Shopinvader Partner"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "Synchronize Metadata"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__username
+msgid "Username"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_product_filter__visible
+msgid "Visible"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__visible_filter_ids
+msgid "Visible Filter"
+msgstr ""
