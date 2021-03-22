@@ -1,0 +1,105 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_product_variant_selector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_3_value_1
+msgid "45x30cm"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_3_value_2
+msgid "70x50cm"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_3_value_3
+msgid "90x60cm"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_1_value_3
+msgid "Aluminium"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_2
+msgid "Black"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute,name:shopinvader_product_variant_selector.product_attribute_2
+msgid "Frame Color"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute,name:shopinvader_product_variant_selector.product_attribute_1
+msgid "Frame Type"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_4
+msgid "Gold"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_3
+msgid "Grey"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_5
+msgid "Oak"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_1_value_1
+#: model:product.category,name:shopinvader_product_variant_selector.product_category_1
+msgid "Poster"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute,name:shopinvader_product_variant_selector.product_attribute_3
+msgid "Poster Size"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:ir.model.fields,field_description:shopinvader_product_variant_selector.field_shopinvader_variant__variant_selector
+msgid "Shopinvader Selector"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:ir.model,name:shopinvader_product_variant_selector.model_shopinvader_variant
+msgid "Shopinvader Variant"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.template,name:shopinvader_product_variant_selector.product_template_1
+msgid "Sun on Confluence, Lyon, France"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.template,uom_name:shopinvader_product_variant_selector.product_template_1
+msgid "Units"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_1
+msgid "White"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_1_value_2
+msgid "Wooden"
+msgstr ""
