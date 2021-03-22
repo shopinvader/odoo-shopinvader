@@ -1,0 +1,159 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_search_engine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Add missing index"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Clear"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
+msgid "Done"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Export"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Export index settings"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_backend__index_ids
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__index_id
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__index_id
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
+msgid "Index"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Indexes"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_se_index__is_valid
+msgid "Is Valid"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid ""
+"Loop trough all the indexes and export their settings (filters, facets, "
+"etc).                                   This is mandatory if you have "
+"updated filters."
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Re-synchronize"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Recompute"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.actions.server,name:shopinvader_search_engine.action_recompute_shopinvader_category
+msgid "Recompute shopinvader category"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.actions.server,name:shopinvader_search_engine.action_recompute_shopinvader_product_on_binding
+#: model:ir.actions.server,name:shopinvader_search_engine.action_recompute_shopinvader_product_on_template
+msgid "Recompute shopinvader product"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
+msgid "Scheduled"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model,name:shopinvader_search_engine.model_se_index
+msgid "Se Index"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_backend__se_backend_id
+msgid "Search Engine Backend"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_backend__se_backend_id
+msgid "Search Engine backend configuration to use"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_form_view
+msgid "Search engine"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid "Search engine indexes"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_category
+msgid "Shopinvader Category"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_variant
+msgid "Shopinvader Variant"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
+msgid "State"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
+msgid ""
+"This will iter on all items in the index of the search engine"
+"                             if the corresponding binding does not exist on "
+"odoo it will create a job                             that delete all the "
+"obsolete items.                             You should not use this method "
+"for day to day job, it is only an helper                             for "
+"recovering your index after a damage.                             You can "
+"also drop index but this will introduce downtime, so it's"
+"                             better to force a resynchronization"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
+msgid "To Update"
+msgstr ""
