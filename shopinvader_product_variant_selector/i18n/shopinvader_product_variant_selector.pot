@@ -1,0 +1,209 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* shopinvader_product_variant_selector
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_product_variant_selector
+#: model:product.template,description:shopinvader_product_variant_selector.product_template_1
+msgid "\n"
+"<h2>Fusce ac ligula ante</h2>\n"
+"<p>\n"
+"  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales\n"
+"  lacus quam, eget laoreet mauris ultrices ut. Sed ante lectus, vulputate\n"
+"  in nunc sit amet, interdum pellentesque est. <br>\n"
+"  <strong>\n"
+"    Vivamus varius justo justo, eu ultricies orci ullamcorper eget\n"
+"  </strong>\n"
+"  <ul>\n"
+"    <li>Praesent sodales tempor nibh quis vehicula.</li>\n"
+"    <li>Varius faucibus velit pulvinar.</li>\n"
+"    <li> Proin iaculis dapibus vestibulum. Sed feugiat augue sagittis, ullamcorper nunc sit amet, egestas eros.</li>\n"
+"    <li>Vivamus varius justo justo, eu ultricies orci ullamcorper eget.</li>\n"
+"  </ul>\n"
+"</p>\n"
+"<h2>Furabitur sodales nisi odio, sed egestas velit placerat faucibus</h2>\n"
+"<h3>Phasellus congue nibh nunc, vel euismod justo lacinia ut</h3>\n"
+"<p>\n"
+"  Vivamus varius justo justo, eu ultricies orci ullamcorper eget. Integer\n"
+"  et ante sit amet erat placerat viverra a in nisl. Phasellus ac nulla\n"
+"  blandit, sodales nunc non, blandit sapien. Donec libero nisl, fermentum\n"
+"  aliquam velit sit amet, luctus luctus ex. Etiam rutrum ullamcorper\n"
+"  dapibus. Vestibulum cursus iaculis elit et <strong>ultricies</strong>. Ut est sapien,\n"
+"  vestibulum quis libero eu, mattis iaculis risus. Ut ante magna, congue\n"
+"  eget diam a, volutpat lobortis arcu. Orci varius natoque penatibus et\n"
+"  magnis dis parturient montes, nascetur ridiculus mus. <strong>Ut tempus urna at\n"
+"  malesuada fermentum.&nbsp;</strong>\n"
+"</p>\n"
+"<h3>In finibus nulla pulvinar dolor feugiat, varius faucibus velit pulvinar</h3>\n"
+"<p>\n"
+"  Donec at hendrerit orci. Mauris velit lorem, pretium eu tellus eu,\n"
+"  laoreet faucibus ligula. Vivamus nibh nisl, vestibulum nec<strong> metus sit\n"
+"  amet, viverra sollicitudin sem</strong>. Sed a finibus sem. Curabitur fermentum\n"
+"  metus purus, ut bibendum augue consequat nec. Morbi ex tellus, rutrum\n"
+"  quis diam in, aliquet vestibulum mi. Donec id pulvinar lacus. Nunc\n"
+"  scelerisque porta nisi in pharetra.\n"
+"</p>\n"
+"<h2>Pellentesque vitae erat imperdiet, pulvinar tortor nec</h2>\n"
+"<h3>In finibus nulla pulvinar dolor feugiat, varius faucibus velit pulvinar</h3>\n"
+"<p>\n"
+"  Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere\n"
+"  cubilia Curae.\n"
+"</p>\n"
+"<p>\n"
+"  Cras non feugiat ipsum, ac ultricies ipsum. Sed porttitor sit amet lacus ut vehicula.\n"
+"  Fusce placerat, nisi vitae ullamcorper fermentum, lectus odio sodales elit, quis rhoncus nisl\n"
+"  tortor vel ipsum. Vestibulum ante ipsum primis in faucibus orci luctus\n"
+"  et ultrices posuere cubilia Curae; Proin et justo mauris. Nunc sit amet\n"
+"  posuere justo. Donec at fermentum augue. Orci varius natoque penatibus\n"
+"  et magnis dis parturient montes, nascetur ridiculus mus.\n"
+"</p>\n"
+"<p>\n"
+"  Aenean eget\n"
+"  nunc dictum ipsum elementum pharetra. Integer mattis nisi eget dignissim\n"
+"   dapibus. Sed et justo erat. Aenean dapibus arcu vitae eros sagittis,\n"
+"  vel tincidunt est tincidunt. Maecenas nec sodales mi.\n"
+"</p>\n"
+"<blockquote>\n"
+"  <i>\n"
+"    Estibulum ante ipsum primis in faucibus orci luctus et ultrices posuere\n"
+"    cubilia Curae; Cras non feugiat ipsum, ac ultricies ipsum. Sed porttitor\n"
+"    sit amet lacus ut vehicula. Fusce placerat, nisi vitae ullamcorper\n"
+"    fermentum\n"
+"  </i>\n"
+"</blockquote>\n"
+"<p>\n"
+"  Pellentesque iaculis auctor ornare. Nulla posuere nisi leo, ut dapibus\n"
+"  ipsum pretium in. Donec pharetra est sed nunc lobortis tincidunt. Fusce\n"
+"  convallis suscipit sem, sed elementum orci tempor vel. Donec pretium\n"
+"  felis nec nisi auctor, sed dignissim enim dictum. Etiam a lectus\n"
+"  molestie, tincidunt urna quis, sodales augue. Curabitur venenatis justo\n"
+"  quam, sit amet dictum ex cursus a. Nunc nulla dolor, molestie sit amet\n"
+"  tempor a, maximus eu erat. Morbi vel tempor nulla. Maecenas eu dictum\n"
+"  enim, et rutrum dui. Vivamus non efficitur urna. Morbi blandit massa vel\n"
+"   metus fringilla tristique. Praesent malesuada ante nec magna\n"
+"   <strong> elementum dapibus eget a elit.</strong>\n"
+"</p>\n"
+"<h3>Pellentesque iaculis auctor ornare</h3>\n"
+"<p>\n"
+"  Nulla posuere nisi leo, ut dapibus\n"
+"  ipsum pretium in. Donec pharetra est sed nunc lobortis tincidunt.\n"
+"</p>\n"
+"<p>\n"
+"  Fusce convallis suscipit sem, sed elementum orci tempor vel. Donec pretium\n"
+"  felis nec nisi auctor, sed dignissim enim dictum. Etiam a lectus\n"
+"  molestie, tincidunt urna quis, sodales augue. Curabitur venenatis justo\n"
+"  quam, sit amet dictum ex cursus a. Nunc nulla dolor, molestie sit amet\n"
+"  tempor a, maximus eu erat. Morbi vel tempor nulla. Maecenas eu dictum\n"
+"  enim, et rutrum dui. <br></p><p>Vivamus non efficitur urna. Morbi blandit massa vel\n"
+"   metus fringilla tristique. Praesent malesuada ante nec magna elementum\n"
+"  dapibus eget a elit.\n"
+"</p>\n"
+"        "
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_3_value_1
+msgid "45x30cm"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_3_value_2
+msgid "70x50cm"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_3_value_3
+msgid "90x60cm"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_1_value_3
+msgid "Aluminium"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_2
+msgid "Black"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute,name:shopinvader_product_variant_selector.product_attribute_2
+msgid "Frame Color"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute,name:shopinvader_product_variant_selector.product_attribute_1
+msgid "Frame Type"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_4
+msgid "Gold"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_3
+msgid "Grey"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_5
+msgid "Oak"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_1_value_1
+#: model:product.category,name:shopinvader_product_variant_selector.product_category_1
+msgid "Poster"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute,name:shopinvader_product_variant_selector.product_attribute_3
+msgid "Poster Size"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:ir.model.fields,field_description:shopinvader_product_variant_selector.field_shopinvader_variant__variant_selector
+msgid "Shopinvader Selector"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:ir.model,name:shopinvader_product_variant_selector.model_shopinvader_variant
+msgid "Shopinvader Variant"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.template,name:shopinvader_product_variant_selector.product_template_1
+msgid "Sun on Confluence, Lyon, France"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.template,uom_name:shopinvader_product_variant_selector.product_template_1
+msgid "Unit(s)"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_2_value_1
+msgid "White"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.attribute.value,name:shopinvader_product_variant_selector.product_attribute_1_value_2
+msgid "Wooden"
+msgstr ""
+
+#. module: shopinvader_product_variant_selector
+#: model:product.template,weight_uom_name:shopinvader_product_variant_selector.product_template_1
+msgid "kg"
+msgstr ""
+
