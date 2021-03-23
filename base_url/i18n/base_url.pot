@@ -1,0 +1,215 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* base_url
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_active
+msgid "Active"
+msgstr ""
+
+#. module: base_url
+#: sql_constraint:url.url:0
+msgid "Already exists in database"
+msgstr ""
+
+#. module: base_url
+#: selection:abstract.url,url_builder:0
+#: selection:shopinvader.category,url_builder:0
+#: selection:shopinvader.product,url_builder:0
+msgid "Automatic"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_automatic_url_key
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_automatic_url_key
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_product_automatic_url_key
+msgid "Automatic url key"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_url_url_backend_id
+msgid "Backend"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,help:base_url.field_url_url_backend_id
+msgid "Backend linked to this URL"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_url_url_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_url_url_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_display_name
+#: model:ir.model.fields,field_description:base_url.field_url_url_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_id
+#: model:ir.model.fields,field_description:base_url.field_url_url_id
+msgid "ID"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,help:base_url.field_url_url_redirect
+msgid "If tick this url is a redirection to the new url"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_is_urls_sync_required
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_is_urls_sync_required
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_product_is_urls_sync_required
+msgid "Is urls sync required"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_lang_id
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_lang_id
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_product_lang_id
+#: model:ir.model.fields,field_description:base_url.field_url_url_lang_id
+msgid "Lang"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url___last_update
+#: model:ir.model.fields,field_description:base_url.field_url_url___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_url_url_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_url_url_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: base_url
+#: selection:abstract.url,url_builder:0
+#: selection:shopinvader.category,url_builder:0
+#: selection:shopinvader.product,url_builder:0
+msgid "Manual"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_manual_url_key
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_manual_url_key
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_product_manual_url_key
+msgid "Manual url key"
+msgstr ""
+
+#. module: base_url
+#: code:addons/base_url/models/abstract_url.py:54
+#, python-format
+msgid "Manual url key is required if builder is set to manual"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_url_url_model_id
+msgid "Model"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_url_url_redirect
+msgid "Redirect"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_redirect_url_url_ids
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_redirect_url_url_ids
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_product_redirect_url_url_ids
+msgid "Redirect url url ids"
+msgstr ""
+
+#. module: base_url
+#: selection:url.url,model_id:0
+msgid "ShopInvader Category"
+msgstr ""
+
+#. module: base_url
+#: selection:url.url,model_id:0
+msgid "ShopInvader Product"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,help:base_url.field_url_url_model_id
+msgid "The id of content linked to the url."
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_url_builder
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_url_builder
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_product_url_builder
+msgid "Url builder"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_url_key
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_url_key
+#: model:ir.model.fields,field_description:base_url.field_url_url_url_key
+msgid "Url key"
+msgstr ""
+
+#. module: base_url
+#: model:ir.ui.view,arch_db:base_url.url_view_form
+msgid "Url rewriting edit form"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model.fields,field_description:base_url.field_abstract_url_url_url_ids
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_category_url_url_ids
+#: model:ir.model.fields,field_description:base_url.field_shopinvader_product_url_url_ids
+msgid "Url url ids"
+msgstr ""
+
+#. module: base_url
+#: code:addons/base_url/models/abstract_url.py:192
+#, python-format
+msgid "Url_key already exist in other model\n"
+"- name: %s\n"
+" - id: %s\n"
+"- url_key: %s\n"
+" - url_key_id %s"
+msgstr ""
+
+#. module: base_url
+#: model:ir.ui.menu,name:base_url.url_menu_view
+msgid "Url_rewrite"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model,name:base_url.model_abstract_url
+msgid "abstract.url"
+msgstr ""
+
+#. module: base_url
+#: model:ir.actions.act_window,name:base_url.base_url_action_view
+msgid "url list Viewer"
+msgstr ""
+
+#. module: base_url
+#: model:ir.model,name:base_url.model_url_url
+msgid "url.url"
+msgstr ""
+
