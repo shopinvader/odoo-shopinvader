@@ -5,4 +5,3 @@ printWidth: 88
 proseWrap: always
 semi: true
 trailingComma: "es5"
-xmlWhitespaceSensitivity: "strict"
