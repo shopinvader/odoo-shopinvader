@@ -20,22 +20,22 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 12.0.0.2.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 12.0.3.17.0 | Shopinvader
+[shopinvader](shopinvader/) | 12.0.3.17.1 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 12.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 12.0.1.1.2 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 12.0.1.1.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.2 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 12.0.1.0.0 | Shopinvader Display category image for product
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.3.1.0 | Carrier integration for Shopinvader
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.3.1.1 | Carrier integration for Shopinvader
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.5 | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 12.0.1.1.0 | Add the export of Image for Shopinvader
-[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.2.0 | Shopinvader Invoice module
+[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.2.1 | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 12.0.2.0.0 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 12.0.3.3.0 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 12.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
-[shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 | This addons is used to push the initial elasticsearch configuration to locomotive
+[shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.1 | This addons is used to push the initial elasticsearch configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 12.0.1.0.2 | Shopinvader guest mode for locomotive
 [shopinvader_multi_category](shopinvader_multi_category/) | 12.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 12.0.1.0.2 | Shopinvader Customer firstname/lastname
