@@ -1,13 +1,7 @@
-python-slugify>=3.0.2
+# generated from manifests external_dependencies
 cerberus
-algoliasearch<2.0.0
+locomotivecms
+openupgradelib
+python-slugify>=3.0.2
+python-stdnum
 unidecode
-pysimplesoap
-mailjet_rest
-requests_mock
-pyquerystring
-parse-accept-language
--e git+https://github.com/OCA/openupgradelib.git@master#egg=openupgradelib
-python-magic
-validators
--e git://github.com/shopinvader/locomotivecms-python-client.git#egg=locomotivecms
