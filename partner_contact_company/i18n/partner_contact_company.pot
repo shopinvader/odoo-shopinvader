@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* partner_contact_company
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: partner_contact_company
+#: model:ir.model.fields,field_description:partner_contact_company.field_res_partner_company
+#: model:ir.model.fields,field_description:partner_contact_company.field_res_users_company
+#: model:ir.ui.view,arch_db:partner_contact_company.view_partner_form_firstname
+msgid "Company"
+msgstr ""
+
+#. module: partner_contact_company
+#: model:ir.model.fields,field_description:partner_contact_company.field_res_partner_contact_name
+#: model:ir.model.fields,field_description:partner_contact_company.field_res_users_contact_name
+#: model:ir.ui.view,arch_db:partner_contact_company.view_partner_form_firstname
+msgid "Contact name"
+msgstr ""
+
+#. module: partner_contact_company
+#: model:ir.model,name:partner_contact_company.model_res_partner
+msgid "Partner"
+msgstr ""
+
+#. module: partner_contact_company
+#: code:addons/partner_contact_company/models/partner.py:110
+#, python-format
+msgid "You can not pass the contact_name and the name at the same time"
+msgstr ""
+
