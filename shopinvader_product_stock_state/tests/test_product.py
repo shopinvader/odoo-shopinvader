@@ -19,7 +19,7 @@ class TestProductProduct(StockCommonCase):
     def test_out_of_stock(self):
         self.assertEqual(
             self.shop_product.stock_data,
-            {"global": {"state": "out_of_stock", "qty": 0.0}}
+            {"global": {"state": "out_of_stock", "qty": 0.0}},
         )
 
     def test_in_limited_stock(self):
@@ -35,7 +35,7 @@ class TestProductProduct(StockCommonCase):
         self._add_stock_to_product(self.product, self.loc_1, 19)
         self.assertEqual(
             self.shop_product.stock_data,
-            {"global": {"state": "in_limited_stock", "qty": 19}}
+            {"global": {"state": "in_limited_stock", "qty": 19}},
         )
         self._add_stock_to_product(self.product, self.loc_1, 20.5)
         self.shop_product._compute_stock_data()
@@ -48,7 +48,7 @@ class TestProductProduct(StockCommonCase):
         move._action_confirm()
         self.assertEqual(
             self.shop_product.stock_data,
-            {"global": {"qty": 0.0, "state": "resupplying"}}
+            {"global": {"qty": 0.0, "state": "resupplying"}},
         )
 
     def test_config_only_qty(self):
@@ -83,7 +83,7 @@ class TestProductProduct(StockCommonCase):
         self.assertEqual(
             self.shop_product.stock_data,
             {"global": {"qty": 8.00, "state": "in_limited_stock"}},
-            "qty should be present when stock is greather than threshold"
+            "qty should be present when stock is greather than threshold",
         )
 
     def test_config_state_and_low_qty(self):
@@ -91,7 +91,7 @@ class TestProductProduct(StockCommonCase):
         self.assertEqual(
             self.shop_product.stock_data,
             {"global": {"qty": 0.00, "state": "out_of_stock"}},
-            "qty should be present when out of stock"
+            "qty should be present when out of stock",
         )
         self._add_stock_to_product(self.product, self.loc_1, 5)
         self.shop_product._compute_stock_data()
@@ -105,5 +105,5 @@ class TestProductProduct(StockCommonCase):
         self.assertEqual(
             self.shop_product.stock_data,
             {"global": {"state": "in_stock"}},
-            "qty should be absent when stock is greather than threshold"
+            "qty should be absent when stock is greather than threshold",
         )
