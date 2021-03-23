@@ -132,7 +132,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
         """
         self._create_notification_config()
         now = fields.Date.today()
-        self.service.dispatch("ask_email", _id=self.cart.id)
+        self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
         description = "Notify {} for {},{}".format(
             notif, self.cart._name, self.cart.id
@@ -339,7 +339,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         """
         self._create_notification_config()
         now = fields.Datetime.now()
-        self.service.dispatch("ask_email", _id=self.cart.id)
+        self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
         description = "Notify {} for {},{}".format(
             notif, self.cart._name, self.cart.id
@@ -357,7 +357,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         :return:
         """
         now = fields.Datetime.now()
-        self.service.dispatch("ask_email", _id=self.cart.id)
+        self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
         description = "Notify {} for {},{}".format(
             notif, self.cart._name, self.cart.id
@@ -375,7 +375,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self._create_notification_config()
         now = fields.Datetime.now()
         self.cart.write({"partner_id": self.partner.copy({}).id})
-        self.service.dispatch("ask_email", _id=self.cart.id)
+        self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
         description = "Notify {} for {},{}".format(
             notif, self.cart._name, self.cart.id
