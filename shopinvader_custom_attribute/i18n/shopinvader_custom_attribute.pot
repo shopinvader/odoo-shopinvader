@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* shopinvader_custom_attribute
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_custom_attribute
+#: model:ir.model.fields,field_description:shopinvader_custom_attribute.field_product_filter_custom_attribute_id
+msgid "Attribute"
+msgstr ""
+
+#. module: shopinvader_custom_attribute
+#: model:product.filter,name:shopinvader_custom_attribute.filter_compatible_linux
+msgid "Compatible linux"
+msgstr ""
+
+#. module: shopinvader_custom_attribute
+#: model:ir.model,name:shopinvader_custom_attribute.model_product_filter
+msgid "Product Filter"
+msgstr ""
+
+#. module: shopinvader_custom_attribute
+#: model:ir.model,name:shopinvader_custom_attribute.model_shopinvader_variant
+msgid "Shopinvader Variant"
+msgstr ""
+
+#. module: shopinvader_custom_attribute
+#: model:ir.model.fields,field_description:shopinvader_custom_attribute.field_shopinvader_variant_attributes
+#: model:ir.model.fields,field_description:shopinvader_custom_attribute.field_shopinvader_variant_structured_attributes
+msgid "Shopinvader attributes Fields"
+msgstr ""
+
