@@ -1,0 +1,126 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* shopinvader_import_image
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 10.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_file_csv
+msgid "CSV files descriptors"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_wizard_form_view
+msgid "Cancel"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_wizard_form_view
+msgid "Import File"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.actions.act_window,name:shopinvader_import_image.import_image_action_form
+msgid "Import Product Image"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.ui.menu,name:shopinvader_import_image.menu_import_product_image
+msgid "Import product images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_wizard_form_view
+msgid "Import shopinvader product images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:100
+#, python-format
+msgid "Invalid CSV file headers found! Expected: %s"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_overwrite
+msgid "Overwrite image with same name"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_product_model
+msgid "Product Model"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: selection:import.product_image,product_model:0
+msgid "Product template"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: selection:import.product_image,product_model:0
+msgid "Product variants"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_storage_backend_id
+msgid "Storage Backend"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_import_product_image_file_zip
+msgid "ZIP with images"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model,name:shopinvader_import_image.model_import_product_image
+msgid "import.product_image"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_wizard_form_view
+msgid "or"
+msgstr ""
+
