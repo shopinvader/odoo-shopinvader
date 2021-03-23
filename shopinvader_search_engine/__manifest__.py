@@ -7,7 +7,7 @@
     "name": "Shopinvader Catalog Search Engine Connector",
     "version": "12.0.1.5.0",
     "author": "Akretion",
-    "development_status": "Stable/Production",
+    "development_status": "Production/Stable",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "category": "Generic Modules",

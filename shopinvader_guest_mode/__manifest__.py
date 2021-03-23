@@ -7,7 +7,7 @@
         Guest mode for Shopinvader""",
     "version": "12.0.2.0.0",
     "license": "AGPL-3",
-    "development_status": "Stable/Production",
+    "development_status": "Production/Stable",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader"],
