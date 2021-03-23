@@ -1,0 +1,7 @@
+_create_setup_intent
+/payment/stripe/s2s/create_json_3ds => s2s_process => strip_s2s_form_process
+/invoice/pay/<int:invoice_id>/s2s_token_tx => s2s_do_transaction => _set_transaction_done
+
+
+/add_payment
+*

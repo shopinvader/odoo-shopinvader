@@ -1,0 +1,18 @@
+@startuml
+actor User
+participant Browser
+participant LocomotiveCMS
+participant Odoo
+participant Stripe
+
+User->Browser: Select enters credit card\nand clicks pay with stripe
+Browser->Stripe: createSource
+Stripe-->Browser: source.id aka stripe_token
+Browser->Odoo: POST via Loco /invader/cart/add_payment\n(payment_mode, stripe_token, success url)
+Odoo->Odoo: - add payment mode on cart\n- find acquirer on payment mode\n
+Odoo->Stripe: create charge
+Stripe-->Odoo: acquirer tx reference, next url
+Odoo->Odoo: - create payment.transaction\n- add it to sale.order.transaction_ids
+Odoo-->Browser: redirect to next url
+Stripe->Odoo: POST via Loco /process.event
+@enduml

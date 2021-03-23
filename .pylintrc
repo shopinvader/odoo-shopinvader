@@ -4,7 +4,6 @@ score=n
 
 [ODOOLINT]
 readme_template_url="https://github.com/OCA/maintainer-tools/blob/master/template/module/README.rst"
-manifest_required_authors=
 manifest_required_keys=license
 manifest_deprecated_keys=description,active
 license_allowed=AGPL-3,GPL-2,GPL-2 or any later version,GPL-3,GPL-3 or any later version,LGPL-3
@@ -28,6 +27,7 @@ enable=anomalous-backslash-in-string,
     class-camelcase,
     dangerous-default-value,
     dangerous-view-replace-wo-priority,
+    development-status-allowed,
     duplicate-id-csv,
     duplicate-key,
     duplicate-xml-fields,
@@ -44,8 +44,6 @@ enable=anomalous-backslash-in-string,
     method-inverse,
     method-required-super,
     method-search,
-    missing-import-error,
-    missing-manifest-dependency,
     openerp-exception-warning,
     pointless-statement,
     pointless-string-statement,
@@ -71,6 +69,7 @@ enable=anomalous-backslash-in-string,
     deprecated-module,
     file-not-used,
     invalid-commit,
+    missing-manifest-dependency,
     missing-newline-extrafiles,
     missing-readme,
     no-utf8-coding-comment,
@@ -79,6 +78,7 @@ enable=anomalous-backslash-in-string,
     redefined-builtin,
     too-complex,
     unnecessary-utf8-coding-comment
+
 
 [REPORTS]
 msg-template={path}:{line}: [{msg_id}({symbol}), {obj}] {msg}
