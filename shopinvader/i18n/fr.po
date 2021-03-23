@@ -22,12 +22,6 @@ msgid "Invalid Form"
 msgstr "Une ou plusieurs valeurs saisies ne sont pas correctes"
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/helper.py:26
-#, python-format
-msgid "Invalid Form"
-msgstr "Une ou plusieurs valeurs saisies ne sont pas correctes"
-
-#. module: shopinvader
 #: code:addons/shopinvader/services/helper.py:78
 #, python-format
 msgid "Invalid Token"
