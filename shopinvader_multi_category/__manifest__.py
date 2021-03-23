@@ -7,7 +7,7 @@
     "summary": "Shopinvader Many Categories",
     "version": "12.0.1.0.0",
     "category": "e-commerce",
-    "website": "https://shopinvader.com/",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "depends": ["shopinvader", "product_multi_category"],

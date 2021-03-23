@@ -7,7 +7,7 @@
     "version": "12.0.1.2.0",
     "depends": ["base", "shopinvader_locomotive", "shopinvader"],
     "author": "Akretion,ACSONE SA/NV",
-    "website": "http://www.akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "category": "e-commerce",
     "data": [

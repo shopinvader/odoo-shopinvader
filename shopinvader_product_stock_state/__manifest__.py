@@ -7,7 +7,7 @@
     "export (by backend)",
     "version": "12.0.1.0.1",
     "category": "e-commerce",
-    "website": "https://akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "installable": True,
