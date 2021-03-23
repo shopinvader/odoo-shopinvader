@@ -5,11 +5,12 @@
 from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
+from odoo.http import request
+from odoo.osv import expression
+
 from odoo.addons.http_routing.models.ir_http import slugify
 from odoo.addons.queue_job.job import job
 from odoo.addons.server_environment import serv_config
-from odoo.http import request
-from odoo.osv import expression
 
 
 class ShopinvaderBackend(models.Model):

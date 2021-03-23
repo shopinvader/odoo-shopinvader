@@ -4,7 +4,9 @@
 from uuid import uuid4
 
 from dateutil import parser
+
 from odoo import fields
+
 from odoo.addons.shopinvader.tests.common import CommonCase, CommonTestDownload
 
 

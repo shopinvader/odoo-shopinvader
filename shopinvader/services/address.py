@@ -6,9 +6,10 @@
 # pylint: disable=method-required-super, consider-merging-classes-inherited
 
 from odoo import _
+from odoo.exceptions import AccessError
+
 from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
-from odoo.exceptions import AccessError
 
 
 class AddressService(Component):

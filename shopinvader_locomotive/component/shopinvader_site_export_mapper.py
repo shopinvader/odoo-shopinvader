@@ -6,9 +6,10 @@
 import json
 import logging
 
+from odoo.fields import first
+
 from odoo.addons.component.core import Component
 from odoo.addons.connector.components.mapper import changed_by, mapping
-from odoo.fields import first
 
 _logger = logging.getLogger(__name__)
 

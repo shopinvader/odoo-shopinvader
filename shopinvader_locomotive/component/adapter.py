@@ -6,8 +6,9 @@ import json
 import logging
 
 from odoo import _
-from odoo.addons.component.core import AbstractComponent, Component
 from odoo.exceptions import UserError
+
+from odoo.addons.component.core import AbstractComponent, Component
 
 _logger = logging.getLogger(__name__)
 

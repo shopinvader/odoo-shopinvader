@@ -1,9 +1,10 @@
 # Copyright 2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import mock
+from odoo_test_helper import FakeModelLoader
+
 from odoo.exceptions import ValidationError
 from odoo.tests import SavepointCase
-from odoo_test_helper import FakeModelLoader
 
 
 class TestAbstractUrl(SavepointCase, FakeModelLoader):
@@ -13,9 +14,9 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         from .models import (
-            UrlBackendFake,
             ResPartner,
             ResPartnerAddressableFake,
+            UrlBackendFake,
         )
 
         cls.loader.update_registry(
