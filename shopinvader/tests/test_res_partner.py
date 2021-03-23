@@ -3,8 +3,9 @@
 
 from datetime import datetime
 
-from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.exceptions import ValidationError
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestResPartner(SavepointComponentCase):

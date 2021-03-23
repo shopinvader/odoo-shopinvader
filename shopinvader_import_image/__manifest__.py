@@ -27,7 +27,7 @@
     "author": "Sylvain Calador",
     "company": "Akretion",
     "maintainer": "Akretion",
-    "website": "https://www.akretion.com",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "Product",
     "depends": ["shopinvader_image"],
     "external_dependencies": {"python": ["magic", "validators"]},

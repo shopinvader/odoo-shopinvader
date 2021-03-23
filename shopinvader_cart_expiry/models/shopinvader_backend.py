@@ -4,8 +4,9 @@
 from datetime import timedelta
 
 from odoo import _, api, fields, models
-from odoo.addons.queue_job.job import job
 from odoo.osv import expression
+
+from odoo.addons.queue_job.job import job
 
 
 class ShopinvaderBackend(models.Model):

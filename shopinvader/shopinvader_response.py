@@ -68,5 +68,5 @@ def get():
         # in test mode we can rely on the threadLocal context
         current_local = threadLocal
     if not hasattr(current_local, "_shopinvader_response"):
-        setattr(current_local, "_shopinvader_response", ShopinvaderResponse())
+        current_local._shopinvader_response = ShopinvaderResponse()
     return current_local._shopinvader_response

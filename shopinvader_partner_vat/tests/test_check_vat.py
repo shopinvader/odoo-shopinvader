@@ -5,8 +5,9 @@
 
 from os.path import dirname, join
 
-from odoo.addons.shopinvader.tests.common import CommonCase
 from vcr import VCR
+
+from odoo.addons.shopinvader.tests.common import CommonCase
 
 vcr = VCR(cassette_library_dir=join(dirname(__file__), "cassettes"))
 
