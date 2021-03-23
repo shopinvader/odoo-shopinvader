@@ -26,7 +26,7 @@ class CartService(Component):
         """
         # If the user try to remove the value, we'll have an empty string
         if delivery_instruction or isinstance(
-            delivery_instruction, (str, unicode)
+            delivery_instruction, (str, unicode)  # noqa
         ):
             params.update({"picking_note": delivery_instruction})
         return True

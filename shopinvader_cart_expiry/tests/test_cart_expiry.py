@@ -4,7 +4,9 @@
 from datetime import timedelta
 
 import mock
+
 from odoo import fields
+
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 

@@ -7,6 +7,7 @@
 import logging
 
 from odoo import api, fields, models
+
 from odoo.addons.queue_job.job import job
 
 _logger = logging.getLogger(__name__)
@@ -60,7 +61,7 @@ class SaleOrder(models.Model):
         :return:
         """
         self.order_line.shopinvader_recompute()
-        for name, field in self._fields.iteritems():
+        for _name, field in self._fields.items():
             if field.compute and field.store:
                 self._recompute_todo(field)
 
@@ -213,7 +214,7 @@ class SaleOrderLine(models.Model):
     @api.multi
     def shopinvader_recompute(self):
         for line in self:
-            for name, field in line._fields.iteritems():
+            for _name, field in line._fields.items():
                 if field.compute and field.store:
                     line._recompute_todo(field)
         self.recompute()

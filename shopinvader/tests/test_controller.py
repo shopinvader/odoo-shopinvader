@@ -6,9 +6,11 @@ import unittest
 from uuid import uuid4
 
 import requests
-from odoo.addons.server_environment import serv_config
+
 from odoo.exceptions import MissingError
 from odoo.tools import mute_logger
+
+from odoo.addons.server_environment import serv_config
 
 from .common import ShopinvaderRestCase
 

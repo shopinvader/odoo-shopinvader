@@ -3,11 +3,12 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.exceptions import UserError
+
 from odoo.addons.sale_promotion_rule.tests.test_promotion import (
     AbstractCommonPromotionCase,
 )
 from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
-from odoo.exceptions import UserError
 
 
 class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):

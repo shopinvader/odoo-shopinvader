@@ -31,7 +31,10 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "Product",
     "depends": ["shopinvader_image"],
-    "external_dependencies": {"python": ["magic", "validators"]},
+    "external_dependencies": {
+        "python": ["magic", "validators"],
+        "deb": ["libmagic1"],
+    },
     "data": ["views/import_product_image_view.xml"],
     "license": "AGPL-3",
     "installable": True,

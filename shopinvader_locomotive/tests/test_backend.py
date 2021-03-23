@@ -70,7 +70,7 @@ class TestBackend(LocoCommonCase):
         self.assertIn("_store", metafields)
         for key, vals in metafields["_store"].items():
             if key in ODOO_STORE_JSON_KEY:
-                self.assertIsInstance(vals, unicode)
+                self.assertIsInstance(vals, unicode)  # noqa
                 metafields["_store"][key] = json.loads(vals)
         return metafields
 

@@ -2,8 +2,9 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
-from odoo.addons.component.core import Component
 from odoo.osv import expression
+
+from odoo.addons.component.core import Component
 
 
 class DeliveryService(Component):

@@ -1,13 +1,9 @@
-slugify
-cerberus
-algoliasearch<2.0.0
-unidecode
-pysimplesoap
-mailjet_rest
-requests_mock
--e git+https://github.com/akretion/locomotivecms-python-client.git#egg=locomotivecms
-pyquerystring
-parse-accept-language
+# generated from manifests external_dependencies
+Cerberus>=1.3.2
+locomotivecms
 openupgradelib
 python-magic
+python-stdnum
+slugify
+unidecode
 validators
