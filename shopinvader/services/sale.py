@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.exceptions import UserError
 from odoo.osv import expression
+from odoo.tools.float_utils import float_is_zero
 from odoo.tools.translate import _
 
 from odoo.addons.base_rest.components.service import to_int
@@ -125,12 +126,22 @@ class SaleService(Component):
         domain_state = invoice_service._get_domain_state()
         return invoices.filtered_domain(domain_state)
 
-    def _cancel(self, sale, reset_to_cart=False):
+    def _is_cancel_allowed(self, sale):
+        precision = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
         for line in sale.order_line:
-            if line.qty_delivered > 0 or line.qty_invoiced > 0:
+            if not float_is_zero(
+                line.qty_delivered, precision_digits=precision
+            ) or not float_is_zero(line.qty_invoiced, precision_digits=precision):
                 raise UserError(
                     _("Orders that have been delivered or invoiced cannot be edited.")
                 )
+        return True
+
+    def _cancel(self, sale, reset_to_cart=False):
+        if not self._is_cancel_allowed(sale):
+            raise UserError(_("This order cannot be cancelled"))
         sale.action_cancel()
         if reset_to_cart:
             sale.action_draft()
