@@ -21,6 +21,7 @@ addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 14.0.1.1.2 | Shopinvader
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.0.0 | Shopinvader Catalog Search Engine Connector
 
@@ -34,7 +35,6 @@ addon | version | summary
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.2.2 (unported) | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 (unported) | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
-[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.2.0.0 (unported) | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 (unported) | Shopinvader Display category image for product
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
