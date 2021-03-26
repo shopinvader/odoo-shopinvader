@@ -96,14 +96,10 @@ class ResPartner(models.Model):
         for record in self:
             record.has_shopinvader_user = bool(record.shopinvader_bind_ids)
             record.has_shopinvader_user_active = any(
-                record.shopinvader_bind_ids.filtered(
-                    lambda x: x.state == STATE_ACTIVE
-                )
+                record.shopinvader_bind_ids.filtered(lambda x: x.state == STATE_ACTIVE)
             )
             record.has_shopinvader_user_to_validate = any(
-                record.shopinvader_bind_ids.filtered(
-                    lambda x: x.state == STATE_PENDING
-                )
+                record.shopinvader_bind_ids.filtered(lambda x: x.state == STATE_PENDING)
             )
 
     @api.depends(
@@ -129,15 +125,11 @@ class ResPartner(models.Model):
             if x["parent_id"]
         }
         for record in self:
-            record.has_shopinvader_address_to_validate = bool(
-                by_parent.get(record.id)
-            )
+            record.has_shopinvader_address_to_validate = bool(by_parent.get(record.id))
 
     def _compute_display_flags(self):
         for record in self:
-            record.display_validate_address = (
-                record._display_validate_address()
-            )
+            record.display_validate_address = record._display_validate_address()
 
     def _display_validate_address(self):
         if self.has_shopinvader_user:
@@ -222,9 +214,7 @@ class ResPartner(models.Model):
 
     def action_shopinvader_validate_address(self):
         wiz = self._get_shopinvader_validate_address_wizard()
-        action = self.env.ref(
-            "shopinvader.shopinvader_address_validate_act_window"
-        )
+        action = self.env.ref("shopinvader.shopinvader_address_validate_act_window")
         action_data = action.read()[0]
         action_data["res_id"] = wiz.id
         return action_data

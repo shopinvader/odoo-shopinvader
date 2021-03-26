@@ -250,9 +250,7 @@ class ShopinvaderVariant(models.Model):
             # but it's very unlikely that the default order for product.product
             # will be changed.
             try:
-                ordered = sorted(
-                    prods, key=lambda var: [var[x] for x in order_by]
-                )
+                ordered = sorted(prods, key=lambda var: [var[x] for x in order_by])
             except TypeError as orig_exception:
                 # TypeError: '<' not supported between instances of 'bool' and 'str'
                 # It means we don't have all values to determine this value.

@@ -5,8 +5,7 @@ from odoo import fields, models
 
 
 class ShopinvaderPartnerValidate(models.TransientModel):
-    """Wizard used to validate customers.
-    """
+    """Wizard used to validate customers."""
 
     _name = "shopinvader.partner.validate"
     _description = "Shopinvader partner validate"

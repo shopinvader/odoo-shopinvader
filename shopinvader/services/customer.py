@@ -79,9 +79,7 @@ class CustomerService(Component):
         if mode == "create":
             if params.get("is_company"):
                 params["is_company"] = True
-            enabled = self.partner_validator.enabled_by_params(
-                params, "profile"
-            )
+            enabled = self.partner_validator.enabled_by_params(params, "profile")
             params["state"] = STATE_ACTIVE if enabled else STATE_PENDING
         return params
 

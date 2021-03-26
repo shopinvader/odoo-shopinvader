@@ -409,9 +409,7 @@ class ShopinvaderBackend(models.Model):
         # TODO: we should exclude levels from `category_binding_level` as well
         self._bind_all_content("product.category", "shopinvader.category", domain)
 
-    def bind_selected_products(
-        self, products, langs=None, run_immediately=False
-    ):
+    def bind_selected_products(self, products, langs=None, run_immediately=False):
         """Bind given product variants.
 
         :param products: product.product recordset
@@ -420,9 +418,7 @@ class ShopinvaderBackend(models.Model):
         """
         for backend in self:
             langs = langs or backend.lang_ids
-            grouped_by_template = defaultdict(
-                self.env["product.product"].browse
-            )
+            grouped_by_template = defaultdict(self.env["product.product"].browse)
             for rec in products:
                 grouped_by_template[rec.product_tmpl_id] |= rec
             method = backend.with_delay().bind_single_product
@@ -444,9 +440,7 @@ class ShopinvaderBackend(models.Model):
             langs, product_tmpl
         )
         for shopinvader_product in shopinvader_products:
-            self._get_or_create_shopinvader_variants(
-                shopinvader_product, variants
-            )
+            self._get_or_create_shopinvader_variants(shopinvader_product, variants)
         self.auto_bind_categories()
 
     def _get_or_create_shopinvader_products(self, langs, product_tmpl):
@@ -455,9 +449,7 @@ class ShopinvaderBackend(models.Model):
         :param langs: res.lang recordset
         :param product_tmpl: product.template browse record
         """
-        binding_model = self.env["shopinvader.product"].with_context(
-            active_test=False
-        )
+        binding_model = self.env["shopinvader.product"].with_context(active_test=False)
         bound_templates = binding_model.search(
             [
                 ("record_id", "=", product_tmpl.id),
@@ -466,9 +458,7 @@ class ShopinvaderBackend(models.Model):
             ]
         )
         for lang in langs:
-            shopinvader_product = bound_templates.filtered(
-                lambda x: x.lang_id == lang
-            )
+            shopinvader_product = bound_templates.filtered(lambda x: x.lang_id == lang)
             if not shopinvader_product:
                 # fmt: off
                 data = {
@@ -482,9 +472,7 @@ class ShopinvaderBackend(models.Model):
                 shopinvader_product.write({"active": True})
         return bound_templates
 
-    def _get_or_create_shopinvader_variants(
-        self, shopinvader_product, variants
-    ):
+    def _get_or_create_shopinvader_variants(self, shopinvader_product, variants):
         """Get variant bindings, create if missing.
 
         :param langs: res.lang recordset

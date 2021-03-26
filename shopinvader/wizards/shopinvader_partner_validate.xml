@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2021 Camptocamp SA
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
@@ -17,14 +17,19 @@
                 <group>
                     <field name="shopinvader_partner_ids" colspan="4" nolabel="1">
                         <tree create="false" delete="false">
-                            <field name="record_id"/>
-                            <field name="email"/>
-                            <field name="state"/>
+                            <field name="record_id" />
+                            <field name="email" />
+                            <field name="state" />
                         </tree>
                     </field>
                 </group>
                 <footer>
-                    <button string="Apply" name="action_apply" type="object" class="btn-primary"/>
+                    <button
+                        string="Apply"
+                        name="action_apply"
+                        type="object"
+                        class="btn-primary"
+                    />
                     <button string="Cancel" class="btn-default" special="cancel" />
                 </footer>
             </form>
@@ -38,9 +43,12 @@
         <field name="view_mode">form</field>
         <field name="context">{}</field>
         <field name="target">new</field>
-        <field name="view_id" ref="shopinvader_partner_validate_form_view"/>
-        <field name="groups_id" eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"/>
-        <field name="binding_model_id" ref="shopinvader.model_shopinvader_partner"/>
+        <field name="view_id" ref="shopinvader_partner_validate_form_view" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"
+        />
+        <field name="binding_model_id" ref="shopinvader.model_shopinvader_partner" />
     </record>
 
 </odoo>

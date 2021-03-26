@@ -171,7 +171,9 @@ class TestCustomer(TestCustomerCommon):
 
     def test_has_address_to_validate(self):
         invader_partner = self._create_invader_partner(
-            self.env, name="Just A User", email="just@auser.com",
+            self.env,
+            name="Just A User",
+            email="just@auser.com",
         )
         self.assertTrue(invader_partner.is_shopinvader_active)
         partner = invader_partner.record_id

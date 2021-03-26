@@ -10,9 +10,9 @@
         <field name="model">shopinvader.variant.binding.wizard</field>
         <field name="arch" type="xml">
             <form string="Shopinvader Variant Binding Wizard">
-                <field name='backend_id'/>
-                <field name='product_ids'/>
-                <field name='run_immediately'/>
+                <field name='backend_id' />
+                <field name='product_ids' />
+                <field name='run_immediately' />
                 <footer>
                     <button
                         string="Bind Products"

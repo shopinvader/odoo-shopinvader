@@ -221,7 +221,7 @@ class AddressService(Component):
             params["title"] = params.get("title")["id"]
 
         if mode == "create":
-            params[
-                "is_shopinvader_active"
-            ] = self.partner_validator.enabled_by_params(params, "address")
+            params["is_shopinvader_active"] = self.partner_validator.enabled_by_params(
+                params, "address"
+            )
         return params

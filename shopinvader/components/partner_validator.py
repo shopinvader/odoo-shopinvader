@@ -115,9 +115,6 @@ class PartnerValidator(Component):
 
     def is_partner_validated(self, partner):
         """Check if given partner is enabled for current backend."""
-        if (
-            self.backend.validate_customers
-            and not partner.is_shopinvader_active
-        ):
+        if self.backend.validate_customers and not partner.is_shopinvader_active:
             return False
         return True
