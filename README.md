@@ -22,6 +22,7 @@ addon | version | summary
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 14.0.1.1.2 | Shopinvader
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
+[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.0.0 | Shopinvader Catalog Search Engine Connector
 
 
 Unported addons
@@ -75,7 +76,6 @@ addon | version | summary
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 (unported) | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.2.0 (unported) | ShopInvader - Sale profile
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
-[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.1.4.0 (unported) | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 13.0.2.2.1 (unported) | Handle shop wishlist
 
 [//]: # (end addons)
