@@ -64,7 +64,7 @@ class ShopinvaderPartner(models.Model):
         # company_id field is mandatory so we don't have manage empty value
         for company in self.mapped("backend_id.company_id"):
             fposition_by_partner = self._get_fiscal_position_by_partner(
-                partners, company_id=company.id
+                partners, company=company
             )
             # Get every fiscal position ids (without duplicates)
             fposition_ids = list(set(fposition_by_partner.values()))
@@ -74,9 +74,7 @@ class ShopinvaderPartner(models.Model):
             shopinv_partners = self.filtered(
                 lambda p, c=company: p.backend_id.company_id.id == c.id
             )
-            shopinv_partners = shopinv_partners.with_context(
-                force_company=company.id
-            )
+            shopinv_partners = shopinv_partners.with_company(company)
             for binding in shopinv_partners:
                 sale_profile = sale_profile_obj.browse()
                 # Only if the related backend use sale profiles
@@ -114,9 +112,7 @@ class ShopinvaderPartner(models.Model):
                 and p.pricelist_id.id == pl.id
                 and p.backend_id.id == b.id
             )
-            sale_profile = first(
-                sale_profile.with_prefetch(self._prefetch_ids)
-            )
+            sale_profile = first(sale_profile.with_prefetch(self._prefetch_ids))
         else:
             pricelist = partner.property_product_pricelist
             sale_profile = sale_profiles.filtered(
@@ -124,17 +120,13 @@ class ShopinvaderPartner(models.Model):
                 and p.pricelist_id.id == pl.id
                 and p.backend_id.id == b.id
             )
-            sale_profile = first(
-                sale_profile.with_prefetch(self._prefetch_ids)
-            )
+            sale_profile = first(sale_profile.with_prefetch(self._prefetch_ids))
         if not sale_profile:
             # Get the default sale profile
             sale_profile = default_sale_profiles.filtered(
                 lambda p, b=backend: p.backend_id.id == b.id
             )
-            sale_profile = first(
-                sale_profile.with_prefetch(self._prefetch_ids)
-            )
+            sale_profile = first(sale_profile.with_prefetch(self._prefetch_ids))
             if not sale_profile:
                 message = (
                     _("No default sale profile found for the backend" " %s")
@@ -143,9 +135,7 @@ class ShopinvaderPartner(models.Model):
                 raise exceptions.UserError(message)
         return sale_profile
 
-    def _get_sale_profiles(
-        self, backend_ids, pricelists, fposition_ids, company=False
-    ):
+    def _get_sale_profiles(self, backend_ids, pricelists, fposition_ids, company=False):
         """Get sale profiles for given backends, fiscal positions, pricelists.
 
         :param fposition_ids: list of int
@@ -156,9 +146,7 @@ class ShopinvaderPartner(models.Model):
         """
         sale_profile_obj = self.env["shopinvader.sale.profile"]
         if company:
-            sale_profile_obj = sale_profile_obj.with_context(
-                force_company=company.id
-            )
+            sale_profile_obj = sale_profile_obj.with_company(company)
         domain = [
             "|",
             ("fiscal_position_ids", "in", fposition_ids),
@@ -181,13 +169,11 @@ class ShopinvaderPartner(models.Model):
             ("default", "=", True),
             ("backend_id", "in", backend_ids),
         ]
-        default_sale_profiles = sale_profile_obj.search(
-            domain_default_profiles
-        )
+        default_sale_profiles = sale_profile_obj.search(domain_default_profiles)
         return default_sale_profiles
 
     @api.model
-    def _get_fiscal_position_by_partner(self, partners, company_id=False):
+    def _get_fiscal_position_by_partner(self, partners, company=False):
         """Get every fiscal position related to given partners.
 
         :param partners: res.partner recordset
@@ -195,15 +181,11 @@ class ShopinvaderPartner(models.Model):
         :return: account.fiscal.position recordset
         """
         fposition_obj = self.env["account.fiscal.position"]
-        if company_id:
-            fposition_obj = fposition_obj.with_context(
-                force_company=company_id
-            )
+        if company:
+            fposition_obj = fposition_obj.with_company(company)
         fposition_by_partner = {}
         for partner in partners:
-            fpos_id = fposition_obj.get_fiscal_position(
-                partner.id, delivery_id=partner.id
-            )
-            if fpos_id:
-                fposition_by_partner[partner.id] = fpos_id
+            fpos = fposition_obj.get_fiscal_position(partner.id, delivery_id=partner.id)
+            if fpos:
+                fposition_by_partner[partner.id] = fpos.id
         return fposition_by_partner

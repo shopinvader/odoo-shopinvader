@@ -44,7 +44,6 @@ exclude: |
   ^shopinvader_sale_communication/|
   ^shopinvader_sale_packaging/|
   ^shopinvader_sale_packaging_wishlist/|
-  ^shopinvader_sale_profile/|
   ^shopinvader_sale_report/|
   ^shopinvader_wishlist/|
   # END NOT INSTALLABLE ADDONS
