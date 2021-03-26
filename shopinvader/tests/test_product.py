@@ -12,6 +12,14 @@ from .common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
+            context=dict(cls.env.context, test_queue_job_no_delay=True)
+        )
+        cls.backend = cls.backend.with_context(test_queue_job_no_delay=True)
+
     def test_create_shopinvader_variant(self):
         self.assertEqual(
             len(self.template.product_variant_ids),

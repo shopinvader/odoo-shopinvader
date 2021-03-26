@@ -12,6 +12,10 @@ class BackendCase(CommonCase):
     def setUpClass(cls):
         super(BackendCase, cls).setUpClass()
         cls.lang_fr = cls._install_lang(cls, "base.lang_fr")
+        cls.env = cls.env(
+            context=dict(cls.env.context, test_queue_job_no_delay=True)
+        )
+        cls.backend = cls.backend.with_context(test_queue_job_no_delay=True)
 
     def _all_products_count(self):
         return self.env["product.template"].search_count(
