@@ -44,15 +44,15 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         self.ensure_one()
         return self.lang_ids or self.backend_id.lang_ids
 
-    def _get_binded_templates(self):
+    def _get_bound_templates(self):
         """
-        return a dict of binded shopinvader.product by product template id
+        return a dict of bound shopinvader.product by product template id
         :return:
         """
         self.ensure_one()
         binding = self.env["shopinvader.product"]
         product_template_ids = self.mapped("product_ids.product_tmpl_id")
-        binded_templates = binding.with_context(active_test=False).search(
+        bound_templates = binding.with_context(active_test=False).search(
             [
                 ("record_id", "in", product_template_ids.ids),
                 ("backend_id", "=", self.backend_id.id),
@@ -60,7 +60,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
             ]
         )
         ret = defaultdict(dict)
-        for bt in binded_templates:
+        for bt in bound_templates:
             ret[bt.record_id][bt.lang_id] = bt
         for product in self.mapped("product_ids.product_tmpl_id"):
             product_tmpl_id = product
@@ -80,16 +80,16 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
 
     def bind_products(self):
         for wizard in self:
-            binded_templates = wizard._get_binded_templates()
+            bound_templates = wizard._get_bound_templates()
             binding = self.env["shopinvader.variant"]
             for product in wizard.product_ids:
-                binded_products = binded_templates[product.product_tmpl_id]
+                bound_products = bound_templates[product.product_tmpl_id]
                 for lang_id in wizard._get_langs_to_bind():
-                    for shopinvader_product in binded_products[lang_id]:
-                        binded_variants = (
+                    for shopinvader_product in bound_products[lang_id]:
+                        bound_variants = (
                             shopinvader_product.shopinvader_variant_ids
                         )
-                        bind_record = binded_variants.filtered(
+                        bind_record = bound_variants.filtered(
                             lambda p: p.record_id == product
                         )
                         if not bind_record:
@@ -112,18 +112,18 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         Ensure that a shopinvader.variant exists for each lang_id. If not,
         create a new binding for the missing lang. This method is usefull
         to ensure that when a lang is added to a backend, all the binding
-        for this lang are created for the existing binded products
+        for this lang are created for the existing bound products
         :param backend: backend record
         :param lang_ids: list of lang ids we must ensure that a binding exists
         :return:
         """
-        binded_products = self.env["product.product"].search(
+        bound_products = self.env["product.product"].search(
             [("shopinvader_bind_ids.backend_id", "=", backend.id)]
         )
         # use in memory record to avoid the creation of useless records into
         # the database
-        # by default the wizard check if a product is already binded so we
-        # can use it by giving the list of product already binded in one of
+        # by default the wizard check if a product is already bound so we
+        # can use it by giving the list of product already bound in one of
         # the specified lang and the process will create the missing one.
 
         # TODO 'new({})' doesn't work into V13 -> should use model lassmethod
@@ -131,7 +131,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
             {
                 "lang_ids": self.env["res.lang"].browse(lang_ids),
                 "backend_id": backend.id,
-                "product_ids": binded_products,
+                "product_ids": bound_products,
             }
         )
         wiz.bind_products()
