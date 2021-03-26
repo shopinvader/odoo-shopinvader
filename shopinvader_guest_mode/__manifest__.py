@@ -15,6 +15,7 @@
         "data/ir_cron.xml",
         "views/shopinvader_backend.xml",
         "views/shopinvader_partner.xml",
+        "wizards/partner_binding_wizard.xml",
     ],
-    "demo": [],
+    "demo": ["demo/partner_demo.xml"],
 }
