@@ -43,9 +43,7 @@ class TestSaleOrderDeliveryNote(CommonCase):
             self.assertEquals(self.cart.picking_note, delivery_instruction)
         result = self.service.dispatch("update")
         data = result.get("data", {})
-        self.assertEquals(
-            data.get("delivery_instruction"), delivery_instruction
-        )
+        self.assertEquals(data.get("delivery_instruction"), delivery_instruction)
         self.cart.action_confirm()
         pickings = self.cart.picking_ids
         self.assertTrue(pickings)
