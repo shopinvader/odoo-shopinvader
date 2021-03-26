@@ -1464,6 +1464,16 @@ msgid "Fail Mail"
 msgstr ""
 
 #. module: shopinvader
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_blue
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_grey
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_red
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_yellow
+#: model:product.product,name:shopinvader.product_product_table_walmut
+#: model:product.template,name:shopinvader.product_template_armchair_mid_century
+msgid "Fauteuil Style Mid-Century avec assise tapissée"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_fedex
 msgid "FedEx Connector"
 msgstr ""
@@ -1769,6 +1779,7 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__image_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__image_1920
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_1920
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_1920
@@ -1801,6 +1812,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_512
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_512
 msgid "Image 512"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_medium_url
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_medium_url
+msgid "Image Medium Url"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_small_url
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_small_url
+msgid "Image Small Url"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_ids
+msgid "Images"
 msgstr ""
 
 #. module: shopinvader
@@ -4216,6 +4245,21 @@ msgid "Variant Image 512"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_medium_url
+msgid "Variant Image Medium Url"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_small_url
+msgid "Variant Image Small Url"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_ids
+msgid "Variant Images"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__price_extra
 msgid "Variant Price Extra"
 msgstr ""
@@ -4275,18 +4319,6 @@ msgstr ""
 #: model:product.product,name:shopinvader.product_product_chair_vortex_white
 #: model:product.template,name:shopinvader.product_template_chair_vortex
 msgid "Vortex Side Chair"
-msgstr ""
-
-#. module: shopinvader
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_blue
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_grey
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_red
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_yellow
-#: model:product.product,name:shopinvader.product_product_table_walmut
-#: model:product.template,name:shopinvader.product_template_armchair_mid_century
-msgid ""
-"Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture\n"
-"        "
 msgstr ""
 
 #. module: shopinvader
