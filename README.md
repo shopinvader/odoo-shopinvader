@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.1.1.1 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.1.1.2 | Shopinvader
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 
 
