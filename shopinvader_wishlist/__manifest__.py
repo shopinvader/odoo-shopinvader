@@ -5,7 +5,7 @@
     "name": "Shopinvader Wishlist",
     "summary": """
         Handle shop wishlist""",
-    "version": "13.0.3.1.0",
+    "version": "13.0.3.1.1",
     "license": "AGPL-3",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
