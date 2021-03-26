@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.1.1.2 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.1.2.0 | Shopinvader
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_image](shopinvader_image/) | 14.0.1.0.0 | Add the export of Image for Shopinvader
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.1.1.1 | Shopinvader Invoice module
