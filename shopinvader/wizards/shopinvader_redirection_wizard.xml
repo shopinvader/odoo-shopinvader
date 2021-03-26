@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+<record id="shopinvader_redirection_view_form" model="ir.ui.view">
+    <field name="model">shopinvader.redirection.wizard</field>
+    <field name="arch" type="xml">
+        <form string="Redirection Url">
+            <sheet>
+                <group>
+                    <field name="dest_categ_id" invisible="context.get('active_model') != 'product.category'"/>
+                    <field name="dest_product_id" invisible="context.get('active_model') != 'product.template'"/>
+                </group>
+            </sheet>
+            <footer>
+                <button string="Apply Redirection" name="apply_redirection" type="object" class="oe_highlight"/>
+                or
+                <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
+        </form>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="act_open_shopinvader_redirection_wizard_view">
+    <field name="name">Redirect Shopinvader Record</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">shopinvader.redirection.wizard</field>
+    <field name="view_mode">form</field>
+    <field name="target">new</field>
+    <field name="context">{}</field>
+</record>
+
+<record id="ir_redirect_product_url" model="ir.values">
+    <field eval="'client_action_multi'" name="key2"/>
+    <field eval="'product.template'" name="model"/>
+    <field name="name">Redirect Product</field>
+    <field eval="'ir.actions.act_window,%d'%act_open_shopinvader_redirection_wizard_view" name="value"/>
+</record>
+
+<record id="ir_redirect_category_url" model="ir.values">
+    <field eval="'client_action_multi'" name="key2"/>
+    <field eval="'product.category'" name="model"/>
+    <field name="name">Redirect Category</field>
+    <field eval="'ir.actions.act_window,%d'%act_open_shopinvader_redirection_wizard_view" name="value"/>
+</record>
+
+</odoo>
