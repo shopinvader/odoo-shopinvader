@@ -2292,6 +2292,11 @@ msgid "Re-Invoice Expenses"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_real_level
+msgid "Real level"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_reception_count
 msgid "Receipt"
 msgstr ""
