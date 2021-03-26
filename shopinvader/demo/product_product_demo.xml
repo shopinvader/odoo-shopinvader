@@ -161,7 +161,7 @@
         <field name="uom_po_id" ref="uom.product_uom_unit"></field>
         <field name="list_price">1.0</field>
         <field name="standard_price">0</field>
-        <field name="default_code"></field>
+        <field name="default_code">SAU-414986</field>
         <field name="type">consu</field>
     </record>
 
@@ -217,7 +217,7 @@
         <field name="attribute_value_ids" eval="[(6,0,[ref('product_attribute_value_11')])]"></field>
         <field name="list_price">99.72</field>
         <field name="standard_price">99.72</field>
-        <field name="default_code">/</field>
+        <field name="default_code">SAU-414970</field>
         <field name="type">consu</field>
     </record>
 
