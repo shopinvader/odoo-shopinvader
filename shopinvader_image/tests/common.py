@@ -6,9 +6,7 @@
 
 
 from odoo.addons.shopinvader.tests.common import ProductCommonCase
-from odoo.addons.storage_image_product.tests.common import (
-    ProductImageCommonCase,
-)
+from odoo.addons.storage_image_product.tests.common import ProductImageCommonCase
 
 
 class TestShopinvaderImageCase(ProductCommonCase, ProductImageCommonCase):
