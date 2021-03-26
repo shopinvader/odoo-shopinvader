@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_customer_multi_user',
         'odoo13-addon-shopinvader_customer_multi_user_wishlist',
         'odoo13-addon-shopinvader_delivery_carrier',
+        'odoo13-addon-shopinvader_delivery_instruction',
         'odoo13-addon-shopinvader_elasticsearch',
         'odoo13-addon-shopinvader_guest_mode',
         'odoo13-addon-shopinvader_image',
