@@ -55,6 +55,7 @@ class MembershipService(Component):
         :return: dict
         """
         membership_product_schema = {
+            "id": {"type": "integer"},
             "name": {"type": "string", "nullable": True},
             "default_code": {"type": "string", "nullable": True},
             "description_sale": {"type": "string", "nullable": True},
@@ -77,7 +78,13 @@ class MembershipService(Component):
         Get the parser of membership products
         :return: list
         """
-        to_parse = ["name", "default_code", "description_sale", "list_price"]
+        to_parse = [
+            "id",
+            "name",
+            "default_code",
+            "description_sale",
+            "list_price",
+        ]
         return to_parse
 
     def _to_json_membership_product(self, membership_product):

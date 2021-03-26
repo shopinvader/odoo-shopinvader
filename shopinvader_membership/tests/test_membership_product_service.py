@@ -30,6 +30,7 @@ class TestMembershipProductService(CommonCase):
         )
         self.assertEquals(len(data), len(membership_products))
         for current_data, membership_product in zip(data, membership_products):
+            self.assertEquals(current_data.get("id"), membership_product.id)
             self.assertEquals(
                 current_data.get("name"), membership_product.name
             )
