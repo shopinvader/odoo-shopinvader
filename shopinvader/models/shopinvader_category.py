@@ -39,6 +39,7 @@ class ShopinvaderCategory(models.Model):
         "shopinvader.category", inverse_name="shopinvader_parent_id"
     )
     level = fields.Integer(compute="_compute_level")
+    real_level = fields.Char(compute="_compute_real_level")
     redirect_url_key = fields.Serialized(
         compute="_compute_redirect_url_key", string="Redirect Url Keys"
     )
@@ -67,6 +68,41 @@ class ShopinvaderCategory(models.Model):
     def _compute_object_id(self):
         for record in self:
             record.object_id = record.record_id.id
+
+    @api.multi
+    @api.depends(
+        "level",
+        "sequence",
+        "shopinvader_parent_id",
+        "shopinvader_parent_id.level",
+        "shopinvader_parent_id.real_level",
+        "shopinvader_parent_id.sequence",
+        "shopinvader_parent_id.active",
+    )
+    def _compute_real_level(self):
+        """
+        Compute the real_level.
+        This function is recursive (depth depends on category depth).
+        Each category real_sequence is based on the real_sequence of his
+        parent (by removing the level of the parent to use the current level).
+        So the pattern is:
+        LEVEL.PARENT_SEQ.SEQUENCE
+        Every number are on 3 digits to simplify the order.
+        :return:
+        """
+        separator = "."
+        for record in self:
+            seq = "{seq:03d}".format(seq=record.sequence)
+            if record.shopinvader_parent_id:
+                seq_split = record.shopinvader_parent_id.real_level.split(
+                    separator, 1
+                )
+                if seq_split:
+                    seq = separator.join([seq_split[1], seq])
+            real_level = "{level:03d}{sep}{seq}".format(
+                level=record.level, sep=separator, seq=seq
+            )
+            record.real_level = real_level
 
     @api.depends(
         "parent_id.shopinvader_bind_ids.shopinvader_parent_id",
