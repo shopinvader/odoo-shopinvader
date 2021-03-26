@@ -12,6 +12,9 @@
     "category": "Partner",
     "summary": "Partner Company",
     "depends": ["base"],
+    "excludes": [
+        "partner_firstname"
+    ],  # key only known from 12.0 but set for memory
     "data": ["views/partner_view.xml", "views/users_view.xml"],
     "demo": ["demo/partner.xml"],
     "installable": True,

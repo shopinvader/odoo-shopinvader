@@ -22,5 +22,7 @@ class TestCustomer(TestCustomerCommon):
         params = data.copy()
         res = self.service.dispatch("create", params=params)["data"]
         partner = self.env["res.partner"].browse(res["id"])
-        data["name"] = "John Doe"
+        # in v12 the result is "John Doe" by default
+        data["name"] = "Doe John"
+        # That's the partner_firstname default behavior
         self._test_partner_data(partner, data)

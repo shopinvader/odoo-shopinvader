@@ -29,6 +29,7 @@ Known issues / Roadmap
 ======================
 
 * Add onchange to fill by default the company
+* This module is incompatible with partner_firstname: an option could be to have a refactor which depends on it to limit weird cases and complexity
 
 Bug Tracker
 ===========
