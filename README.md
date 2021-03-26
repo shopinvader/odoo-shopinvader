@@ -27,6 +27,7 @@ addon | version | summary
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 12.0.1.1.2 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 12.0.1.0.0 | Shopinvader Display category image for product
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 12.0.3.1.1 | Carrier integration for Shopinvader
+[shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 12.0.1.0.0 | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.5 | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 12.0.1.0.3 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 12.0.2.0.0 | Guest mode for Shopinvader
