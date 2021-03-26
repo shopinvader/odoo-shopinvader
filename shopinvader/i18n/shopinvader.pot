@@ -751,7 +751,6 @@ msgid "Can be Sold"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/address.py:56
 #: code:addons/shopinvader/services/address.py:57
 #, python-format
 msgid "Can not delete the partner account"
@@ -2053,7 +2052,6 @@ msgid "Invalid scope %s, error : %s"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:391
 #: code:addons/shopinvader/services/cart.py:392
 #, python-format
 msgid "Invalid step code %s"
@@ -2610,7 +2608,6 @@ msgid "Minimum Stock Rules"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:272
 #: code:addons/shopinvader/services/cart.py:273
 #, python-format
 msgid "Missing feature to clear the cart!"
@@ -3107,7 +3104,6 @@ msgid "Product"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:280
 #: code:addons/shopinvader/services/cart.py:281
 #, python-format
 msgid "Product %s is not allowed"
@@ -4262,7 +4258,6 @@ msgid "The bank reconciliation widget won't ask to reconcile payments older than
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:134
 #: code:addons/shopinvader/services/cart.py:135
 #, python-format
 msgid "The cart does not exists or does not belong to you!"
