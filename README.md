@@ -24,6 +24,7 @@ addon | version | summary
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.1.1.1 | Shopinvader Invoice module
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
+[shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.0.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.0.0 | Shopinvader Catalog Search Engine Connector
 
@@ -69,7 +70,6 @@ addon | version | summary
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 13.0.1.0.1 (unported) | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.3 (unported) | Shopinvader Product Link
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 (unported) | Integrate product_variant_multi_link with Shopinvader
-[shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 (unported) | Ease creation of variants selector on shopinvader sites
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 12.0.2.0.0 (unported) | Shopinvader Quotation
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) | This module adds information fields for customers and vendors.
