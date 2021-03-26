@@ -22,9 +22,7 @@ class SaleOrder(models.Model):
             and self.typology == "cart"
         )
 
-    @api.depends(
-        "shopinvader_backend_id.cart_expiry_delay", "typology", "write_date"
-    )
+    @api.depends("shopinvader_backend_id.cart_expiry_delay", "typology", "write_date")
     def _compute_cart_expiration_date(self):
         """
         Compute the cart expiration date
@@ -39,8 +37,6 @@ class SaleOrder(models.Model):
                     or fields.Datetime.from_string(fields.Datetime.now())
                 )
                 backend = order.shopinvader_backend_id
-                delta_arg = {
-                    backend.cart_expiry_delay_unit: backend.cart_expiry_delay
-                }
+                delta_arg = {backend.cart_expiry_delay_unit: backend.cart_expiry_delay}
                 expiration_date = trigger_date + timedelta(**delta_arg)
                 order.cart_expiration_date = expiration_date

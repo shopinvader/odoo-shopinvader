@@ -1,5 +1,7 @@
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
+# Copyright 2021 Camptocamp (http://www.camptocamp.com).
+# @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 import logging
@@ -12,16 +14,6 @@ _logger = logging.getLogger(__name__)
 class AbstractSaleService(AbstractComponent):
     _inherit = "shopinvader.abstract.mail.service"
     _name = "shopinvader.abstract.sale.service"
-
-    def _parser_product(self):
-        return [
-            "full_name:name",
-            "short_name",
-            ("shopinvader_product_id:model", ("name",)),
-            "object_id:id",
-            "url_key",
-            "default_code:sku",
-        ]
 
     def _convert_one_sale(self, sale):
         sale.ensure_one()
@@ -65,11 +57,7 @@ class AbstractSaleService(AbstractComponent):
             variant = line.product_id._get_invader_variant(
                 self.shopinvader_backend, line.order_id.partner_id.lang
             )
-        if variant:
-            # TODO we should reuse the parser of the index
-            product = variant.jsonify(self._parser_product())[0]
-        else:
-            product = {}
+        product = self._convert_one_line_product(variant)
         return {
             "id": line.id,
             "product": product,
@@ -83,6 +71,9 @@ class AbstractSaleService(AbstractComponent):
             "qty": line.product_uom_qty,
             "discount": {"rate": line.discount, "value": line.discount_total},
         }
+
+    def _convert_one_line_product(self, variant):
+        return variant.get_shop_data() if variant else {}
 
     def _convert_lines(self, sale):
         items = []

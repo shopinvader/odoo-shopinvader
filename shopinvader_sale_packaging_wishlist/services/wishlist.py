@@ -30,12 +30,6 @@ class WishlistService(Component):
             "product_packaging_qty:packaging_qty",
         ]
 
-    def _json_parser_product(self):
-        return super()._json_parser_product() + [
-            "packaging",
-            "sell_only_by_packaging",
-        ]
-
     def _json_parser_product_packaging(self, rec, fname):
         return self._packaging_info_by_qty(rec.product_id, rec.quantity)
 

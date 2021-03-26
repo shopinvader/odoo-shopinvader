@@ -74,7 +74,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         self.assertEqual(
             index_data["index"]["_index"], self.index_product.name.lower()
         )
-        self.assertEqual(index_data["index"]["_id"], si_variant.object_id)
+        self.assertEqual(index_data["index"]["_id"], si_variant.record_id.id)
         self.assertEqual(product_data, si_variant.data)
 
     @mute_logger("odoo.addons.product.models.product")

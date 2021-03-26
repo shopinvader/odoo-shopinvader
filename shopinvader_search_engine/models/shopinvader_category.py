@@ -10,13 +10,9 @@ class ShopinvaderCategory(models.Model):
     _name = "shopinvader.category"
     _description = "Shopinvader Category"
 
-    index_id = fields.Many2one(
-        compute="_compute_index", store=True, required=False
-    )
+    index_id = fields.Many2one(compute="_compute_index", store=True, required=False)
 
-    @api.depends(
-        "backend_id.se_backend_id", "backend_id.se_backend_id.index_ids"
-    )
+    @api.depends("backend_id.se_backend_id", "backend_id.se_backend_id.index_ids")
     def _compute_index(self):
         for record in self:
             se_backend = record.backend_id.se_backend_id

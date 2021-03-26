@@ -10,9 +10,7 @@ class ShopinvaderVariant(models.Model):
     _name = "shopinvader.variant"
     _description = "Shopinvader Variant"
 
-    index_id = fields.Many2one(
-        compute="_compute_index", store=True, required=False
-    )
+    index_id = fields.Many2one(compute="_compute_index", store=True, required=False)
 
     @api.depends(
         "backend_id.se_backend_id",
@@ -34,3 +32,7 @@ class ShopinvaderVariant(models.Model):
                 and r.lang_id == i.lang_id
             )
             record.index_id = fields.first(index)
+
+    def _get_shop_data(self):
+        """Use pre-computed index data."""
+        return self.get_export_data()
