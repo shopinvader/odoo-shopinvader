@@ -2668,6 +2668,12 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: code:addons/shopinvader/services/sale.py:0
+#, python-format
+msgid "Orders that have been delivered or invoiced cannot be edited."
+msgstr ""
+
+#. module: shopinvader
 #: model:product.category,name:shopinvader.product_category_227
 msgid "Ordinateur, Tablettes & Accessoires"
 msgstr ""
@@ -3913,6 +3919,12 @@ msgstr ""
 msgid ""
 "This option allows you to print the date label on the check as per CPA.\n"
 "Disable this if your pre-printed check includes the date label."
+msgstr ""
+
+#. module: shopinvader
+#: code:addons/shopinvader/services/sale.py:0
+#, python-format
+msgid "This order cannot be cancelled"
 msgstr ""
 
 #. module: shopinvader
