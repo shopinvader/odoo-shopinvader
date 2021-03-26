@@ -391,28 +391,24 @@ msgid "Address Type"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:74
 #: code:addons/shopinvader/models/shopinvader_notification.py:75
 #, python-format
 msgid "Address created"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:78
 #: code:addons/shopinvader/models/shopinvader_notification.py:79
 #, python-format
 msgid "Address created not validated"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:86
 #: code:addons/shopinvader/models/shopinvader_notification.py:87
 #, python-format
 msgid "Address updated"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:82
 #: code:addons/shopinvader/models/shopinvader_notification.py:83
 #, python-format
 msgid "Address validated"
@@ -755,7 +751,6 @@ msgid "Can be Sold"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/address.py:55
 #: code:addons/shopinvader/services/address.py:56
 #, python-format
 msgid "Can not delete the partner account"
@@ -781,7 +776,6 @@ msgid "Cart"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:34
 #: code:addons/shopinvader/models/shopinvader_notification.py:35
 #, python-format
 msgid "Cart Confirmation"
@@ -794,7 +788,6 @@ msgid "Cart Step"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:38
 #: code:addons/shopinvader/models/shopinvader_notification.py:39
 #, python-format
 msgid "Cart ask by email"
@@ -1249,7 +1242,6 @@ msgid "Customer configuration"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:70
 #: code:addons/shopinvader/models/shopinvader_notification.py:71
 #, python-format
 msgid "Customer updated"
@@ -2054,14 +2046,12 @@ msgid "Intrastat"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/service.py:74
 #: code:addons/shopinvader/services/service.py:75
 #, python-format
 msgid "Invalid scope %s, error : %s"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:389
 #: code:addons/shopinvader/services/cart.py:391
 #, python-format
 msgid "Invalid step code %s"
@@ -2092,7 +2082,6 @@ msgid "Invoice Online Payment"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:50
 #: code:addons/shopinvader/models/shopinvader_notification.py:51
 #, python-format
 msgid "Invoice Validated"
@@ -2104,7 +2093,6 @@ msgid "Invoice notification ${object.number}"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:54
 #: code:addons/shopinvader/models/shopinvader_notification.py:55
 #, python-format
 msgid "Invoice send email"
@@ -2620,7 +2608,6 @@ msgid "Minimum Stock Rules"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:270
 #: code:addons/shopinvader/services/cart.py:272
 #, python-format
 msgid "Missing feature to clear the cart!"
@@ -2696,21 +2683,18 @@ msgid "Nbr Variant"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:58
 #: code:addons/shopinvader/models/shopinvader_notification.py:59
 #, python-format
 msgid "New customer Welcome"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:62
 #: code:addons/shopinvader/models/shopinvader_notification.py:63
 #, python-format
 msgid "New customer Welcome not validated"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:66
 #: code:addons/shopinvader/models/shopinvader_notification.py:67
 #, python-format
 msgid "New customer validated"
@@ -2748,7 +2732,6 @@ msgid "No Rescheduling Propagation"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/abstract_download.py:63
 #: code:addons/shopinvader/services/abstract_download.py:64
 #, python-format
 msgid "No content found for %s"
@@ -2807,7 +2790,6 @@ msgid "Notifications"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_backend.py:343
 #: code:addons/shopinvader/models/shopinvader_backend.py:344
 #, python-format
 msgid "Notify %s for %s,%s"
@@ -2984,7 +2966,6 @@ msgid "Partner names order"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/partner_mixin.py:57
 #: code:addons/shopinvader/services/partner_mixin.py:58
 #, python-format
 msgid "Partner needs review"
@@ -3123,7 +3104,6 @@ msgid "Product"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:278
 #: code:addons/shopinvader/services/cart.py:280
 #, python-format
 msgid "Product %s is not allowed"
@@ -3417,7 +3397,6 @@ msgid "Sale"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:46
 #: code:addons/shopinvader/models/shopinvader_notification.py:47
 #, python-format
 msgid "Sale Confirmation"
@@ -3450,7 +3429,6 @@ msgid "Sale Price"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_notification.py:42
 #: code:addons/shopinvader/models/shopinvader_notification.py:43
 #, python-format
 msgid "Sale ask by email"
@@ -4280,7 +4258,6 @@ msgid "The bank reconciliation widget won't ask to reconcile payments older than
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/cart.py:132
 #: code:addons/shopinvader/services/cart.py:134
 #, python-format
 msgid "The cart does not exists or does not belong to you!"
@@ -4302,7 +4279,6 @@ msgid "The fiscal position determines the taxes/accounts used for this contact."
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/controllers/main.py:51
 #: code:addons/shopinvader/controllers/main.py:52
 #, python-format
 msgid "The given partner is not found!"
@@ -4341,7 +4317,6 @@ msgid "The partner's timezone, used to output proper date and time values inside
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/services/service.py:129
 #: code:addons/shopinvader/services/service.py:130
 #, python-format
 msgid "The record %s %s does not exist"
