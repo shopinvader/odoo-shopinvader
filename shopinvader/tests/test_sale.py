@@ -9,7 +9,7 @@ from odoo.tools import mute_logger
 from .common import CommonCase, CommonTestDownload
 
 
-class SaleCase(CommonCase, CommonTestDownload):
+class CommonSaleCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -25,10 +25,12 @@ class SaleCase(CommonCase, CommonTestDownload):
         )
 
     def setUp(self, *args, **kwargs):
-        super(SaleCase, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="sales")
 
+
+class SaleCase(CommonSaleCase, CommonTestDownload):
     def _confirm_and_invoice_sale(self):
         self.sale.action_confirm()
         for line in self.sale.order_line:

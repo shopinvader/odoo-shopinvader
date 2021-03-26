@@ -9,6 +9,7 @@ from . import test_partner_access_info
 from . import test_product
 from . import test_product_filter
 from . import test_sale
+from . import test_sale_cancel
 from . import test_shopinvader_category
 from . import test_shopinvader_variant_binding_wizard
 from . import test_shopinvader_category_binding_wizard

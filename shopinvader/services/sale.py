@@ -1,7 +1,10 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from odoo.exceptions import UserError
 from odoo.osv import expression
+from odoo.tools.float_utils import float_is_zero
+from odoo.tools.translate import _
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
@@ -49,6 +52,21 @@ class SaleService(Component):
         self._ask_email_invoice = True
         return self.ask_email(_id)
 
+    def cancel(self, _id):
+        order = self._get(_id)
+        self._cancel(order)
+        return self._to_json(order)[0]
+
+    def reset_to_cart(self, _id):
+        order = self._get(_id)
+        self._cancel(order, reset_to_cart=True)
+        res = self._to_json(order)[0]
+        return {
+            "data": res,
+            "set_session": {"cart_id": res["id"]},
+            "store_cache": {"cart": res},
+        }
+
     # Validator
     def _validator_search(self):
         default_search_validator = self._default_validator_search()
@@ -58,6 +76,12 @@ class SaleService(Component):
 
     def _validator_ask_email_invoice(self):
         return self._validator_ask_email()
+
+    def _validator_cancel(self):
+        return {}
+
+    def _validator_reset_to_cart(self):
+        return {}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -101,6 +125,28 @@ class SaleService(Component):
         invoice_service = self.component(usage="invoice")
         domain_state = invoice_service._get_domain_state()
         return invoices.filtered_domain(domain_state)
+
+    def _is_cancel_allowed(self, sale):
+        precision = self.env["decimal.precision"].precision_get(
+            "Product Unit of Measure"
+        )
+        for line in sale.order_line:
+            if not float_is_zero(
+                line.qty_delivered, precision_digits=precision
+            ) or not float_is_zero(line.qty_invoiced, precision_digits=precision):
+                raise UserError(
+                    _("Orders that have been delivered or invoiced cannot be edited.")
+                )
+        return True
+
+    def _cancel(self, sale, reset_to_cart=False):
+        if not self._is_cancel_allowed(sale):
+            raise UserError(_("This order cannot be cancelled"))
+        sale.action_cancel()
+        if reset_to_cart:
+            sale.action_draft()
+            sale.typology = "cart"
+        return sale
 
     def _convert_invoices(self, invoices):
         return [self._convert_one_invoice(invoice) for invoice in invoices]
