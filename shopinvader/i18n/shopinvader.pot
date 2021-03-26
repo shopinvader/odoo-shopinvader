@@ -368,6 +368,11 @@ msgid "Apply"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.ui.view,arch_db:shopinvader.shopinvader_redirection_view_form
+msgid "Apply Redirection"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_associate_member
 msgid "Associate Member"
 msgstr ""
@@ -528,6 +533,7 @@ msgstr ""
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_partner_binding_form_view
+#: model:ir.ui.view,arch_db:shopinvader.shopinvader_redirection_view_form
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_variant_binding_wizard_form_view
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_variant_unbinding_wizard_form_view
 #: selection:sale.order,shopinvader_state:0
@@ -840,6 +846,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line_create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product_create_uid
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard_create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard_create_uid
@@ -859,6 +866,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line_create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product_create_date
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard_create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard_create_date
@@ -1072,6 +1080,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line_display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product_display_name
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard_display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard_display_name
@@ -1310,6 +1319,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard_id
@@ -1594,6 +1604,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding___last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line___last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product___last_update
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard___last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant___last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard___last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard___last_update
@@ -1614,6 +1625,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product_write_uid
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard_write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard_write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_write_uid
@@ -1633,6 +1645,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product_write_date
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard_write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard_write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_write_date
@@ -2296,6 +2309,11 @@ msgid "Record id"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.act_open_shopinvader_redirection_wizard_view
+msgid "Redirect Shopinvader Record"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_product_form_view
 #: model:ir.ui.view,arch_db:shopinvader.view_shopinvader_category_form
 msgid "Redirect Url"
@@ -2308,8 +2326,23 @@ msgid "Redirect Url Keys"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_dest_categ_id
+msgid "Redirect to Category"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_redirection_wizard_dest_product_id
+msgid "Redirect to Product"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_redirect_url_url_ids
 msgid "Redirect url url ids"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.ui.view,arch_db:shopinvader.shopinvader_redirection_view_form
+msgid "Redirection Url"
 msgstr ""
 
 #. module: shopinvader
@@ -2980,6 +3013,12 @@ msgid "The cart does not exists or does not belong to you!"
 msgstr ""
 
 #. module: shopinvader
+#: code:addons/shopinvader/wizards/shopinvader_redirection_wizard.py:35
+#, python-format
+msgid "The destination record do not have binding for the backend {}"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner_property_account_position_id
 msgid "The fiscal position will determine taxes and accounts used for the partner."
 msgstr ""
@@ -3515,6 +3554,12 @@ msgid "X technical description"
 msgstr ""
 
 #. module: shopinvader
+#: code:addons/shopinvader/wizards/shopinvader_redirection_wizard.py:26
+#, python-format
+msgid "You can not redirect a record on itself"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_zip
 msgid "Zip"
 msgstr ""
@@ -3537,6 +3582,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_category_binding_wizard_form_view
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
+#: model:ir.ui.view,arch_db:shopinvader.shopinvader_redirection_view_form
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_variant_binding_wizard_form_view
 #: model:ir.ui.view,arch_db:shopinvader.shopinvader_variant_unbinding_wizard_form_view
 msgid "or"
@@ -3555,6 +3601,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model,name:shopinvader.model_shopinvader_config_settings
 msgid "shopinvader.config.settings"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model,name:shopinvader.model_shopinvader_redirection_wizard
+msgid "shopinvader.redirection.wizard"
 msgstr ""
 
 #. module: shopinvader
