@@ -20,6 +20,7 @@ class CartService(Component):
     _inherit = "shopinvader.abstract.sale.service"
     _name = "shopinvader.cart.service"
     _usage = "cart"
+    _description = "Shopinvader Cart Service"
 
     @property
     def cart_id(self):

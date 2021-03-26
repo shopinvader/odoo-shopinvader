@@ -15,6 +15,7 @@ class CustomerService(Component):
     ]
     _name = "shopinvader.customer.service"
     _usage = "customer"
+    _description = "Shopinvader Customer Service"
 
     # The following method are 'public' and can be called from the controller.
     def get(self):
