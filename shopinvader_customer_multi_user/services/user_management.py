@@ -5,10 +5,11 @@
 from functools import wraps
 
 from odoo import _, exceptions
+from odoo.osv import expression
+
 from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
 from odoo.addons.shopinvader.models.shopinvader_partner import ALL_STATES
-from odoo.osv import expression
 
 
 # TODO: move it to core module

@@ -2,6 +2,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import _
+
 from odoo.addons.component.core import Component
 from odoo.addons.component_event import skip_if
 
