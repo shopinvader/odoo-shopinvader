@@ -22,11 +22,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader_wishlist
-#: model:ir.model.fields,field_description:shopinvader_wishlist.field_product_set__lang_id
-msgid "Lang"
-msgstr ""
-
-#. module: shopinvader_wishlist
 #: code:addons/shopinvader_wishlist/services/wishlist.py:0
 #, python-format
 msgid "Must be authenticated to create a wishlist"
