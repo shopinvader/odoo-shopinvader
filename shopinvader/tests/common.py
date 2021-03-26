@@ -193,8 +193,8 @@ class ProductCommonCase(CommonCase):
             ]
         )
         cls.env.user.company_id.currency_id = cls.env.ref("base.USD")
-        base_price_list = cls.env.ref("product.list0")
-        base_price_list.currency_id = cls.env.ref("base.USD")
+        cls.base_pricelist = cls.env.ref("product.list0")
+        cls.base_pricelist.currency_id = cls.env.ref("base.USD")
         cls.shopinvader_variant.record_id.currency_id = cls.env.ref("base.USD")
 
 
