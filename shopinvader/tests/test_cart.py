@@ -3,11 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import fields
-<<<<<<< HEAD
 from odoo.tools import mute_logger
-=======
+
 from odoo.addons.shopinvader import shopinvader_response
->>>>>>> [10.0][IMP] shopinvader: Use shopinvader_response
 
 from .common import CommonCase
 
@@ -449,6 +447,14 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.assertEqual(
             self.backend.account_analytic_id, cart_bis.analytic_account_id
         )
+
+    def test_cart_misc_data_update(self):
+        self.service.dispatch(
+            "update", params={"client_order_ref": "#SpecialPurchaseDude!"}
+        )
+
+        cart = self.cart
+        self.assertEqual(cart.client_order_ref, "#SpecialPurchaseDude!")
 
     @mute_logger("odoo.models.unlink")
     def test_cart_delete_robustness(self):

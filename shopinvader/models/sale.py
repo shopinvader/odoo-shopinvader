@@ -6,6 +6,7 @@
 import logging
 
 from odoo import api, fields, models
+
 from odoo.addons.queue_job.job import job
 
 _logger = logging.getLogger(__name__)
@@ -49,7 +50,7 @@ class SaleOrder(models.Model):
             with them to ensure we forget no field
         :return:
         """
-        for name, field in self._fields.iteritems():
+        for _, field in self._fields.items():
             if field.compute and field.store:
                 self._recompute_todo(field)
 

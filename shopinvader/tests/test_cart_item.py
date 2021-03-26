@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import exceptions
+from odoo.tools import mute_logger
 from odoo.tools.float_utils import float_round
 
 from .common import CommonCase
