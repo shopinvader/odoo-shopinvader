@@ -22,6 +22,7 @@ addon | version | summary
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 14.0.1.1.2 | Shopinvader
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
+[shopinvader_invoice](shopinvader_invoice/) | 14.0.1.1.1 | Shopinvader Invoice module
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.0.0 | Shopinvader Catalog Search Engine Connector
 
@@ -47,7 +48,6 @@ addon | version | summary
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.0 (unported) | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 13.0.1.0.1 (unported) | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.3.0.0 (unported) | Import product images
-[shopinvader_invoice](shopinvader_invoice/) | 12.0.1.1.1 (unported) | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 13.0.1.0.1 (unported) | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 13.0.2.1.0 (unported) | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.1 (unported) | This addons is used to push the initial algolia configuration to locomotive
