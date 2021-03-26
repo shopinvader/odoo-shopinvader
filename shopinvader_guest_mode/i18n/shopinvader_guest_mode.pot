@@ -49,6 +49,7 @@ msgid "If true, the partner will be automatically deactivated once the expiry da
 msgstr ""
 
 #. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner_binding_line_is_guest
 #: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner_is_guest
 msgid "Is guest"
 msgstr ""
@@ -72,6 +73,16 @@ msgstr ""
 #. module: shopinvader_guest_mode
 #: model:ir.model,name:shopinvader_guest_mode.model_shopinvader_partner
 msgid "Shopinvader Partner"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model,name:shopinvader_guest_mode.model_shopinvader_partner_binding
+msgid "Shopinvader partner binding"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model,name:shopinvader_guest_mode.model_shopinvader_partner_binding_line
+msgid "Shopinvader partner binding line"
 msgstr ""
 
 #. module: shopinvader_guest_mode
