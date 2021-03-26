@@ -40,6 +40,7 @@ addon | version | summary
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.2.1.0 (unported) | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.0.1 (unported) | Integrate customer multi user and wishlist.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.2.5.1 (unported) | Carrier integration for Shopinvader
+[shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 (unported) | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.1 (unported) | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.0 (unported) | Guest mode for Shopinvader
