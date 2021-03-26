@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo14-addon-base_url',
         'odoo14-addon-shopinvader',
         'odoo14-addon-shopinvader_multi_category',
+        'odoo14-addon-shopinvader_search_engine',
     ],
     classifiers=[
         'Programming Language :: Python',
