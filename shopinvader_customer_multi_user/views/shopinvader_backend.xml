@@ -1,20 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2019 Camptocamp SA
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record model="ir.ui.view" id="shopinvader_backend_form_view">
-        <field name="name">shopinvader.backend.shopinvader_customer_multi_user.form</field>
+        <field
+            name="name"
+        >shopinvader.backend.shopinvader_customer_multi_user.form</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
             <group name="sale_customer" position="inside">
                 <group name="multi_user" string="Multiple users">
-                    <field name="customer_multi_user"/>
-                    <field name="multi_user_profile_policy"/>
-                    <field name="multi_user_records_policy"/>
-                    <field name="multi_user_main_partner_domain" widget="domain" options="{'model': 'res.partner'}"/>
+                    <field name="customer_multi_user" />
+                    <field name="multi_user_profile_policy" />
+                    <field name="multi_user_records_policy" />
+                    <field
+                        name="multi_user_main_partner_domain"
+                        widget="domain"
+                        options="{'model': 'res.partner'}"
+                    />
                 </group>
             </group>
         </field>
