@@ -35,6 +35,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_product_stock',
         'odoo13-addon-shopinvader_product_stock_state',
         'odoo13-addon-shopinvader_product_template_multi_link',
+        'odoo13-addon-shopinvader_product_template_multi_link_date_span',
         'odoo13-addon-shopinvader_product_variant_multi_link',
         'odoo13-addon-shopinvader_product_variant_selector',
         'odoo13-addon-shopinvader_sale_packaging',
