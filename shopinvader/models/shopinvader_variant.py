@@ -137,10 +137,7 @@ class ShopinvaderVariant(models.Model):
 
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()
-        attributes = self.mapped(
-            "product_template_attribute_value_ids."
-            "product_attribute_value_id"
-        )
+        attributes = self.attribute_value_ids
         short_name = ", ".join(attributes.mapped("name"))
         full_name = self.shopinvader_display_name
         if short_name:
