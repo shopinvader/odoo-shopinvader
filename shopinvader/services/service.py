@@ -77,7 +77,7 @@ class BaseShopinvaderService(AbstractComponent):
                 else:
                     op = "="
                 domain.append((key, op, value))
-            return expression.normalize_domain(domain)
+            return domain
         except Exception as e:
             raise UserError(_("Invalid scope %s, error : %s"), scope, e)
 
