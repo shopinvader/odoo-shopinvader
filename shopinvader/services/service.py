@@ -79,7 +79,9 @@ class BaseShopinvaderService(AbstractComponent):
                 domain.append((key, op, value))
             return domain
         except Exception as e:
-            raise UserError(_("Invalid scope %s, error : %s"), scope, e)
+            raise UserError(
+                _("Invalid scope %s, error: %s") % (str(scope), str(e))
+            )
 
     # Validator
     def _default_validator_search(self):
