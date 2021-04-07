@@ -20,3 +20,4 @@ from . import test_invoice
 from . import test_shopinvader_partner_binding
 from . import test_notification
 from . import test_salesman_notification
+from . import test_search
