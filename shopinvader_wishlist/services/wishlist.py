@@ -122,7 +122,7 @@ class WishlistService(Component):
     def _validator_create(self):
         return {
             "name": {"type": "string", "required": True},
-            "ref": {"type": "string", "required": True, "empty": False},
+            "ref": {"type": "string", "required": False, "nullable": True},
             "partner_id": {
                 "type": "integer",
                 "coerce": to_int,
