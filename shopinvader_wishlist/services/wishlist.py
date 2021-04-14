@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from collections import defaultdict
+from functools import wraps
 
 from werkzeug.exceptions import NotFound
 
@@ -11,6 +12,20 @@ from odoo.osv import expression
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+
+
+def data_mode(func):
+    """Decorator extend Cerberus schema dict w/ data mode params.
+    """
+
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        service = args[0]
+        res = func(*args, **kwargs)
+        res.update(service._validate_data_mode())
+        return res
+
+    return wrapped
 
 
 class WishlistService(Component):
@@ -107,6 +122,12 @@ class WishlistService(Component):
     def _validator_get(self):
         return {}
 
+    def _validate_data_mode(self):
+        return {
+            "data_mode": {"type": "string", "nullable": True},
+        }
+
+    @data_mode
     def _validator_search(self):
         return {
             "id": {"coerce": to_int, "type": "integer"},
@@ -119,6 +140,7 @@ class WishlistService(Component):
             "scope": {"type": "dict", "nullable": True},
         }
 
+    @data_mode
     def _validator_create(self):
         return {
             "name": {"type": "string", "required": True},
@@ -205,6 +227,7 @@ class WishlistService(Component):
     def _validator_update_items(self):
         return self._validator_add_items()
 
+    @data_mode
     def _validator_move_items(self):
         return {
             "lines": {
@@ -231,6 +254,7 @@ class WishlistService(Component):
             },
         }
 
+    @data_mode
     def _validator_delete_items(self):
         return {
             "lines": {
@@ -252,6 +276,7 @@ class WishlistService(Component):
             }
         }
 
+    @data_mode
     def _validator_replace_items(self):
         return {
             "lines": {
@@ -315,10 +340,20 @@ class WishlistService(Component):
             (0, 0, self._prepare_item(record, line))
             for line in params.pop("lines", [])
         ]
+        params.pop("data_mode", None)
         return params
 
-    def _to_json(self, records, **kw):
-        return records.jsonify(self._json_parser())
+    def _to_json(self, records, data_mode=None, **kw):
+        if data_mode:
+            try:
+                parser = getattr(self, "_json_parser_" + data_mode)()
+            except AttributeError:
+                raise exceptions.UserError(
+                    _("JSON data mode `%s` not found.") % data_mode
+                )
+        else:
+            parser = self._json_parser()
+        return records.jsonify(parser)
 
     def _to_json_one(self, records, **kw):
         # This works only here... see `_update_item` :/
@@ -327,6 +362,12 @@ class WishlistService(Component):
         if len(records) == 1:
             values = values[0]
         return values
+
+    def _json_parser_light(self):
+        return [
+            "id",
+            "name",
+        ]
 
     def _json_parser(self):
         return [
