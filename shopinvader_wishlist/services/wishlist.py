@@ -24,9 +24,9 @@ class WishlistService(Component):
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
 
-    def get(self, _id):
+    def get(self, _id, **params):
         record = self._get(_id)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def search(self, **params):
         return self._paginate_search(**params)
@@ -41,17 +41,17 @@ class WishlistService(Component):
         vals = self._prepare_params(params.copy())
         record = self.env[self._expose_model].create(vals)
         self._post_create(record)
-        return {"data": self._to_json_one(record)}
+        return {"data": self._to_json_one(record, **params)}
 
     def update(self, _id, **params):
         record = self._get(_id)
         record.write(self._prepare_params(params.copy(), mode="update"))
         self._post_update(record)
-        return self.search()
+        return self.search(**params)
 
-    def delete(self, _id):
+    def delete(self, _id, **params):
         self._get(_id).unlink()
-        return self.search()
+        return self.search(**params)
 
     def add_to_cart(self, _id):
         record = self._get(_id)
@@ -64,27 +64,27 @@ class WishlistService(Component):
     def add_items(self, _id, **params):
         record = self._get(_id)
         self._add_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def update_items(self, _id, **params):
         record = self._get(_id)
         self._update_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def delete_items(self, _id, **params):
         record = self._get(_id)
         self._delete_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def move_items(self, _id, **params):
         record = self._get(_id)
         self._move_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def replace_items(self, _id, **params):
         record = self._get(_id)
         self._replace_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def _post_create(self, record):
         pass
