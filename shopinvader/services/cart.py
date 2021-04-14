@@ -402,7 +402,7 @@ class CartService(Component):
         else:
             return step
 
-    def _to_json(self, cart):
+    def _to_json(self, cart, **kw):
         if not cart:
             return {
                 "data": {},

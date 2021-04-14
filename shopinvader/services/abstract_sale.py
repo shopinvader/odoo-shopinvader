@@ -114,7 +114,7 @@ class AbstractSaleService(AbstractComponent):
             "total_without_discount": sale.price_total_no_discount,
         }
 
-    def _to_json(self, sales):
+    def _to_json(self, sales, **kw):
         res = []
         for sale in sales:
             res.append(self._convert_one_sale(sale))

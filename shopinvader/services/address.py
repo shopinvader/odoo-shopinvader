@@ -197,7 +197,7 @@ class AddressService(Component):
         ]
         return res
 
-    def _to_json(self, address):
+    def _to_json(self, address, **kw):
         data = address.jsonify(self._json_parser())
         for item in data:
             # access info on the current record partner record
