@@ -58,11 +58,7 @@ class ShopinvaderWishlistLineListener(Component):
     def _get_fields_to_export(self):
         return [
             "product_id",
-            "quantity",
             "product_set_id",
-            "active",
-            "sequence",
-            "discount",
         ]
 
     def _skip_if(self, record, fields=None):
