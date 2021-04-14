@@ -3,8 +3,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import mock
-from odoo.addons.shopinvader.tests.common import CommonCase
 from werkzeug.exceptions import NotFound
+
+from odoo import exceptions
+
+from odoo.addons.shopinvader.tests.common import CommonCase
 
 
 class CommonWishlistCase(CommonCase):
@@ -299,3 +302,16 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res_line["quantity"], 1)
         self.assertEqual(res_line["sequence"], 10)
         self.assertEqual(res_line["product"], variant.get_shop_data())
+
+    def test_jsonify_data_mode(self):
+        res = self.wishlist_service._to_json_one(
+            self.prod_set, data_mode="light"
+        )
+        self.assertEqual(
+            res, {"id": self.prod_set.id, "name": self.prod_set.name}
+        )
+        msg = "JSON data mode `fancy` not found."
+        with self.assertRaisesRegex(exceptions.UserError, msg):
+            self.wishlist_service._to_json_one(
+                self.prod_set, data_mode="fancy"
+            )
