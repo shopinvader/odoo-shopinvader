@@ -278,13 +278,13 @@ class WishlistService(Component):
         ]
         return params
 
-    def _to_json(self, records):
+    def _to_json(self, records, **kw):
         return records.jsonify(self._json_parser())
 
-    def _to_json_one(self, records):
+    def _to_json_one(self, records, **kw):
         # This works only here... see `_update_item` :/
         records.set_line_ids.invalidate_cache()
-        values = self._to_json(records)
+        values = self._to_json(records, **kw)
         if len(records) == 1:
             values = values[0]
         return values
