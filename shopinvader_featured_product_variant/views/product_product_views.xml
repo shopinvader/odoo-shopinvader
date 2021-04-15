@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ForgeFlow S.L.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="product_product_form_view_shopinvader_featured" model="ir.ui.view">
+        <field name="name">product.product.featured.variant.form</field>
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <field name="shopinvader_bind_ids" position="after">
+                <group string="Variant Attributes">
+                    <field name="featured" />
+                </group>
+            </field>
+        </field>
+    </record>
+</odoo>
