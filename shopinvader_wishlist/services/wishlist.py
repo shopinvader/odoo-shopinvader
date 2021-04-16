@@ -169,12 +169,7 @@ class WishlistService(Component):
                 "type": "integer",
             },
             "quantity": {"coerce": float, "type": "float", "default": 1.0},
-            "sequence": {
-                "coerce": int,
-                "type": "integer",
-                "required": False,
-                "default": 0,
-            },
+            "sequence": {"coerce": int, "type": "integer", "required": False},
         }
 
     def _validator_update(self):
@@ -494,12 +489,15 @@ class WishlistService(Component):
         return set_lines
 
     def _prepare_item(self, record, params):
-        return {
+        vals = {
             "product_set_id": record.id,
             "product_id": params["product_id"],
             "quantity": params.get("quantity") or 1,
-            "sequence": params.get("sequence") or 0,
         }
+        if "sequence" in params:
+            # Set sequence only if explicitly given
+            vals["sequence"] = params.get("sequence")
+        return vals
 
     def _delete_items(self, record, params):
         to_delete = self.env["product.set.line"].browse()
