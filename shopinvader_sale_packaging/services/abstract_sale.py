@@ -19,16 +19,22 @@ class AbstractSaleService(AbstractComponent):
             "packaging_by_qty": [],
         }
         if line.product_packaging:
-            pkg_vals.update(
-                {
-                    "packaging": line.product_packaging.jsonify(
-                        ["id", "name"]
-                    )[0],
-                    "packaging_qty": line.product_packaging_qty,
-                    "packaging_by_qty": self._packaging_info_by_qty(
-                        line.product_id, line.product_uom_qty
-                    ),
-                }
-            )
+            pkg_vals = line.jsonify(self._parser_line_packaging(), one=True)
         res.update(pkg_vals)
         return res
+
+    def _parser_line_packaging(self):
+        return [
+            (
+                "product_packaging:packaging",
+                lambda rec, fname: self._packaging_to_json(rec[fname]),
+            ),
+            ("product_packaging_qty:packaging_qty"),
+            (
+                "product_packaging_qty:packaging_by_qty",
+                self._parser_packaging_by_qty,
+            ),
+        ]
+
+    def _parser_packaging_by_qty(self, rec, fname):
+        return self._packaging_info_by_qty(rec.product_id, rec.product_uom_qty)
