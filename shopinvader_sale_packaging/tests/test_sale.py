@@ -41,7 +41,11 @@ class TestSaleOrderPackaging(CommonCase):
             if line["id"] == self.sale_line1.id:
                 self.assertEqual(
                     line["packaging"],
-                    {"id": self.pkg_box.id, "name": self.pkg_box.name},
+                    {
+                        "id": self.pkg_box.id,
+                        "name": self.pkg_box.packaging_type_id.name,
+                        "code": self.pkg_box.packaging_type_id.code,
+                    },
                 )
                 self.assertEqual(line["packaging_qty"], 5)
                 self.assertEqual(line["qty"], 500)

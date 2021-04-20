@@ -13,8 +13,18 @@ class WishlistCase(CommonWishlistCase):
         super().setUpClass()
         cls.prod_set = cls.env.ref("shopinvader_wishlist.wishlist_1")
         cls.prod_set.shopinvader_backend_id = cls.backend
+        cls.packaging_type = (
+            cls.env["product.packaging.type"]
+            .sudo()
+            .create({"name": "TYPE 1", "code": "P", "sequence": 3})
+        )
         cls.product_packaging = cls.env["product.packaging"].create(
-            {"name": "PKG TEST", "product_id": cls.prod1.id, "qty": 4}
+            {
+                "name": "PKG TEST",
+                "product_id": cls.prod1.id,
+                "qty": 4,
+                "packaging_type_id": cls.packaging_type.id,
+            }
         )
         # Make sure our products' data is up to date
         cls._refresh_json_data(
@@ -86,6 +96,7 @@ class WishlistCase(CommonWishlistCase):
                 "product_id": prod.id,
                 "qty": 100,
                 "can_be_sold": False,
+                "packaging_type_id": self.packaging_type.id,
             }
         )
         self.assertEqual(res_line["quantity"], 1)
@@ -115,7 +126,12 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res_line["quantity"], 300)
         self.assertEqual(res_line["packaging_qty"], 3.0)
         self.assertEqual(
-            res_line["packaging"], {"id": packaging.id, "name": packaging.name}
+            res_line["packaging"],
+            {
+                "id": packaging.id,
+                "name": self.packaging_type.name,
+                "code": self.packaging_type.code,
+            },
         )
         self.assertEqual(
             res_line["packaging_by_qty"],

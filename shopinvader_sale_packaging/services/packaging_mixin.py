@@ -45,3 +45,13 @@ class PackagingServiceMixin(AbstractComponent):
                 "product_packaging_qty": params.pop("packaging_qty"),
             }
         return {}
+
+    def _packaging_to_json(self, packaging):
+        if not packaging:
+            return None
+        return {
+            "id": packaging.id,
+            # Use packaging type name because it's translated
+            "name": packaging.packaging_type_id.name,
+            "code": packaging.packaging_type_id.code,
+        }

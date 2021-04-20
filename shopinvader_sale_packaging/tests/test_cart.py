@@ -61,7 +61,11 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         self.check_product_and_qty(cart_line, self.product_1.id, 4000)
         self.assertEqual(
             cart_line["packaging"],
-            {"id": self.pkg_pallet.id, "name": self.pkg_pallet.name},
+            {
+                "id": self.pkg_pallet.id,
+                "name": self.pkg_pallet.packaging_type_id.name,
+                "code": self.pkg_pallet.packaging_type_id.code,
+            },
         )
         self.assertEqual(cart_line["packaging_qty"], 2)
         self.assertIn("sell_only_by_packaging", cart_line["product"])
@@ -83,7 +87,11 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         self.check_product_and_qty(cart_line, product.id, 6000)
         self.assertEqual(
             cart_line["packaging"],
-            {"id": self.pkg_pallet.id, "name": self.pkg_pallet.name},
+            {
+                "id": self.pkg_pallet.id,
+                "name": self.pkg_pallet.packaging_type_id.name,
+                "code": self.pkg_pallet.packaging_type_id.code,
+            },
         )
         self.assertEqual(cart_line["packaging_qty"], 3.0)
         self.assertIn("sell_only_by_packaging", cart_line["product"])
@@ -111,7 +119,11 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         # Check cart line values
         self.assertEqual(
             cart_line["packaging"],
-            {"id": self.pkg_pallet.id, "name": self.pkg_pallet.name},
+            {
+                "id": self.pkg_pallet.id,
+                "name": self.pkg_pallet.packaging_type_id.name,
+                "code": self.pkg_pallet.packaging_type_id.code,
+            },
         )
         self.assertEqual(cart_line["packaging_qty"], 4.0)
         # check SO line values
