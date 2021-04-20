@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="res.groups" id="shopinvader.group_shopinvader_manager">
+        <field
+            name="implied_ids"
+            eval="[(4, ref('rating_moderation.group_rating_moderation'))]"
+        />
+    </record>
+</odoo>
