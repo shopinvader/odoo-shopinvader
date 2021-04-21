@@ -40,7 +40,8 @@ class TestInvoice(CommonCase, CommonTestDownload):
         :param invoice: account.invoice recordset
         :return: bool
         """
-        invoice.post()
+        if invoice.state != "posted":
+            invoice.post()
         ctx = {"active_ids": invoice.ids}
         wizard_obj = self.register_payments_obj.with_context(ctx)
         register_payments = wizard_obj.create(
