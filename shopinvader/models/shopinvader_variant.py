@@ -6,8 +6,10 @@
 from contextlib import contextmanager
 from itertools import groupby
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 from odoo.tools import float_compare, float_round
+
+from odoo.addons.queue_job.exception import RetryableJobError
 
 from .tools import sanitize_attr_name
 
@@ -135,10 +137,7 @@ class ShopinvaderVariant(models.Model):
 
     def _prepare_variant_name_and_short_name(self):
         self.ensure_one()
-        attributes = self.mapped(
-            "product_template_attribute_value_ids."
-            "product_attribute_value_id"
-        )
+        attributes = self.attribute_value_ids
         short_name = ", ".join(attributes.mapped("name"))
         full_name = self.shopinvader_display_name
         if short_name:
@@ -263,11 +262,26 @@ class ShopinvaderVariant(models.Model):
             # NOTE: if the order is changed by adding `asc/desc` this can be broken
             # but it's very unlikely that the default order for product.product
             # will be changed.
-            ordered = sorted(prods, key=lambda var: [var[x] for x in order_by])
+            try:
+                ordered = sorted(
+                    prods, key=lambda var: [var[x] for x in order_by]
+                )
+            except TypeError as orig_exception:
+                # TypeError: '<' not supported between instances of 'bool' and 'str'
+                # It means we don't have all values to determine this value.
+                msg = _(
+                    "Cannot determine main variant for template ID: %s."
+                    "\nAt least one variant misses one of these values: %s."
+                    "\nWill try again later till 'max retries' count is reached."
+                ) % (prods[0]["tmpl_record_id"], ", ".join(order_by))
+                # This issue might depend on incomplete state of product info.
+                # Eg: missing translation for variant matching current lang.
+                # Let's retry later a bunch of times (5 by default).
+                raise RetryableJobError(msg) from orig_exception
             return ordered[0].get("id") if ordered else None
 
         main_by_tmpl = {
-            tmpl: pick_1st_variant(prods) for tmpl, prods in var_by_tmpl
+            tmpl: pick_1st_variant(tuple(prods)) for tmpl, prods in var_by_tmpl
         }
         for record in self:
             record.main = (
