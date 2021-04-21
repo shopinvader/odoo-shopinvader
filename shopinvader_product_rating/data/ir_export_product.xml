@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="ir_exp_shopinvader_variant_rating_feedback" model="ir.exports.line">
+        <field name="name">variant_rating_ids/feedback</field>
+        <field name="target">variant_rating_ids:ratings/feedback</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating" model="ir.exports.line">
+        <field name="name">variant_rating_ids/rating</field>
+        <field name="target">variant_rating_ids:ratings/rating</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating_id" model="ir.exports.line">
+        <field name="name">variant_rating_ids/id</field>
+        <field name="target">variant_rating_ids:ratings/id</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating_date" model="ir.exports.line">
+        <field name="name">variant_rating_ids/write_date</field>
+        <field name="target">variant_rating_ids:ratings/write_date:date</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating_partner" model="ir.exports.line">
+        <field name="name">variant_rating_ids/partner_id/name</field>
+        <field name="target">variant_rating_ids:ratings/partner_id:user/name</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating_reply" model="ir.exports.line">
+        <field name="name">variant_rating_ids/publisher_comment</field>
+        <field
+            name="target"
+        >variant_rating_ids:ratings/publisher_comment:reply_text</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating_reply_date" model="ir.exports.line">
+        <field name="name">variant_rating_ids/publisher_datetime</field>
+        <field
+            name="target"
+        >variant_rating_ids:ratings/publisher_datetime:reply_datetime</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating_reply_user" model="ir.exports.line">
+        <field name="name">variant_rating_ids/publisher_id/name</field>
+        <field
+            name="target"
+        >variant_rating_ids:ratings/publisher_id:reply_user/name</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_rating_stats" model="ir.exports.line">
+        <field name="name">rating_stats</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+</odoo>
