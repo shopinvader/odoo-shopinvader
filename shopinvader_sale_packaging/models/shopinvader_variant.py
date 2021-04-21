@@ -13,12 +13,21 @@ class ShopinvaderVariant(models.Model):
     packaging = Serialized(
         compute="_compute_packaging",
         help="Technical field to store packaging for the shop",
+        store=True,
     )
 
-    @api.depends("record_id.packaging_ids.qty")
+    @api.depends(lambda self: self._compute_packaging_depends())
     def _compute_packaging(self):
         for rec in self:
             rec.packaging = rec._get_variant_packaging()
+
+    def _compute_packaging_depends(self):
+        return (
+            "lang_id",
+            "record_id.packaging_ids.qty",
+            "record_id.packaging_ids.can_be_sold",
+            "record_id.packaging_ids.packaging_type_id.name",
+        )
 
     def _get_variant_packaging(self):
         res = []
