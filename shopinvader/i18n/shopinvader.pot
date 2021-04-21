@@ -2138,7 +2138,7 @@ msgstr ""
 #. module: shopinvader
 #: code:addons/shopinvader/services/service.py:0
 #, python-format
-msgid "Invalid scope %s, error : %s"
+msgid "Invalid scope %s, error: %s"
 msgstr ""
 
 #. module: shopinvader
