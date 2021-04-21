@@ -1452,6 +1452,11 @@ msgid "Display SEPA QR code"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant_binding_wizard__run_immediately
+msgid "Do not schedule jobs."
+msgstr ""
+
+#. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
 msgid "Do you really want to unbind these categories ?"
 msgstr ""
@@ -3534,6 +3539,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__route_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__route_ids
 msgid "Routes"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__run_immediately
+msgid "Run Immediately"
 msgstr ""
 
 #. module: shopinvader
