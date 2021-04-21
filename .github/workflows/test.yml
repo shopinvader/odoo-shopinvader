@@ -40,5 +40,6 @@ jobs:
       - uses: codecov/codecov-action@v1
       - run: |
           oca_export_and_commit_pot
+          git fetch --unshallow --all
           git push https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
         if: ${{ matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == 'shopinvader' && startsWith(github.ref, 'refs/heads/14.0') }}
