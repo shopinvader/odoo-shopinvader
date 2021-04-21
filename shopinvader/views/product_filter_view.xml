@@ -9,10 +9,10 @@
                     <field name="name"/>
                     <field name="based_on"/>
                     <field name="field_id" attrs="{'invisible': [('based_on', '!=', 'field')],
-
-                                               'required': [('based_on', '=', 'field')]}"/>
+                                                   'required': [('based_on', '=', 'field')]}"/>
                     <field name="variant_attribute_id" attrs="{'invisible': [('based_on', '!=', 'variant_attribute')],
                                                    'required': [('based_on', '=', 'variant_attribute')]}"/>
+                    <field name="path"  attrs="{'invisible': [('based_on', '!=', 'field')]}" />
                     <separator string="Help"/>
                     <field name="help" colspan="4" nolabel="1"/>
                 </group>
