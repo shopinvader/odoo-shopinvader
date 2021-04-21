@@ -26,13 +26,13 @@ class ShopinvaderBackend(models.Model):
         unbinding_wizard_obj = self.env["shopinvader.variant.unbinding.wizard"]
         assortment_domain = self.product_assortment_id._get_eval_domain()
         assortment_products = product_obj.search(assortment_domain)
-        variants_binded = shopinvader_variant_obj.search(
+        variants_bound = shopinvader_variant_obj.search(
             [("backend_id", "=", self.id)]
         )
-        products_binded = variants_binded.mapped("record_id")
-        products_to_bind = assortment_products - products_binded
-        products_to_unbind = products_binded - assortment_products
-        variants_to_unbind = variants_binded.filtered(
+        products_bound = variants_bound.mapped("record_id")
+        products_to_bind = assortment_products - products_bound
+        products_to_unbind = products_bound - assortment_products
+        variants_to_unbind = variants_bound.filtered(
             lambda x: x.record_id.id in products_to_unbind.ids
         )
 

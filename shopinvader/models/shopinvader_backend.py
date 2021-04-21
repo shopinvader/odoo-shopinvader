@@ -4,6 +4,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from collections import defaultdict
 from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
@@ -423,6 +424,107 @@ class ShopinvaderBackend(models.Model):
         self._bind_all_content(
             "product.category", "shopinvader.category", domain
         )
+
+    def bind_selected_products(
+        self, products, langs=None, run_immediately=False
+    ):
+        """Bind given product variants.
+
+        :param products: product.product recordset
+        :param langs: res.lang recordset. If none, all langs from backend
+        :param run_immediately: do not use jobs
+        """
+        for backend in self:
+            langs = langs or backend.lang_ids
+            grouped_by_template = defaultdict(
+                self.env["product.product"].browse
+            )
+            for rec in products:
+                grouped_by_template[rec.product_tmpl_id] |= rec
+            method = backend.with_delay().bind_single_product
+            if run_immediately:
+                method = backend.bind_single_product
+            for tmpl, variants in grouped_by_template.items():
+                method(langs, tmpl, variants)
+
+    def bind_single_product(self, langs, product_tmpl, variants):
+        """Bind given product variants for given template and languages.
+
+        :param langs: res.lang recordset
+        :param product_tmpl: product.template browse record
+        :param variants: product.product recordset
+        :param run_immediately: do not use jobs
+        """
+        self.ensure_one()
+        shopinvader_products = self._get_or_create_shopinvader_products(
+            langs, product_tmpl
+        )
+        for shopinvader_product in shopinvader_products:
+            self._get_or_create_shopinvader_variants(
+                shopinvader_product, variants
+            )
+        self.auto_bind_categories()
+
+    def _get_or_create_shopinvader_products(self, langs, product_tmpl):
+        """Get template bindings for given languages or create if missing.
+
+        :param langs: res.lang recordset
+        :param product_tmpl: product.template browse record
+        """
+        binding_model = self.env["shopinvader.product"].with_context(
+            active_test=False
+        )
+        bound_templates = binding_model.search(
+            [
+                ("record_id", "=", product_tmpl.id),
+                ("backend_id", "=", self.id),
+                ("lang_id", "in", langs.ids),
+            ]
+        )
+        for lang in langs:
+            shopinvader_product = bound_templates.filtered(
+                lambda x: x.lang_id == lang
+            )
+            if not shopinvader_product:
+                # fmt: off
+                data = {
+                    "record_id": product_tmpl.id,
+                    "backend_id": self.id,
+                    "lang_id": lang.id,
+                }
+                # fmt: on
+                bound_templates |= binding_model.create(data)
+            elif not shopinvader_product.active:
+                shopinvader_product.write({"active": True})
+        return bound_templates
+
+    def _get_or_create_shopinvader_variants(
+        self, shopinvader_product, variants
+    ):
+        """Get variant bindings, create if missing.
+
+        :param langs: res.lang recordset
+        :param product_tmpl: product.template browse record
+        """
+        binding_model = self.env["shopinvader.variant"]
+        bound_variants = shopinvader_product.shopinvader_variant_ids
+        for variant in variants:
+            shopinvader_variant = bound_variants.filtered(
+                lambda p: p.record_id == variant
+            )
+            if not shopinvader_variant:
+                # fmt: off
+                data = {
+                    "record_id": variant.id,
+                    "backend_id": self.id,
+                    "shopinvader_product_id":
+                        shopinvader_product.id,
+                }
+                # fmt: on
+                bound_variants |= binding_model.create(data)
+            elif not shopinvader_variant.active:
+                shopinvader_variant.write({"active": True})
+        return bound_variants
 
     def _send_notification(self, notification, record):
         self.ensure_one()

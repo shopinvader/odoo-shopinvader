@@ -37,7 +37,11 @@ class UtilsMixin(object):
         backend = backend or self.backend
         bind_wizard_model = self.env["shopinvader.variant.binding.wizard"]
         bind_wizard = bind_wizard_model.create(
-            {"backend_id": backend.id, "product_ids": [(6, 0, products.ids)]}
+            {
+                "backend_id": backend.id,
+                "product_ids": [(6, 0, products.ids)],
+                "run_immediately": True,
+            }
         )
         bind_wizard.bind_products()
 

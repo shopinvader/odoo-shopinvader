@@ -1,16 +1,24 @@
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import SavepointCase
 
 
-class TestProductAutoBind(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.backend = self.env.ref("shopinvader.backend_1")
-        self.variant_obj = self.env["shopinvader.variant"]
-        self.product_obj = self.env["product.product"]
-        self.backend.product_assortment_id.domain = "[('sale_ok', '=', True)]"
+class TestProductAutoBind(SavepointCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                tracking_disable=True,
+                test_queue_job_no_delay=True,
+            )
+        )
+        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.variant_obj = cls.env["shopinvader.variant"]
+        cls.product_obj = cls.env["product.product"]
+        cls.backend.product_assortment_id.domain = "[('sale_ok', '=', True)]"
 
     def test_shopinvader_auto_product_auto_bind(self):
         # Test bind all products from assortment domain
@@ -28,7 +36,8 @@ class TestProductAutoBind(TransactionCase):
         )
 
         self.assertEqual(
-            products_to_bind.ids, variants.mapped("record_id").ids
+            sorted(products_to_bind.ids),
+            sorted(variants.mapped("record_id").ids),
         )
 
         # Exclude one product, related binding should be inactivated
@@ -85,7 +94,8 @@ class TestProductAutoBind(TransactionCase):
         )
 
         self.assertEqual(
-            products_to_bind.ids, variants.mapped("record_id").ids
+            sorted(products_to_bind.ids),
+            sorted(variants.mapped("record_id").ids),
         )
 
         # Exclude one product, related binding should be inactivated
