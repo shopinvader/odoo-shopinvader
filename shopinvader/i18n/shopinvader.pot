@@ -1567,6 +1567,14 @@ msgid "Enabled"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_product_filter__path
+msgid ""
+"Enforce external filter key used for indexing and search.Being a path, you "
+"can specify a dotted path to an inner value. Eg: supplier = {id: 1, name: "
+"'Foo'} -> `supplier.name`"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__lead_enrich_auto
 msgid "Enrich lead automatically"
 msgstr ""
@@ -3092,6 +3100,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__same_vat_partner_id
 msgid "Partner with same Tax ID"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_product_filter__path
+msgid "Path"
 msgstr ""
 
 #. module: shopinvader
