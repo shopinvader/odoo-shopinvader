@@ -41,7 +41,8 @@ class PackagingServiceMixin(AbstractComponent):
     def _packaging_values_from_params(self, params):
         if "packaging_id" in params and "packaging_qty" in params:
             return {
-                "product_packaging": params.pop("packaging_id"),
+                # Make sure packaging_id is wiped if we pass 0
+                "product_packaging": params.pop("packaging_id") or False,
                 "product_packaging_qty": params.pop("packaging_qty"),
             }
         return {}
