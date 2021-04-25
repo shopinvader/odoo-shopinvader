@@ -16,9 +16,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - container: ghcr.io/sbidoul/oca-ci/py3.6-odoo12.0:latest
+          - container: ghcr.io/oca/oca-ci/py3.6-odoo12.0:latest
             makepot: "true"
-          - container: ghcr.io/sbidoul/oca-ci/py3.6-ocb12.0:latest
+          - container: ghcr.io/oca/oca-ci/py3.6-ocb12.0:latest
     services:
       postgres:
         image: postgres:9.6
@@ -40,5 +40,6 @@ jobs:
       - uses: codecov/codecov-action@v1
       - run: |
           oca_export_and_commit_pot
+          git fetch --unshallow --all
           git push https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
         if: ${{ matrix.makepot == 'true' && github.event_name == 'push' && github.repository_owner == 'shopinvader' && startsWith(github.ref, 'refs/heads/12.0') }}
