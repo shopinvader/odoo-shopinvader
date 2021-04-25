@@ -16,9 +16,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - container: ghcr.io/sbidoul/oca-ci/py3.6-odoo13.0:latest
+          - container: ghcr.io/oca/oca-ci/py3.6-odoo13.0:latest
             makepot: "true"
-          - container: ghcr.io/sbidoul/oca-ci/py3.6-ocb13.0:latest
+          - container: ghcr.io/oca/oca-ci/py3.6-ocb13.0:latest
     services:
       postgres:
         image: postgres:9.6

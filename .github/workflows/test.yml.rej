@@ -1,0 +1,5 @@
+diff a/.github/workflows/test.yml b/.github/workflows/test.yml	(rejected hunks)
+@@ -42,2 +42,3 @@ jobs:
+           oca_export_and_commit_pot
++          git fetch --unshallow --all
+           git push https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/${{ github.repository }}
