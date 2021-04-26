@@ -111,7 +111,9 @@ class InvoiceService(Component):
         values.update(
             {
                 "type_label": self._get_selection_label(invoice, "move_type"),
-                "state_label": self._get_selection_label(invoice, "payment_state"),
+                "state_label": self._get_selection_label(
+                    invoice, "payment_state"
+                ),
             }
         )
         return values

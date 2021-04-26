@@ -6,7 +6,6 @@ exclude: |
   ^shopinvader_contact_company/|
   ^shopinvader_custom_attribute/|
   ^shopinvader_demo_app/|
-  ^shopinvader_invoice/|
   ^shopinvader_locomotive_contact_company/|
   ^shopinvader_locomotive_elasticsearch/|
   ^shopinvader_locomotive_reset_password/|
