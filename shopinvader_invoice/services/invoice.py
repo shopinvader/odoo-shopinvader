@@ -91,15 +91,15 @@ class InvoiceService(Component):
         """
         to_parse = [
             "id:invoice_id",
-            "payment_reference:number",
+            "invoice_payment_ref:number",
             "invoice_date:date_invoice",
             "amount_total",
             "amount_total_signed",
             "amount_tax",
             "amount_untaxed",
             "amount_untaxed_signed",
-            "payment_state:state",
-            "move_type:type",
+            "invoice_payment_state:state",
+            "type",
             "amount_residual:amount_due",
         ]
         return to_parse
@@ -110,9 +110,9 @@ class InvoiceService(Component):
         values = invoice.jsonify(parser, one=True)
         values.update(
             {
-                "type_label": self._get_selection_label(invoice, "move_type"),
+                "type_label": self._get_selection_label(invoice, "type"),
                 "state_label": self._get_selection_label(
-                    invoice, "payment_state"
+                    invoice, "invoice_payment_state"
                 ),
             }
         )

@@ -44,18 +44,22 @@ class CommonInvoiceCase(CommonCase):
         invoices = invoices.search([("id", "in", invoices.ids)])
         self.assertEqual(len(data), len(invoices))
         for current_data, invoice in zip(data, invoices):
-            state_label = self._get_selection_label(invoice, "payment_state")
-            type_label = self._get_selection_label(invoice, "move_type")
+            state_label = self._get_selection_label(
+                invoice, "invoice_payment_state"
+            )
+            type_label = self._get_selection_label(invoice, "type")
             self.assertEqual(current_data.get("invoice_id"), invoice.id)
             self.assertEqual(
-                current_data.get("number"), invoice.payment_reference
+                current_data.get("number"), invoice.invoice_payment_ref
             )
             self.assertEqual(
                 current_data.get("date_invoice"),
                 fields.Date.to_string(invoice.invoice_date),
             )
-            self.assertEqual(current_data.get("state"), invoice.payment_state)
-            self.assertEqual(current_data.get("type"), invoice.move_type)
+            self.assertEqual(
+                current_data.get("state"), invoice.invoice_payment_state
+            )
+            self.assertEqual(current_data.get("type"), invoice.type)
             self.assertEqual(current_data.get("state_label"), state_label)
             self.assertEqual(current_data.get("type_label"), type_label)
             self.assertEqual(
@@ -94,7 +98,7 @@ class CommonInvoiceCase(CommonCase):
             line.write({"qty_delivered": line.product_uom_qty})
         invoice = sale._create_invoices()
         if validate:
-            invoice._post()
+            invoice.post()
             if payment:
                 self._make_payment(invoice)
         return invoice
@@ -119,7 +123,7 @@ class CommonInvoiceCase(CommonCase):
             register_payments.write({"journal_id": journal.id})
         if amount:
             register_payments.write({"amount": amount})
-        register_payments.action_create_payments()
+        register_payments.create_payments()
 
     def _create_invoice(
         self, partner=False, inv_type="out_invoice", validate=False
@@ -138,7 +142,7 @@ class CommonInvoiceCase(CommonCase):
             "partner_shipping_id": partner.id,
             "shopinvader_backend_id": self.backend.id,
             "invoice_date": fields.Date.today(),
-            "move_type": inv_type,
+            "type": inv_type,
             "invoice_line_ids": [
                 (
                     0,
@@ -155,7 +159,7 @@ class CommonInvoiceCase(CommonCase):
         }
         invoice = self.invoice_obj.create(values)
         if validate:
-            invoice._post()
+            invoice.post()
         return invoice
 
     def _get_selection_label(self, invoice, field):
