@@ -82,6 +82,7 @@ class InvoiceService(Component):
             "state": {"type": "string"},
             "type_label": {"type": "string"},
             "state_label": {"type": "string"},
+            "origin": {"type": "string"},
         }
         return invoice_schema
 
@@ -103,6 +104,7 @@ class InvoiceService(Component):
             "invoice_payment_state:state",
             "type",
             "amount_residual:amount_due",
+            "invoice_origin:origin",
         ]
         return to_parse
 
