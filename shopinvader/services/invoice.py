@@ -14,7 +14,7 @@ class InvoiceService(Component):
         "abstract.shopinvader.download",
     ]
     _name = "shopinvader.invoice.service"
-    _usage = "invoice"
+    _usage = "invoices"
     _expose_model = "account.move"
     _description = __doc__
 

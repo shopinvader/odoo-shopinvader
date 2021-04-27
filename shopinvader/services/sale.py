@@ -104,7 +104,7 @@ class SaleService(Component):
 
     def _get_invoices(self, sale):
         invoices = sale.sudo().invoice_ids
-        invoice_service = self.component(usage="invoice")
+        invoice_service = self.component(usage="invoices")
         domain_state = invoice_service._get_domain_state()
         return invoices.filtered_domain(domain_state)
 

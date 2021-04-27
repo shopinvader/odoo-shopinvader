@@ -32,7 +32,7 @@ class TestInvoice(CommonCase, CommonTestDownload):
         super(TestInvoice, self).setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.sale_service = work.component(usage="sales")
-            self.invoice_service = work.component(usage="invoice")
+            self.invoice_service = work.component(usage="invoices")
 
     def _make_payment(self, invoice):
         """

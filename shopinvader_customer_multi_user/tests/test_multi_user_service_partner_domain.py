@@ -119,7 +119,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         )
 
     def _test_invoice(self, partner, expected):
-        service = self._get_service(partner, "invoice")
+        service = self._get_service(partner, "invoices")
         res = service._get_available_invoices()
         self.assertEqual(sorted(res.ids), sorted(expected.ids))
 
