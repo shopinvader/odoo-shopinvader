@@ -293,6 +293,9 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res["name"], "Wishlist 1")
         self.assertEqual(res["typology"], "wishlist")
         self.assertEqual(
+            res["access"], {"read": True, "update": True, "delete": True}
+        )
+        self.assertEqual(
             res["partner"], {"id": self.partner.id, "name": self.partner.name}
         )
         prod = self.env.ref("product.product_product_4b")
