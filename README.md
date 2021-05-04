@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.1.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 13.0.6.2.0 | Shopinvader
+[shopinvader](shopinvader/) | 13.0.6.3.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.2.3 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.2.0.0 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
@@ -28,7 +28,7 @@ addon | version | summary
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 | Shopinvader Display category image for product
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.2.1.0 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.0.1 | Integrate customer multi user and wishlist.
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.3.0.0 | Carrier integration for Shopinvader
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.3.1.0 | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 | Shopinvader addons to let user define delivery instructions
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.1.0 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.0 | Guest mode for Shopinvader
@@ -39,7 +39,7 @@ addon | version | summary
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.1 | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 13.0.1.0.2 | Shopinvader guest mode for locomotive
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 13.0.1.2.0 | Synchronize the sale profile info to customer record on Locomotive
-[shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.1.0 | Synchronize wishlist details to Locomotive users record.
+[shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.2.0 | Synchronize wishlist details to Locomotive users record.
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_media](shopinvader_product_media/) | 13.0.1.0.1 | Index storage media data into external search engine
@@ -53,7 +53,7 @@ addon | version | summary
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.2.1.1 | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.2.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 13.0.2.0.0 | Shopinvader Catalog Search Engine Connector
-[shopinvader_wishlist](shopinvader_wishlist/) | 13.0.3.1.2 | Handle shop wishlist
+[shopinvader_wishlist](shopinvader_wishlist/) | 13.0.3.2.0 | Handle shop wishlist
 
 
 Unported addons
