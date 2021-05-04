@@ -24,6 +24,12 @@ msgstr ""
 #. module: shopinvader_wishlist
 #: code:addons/shopinvader_wishlist/services/wishlist.py:0
 #, python-format
+msgid "JSON data mode `%s` not found."
+msgstr ""
+
+#. module: shopinvader_wishlist
+#: code:addons/shopinvader_wishlist/services/wishlist.py:0
+#, python-format
 msgid "Must be authenticated to create a wishlist"
 msgstr ""
 
