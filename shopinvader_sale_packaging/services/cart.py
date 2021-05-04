@@ -39,6 +39,5 @@ class CartService(Component):
         res = super()._upgrade_cart_item_quantity_vals(item, params, **kw)
         pkg_params = self._packaging_values_from_params(params)
         if pkg_params:
-            res.pop("product_uom_qty", None)
             res.update(pkg_params)
         return res
