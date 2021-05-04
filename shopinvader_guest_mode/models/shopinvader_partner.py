@@ -6,6 +6,7 @@ from datetime import timedelta
 from functools import wraps
 
 import psycopg2
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
@@ -60,10 +61,8 @@ class ShopinvaderPartner(models.Model):
         ("email_uniq", "CHECK(1=1)", ""),
         (
             "unique_shopinvader_partner_email",
-            "EXCLUDE (backend_id WITH =, partner_email WITH =)"
-            " WHERE (active=True)",
-            "Only one active binding with the same email is "
-            "allowed by backend.",
+            "EXCLUDE (backend_id WITH =, partner_email WITH =)" " WHERE (active=True)",
+            "Only one active binding with the same email is " "allowed by backend.",
         ),
     ]
 

@@ -1,17 +1,19 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2018-2019 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record model="ir.ui.view" id="shopinvader_backend_form_view">
         <field name="name">shopinvader.backend.form (in shopinvader_guest_mode)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
             <group name="sale_customer" position="inside">
-                <field name="is_guest_mode_allowed"/>
-                <field name="guest_account_expiry_delay" attrs="{'invisible': [('is_guest_mode_allowed', '=', False)]}"/>
+                <field name="is_guest_mode_allowed" />
+                <field
+                    name="guest_account_expiry_delay"
+                    attrs="{'invisible': [('is_guest_mode_allowed', '=', False)]}"
+                />
             </group>
         </field>
     </record>
