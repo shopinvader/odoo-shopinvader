@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from collections import defaultdict
+from functools import wraps
 
 from werkzeug.exceptions import NotFound
 
@@ -11,6 +12,20 @@ from odoo.osv import expression
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+
+
+def data_mode(func):
+    """Decorator extend Cerberus schema dict w/ data mode params.
+    """
+
+    @wraps(func)
+    def wrapped(*args, **kwargs):
+        service = args[0]
+        res = func(*args, **kwargs)
+        res.update(service._validate_data_mode())
+        return res
+
+    return wrapped
 
 
 class WishlistService(Component):
@@ -26,9 +41,9 @@ class WishlistService(Component):
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
 
-    def get(self, _id):
+    def get(self, _id, **params):
         record = self._get(_id)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def search(self, **params):
         return self._paginate_search(**params)
@@ -43,17 +58,17 @@ class WishlistService(Component):
         vals = self._prepare_params(params.copy())
         record = self.env[self._expose_model].create(vals)
         self._post_create(record)
-        return {"data": self._to_json_one(record)}
+        return {"data": self._to_json_one(record, **params)}
 
     def update(self, _id, **params):
         record = self._get(_id)
         record.write(self._prepare_params(params.copy(), mode="update"))
         self._post_update(record)
-        return self.search()
+        return self.search(**params)
 
-    def delete(self, _id):
+    def delete(self, _id, **params):
         self._get(_id).unlink()
-        return self.search()
+        return self.search(**params)
 
     def add_to_cart(self, _id):
         record = self._get(_id)
@@ -76,27 +91,27 @@ class WishlistService(Component):
     def add_items(self, _id, **params):
         record = self._get(_id)
         self._add_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def update_items(self, _id, **params):
         record = self._get(_id)
         self._update_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def delete_items(self, _id, **params):
         record = self._get(_id)
         self._delete_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def move_items(self, _id, **params):
         record = self._get(_id)
         self._move_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def replace_items(self, _id, **params):
         record = self._get(_id)
         self._replace_items(record, params)
-        return self._to_json_one(record)
+        return self._to_json_one(record, **params)
 
     def _post_create(self, record):
         pass
@@ -107,6 +122,12 @@ class WishlistService(Component):
     def _validator_get(self):
         return {}
 
+    def _validate_data_mode(self):
+        return {
+            "data_mode": {"type": "string", "nullable": True},
+        }
+
+    @data_mode
     def _validator_search(self):
         return {
             "id": {"coerce": to_int, "type": "integer"},
@@ -119,6 +140,7 @@ class WishlistService(Component):
             "scope": {"type": "dict", "nullable": True},
         }
 
+    @data_mode
     def _validator_create(self):
         return {
             "name": {"type": "string", "required": True},
@@ -147,12 +169,7 @@ class WishlistService(Component):
                 "type": "integer",
             },
             "quantity": {"coerce": float, "type": "float", "default": 1.0},
-            "sequence": {
-                "coerce": int,
-                "type": "integer",
-                "required": False,
-                "default": 0,
-            },
+            "sequence": {"coerce": int, "type": "integer", "required": False},
         }
 
     def _validator_update(self):
@@ -205,6 +222,7 @@ class WishlistService(Component):
     def _validator_update_items(self):
         return self._validator_add_items()
 
+    @data_mode
     def _validator_move_items(self):
         return {
             "lines": {
@@ -231,6 +249,7 @@ class WishlistService(Component):
             },
         }
 
+    @data_mode
     def _validator_delete_items(self):
         return {
             "lines": {
@@ -252,6 +271,7 @@ class WishlistService(Component):
             }
         }
 
+    @data_mode
     def _validator_replace_items(self):
         return {
             "lines": {
@@ -315,18 +335,34 @@ class WishlistService(Component):
             (0, 0, self._prepare_item(record, line))
             for line in params.pop("lines", [])
         ]
+        params.pop("data_mode", None)
         return params
 
-    def _to_json(self, records):
-        return records.jsonify(self._json_parser())
+    def _to_json(self, records, data_mode=None, **kw):
+        if data_mode:
+            try:
+                parser = getattr(self, "_json_parser_" + data_mode)()
+            except AttributeError:
+                raise exceptions.UserError(
+                    _("JSON data mode `%s` not found.") % data_mode
+                )
+        else:
+            parser = self._json_parser()
+        return records.jsonify(parser)
 
-    def _to_json_one(self, records):
+    def _to_json_one(self, records, **kw):
         # This works only here... see `_update_item` :/
         records.set_line_ids.invalidate_cache()
-        values = self._to_json(records)
+        values = self._to_json(records, **kw)
         if len(records) == 1:
             values = values[0]
         return values
+
+    def _json_parser_light(self):
+        return [
+            "id",
+            "name",
+        ]
 
     def _json_parser(self):
         return [
@@ -453,12 +489,15 @@ class WishlistService(Component):
         return set_lines
 
     def _prepare_item(self, record, params):
-        return {
+        vals = {
             "product_set_id": record.id,
             "product_id": params["product_id"],
             "quantity": params.get("quantity") or 1,
-            "sequence": params.get("sequence") or 0,
         }
+        if "sequence" in params:
+            # Set sequence only if explicitly given
+            vals["sequence"] = params.get("sequence")
+        return vals
 
     def _delete_items(self, record, params):
         to_delete = self.env["product.set.line"].browse()

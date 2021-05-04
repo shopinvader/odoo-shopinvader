@@ -160,7 +160,7 @@ class DeliveryService(Component):
             )
         return delivery_date
 
-    def _to_json(self, pickings):
+    def _to_json(self, pickings, **kw):
         res = []
         for picking in pickings:
             res.append(self._to_json_picking(picking))
