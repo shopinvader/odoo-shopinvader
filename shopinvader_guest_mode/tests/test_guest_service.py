@@ -1,8 +1,9 @@
 # Copyright 2018-2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
 from werkzeug.exceptions import Forbidden, NotFound
+
+from odoo.addons.shopinvader.tests.common import CommonCase
 
 
 class TestGuestService(CommonCase):
@@ -37,9 +38,7 @@ class TestGuestService(CommonCase):
         # if we create a new guest with the same email, a new binding is
         # created and the first one is archived
         # moreover in no duplicate mode, the partner remains the same
-        self.shopinvader_config.create(
-            {"no_partner_duplicate": True}
-        ).execute()
+        self.shopinvader_config.create({"no_partner_duplicate": True}).execute()
         res = self.service.dispatch("create", params=self.data)["data"]
         new_partner = self.env["res.partner"].browse(res["id"])
         self.assertEqual(partner, new_partner)
