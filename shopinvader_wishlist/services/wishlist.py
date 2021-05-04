@@ -113,6 +113,18 @@ class WishlistService(Component):
         self._replace_items(record, params)
         return self._to_json_one(record, **params)
 
+    @property
+    def access_info(self):
+        with self.shopinvader_backend.work_on(
+            "res.partner",
+            partner=self.partner,
+            partner_user=self.partner_user,
+            invader_partner=self.invader_partner,
+            invader_partner_user=self.invader_partner_user,
+            service_work=self.work,
+        ) as work:
+            return work.component(usage="access.info")
+
     def _post_create(self, record):
         pass
 
@@ -372,6 +384,7 @@ class WishlistService(Component):
             "ref",
             ("partner_id:partner", ["id", "name"]),
             ("set_line_ids:lines", self._json_parser_line()),
+            ("partner_id:access", self._json_parser_wishlist_access),
         ]
 
     def _json_parser_line(self):
@@ -384,6 +397,9 @@ class WishlistService(Component):
 
     def _json_parser_product_data(self, rec, fname):
         return rec.shopinvader_variant_id.get_shop_data()
+
+    def _json_parser_wishlist_access(self, rec, fname):
+        return self.access_info.for_wishlist(rec)
 
     def _get_existing_line(self, record, params, raise_if_not_found=False):
         product_id = params["product_id"]
