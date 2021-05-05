@@ -177,8 +177,8 @@ class UsersService(Component):
         params["parent_id"] = parent_id or self.partner_user.id
         return params
 
-    def _to_json(self, records, **kw):
-        return records.jsonify(self._json_parser(), **kw)
+    def _to_json(self, records, one=None, **kw):
+        return records.jsonify(self._json_parser(), one=one)
 
     def _json_parser(self):
         return [
