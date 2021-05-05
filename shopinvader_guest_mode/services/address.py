@@ -18,7 +18,7 @@ class AddressService(Component):
         :return:
         """
         address = self._get(_id)
-        res = super(AddressService, self).update(_id=_id, **params)
+        res = super().update(_id=_id, **params)
         guest = self.component(usage="guest")
         binding = guest._get_binding(address.email)
         if binding.is_guest and binding.address_type == "profile":

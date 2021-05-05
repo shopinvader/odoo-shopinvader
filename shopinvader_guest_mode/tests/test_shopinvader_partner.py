@@ -13,7 +13,7 @@ from odoo.addons.component.tests.common import SavepointComponentCase
 class TestShopinvaderPartner(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
-        super(TestShopinvaderPartner, cls).setUpClass()
+        super().setUpClass()
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.backend.is_guest_mode_allowed = True
         cls.shopinvader_partner = cls.env["shopinvader.partner"].create(
