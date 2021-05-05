@@ -8,9 +8,7 @@ from odoo.addons.shopinvader_locomotive.tests.test_shopinvader_partner import (
 class TestShopinvaderPartnerGuest(CommonShopinvaderPartner):
     def setUp(self, *args, **kwargs):
         super(TestShopinvaderPartnerGuest, self).setUp(*args, **kwargs)
-        self.backend2 = self.backend.search(
-            [("id", "!=", self.backend.id)], limit=1
-        )
+        self.backend2 = self.backend.search([("id", "!=", self.backend.id)], limit=1)
         backends = self.backend
         backends |= self.backend2
         backends.write({"is_guest_mode_allowed": True})
@@ -32,9 +30,7 @@ class TestShopinvaderPartnerGuest(CommonShopinvaderPartner):
 
     def _create_shopinvader_guest_partner(self, data, backend=False):
         partner = self.env["res.partner"].create(data)
-        return self._create_shopinvader_guest_for_partner(
-            partner, backend=backend
-        )
+        return self._create_shopinvader_guest_for_partner(partner, backend=backend)
 
     def test_get_binding_to_export1(self):
         """
