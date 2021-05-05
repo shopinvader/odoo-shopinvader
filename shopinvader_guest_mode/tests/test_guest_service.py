@@ -46,7 +46,7 @@ class TestGuestService(CommonCase):
         self.assertFalse(first_binding.active)
         new_binding = partner.shopinvader_bind_ids
         self.assertEqual(new_binding.is_guest, True)
-        self.assertNotEquals(first_binding, new_binding)
+        self.assertNotEqual(first_binding, new_binding)
 
         # Update guest address
         self.data.update({"phone": "012345"})
@@ -56,10 +56,9 @@ class TestGuestService(CommonCase):
             self.service = work.component(usage="addresses")
         res = self.service.dispatch("update", new_partner.id, params=self.data)
 
-        self.assertEquals("012345", new_partner.phone)
-        self.assertDictContainsSubset(
-            {"email": new_partner.email}, res["store_cache"]["customer"]
-        )
+        self.assertEqual("012345", new_partner.phone)
+        customer = res["store_cache"]["customer"]
+        self.assertEqual(dict(customer, **{"email": new_partner.email}), customer)
 
     def test_search_guest(self):
         self._create_guest()
