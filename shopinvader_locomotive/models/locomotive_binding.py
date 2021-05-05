@@ -21,6 +21,18 @@ class LocomotiveBinding(models.AbstractModel):
             deleter = work.component(usage="record.exporter.deleter")
             return deleter.run(external_id)
 
+    def unlink(self):
+        # Prevent export of fields on deletion.
+        # Motivation:
+        # when a record is deleted some fields might get recomputed and cause writes.
+        # When it happens, you can have an export before deletion.
+        # As the record gets deleted right after this is useless.
+        # `on_record_unlink` has no guard for `connector_no_export`
+        # hence it won't be skipped.
+        return super(
+            LocomotiveBinding, self.with_context(connector_no_export=True)
+        ).unlink()
+
     _sql_constraints = [
         (
             "locomotive_uniq",
