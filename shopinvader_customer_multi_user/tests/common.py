@@ -2,6 +2,8 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from os import urandom
+
 from odoo.addons.shopinvader.tests.test_customer import TestCustomerCommon
 
 
@@ -23,6 +25,13 @@ class TestMultiUserCommon(TestCustomerCommon):
         cls.backend.multi_user_records_policy = "record_id"
 
     @staticmethod
+    def _get_random_hash():
+        """
+        returns a positive integer from hashing 4 random bytes
+        """
+        return abs(hash(urandom(4)))
+
+    @staticmethod
     def _create_partner(env, **kw):
         values = {
             "backend_id": env.ref("shopinvader.backend_1").id,
@@ -32,4 +41,7 @@ class TestMultiUserCommon(TestCustomerCommon):
             "ref": "#ACME",
         }
         values.update(kw)
+        values["external_id"] = values["external_id"] + str(
+            TestMultiUserCommon._get_random_hash()
+        )
         return env["shopinvader.partner"].create(values)

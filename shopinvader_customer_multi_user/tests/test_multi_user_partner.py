@@ -95,6 +95,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
             {
                 "name": "New Binding",
                 "email": "new@test.com",
+                "external_id": "test1",
                 "main_partner_id": custom_partner.id,
             }
         )
@@ -105,6 +106,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
             self.env,
             parent_id=self.company.id,
             name="New Binding 2",
+            external_id="test2",
             email="new2@test.com",
             main_partner_id=custom_partner.id,
         )
