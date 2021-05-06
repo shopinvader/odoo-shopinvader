@@ -39,7 +39,7 @@ class GuestService(Component):
         if not binding:
             raise NotFound(email)
         binding.write({"is_guest": False, "external_id": external_id})
-        self.work.partner = binding.record_id
+        self._load_partner_work_context(binding)
         return self._prepare_create_response(binding)
 
     def stop(self, email):
