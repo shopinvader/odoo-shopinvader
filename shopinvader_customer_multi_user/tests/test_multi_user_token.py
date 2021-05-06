@@ -2,7 +2,6 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import random
 
 from .common import TestMultiUserCommon
 
@@ -15,13 +14,13 @@ class TestMultiUserToken(TestMultiUserCommon):
 
     def _generate_random_companies(self, count=5):
         tokens = set()
-        for x in range(5):
+        for x in range(count):
             comp = self._create_partner(
                 self.env,
                 name="ACME %s" % x,
                 email="acme%s@test.com" % x,
                 is_company=True,
-                external_id="acme{}-{}".format(x, random.getrandbits(64)),
+                external_id="acme{}-{}".format(x, self._get_random_hash()),
             )
             if comp.invader_user_token:
                 tokens.add(comp.invader_user_token)
