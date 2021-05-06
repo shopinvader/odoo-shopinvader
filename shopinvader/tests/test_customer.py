@@ -81,7 +81,6 @@ class TestCustomer(TestCustomerCommon):
         self.data["external_id"] = "D5CdkqOEL"
         res = self.service.dispatch("create", params=self.data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
-        self.service.work.partner = partner
         sale_domain = [("partner_id", "=", partner.id)]
         SaleOrder = self.env["sale.order"]
         self.assertFalse(SaleOrder.search(sale_domain))
@@ -95,11 +94,13 @@ class TestCustomer(TestCustomerCommon):
         sale_domain = [("partner_id", "=", partner.id)]
         SaleOrder = self.env["sale.order"]
         SaleOrder.search(sale_domain).unlink()
-        self.service.work.partner = partner
+
+        invader_partner = partner._get_invader_partner(self.backend)
+        self.service._load_partner_work_context(invader_partner)
         self.service.sign_in()
         self.assertFalse(SaleOrder.search(sale_domain))
 
-    def test_create_customer_validation(self):
+    def test_create_customer_validation_none(self):
         data = dict(self.data, external_id="12345678", email="acme@foo.com")
         # validation is not active
         self.assertFalse(self.backend.validate_customers)
@@ -111,7 +112,9 @@ class TestCustomer(TestCustomerCommon):
         self.backend.update(
             dict(validate_customers=True, validate_customers_type="all")
         )
+        # and create a new one
         data = dict(self.data, external_id="D5CdkqOEL", email="funny@foo.com")
+        self.service._reset_partner_work_context()
         res = self.service.dispatch("create", params=data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
         # must not be validated
@@ -119,12 +122,12 @@ class TestCustomer(TestCustomerCommon):
         # now let's enable it w/ specific action
         partner.action_enable_for_shop()
         self.assertTrue(partner.shopinvader_enabled)
-        # no let's call an update -> validation state won't change
+        # now let's call an update -> validation state won't change
         data = dict(data, email="funny@boo.com")
-        self.address_service.dispatch("update", partner.id, params=data)
+        self.address_service.dispatch("update", res["id"], params=data)
         self.assertTrue(partner.shopinvader_enabled)
 
-    def test_create_customer_validation_company(self):
+    def test_create_customer_validation_company_user_enabled(self):
         data = dict(
             self.data,
             external_id="12345678X",
@@ -141,13 +144,15 @@ class TestCustomer(TestCustomerCommon):
         # hence the company is enabled
         self.assertTrue(partner.shopinvader_enabled)
         # now enable it for company only
-        self.backend.validate_customers_type = "company"
+        self.backend.update(
+            dict(validate_customers=True, validate_customers_type="company")
+        )
         data = dict(
             self.data,
             external_id="12345678Y",
             is_company=True,
             vat="BE0477472701",
-            email="funny@foo.com",
+            email="company@foo.com",
         )
         res = self.service.dispatch("create", params=data)["data"]
         partner = self.env["res.partner"].browse(res["id"])

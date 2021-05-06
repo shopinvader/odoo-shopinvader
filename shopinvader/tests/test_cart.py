@@ -107,15 +107,16 @@ class AnonymousCartCase(CartCase, CartClearTest):
         ) as work:
             self.service = work.component(usage="cart")
 
-    def _sign_with(self, partner):
-        self.service.work.partner = partner
+    def _sign_with(self, invader_partner):
+        self.service._load_partner_work_context(invader_partner, force=True)
         service_sign = self.service.component("customer")
         service_sign.sign_in()
 
     def test_anonymous_cart_then_sign(self):
         cart = self.cart
-        partner = self.env.ref("shopinvader.partner_1")
-        self._sign_with(partner)
+        invader_partner = self.env.ref("shopinvader.shopinvader_partner_1")
+        partner = invader_partner.record_id
+        self._sign_with(invader_partner)
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id, partner)
         self.assertEqual(cart.partner_invoice_id, partner)

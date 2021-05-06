@@ -8,8 +8,7 @@ from odoo.addons.component.core import WorkContext
 
 
 def get_partner_work_context(shopinvader_partner):
-    """Retrieve service work context for given shopinvader.partner
-    """
+    """Retrieve service work context for given shopinvader.partner"""
     ctx = {}
     ctx["invader_partner"] = shopinvader_partner
     ctx["invader_partner_user"] = shopinvader_partner
@@ -18,9 +17,7 @@ def get_partner_work_context(shopinvader_partner):
     partner_user = shopinvader_partner.record_id
     ctx["partner_user"] = partner_user
     # The partner user for the main account or for sale order may differ.
-    partner_shop = partner_user.get_shop_partner(
-        shopinvader_partner.backend_id
-    )
+    partner_shop = partner_user.get_shop_partner(shopinvader_partner.backend_id)
     ctx["partner"] = partner_shop
     if partner_shop != partner_user:
         # Invader partner must represent the same partner as the shop
@@ -41,9 +38,7 @@ def load_partner_work_ctx(service, invader_partner, force=False):
 def reset_partner_work_ctx(service):
     """Update work context flushing all partner keys."""
     defaults = {}
-    partner_work_context_defaults(
-        service.env, service.shopinvader_backend, defaults
-    )
+    partner_work_context_defaults(service.env, service.shopinvader_backend, defaults)
     update_work_ctx(service, defaults, force=True)
 
 
