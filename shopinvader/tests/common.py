@@ -10,13 +10,11 @@ import mock
 from odoo.exceptions import MissingError
 from odoo.tests import SavepointCase
 
-from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
-from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
 
-from .. import shopinvader_response
+from .. import shopinvader_response, utils
 
 
 def _install_lang_odoo(env, lang_xml_id, full_install=False):
@@ -98,12 +96,8 @@ class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
     @contextmanager
     def work_on_services(self, **params):
         params = self._work_on_services_default_params(self, **params)
-        collection = _PseudoCollection("shopinvader.backend", self.env)
-        yield WorkContext(
-            model_name="rest.service.registration",
-            collection=collection,
-            **params
-        )
+        with utils.work_on_service(self.env, **params) as work:
+            yield work
 
     @staticmethod
     def _work_on_services_default_params(class_or_instance, **params):
@@ -111,24 +105,14 @@ class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
             params["shopinvader_backend"] = class_or_instance.backend
         if "shopinvader_session" not in params:
             params["shopinvader_session"] = {}
-        if params.get("partner") and not params.get("partner_user"):
-            params["partner_user"] = params["partner"]
-
-        # Safe defaults as these keys are mandatory for work ctx
-        for k in ("partner", "partner_user"):
-            if not params.get(k):
-                params[k] = class_or_instance.env["res.partner"].browse()
-            if not params.get("invader_" + k):
-                params["invader_" + k] = params[k]._get_invader_partner(
-                    class_or_instance.backend
-                )
+        utils.partner_work_context_defaults(
+            class_or_instance.env, class_or_instance.backend, params
+        )
         return params
 
     def _update_work_ctx(self, service, **params):
         params = self._work_on_services_default_params(self, **params)
-        for k, v in params.items():
-            if not getattr(service.work, k, None) and v:
-                setattr(service.work, k, v)
+        utils.update_work_ctx(service, params)
 
     def _init_job_counter(self):
         self.existing_jobs = self.env["queue.job"].search([])
