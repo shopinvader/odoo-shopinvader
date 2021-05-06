@@ -108,16 +108,6 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         for line in self.cart.order_line:
             self.check_discount_rule_set(line, self.promotion_rule_coupon)
 
-    def _sign_with(self, partner):
-        """
-        Simulate a sign_in with the given partner
-        :param partner: res.partner recordset
-        :return:
-        """
-        self.service.work.partner = partner
-        service_sign = self.service.component("customer")
-        service_sign.sign_in()
-
     def test_promotion_rule_applied_after_fiscal_pos_update(self):
         """
         Ensure promotions are correctly applied even after updating the
