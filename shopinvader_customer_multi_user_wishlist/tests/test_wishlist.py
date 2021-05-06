@@ -68,22 +68,14 @@ class WishlistCase(CommonWishlistCase):
             self.assertEqual(cart.order_line[0].product_id, prod)
 
     def test_access_owner(self):
-        self.wishlist_service.work.partner = self.company_binding.record_id
-        self.wishlist_service.work.invader_partner = self.company_binding
-        self.wishlist_service.work.partner_user = (
-            self.company_binding.record_id
+        self.wishlist_service._load_partner_work_context(
+            self.company_binding, force=True
         )
-        self.wishlist_service.work.invader_partner_user = self.company_binding
         res = self.wishlist_service._to_json_one(self.prod_set)
-        self.assertEqual(
-            res["access"], {"read": True, "update": True, "delete": True}
-        )
+        self.assertEqual(res["access"], {"read": True, "update": True, "delete": True})
 
     def test_access_not_owner(self):
-        self.wishlist_service.work.partner = self.company_binding.record_id
-        self.wishlist_service.work.invader_partner = self.company_binding
-        self.wishlist_service.work.partner_user = self.user_binding.record_id
-        self.wishlist_service.work.invader_partner_user = self.user_binding
+        self.wishlist_service._load_partner_work_context(self.user_binding)
         res = self.wishlist_service._to_json_one(self.prod_set)
         self.assertEqual(
             res["access"], {"read": True, "update": False, "delete": False}
