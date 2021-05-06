@@ -1,6 +1,7 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
+
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
@@ -15,9 +16,7 @@ class TestShopinvaderBackend(CommonCase):
             "shopinvader_pending_cart_reminder."
             "mail_template_shopinvader_sale_reminder"
         )
-        self.backend.write(
-            {"pending_cart_reminder_template_id": self.template.id}
-        )
+        self.backend.write({"pending_cart_reminder_template_id": self.template.id})
 
     def test_auto_reminder_start_date(self):
         """

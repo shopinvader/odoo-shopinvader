@@ -41,25 +41,18 @@ class ShopinvaderBackend(models.Model):
         "updated to > 0 (considered as enable).",
     )
 
-    @api.multi
     def write(self, vals):
         """
         Inherit to auto-fill the reminder_start_date if necessary
         :param vals: dict
         :return: bool
         """
-        self_at_zero = self.filtered(
-            lambda r: r.pending_cart_reminder_delay <= 0
-        )
+        self_at_zero = self.filtered(lambda r: r.pending_cart_reminder_delay <= 0)
         self_others = self - self_at_zero
         result = True
         if self_at_zero:
-            values_at_zero = self_at_zero._fill_reminder_start_date(
-                vals.copy()
-            )
-            result = super(ShopinvaderBackend, self_at_zero).write(
-                values_at_zero
-            )
+            values_at_zero = self_at_zero._fill_reminder_start_date(vals.copy())
+            result = super(ShopinvaderBackend, self_at_zero).write(values_at_zero)
         if self_others:
             result = super(ShopinvaderBackend, self_others).write(vals)
         return result
@@ -93,10 +86,7 @@ class ShopinvaderBackend(models.Model):
             values.update({"reminder_start_date": fields.Date.today()})
         return values
 
-    @api.multi
-    @api.constrains(
-        "pending_cart_reminder_template_id", "pending_cart_reminder_delay"
-    )
+    @api.constrains("pending_cart_reminder_template_id", "pending_cart_reminder_delay")
     def _constrains_quotation_reminder(self):
         """
         Constrain function to ensure that the email template is filled
