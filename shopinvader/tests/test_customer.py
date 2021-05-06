@@ -81,7 +81,6 @@ class TestCustomer(TestCustomerCommon):
         self.data["external_id"] = "D5CdkqOEL"
         res = self.service.dispatch("create", params=self.data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
-        self.service.work.partner = partner
         sale_domain = [("partner_id", "=", partner.id)]
         SaleOrder = self.env["sale.order"]
         self.assertFalse(SaleOrder.search(sale_domain))
@@ -95,11 +94,13 @@ class TestCustomer(TestCustomerCommon):
         sale_domain = [("partner_id", "=", partner.id)]
         SaleOrder = self.env["sale.order"]
         SaleOrder.search(sale_domain).unlink()
-        self.service.work.partner = partner
+
+        invader_partner = partner._get_invader_partner(self.backend)
+        self.service._load_partner_work_context(invader_partner)
         self.service.sign_in()
         self.assertFalse(SaleOrder.search(sale_domain))
 
-    def test_create_customer_validation(self):
+    def test_create_customer_validation_none(self):
         data = dict(self.data, external_id="12345678", email="acme@foo.com")
         # validation is not active
         self.assertFalse(self.backend.validate_customers)
@@ -107,6 +108,8 @@ class TestCustomer(TestCustomerCommon):
         partner = self.env["res.partner"].browse(res["id"])
         # hence is enabled by default
         self.assertTrue(partner.is_shopinvader_active)
+
+    def test_create_customer_validation_all(self):
         # enable validation for all
         self.backend.update(
             dict(validate_customers=True, validate_customers_type="all")
@@ -127,7 +130,7 @@ class TestCustomer(TestCustomerCommon):
         self.address_service.dispatch("update", partner.id, params=data)
         self.assertFalse(partner.has_shopinvader_user_to_validate)
 
-    def test_create_customer_validation_company(self):
+    def test_create_customer_validation_company_user_enabled(self):
         data = dict(
             self.data,
             external_id="12345678X",
@@ -143,14 +146,18 @@ class TestCustomer(TestCustomerCommon):
         partner = self.env["res.partner"].browse(res["id"])
         # hence the company is enabled
         self.assertTrue(partner.is_shopinvader_active)
+
+    def test_create_customer_validation_company_company_enabled(self):
         # now enable it for company only
-        self.backend.validate_customers_type = "company"
+        self.backend.update(
+            dict(validate_customers=True, validate_customers_type="company")
+        )
         data = dict(
             self.data,
             external_id="12345678Y",
             is_company=True,
             vat="BE0477472701",
-            email="funny@foo.com",
+            email="company@foo.com",
         )
         res = self.service.dispatch("create", params=data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
