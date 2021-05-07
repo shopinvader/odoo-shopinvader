@@ -304,17 +304,18 @@ class CartService(Component):
                 partner = cart.partner_id
                 ctx_lang = self.env.context.get("lang", partner.lang)
                 if partner.lang != ctx_lang:
-                    product_id = vals["product_id"]
-                    vals["name"] = self._get_sale_order_line_name(product_id)
+                    name = self._get_sale_order_line_name(cart, vals, ctx_lang)
+                    vals["name"] = name
                 self.env["sale.order.line"].create(vals)
             cart.recompute()
 
-    def _get_sale_order_line_name(self, product_id):
-        product = self.env["product.product"].browse(product_id)
-        name = product.name_get()[0][1]
-        if product.description_sale:
-            name += "\n" + product.description_sale
-        return name
+    def _get_sale_order_line_name(self, cart, line_vals, lang):
+        with self.env.do_in_onchange():
+            model_line = self.env["sale.order.line"]
+            line = model_line.suspend_security().new(line_vals)
+            product = cart._get_contextualized_product(line, lang=lang)
+            r = line.get_sale_order_line_multiline_description_sale(product)
+        return r
 
     def _update_item(self, cart, params, item=False):
         if not item:
