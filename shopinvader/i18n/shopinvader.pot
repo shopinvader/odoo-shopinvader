@@ -195,6 +195,12 @@ msgid "Accounting"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__next_state
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__next_state
+msgid "Action"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__message_needaction
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_needaction
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_needaction
@@ -209,6 +215,12 @@ msgid ""
 "- Clear: keep the cart but remove items;\n"
 "- Cancel: The cart is canceled but kept into the database.\n"
 "When a quotation is not validated, habitually it's not removed but cancelled. It could be also useful if you want to keep cart for statistics reasons. A new cart is created automatically when the customer will add a new item."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_address_validate__next_state__active
+#: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_partner_validate__next_state__active
+msgid "Activate"
 msgstr ""
 
 #. module: shopinvader
@@ -297,6 +309,11 @@ msgstr ""
 #: code:addons/shopinvader/models/shopinvader_notification.py:0
 #, python-format
 msgid "Address validated"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__partner_ids
+msgid "Addresses"
 msgstr ""
 
 #. module: shopinvader
@@ -440,8 +457,10 @@ msgid "Appliances"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_address_validate_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_binding_form_view
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_validate_form_view
 msgid "Apply"
 msgstr ""
 
@@ -659,10 +678,12 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__sale_order__shopinvader_state__cancel
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__clear_cart_options__cancel
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_address_validate_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_binding_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_binding_form_view
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_validate_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_binding_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_unbinding_wizard_form_view
 msgid "Cancel"
@@ -1047,6 +1068,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__create_uid
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__create_uid
@@ -1057,6 +1079,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line__create_uid
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__create_uid
@@ -1066,6 +1089,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__create_date
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__create_date
@@ -1076,6 +1100,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line__create_date
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__create_date
@@ -1187,6 +1212,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__date
 msgid "Date"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Deactivate address for Shopinvader"
 msgstr ""
 
 #. module: shopinvader
@@ -1437,6 +1467,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_seo_title_mixin__display_name
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_binding__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__display_name
@@ -1448,6 +1479,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line__display_name
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__display_name
@@ -1458,6 +1490,13 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__qr_code
 msgid "Display SEPA QR code"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__display_validate_address
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__display_validate_address
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__display_validate_address
+msgid "Display Validate Address"
 msgstr ""
 
 #. module: shopinvader
@@ -1498,6 +1537,17 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_easypost
 msgid "Easypost Connector"
+msgstr ""
+
+#. module: shopinvader
+#: code:addons/shopinvader/models/shopinvader_partner.py:0
+#, python-format
+msgid "Edit %s"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Edit in form"
 msgstr ""
 
 #. module: shopinvader
@@ -1556,28 +1606,8 @@ msgid "Employee"
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
-msgid "Enable customer"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__auth_signup_reset_password
 msgid "Enable password reset from Login page"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_res_partner__shopinvader_enabled
-#: model:ir.model.fields,help:shopinvader.field_res_users__shopinvader_enabled
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__shopinvader_enabled
-msgid ""
-"Enable user account on the frontend. If this is disabled the user cannot log"
-" in on all the websites. This behavior must be enabled on the backend via "
-"'Validate customers' flag."
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
-msgid "Enabled"
 msgstr ""
 
 #. module: shopinvader
@@ -1866,6 +1896,34 @@ msgid "Has Accounting Entries"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__has_shopinvader_address_to_validate
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__has_shopinvader_address_to_validate
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__has_shopinvader_address_to_validate
+msgid "Has Shopinvader Address To Validate"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__has_shopinvader_user
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__has_shopinvader_user
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__has_shopinvader_user
+msgid "Has Shopinvader User"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__has_shopinvader_user_active
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__has_shopinvader_user_active
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__has_shopinvader_user_active
+msgid "Has Shopinvader User Active"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__has_shopinvader_user_to_validate
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__has_shopinvader_user_to_validate
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__has_shopinvader_user_to_validate
+msgid "Has Shopinvader User To Validate"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__has_unreconciled_entries
 msgid "Has Unreconciled Entries"
 msgstr ""
@@ -1879,6 +1937,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__id
 #: model:ir.model.fields,field_description:shopinvader.field_seo_title_mixin__id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_binding__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__id
@@ -1890,6 +1949,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line__id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__id
@@ -2084,6 +2144,12 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_address_validate__next_state__inactive
+#: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_partner_validate__next_state__inactive
+msgid "Inactivate"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_account_income_categ_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__property_account_income_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__property_account_income_id
@@ -2133,6 +2199,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_intrastat
 msgid "Intrastat"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__shopinvader_partner_ids
+msgid "Invader Partners"
 msgstr ""
 
 #. module: shopinvader
@@ -2240,6 +2311,11 @@ msgid "Is Product Variant"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__is_shopinvader_active
+msgid "Is Shopinvader Active"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__is_urls_sync_required
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__is_urls_sync_required
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__is_urls_sync_required
@@ -2331,6 +2407,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_seo_title_mixin____last_update
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_binding____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step____last_update
@@ -2342,6 +2419,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line____last_update
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard____last_update
@@ -2351,6 +2429,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__write_uid
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__write_uid
@@ -2361,6 +2440,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line__write_uid
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__write_uid
@@ -2370,6 +2450,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__write_date
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__write_date
@@ -2380,6 +2461,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line__write_date
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_validate__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__write_date
@@ -2529,6 +2611,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__currency_id
 msgid "Main currency of the company."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_partner_validate__next_state__pending
+msgid "Make pending"
 msgstr ""
 
 #. module: shopinvader
@@ -2833,6 +2920,16 @@ msgid "No Partner Duplicate"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.actions.act_window,help:shopinvader.action_sale_shopinvader_customer_to_validate
+msgid "No Shopinvader customer to be validated."
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.actions.act_window,help:shopinvader.action_sale_shopinvader_addresses_to_validate
+msgid "No address to validate for Shopinvader."
+msgstr ""
+
+#. module: shopinvader
 #: code:addons/shopinvader/services/abstract_download.py:0
 #, python-format
 msgid "No content found for %s"
@@ -3065,8 +3162,20 @@ msgid "Paper format"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
+msgid "Parent"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__parent_id
 msgid "Parent Category"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__parent_has_shopinvader_user
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__parent_has_shopinvader_user
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__parent_has_shopinvader_user
+msgid "Parent Has Shopinvader User"
 msgstr ""
 
 #. module: shopinvader
@@ -3848,21 +3957,41 @@ msgid "Shop - Validate customer"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_res_partner__shopinvader_enabled
-#: model:ir.model.fields,field_description:shopinvader.field_res_users__shopinvader_enabled
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__shopinvader_enabled
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__is_shopinvader_active
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__is_shopinvader_active
 msgid "Shop enabled"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/res_partner.py:0
+#: code:addons/shopinvader/components/res_partner_event_listener.py:0
+#: code:addons/shopinvader/components/shopinvader_partner_event_listener.py:0
 #, python-format
 msgid "Shop {addr_type} '{name}' validated"
 msgstr ""
 
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
-msgid "Shop: enable address"
+msgid "Shop: deactivate address"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Shop: validate address"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Shop: validate addresses"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Shop: validate user"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Shop: validate users"
 msgstr ""
 
 #. module: shopinvader
@@ -3879,6 +4008,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_product__shopinvader_backend_ids
 #: model:ir.model.fields,field_description:shopinvader.field_product_template__shopinvader_backend_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__backend_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__shopinvader_backend_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__shopinvader_backend_ids
 msgid "ShopInvader Backends"
@@ -3898,6 +4028,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_res_users__address_type
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__address_type
 msgid "Shopinvader Address Type"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.shopinvader_address_validate_act_window
+msgid "Shopinvader Address validate Wizard"
 msgstr ""
 
 #. module: shopinvader
@@ -4008,6 +4143,11 @@ msgid "Shopinvader Partner Binding Wizard"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.shopinvader_partner_validate_act_window
+msgid "Shopinvader Partner validate Wizard"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__price
 msgid "Shopinvader Price"
 msgstr ""
@@ -4057,8 +4197,24 @@ msgid "Shopinvader Website"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model,name:shopinvader.model_shopinvader_address_validate
+msgid "Shopinvader address validate"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.action_sale_shopinvader_addresses_to_validate
+#: model:ir.ui.menu,name:shopinvader.menu_sale_shopinvader_addresses_to_validate
+msgid "Shopinvader addresses to validate"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__shopinvader_backend_id
 msgid "Shopinvader backend"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_address_validate_form_view
+msgid "Shopinvader backends not notify"
 msgstr ""
 
 #. module: shopinvader
@@ -4073,6 +4229,12 @@ msgid "Shopinvader configuration"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.action_sale_shopinvader_customer_to_validate
+#: model:ir.ui.menu,name:shopinvader.menu_sale_shopinvader_customer_to_validate
+msgid "Shopinvader customers to validate"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model,name:shopinvader.model_shopinvader_partner_binding
 msgid "Shopinvader partner binding"
 msgstr ""
@@ -4080,6 +4242,31 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model,name:shopinvader.model_shopinvader_partner_binding_line
 msgid "Shopinvader partner binding line"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model,name:shopinvader.model_shopinvader_partner_validate
+msgid "Shopinvader partner validate"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Shopinvader users"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_res_partner_filter
+msgid "Shopinvader: active user"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_res_partner_filter
+msgid "Shopinvader: address to validate"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_res_partner_filter
+msgid "Shopinvader: user to validate"
 msgstr ""
 
 #. module: shopinvader
@@ -4184,8 +4371,25 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__state
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__state_id
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
 msgid "State"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
+msgid "State: Active"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
+msgid "State: Inactive"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
+msgid "State: Pending"
 msgstr ""
 
 #. module: shopinvader
@@ -4324,6 +4528,13 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__tech_name
 msgid "Tech Name"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_partner__display_validate_address
+#: model:ir.model.fields,help:shopinvader.field_res_users__display_validate_address
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__display_validate_address
+msgid "Tech field to be used in views to display/hide validate action."
 msgstr ""
 
 #. module: shopinvader
@@ -4519,6 +4730,21 @@ msgid "Thelma"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "There's at least one Shopinvader user to validate"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "There's at least one address to validate"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "There's at least one address to validate for Shopinvader"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__property_account_payable_id
 msgid ""
 "This account will be used instead of the default one as the payable account "
@@ -4535,6 +4761,12 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_category__property_account_income_categ_id
 msgid "This account will be used when validating a customer invoice."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_partner__is_shopinvader_active
+#: model:ir.model.fields,help:shopinvader.field_res_users__is_shopinvader_active
+msgid "This address is enabled to be used for Shopinvader."
 msgstr ""
 
 #. module: shopinvader
@@ -4575,6 +4807,41 @@ msgstr ""
 msgid ""
 "This option allows you to print the date label on the check as per CPA. "
 "Disable this if your pre-printed check includes the date label."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_partner__parent_has_shopinvader_user
+#: model:ir.model.fields,help:shopinvader.field_res_users__parent_has_shopinvader_user
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__parent_has_shopinvader_user
+msgid "This partner belongs to Shopinvader user."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_partner__has_shopinvader_user_active
+#: model:ir.model.fields,help:shopinvader.field_res_users__has_shopinvader_user_active
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__has_shopinvader_user_active
+msgid "This partner has at least a Shopinvader active user."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_partner__has_shopinvader_user_to_validate
+#: model:ir.model.fields,help:shopinvader.field_res_users__has_shopinvader_user_to_validate
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__has_shopinvader_user_to_validate
+msgid "This partner has at least a Shopinvader user to be validated."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_partner__has_shopinvader_user
+#: model:ir.model.fields,help:shopinvader.field_res_users__has_shopinvader_user
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__has_shopinvader_user
+msgid "This partner has at least a Shopinvader user."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_partner__has_shopinvader_address_to_validate
+#: model:ir.model.fields,help:shopinvader.field_res_users__has_shopinvader_address_to_validate
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__has_shopinvader_address_to_validate
+msgid "This partner has at least an address to validate for Shopinvader."
 msgstr ""
 
 #. module: shopinvader
@@ -4904,6 +5171,30 @@ msgid "Validate Customers Type"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_address_validate_form_view
+msgid ""
+"Validate Shopinvader addresses.\n"
+"                  Selected addresses not matching this status will be updated."
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_validate_form_view
+msgid ""
+"Validate Shopinvader customers.\n"
+"                  Selected customers not matching this state will be updated."
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Validate address for Shopinvader"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Validate user for Shopinvader"
+msgstr ""
+
+#. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Validation"
 msgstr ""
@@ -5010,6 +5301,16 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__vat_check_vies
 msgid "Verify VAT Numbers"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.actions.act_window,help:shopinvader.action_sale_shopinvader_customer_to_validate
+msgid "View all partners that have a Shopinvader user to be validated."
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.actions.act_window,help:shopinvader.action_sale_shopinvader_addresses_to_validate
+msgid "View all partners that have an address to be validated."
 msgstr ""
 
 #. module: shopinvader
