@@ -12,7 +12,10 @@ class ShopinvaderPartner(models.Model):
     _inherit = "shopinvader.partner"
 
     is_invader_user = fields.Boolean(
-        compute="_compute_invader_parent_dependent", store=True
+        string="Is simple user",
+        help="This shop user is not a main profile user",
+        compute="_compute_invader_parent_dependent",
+        store=True,
     )
     invader_parent_id = fields.Many2one(
         string="Invader parent",
@@ -35,6 +38,12 @@ class ShopinvaderPartner(models.Model):
         readonly=False,
         ondelete="restrict",
     )
+    is_main_account = fields.Boolean(compute="_compute_is_main_account")
+    can_manage_users = fields.Boolean(
+        help="Authorize this user to manage the account."
+    )
+    is_admin_account = fields.Boolean(compute="_compute_permission_flags")
+    is_users_manager = fields.Boolean(compute="_compute_permission_flags")
 
     @api.depends("parent_id", "parent_id.shopinvader_bind_ids", "backend_id")
     def _compute_invader_parent_dependent(self):
@@ -46,6 +55,23 @@ class ShopinvaderPartner(models.Model):
     def _compute_main_partner_id(self):
         for rec in self:
             rec.main_partner_id = rec._get_main_partner()
+            rec.is_main_account = rec.record_id == rec.main_partner_id
+
+    @api.depends("main_partner_id")
+    def _compute_is_main_account(self):
+        for rec in self:
+            rec.is_main_account = rec.record_id == rec.main_partner_id
+
+    @api.depends("parent_id", "can_manage_users")
+    def _compute_permission_flags(self):
+        for rec in self:
+            is_admin = not rec.parent_id
+            rec.update(
+                {
+                    "is_admin_account": is_admin,
+                    "is_users_manager": is_admin or rec.can_manage_users,
+                }
+            )
 
     def _check_is_invader_user(self):
         """Check if current partner is a bound shopinvader user.
@@ -119,7 +145,7 @@ class ShopinvaderPartner(models.Model):
         and not from sibling users.
         """
         # Main users can always see everything down their hierarchy
-        if self._is_admin_account() or self._is_main_account():
+        if self.is_admin_account or self.is_main_account:
             return [(partner_field, "child_of", self.record_id.id)]
 
         # Change partner domain based on backend policy
@@ -157,11 +183,10 @@ class ShopinvaderPartner(models.Model):
         they'll be able to see main account addresses too.
         """
         # Main users can always see everything down their hierarchy
-        if self._is_admin_account() or self._is_main_account():
+        if self.is_admin_account or self.is_main_account:
             return [
                 ("id", "child_of", self.record_id.id),
             ]
-
         # Change partner domain based on backend policy
         policy_field = self.backend_id.multi_user_records_policy
         related_partner = self[policy_field]
@@ -193,10 +218,3 @@ class ShopinvaderPartner(models.Model):
         # Always include these IDS
         partner_domains.append([("id", "in", specific_ids)])
         return expression.OR(partner_domains)
-
-    def _is_admin_account(self):
-        # Root account
-        return not self.parent_id
-
-    def _is_main_account(self):
-        return self.record_id == self.main_partner_id

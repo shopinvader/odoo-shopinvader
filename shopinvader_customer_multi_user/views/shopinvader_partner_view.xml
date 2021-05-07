@@ -10,6 +10,14 @@
         <field name="main_partner_id"/>
         <field name="is_invader_user"/>
       </field>
+      <group name="main" position="after">
+        <group name="permissions" string="Permissions">
+          <field name="can_manage_users"/>
+          <field name="is_admin_account"/>
+          <field name="is_main_account"/>
+          <field name="is_users_manager"/>
+        </group>
+      </group>
     </field>
   </record>
 
@@ -31,6 +39,7 @@
       <field name="external_id" position="after">
         <field name="main_partner_id"/>
         <field name="is_invader_user"/>
+        <field name="can_manage_users"/>
       </field>
       <filter name="group_by_backend_id" position="after">
         <filter name="group_by_main_partner_id" string="Main partner" domain="[]" context="{'group_by':'main_partner_id'}"/>

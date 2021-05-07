@@ -10,6 +10,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
     """
 
     def test_create_customer_no_multi_user(self):
+        self.backend.customer_multi_user = False
         self.data.update({"external_id": "cust1"})
         params = dict(self.data, company_token="ABCDEF")
         res = self.service.dispatch("create", params=params)["data"]
@@ -60,6 +61,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         # Update happens via address service. To be changed as per
         # https://github.com/shopinvader/odoo-shopinvader/issues/530
         params["name"] = params["name"] + " UPDATED!"
+        self._update_work_ctx(self.address_service, partner=partner1)
         res = self.address_service.dispatch(
             "update", partner1.id, params=params
         )
@@ -91,6 +93,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         self.assertFalse(self.company.has_invader_user)
 
     def test_customer_data(self):
+        self.backend.customer_multi_user = False
         with self.work_on_services(
             partner=self.company, shopinvader_session=self.shopinvader_session
         ) as work:

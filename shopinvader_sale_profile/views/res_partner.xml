@@ -9,7 +9,7 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="priority" eval="90"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='shopinvader_bind_ids']//tree" position="inside">
+            <xpath expr="//field[@name='shopinvader_bind_ids']//tree//field[@name='state']" position="after">
                 <field name="sale_profile_id" readonly="1"/>
             </xpath>
         </field>

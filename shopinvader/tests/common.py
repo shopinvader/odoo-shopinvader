@@ -97,34 +97,38 @@ class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
 
     @contextmanager
     def work_on_services(self, **params):
-        params = params or {}
-        if params.get("partner") and not params.get("partner_user"):
-            params["partner_user"] = params["partner"]
-        if "shopinvader_backend" not in params:
-            params["shopinvader_backend"] = self.backend
-        if "shopinvader_session" not in params:
-            params["shopinvader_session"] = {}
-        if not params.get("partner_user") and params.get("partner"):
-            params["partner_user"] = params["partner"]
-        if params.get("partner_user"):
-            params["invader_partner"] = params[
-                "partner_user"
-            ]._get_invader_partner(self.backend)
-        # Safe defaults as these keys are mandatory for work ctx
-        if "partner" not in params:
-            params["partner"] = self.env["res.partner"].browse()
-        if "partner_user" not in params:
-            params["partner_user"] = self.env["res.partner"].browse()
-        if "invader_partner" not in params:
-            params["invader_partner"] = self.env[
-                "shopinvader.partner"
-            ].browse()
+        params = self._work_on_services_default_params(self, **params)
         collection = _PseudoCollection("shopinvader.backend", self.env)
         yield WorkContext(
             model_name="rest.service.registration",
             collection=collection,
             **params
         )
+
+    @staticmethod
+    def _work_on_services_default_params(class_or_instance, **params):
+        if "shopinvader_backend" not in params:
+            params["shopinvader_backend"] = class_or_instance.backend
+        if "shopinvader_session" not in params:
+            params["shopinvader_session"] = {}
+        if params.get("partner") and not params.get("partner_user"):
+            params["partner_user"] = params["partner"]
+
+        # Safe defaults as these keys are mandatory for work ctx
+        for k in ("partner", "partner_user"):
+            if not params.get(k):
+                params[k] = class_or_instance.env["res.partner"].browse()
+            if not params.get("invader_" + k):
+                params["invader_" + k] = params[k]._get_invader_partner(
+                    class_or_instance.backend
+                )
+        return params
+
+    def _update_work_ctx(self, service, **params):
+        params = self._work_on_services_default_params(self, **params)
+        for k, v in params.items():
+            if not getattr(service.work, k, None) and v:
+                setattr(service.work, k, v)
 
     def _init_job_counter(self):
         self.existing_jobs = self.env["queue.job"].search([])

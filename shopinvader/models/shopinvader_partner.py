@@ -5,7 +5,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
+
+STATE_ACTIVE = "active"
+STATE_INACTIVE = "inactive"
+STATE_PENDING = "pending"
+ALL_STATES = (STATE_ACTIVE, STATE_INACTIVE, STATE_PENDING)
 
 
 class ShopinvaderPartner(models.Model):
@@ -24,6 +29,27 @@ class ShopinvaderPartner(models.Model):
         string="Partner Email",
     )
     role = fields.Char(compute="_compute_role")
+    state = fields.Selection(selection="_select_state", default=STATE_ACTIVE,)
+    # Common interface to mimic the same behavior as res.partner.
+    # On the binding we have a selection for the state
+    # and we can set the value for each backend.
+    # On addresses is relevant only if the record is enabled or not for the shop.
+    # Having the same field on both models allows to use simple conditions to check.
+    is_shopinvader_active = fields.Boolean(
+        compute="_compute_is_shopinvader_active"
+    )
+
+    def _select_state(self):
+        return [
+            (STATE_ACTIVE, "Active"),
+            (STATE_INACTIVE, "Inactive"),
+            (STATE_PENDING, "Pending"),
+        ]
+
+    @api.depends("state")
+    def _compute_is_shopinvader_active(self):
+        for rec in self:
+            rec.is_shopinvader_active = rec.state == STATE_ACTIVE
 
     _sql_constraints = [
         (
@@ -146,3 +172,34 @@ class ShopinvaderPartner(models.Model):
             if f not in partner_fields:
                 v.pop(f)
         return v
+
+    def action_shopinvader_validate(self):
+        wiz = self._get_shopinvader_validate_wizard()
+        action = self.env.ref(
+            "shopinvader.shopinvader_partner_validate_act_window"
+        )
+        action_data = action.read()[0]
+        action_data["res_id"] = wiz.id
+        return action_data
+
+    def _get_shopinvader_validate_wizard(self, **kw):
+        vals = dict(shopinvader_partner_ids=self.ids, **kw)
+        return self.env["shopinvader.partner.validate"].create(vals)
+
+    def action_edit_in_form(self):
+        self.ensure_one()
+        form_xid = self.env.context.get(
+            "form_view_ref", "shopinvader.shopinvader_partner_view_form"
+        )
+        view = self.env.ref(form_xid)
+        return {
+            "name": _("Edit %s") % self.name,
+            "type": "ir.actions.act_window",
+            "view_type": "form",
+            "res_model": self._name,
+            "views": [(view.id, "form")],
+            "view_id": view.id,
+            "target": "new",
+            "res_id": self.id,
+            "context": dict(self.env.context),
+        }

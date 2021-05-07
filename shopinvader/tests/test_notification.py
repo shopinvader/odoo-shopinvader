@@ -122,7 +122,8 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
         self._check_notification("new_customer_welcome_not_validated", partner)
 
         # now enable it
-        partner.action_enable_for_shop()
+        invader_partner = partner._get_invader_partner(self.backend)
+        invader_partner._get_shopinvader_validate_wizard().action_apply()
         job = self._find_job(
             name="Notify customer_validated for res.partner,%d" % partner.id
         )
@@ -163,7 +164,7 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
         self._check_notification("address_created_not_validated", partner)
 
         # now enable it
-        address.action_enable_for_shop()
+        address._get_shopinvader_validate_address_wizard().action_apply()
         job = self._find_job(
             name="Notify address_validated for res.partner,%d" % partner.id
         )

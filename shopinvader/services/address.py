@@ -193,7 +193,7 @@ class AddressService(Component):
             "is_company",
             "lang",
             ("title", ["id", "name"]),
-            "shopinvader_enabled:enabled",
+            "is_shopinvader_active:enabled",
             ("industry_id", ["id", "name"]),
         ]
         return res
@@ -223,6 +223,6 @@ class AddressService(Component):
 
         if mode == "create":
             params[
-                "shopinvader_enabled"
+                "is_shopinvader_active"
             ] = self.partner_validator.enabled_by_params(params, "address")
         return params

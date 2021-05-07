@@ -48,7 +48,7 @@ class CustomerService(Component):
             return info
         if partner.is_company:
             info["company_token"] = partner.invader_user_token
-        invader_partner = self.invader_partner
+        invader_partner = self.invader_partner_user
         info["is_simple_user"] = invader_partner.is_invader_user
         info["main_account"] = self._get_main_account_info(invader_partner)
         return info
