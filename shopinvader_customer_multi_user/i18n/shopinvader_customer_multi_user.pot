@@ -26,6 +26,16 @@ msgid "At least one backend has an invader user for this partner."
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__can_manage_users
+msgid "Authorize this user to manage the account."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__can_manage_users
+msgid "Can Manage Users"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
 #: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__invader_parent_id
 msgid ""
 "Closest invader partner. In simple multi-user setup it matches the parent "
@@ -62,13 +72,28 @@ msgid "Invader parent"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
-#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__is_invader_user
-msgid "Is Invader User"
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__is_admin_account
+msgid "Is Admin Account"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__is_main_account
+msgid "Is Main Account"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__is_users_manager
+msgid "Is Users Manager"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_partner_view_search
 msgid "Is invader user"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__is_invader_user
+msgid "Is simple user"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
@@ -105,6 +130,11 @@ msgstr ""
 #. module: shopinvader_customer_multi_user
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_backend_form_view
 msgid "Multiple users"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_partner_view_form
+msgid "Permissions"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
@@ -172,6 +202,11 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__is_invader_user
+msgid "This shop user is not a main profile user"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
 #: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_backend__customer_multi_user
 msgid ""
 "Turn on this flag to enable multiple users per each partner. Customers will "
@@ -179,6 +214,18 @@ msgid ""
 "token. Every order and every notification will be associated to the main "
 "partner. Simple users can manage their own address and use it for invoicing "
 "or shipping. Addresses must be validated before frontend users can use them."
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: code:addons/shopinvader_customer_multi_user/services/user_management.py:0
+#, python-format
+msgid "User not allowed"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: code:addons/shopinvader_customer_multi_user/services/user_management.py:0
+#, python-format
+msgid "User not authenticated"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
@@ -199,4 +246,10 @@ msgstr ""
 #. module: shopinvader_customer_multi_user
 #: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__shopinvader_backend__multi_user_records_policy__parent_id
 msgid "View parent partner records"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: code:addons/shopinvader_customer_multi_user/services/user_management.py:0
+#, python-format
+msgid "You cannot delete your own user"
 msgstr ""
