@@ -117,8 +117,6 @@ class TestInvoice(CommonCase, CommonTestDownload):
         # and only paid invoice are accessible
         self.assertFalse(self.backend.invoice_access_open)
         # Invoices are open, none of them is included
-        self.invoice._post()
-        self.non_sale_invoice._post()
         domain = self.invoice_service._get_base_search_domain()
         self.assertNotIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertNotIn(self.invoice, self.invoice_obj.search(domain))
@@ -136,8 +134,6 @@ class TestInvoice(CommonCase, CommonTestDownload):
         # and only paid invoice are accessible
         self.assertFalse(self.backend.invoice_access_open)
         # Invoices are open, none of them is included
-        self.invoice._post()
-        self.non_sale_invoice._post()
         domain = self.invoice_service._get_base_search_domain()
         self.assertNotIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertNotIn(self.invoice, self.invoice_obj.search(domain))
@@ -154,15 +150,12 @@ class TestInvoice(CommonCase, CommonTestDownload):
         self.backend.invoice_linked_to_sale_only = False
         # and open invoices enabled as well
         self.backend.invoice_access_open = True
-        self.invoice._post()
-        self.non_sale_invoice._post()
-        domain = self.invoice_service._get_base_search_domain()
-        self.assertIn(self.non_sale_invoice, self.invoice_obj.search(domain))
-        self.assertIn(self.invoice, self.invoice_obj.search(domain))
         # pay both invoices
         self._make_payment(self.invoice)
         self._make_payment(self.non_sale_invoice)
         domain = self.invoice_service._get_base_search_domain()
+        self.assertIn(self.non_sale_invoice, self.invoice_obj.search(domain))
+        self.assertIn(self.invoice, self.invoice_obj.search(domain))
         # Still both available
         self.assertIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertIn(self.invoice, self.invoice_obj.search(domain))
