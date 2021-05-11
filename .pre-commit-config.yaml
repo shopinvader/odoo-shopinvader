@@ -27,7 +27,6 @@ exclude: |
   ^shopinvader_locomotive_wishlist/|
   ^shopinvader_notification_default/|
   ^shopinvader_partner_firstname/|
-  ^shopinvader_partner_vat/|
   ^shopinvader_pending_cart_reminder/|
   ^shopinvader_product_media/|
   ^shopinvader_product_new/|

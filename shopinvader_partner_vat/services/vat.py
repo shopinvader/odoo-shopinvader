@@ -5,8 +5,9 @@
 import logging
 
 from odoo import _
-from odoo.addons.component.core import Component
 from odoo.exceptions import ValidationError
+
+from odoo.addons.component.core import Component
 
 _logger = logging.getLogger(__name__)
 
@@ -55,9 +56,7 @@ class CustomerService(Component):
             else:
                 res["valid"] = False
         except Exception as e:
-            raise ValidationError(
-                _("VIES server communication problem: {}".format(e))
-            )
+            raise ValidationError(_("VIES server communication problem: {}".format(e)))
         return res
 
     # Validator
