@@ -25,6 +25,7 @@ class ShopinvaderVariant(models.Model):
             "lang_id",
             "record_id.packaging_ids.qty",
             "record_id.packaging_ids.can_be_sold",
+            "record_id.packaging_ids.barcode",
             "record_id.packaging_ids.packaging_type_id.name",
         )
 
