@@ -3,9 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.shopinvader.tests.common import CommonCase
-from odoo.addons.shopinvader.tests.test_notification import (
-    NotificationCaseMixin,
-)
+from odoo.addons.shopinvader.tests.test_notification import NotificationCaseMixin
 
 
 class NotificationQuotationCase(CommonCase, NotificationCaseMixin):
