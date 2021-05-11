@@ -3,6 +3,7 @@ cerberus
 locomotivecms
 python-magic
 python-slugify
+python-stdnum
 slugify
 unidecode
 validators

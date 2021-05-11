@@ -5,8 +5,9 @@
 
 from os.path import dirname, join
 
-from odoo.addons.shopinvader.tests.common import CommonCase
 from vcr import VCR
+
+from odoo.addons.shopinvader.tests.common import CommonCase
 
 vcr = VCR(cassette_library_dir=join(dirname(__file__), "cassettes"))
 
@@ -21,9 +22,7 @@ class CheckVatCase(CommonCase):
         vat_number = "FR86792377731"
         self.service.shopinvader_backend.company_id.vat_check_vies = True
         with vcr.use_cassette("success.json"):
-            res = self.service.dispatch(
-                "check_vat", params={"vat_number": vat_number}
-            )
+            res = self.service.dispatch("check_vat", params={"vat_number": vat_number})
             # Address can change, we remove unstable data
             res.pop("address")
             self.assertEqual(
@@ -40,21 +39,15 @@ class CheckVatCase(CommonCase):
         vat_number = "FR54348545954"
         self.service.shopinvader_backend.company_id.vat_check_vies = True
         with vcr.use_cassette("failure.json"):
-            res = self.service.dispatch(
-                "check_vat", params={"vat_number": vat_number}
-            )
+            res = self.service.dispatch("check_vat", params={"vat_number": vat_number})
             self.assertEqual(res, {"valid": False, "vat_number": vat_number})
 
     def test_check_valid_vat_without_vies(self):
         vat_number = "FR86792377731"
-        res = self.service.dispatch(
-            "check_vat", params={"vat_number": vat_number}
-        )
+        res = self.service.dispatch("check_vat", params={"vat_number": vat_number})
         self.assertEqual(res, {"valid": True, "vat_number": vat_number})
 
     def test_check_invalid_vat_without_vies(self):
         vat_number = "FR54348545954"
-        res = self.service.dispatch(
-            "check_vat", params={"vat_number": vat_number}
-        )
+        res = self.service.dispatch("check_vat", params={"vat_number": vat_number})
         self.assertEqual(res, {"valid": False, "vat_number": vat_number})
