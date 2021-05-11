@@ -14,13 +14,28 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.cart = cls.env.ref("shopinvader.sale_order_2")
         cls.pkg_box = cls.env["product.packaging"].create(
-            {"name": "Box", "product_id": cls.product_1.id, "qty": 50}
+            {
+                "name": "Box",
+                "product_id": cls.product_1.id,
+                "qty": 50,
+                "barcode": "BOX",
+            }
         )
         cls.pkg_big_box = cls.env["product.packaging"].create(
-            {"name": "Big Box", "product_id": cls.product_1.id, "qty": 200}
+            {
+                "name": "Big Box",
+                "product_id": cls.product_1.id,
+                "qty": 200,
+                "barcode": "BIGBOX",
+            }
         )
         cls.pkg_pallet = cls.env["product.packaging"].create(
-            {"name": "Pallet", "product_id": cls.product_1.id, "qty": 2000}
+            {
+                "name": "Pallet",
+                "product_id": cls.product_1.id,
+                "qty": 2000,
+                "barcode": "PALLET",
+            }
         )
         # This module adds new keys: recompute
         cls._refresh_json_data(
@@ -65,6 +80,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
                 "id": self.pkg_pallet.id,
                 "name": self.pkg_pallet.packaging_type_id.name,
                 "code": self.pkg_pallet.packaging_type_id.code,
+                "barcode": self.pkg_pallet.barcode,
             },
         )
         self.assertEqual(cart_line["packaging_qty"], 2)
@@ -91,6 +107,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
                 "id": self.pkg_pallet.id,
                 "name": self.pkg_pallet.packaging_type_id.name,
                 "code": self.pkg_pallet.packaging_type_id.code,
+                "barcode": self.pkg_pallet.barcode,
             },
         )
         self.assertEqual(cart_line["packaging_qty"], 3.0)
@@ -123,6 +140,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
                 "id": self.pkg_pallet.id,
                 "name": self.pkg_pallet.packaging_type_id.name,
                 "code": self.pkg_pallet.packaging_type_id.code,
+                "barcode": self.pkg_pallet.barcode,
             },
         )
         self.assertEqual(cart_line["packaging_qty"], 4.0)

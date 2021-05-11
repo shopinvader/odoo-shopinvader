@@ -55,4 +55,5 @@ class PackagingServiceMixin(AbstractComponent):
             # Use packaging type name because it's translated
             "name": packaging.packaging_type_id.name,
             "code": packaging.packaging_type_id.code,
+            "barcode": packaging.barcode,
         }

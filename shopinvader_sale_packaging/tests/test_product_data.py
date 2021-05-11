@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.stock_packaging_calculator.tests.utils import make_pkg_values
 
 
 class TestProductPackagingData(CommonCase):
@@ -28,6 +29,7 @@ class TestProductPackagingData(CommonCase):
                 "product_id": product.id,
                 "qty": 50,
                 "packaging_type_id": cls.type_retail_box.id,
+                "barcode": "BOX",
             }
         )
         cls.pkg_big_box = cls.env["product.packaging"].create(
@@ -36,6 +38,7 @@ class TestProductPackagingData(CommonCase):
                 "product_id": product.id,
                 "qty": 200,
                 "packaging_type_id": cls.type_transport_box.id,
+                "barcode": "BIGBOX",
             }
         )
         cls.pkg_pallet = cls.env["product.packaging"].create(
@@ -44,6 +47,7 @@ class TestProductPackagingData(CommonCase):
                 "product_id": product.id,
                 "qty": 2000,
                 "packaging_type_id": cls.type_pallet.id,
+                "barcode": "PALLET",
             }
         )
         cls._bind_products(cls, product)
@@ -53,55 +57,32 @@ class TestProductPackagingData(CommonCase):
 
     def _default_expected(self):
         return [
-            {
-                "id": self.pkg_pallet.id,
-                "name": self.type_pallet.name,
-                "qty": self.pkg_pallet.qty,
-                "is_unit": False,
-                "contained": [
-                    {
-                        "id": self.pkg_big_box.id,
-                        "is_unit": False,
-                        "name": self.type_transport_box.name,
-                        "qty": 10,
-                    }
+            make_pkg_values(
+                self.pkg_pallet,
+                name=self.type_pallet.name,
+                contained=[
+                    make_pkg_values(
+                        self.pkg_big_box,
+                        name=self.type_transport_box.name,
+                        qty=10,
+                    )
                 ],
-            },
-            {
-                "id": self.pkg_big_box.id,
-                "name": self.type_transport_box.name,
-                "qty": self.pkg_big_box.qty,
-                "is_unit": False,
-                "contained": [
-                    {
-                        "id": self.pkg_box.id,
-                        "is_unit": False,
-                        "name": self.type_retail_box.name,
-                        "qty": 4,
-                    }
+            ),
+            make_pkg_values(
+                self.pkg_big_box,
+                name=self.type_transport_box.name,
+                contained=[
+                    make_pkg_values(
+                        self.pkg_box, name=self.type_retail_box.name, qty=4
+                    )
                 ],
-            },
-            {
-                "id": self.pkg_box.id,
-                "name": self.type_retail_box.name,
-                "qty": self.pkg_box.qty,
-                "is_unit": False,
-                "contained": [
-                    {
-                        "id": self.product.uom_id.id,
-                        "is_unit": True,
-                        "name": self.product.uom_id.name,
-                        "qty": 50,
-                    }
-                ],
-            },
-            {
-                "id": self.product.uom_id.id,
-                "is_unit": True,
-                "name": self.product.uom_id.name,
-                "contained": None,
-                "qty": 1.0,
-            },
+            ),
+            make_pkg_values(
+                self.pkg_box,
+                name=self.type_retail_box.name,
+                contained=[make_pkg_values(self.product.uom_id, qty=50)],
+            ),
+            make_pkg_values(self.product.uom_id, qty=1, contained=None),
         ]
 
     def test_product_data(self):
