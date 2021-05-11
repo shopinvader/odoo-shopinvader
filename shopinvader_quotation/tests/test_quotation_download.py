@@ -11,7 +11,7 @@ class QuotationDownloadCase(CommonCase, CommonTestDownload):
         cls.quotation = cls.env.ref("shopinvader.sale_order_2")
         cls.quotation.write({"typology": "quotation"})
         cls.partner = cls.env.ref("shopinvader.partner_1")
-        with cls.work_on_services(partner=cls.partner) as work:
+        with cls.work_on_services(cls, partner=cls.partner) as work:
             cls.service = work.component(usage="quotations")
 
     def test_quotation_download(self):
