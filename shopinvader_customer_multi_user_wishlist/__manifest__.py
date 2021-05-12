@@ -6,7 +6,7 @@
     "summary": """
         Integrate customer multi user and wishlist.
     """,
-    "version": "13.0.1.1.0",
+    "version": "13.0.1.1.1",
     "license": "AGPL-3",
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
