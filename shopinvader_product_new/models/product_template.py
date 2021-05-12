@@ -17,7 +17,5 @@ class ProductTemplate(models.Model):
         domain = [("shopinvader_bind_ids", "!=", False)]
         if extra_domain is not None:
             domain += extra_domain
-        new_products = self.search(
-            domain, limit=limit, order="create_date desc"
-        )
+        new_products = self.search(domain, limit=limit, order="create_date desc")
         new_products.write({"new_product": True})
