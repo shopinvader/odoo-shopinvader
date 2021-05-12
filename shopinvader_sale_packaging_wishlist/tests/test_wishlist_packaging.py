@@ -107,6 +107,7 @@ class WishlistCase(CommonWishlistCase):
             res_line["packaging_by_qty"],
             [
                 {
+                    "barcode": None,
                     "contained": None,
                     "id": 1,
                     "is_unit": True,
@@ -131,6 +132,7 @@ class WishlistCase(CommonWishlistCase):
                 "id": packaging.id,
                 "name": self.packaging_type.name,
                 "code": self.packaging_type.code,
+                "barcode": packaging.barcode,
             },
         )
         self.assertEqual(
@@ -143,12 +145,14 @@ class WishlistCase(CommonWishlistCase):
                             "is_unit": True,
                             "name": "Units",
                             "qty": 100,
+                            "barcode": None,
                         }
                     ],
                     "id": packaging.id,
                     "is_unit": False,
                     "name": packaging.packaging_type_id.name,
                     "qty": 3,
+                    "barcode": packaging.barcode,
                 }
             ],
         )
