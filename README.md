@@ -20,18 +20,18 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.1.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 13.0.6.3.0 | Shopinvader
+[shopinvader](shopinvader/) | 13.0.6.3.1 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.2.3 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.2.0.0 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.2.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 | Shopinvader Display category image for product
-[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.2.2.0 | Enable registration of multiple users per each company customer.
-[shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.1.0 | Integrate customer multi user and wishlist.
+[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.2.2.1 | Enable registration of multiple users per each company customer.
+[shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.1.1 | Integrate customer multi user and wishlist.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.3.1.0 | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 | Shopinvader addons to let user define delivery instructions
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.1.0 | Shopinvader Elasticsearch Connector
-[shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.0 | Guest mode for Shopinvader
+[shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.1 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 13.0.2.0.1 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.3.0.0 | Import product images
 [shopinvader_lead](shopinvader_lead/) | 13.0.1.0.1 | Shopinvader Lead Management
