@@ -9,9 +9,8 @@
         <field name="interval_type">days</field>
         <field name="numbercall">-1</field>
         <field eval="False" name="doall" />
-        <field eval="'product.template'" name="model" />
-        <field eval="'compute_new_product'" name="function" />
-        <field eval="'(50, None,)'" name="args" />
+        <field ref="model_product_template" name="model_id" />
+        <field name="code">model.compute_new_product(50)</field>
     </record>
 
 </odoo>
