@@ -311,7 +311,12 @@ class WishlistCase(CommonWishlistCase):
             self.prod_set, data_mode="light"
         )
         self.assertEqual(
-            res, {"id": self.prod_set.id, "name": self.prod_set.name}
+            res,
+            {
+                "id": self.prod_set.id,
+                "name": self.prod_set.name,
+                "access": {"read": True, "update": True, "delete": True},
+            },
         )
         msg = "JSON data mode `fancy` not found."
         with self.assertRaisesRegex(exceptions.UserError, msg):
