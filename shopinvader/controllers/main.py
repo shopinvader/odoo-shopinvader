@@ -12,6 +12,8 @@ from odoo.http import request, route
 
 from odoo.addons.base_rest.controllers import main
 
+from ..utils import get_partner_work_context
+
 _logger = logging.getLogger(__name__)
 
 
@@ -102,22 +104,7 @@ class InvaderController(main.RestController):
         # TODO: all services should rely on shopinvader partner
         # rather than the real partner
         shopinvader_partner = self._get_partner_from_headers(headers)
-        res["invader_partner"] = shopinvader_partner
-        res["invader_partner_user"] = shopinvader_partner
-        partner_user = shopinvader_partner.record_id
-        res["partner_user"] = partner_user
-        # The partner user for the main account or for sale order may differ.
-        partner_shop = partner_user.get_shop_partner(
-            res["shopinvader_backend"]
-        )
-        res["partner"] = partner_shop
-        if partner_shop != partner_user:
-            # Invader partner must rappresent the same partner as the shop
-            invader_partner_shop = partner_shop._get_invader_partner(
-                res["shopinvader_backend"]
-            )
-            if invader_partner_shop:
-                res["invader_partner"] = invader_partner_shop
+        res.update(get_partner_work_context(shopinvader_partner))
         res[
             "shopinvader_session"
         ] = self._get_shopinvader_session_from_headers(headers)

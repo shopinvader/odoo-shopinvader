@@ -48,8 +48,9 @@ class TestCustomer(CommonCase):
     def _create_customer(self, **kw):
         data = dict(self.base_data)
         data.update(kw)
-        res = self.customer_service.dispatch("create", params=data)["data"]
-        return self.env["res.partner"].browse(res["id"])
+        self.customer_service._reset_partner_work_context()
+        self.customer_service.dispatch("create", params=data)["data"]
+        return self.customer_service.partner
 
     def _create_address(self, partner=None, **kw):
         data = dict(self.base_data)

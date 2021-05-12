@@ -53,6 +53,12 @@ class TestMultiUserCommon(TestCustomerCommon):
         values.update(kw)
         return env["shopinvader.partner"].create(values)
 
+    def _get_service(self, partner, usage="users"):
+        with self.work_on_services(
+            partner=partner, shopinvader_session=self.shopinvader_session
+        ) as work:
+            return work.component(usage=usage)
+
 
 class TestUserManagementCommmon(TestMultiUserCommon):
     """Test interaction with /users endpoint.
