@@ -5,20 +5,16 @@
 {
     "name": "Shopinvader Product New",
     "summary": "Shopinvader product new",
-    "version": "10.0.0.0.0",
+    "version": "14.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
-    "application": False,
     "installable": True,
-    "external_dependencies": {},
     "depends": ["shopinvader"],
     "data": [
         "views/product_template.xml",
         "data/ir_export_product.xml",
         "data/ir_cron.xml",
     ],
-    "demo": [],
-    "qweb": [],
 }
