@@ -63,7 +63,6 @@ class ShopinvaderBackend(models.Model):
         ):
             backend.with_delay().reset_expired_password()
 
-    @api.multi
     def _get_expired_password_domain(self):
         self.ensure_one()
         pivot_date = fields.Datetime.from_string(fields.Datetime.now()) + timedelta(
