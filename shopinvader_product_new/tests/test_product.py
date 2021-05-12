@@ -13,9 +13,7 @@ class TestProductNew(TransactionCase):
 
     def test_scheduler_new_product(self):
         self.env["product.template"].compute_new_product(10, extra_domain=[])
-        new_products = self.env["product.template"].search(
-            [("new_product", "=", True)]
-        )
+        new_products = self.env["product.template"].search([("new_product", "=", True)])
         self.assertEqual(len(new_products), 10)
         product = self.env["product.template"].create(
             {"name": "Test new product", "default_code": "REF-NEW-PRODUCT"}
@@ -24,7 +22,5 @@ class TestProductNew(TransactionCase):
         self.assertEqual(product.new_product, False)
         self.env["product.template"].compute_new_product(10, extra_domain=[])
         self.assertEqual(product.new_product, True)
-        new_products = self.env["product.template"].search(
-            [("new_product", "=", True)]
-        )
+        new_products = self.env["product.template"].search([("new_product", "=", True)])
         self.assertEqual(len(new_products), 10)
