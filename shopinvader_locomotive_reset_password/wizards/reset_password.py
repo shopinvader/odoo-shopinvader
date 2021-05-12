@@ -52,7 +52,6 @@ class ShopinvaderResetPassword(models.TransientModel):
             res["partner_ids"] = active_ids
         return res
 
-    @api.multi
     def confirm(self):
         self.ensure_one()
         partners = self.partner_ids
