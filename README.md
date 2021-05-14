@@ -53,7 +53,7 @@ addon | version | summary
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.2.2.0 | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.2.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 13.0.2.0.0 | Shopinvader Catalog Search Engine Connector
-[shopinvader_wishlist](shopinvader_wishlist/) | 13.0.3.3.0 | Handle shop wishlist
+[shopinvader_wishlist](shopinvader_wishlist/) | 13.0.3.3.1 | Handle shop wishlist
 
 
 Unported addons
