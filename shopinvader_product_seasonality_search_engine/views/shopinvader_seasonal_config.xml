@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_seasonal_config_search_view">
+        <field name="name">shopinvader.seasonal.config.line.search</field>
+        <field name="model">shopinvader.seasonal.config.line</field>
+        <field
+            name="inherit_id"
+            ref="shopinvader_product_seasonality.shopinvader_seasonal_config_search_view"
+        />
+        <field name="arch" type="xml">
+            <search string="Lines">
+                <field name="seasonal_config_id" position="after">
+                    <field name="sync_state" />
+                </field>
+                <filter name="group_by_seasonal_config_id" position="after">
+                    <filter
+                        string="Sync state"
+                        name="group_by_sync_state"
+                        domain="[]"
+                        context="{'group_by':'sync_state'}"
+                    />
+                </filter>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="shopinvader_seasonal_config_tree_view">
+        <field name="name">shopinvader.seasonal.config.line.tree</field>
+        <field name="model">shopinvader.seasonal.config.line</field>
+        <field
+            name="inherit_id"
+            ref="shopinvader_product_seasonality.shopinvader_seasonal_config_tree_view"
+        />
+        <field name="arch" type="xml">
+            <field name="product_template_id" position="after">
+                <field name="sync_state" />
+            </field>
+        </field>
+    </record>
+
+    <record id="shopinvader_seasonal_config_form_view" model="ir.ui.view">
+        <field name="name">shopinvader.seasonal.config.line.form</field>
+        <field name="model">shopinvader.seasonal.config.line</field>
+        <field
+            name="inherit_id"
+            ref="shopinvader_product_seasonality.shopinvader_seasonal_config_form_view"
+        />
+        <field name="arch" type="xml">
+            <field name="seasonal_config_id" position="after">
+                <field name="data_display" />
+            </field>
+        </field>
+    </record>
+
+    <record
+        model="ir.actions.server"
+        id="action_recompute_shopinvader_seasonal_config_line"
+    >
+        <field name="name">Recompute</field>
+        <field name="model_id" ref="model_shopinvader_seasonal_config_line" />
+        <field name="binding_model_id" ref="model_shopinvader_seasonal_config_line" />
+        <field name="state">code</field>
+        <field name="code">records.jobify_recompute_json(force_export=True)</field>
+    </record>
+
+</odoo>
