@@ -1,0 +1,40 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_elasticsearch
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_elasticsearch
+#: model:ir.model.fields,field_description:shopinvader_elasticsearch.field_shopinvader_product__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_elasticsearch
+#: model:ir.model.fields,field_description:shopinvader_elasticsearch.field_shopinvader_product__hierarchical_categories
+#: model:ir.model.fields,field_description:shopinvader_elasticsearch.field_shopinvader_variant__hierarchical_categories
+msgid "Hierarchical Categories"
+msgstr ""
+
+#. module: shopinvader_elasticsearch
+#: model:ir.model.fields,field_description:shopinvader_elasticsearch.field_shopinvader_product__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_elasticsearch
+#: model:ir.model.fields,field_description:shopinvader_elasticsearch.field_shopinvader_product____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_elasticsearch
+#: model:ir.model,name:shopinvader_elasticsearch.model_shopinvader_product
+msgid "Shopinvader Product"
+msgstr ""
