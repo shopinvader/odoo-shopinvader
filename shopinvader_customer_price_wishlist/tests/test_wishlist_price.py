@@ -2,10 +2,11 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.tests import tagged
+
 from odoo.addons.shopinvader_wishlist.tests.test_wishlist import (
     CommonWishlistCase,
 )
-from odoo.tests import tagged
 
 
 @tagged("post_install", "-at_install")
