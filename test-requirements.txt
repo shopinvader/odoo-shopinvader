@@ -7,9 +7,3 @@ vcrpy
 vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
-
-
-### Pending PRs
-
-odoo14-addon-connector @ git+https://github.com/nuobit/connector.git@14.0-mig-connector#subdirectory=setup/connector
-odoo14-addon-connector_search_engine @ git+https://github.com/akretion/search-engine.git@14.0-migrate#subdirectory=setup/connector_search_engine
