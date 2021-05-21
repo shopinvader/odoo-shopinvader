@@ -269,13 +269,19 @@ class CommonTestDownload(object):
         """
         self._test_download_not_allowed(service, target)
 
+    # FIXME: this seems duplicated in some common test cases
+
+    def _ensure_posted(self, invoice):
+        if invoice.state != "posted":
+            invoice._post()
+
     def _make_payment(self, invoice):
         """
         Make the invoice payment
         :param invoice: account.invoice recordset
         :return: bool
         """
-        invoice._post()
+        self._ensure_posted(invoice)
         ctx = {"active_ids": invoice.ids, "active_model": "account.move"}
         wizard_obj = self.register_payments_obj.with_context(ctx)
         register_payments = wizard_obj.create(
