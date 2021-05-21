@@ -13,10 +13,12 @@ class SeIndex(models.Model):
     @api.depends("lang_id", "model_id")
     @api.depends_context("shopinvader_backend_id")
     def _compute_is_valid(self):
+        backend = self.env["shopinvader.backend"]
+        backend_id = self.env.context.get("shopinvader_backend_id")
+        if backend_id:
+            backend = backend.browse(backend_id)
         for rec in self:
-            active_id = self.env.context.get("shopinvader_backend_id")
-            active_id = self.env["shopinvader.backend"].browse(active_id)
-            if active_id and rec.lang_id in active_id.lang_ids:
+            if not rec.lang_id or not backend:
                 rec.is_valid = True
-            else:
-                rec.is_valid = False
+                continue
+            rec.is_valid = rec.lang_id.id in backend.lang_ids.ids
