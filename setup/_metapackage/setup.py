@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader',
         'odoo14-addon-shopinvader_cart_expiry',
         'odoo14-addon-shopinvader_customer_multi_user',
+        'odoo14-addon-shopinvader_elasticsearch',
         'odoo14-addon-shopinvader_image',
         'odoo14-addon-shopinvader_invoice',
         'odoo14-addon-shopinvader_multi_category',
