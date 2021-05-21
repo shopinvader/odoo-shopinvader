@@ -28,6 +28,8 @@ addon | version | summary
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 | Shopinvader Display category image for product
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.2.2.1 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.1.1 | Integrate customer multi user and wishlist.
+[shopinvader_customer_price](shopinvader_customer_price/) | 13.0.1.0.0 | Expose customer's specific prices.
+[shopinvader_customer_price_wishlist](shopinvader_customer_price_wishlist/) | 13.0.1.0.0 | Expose customer's specific prices.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.3.1.0 | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 | Shopinvader addons to let user define delivery instructions
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.1.0 | Shopinvader Elasticsearch Connector
