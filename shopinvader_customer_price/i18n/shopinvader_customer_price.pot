@@ -1,0 +1,33 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_customer_price
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_customer_price
+#: model:ir.model.fields,field_description:shopinvader_customer_price.field_shopinvader_backend__cart_pricelist_partner_field_id
+msgid "Cart Pricelist Partner Field"
+msgstr ""
+
+#. module: shopinvader_customer_price
+#: model:ir.model,name:shopinvader_customer_price.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_customer_price
+#: model:ir.model.fields,help:shopinvader_customer_price.field_shopinvader_backend__cart_pricelist_partner_field_id
+msgid ""
+"Set the partner pricelist that will be used for the cart. WARNING: by "
+"changing this you might have a mismatch between the prices showed on the "
+"cart and the ones showed on product details. The default pricelist will "
+"still be used for products' indexes."
+msgstr ""
