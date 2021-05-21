@@ -63,8 +63,8 @@
                 </group>
                 <group colspan="4">
                     <button
-                        name="add_missing_index"
-                        string="Add missing index"
+                        name="action_add_missing_indexes"
+                        string="Add missing indexes"
                         type="object"
                     />
                 </group>
