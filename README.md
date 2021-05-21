@@ -23,6 +23,7 @@ addon | version | summary
 [shopinvader](shopinvader/) | 14.0.1.2.1 | Shopinvader
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.0.1 | Enable registration of multiple users per each company customer.
+[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 14.0.1.0.0 | Add the export of Image for Shopinvader
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.1.1.1 | Shopinvader Invoice module
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
@@ -47,7 +48,6 @@ addon | version | summary
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.2.5.1 (unported) | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 (unported) | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
-[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.0.1 (unported) | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.0 (unported) | Guest mode for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.3.0.0 (unported) | Import product images
 [shopinvader_lead](shopinvader_lead/) | 13.0.1.0.1 (unported) | Shopinvader Lead Management
