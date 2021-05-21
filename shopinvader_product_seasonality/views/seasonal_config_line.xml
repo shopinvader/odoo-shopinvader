@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    # Copyright 2021 Camptocamp SA
+    # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+
+  <record id="seasonal_config_line_view_form" model="ir.ui.view">
+    <field name="name">seasonal.config.line.form</field>
+    <field name="model">seasonal.config.line</field>
+    <field name="inherit_id" ref="product_seasonality.seasonal_config_line_view_form" />
+    <field name="arch" type="xml">
+      <group name="config" position="after">
+        <group
+                    name="shopinvader"
+                    groups="shopinvader.group_shopinvader_manager"
+                    colspan="4"
+                >
+          <field name="shopinvader_bind_ids">
+            <tree editable="bottom">
+              <field name="backend_id" />
+              <field name="external_id" readonly="True" />
+              <field name="create_date" readonly="True" />
+              <field name="sync_date" readonly="True" />
+            </tree>
+          </field>
+        </group>
+      </group>
+    </field>
+  </record>
+
+</odoo>

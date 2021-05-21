@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_backend_form_view">
+        <field
+            name="name"
+        >shopinvader.backend.form (in shopinvader_product_seasonality)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="arch" type="xml">
+            <button
+                name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d"
+                position="after"
+            >
+                <button
+                    name="bind_all_seasonal_config_lines"
+                    type="object"
+                    string="Bind Seasonal config lines"
+                    class="oe_highlight"
+                    groups="shopinvader.group_shopinvader_manager"
+                />
+            </button>
+        </field>
+    </record>
+
+</odoo>

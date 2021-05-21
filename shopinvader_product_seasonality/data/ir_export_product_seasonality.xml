@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+  <record id="ir_exp_seasonal_config_line" model="ir.exports">
+      <field name="name">ShopInvader Product Seasonality Export</field>
+      <field name="resource">shopinvader.seasonal.config.line</field>
+  </record>
+
+  <record id="ir_exp_config_line_id" model="ir.exports.line">
+      <field name="name">id</field>
+      <field name="export_id" ref="ir_exp_seasonal_config_line" />
+  </record>
+
+  <record id="ir_exp_variant_config_id" model="ir.exports.line">
+      <field name="name">seasonal_config_id</field>
+      <field name="target">seasonal_config_id:config_id</field>
+      <field name="instance_method_name">_jsonify_m2o_to_id</field>
+      <field name="export_id" ref="ir_exp_seasonal_config_line" />
+  </record>
+
+  <record id="ir_exp_variant_record_id" model="ir.exports.line">
+      <field name="name">record_id</field>
+      <field name="target">record_id:objectID</field>
+      <field name="instance_method_name">_jsonify_m2o_to_id</field>
+      <field name="export_id" ref="ir_exp_seasonal_config_line" />
+  </record>
+
+  <record id="ir_exp_seasonal_config_line_product_ids" model="ir.exports.line">
+    <field name="name">product_ids</field>
+    <field name="export_id" ref="ir_exp_seasonal_config_line" />
+  </record>
+
+  <record id="ir_exp_seasonal_config_line_date_start" model="ir.exports.line">
+    <field name="name">date_start</field>
+    <field name="export_id" ref="ir_exp_seasonal_config_line" />
+  </record>
+
+  <record id="ir_exp_seasonal_config_line_date_end" model="ir.exports.line">
+    <field name="name">date_end</field>
+    <field name="export_id" ref="ir_exp_seasonal_config_line" />
+  </record>
+
+  <record id="ir_exp_seasonal_config_line_weekdays" model="ir.exports.line">
+    <field name="name">weekdays</field>
+    <field name="export_id" ref="ir_exp_seasonal_config_line" />
+  </record>
+
+</odoo>
