@@ -1,9 +1,12 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
   <!-- Using tables is still the only reliable way for html emails -->
   <template id="make_table">
-    <t t-set="table_class" t-value="'block' + (' ' + extra_class if extra_class else '')" />
+    <t
+            t-set="table_class"
+            t-value="'block' + (' ' + extra_class if extra_class else '')"
+        />
     <table t-att-class="table_class">
       <tbody>
         <tr>
@@ -24,7 +27,7 @@
       <t t-set="partner" t-value="object.partner_id" />
     </t>
     <t t-if="partner">
-      <t t-set="object" t-value="object.with_context(lang=partner.lang)"/>
+      <t t-set="object" t-value="object.with_context(lang=partner.lang)" />
     </t>
     <t t-if="not website_name">
       <t t-set="website_name" t-value="res_company.name" />
@@ -35,7 +38,9 @@
   <template id="email_layout" name="Shopinvader email layout">
     <t t-call="shopinvader_notification_default.default_values" />
     <html>
-      <body t-attf-class="type-#{notification_type} model-#{object._name.replace('.', '_')}">
+      <body
+                t-attf-class="type-#{notification_type} model-#{object._name.replace('.', '_')}"
+            >
         <!-- TODO: move to LESS file
         If we put the link as it is `premailer` won't be able to render it.
         To ease this, we could:
@@ -84,7 +89,11 @@
                   <tbody>
                     <tr>
                       <td class="logo" t-if="main_logo">
-                        <img id="main_logo" t-ignore="true" t-att-src="image_data_uri(main_logo)" />
+                        <img
+                                                    id="main_logo"
+                                                    t-ignore="true"
+                                                    t-att-src="image_data_uri(main_logo)"
+                                                />
                       </td>
                     </tr>
                   </tbody>

@@ -1,9 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
   <template id="customer_welcome" name="Shopinvader customer welcome">
-    <t t-set="website_name"
-       t-value="shopinvader_backend.website_public_name if shopinvader_backend else res_company.name" />
-    Welcome to <t t-esc="website_name"/>
+    <t
+            t-set="website_name"
+            t-value="shopinvader_backend.website_public_name if shopinvader_backend else res_company.name"
+        />
+    Welcome to <t t-esc="website_name" />
   </template>
 
   <template id="new_customer_welcome" name="Shopinvader new customer email">
@@ -17,7 +19,10 @@
     </t>
   </template>
 
-  <template id="new_customer_not_validated" name="Shopinvader new customer not validated email">
+  <template
+        id="new_customer_not_validated"
+        name="Shopinvader new customer not validated email"
+    >
     <t t-call="shopinvader_notification_default.email_layout">
       <t t-set="mail_title">
         <t t-call="shopinvader_notification_default.customer_welcome" />
