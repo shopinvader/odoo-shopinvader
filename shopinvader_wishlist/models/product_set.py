@@ -18,18 +18,16 @@ class ProductSet(models.Model):
         "you must select a backend.",
     )
 
-    def get_line_by_product(self, product_id=None, invader_variant_id=None):
-        if not product_id and not invader_variant_id:
+    def get_lines_by_products(self, product_ids=None, invader_variant_ids=None):
+        if not product_ids and not invader_variant_ids:
             raise exceptions.ValidationError(
                 _("Provide `product_ids` or `invader_variant_id`")
             )
-        if product_id:
-            return self.set_line_ids.filtered(
-                lambda x: x.product_id.id == product_id
-            )
+        if product_ids:
+            return self.set_line_ids.filtered(lambda x: x.product_id.id in product_ids)
         else:
             return self.set_line_ids.filtered(
-                lambda x: x.shopinvader_variant_id.id == invader_variant_id
+                lambda x: x.shopinvader_variant_id.id in invader_variant_ids
             )
 
 
@@ -59,7 +57,5 @@ class ProductSetLine(models.Model):
                 if not variant:
                     lang = record.product_set_id.partner_id.lang
                     # try w/ partner lang
-                    variant = record.product_id._get_invader_variant(
-                        backend, lang
-                    )
+                    variant = record.product_id._get_invader_variant(backend, lang)
                 record.shopinvader_variant_id = variant
