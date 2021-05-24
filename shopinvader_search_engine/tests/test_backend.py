@@ -10,7 +10,7 @@ from odoo.tests import SavepointCase
 from odoo.addons.shopinvader.tests.common import _install_lang_odoo
 
 
-class BackendCase(SavepointCase):
+class BackendCaseBase(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -51,6 +51,8 @@ class BackendCase(SavepointCase):
         cls.loader.restore_registry()
         super().tearDownClass()
 
+
+class TestBackend(BackendCaseBase):
     def test_create_missing_indexes_1_lang(self):
         self.assertFalse(self.backend.index_ids)
         self.backend.action_add_missing_indexes()
