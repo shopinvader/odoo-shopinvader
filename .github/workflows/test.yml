@@ -35,8 +35,8 @@ jobs:
         with:
           persist-credentials: false
       - run: oca_install_addons
-      - run: manifestoo -v -d . check-licenses
-      - run: manifestoo -v -d . check-dev-status --default-dev-status Beta
+      - run: unbuffer manifestoo -v -d . check-licenses
+      - run: unbuffer manifestoo -v -d . check-dev-status --default-dev-status Beta
       - run: oca_init_test_database
       - run: oca_run_tests
       - uses: codecov/codecov-action@v1
