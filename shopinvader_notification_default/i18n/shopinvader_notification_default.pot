@@ -1,0 +1,186 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_notification_default
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_created_not_validated
+msgid ""
+"A new address has been added to your account, will be validated and "
+"activated soon."
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_created
+msgid "A new address has been added to your account."
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_validated
+msgid "A new address has been validated and activated."
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.customer_updated
+msgid "Account updated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.customer_validated
+msgid "Account validated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_created
+msgid "Address created"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_created_not_validated
+msgid "Address created but not validated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_modified
+msgid "Address modified"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_validated
+msgid "Address validated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.cart_confirmation
+msgid "Cart confirmation"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_cart_notification
+msgid "Cart notification ${object.name}"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.cart_confirmation
+msgid "INTRO TODO"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.invoice_confirmation
+msgid "Invoce generated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_invoice_notification
+msgid "Invoice notification ${object.number}"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.cart_confirmation
+msgid "MAIN INFO TODO"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_address_created_notification
+msgid "Notification ${object.name} - Address created"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_address_created_not_validated_notification
+msgid "Notification ${object.name} - Address created to be validated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_address_updated_notification
+msgid "Notification ${object.name} - Address modified"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_address_validated_notification
+msgid "Notification ${object.name} - Address validated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_customer_updated_notification
+msgid "Notification ${object.name} - Customer modified"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.cart_confirmation
+msgid "OUTTRO TODO"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_sale_notification
+msgid "Sale notification ${object.name}"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.sale_confirmation
+msgid "Sale order confirmation"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.sale_confirmation
+msgid "We are processing your sale order."
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_new_customer_welcome_notification
+msgid "Welcome notification ${object.name}"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_new_customer_welcome_not_validated_notification
+msgid "Welcome notification ${object.name} - Account to be validated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model:mail.template,subject:shopinvader_notification_default.email_customer_validated_notification
+msgid "Welcome notification ${object.name} - Account validated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.customer_welcome
+msgid "Welcome to"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.new_customer_not_validated
+msgid "Welcome, your account will be validated and activated soon"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.new_customer_welcome
+msgid "You are now registered on our website."
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.customer_updated
+msgid "Your account has been updated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.customer_validated
+msgid "Your account has been validated and activated"
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.address_modified
+msgid "Your address has been modified."
+msgstr ""
+
+#. module: shopinvader_notification_default
+#: model_terms:ir.ui.view,arch_db:shopinvader_notification_default.invoice_confirmation
+msgid "Your invoice have been generated."
+msgstr ""
