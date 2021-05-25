@@ -89,6 +89,11 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: shopinvader_cart_expiry
+#: model:ir.model,name:shopinvader_cart_expiry.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_cart_expiry
 #: code:addons/shopinvader_cart_expiry/models/shopinvader_backend.py:0
 #, python-format
 msgid "Manage cart expired for backend %s"
@@ -102,11 +107,6 @@ msgstr ""
 #. module: shopinvader_cart_expiry
 #: model:ir.model,name:shopinvader_cart_expiry.model_sale_order
 msgid "Sales Order"
-msgstr ""
-
-#. module: shopinvader_cart_expiry
-#: model:ir.model,name:shopinvader_cart_expiry.model_shopinvader_backend
-msgid "Shopinvader Backend"
 msgstr ""
 
 #. module: shopinvader_cart_expiry
