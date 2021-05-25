@@ -24,9 +24,7 @@ class ShopinvaderBindingListener(Component):
         with record.backend_id.work_on(record._name) as work:
             external_id = work.component(usage="binder").to_external(record)
             if external_id:
-                record.with_delay().export_delete_record(
-                    record.backend_id, external_id
-                )
+                record.with_delay().export_delete_record(record.backend_id, external_id)
 
 
 class ShopinvaderRecordListener(Component):
@@ -49,7 +47,7 @@ class ShopinvaderRecordListener(Component):
             binding.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record, fields=None):
-        """ Unlink all binding before removing the record in order to
+        """Unlink all binding before removing the record in order to
         trigger an event for deleting the record in locomotive"""
         if "shopinvader_bind_ids" not in record._fields:
             return

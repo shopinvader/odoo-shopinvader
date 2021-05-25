@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <record id="shopinvader.backend_1" model="shopinvader.backend">
@@ -6,14 +6,14 @@
          <field name="username">demo@shopinvader.com</field>
         <field name="handle">shopinvader</field>
         <field name="password">d49cd50f6f0d2b163f48fc73cb249f0244c37074</field>
-        <field name="currency_ids" eval="[(6, 0, [ref('base.EUR'),ref('base.USD')])]"/>
+        <field name="currency_ids" eval="[(6, 0, [ref('base.EUR'),ref('base.USD')])]" />
     </record>
     <record id="shopinvader.backend_2" model="shopinvader.backend">
         <field name="location">http://locomotive.localtest.me:3000</field>
          <field name="username">demo2@shopinvader.com</field>
         <field name="handle">shopinvader</field>
         <field name="password">d49cd50f6f0d2b163f48fc73cb249f0244c37074</field>
-        <field name="currency_ids" eval="[(6, 0, [ref('base.EUR'),ref('base.USD')])]"/>
+        <field name="currency_ids" eval="[(6, 0, [ref('base.EUR'),ref('base.USD')])]" />
     </record>
 
 </odoo>

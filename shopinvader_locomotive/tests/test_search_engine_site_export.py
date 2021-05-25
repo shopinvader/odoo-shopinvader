@@ -85,16 +85,12 @@ class TestSiteSearchEngineExport(TestSiteSearchEngineExportBase):
         # Load fake models ->/
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
-        from odoo.addons.connector_search_engine.tests.models import (
-            SeBackendFake,
-        )
+        from odoo.addons.connector_search_engine.tests.models import SeBackendFake
 
         cls.loader.update_registry((SeBackendFake,))
         # ->/ Load fake models
         cls.se_backend = (
-            cls.env[SeBackendFake._name]
-            .create({"name": "Fake SE"})
-            .se_backend_id
+            cls.env[SeBackendFake._name].create({"name": "Fake SE"}).se_backend_id
         )
         cls.search_engine_name = cls.se_backend.search_engine_name
         cls.backend.se_backend_id = cls.se_backend
@@ -103,12 +99,8 @@ class TestSiteSearchEngineExport(TestSiteSearchEngineExportBase):
                 "backend_id": cls.backend.se_backend_id.id,
                 "name": "index-product",
                 "lang_id": cls.env.ref("base.lang_en").id,
-                "model_id": cls.env.ref(
-                    "shopinvader.model_shopinvader_variant"
-                ).id,
-                "exporter_id": cls.env.ref(
-                    "shopinvader.ir_exp_shopinvader_variant"
-                ).id,
+                "model_id": cls.env.ref("shopinvader.model_shopinvader_variant").id,
+                "exporter_id": cls.env.ref("shopinvader.ir_exp_shopinvader_variant").id,
             }
         )
         cls.env["se.index"].create(
@@ -116,9 +108,7 @@ class TestSiteSearchEngineExport(TestSiteSearchEngineExportBase):
                 "backend_id": cls.backend.se_backend_id.id,
                 "name": "index-category",
                 "lang_id": cls.env.ref("base.lang_en").id,
-                "model_id": cls.env.ref(
-                    "shopinvader.model_shopinvader_category"
-                ).id,
+                "model_id": cls.env.ref("shopinvader.model_shopinvader_category").id,
                 "exporter_id": cls.env.ref(
                     "shopinvader.ir_exp_shopinvader_category"
                 ).id,

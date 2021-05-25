@@ -67,7 +67,11 @@
                                 <field name="website_public_name" />
                             </group>
                             <group name="search_filters" string="Filters" colspan="4">
-                                <field name="filter_ids" nolabel="1" />
+                                <field
+                                    name="filter_ids"
+                                    nolabel="1"
+                                    context="{'tree_view_ref': 'shopinvader.product_filter_view_tree'}"
+                                />
                             </group>
                         </page>
                         <page name="sale" string="Sale">
@@ -157,8 +161,8 @@
                                 />
                             </group>
                         </page>
-                        <page name="developper" string="Developper">
-                            <group name="developper" colspan="4">
+                        <page name="developer" string="Developer">
+                            <group name="developer" colspan="4">
                                 <group
                                     name="product"
                                     string="Product"

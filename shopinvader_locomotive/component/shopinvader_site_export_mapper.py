@@ -9,9 +9,10 @@ import json
 import logging
 
 from odoo import models
+from odoo.fields import first
+
 from odoo.addons.component.core import Component
 from odoo.addons.connector.components.mapper import changed_by, mapping
-from odoo.fields import first
 
 _logger = logging.getLogger(__name__)
 
@@ -47,11 +48,13 @@ class ShopinvaderSiteExportMapper(Component):
         }
 
     @mapping
-    @changed_by("filter_ids")
+    @changed_by("visible_filter_ids")
     def filters(self, record):
         return {
             "all_filters": self._m2m_to_external(
-                record, "filter_ids", ["name", "display_name:code", "help"]
+                record,
+                "visible_filter_ids",
+                ["name", "display_name:code", "help"],
             )
         }
 
@@ -78,9 +81,7 @@ class ShopinvaderSiteExportMapper(Component):
             erp["api_key"] = record.auth_api_key_id.key
         if self.options["force"] or not erp.get("api_url"):
             erp["api_url"] = "{}/shopinvader".format(
-                record.env["ir.config_parameter"]
-                .sudo()
-                .get_param("web.base.url")
+                record.env["ir.config_parameter"].sudo().get_param("web.base.url")
             )
         return {"erp": erp}
 
@@ -93,16 +94,10 @@ class ShopinvaderSiteExportMapper(Component):
         if not se_backend.search_engine_name:
             _logger.warning("No search engine name declared.")
             return {}
-        return {
-            se_backend.search_engine_name: self._search_engine_config(
-                se_backend
-            )
-        }
+        return {se_backend.search_engine_name: self._search_engine_config(se_backend)}
 
     def _search_engine_config(self, se_backend):
-        config = self.options["current_values"].get(
-            se_backend.search_engine_name, {}
-        )
+        config = self.options["current_values"].get(se_backend.search_engine_name, {})
         if self.options["force"] or not config.get("indices"):
             indices, routes = self._get_indexes_config(se_backend)
             config["indices"] = json.dumps(indices)
@@ -193,17 +188,17 @@ class ShopinvaderSiteExportMapper(Component):
 
     def finalize(self, map_record, values):
         """
-           By default, custom information are stored in the field "_store"
-           of the site. Initially, it was not possible to update any other
-           information from the site. To remove this limitation, without
-           breaking existing code, the following euristic has been put in
-           place.
-           If the key of a value provided by the mapper is a key
-           of the current mmetafields values from the site, we update this
-           key into the metafields.
-           Otherwise, this key is a custom field part of the '_store'
-           sub-dictionary and the its value must be serialized
-       """
+        By default, custom information are stored in the field "_store"
+        of the site. Initially, it was not possible to update any other
+        information from the site. To remove this limitation, without
+        breaking existing code, the following euristic has been put in
+        place.
+        If the key of a value provided by the mapper is a key
+        of the current mmetafields values from the site, we update this
+        key into the metafields.
+        Otherwise, this key is a custom field part of the '_store'
+        sub-dictionary and the its value must be serialized
+        """
         values = super().finalize(map_record, values)
         current_values = self.options["current_values"]
         store_values = current_values.setdefault("_store", {})
