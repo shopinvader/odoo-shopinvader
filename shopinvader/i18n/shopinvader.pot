@@ -595,9 +595,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__mobile_blacklisted
 msgid "Blacklisted Phone Is Mobile"
-
-#: view:shopinvader.backend:shopinvader.shopinvader_backend_view_form
-msgid "Developer"
 msgstr ""
 
 #. module: shopinvader
@@ -1274,7 +1271,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
-msgid "Developper"
+msgid "Developer"
 msgstr ""
 
 #. module: shopinvader
@@ -2230,6 +2227,16 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_auto_done_setting
 msgid "Lock Confirmed Sales"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model,name:shopinvader.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__location
+msgid "Locomotive URL (see Developers section Locomotive site)"
 msgstr ""
 
 #. module: shopinvader
@@ -3378,7 +3385,6 @@ msgid "Shopinvader Attributes"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model,name:shopinvader.model_shopinvader_backend
 #: model:ir.model.fields,field_description:shopinvader.field_account_bank_statement_line__shopinvader_backend_id
 #: model:ir.model.fields,field_description:shopinvader.field_account_move__shopinvader_backend_id
 #: model:ir.model.fields,field_description:shopinvader.field_account_payment__shopinvader_backend_id
