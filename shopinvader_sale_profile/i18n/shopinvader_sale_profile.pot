@@ -102,6 +102,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: shopinvader_sale_profile
+#: model:ir.model,name:shopinvader_sale_profile.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_sale_profile
 #: code:addons/shopinvader_sale_profile/models/shopinvader_partner.py:0
 #, python-format
 msgid "No default sale profile found for the backend %s"
@@ -145,11 +150,6 @@ msgstr ""
 #. module: shopinvader_sale_profile
 #: model_terms:ir.ui.view,arch_db:shopinvader_sale_profile.shopinvader_backend_view_form
 msgid "Sale profiles"
-msgstr ""
-
-#. module: shopinvader_sale_profile
-#: model:ir.model,name:shopinvader_sale_profile.model_shopinvader_backend
-msgid "Shopinvader Backend"
 msgstr ""
 
 #. module: shopinvader_sale_profile
