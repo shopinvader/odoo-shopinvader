@@ -95,6 +95,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: shopinvader_image
+#: model:ir.model,name:shopinvader_image.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_image
 #: model:ir.model.fields,field_description:shopinvader_image.field_shopinvader_image_resize__name
 #: model_terms:ir.ui.view,arch_db:shopinvader_image.shopinvader_image_resize_search_view
 msgid "Name"
@@ -113,11 +118,6 @@ msgstr ""
 #. module: shopinvader_image
 #: model_terms:ir.ui.view,arch_db:shopinvader_image.shopinvader_image_resize_search_view
 msgid "Products"
-msgstr ""
-
-#. module: shopinvader_image
-#: model:ir.model,name:shopinvader_image.model_shopinvader_backend
-msgid "Shopinvader Backend"
 msgstr ""
 
 #. module: shopinvader_image
