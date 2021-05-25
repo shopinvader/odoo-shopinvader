@@ -47,6 +47,11 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: shopinvader_assortment
+#: model:ir.model,name:shopinvader_assortment.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_assortment
 #: model:ir.model.fields,field_description:shopinvader_assortment.field_shopinvader_backend__product_assortment_id
 msgid "Product Assortment"
 msgstr ""
@@ -59,9 +64,4 @@ msgstr ""
 #. module: shopinvader_assortment
 #: model:ir.model,name:shopinvader_assortment.model_se_index
 msgid "Se Index"
-msgstr ""
-
-#. module: shopinvader_assortment
-#: model:ir.model,name:shopinvader_assortment.model_shopinvader_backend
-msgid "Shopinvader Backend"
 msgstr ""
