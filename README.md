@@ -21,6 +21,7 @@ addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
 [shopinvader](shopinvader/) | 14.0.1.2.1 | Shopinvader
+[shopinvader_assortment](shopinvader_assortment/) | 14.0.1.0.0 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.0.1 | Enable registration of multiple users per each company customer.
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.1.0.0 | Shopinvader Elasticsearch Connector
@@ -40,7 +41,6 @@ addon | version | summary
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.1.2.2 (unported) | Shopinvader Algolia Connector
-[shopinvader_assortment](shopinvader_assortment/) | 13.0.1.0.0 (unported) | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 (unported) | Shopinvader Display category image for product
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
