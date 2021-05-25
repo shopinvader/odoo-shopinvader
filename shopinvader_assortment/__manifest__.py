@@ -3,7 +3,7 @@
 
 {
     "name": "Shopinvader Assortment",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
@@ -14,5 +14,5 @@
     ],
     "data": ["views/shopinvader_backend.xml"],
     "demo": ["demo/shopinvader_assortment_demo.xml"],
-    "installable": False,
+    "installable": True,
 }
