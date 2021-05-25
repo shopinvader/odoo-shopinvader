@@ -93,6 +93,11 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
+#: model:ir.model,name:shopinvader_customer_multi_user.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
 #: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__shopinvader_backend__multi_user_profile_policy__main_partner_id
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_partner_view_search
 msgid "Main partner"
@@ -126,11 +131,6 @@ msgstr ""
 #. module: shopinvader_customer_multi_user
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.res_partner_view_form
 msgid "Re-generate token"
-msgstr ""
-
-#. module: shopinvader_customer_multi_user
-#: model:ir.model,name:shopinvader_customer_multi_user.model_shopinvader_backend
-msgid "Shopinvader Backend"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
