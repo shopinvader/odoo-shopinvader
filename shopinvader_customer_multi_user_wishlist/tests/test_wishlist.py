@@ -3,10 +3,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import mock
+
 from odoo import exceptions
-from odoo.addons.shopinvader_wishlist.tests.test_wishlist import (
-    CommonWishlistCase,
-)
+
+from odoo.addons.shopinvader_wishlist.tests.test_wishlist import CommonWishlistCase
 
 
 class WishlistCase(CommonWishlistCase):
@@ -42,9 +42,7 @@ class WishlistCase(CommonWishlistCase):
         self.backend.multi_user_records_policy = "main_partner_id"
         prod = self.env.ref("product.product_product_4b")
 
-        with self.work_on_services(
-            partner=self.user_binding.record_id
-        ) as work:
+        with self.work_on_services(partner=self.user_binding.record_id) as work:
             cart_service = work.component(usage="cart")
         cart = cart_service._get()
         # no line yet
