@@ -20,6 +20,8 @@ class ShopinvaderBackend(models.Model):
 
     def _autobind_product_from_assortment(self):
         self.ensure_one()
+        if not self.product_assortment_id:
+            return
         product_obj = self.env["product.product"]
         shopinvader_variant_obj = self.env["shopinvader.variant"]
         binding_wizard_obj = self.env["shopinvader.variant.binding.wizard"]
