@@ -43,12 +43,15 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         for wizard in self:
             backend = wizard.backend_id
             method = backend.with_delay().bind_selected_products
-            if wizard.run_immediately:
+            run_immediately = wizard.run_immediately or self.env.context.get(
+                "bind_products_immediately"
+            )
+            if run_immediately:
                 method = backend.bind_selected_products
             method(
                 wizard.product_ids,
                 langs=wizard.lang_ids,
-                run_immediately=wizard.run_immediately,
+                run_immediately=run_immediately,
             )
 
     @api.model
