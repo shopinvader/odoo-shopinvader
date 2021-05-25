@@ -119,6 +119,11 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: shopinvader_search_engine
+#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_search_engine
 #: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
 msgid ""
 "Loop trough all the indexes and export their settings (filters, facets, "
@@ -178,11 +183,6 @@ msgstr ""
 #. module: shopinvader_search_engine
 #: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
 msgid "Search engine indexes"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_backend
-msgid "Shopinvader Backend"
 msgstr ""
 
 #. module: shopinvader_search_engine
