@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.1.2.2 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.1.2.3 | Shopinvader
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.0.1 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.0.1 | Enable registration of multiple users per each company customer.
