@@ -164,7 +164,7 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">79.99</field>
         <field name="standard_price">79.99</field>
-        <field name="default_code" />
+        <field name="default_code">WALT-001</field>
         <field name="type">consu</field>
     </record>
 
