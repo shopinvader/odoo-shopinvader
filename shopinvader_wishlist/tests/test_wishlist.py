@@ -298,7 +298,19 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res_line["id"], self.prod_set.set_line_ids[0].id)
         self.assertEqual(res_line["quantity"], 1)
         self.assertEqual(res_line["sequence"], 10)
-        self.assertEqual(res_line["product"], variant.get_shop_data())
+        self.assertEqual(
+            res_line["product"], dict(variant.get_shop_data(), available=True)
+        )
+
+    def test_jsonify_missing_variant_binding(self):
+        prod = self.env.ref("product.product_product_4b")
+        prod.shopinvader_bind_ids.unlink()
+        res = self.wishlist_service._to_json_one(self.prod_set)
+        res_line = res["lines"][0]
+        self.assertEqual(
+            res_line["product"],
+            {"id": prod.id, "name": prod.name, "available": False},
+        )
 
     def test_jsonify_data_mode(self):
         res = self.wishlist_service._to_json_one(self.prod_set, data_mode="light")

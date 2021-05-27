@@ -392,7 +392,30 @@ class WishlistService(Component):
         ]
 
     def _json_parser_product_data(self, rec, fname):
-        return rec.shopinvader_variant_id.get_shop_data()
+        if rec.shopinvader_variant_id:
+            data = rec.shopinvader_variant_id.get_shop_data()
+            data["available"] = True
+            return data
+        return rec.product_id.jsonify(
+            self._json_parser_binding_not_available_data(), one=True
+        )
+
+    def _json_parser_binding_not_available_data(self):
+        """Special parser for when the binding is not available.
+
+        A user might delete bindings for a specific product
+        or add a product w/out bindings to a wishlist
+        and then archive the product which will lead to no binding as well.
+        Or, product and wishlists have been imported from CSVs
+        and the product was archived in the process or right after
+        before creating bindings.
+
+        In all the cases, you end up w/ broken reference.
+
+        When this happens, allow the frontend to show a nice message
+        to ask users to replace the product.
+        """
+        return ["id", "name", ("active:available", lambda rec, fname: False)]
 
     def _json_parser_wishlist_access(self, rec, fname):
         return self.access_info.for_wishlist(rec)

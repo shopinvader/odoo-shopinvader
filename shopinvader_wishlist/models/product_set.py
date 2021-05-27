@@ -49,7 +49,7 @@ class ProductSetLine(models.Model):
     @api.depends("product_id")
     @api.depends_context("lang")
     def _compute_shopinvader_variant(self):
-        for record in self:
+        for record in self.with_context(active_test=False):
             if record.product_id and not record.shopinvader_variant_id:
                 backend = record.product_set_id.shopinvader_backend_id
                 lang = self.env.context.get("lang")

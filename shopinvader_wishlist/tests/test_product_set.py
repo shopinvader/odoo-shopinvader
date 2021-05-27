@@ -29,6 +29,21 @@ class ProductSet(CommonCase):
         self.assertEqual(line.shopinvader_variant_id, variant)
         self.assertEqual(variant.lang_id.code, "en_US")
 
+    def test_archived_product(self):
+        # ensure product archived is visible
+        prod = self.env.ref("product.product_product_4d")
+        line = self.prod_set.set_line_ids.create(
+            {
+                "product_set_id": self.prod_set.id,
+                "product_id": prod.id,
+                "quantity": 1,
+            }
+        )
+        variant = prod.shopinvader_bind_ids[0]
+        variant.active = False
+        line.invalidate_cache(["shopinvader_variant_id"])
+        self.assertEqual(line.shopinvader_variant_id, variant)
+
     @mute_logger("odoo.models.unlink")
     def test_create_no_variant_switch_lang(self):
         lang_fr = self._install_lang("base.lang_fr")
