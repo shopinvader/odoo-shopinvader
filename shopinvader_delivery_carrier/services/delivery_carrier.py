@@ -36,7 +36,8 @@ class DeliveryCarrierService(Component):
         vals = {
             "size": len(delivery_carriers),
             "data": [
-                self._prepare_carrier(dc, cart) for dc in delivery_carriers
+                self._prepare_carrier(dc, cart, **params)
+                for dc in delivery_carriers
             ],
         }
         # TODO DEPRECATED this old API is deprecated
@@ -122,12 +123,21 @@ class DeliveryCarrierService(Component):
             return cart._invader_available_carriers()
         return self.shopinvader_backend.carrier_ids
 
-    def _prepare_carrier(self, carrier, cart=None):
+    def _prepare_carrier(self, carrier, cart=None, **params):
         res = carrier.jsonify(self._json_parser_carrier, one=True)
         res["type"] = None
         price = 0.0
         if cart:
-            price = carrier.rate_shipment(cart).get("price", 0.0)
+            country = self._load_country(params)
+            zip_code = self._load_zip_code(params)
+            if country or zip_code:
+                with carrier._simulate_delivery_cost(cart.partner_id):
+                    cart.partner_id.update(
+                        {"country_id": country.id, "zip": zip_code}
+                    )
+                    price = carrier.rate_shipment(cart).get("price", 0.0)
+            else:
+                price = carrier.rate_shipment(cart).get("price", 0.0)
         res["price"] = price
         return res
 
