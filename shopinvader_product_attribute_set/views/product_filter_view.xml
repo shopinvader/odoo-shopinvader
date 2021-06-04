@@ -6,9 +6,9 @@
     <field name="inherit_id" ref="shopinvader.product_filter_view_form"/>
     <field name="arch" type="xml">
         <field name="variant_attribute_id" position="after">
-            <field name="custom_attribute_id"
-                   attrs="{'invisible': [('based_on', '!=', 'custom_attribute')],
-                           'required': [('based_on', '=', 'custom_attribute')]}"/>
+            <field name="product_attribute_id"
+                   attrs="{'invisible': [('based_on', '!=', 'product_attribute')],
+                           'required': [('based_on', '=', 'product_attribute')]}"/>
         </field>
     </field>
 </record>
