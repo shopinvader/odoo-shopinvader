@@ -9,15 +9,15 @@ class ProductCase(ProductCommonCase):
     def setUp(self):
         super(ProductCase, self).setUp()
         self.attr_set = self.env.ref(
-            "product_custom_attribute.computer_attribute_set"
+            "product_attribute_set.computer_attribute_set"
         )
         self.processor = self.env.ref(
-            "product_custom_attribute.computer_processor_attribute_option_1"
+            "product_attribute_set.computer_processor_attribute_option_1"
         )
         self.product = self.env.ref("product.product_product_8")
         self.shopinvader_variant = self.product.shopinvader_bind_ids
         self.product_filter = self.env.ref(
-            "shopinvader_custom_attribute.filter_compatible_linux"
+            "shopinvader_product_attribute_set.filter_compatible_linux"
         )
 
     def test_product_attributes(self):
@@ -33,34 +33,37 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             self.shopinvader_variant.attributes,
             {
-                u"linux_compatible": True,
+                u"linux_compatible": "true",
                 u"processor": u"Intel i5",
                 u"technical_description": u"foo",
             },
         )
 
-        self.assertEqual(
+        self.assertListEqual(
             self.shopinvader_variant.structured_attributes,
             [
                 {
                     "fields": [
                         {
-                            "value": u"Intel i5",
-                            "name": u"X processor",
-                            "key": u"processor",
+                            "value": "Intel i5",
+                            "name": "X Processor",
+                            "key": "processor",
+                            "type": "select",
                         },
                         {
-                            "value": u"foo",
-                            "name": u"X technical description",
-                            "key": u"technical_description",
+                            "value": "foo",
+                            "name": "X Technical Description",
+                            "key": "technical_description",
+                            "type": "text",
                         },
                         {
-                            "value": True,
-                            "name": u"X linux compatible",
-                            "key": u"linux_compatible",
+                            "value": "true",
+                            "name": "X Linux Compatible",
+                            "key": "linux_compatible",
+                            "type": "boolean",
                         },
                     ],
-                    "group_name": u"Technical",
+                    "group_name": "Technical",
                 }
             ],
         )
