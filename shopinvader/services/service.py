@@ -56,27 +56,30 @@ class BaseShopinvaderService(AbstractComponent):
     def client_header(self):
         return self.work.client_header
 
+    _scope_to_domain_operators = {
+        "gt": ">",
+        "gte": ">=",
+        "lt": "<",
+        "lte": "<=",
+        "ne": "!=",
+        "like": "like",
+        "ilike": "ilike",
+    }
+
     def _scope_to_domain(self, scope):
-        # Convert the liquid scope syntax to the odoo domain
+        # Convert the frontend scope syntax to the odoo domain
         try:
-            OPERATORS = {
-                "gt": ">",
-                "gte": ">=",
-                "lt": "<",
-                "lte": "<=",
-                "ne": "!=",
-            }
             domain = []
             for key, value in scope.items():
                 if "." in key:
                     key, op = key.split(".")
-                    op = OPERATORS[op]
+                    op = self._scope_to_domain_operators[op]
                 else:
                     op = "="
                 domain.append((key, op, value))
-            return expression.normalize_domain(domain)
+            return domain
         except Exception as e:
-            raise UserError(_("Invalid scope %s, error : %s"), scope, e)
+            raise UserError(_("Invalid scope %s, error: %s") % (str(scope), str(e)))
 
     # Validator
     def _default_validator_search(self):
@@ -129,7 +132,7 @@ class BaseShopinvaderService(AbstractComponent):
             offset=per_page * (page - 1),
             order=self._get_search_order(order, **params),
         )
-        return {"size": total_count, "data": self._to_json(records)}
+        return {"size": total_count, "data": self._to_json(records, **params)}
 
     def _get_search_order(self, order, **params):
         """Customize search results order.
