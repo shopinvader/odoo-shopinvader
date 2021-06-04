@@ -46,9 +46,6 @@ class ShopinvaderVariant(models.Model):
             "lang": self.lang_id.code,
             # consider only packaging that can be sold
             "_packaging_filter": lambda x: x.can_be_sold,
-            # to support multilang shop we rely on packaging type's name
-            # which is already translatable.
-            "_packaging_name_getter": lambda x: x.packaging_type_id.name,
             "_packaging_values_handler": self._prepare_qty_by_packaging_values,
         }
 
