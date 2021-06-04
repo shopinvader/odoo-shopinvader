@@ -84,9 +84,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
                 bound_products = bound_templates[product.product_tmpl_id]
                 for lang_id in wizard._get_langs_to_bind():
                     for shopinvader_product in bound_products[lang_id]:
-                        bound_variants = (
-                            shopinvader_product.shopinvader_variant_ids
-                        )
+                        bound_variants = shopinvader_product.shopinvader_variant_ids
                         bind_record = bound_variants.filtered(
                             lambda p: p.record_id == product
                         )
