@@ -18,13 +18,11 @@ class ShopinvaderCategoryUnbindingWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        result = super(ShopinvaderCategoryUnbindingWizard, self).default_get(
-            fields_list
-        )
-        shopinvader_category_ids = self.env.context.get("active_ids")
+        res = super(ShopinvaderCategoryUnbindingWizard, self).default_get(fields_list)
+        shopinvader_category_ids = self.env.context.get("active_ids", False)
         if shopinvader_category_ids:
-            result.update({"shopinvader_category_ids": shopinvader_category_ids})
-        return result
+            res["shopinvader_category_ids"] = [(6, 0, shopinvader_category_ids)]
+        return res
 
     def action_unbind_categories(self):
         self.mapped("shopinvader_category_ids")._unbind()
