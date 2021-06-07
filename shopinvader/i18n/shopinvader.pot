@@ -1332,6 +1332,11 @@ msgid "Display SEPA QR-code"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant_binding_wizard__run_immediately
+msgid "Do not schedule jobs."
+msgstr ""
+
+#. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
 msgid "Do you really want to unbind these categories ?"
 msgstr ""
@@ -1429,6 +1434,14 @@ msgstr ""
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
 msgid "Enabled"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_product_filter__path
+msgid ""
+"Enforce external filter key used for indexing and search.Being a path, you "
+"can specify a dotted path to an inner value. Eg: supplier = {id: 1, name: "
+"'Foo'} -> `supplier.name`"
 msgstr ""
 
 #. module: shopinvader
@@ -2750,6 +2763,11 @@ msgid "Partner with same Tax ID"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_product_filter__path
+msgid "Path"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__debit_limit
 msgid "Payable Limit"
 msgstr ""
@@ -3079,6 +3097,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__role
 msgid "Role"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__run_immediately
+msgid "Run Immediately"
 msgstr ""
 
 #. module: shopinvader
