@@ -32,7 +32,7 @@ addon | version | summary
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.0.0 | ShopInvader - Sale profile
-[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.0.0 | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.1.0 | Shopinvader Catalog Search Engine Connector
 
 
 Unported addons
