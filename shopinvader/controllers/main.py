@@ -101,9 +101,7 @@ class InvaderController(main.RestController):
         partner_user = shopinvader_partner.record_id
         res["partner_user"] = partner_user
         # The partner user for the main account or for sale order may differ.
-        partner_shop = partner_user.get_shop_partner(
-            res["shopinvader_backend"]
-        )
+        partner_shop = partner_user.get_shop_partner(res["shopinvader_backend"])
         res["partner"] = partner_shop
         if partner_shop != partner_user:
             # Invader partner must rappresent the same partner as the shop
@@ -112,7 +110,5 @@ class InvaderController(main.RestController):
             )
             if invader_partner_shop:
                 res["invader_partner"] = invader_partner_shop
-        res[
-            "shopinvader_session"
-        ] = self._get_shopinvader_session_from_headers(headers)
+        res["shopinvader_session"] = self._get_shopinvader_session_from_headers(headers)
         return res
