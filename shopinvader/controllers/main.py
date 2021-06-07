@@ -99,7 +99,5 @@ class InvaderController(main.RestController):
         # rather than the real partner
         shopinvader_partner = self._get_partner_from_headers(headers)
         res.update(get_partner_work_context(shopinvader_partner))
-        res[
-            "shopinvader_session"
-        ] = self._get_shopinvader_session_from_headers(headers)
+        res["shopinvader_session"] = self._get_shopinvader_session_from_headers(headers)
         return res
