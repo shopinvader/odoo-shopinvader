@@ -43,11 +43,22 @@ class ProductFilter(models.Model):
     # TODO: rename to not clash w/ built-in
     help = fields.Html(translate=True)
     name = fields.Char(translate=True, required=True)
+    # TODO: rename this to `code`, "display_name" makes no sense.
+    # Also, in shopinvader_locomotive it is exported as `code`.
     display_name = fields.Char(compute="_compute_display_name")
+    # TODO: replace completely `display_name`
+    # NOTE: this allows to unify filter/index keys across languages.
+    # For prod attributes we'd neeed a unique language agnostic key
+    # on product.attribute.
+    path = fields.Char(
+        help="Enforce external filter key used for indexing and search."
+        "Being a path, you can specify a dotted path to an inner value. "
+        "Eg: supplier = {id: 1, name: 'Foo'} -> `supplier.name`",
+    )
 
     def _build_display_name(self):
         if self.based_on == "field":
-            return self.field_id.name
+            return self.path or self.field_id.name
         elif self.based_on == "variant_attribute":
             return "variant_attributes.%s" % sanitize_attr_name(
                 self.variant_attribute_id
