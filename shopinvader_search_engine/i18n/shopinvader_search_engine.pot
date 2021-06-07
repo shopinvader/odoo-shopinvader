@@ -21,7 +21,7 @@ msgstr ""
 
 #. module: shopinvader_search_engine
 #: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Add missing index"
+msgid "Add missing indexes"
 msgstr ""
 
 #. module: shopinvader_search_engine
