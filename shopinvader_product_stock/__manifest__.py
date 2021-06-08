@@ -6,13 +6,13 @@
     "name": "Shopinvader Product Stock",
     "summary": "This module is used to choose a stock field during the"
     "export (by backend)",
-    "version": "13.0.2.0.1",
+    "version": "14.0.1.0.0",
     "development_status": "Production/Stable",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,ACSONE SA/NV,Camptocamp",
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
     "depends": [
         "stock",
         "shopinvader",

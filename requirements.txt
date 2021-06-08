@@ -2,4 +2,5 @@
 cerberus
 locomotivecms
 python-slugify
+slugify
 unidecode
