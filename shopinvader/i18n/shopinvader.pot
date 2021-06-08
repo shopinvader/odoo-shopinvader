@@ -258,6 +258,13 @@ msgid "Add a Cover Page"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__group_stock_adv_location
+msgid ""
+"Add and customize route operations to process product moves in your warehouse(s): e.g. unload > quality control > stock for incoming products, pick > pack > ship for outgoing products. \n"
+" You can also set putaway strategies on warehouse locations in order to send incoming products into specific child locations straight away (e.g. specific bins, racks)."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__additional_info
 msgid "Additional info"
 msgstr ""
@@ -315,6 +322,13 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_sale_pricelist
 msgid "Advanced Pricelists"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__module_stock_landed_costs
+msgid ""
+"Affect landed costs on reception operations and split them among products to"
+" update their cost price."
 msgstr ""
 
 #. module: shopinvader
@@ -536,6 +550,11 @@ msgid "Barcode"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_barcode
+msgid "Barcode Scanner"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_cash_basis_base_account_id
 msgid "Base Tax Received Account"
 msgstr ""
@@ -543,6 +562,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__based_on
 msgid "Based On"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_picking_batch
+msgid "Batch Pickings"
 msgstr ""
 
 #. module: shopinvader
@@ -737,6 +761,12 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__category_root_binding_level
 msgid "Category Root Binding Level"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__route_from_categ_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__route_from_categ_ids
+msgid "Category Routes"
 msgstr ""
 
 #. module: shopinvader
@@ -954,6 +984,11 @@ msgid "Confirmation Email"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_tracking_owner
+msgid "Consignment"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model,name:shopinvader.model_res_partner
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__child_ids
 msgid "Contact"
@@ -978,6 +1013,13 @@ msgid "Cost Currency"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_cost_method
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__cost_method
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__cost_method
+msgid "Costing Method"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__payment_token_count
 msgid "Count Payment Token"
 msgstr ""
@@ -985,6 +1027,13 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__message_bounce
 msgid "Counter of the number of bounced emails for this contact"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__property_stock_account_input_categ_id
+msgid ""
+"Counterpart journal items for all incoming stock moves will be posted in this account, unless there is a specific valuation account\n"
+"                set on the source location. This is the default value for all products in this category. It can also directly be set on each product."
 msgstr ""
 
 #. module: shopinvader
@@ -1074,6 +1123,16 @@ msgid "Current Cart Step"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__qty_available
+msgid ""
+"Current quantity of products.\n"
+"In a context with a single Stock Location, this includes goods stored at this Location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods stored in the Stock Location of this Warehouse, or any of its children.\n"
+"stored in the Stock Location of the Warehouse of this Shop, or any of its children.\n"
+"Otherwise, this includes goods stored in any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__report_footer
 msgid "Custom Report Footer"
 msgstr ""
@@ -1091,6 +1150,17 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__customer_default_role
 msgid "Customer Default Role"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__sale_delay
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__sale_delay
+msgid "Customer Lead Time"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_stock_customer
+msgid "Customer Location"
 msgstr ""
 
 #. module: shopinvader
@@ -1207,6 +1277,23 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__stock_state_threshold
+msgid ""
+"Define custom value under which the stock state will pass from 'In Stock' to"
+" 'In Limited Stock' State."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__stock_state_threshold
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__stock_state_threshold
+msgid ""
+"Define custom value under which the stock state will pass from 'In Stock' to"
+" 'In Limited Stock' State. If not set, Odoo will use the value defined in "
+"the product category. If no value is defined in product category, it will "
+"use the value defined for the company"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__cart_checkout_address_policy
 msgid ""
 "Define how the cart address will be handled in the checkout step:\n"
@@ -1260,6 +1347,23 @@ msgid "Delivery Methods"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sale_delay
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sale_delay
+msgid ""
+"Delivery lead time, in days. It's the number of days, promised to the "
+"customer, between the confirmation of the sales order and the delivery."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__route_ids
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__route_ids
+msgid ""
+"Depending on the modules installed, this will allow you to define the route "
+"of the product: whether it will be bought, manufactured, replenished on "
+"order, etc."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__deposit_default_product_id
 msgid "Deposit Product"
 msgstr ""
@@ -1276,6 +1380,24 @@ msgstr ""
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_form_view
 msgid "Description and Seo"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__description_pickingout
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__description_pickingout
+msgid "Description on Delivery Orders"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__description_picking
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__description_picking
+msgid "Description on Picking"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__description_pickingin
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__description_pickingin
+msgid "Description on Receptions"
 msgstr ""
 
 #. module: shopinvader
@@ -1296,6 +1418,16 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_discount_per_so_line
 msgid "Discounts"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_lot_on_delivery_slip
+msgid "Display Lots & Serial Numbers on Delivery Slips"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_lot_on_invoice
+msgid "Display Lots & Serial Numbers on Invoices"
 msgstr ""
 
 #. module: shopinvader
@@ -1391,14 +1523,29 @@ msgid "Email"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_move_email_validation
+msgid "Email Confirmation picking"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__template_id
 msgid "Email Template"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_mail_confirmation_template_id
+msgid "Email Template confirmation picking"
 msgstr ""
 
 #. module: shopinvader
 #: code:addons/shopinvader/models/res_partner.py:0
 #, python-format
 msgid "Email must be unique: The following mails are not unique: %s"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__stock_mail_confirmation_template_id
+msgid "Email sent to the customer once the order is done."
 msgstr ""
 
 #. module: shopinvader
@@ -1445,6 +1592,12 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__tracking
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__tracking
+msgid "Ensure the traceability of a storable product in your warehouse."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_account_expense_categ_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__property_account_expense_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__property_account_expense_id
@@ -1458,6 +1611,11 @@ msgid ""
 "Expenses and vendor bills can be re-invoiced to a customer.With this option,"
 " a validated expense can be re-invoice to a customer at its cost or sales "
 "price."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_product_expiry
+msgid "Expiration Dates"
 msgstr ""
 
 #. module: shopinvader
@@ -1567,6 +1725,39 @@ msgid "Footer text displayed at the bottom of all reports."
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__removal_strategy_id
+msgid "Force Removal Strategy"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__virtual_available
+msgid "Forecast Quantity"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__virtual_available
+msgid ""
+"Forecast quantity (computed as Quantity On Hand - Outgoing + Incoming)\n"
+"In a context with a single Stock Location, this includes goods stored in this location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods stored in the Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods stored in any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__free_qty
+msgid ""
+"Forecast quantity (computed as Quantity On Hand - reserved quantity)\n"
+"In a context with a single Stock Location, this includes goods stored in this location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods stored in the Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods stored in any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__virtual_available
+msgid "Forecasted Quantity"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__email_formatted
 msgid "Format email address \"Name <email@domain>\""
 msgstr ""
@@ -1574,6 +1765,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__email_formatted
 msgid "Formatted Email"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__free_qty
+msgid "Free To Use Quantity "
 msgstr ""
 
 #. module: shopinvader
@@ -1892,6 +2088,17 @@ msgid "Income Account"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__incoming_qty
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__incoming_qty
+msgid "Incoming"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_display_incoterm
+msgid "Incoterms"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__mobile_blacklisted
 msgid ""
 "Indicates if a blacklisted sanitized phone number is a mobile number. Helps "
@@ -1950,6 +2157,19 @@ msgstr ""
 #: code:addons/shopinvader/services/cart.py:0
 #, python-format
 msgid "Invalid step code %s"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__property_stock_inventory
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__property_stock_inventory
+msgid "Inventory Location"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_valuation
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__valuation
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__valuation
+msgid "Inventory Valuation"
 msgstr ""
 
 #. module: shopinvader
@@ -2088,6 +2308,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_auth_ldap
 msgid "LDAP Authentication"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_landed_costs
+msgid "Landed Costs"
 msgstr ""
 
 #. module: shopinvader
@@ -2233,6 +2458,8 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__location
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__location_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__location_id
 msgid "Location"
 msgstr ""
 
@@ -2264,6 +2491,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__expense_currency_exchange_account_id
 msgid "Loss Account"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_production_lot
+msgid "Lots & Serial Numbers"
 msgstr ""
 
 #. module: shopinvader
@@ -2302,10 +2534,27 @@ msgid "Manual SEO Title"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__manual_stock_state_threshold
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__manual_stock_state_threshold
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__manual_stock_state_threshold
+msgid "Manual Stock State Threshold"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__manual_url_key
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__manual_url_key
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__manual_url_key
 msgid "Manual Url Key"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__property_valuation
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__valuation
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__valuation
+msgid ""
+"Manual: The accounting entries to value the inventory are not posted automatically.\n"
+"        Automated: An accounting entry is automatically created to value the inventory when a product enters or leaves the company.\n"
+"        "
 msgstr ""
 
 #. module: shopinvader
@@ -2315,6 +2564,22 @@ msgid ""
 "Manually set quantities on order: Invoice based on the manually entered quantity, without creating an analytic account.\n"
 "Timesheets on contract: Invoice based on the tracked hours on the related timesheet.\n"
 "Create a task and track hours: Create a task on the sales order validation and track the work hours."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__use_security_lead
+msgid ""
+"Margin of error for dates promised to customers. Products will be scheduled "
+"for delivery that many days earlier than the actual promised date, to cope "
+"with unexpected delays in the supply chain."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__security_lead
+msgid ""
+"Margin of error for dates promised to customers. Products will be scheduled "
+"for procurement and delivery that many days earlier than the actual promised"
+" date, to cope with unexpected delays in the supply chain."
 msgstr ""
 
 #. module: shopinvader
@@ -2353,6 +2618,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__sale_line_warn_msg
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__sale_line_warn_msg
 msgid "Message for Sales Order Line"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__picking_warn_msg
+msgid "Message for Stock Picking"
 msgstr ""
 
 #. module: shopinvader
@@ -2409,6 +2679,11 @@ msgid "Mid Century Modern Eames Chair with Molded Arms and Wood Legs"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__orderpoint_ids
+msgid "Minimum Stock Rules"
+msgstr ""
+
+#. module: shopinvader
 #: code:addons/shopinvader/services/cart.py:0
 #, python-format
 msgid "Missing feature to clear the cart!"
@@ -2432,6 +2707,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_check_printing_multi_stub
 msgid "Multi-Pages Check Stub"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_adv_location
+msgid "Multi-Step Routes"
 msgstr ""
 
 #. module: shopinvader
@@ -2711,8 +2991,19 @@ msgid "Ordinateur, Tablettes & Accessoires"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__outgoing_qty
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__outgoing_qty
+msgid "Outgoing"
+msgstr ""
+
+#. module: shopinvader
 #: model:product.category,name:shopinvader.product_category_228
 msgid "PC Portable"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_tracking_lot
+msgid "Packages"
 msgstr ""
 
 #. module: shopinvader
@@ -2795,6 +3086,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__phone_sanitized_blacklisted
 msgid "Phone Blacklisted"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__default_picking_policy
+msgid "Picking Policy"
 msgstr ""
 
 #. module: shopinvader
@@ -2958,6 +3254,12 @@ msgid "Product template"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__property_stock_production
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__property_stock_production
+msgid "Production Location"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__product_variant_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__product_ids
@@ -3010,6 +3312,41 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__uom_po_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__uom_po_id
 msgid "Purchase Unit of Measure"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__putaway_rule_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__putaway_rule_ids
+msgid "Putaway Rules"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__qty_available
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__qty_available
+msgid "Quantity On Hand"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__quantity_svl
+msgid "Quantity Svl"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__incoming_qty
+msgid ""
+"Quantity of planned incoming products.\n"
+"In a context with a single Stock Location, this includes goods arriving to this Location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods arriving to the Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods arriving to any Stock Location with 'internal' type."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__outgoing_qty
+msgid ""
+"Quantity of planned outgoing products.\n"
+"In a context with a single Stock Location, this includes goods leaving this Location, or any of its children.\n"
+"In a context with a single Warehouse, this includes goods leaving the Stock Location of this Warehouse, or any of its children.\n"
+"Otherwise, this includes goods leaving any Stock Location with 'internal' type."
 msgstr ""
 
 #. module: shopinvader
@@ -3088,6 +3425,43 @@ msgid "Related records"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__reordering_max_qty
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__reordering_max_qty
+msgid "Reordering Max Qty"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__reordering_min_qty
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__reordering_min_qty
+msgid "Reordering Min Qty"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__nbr_reordering_rules
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__nbr_reordering_rules
+msgid "Reordering Rules"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_procurement_jit
+msgid "Reservation"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__module_procurement_jit
+msgid ""
+"Reserving products manually in delivery orders or by running the scheduler "
+"is advised to better manage priorities in case of long customer lead times "
+"or/and frequent stock-outs."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__responsible_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__responsible_id
+msgid "Responsible"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__activity_user_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__activity_user_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__activity_user_id
@@ -3097,6 +3471,19 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__role
 msgid "Role"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__route_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__route_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__route_ids
+msgid "Routes"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__has_available_route_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__has_available_route_ids
+msgid "Routes can be selected on this product"
 msgstr ""
 
 #. module: shopinvader
@@ -3128,10 +3515,30 @@ msgid "SEPA Credit Transfer (SCT)"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_sms
+msgid "SMS Confirmation"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__message_has_sms_error
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_has_sms_error
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_has_sms_error
 msgid "SMS Delivery error"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_sms_confirmation_template_id
+msgid "SMS Template"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_move_sms_validation
+msgid "SMS Validation with stock move"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__stock_sms_confirmation_template_id
+msgid "SMS sent to the customer once the order is done."
 msgstr ""
 
 #. module: shopinvader
@@ -3276,6 +3683,16 @@ msgid "Search engine"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__security_lead
+msgid "Security Lead Time"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__use_security_lead
+msgid "Security Lead Time for Sales"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__invoice_report_id
 msgid ""
 "Select a specific report for invoice download, if none are selected default "
@@ -3305,6 +3722,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__invoice_warn
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__picking_warn
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__sale_warn
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sale_line_warn
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sale_line_warn
@@ -3341,6 +3759,13 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__server_env_defaults
 msgid "Server Env Defaults"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__removal_strategy_id
+msgid ""
+"Set a specific removal strategy that will be used regardless of the source "
+"location for this product category"
 msgstr ""
 
 #. module: shopinvader
@@ -3625,6 +4050,11 @@ msgid "Show line subtotals without taxes (B2B)"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_sign_delivery
+msgid "Signature"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__signup_expiration
 msgid "Signup Expiration"
 msgstr ""
@@ -3678,6 +4108,17 @@ msgid "Specific report"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__property_cost_method
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__cost_method
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__cost_method
+msgid ""
+"Standard Price: The products are valued at their standard cost defined on the product.\n"
+"        Average Cost (AVCO): The products are valued at weighted average cost.\n"
+"        First In First Out (FIFO): The products are valued supposing those that enter the company first will also leave it first.\n"
+"        "
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__state_id
 msgid "State"
 msgstr ""
@@ -3691,6 +4132,71 @@ msgid ""
 "Overdue: Due date is already passed\n"
 "Today: Activity date is today\n"
 "Planned: Future activities."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_stock_account_input_categ_id
+msgid "Stock Input Account"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_stock_journal
+msgid "Stock Journal"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__stock_move_ids
+msgid "Stock Move"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_stock_account_output_categ_id
+msgid "Stock Output Account"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__picking_warn
+msgid "Stock Picking"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__stock_quant_ids
+msgid "Stock Quant"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__stock_state
+msgid "Stock State"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__stock_state_threshold
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_state_threshold
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__stock_state_threshold
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__stock_state_threshold
+msgid "Stock State Threshold"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__property_stock_valuation_account_id
+msgid "Stock Valuation Account"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__stock_valuation_layer_ids
+msgid "Stock Valuation Layer"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_multi_locations
+msgid "Storage Locations"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__group_stock_multi_locations
+msgid ""
+"Store products in specific locations of your warehouse (e.g. bins, racks) "
+"and to track inventory accordingly."
 msgstr ""
 
 #. module: shopinvader
@@ -3777,6 +4283,12 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__stock_move_ids
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__stock_quant_ids
+msgid "Technical: used to compute quantities."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__chart_template_id
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Template"
@@ -3817,6 +4329,14 @@ msgstr ""
 #: code:addons/shopinvader/services/cart.py:0
 #, python-format
 msgid "The cart does not exists or does not belong to you!"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__stock_state_threshold
+msgid ""
+"The custom value under which the stock state of the products of this "
+"category will pass from 'In Stock' to 'In Limited Stock' State. If not set, "
+"Odoo will use the threshold defined at the company level."
 msgstr ""
 
 #. module: shopinvader
@@ -3878,6 +4398,18 @@ msgstr ""
 msgid ""
 "The sale price is managed from the product template. Click on the 'Configure"
 " Variants' button to set the extra attribute prices."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__property_stock_customer
+msgid ""
+"The stock location used as destination when sending goods to this contact."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__property_stock_supplier
+msgid ""
+"The stock location used as source when receiving goods from this contact."
 msgstr ""
 
 #. module: shopinvader
@@ -3990,6 +4522,30 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__property_stock_production
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__property_stock_production
+msgid ""
+"This stock location will be used, instead of the default one, as the source "
+"location for stock moves generated by manufacturing orders."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__property_stock_inventory
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__property_stock_inventory
+msgid ""
+"This stock location will be used, instead of the default one, as the source "
+"location for stock moves generated when you do an inventory."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__responsible_id
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__responsible_id
+msgid ""
+"This user will be responsible of the next activities related to logistic "
+"operations for this product."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner_binding_line__bind
 msgid "Tick to bind the partner to the backend. Untick to unbind it."
 msgstr ""
@@ -4035,9 +4591,27 @@ msgid "Total amount you have to pay to this vendor."
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__total_route_ids
+msgid "Total routes"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__service_type
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__service_type
 msgid "Track Service"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__module_product_expiry
+msgid ""
+"Track following dates on lots & serial numbers: best before, removal, end of life, alert. \n"
+" Such dates are set automatically at lot/serial number creation based on values set on the product (in days)."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__tracking
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__tracking
+msgid "Tracking"
 msgstr ""
 
 #. module: shopinvader
@@ -4262,6 +4836,11 @@ msgid "Validation"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__value_svl
+msgid "Value Svl"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.ui.menu,name:shopinvader.shopinvader_variant_menu
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_form_view
 msgid "Variant"
@@ -4329,6 +4908,11 @@ msgid "Variants"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_stock_supplier
+msgid "Vendor Location"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_supplier_payment_term_id
 msgid "Vendor Payment Terms"
 msgstr ""
@@ -4372,6 +4956,17 @@ msgstr ""
 #: model:product.product,name:shopinvader.product_product_chair_vortex_white
 #: model:product.template,name:shopinvader.product_template_chair_vortex
 msgid "Vortex Side Chair"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__warehouse_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__warehouse_id
+msgid "Warehouse"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_warning_stock
+msgid "Warnings for Stock"
 msgstr ""
 
 #. module: shopinvader
@@ -4438,6 +5033,28 @@ msgstr ""
 #. module: shopinvader
 #: model:mail.template,subject:shopinvader.email_customer_validated_notification
 msgid "Welcome notification ${object.name} - Account validated"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__property_stock_valuation_account_id
+msgid ""
+"When automated inventory valuation is enabled on a product, this account "
+"will hold the current value of the products."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__property_stock_account_output_categ_id
+msgid ""
+"When doing automated inventory valuation, counterpart journal items for all outgoing stock moves will be posted in this account,\n"
+"                unless there is a specific valuation account set on the destination location. This is the default value for all products in this category.\n"
+"                It can also directly be set on each product."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_category__property_stock_journal
+msgid ""
+"When doing automated inventory valuation, this is the Accounting Journal in "
+"which entries will be automatically posted when stock moves are processed."
 msgstr ""
 
 #. module: shopinvader
