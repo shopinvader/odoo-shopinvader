@@ -30,6 +30,8 @@ addon | version | summary
 [shopinvader_locomotive](shopinvader_locomotive/) | 14.0.1.0.1 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 | Provide default notification templates for Shopinvader suite.
+[shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.0 | This module is used to choose a stock field during theexport (by backend)
+[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.0.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.1.0 | Shopinvader Catalog Search Engine Connector
@@ -65,9 +67,7 @@ addon | version | summary
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 (unported) | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_media](shopinvader_product_media/) | 13.0.1.0.1 (unported) | Index storage media data into external search engine
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
-[shopinvader_product_stock](shopinvader_product_stock/) | 13.0.2.0.1 (unported) | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 13.0.1.0.0 (unported) | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
-[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 13.0.1.0.1 (unported) | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.1.0.3 (unported) | Shopinvader Product Link
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 (unported) | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
