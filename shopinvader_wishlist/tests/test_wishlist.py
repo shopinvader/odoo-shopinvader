@@ -320,6 +320,7 @@ class WishlistCase(CommonWishlistCase):
                 "id": self.prod_set.id,
                 "name": self.prod_set.name,
                 "access": {"read": True, "update": True, "delete": True},
+                "partner": {"id": self.partner.id, "name": self.partner.name},
             },
         )
         msg = "JSON data mode `fancy` not found."
