@@ -2722,6 +2722,13 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__my_activity_date_deadline
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__my_activity_date_deadline
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_category__name
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__name
@@ -4650,13 +4657,13 @@ msgid "USPS Connector"
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_unbinding_wizard_form_view
-msgid "UnBind Products"
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
+msgid "Unbind Categories"
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
-msgid "Unbind Categories"
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_unbinding_wizard_form_view
+msgid "Unbind Products"
 msgstr ""
 
 #. module: shopinvader
