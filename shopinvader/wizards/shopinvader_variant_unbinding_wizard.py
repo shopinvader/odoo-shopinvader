@@ -21,7 +21,7 @@ class ShopinvaderVariantUnbindingWizard(models.TransientModel):
         res = super(ShopinvaderVariantUnbindingWizard, self).default_get(fields_list)
         shopinvader_variant_ids = self.env.context.get("active_ids", False)
         if shopinvader_variant_ids:
-            res["shopinvader_variant_ids"] = shopinvader_variant_ids
+            res["shopinvader_variant_ids"] = [(6, 0, shopinvader_variant_ids)]
         return res
 
     def unbind_products(self):

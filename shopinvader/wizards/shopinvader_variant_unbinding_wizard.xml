@@ -13,7 +13,7 @@
                <field name='shopinvader_variant_ids' />
                 <footer>
                     <button
-                        string="UnBind Products"
+                        string="Unbind Products"
                         name="unbind_products"
                         type="object"
                         class="oe_highlight"
