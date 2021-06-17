@@ -8,9 +8,7 @@ from odoo.addons.shopinvader.tests.common import ProductCommonCase
 class ProductCase(ProductCommonCase):
     def setUp(self):
         super(ProductCase, self).setUp()
-        self.attr_set = self.env.ref(
-            "product_attribute_set.computer_attribute_set"
-        )
+        self.attr_set = self.env.ref("product_attribute_set.computer_attribute_set")
         self.processor = self.env.ref(
             "product_attribute_set.computer_processor_attribute_option_1"
         )

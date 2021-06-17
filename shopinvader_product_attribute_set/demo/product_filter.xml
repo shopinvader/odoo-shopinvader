@@ -1,11 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <record id="filter_compatible_linux" model="product.filter">
         <field name="based_on">product_attribute</field>
-        <field name="sequence" eval="50"/>
+        <field name="sequence" eval="50" />
         <field name="name">Compatible linux</field>
-        <field name="product_attribute_id" ref="product_attribute_set.computer_linux_compatible_attribute"/>
+        <field
+            name="product_attribute_id"
+            ref="product_attribute_set.computer_linux_compatible_attribute"
+        />
     </record>
 
 </odoo>
