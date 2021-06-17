@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
 <record id="product_filter_view_form" model="ir.ui.view">
     <field name="model">product.filter</field>
-    <field name="inherit_id" ref="shopinvader.product_filter_view_form"/>
+    <field name="inherit_id" ref="shopinvader.product_filter_view_form" />
     <field name="arch" type="xml">
         <field name="variant_attribute_id" position="after">
-            <field name="product_attribute_id"
-                   attrs="{'invisible': [('based_on', '!=', 'product_attribute')],
-                           'required': [('based_on', '=', 'product_attribute')]}"/>
+            <field
+                    name="product_attribute_id"
+                    attrs="{'invisible': [('based_on', '!=', 'product_attribute')],
+                           'required': [('based_on', '=', 'product_attribute')]}"
+                />
         </field>
     </field>
 </record>
