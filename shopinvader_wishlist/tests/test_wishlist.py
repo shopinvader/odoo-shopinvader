@@ -328,6 +328,16 @@ class WishlistCase(CommonWishlistCase):
             res_line["product"], dict(variant.get_shop_data(), available=True)
         )
 
+    def test_jsonify_variant_archived(self):
+        prod = self.env.ref("product.product_product_4b")
+        variant = prod.shopinvader_bind_ids[0]
+        variant.active = False
+        res = self.wishlist_service._to_json_one(self.prod_set)
+        res_line = res["lines"][0]
+        self.assertEqual(
+            res_line["product"], dict(variant.get_shop_data(), available=False)
+        )
+
     def test_jsonify_missing_variant_binding(self):
         prod = self.env.ref("product.product_product_4b")
         prod.shopinvader_bind_ids.unlink()
@@ -348,6 +358,7 @@ class WishlistCase(CommonWishlistCase):
                 "id": self.prod_set.id,
                 "name": self.prod_set.name,
                 "access": {"read": True, "update": True, "delete": True},
+                "partner": {"id": self.partner.id, "name": self.partner.name},
             },
         )
         msg = "JSON data mode `fancy` not found."
