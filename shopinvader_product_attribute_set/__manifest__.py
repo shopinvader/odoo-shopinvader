@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Product Attribute Set",
     "summary": "Expose all PIM' Attribute sets with Shopinvader",
-    "version": "12.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
