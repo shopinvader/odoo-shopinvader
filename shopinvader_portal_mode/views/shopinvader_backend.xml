@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2021 Camptocamp
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_backend_form_view">
+        <field name="name">shopinvader.backend.form (in shopinvader_portal_mode)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="arch" type="xml">
+            <group name="sale_conf" position="inside">
+                <field name="sale_order_portal_mode"/>
+            </group>
+        </field>
+    </record>
+
+</odoo>
