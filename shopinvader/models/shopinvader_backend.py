@@ -142,15 +142,24 @@ class ShopinvaderBackend(models.Model):
         string="Available partner industries",
         default=lambda self: self._default_partner_industry_ids(),
     )
-    # Invoice settings
-    invoice_settings = Serialized(
+    # Sale settings aggregator.
+    # Use this for `sparse` attribute of sale related settings
+    # that do not require a real field.
+    sale_settings = Serialized(
         # Default values on the sparse fields work only for create
         # and does not provide defaults for existing records.
+        default={}
+    )
+    # Invoice settings aggregator.
+    # Use this for `sparse` attribute of invoice related settings
+    # that do not require a real field.
+    invoice_settings = Serialized(
         default={
             "invoice_linked_to_sale_only": True,
             "invoice_access_open": False,
         }
     )
+    # TODO: move to portal mode?
     invoice_linked_to_sale_only = fields.Boolean(
         default=True,
         string="Only sale invoices",
