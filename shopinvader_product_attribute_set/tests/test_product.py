@@ -17,6 +17,11 @@ class ProductCase(ProductCommonCase):
         self.product_filter = self.env.ref(
             "shopinvader_product_attribute_set.filter_compatible_linux"
         )
+        attributes = self.attr_set.attribute_ids.filtered(
+            lambda s: s.name
+            in ["x_linux_compatible", "x_processor", "x_technical_description"]
+        )
+        self.attr_set.attribute_ids = attributes
 
     def test_product_attributes(self):
         self.product.write(
@@ -31,37 +36,38 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             self.shopinvader_variant.attributes,
             {
-                u"linux_compatible": "true",
-                u"processor": u"Intel i5",
-                u"technical_description": u"foo",
+                "linux_compatible": True,
+                "processor": "Intel i5",
+                "technical_description": "foo",
             },
         )
-
         self.assertListEqual(
             self.shopinvader_variant.structured_attributes,
             [
                 {
+                    "group_name": "Technical",
                     "fields": [
                         {
+                            "value": "true",
+                            # TODO cleanup demo in product_attribute_set
+                            # name should be "Linux Compatible"
+                            "name": "X Linux Compatible",
+                            "key": "linux_compatible",
+                            "type": "boolean",
+                        },
+                        {
                             "value": "Intel i5",
-                            "name": "X Processor",
+                            "name": "Processor",
                             "key": "processor",
                             "type": "select",
                         },
                         {
                             "value": "foo",
-                            "name": "X Technical Description",
+                            "name": "Technical Description",
                             "key": "technical_description",
                             "type": "text",
                         },
-                        {
-                            "value": "true",
-                            "name": "X Linux Compatible",
-                            "key": "linux_compatible",
-                            "type": "boolean",
-                        },
                     ],
-                    "group_name": "Technical",
                 }
             ],
         )
@@ -85,12 +91,11 @@ class ProductCase(ProductCommonCase):
         for field in self.shopinvader_variant.structured_attributes[0]["fields"]:
             if field["key"] == "processor":
                 processor_field = field
-
-        self.assertListEqual(
+        self.assertEqual(
             processor_field,
             {
-                "value": "Intel i5",
-                "name": "",
+                "value": "",
+                "name": "Processor",
                 "key": "processor",
                 "type": "select",
             },
