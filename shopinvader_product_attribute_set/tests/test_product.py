@@ -70,3 +70,28 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             self.product_filter.display_name, "attributes.linux_compatible"
         )
+
+    def test_product_attributes_empty_select(self):
+        self.product.write(
+            {
+                "attribute_set_id": self.attr_set.id,
+                "x_processor": False,
+            }
+        )
+
+        self.assertEqual(self.shopinvader_variant.attributes["processor"], "")
+
+        processor_field = {}
+        for field in self.shopinvader_variant.structured_attributes[0]["fields"]:
+            if field["key"] == "processor":
+                processor_field = field
+
+        self.assertListEqual(
+            processor_field,
+            {
+                "value": "Intel i5",
+                "name": "",
+                "key": "processor",
+                "type": "select",
+            },
+        )
