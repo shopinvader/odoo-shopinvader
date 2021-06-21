@@ -22,8 +22,7 @@ class ShopinvaderVariant(models.Model):
         if not name_key:
             name_key = self[fieldname]._rec_name
         if one:
-            self[fieldname].ensure_one()
-            return self[fieldname][name_key]
+            return self[fieldname][name_key] or ""
         else:
             return self[fieldname].mapped(name_key)
 
