@@ -16,7 +16,7 @@ class SaleService(Component):
             return super()._get_base_search_domain()
         domain = self._default_domain_for_partner_records(
             with_backend=False
-        ) + [("typology", "=", "sale")]
+        ) + [("state", "in", self._portal_mode_sale_states())]
         backend_domain = [
             "|",
             ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
@@ -24,6 +24,9 @@ class SaleService(Component):
         ]
         domain = expression.AND([domain, backend_domain])
         return expression.normalize_domain(domain)
+
+    def _portal_mode_sale_states(self):
+        return ("sale", "done")
 
     def _convert_one_sale(self, sale):
         res = super()._convert_one_sale(sale)
