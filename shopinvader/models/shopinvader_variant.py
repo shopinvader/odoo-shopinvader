@@ -293,20 +293,24 @@ class ShopinvaderVariant(models.Model):
         # Respect same order.
         order_by = [x.strip() for x in self.env["product.product"]._order.split(",")]
         backends = self.mapped("backend_id")
-        fields_to_read = ["tmpl_record_id", "backend_id", "lang_id"] + order_by
-        tmpl_ids = self.mapped("tmpl_record_id").ids
+        fields_to_read = ["shopinvader_product_id", "backend_id", "lang_id"] + order_by
+        product_ids = self.mapped("shopinvader_product_id").ids
         # Use sudo to bypass permissions (we don't care)
         _variants = self.sudo().search(
-            [("tmpl_record_id", "in", tmpl_ids), ("backend_id", "in", backends.ids)],
-            order="tmpl_record_id",
+            [
+                ("shopinvader_product_id", "in", product_ids),
+                ("backend_id", "in", backends.ids),
+            ],
+            order="shopinvader_product_id",
         )
         # Use `load=False` to not load template name
         variants = _variants.read(fields_to_read, load=False)
-        var_by_tmpl = groupby(
-            variants, lambda x: (x["tmpl_record_id"], x["backend_id"], x["lang_id"])
+        var_by_product = groupby(
+            variants,
+            lambda x: (x["shopinvader_product_id"], x["backend_id"], x["lang_id"]),
         )
 
-        def pick_1st_variant(prods):
+        def pick_1st_variant(variants):
             # NOTE: if the order is changed by adding `asc/desc` this can be broken
             # but it's very unlikely that the default order for product.product
             # will be changed.
@@ -317,17 +321,22 @@ class ShopinvaderVariant(models.Model):
                     return record[key]
 
             ordered = sorted(
-                prods, key=lambda var: [get_value(var, x) for x in order_by]
+                variants, key=lambda var: [get_value(var, x) for x in order_by]
             )
             return ordered[0].get("id") if ordered else None
 
-        main_by_tmpl = {
-            tmpl: pick_1st_variant(tuple(prods)) for tmpl, prods in var_by_tmpl
+        main_by_product = {
+            product: pick_1st_variant(tuple(variants))
+            for product, variants in var_by_product
         }
         for record in self:
             record.main = (
-                main_by_tmpl.get(
-                    (record.tmpl_record_id.id, record.backend_id.id, record.lang_id.id)
+                main_by_product.get(
+                    (
+                        record.shopinvader_product_id.id,
+                        record.backend_id.id,
+                        record.lang_id.id,
+                    )
                 )
                 == record.id
             )
