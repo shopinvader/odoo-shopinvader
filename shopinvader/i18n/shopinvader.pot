@@ -1891,6 +1891,16 @@ msgid "HS Code"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__image_medium_url
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__image_small_url
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__image_medium_url
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__image_small_url
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__variant_image_medium_url
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__variant_image_small_url
+msgid "HTTP accessible path to the file"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__has_accounting_entries
 msgid "Has Accounting Entries"
 msgstr ""
@@ -2093,18 +2103,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_512
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_512
 msgid "Image 512"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_medium_url
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_medium_url
-msgid "Image Medium Url"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_small_url
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_small_url
-msgid "Image Small Url"
 msgstr ""
 
 #. module: shopinvader
@@ -2609,8 +2607,26 @@ msgid "Main Attachment"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__main_image_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__main_image_id
+msgid "Main Image"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__currency_id
 msgid "Main currency of the company."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_medium_url
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_medium_url
+msgid "Main medium image URL"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_small_url
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_small_url
+msgid "Main small image URL"
 msgstr ""
 
 #. module: shopinvader
@@ -3740,6 +3756,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_warning_sale
 msgid "Sale Order Warnings"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__sale_settings
+msgid "Sale Settings"
 msgstr ""
 
 #. module: shopinvader
@@ -5241,16 +5262,6 @@ msgid "Variant Image 512"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_medium_url
-msgid "Variant Image Medium Url"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_small_url
-msgid "Variant Image Small Url"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_ids
 msgid "Variant Images"
 msgstr ""
@@ -5269,6 +5280,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__variant_seller_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_seller_ids
 msgid "Variant Seller"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_medium_url
+msgid "Variant main medium image URL"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_small_url
+msgid "Variant main small image URL"
 msgstr ""
 
 #. module: shopinvader
