@@ -1,0 +1,77 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_product_attribute_set
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model,name:shopinvader_product_attribute_set.model_attribute_attribute
+msgid "Attribute"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_product_filter__based_on
+msgid "Based On"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:product.filter,name:shopinvader_product_attribute_set.filter_compatible_linux
+msgid "Compatible linux"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_attribute_attribute__display_name
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_product_filter__display_name
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_shopinvader_variant__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_attribute_attribute__export_name
+msgid "Export Name"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_attribute_attribute__id
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_product_filter__id
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_shopinvader_variant__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_attribute_attribute____last_update
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_product_filter____last_update
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_shopinvader_variant____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_product_filter__product_attribute_id
+#: model:ir.model.fields.selection,name:shopinvader_product_attribute_set.selection__product_filter__based_on__product_attribute
+msgid "Product Attribute"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model,name:shopinvader_product_attribute_set.model_product_filter
+msgid "Product Filter"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model,name:shopinvader_product_attribute_set.model_shopinvader_variant
+msgid "Shopinvader Variant"
+msgstr ""
+
+#. module: shopinvader_product_attribute_set
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_shopinvader_variant__attributes
+#: model:ir.model.fields,field_description:shopinvader_product_attribute_set.field_shopinvader_variant__structured_attributes
+msgid "Shopinvader attributes Fields"
+msgstr ""
