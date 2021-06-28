@@ -44,6 +44,7 @@ addon | version | summary
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.2.0 | Synchronize wishlist details to Locomotive users record.
 [shopinvader_notification_default](shopinvader_notification_default/) | 13.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 13.0.1.0.0 | Shopinvader Customer firstname/lastname
+[shopinvader_portal_mode](shopinvader_portal_mode/) | 13.0.1.0.0 | Shopinvader portal mode
 [shopinvader_product_media](shopinvader_product_media/) | 13.0.1.0.1 | Index storage media data into external search engine
 [shopinvader_product_stock](shopinvader_product_stock/) | 13.0.3.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 13.0.1.0.1 | This module is used to choose a stock state during theexport (by backend)
