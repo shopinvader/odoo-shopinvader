@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_locomotive_wishlist',
         'odoo13-addon-shopinvader_notification_default',
         'odoo13-addon-shopinvader_partner_firstname',
+        'odoo13-addon-shopinvader_portal_mode',
         'odoo13-addon-shopinvader_product_media',
         'odoo13-addon-shopinvader_product_stock',
         'odoo13-addon-shopinvader_product_stock_state',
