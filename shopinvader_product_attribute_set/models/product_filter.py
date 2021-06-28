@@ -4,24 +4,21 @@
 
 
 from odoo import fields, models
-from odoo.addons.shopinvader.models.tools import sanitize_attr_name
 
 
 class ProductFilter(models.Model):
     _inherit = "product.filter"
 
     based_on = fields.Selection(
-        selection_add=[("custom_attribute", "Custom Attribute")]
+        selection_add=[("product_attribute", "Product Attribute")],
+        ondelete={"product_attribute": "cascade"},
     )
-    custom_attribute_id = fields.Many2one(
-        string="Attribute", comodel_name="attribute.attribute"
+    product_attribute_id = fields.Many2one(
+        string="Product Attribute", comodel_name="attribute.attribute"
     )
 
     def _build_display_name(self):
-        if self.based_on == "custom_attribute":
-            return (
-                "attributes.%s"
-                % sanitize_attr_name(self.custom_attribute_id)[2:]
-            )
+        if self.based_on == "product_attribute":
+            return "attributes.%s" % self.product_attribute_id.export_name
         else:
             return super(ProductFilter, self)._build_display_name()
