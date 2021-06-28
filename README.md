@@ -30,6 +30,7 @@ addon | version | summary
 [shopinvader_locomotive](shopinvader_locomotive/) | 14.0.1.0.1 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 | Provide default notification templates for Shopinvader suite.
+[shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
@@ -47,7 +48,6 @@ addon | version | summary
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 (unported) | Shopinvader Display category image for product
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
-[shopinvader_custom_attribute](shopinvader_custom_attribute/) | 10.0.1.0.0 (unported) | Integrate your custom attribute in your website
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.0.1 (unported) | Integrate customer multi user and wishlist.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.2.5.1 (unported) | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 (unported) | Shopinvader addons to let user define delivery instructions
