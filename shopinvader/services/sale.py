@@ -8,7 +8,7 @@ from odoo.tools.translate import _
 
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
-
+from odoo.addons.base_rest import restapi
 
 class SaleService(Component):
     """Shopinvader service to expose sale orders records."""
@@ -29,6 +29,10 @@ class SaleService(Component):
         order = self._get(_id)
         return self._to_json(order)[0]
 
+    @restapi.method(
+        [(["/", "/search"], "GET")],
+        cors="*",
+    )
     def search(self, **params):
         return self._paginate_search(**params)
 
