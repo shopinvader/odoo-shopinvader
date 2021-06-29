@@ -18,7 +18,7 @@ _logger = logging.getLogger(__name__)
 class InvaderController(main.RestController):
 
     _root_path = "/shopinvader/"
-    _collection_name = "shopinvader.backend"
+    _collection_name = "shopinvader.backend.controller_disabled"
     _default_auth = "api_key"
 
     @route(
