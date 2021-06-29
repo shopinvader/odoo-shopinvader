@@ -10,7 +10,7 @@ class AttributeAttribute(models.Model):
 
     export_name = fields.Char(compute="_compute_export_name")
 
-    def _compute__export_name(self):
+    def _compute_export_name(self):
         for rec in self:
             if rec.name.startswith("x_"):
                 rec.export_name = rec.name[2:]

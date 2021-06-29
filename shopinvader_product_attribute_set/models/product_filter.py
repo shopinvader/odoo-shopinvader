@@ -10,7 +10,7 @@ class ProductFilter(models.Model):
     _inherit = "product.filter"
 
     based_on = fields.Selection(
-        selection_add=[("product_attribute", "Product Attribute")]
+        selection_add=[("product_attribute", "Product Attribute")],
     )
     product_attribute_id = fields.Many2one(
         string="Product Attribute", comodel_name="attribute.attribute"
