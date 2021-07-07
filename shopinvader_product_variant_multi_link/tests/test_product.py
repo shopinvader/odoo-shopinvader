@@ -45,8 +45,8 @@ class ProductLinkCase(ProductVariantLinkCaseBase):
         self.assertEqual(self.shopinvader_variant_1_1.product_links, expected)
         # 2nd variant gets links w/ template 2 and 3 variants
         expected = {
-            "up_selling": [{"id": self.variant_2_2.id}],
-            "cross_selling": [{"id": self.variant_3_2.id}],
+            "up_selling": [{"id": self.shopinvader_variant_2_2.id}],
+            "cross_selling": [{"id": self.shopinvader_variant_3_2.id}],
         }
         self.assertEqual(self.shopinvader_variant_1_2.product_links, expected)
 
@@ -56,8 +56,8 @@ class ProductLinkCase(ProductVariantLinkCaseBase):
         self.assertEqual(self.shopinvader_variant_2_1.product_links, expected)
         # 2nd variant gets links w/ template 2 and 3 variants
         expected = {
-            "up_selling": [{"id": self.variant_1_2.id}],
-            "cross_selling": [{"id": self.variant_3_2.id}],
+            "up_selling": [{"id": self.shopinvader_variant_1_2.id}],
+            "cross_selling": [{"id": self.shopinvader_variant_3_2.id}],
         }
         self.assertEqual(self.shopinvader_variant_2_2.product_links, expected)
 
@@ -68,9 +68,9 @@ class ProductLinkCase(ProductVariantLinkCaseBase):
         # 2nd variant gets links w/ template 1 and 2 variants
         expected = {
             "cross_selling": [
-                {"id": self.variant_1_2.id},
-                {"id": self.variant_2_2.id},
+                {"id": self.shopinvader_variant_1_2.id},
+                {"id": self.shopinvader_variant_2_2.id},
             ],
-            "one_way": [{"id": self.variant_2_2.id}],
+            "one_way": [{"id": self.shopinvader_variant_2_2.id}],
         }
         self.assertEqual(self.shopinvader_variant_3_2.product_links, expected)
