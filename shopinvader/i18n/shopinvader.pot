@@ -1506,7 +1506,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_l10n_eu_service
-msgid "EU Digital Goods VAT"
+msgid "EU Intra-community Distance Selling"
 msgstr ""
 
 #. module: shopinvader
@@ -2596,6 +2596,13 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_sale_margin
 msgid "Margins"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__media_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__media_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__media_ids
+msgid "Media"
 msgstr ""
 
 #. module: shopinvader
@@ -4919,6 +4926,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_image_ids
 msgid "Variant Images"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__variant_media_ids
+msgid "Variant Media"
 msgstr ""
 
 #. module: shopinvader
