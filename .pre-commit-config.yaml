@@ -21,7 +21,6 @@ exclude: |
   ^shopinvader_locomotive_reset_password/|
   ^shopinvader_locomotive_sale_profile/|
   ^shopinvader_locomotive_wishlist/|
-  ^shopinvader_partner_firstname/|
   ^shopinvader_partner_vat/|
   ^shopinvader_pending_cart_reminder/|
   ^shopinvader_product_media/|
