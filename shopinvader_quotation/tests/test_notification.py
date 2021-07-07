@@ -3,15 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.shopinvader.tests.common import CommonCase
-from odoo.addons.shopinvader.tests.test_notification import (
-    NotificationCaseMixin,
-)
+from odoo.addons.shopinvader.tests.test_notification import NotificationCaseMixin
 
 
 class NotificationQuotationCase(CommonCase, NotificationCaseMixin):
     @classmethod
     def setUpClass(cls):
-        super(NotificationQuotationCase, cls).setUpClass()
+        super().setUpClass()
         cls.cart = cls.env.ref("shopinvader.sale_order_2")
 
     def test_quotation_notification(self):

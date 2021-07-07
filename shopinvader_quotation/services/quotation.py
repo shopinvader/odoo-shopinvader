@@ -1,5 +1,6 @@
 # Copyright 2016 Akretion (http://www.akretion.com)
-# Benoît GUILLOT <benoit.guillot@akretion.com>
+# Copyright 2021 Camptocamp (http://www.camptocamp.com).
+# @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from odoo.addons.base_rest.components.service import to_int
@@ -22,6 +23,11 @@ class QuotationService(Component):
         order = self._get(_id)
         return self._to_json(order)[0]
 
+    def confirm(self, _id):
+        order = self._get(_id)
+        self._confirm(order)
+        return self.component(usage="sales").get(order.id)
+
     def search(self, **params):
         return self._paginate_search(**params)
 
@@ -37,7 +43,11 @@ class QuotationService(Component):
         )
 
     # Validator
+
     def _validator_get(self):
+        return {}
+
+    def _validator_confirm(self):
         return {}
 
     def _validator_search(self):
@@ -57,11 +67,5 @@ class QuotationService(Component):
             ("typology", "=", "quotation"),
         ]
 
-    def _confirm_cart(self, quotation):
-        quotation.action_confirm_cart()
-        res = self._to_json(quotation)[0]
-        return {
-            "data": res,
-            "store_cache": {"last_sale": res, "cart": {}},
-            "set_session": {"cart_id": 0},
-        }
+    def _confirm(self, order):
+        return order.action_confirm_cart()

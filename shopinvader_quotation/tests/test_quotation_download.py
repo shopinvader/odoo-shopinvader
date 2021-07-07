@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -12,8 +11,11 @@ class QuotationDownloadCase(CommonCase, CommonTestDownload):
         cls.quotation = cls.env.ref("shopinvader.sale_order_2")
         cls.quotation.write({"typology": "quotation"})
         cls.partner = cls.env.ref("shopinvader.partner_1")
-        with cls.work_on_services(partner=cls.partner) as work:
-            cls.service = work.component(usage="quotations")
+
+    def setUp(self, *args, **kwargs):
+        super().setUp(*args, **kwargs)
+        with self.work_on_services(partner=self.partner) as work:
+            self.service = work.component(usage="quotations")
 
     def test_quotation_download(self):
         self.assertEqual(self.quotation.typology, "quotation")
