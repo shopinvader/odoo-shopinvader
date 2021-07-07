@@ -19,8 +19,8 @@ class ProductLinkCase(ProductLinkCaseBase):
         ).filtered(lambda x: x.main)
 
         expected = {
-            "up_selling": [{"id": main2.record_id.id}],
-            "cross_selling": [{"id": main3.record_id.id}],
+            "up_selling": [{"id": main2.id}],
+            "cross_selling": [{"id": main3.id}],
         }
         self.assertEqual(
             self.shopinvader_variant_1_1.shopinvader_product_id.product_links,
@@ -32,8 +32,8 @@ class ProductLinkCase(ProductLinkCaseBase):
         )
 
         expected = {
-            "cross_selling": [{"id": main3.record_id.id}],
-            "up_selling": [{"id": main1.record_id.id}],
+            "cross_selling": [{"id": main3.id}],
+            "up_selling": [{"id": main1.id}],
         }
         self.assertEqual(
             self.shopinvader_variant_2_1.shopinvader_product_id.product_links,
@@ -44,12 +44,9 @@ class ProductLinkCase(ProductLinkCaseBase):
             expected,
         )
         expected = {
-            "cross_selling": [
-                {"id": main1.record_id.id},
-                {"id": main2.record_id.id},
-            ],
+            "cross_selling": [{"id": main1.id}, {"id": main2.id}],
         }
-        expected["one_way"] = [{"id": main2.record_id.id}]
+        expected["one_way"] = [{"id": main2.id}]
         self.assertEqual(
             self.shopinvader_variant_3_2.shopinvader_product_id.product_links,
             expected,
