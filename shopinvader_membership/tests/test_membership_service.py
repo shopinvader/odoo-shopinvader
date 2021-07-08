@@ -18,7 +18,9 @@ class TestMembershipService(CommonCase):
         cls.partner = cls.env.ref("shopinvader.partner_1")
         str_today = fields.Date.today()
         cls.date_today = fields.Date.from_string(str_today)
-        cls.next_month = fields.Date.to_string(cls.date_today + timedelta(days=30))
+        cls.next_month = fields.Date.to_string(
+            cls.date_today + timedelta(days=30)
+        )
         cls.product = cls.product_obj.create(
             {
                 "type": "service",
@@ -34,7 +36,9 @@ class TestMembershipService(CommonCase):
         super(TestMembershipService, self).setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="membership")
-        with self.work_on_services(partner=self.backend.anonymous_partner_id) as work:
+        with self.work_on_services(
+            partner=self.backend.anonymous_partner_id
+        ) as work:
             self.service_guest = work.component(usage="membership")
 
     def _check_data_content(self, data, membership_lines):
@@ -46,14 +50,20 @@ class TestMembershipService(CommonCase):
         """
         # To have them into correct order
         service = self.service
-        membership_lines = membership_lines.search(service._get_base_search_domain())
+        membership_lines = membership_lines.search(
+            service._get_base_search_domain()
+        )
         self.assertEquals(len(data), len(membership_lines))
         for current_data, membership_line in zip(data, membership_lines):
-            state_label = service._get_selection_label(membership_line, "state")
+            state_label = service._get_selection_label(
+                membership_line, "state"
+            )
             self.assertEquals(
                 current_data.get("membership_line_id"), membership_line.id
             )
-            self.assertEquals(current_data.get("date") or False, membership_line.date)
+            self.assertEquals(
+                current_data.get("date") or False, membership_line.date
+            )
             self.assertEquals(
                 current_data.get("date_from") or False,
                 membership_line.date_from,
@@ -72,7 +82,9 @@ class TestMembershipService(CommonCase):
             self.assertEquals(
                 current_data.get("member_price"), membership_line.member_price
             )
-            self.assertEquals(current_data.get("state").get("label"), state_label)
+            self.assertEquals(
+                current_data.get("state").get("label"), state_label
+            )
             self.assertEquals(
                 current_data.get("state").get("value"), membership_line.state
             )
@@ -123,7 +135,9 @@ class TestMembershipService(CommonCase):
             }
         )
         service_partner = self.service.partner
-        membership_lines = membership_line_1 | membership_line_2 | membership_line_3
+        membership_lines = (
+            membership_line_1 | membership_line_2 | membership_line_3
+        )
         self.assertEquals(membership_line_1.partner, service_partner)
         self.assertEquals(membership_line_2.partner, service_partner)
         self.assertEquals(membership_line_3.partner, service_partner)

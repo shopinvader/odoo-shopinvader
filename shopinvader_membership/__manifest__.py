@@ -3,8 +3,7 @@
 
 {
     "name": "Shopinvader Membership",
-    "summary": """
-        Shopinvader Membership module""",
+    "summary": """Shopinvader Membership module""",
     "version": "10.0.1.2.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",

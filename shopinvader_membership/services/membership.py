@@ -164,7 +164,9 @@ class MembershipService(Component):
             {
                 "state": {
                     "value": membership_line.state,
-                    "label": self._get_selection_label(membership_line, "state"),
+                    "label": self._get_selection_label(
+                        membership_line, "state"
+                    ),
                 }
             }
         )
