@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -165,9 +164,7 @@ class MembershipService(Component):
             {
                 "state": {
                     "value": membership_line.state,
-                    "label": self._get_selection_label(
-                        membership_line, "state"
-                    ),
+                    "label": self._get_selection_label(membership_line, "state"),
                 }
             }
         )
