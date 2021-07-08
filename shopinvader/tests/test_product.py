@@ -902,6 +902,24 @@ class ProductCase(ProductCommonCase):
             ).mapped("main"),
         )
 
+    def test_main_product_with_two_lang(self):
+        lang = self._install_lang("base.lang_fr")
+        template = self.env.ref("product.product_product_4_product_template")
+        template.with_context(
+            lang="fr_FR"
+        ).name = "Bureau Personnalisable (CONFIG)"
+        template.flush()
+        self.backend.lang_ids |= lang
+        self._bind_products(template.product_variant_ids)
+        main_variants = template.shopinvader_bind_ids.mapped(
+            "shopinvader_variant_ids"
+        ).filtered("main")
+        self.assertEqual(len(main_variants), 2)
+        self.assertNotEqual(
+            main_variants[0].shopinvader_product_id,
+            main_variants[1].shopinvader_product_id,
+        )
+
     def test_create_shopinvader_category_from_product_category(self):
         categ = self.env["product.category"].search([])[0]
         lang = self.env["res.lang"]._lang_get(self.env.user.lang)
