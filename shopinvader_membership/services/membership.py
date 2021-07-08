@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools.translate import _
 
-from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.base.modelst.components.service import to_int
 from odoo.addons.component.core import Component
 
 

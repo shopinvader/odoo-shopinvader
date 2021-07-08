@@ -4,7 +4,7 @@
 {
     "name": "Shopinvader Membership",
     "summary": """Shopinvader Membership module""",
-    "version": "10.0.1.2.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
