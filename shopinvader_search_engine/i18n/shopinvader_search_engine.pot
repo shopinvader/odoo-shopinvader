@@ -30,6 +30,14 @@ msgid "Clear"
 msgstr ""
 
 #. module: shopinvader_search_engine
+#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_category__data_size
+#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_variant__data_size
+msgid ""
+"Computed size of the index. Algolia limits record size to 10KB and exports "
+"fail if your record exceeds the quota."
+msgstr ""
+
+#. module: shopinvader_search_engine
 #: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__data
 #: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__data
 msgid "Data"
@@ -98,6 +106,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
 msgid "Index"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__data_size
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__data_size
+msgid "Index record size"
 msgstr ""
 
 #. module: shopinvader_search_engine
