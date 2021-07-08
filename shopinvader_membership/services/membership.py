@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools.translate import _
 
-from odoo.addons.base.models.components.service import to_int
+from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 
@@ -26,7 +26,7 @@ class MembershipService(Component):
         :return: Odoo domain
         """
         # The partner must be set and not be the anonymous one
-        if not self._is_logged():
+        if not self._is_logged_in():
             return expression.FALSE_DOMAIN
 
         # here we only allow access to membership lines linked to the
@@ -47,7 +47,7 @@ class MembershipService(Component):
         :param _id: id of product.product
         :return: dict with invoice_id
         """
-        if not self._is_logged():
+        if not self._is_logged_in():
             raise UserError(_("A user should be logged"))
         membership_product = self.env["product.product"].search(
             [("id", "=", _id), ("membership", "=", True)]
@@ -164,9 +164,7 @@ class MembershipService(Component):
             {
                 "state": {
                     "value": membership_line.state,
-                    "label": self._get_selection_label(
-                        membership_line, "state"
-                    ),
+                    "label": self._get_selection_label(membership_line, "state"),
                 }
             }
         )

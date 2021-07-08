@@ -3,7 +3,7 @@
 
 from odoo.osv import expression
 
-from odoo.addons.base.models.components.service import to_int
+from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 

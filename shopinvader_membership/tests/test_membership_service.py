@@ -18,9 +18,7 @@ class TestMembershipService(CommonCase):
         cls.partner = cls.env.ref("shopinvader.partner_1")
         str_today = fields.Date.today()
         cls.date_today = fields.Date.from_string(str_today)
-        cls.next_month = fields.Date.to_string(
-            cls.date_today + timedelta(days=30)
-        )
+        cls.next_month = fields.Date.to_string(cls.date_today + timedelta(days=30))
         cls.product = cls.product_obj.create(
             {
                 "type": "service",
@@ -36,9 +34,7 @@ class TestMembershipService(CommonCase):
         super().setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="membership")
-        with self.work_on_services(
-            partner=self.backend.anonymous_partner_id
-        ) as work:
+        with self.work_on_services(partner=self.backend.anonymous_partner_id) as work:
             self.service_guest = work.component(usage="membership")
 
     def _check_data_content(self, data, membership_lines):
@@ -50,42 +46,35 @@ class TestMembershipService(CommonCase):
         """
         # To have them into correct order
         service = self.service
-        membership_lines = membership_lines.search(
-            service._get_base_search_domain()
-        )
-        self.assertEquals(len(data), len(membership_lines))
+        membership_lines = membership_lines.search(service._get_base_search_domain())
+        self.assertEqual(len(data), len(membership_lines))
+        dts = fields.Date.to_string
         for current_data, membership_line in zip(data, membership_lines):
-            state_label = service._get_selection_label(
-                membership_line, "state"
+            state_label = service._get_selection_label(membership_line, "state")
+            self.assertEqual(current_data.get("membership_line_id"), membership_line.id)
+            self.assertEqual(
+                current_data.get("date") or False, dts(membership_line.date)
             )
-            self.assertEquals(
-                current_data.get("membership_line_id"), membership_line.id
-            )
-            self.assertEquals(
-                current_data.get("date") or False, membership_line.date
-            )
-            self.assertEquals(
+            self.assertEqual(
                 current_data.get("date_from") or False,
-                membership_line.date_from,
+                dts(membership_line.date_from),
             )
-            self.assertEquals(
-                current_data.get("date_to") or False, membership_line.date_to
+            self.assertEqual(
+                current_data.get("date_to") or False, dts(membership_line.date_to)
             )
-            self.assertEquals(
+            self.assertEqual(
                 current_data.get("date_cancel") or False,
-                membership_line.date_cancel,
+                dts(membership_line.date_cancel),
             )
-            self.assertEquals(
+            self.assertEqual(
                 current_data.get("membership_id").get("name"),
                 membership_line.membership_id.name,
             )
-            self.assertEquals(
+            self.assertEqual(
                 current_data.get("member_price"), membership_line.member_price
             )
-            self.assertEquals(
-                current_data.get("state").get("label"), state_label
-            )
-            self.assertEquals(
+            self.assertEqual(current_data.get("state").get("label"), state_label)
+            self.assertEqual(
                 current_data.get("state").get("value"), membership_line.state
             )
         return True
@@ -96,51 +85,54 @@ class TestMembershipService(CommonCase):
         data = result.get("data", [])
         self.assertFalse(data)
         # Then create a membership related to partner
-        membership_line = self.membership_line_obj.create(
-            {
-                "partner": self.partner.id,
-                "membership_id": self.product.id,
-                "member_price": self.product.list_price,
-            }
+        invoice = self.partner.create_membership_invoice(
+            self.product, self.product.list_price
         )
-        self.assertEquals(membership_line.partner, self.service.partner)
+        membership_line = self.membership_line_obj.search(
+            [("account_invoice_line", "=", invoice.invoice_line_ids.id)], limit=1
+        )
+        self.assertEqual(membership_line.partner, self.service.partner)
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, membership_line)
 
     def test_get_multi_membership_lines(self):
-        membership_line_1 = self.membership_line_obj.create(
-            {
-                "partner": self.partner.id,
-                "membership_id": self.product.id,
-                "member_price": self.product.list_price,
-            }
+        invoice1 = self.partner.create_membership_invoice(
+            self.product, self.product.list_price
         )
-        membership_line_2 = self.membership_line_obj.create(
+        invoice2 = self.partner.create_membership_invoice(
+            self.product, self.product.list_price
+        )
+        invoice3 = self.partner.create_membership_invoice(
+            self.product, self.product.list_price
+        )
+        membership_line_1 = self.membership_line_obj.search(
+            [("account_invoice_line", "=", invoice1.invoice_line_ids.id)], limit=1
+        )
+        membership_line_2 = self.membership_line_obj.search(
+            [("account_invoice_line", "=", invoice2.invoice_line_ids.id)], limit=1
+        )
+        membership_line_3 = self.membership_line_obj.search(
+            [("account_invoice_line", "=", invoice3.invoice_line_ids.id)], limit=1
+        )
+        membership_line_2.write(
             {
-                "partner": self.partner.id,
-                "membership_id": self.product.id,
                 "member_price": 22,
                 "date_from": self.date_today,
                 "date_to": self.next_month,
             }
         )
-        membership_line_3 = self.membership_line_obj.create(
+        membership_line_3.write(
             {
-                "partner": self.partner.id,
-                "membership_id": self.product.id,
-                "member_price": self.product.list_price,
                 "date": self.date_today,
                 "date_cancel": self.next_month,
             }
         )
         service_partner = self.service.partner
-        membership_lines = (
-            membership_line_1 | membership_line_2 | membership_line_3
-        )
-        self.assertEquals(membership_line_1.partner, service_partner)
-        self.assertEquals(membership_line_2.partner, service_partner)
-        self.assertEquals(membership_line_3.partner, service_partner)
+        membership_lines = membership_line_1 | membership_line_2 | membership_line_3
+        self.assertEqual(membership_line_1.partner, service_partner)
+        self.assertEqual(membership_line_2.partner, service_partner)
+        self.assertEqual(membership_line_3.partner, service_partner)
         result = self.service.dispatch("search")
         data = result.get("data", [])
         self._check_data_content(data, membership_lines)
@@ -149,17 +141,17 @@ class TestMembershipService(CommonCase):
         # Check first not logged
         with self.assertRaises(UserError) as e:
             self.service_guest.dispatch("subscribe", self.product.id)
-        self.assertEqual(e.exception.name, "A user should be logged")
+        self.assertEqual(e.exception.args[0], "A user should be logged")
         # Then with a logged user but with a non membership product
         self.product.write({"membership": False})
         with self.assertRaises(UserError) as e:
             self.service.dispatch("subscribe", self.product.id)
-        self.assertIn("No membership product found with", e.exception.name)
+        self.assertIn("No membership product found with", e.exception.args[0])
         # Then user logged and real membership product
         self.product.write({"membership": True})
         result = self.service.dispatch("subscribe", self.product.id)
         invoice_id = result.get("invoice_id")
-        invoice = self.env["account.invoice"].browse(invoice_id)
+        invoice = self.env["account.move"].browse(invoice_id)
         self.assertEqual(self.partner, invoice.partner_id)
         self.assertEqual(self.product, invoice.invoice_line_ids[0].product_id)
         self.assertEqual(

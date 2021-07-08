@@ -12,9 +12,7 @@ class TestMembershipProductService(CommonCase):
 
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)
-        with self.work_on_services(
-            partner=self.backend.anonymous_partner_id
-        ) as work:
+        with self.work_on_services(partner=self.backend.anonymous_partner_id) as work:
             self.service_guest = work.component(usage="membership_product")
 
     def _check_data_content(self, data):
@@ -27,21 +25,19 @@ class TestMembershipProductService(CommonCase):
         membership_products = self.membership_product_obj.search(
             [("membership", "=", True)]
         )
-        self.assertEquals(len(data), len(membership_products))
+        self.assertEqual(len(data), len(membership_products))
         for current_data, membership_product in zip(data, membership_products):
-            self.assertEquals(current_data.get("id"), membership_product.id)
-            self.assertEquals(
-                current_data.get("name"), membership_product.name
-            )
-            self.assertEquals(
+            self.assertEqual(current_data.get("id"), membership_product.id)
+            self.assertEqual(current_data.get("name"), membership_product.name)
+            self.assertEqual(
                 current_data.get("default_code") or False,
                 membership_product.default_code,
             )
-            self.assertEquals(
+            self.assertEqual(
                 current_data.get("description_sale") or False,
                 membership_product.description_sale,
             )
-            self.assertEquals(
+            self.assertEqual(
                 current_data.get("list_price"), membership_product.list_price
             )
 
