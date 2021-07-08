@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo14-addon-base_url',
         'odoo14-addon-shopinvader',
+        'odoo14-addon-shopinvader_algolia',
         'odoo14-addon-shopinvader_assortment',
         'odoo14-addon-shopinvader_cart_expiry',
         'odoo14-addon-shopinvader_customer_multi_user',
