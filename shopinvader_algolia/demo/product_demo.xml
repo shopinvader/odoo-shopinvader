@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="product.product_product_4_product_template" model="product.template">
-        <field name="description"><![CDATA[
+        <field
+            name="description"
+        ><![CDATA[
 <h2>Fusce ac ligula ante</h2>
 <p>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sodales

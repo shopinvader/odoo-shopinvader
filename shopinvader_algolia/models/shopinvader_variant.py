@@ -12,6 +12,4 @@ class ShopinvaderVariant(models.Model):
 
     @api.model
     def _get_facetting_values(self, se_bakend, lang):
-        return self.env["shopinvader.product"]._get_facetting_values(
-            se_bakend, lang
-        )
+        return self.env["shopinvader.product"]._get_facetting_values(se_bakend, lang)
