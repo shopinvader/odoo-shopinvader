@@ -7,11 +7,11 @@ from odoo.addons.shopinvader.tests.common import CommonCase
 class TestMembershipProductService(CommonCase):
     @classmethod
     def setUpClass(cls):
-        super(TestMembershipProductService, cls).setUpClass()
+        super().setUpClass()
         cls.membership_product_obj = cls.env["product.product"]
 
     def setUp(self, *args, **kwargs):
-        super(TestMembershipProductService, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         with self.work_on_services(
             partner=self.backend.anonymous_partner_id
         ) as work:

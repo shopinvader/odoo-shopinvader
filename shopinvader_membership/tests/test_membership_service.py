@@ -12,7 +12,7 @@ from odoo.addons.shopinvader.tests.common import CommonCase
 class TestMembershipService(CommonCase):
     @classmethod
     def setUpClass(cls):
-        super(TestMembershipService, cls).setUpClass()
+        super().setUpClass()
         cls.membership_line_obj = cls.env["membership.membership_line"]
         cls.product_obj = cls.env["product.product"]
         cls.partner = cls.env.ref("shopinvader.partner_1")
@@ -33,7 +33,7 @@ class TestMembershipService(CommonCase):
         )
 
     def setUp(self, *args, **kwargs):
-        super(TestMembershipService, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="membership")
         with self.work_on_services(
