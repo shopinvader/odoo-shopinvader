@@ -1719,6 +1719,11 @@ msgid "Filters"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__firstname
+msgid "First name"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_account_position_id
 msgid "Fiscal Position"
 msgstr ""
@@ -2445,6 +2450,11 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__lastname
+msgid "Last name"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_binding__sync_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__sync_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__sync_date
@@ -3024,6 +3034,11 @@ msgid "Opt In"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__partner_names_order
+msgid "Order to compose partner fullname"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__invoice_policy
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__invoice_policy
 msgid ""
@@ -3098,6 +3113,16 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_email
 msgid "Partner Email"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__partner_names_order_changed
+msgid "Partner Names Order Changed"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__partner_names_order
+msgid "Partner names order"
 msgstr ""
 
 #. module: shopinvader
