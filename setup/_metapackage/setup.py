@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_locomotive',
         'odoo14-addon-shopinvader_multi_category',
         'odoo14-addon-shopinvader_notification_default',
+        'odoo14-addon-shopinvader_partner_firstname',
         'odoo14-addon-shopinvader_product_attribute_set',
         'odoo14-addon-shopinvader_product_media',
         'odoo14-addon-shopinvader_product_stock',
