@@ -104,7 +104,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         cart_line = [
             x
             for x in cart["lines"]["items"]
-            if x["product"]["objectID"] == product.id
+            if x["product"]["id"] == product.id
         ][0]
         self.assertIn("sell_only_by_packaging", cart_line["product"])
         self.check_product_and_qty(cart_line, product.id, 8000)
