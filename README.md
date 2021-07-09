@@ -20,15 +20,15 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.1.4.2 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.2.0.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.1.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.1.1 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.0.1 | Enable registration of multiple users per each company customer.
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.1.0.0 | Carrier integration for Shopinvader
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.0.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 14.0.1.0.0 | Add the export of Image for Shopinvader
-[shopinvader_invoice](shopinvader_invoice/) | 14.0.1.1.1 | Shopinvader Invoice module
+[shopinvader_invoice](shopinvader_invoice/) | 14.0.2.0.0 | Shopinvader Invoice module
 [shopinvader_locomotive](shopinvader_locomotive/) | 14.0.1.0.1 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 | Provide default notification templates for Shopinvader suite.
