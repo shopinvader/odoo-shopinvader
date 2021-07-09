@@ -1,236 +1,215 @@
 interactions:
-  - request:
-      body:
-        '{"requests": [{"action": "updateObject", "body": {"objectID": 9, "name":
-        "Consumable", "url_key": "all/consumable", "redirect_url_key": [], "subtitle":
-        null, "seo_title": "All / Consumable", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 1, "parent": {"id": 1, "name": "All", "url_key": "all", "parent":
-        null}, "filters": [], "childs": [], "id": 2}}, {"action": "updateObject",
-        "body": {"objectID": 12, "name": "PC Portable", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable",
-        "redirect_url_key": [], "subtitle": null, "seo_title": "All / Electronique et
-        informatique / Ordinateur, Tablettes & Accessoires / PC Portable", "sequence":
-        0, "meta_keywords": null, "meta_description": null, "description": null,
-        "short_description": null, "level": 3, "parent": {"id": 11, "name": "Ordinateur,
-        Tablettes & Accessoires", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires", "parent":
-        {"id": 10, "name": "Electronique et informatique", "url_key":
-        "all/electronique-et-informatique", "parent": {"id": 1, "name": "All",
-        "url_key": "all"}}}, "filters": [], "childs": [], "id": 5}}, {"action":
-        "updateObject", "body": {"objectID": 3, "name": "Expenses", "url_key":
-        "all/expenses", "redirect_url_key": [], "subtitle": null, "seo_title": "All /
-        Expenses", "sequence": 0, "meta_keywords": null, "meta_description": null,
-        "description": null, "short_description": null, "level": 1, "parent": {"id": 1,
-        "name": "All", "url_key": "all", "parent": null}, "filters": [], "childs": [],
-        "id": 6}}, {"action": "updateObject", "body": {"objectID": 4, "name":
-        "Internal", "url_key": "all/internal", "redirect_url_key": [], "subtitle": null,
-        "seo_title": "All / Internal", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 1, "parent": {"id": 1, "name": "All", "url_key": "all", "parent":
-        null}, "filters": [], "childs": [], "id": 7}}, {"action": "updateObject",
-        "body": {"objectID": 8, "name": "Office Furniture", "url_key":
-        "all/saleable/office-furniture", "redirect_url_key": [], "subtitle": null,
-        "seo_title": "All / Saleable / Office Furniture", "sequence": 0,
-        "meta_keywords": null, "meta_description": null, "description": null,
-        "short_description": null, "level": 2, "parent": {"id": 2, "name": "Saleable",
-        "url_key": "all/saleable", "parent": {"id": 1, "name": "All", "url_key": "all",
-        "parent": null}}, "filters": [], "childs": [], "id": 9}}, {"action":
-        "updateObject", "body": {"objectID": 6, "name": "Saleable", "url_key":
-        "all/saleable/services/saleable", "redirect_url_key": [], "subtitle": null,
-        "seo_title": "All / Saleable / Services / Saleable", "sequence": 0,
-        "meta_keywords": null, "meta_description": null, "description": null,
-        "short_description": null, "level": 3, "parent": {"id": 5, "name": "Services",
-        "url_key": "all/saleable/services", "parent": {"id": 2, "name": "Saleable",
-        "url_key": "all/saleable", "parent": {"id": 1, "name": "All", "url_key":
-        "all"}}}, "filters": [], "childs": [], "id": 11}}, {"action": "updateObject",
-        "body": {"objectID": 7, "name": "Software", "url_key": "all/saleable/software",
-        "redirect_url_key": [], "subtitle": null, "seo_title": "All / Saleable /
-        Software", "sequence": 0, "meta_keywords": null, "meta_description": null,
-        "description": null, "short_description": null, "level": 2, "parent": {"id": 2,
-        "name": "Saleable", "url_key": "all/saleable", "parent": {"id": 1, "name":
-        "All", "url_key": "all", "parent": null}}, "filters": [], "childs": [], "id":
-        12}}, {"action": "updateObject", "body": {"objectID": 15, "name": "Chambre",
-        "url_key": "meuble/chambre", "redirect_url_key": [], "subtitle": null,
-        "seo_title": "Meuble / Chambre", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 1, "parent": {"id": 13, "name": "Meuble", "url_key": "meuble",
-        "parent": null}, "filters": [], "childs": [], "id": 14}}, {"action":
-        "updateObject", "body": {"objectID": 18, "name": "Appliances", "url_key":
-        "meuble/cuisine/appliances", "redirect_url_key": [], "subtitle": null,
-        "seo_title": "Meuble / Cuisine / Appliances", "sequence": 0, "meta_keywords":
-        null, "meta_description": null, "description": null, "short_description": null,
-        "level": 2, "parent": {"id": 17, "name": "Cuisine", "url_key": "meuble/cuisine",
-        "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}},
-        "filters": [], "childs": [], "id": 16}}, {"action": "updateObject", "body":
-        {"objectID": 14, "name": "Salle de bain", "url_key": "meuble/salle-de-bain",
-        "redirect_url_key": [], "subtitle": null, "seo_title": "Meuble / Salle de bain",
-        "sequence": 0, "meta_keywords": null, "meta_description": null, "description":
-        null, "short_description": null, "level": 1, "parent": {"id": 13, "name":
-        "Meuble", "url_key": "meuble", "parent": null}, "filters": [], "childs": [],
-        "id": 17}}, {"action": "updateObject", "body": {"objectID": 16, "name": "Salle
-        \u00e0 manger", "url_key": "meuble/salle-a-manger", "redirect_url_key": [],
-        "subtitle": null, "seo_title": "Meuble / Salle \u00e0 manger", "sequence": 0,
-        "meta_keywords": null, "meta_description": null, "description": null,
-        "short_description": null, "level": 1, "parent": {"id": 13, "name": "Meuble",
-        "url_key": "meuble", "parent": null}, "filters": [], "childs": [], "id": 18}},
-        {"action": "updateObject", "body": {"objectID": 20, "name": "Chaise", "url_key":
-        "meuble/salon/chaise", "redirect_url_key": [], "subtitle": null, "seo_title":
-        "Meuble / Salon / Chaise", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 2, "parent": {"id": 19, "name": "Salon", "url_key": "meuble/salon",
-        "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}},
-        "filters": [], "childs": [], "id": 20}}, {"action": "updateObject", "body":
-        {"objectID": 23, "name": "Meuble TV", "url_key": "meuble/salon/meuble-tv",
-        "redirect_url_key": [], "subtitle": null, "seo_title": "Meuble / Salon / Meuble
-        TV", "sequence": 0, "meta_keywords": null, "meta_description": null,
-        "description": null, "short_description": null, "level": 2, "parent": {"id": 19,
-        "name": "Salon", "url_key": "meuble/salon", "parent": {"id": 13, "name":
-        "Meuble", "url_key": "meuble", "parent": null}}, "filters": [], "childs": [],
-        "id": 21}}, {"action": "updateObject", "body": {"objectID": 21, "name":
-        "Rangement", "url_key": "meuble/salon/rangement", "redirect_url_key": [],
-        "subtitle": null, "seo_title": "Meuble / Salon / Rangement", "sequence": 0,
-        "meta_keywords": null, "meta_description": null, "description": null,
-        "short_description": null, "level": 2, "parent": {"id": 19, "name": "Salon",
-        "url_key": "meuble/salon", "parent": {"id": 13, "name": "Meuble", "url_key":
-        "meuble", "parent": null}}, "filters": [], "childs": [], "id": 22}}, {"action":
-        "updateObject", "body": {"objectID": 22, "name": "Tables", "url_key":
-        "meuble/salon/tables", "redirect_url_key": [], "subtitle": null, "seo_title":
-        "Meuble / Salon / Tables", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 2, "parent": {"id": 19, "name": "Salon", "url_key": "meuble/salon",
-        "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}},
-        "filters": [], "childs": [], "id": 23}}, {"action": "updateObject", "body":
-        {"objectID": 1, "name": "All", "url_key": "all", "redirect_url_key": [],
-        "subtitle": null, "seo_title": "All", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 0, "parent": null, "filters": [], "childs": [{"id": 2, "name":
-        "Saleable", "url_key": "all/saleable", "childs": [{"id": 5, "name": "Services",
-        "url_key": "all/saleable/services", "childs": [{"object_id": 6, "name":
-        "Saleable", "url_key": "all/saleable/services/saleable"}]}, {"id": 7, "name":
-        "Software", "url_key": "all/saleable/software", "childs": []}, {"id": 8, "name":
-        "Office Furniture", "url_key": "all/saleable/office-furniture", "childs": []}]},
-        {"id": 3, "name": "Expenses", "url_key": "all/expenses", "childs": []}, {"id":
-        4, "name": "Internal", "url_key": "all/internal", "childs": []}, {"id": 9,
-        "name": "Consumable", "url_key": "all/consumable", "childs": []}, {"id": 10,
-        "name": "Electronique et informatique", "url_key":
-        "all/electronique-et-informatique", "childs": [{"id": 11, "name": "Ordinateur,
-        Tablettes & Accessoires", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires", "childs":
-        [{"object_id": 12, "name": "PC Portable", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable"}]}]}],
-        "id": 1}}, {"action": "updateObject", "body": {"objectID": 10, "name":
-        "Electronique et informatique", "url_key": "all/electronique-et-informatique",
-        "redirect_url_key": [], "subtitle": null, "seo_title": "All / Electronique et
-        informatique", "sequence": 0, "meta_keywords": null, "meta_description": null,
-        "description": null, "short_description": null, "level": 1, "parent": {"id": 1,
-        "name": "All", "url_key": "all", "parent": null}, "filters": [], "childs":
-        [{"id": 11, "name": "Ordinateur, Tablettes & Accessoires", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires", "childs":
-        [{"id": 12, "name": "PC Portable", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable",
-        "childs": []}]}], "id": 3}}, {"action": "updateObject", "body": {"objectID": 11,
-        "name": "Ordinateur, Tablettes & Accessoires", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires",
-        "redirect_url_key": [], "subtitle": null, "seo_title": "All / Electronique et
-        informatique / Ordinateur, Tablettes & Accessoires", "sequence": 0,
-        "meta_keywords": null, "meta_description": null, "description": null,
-        "short_description": null, "level": 2, "parent": {"id": 10, "name":
-        "Electronique et informatique", "url_key": "all/electronique-et-informatique",
-        "parent": {"id": 1, "name": "All", "url_key": "all", "parent": null}},
-        "filters": [], "childs": [{"id": 12, "name": "PC Portable", "url_key":
-        "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable",
-        "childs": []}], "id": 4}}, {"action": "updateObject", "body": {"objectID": 2,
-        "name": "Saleable", "url_key": "all/saleable", "redirect_url_key": [],
-        "subtitle": null, "seo_title": "All / Saleable", "sequence": 0, "meta_keywords":
-        null, "meta_description": null, "description": null, "short_description": null,
-        "level": 1, "parent": {"id": 1, "name": "All", "url_key": "all", "parent":
-        null}, "filters": [], "childs": [{"id": 5, "name": "Services", "url_key":
-        "all/saleable/services", "childs": [{"id": 6, "name": "Saleable", "url_key":
-        "all/saleable/services/saleable", "childs": []}]}, {"id": 7, "name": "Software",
-        "url_key": "all/saleable/software", "childs": []}, {"id": 8, "name": "Office
-        Furniture", "url_key": "all/saleable/office-furniture", "childs": []}], "id":
-        8}}, {"action": "updateObject", "body": {"objectID": 5, "name": "Services",
-        "url_key": "all/saleable/services", "redirect_url_key": [], "subtitle": null,
-        "seo_title": "All / Saleable / Services", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 2, "parent": {"id": 2, "name": "Saleable", "url_key": "all/saleable",
-        "parent": {"id": 1, "name": "All", "url_key": "all", "parent": null}},
-        "filters": [], "childs": [{"id": 6, "name": "Saleable", "url_key":
-        "all/saleable/services/saleable", "childs": []}], "id": 10}}, {"action":
-        "updateObject", "body": {"objectID": 13, "name": "Meuble", "url_key": "meuble",
-        "redirect_url_key": [], "subtitle": null, "seo_title": "Meuble", "sequence": 0,
-        "meta_keywords": null, "meta_description": null, "description": null,
-        "short_description": null, "level": 0, "parent": null, "filters": [], "childs":
-        [{"id": 14, "name": "Salle de bain", "url_key": "meuble/salle-de-bain",
-        "childs": []}, {"id": 15, "name": "Chambre", "url_key": "meuble/chambre",
-        "childs": []}, {"id": 16, "name": "Salle \u00e0 manger", "url_key":
-        "meuble/salle-a-manger", "childs": []}, {"id": 17, "name": "Cuisine", "url_key":
-        "meuble/cuisine", "childs": [{"id": 18, "name": "Appliances", "url_key":
-        "meuble/cuisine/appliances", "childs": []}]}, {"id": 19, "name": "Salon",
-        "url_key": "meuble/salon", "childs": [{"id": 20, "name": "Chaise", "url_key":
-        "meuble/salon/chaise", "childs": []}, {"id": 21, "name": "Rangement", "url_key":
-        "meuble/salon/rangement", "childs": []}, {"id": 22, "name": "Tables", "url_key":
-        "meuble/salon/tables", "childs": []}, {"id": 23, "name": "Meuble TV", "url_key":
-        "meuble/salon/meuble-tv", "childs": []}]}], "id": 13}}, {"action":
-        "updateObject", "body": {"objectID": 17, "name": "Cuisine", "url_key":
-        "meuble/cuisine", "redirect_url_key": [], "subtitle": null, "seo_title": "Meuble
-        / Cuisine", "sequence": 0, "meta_keywords": null, "meta_description": null,
-        "description": null, "short_description": null, "level": 1, "parent": {"id": 13,
-        "name": "Meuble", "url_key": "meuble", "parent": null}, "filters": [], "childs":
-        [{"id": 18, "name": "Appliances", "url_key": "meuble/cuisine/appliances",
-        "childs": []}], "id": 15}}, {"action": "updateObject", "body": {"objectID": 19,
-        "name": "Salon", "url_key": "meuble/salon", "redirect_url_key": [], "subtitle":
-        null, "seo_title": "Meuble / Salon", "sequence": 0, "meta_keywords": null,
-        "meta_description": null, "description": null, "short_description": null,
-        "level": 1, "parent": {"id": 13, "name": "Meuble", "url_key": "meuble",
-        "parent": null}, "filters": [], "childs": [{"id": 20, "name": "Chaise",
-        "url_key": "meuble/salon/chaise", "childs": []}, {"id": 21, "name": "Rangement",
-        "url_key": "meuble/salon/rangement", "childs": []}, {"id": 22, "name": "Tables",
-        "url_key": "meuble/salon/tables", "childs": []}, {"id": 23, "name": "Meuble TV",
-        "url_key": "meuble/salon/meuble-tv", "childs": []}], "id": 19}}]}'
-      headers:
-        Content-Length:
-          - "14023"
-        Content-Type:
-          - application/json
-        User-Agent:
-          - Algolia for Python (2.4.0); Python (3.7.3)
-        X-Algolia-API-Key:
-          - FAKE_KEY
-        X-Algolia-Application-Id:
-          - FAKE_APP
-      method: POST
-      uri: https://fake_app.algolia.net/1/indexes/demo_algolia_backend_shopinvader_category_en_US/batch
-    response:
-      body:
-        string: '{"objectIDs":["9","12","3","4","8","6","7","15","18","14","16","20","23","21","22","1","10","11","2","5","13","17","19"],"taskID":908665060002}'
-      headers:
-        Accept-Encoding:
-          - deflate, gzip
-        Access-Control-Allow-Origin:
-          - "*"
-        Cache-Control:
-          - no-store
-        Connection:
-          - keep-alive
-        Content-Disposition:
-          - inline; filename=a.txt
-        Content-Length:
-          - "143"
-        Content-Type:
-          - application/json; charset=UTF-8
-        Date:
-          - Wed, 27 Jan 2021 11:31:27 GMT
-        Server:
-          - nginx
-        Strict-Transport-Security:
-          - max-age=31536000; includeSubDomains; preload
-        Timing-Allow-Origin:
-          - "*"
-        X-Content-Type-Options:
-          - nosniff
-      status:
-        code: 200
-        message: OK
+- request:
+    body: '{"requests": [{"action": "updateObject", "body": {"name": "Consumable",
+      "url_key": "all/consumable", "redirect_url_key": [], "subtitle": null, "seo_title":
+      "All / Consumable", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 1, "parent":
+      {"id": 1, "name": "All", "url_key": "all", "parent": null}, "filters": [], "childs":
+      [], "id": 9, "objectID": 9}}, {"action": "updateObject", "body": {"name": "PC
+      Portable", "url_key": "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable",
+      "redirect_url_key": [], "subtitle": null, "seo_title": "All / Electronique et
+      informatique / Ordinateur, Tablettes & Accessoires / PC Portable", "sequence":
+      0, "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 3, "parent": {"id": 11, "name": "Ordinateur, Tablettes & Accessoires",
+      "url_key": "all/electronique-et-informatique/ordinateur-tablettes-accessoires",
+      "parent": {"id": 10, "name": "Electronique et informatique", "url_key": "all/electronique-et-informatique",
+      "parent": {"id": 1, "name": "All", "url_key": "all"}}}, "filters": [], "childs":
+      [], "id": 12, "objectID": 12}}, {"action": "updateObject", "body": {"name":
+      "Expenses", "url_key": "all/expenses", "redirect_url_key": [], "subtitle": null,
+      "seo_title": "All / Expenses", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 1, "parent":
+      {"id": 1, "name": "All", "url_key": "all", "parent": null}, "filters": [], "childs":
+      [], "id": 3, "objectID": 3}}, {"action": "updateObject", "body": {"name": "Internal",
+      "url_key": "all/internal", "redirect_url_key": [], "subtitle": null, "seo_title":
+      "All / Internal", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 1, "parent":
+      {"id": 1, "name": "All", "url_key": "all", "parent": null}, "filters": [], "childs":
+      [], "id": 4, "objectID": 4}}, {"action": "updateObject", "body": {"name": "Office
+      Furniture", "url_key": "all/saleable/office-furniture", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "All / Saleable / Office Furniture", "sequence":
+      0, "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 2, "parent": {"id": 2, "name": "Saleable", "url_key": "all/saleable",
+      "parent": {"id": 1, "name": "All", "url_key": "all", "parent": null}}, "filters":
+      [], "childs": [], "id": 8, "objectID": 8}}, {"action": "updateObject", "body":
+      {"name": "Saleable", "url_key": "all/saleable/services/saleable", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "All / Saleable / Services / Saleable", "sequence":
+      0, "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 3, "parent": {"id": 5, "name": "Services", "url_key": "all/saleable/services",
+      "parent": {"id": 2, "name": "Saleable", "url_key": "all/saleable", "parent":
+      {"id": 1, "name": "All", "url_key": "all"}}}, "filters": [], "childs": [], "id":
+      6, "objectID": 6}}, {"action": "updateObject", "body": {"name": "Software",
+      "url_key": "all/saleable/software", "redirect_url_key": [], "subtitle": null,
+      "seo_title": "All / Saleable / Software", "sequence": 0, "meta_keywords": null,
+      "meta_description": null, "description": null, "short_description": null, "level":
+      2, "parent": {"id": 2, "name": "Saleable", "url_key": "all/saleable", "parent":
+      {"id": 1, "name": "All", "url_key": "all", "parent": null}}, "filters": [],
+      "childs": [], "id": 7, "objectID": 7}}, {"action": "updateObject", "body": {"name":
+      "Chambre", "url_key": "meuble/chambre", "redirect_url_key": [], "subtitle":
+      null, "seo_title": "Meuble / Chambre", "sequence": 0, "meta_keywords": null,
+      "meta_description": null, "description": null, "short_description": null, "level":
+      1, "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null},
+      "filters": [], "childs": [], "id": 15, "objectID": 15}}, {"action": "updateObject",
+      "body": {"name": "Appliances", "url_key": "meuble/cuisine/appliances", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "Meuble / Cuisine / Appliances", "sequence":
+      0, "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 2, "parent": {"id": 17, "name": "Cuisine", "url_key": "meuble/cuisine",
+      "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}},
+      "filters": [], "childs": [], "id": 18, "objectID": 18}}, {"action": "updateObject",
+      "body": {"name": "Salle de bain", "url_key": "meuble/salle-de-bain", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "Meuble / Salle de bain", "sequence": 0,
+      "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 1, "parent": {"id": 13, "name": "Meuble", "url_key": "meuble",
+      "parent": null}, "filters": [], "childs": [], "id": 14, "objectID": 14}}, {"action":
+      "updateObject", "body": {"name": "Salle \u00e0 manger", "url_key": "meuble/salle-a-manger",
+      "redirect_url_key": [], "subtitle": null, "seo_title": "Meuble / Salle \u00e0
+      manger", "sequence": 0, "meta_keywords": null, "meta_description": null, "description":
+      null, "short_description": null, "level": 1, "parent": {"id": 13, "name": "Meuble",
+      "url_key": "meuble", "parent": null}, "filters": [], "childs": [], "id": 16,
+      "objectID": 16}}, {"action": "updateObject", "body": {"name": "Chaise", "url_key":
+      "meuble/salon/chaise", "redirect_url_key": [], "subtitle": null, "seo_title":
+      "Meuble / Salon / Chaise", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 2, "parent":
+      {"id": 19, "name": "Salon", "url_key": "meuble/salon", "parent": {"id": 13,
+      "name": "Meuble", "url_key": "meuble", "parent": null}}, "filters": [], "childs":
+      [], "id": 20, "objectID": 20}}, {"action": "updateObject", "body": {"name":
+      "Meuble TV", "url_key": "meuble/salon/meuble-tv", "redirect_url_key": [], "subtitle":
+      null, "seo_title": "Meuble / Salon / Meuble TV", "sequence": 0, "meta_keywords":
+      null, "meta_description": null, "description": null, "short_description": null,
+      "level": 2, "parent": {"id": 19, "name": "Salon", "url_key": "meuble/salon",
+      "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}},
+      "filters": [], "childs": [], "id": 23, "objectID": 23}}, {"action": "updateObject",
+      "body": {"name": "Rangement", "url_key": "meuble/salon/rangement", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "Meuble / Salon / Rangement", "sequence":
+      0, "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 2, "parent": {"id": 19, "name": "Salon", "url_key": "meuble/salon",
+      "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}},
+      "filters": [], "childs": [], "id": 21, "objectID": 21}}, {"action": "updateObject",
+      "body": {"name": "Tables", "url_key": "meuble/salon/tables", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "Meuble / Salon / Tables", "sequence": 0,
+      "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 2, "parent": {"id": 19, "name": "Salon", "url_key": "meuble/salon",
+      "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}},
+      "filters": [], "childs": [], "id": 22, "objectID": 22}}, {"action": "updateObject",
+      "body": {"name": "All", "url_key": "all", "redirect_url_key": [], "subtitle":
+      null, "seo_title": "All", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 0, "parent":
+      null, "filters": [], "childs": [{"id": 2, "name": "Saleable", "url_key": "all/saleable",
+      "childs": [{"id": 5, "name": "Services", "url_key": "all/saleable/services",
+      "childs": [{"record_id": 6, "name": "Saleable", "url_key": "all/saleable/services/saleable"}]},
+      {"id": 7, "name": "Software", "url_key": "all/saleable/software", "childs":
+      []}, {"id": 8, "name": "Office Furniture", "url_key": "all/saleable/office-furniture",
+      "childs": []}]}, {"id": 3, "name": "Expenses", "url_key": "all/expenses", "childs":
+      []}, {"id": 4, "name": "Internal", "url_key": "all/internal", "childs": []},
+      {"id": 9, "name": "Consumable", "url_key": "all/consumable", "childs": []},
+      {"id": 10, "name": "Electronique et informatique", "url_key": "all/electronique-et-informatique",
+      "childs": [{"id": 11, "name": "Ordinateur, Tablettes & Accessoires", "url_key":
+      "all/electronique-et-informatique/ordinateur-tablettes-accessoires", "childs":
+      [{"record_id": 12, "name": "PC Portable", "url_key": "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable"}]}]}],
+      "id": 1, "objectID": 1}}, {"action": "updateObject", "body": {"name": "Electronique
+      et informatique", "url_key": "all/electronique-et-informatique", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "All / Electronique et informatique", "sequence":
+      0, "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 1, "parent": {"id": 1, "name": "All", "url_key": "all", "parent":
+      null}, "filters": [], "childs": [{"id": 11, "name": "Ordinateur, Tablettes &
+      Accessoires", "url_key": "all/electronique-et-informatique/ordinateur-tablettes-accessoires",
+      "childs": [{"id": 12, "name": "PC Portable", "url_key": "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable",
+      "childs": []}]}], "id": 10, "objectID": 10}}, {"action": "updateObject", "body":
+      {"name": "Ordinateur, Tablettes & Accessoires", "url_key": "all/electronique-et-informatique/ordinateur-tablettes-accessoires",
+      "redirect_url_key": [], "subtitle": null, "seo_title": "All / Electronique et
+      informatique / Ordinateur, Tablettes & Accessoires", "sequence": 0, "meta_keywords":
+      null, "meta_description": null, "description": null, "short_description": null,
+      "level": 2, "parent": {"id": 10, "name": "Electronique et informatique", "url_key":
+      "all/electronique-et-informatique", "parent": {"id": 1, "name": "All", "url_key":
+      "all", "parent": null}}, "filters": [], "childs": [{"id": 12, "name": "PC Portable",
+      "url_key": "all/electronique-et-informatique/ordinateur-tablettes-accessoires/pc-portable",
+      "childs": []}], "id": 11, "objectID": 11}}, {"action": "updateObject", "body":
+      {"name": "Saleable", "url_key": "all/saleable", "redirect_url_key": [], "subtitle":
+      null, "seo_title": "All / Saleable", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 1, "parent":
+      {"id": 1, "name": "All", "url_key": "all", "parent": null}, "filters": [], "childs":
+      [{"id": 5, "name": "Services", "url_key": "all/saleable/services", "childs":
+      [{"id": 6, "name": "Saleable", "url_key": "all/saleable/services/saleable",
+      "childs": []}]}, {"id": 7, "name": "Software", "url_key": "all/saleable/software",
+      "childs": []}, {"id": 8, "name": "Office Furniture", "url_key": "all/saleable/office-furniture",
+      "childs": []}], "id": 2, "objectID": 2}}, {"action": "updateObject", "body":
+      {"name": "Services", "url_key": "all/saleable/services", "redirect_url_key":
+      [], "subtitle": null, "seo_title": "All / Saleable / Services", "sequence":
+      0, "meta_keywords": null, "meta_description": null, "description": null, "short_description":
+      null, "level": 2, "parent": {"id": 2, "name": "Saleable", "url_key": "all/saleable",
+      "parent": {"id": 1, "name": "All", "url_key": "all", "parent": null}}, "filters":
+      [], "childs": [{"id": 6, "name": "Saleable", "url_key": "all/saleable/services/saleable",
+      "childs": []}], "id": 5, "objectID": 5}}, {"action": "updateObject", "body":
+      {"name": "Meuble", "url_key": "meuble", "redirect_url_key": [], "subtitle":
+      null, "seo_title": "Meuble", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 0, "parent":
+      null, "filters": [], "childs": [{"id": 14, "name": "Salle de bain", "url_key":
+      "meuble/salle-de-bain", "childs": []}, {"id": 15, "name": "Chambre", "url_key":
+      "meuble/chambre", "childs": []}, {"id": 16, "name": "Salle \u00e0 manger", "url_key":
+      "meuble/salle-a-manger", "childs": []}, {"id": 17, "name": "Cuisine", "url_key":
+      "meuble/cuisine", "childs": [{"id": 18, "name": "Appliances", "url_key": "meuble/cuisine/appliances",
+      "childs": []}]}, {"id": 19, "name": "Salon", "url_key": "meuble/salon", "childs":
+      [{"id": 20, "name": "Chaise", "url_key": "meuble/salon/chaise", "childs": []},
+      {"id": 21, "name": "Rangement", "url_key": "meuble/salon/rangement", "childs":
+      []}, {"id": 22, "name": "Tables", "url_key": "meuble/salon/tables", "childs":
+      []}, {"id": 23, "name": "Meuble TV", "url_key": "meuble/salon/meuble-tv", "childs":
+      []}]}], "id": 13, "objectID": 13}}, {"action": "updateObject", "body": {"name":
+      "Cuisine", "url_key": "meuble/cuisine", "redirect_url_key": [], "subtitle":
+      null, "seo_title": "Meuble / Cuisine", "sequence": 0, "meta_keywords": null,
+      "meta_description": null, "description": null, "short_description": null, "level":
+      1, "parent": {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null},
+      "filters": [], "childs": [{"id": 18, "name": "Appliances", "url_key": "meuble/cuisine/appliances",
+      "childs": []}], "id": 17, "objectID": 17}}, {"action": "updateObject", "body":
+      {"name": "Salon", "url_key": "meuble/salon", "redirect_url_key": [], "subtitle":
+      null, "seo_title": "Meuble / Salon", "sequence": 0, "meta_keywords": null, "meta_description":
+      null, "description": null, "short_description": null, "level": 1, "parent":
+      {"id": 13, "name": "Meuble", "url_key": "meuble", "parent": null}, "filters":
+      [], "childs": [{"id": 20, "name": "Chaise", "url_key": "meuble/salon/chaise",
+      "childs": []}, {"id": 21, "name": "Rangement", "url_key": "meuble/salon/rangement",
+      "childs": []}, {"id": 22, "name": "Tables", "url_key": "meuble/salon/tables",
+      "childs": []}, {"id": 23, "name": "Meuble TV", "url_key": "meuble/salon/meuble-tv",
+      "childs": []}], "id": 19, "objectID": 19}}]}'
+    headers:
+      Content-Length:
+      - '14023'
+      Content-Type:
+      - application/json
+      User-Agent:
+      - Algolia for Python (2.5.0); Python (3.7.3)
+      X-Algolia-API-Key:
+      - 4c043afe97c0c6681b20f9c06049fa65
+      X-Algolia-Application-Id:
+      - C04JR8U8Y1
+    method: POST
+    uri: https://c04jr8u8y1.algolia.net/1/indexes/demo_algolia_backend_shopinvader_category_en_US/batch
+  response:
+    body:
+      string: '{"objectIDs":["9","12","3","4","8","6","7","15","18","14","16","20","23","21","22","1","10","11","2","5","13","17","19"],"taskID":1090244769000}'
+    headers:
+      Accept-Encoding:
+      - deflate, gzip
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - no-store
+      Connection:
+      - keep-alive
+      Content-Disposition:
+      - inline; filename=a.txt
+      Content-Length:
+      - '144'
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Fri, 09 Jul 2021 23:15:35 GMT
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains; preload
+      Timing-Allow-Origin:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+    status:
+      code: 200
+      message: OK
 version: 1
