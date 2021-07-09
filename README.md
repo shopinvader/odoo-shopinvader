@@ -48,9 +48,9 @@ addon | version | summary
 [shopinvader_product_media](shopinvader_product_media/) | 13.0.1.0.1 | Index storage media data into external search engine
 [shopinvader_product_stock](shopinvader_product_stock/) | 13.0.3.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 13.0.1.0.1 | This module is used to choose a stock state during theexport (by backend)
-[shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.2.0.0 | Shopinvader Product Link
+[shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 13.0.2.0.1 | Shopinvader Product Link
 [shopinvader_product_template_multi_link_date_span](shopinvader_product_template_multi_link_date_span/) | 13.0.1.0.0 | Integrate `product_template_multi_link_date_span` in Shopinvader
-[shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.2 | Integrate product_variant_multi_link with Shopinvader
+[shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.3 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 13.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.2.3.0 | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.2.2.0 | Add packaging information to wishlists
