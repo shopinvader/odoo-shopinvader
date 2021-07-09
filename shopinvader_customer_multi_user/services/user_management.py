@@ -5,10 +5,11 @@
 from functools import wraps
 
 from odoo import _, exceptions
+from odoo.osv import expression
+
 from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
 from odoo.addons.shopinvader.models.shopinvader_partner import ALL_STATES
-from odoo.osv import expression
 
 
 # TODO: move it to core module
@@ -136,10 +137,7 @@ class UsersService(Component):
         return res
 
     def _get_base_search_domain(self):
-        if (
-            not self._is_logged_in()
-            or not self.invader_partner_user.is_users_manager
-        ):
+        if not self._is_logged_in() or not self.invader_partner_user.is_users_manager:
             return expression.FALSE_DOMAIN
         # Simple users w/ delegated permissions
         # can see only records they own.

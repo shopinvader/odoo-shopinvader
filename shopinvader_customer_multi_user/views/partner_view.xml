@@ -6,13 +6,19 @@
     <field name="inherit_id" ref="shopinvader.res_partner_view_form" />
     <field name="arch" type="xml">
       <field name="shopinvader_bind_ids" position="after">
-        <group name="multi_user" string="Multi user" 
-               attrs="{'invisible':[('shopinvader_bind_ids','=',False),('address_type', '=', 'profile')]}">
+        <group
+                    name="multi_user"
+                    string="Multi user"
+                    attrs="{'invisible':[('shopinvader_bind_ids','=',False),('address_type', '=', 'profile')]}"
+                >
           <field name="has_invader_user" />
-          <field name="invader_user_token"/>
-          <button name="action_regenerate_invader_user_token" type="object"
-                  string="Re-generate token"
-                  attrs="{'invisible': [('invader_user_token','=',False)]}"/>
+          <field name="invader_user_token" />
+          <button
+                        name="action_regenerate_invader_user_token"
+                        type="object"
+                        string="Re-generate token"
+                        attrs="{'invisible': [('invader_user_token','=',False)]}"
+                    />
         </group>
       </field>
       <xpath

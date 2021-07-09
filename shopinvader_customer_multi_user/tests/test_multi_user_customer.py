@@ -55,9 +55,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         # https://github.com/shopinvader/odoo-shopinvader/issues/530
         params["name"] = params["name"] + " UPDATED!"
         self._update_work_ctx(self.address_service, partner=partner1)
-        res = self.address_service.dispatch(
-            "update", partner1.id, params=params
-        )
+        res = self.address_service.dispatch("update", partner1.id, params=params)
         # By default the customer partner is the main partner
         # hence we are not editing the main profile and we don't need cache
         self.assertNotIn("store_cache", res)

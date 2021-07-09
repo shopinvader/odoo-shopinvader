@@ -12,10 +12,10 @@
       </field>
       <group name="main" position="after">
         <group name="permissions" string="Permissions">
-          <field name="can_manage_users"/>
-          <field name="is_admin_account"/>
-          <field name="is_main_account"/>
-          <field name="is_users_manager"/>
+          <field name="can_manage_users" />
+          <field name="is_admin_account" />
+          <field name="is_main_account" />
+          <field name="is_users_manager" />
         </group>
       </group>
     </field>
@@ -37,9 +37,9 @@
     <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search" />
     <field name="arch" type="xml">
       <field name="external_id" position="after">
-        <field name="main_partner_id"/>
-        <field name="is_invader_user"/>
-        <field name="can_manage_users"/>
+        <field name="main_partner_id" />
+        <field name="is_invader_user" />
+        <field name="can_manage_users" />
       </field>
       <filter name="group_by_backend_id" position="after">
         <filter
