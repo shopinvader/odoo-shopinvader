@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class ShopinvaderPartner(models.Model):
@@ -144,3 +144,21 @@ class ShopinvaderPartner(models.Model):
             if f not in partner_fields:
                 v.pop(f)
         return v
+
+    def action_edit_in_form(self):
+        self.ensure_one()
+        form_xid = self.env.context.get(
+            "form_view_ref", "shopinvader.shopinvader_partner_view_form"
+        )
+        view = self.env.ref(form_xid)
+        return {
+            "name": _("Edit %s") % self.name,
+            "type": "ir.actions.act_window",
+            "view_type": "form",
+            "res_model": self._name,
+            "views": [(view.id, "form")],
+            "view_id": view.id,
+            "target": "new",
+            "res_id": self.id,
+            "context": dict(self.env.context),
+        }
