@@ -1515,6 +1515,17 @@ msgid "Easypost Connector"
 msgstr ""
 
 #. module: shopinvader
+#: code:addons/shopinvader/models/shopinvader_partner.py:0
+#, python-format
+msgid "Edit %s"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
+msgid "Edit in form"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__partner_share
 msgid ""
 "Either customer (not a user), either shared user. Indicated the current "
