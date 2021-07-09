@@ -28,6 +28,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_product_stock_state',
         'odoo14-addon-shopinvader_product_variant_selector',
         'odoo14-addon-shopinvader_sale_amount_by_group',
+        'odoo14-addon-shopinvader_sale_coupon',
         'odoo14-addon-shopinvader_sale_profile',
         'odoo14-addon-shopinvader_search_engine',
     ],
