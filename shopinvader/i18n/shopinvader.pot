@@ -1531,7 +1531,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_l10n_eu_service
-msgid "EU Digital Goods VAT"
+msgid "EU Intra-community Distance Selling"
 msgstr ""
 
 #. module: shopinvader
