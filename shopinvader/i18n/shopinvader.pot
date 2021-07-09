@@ -1252,6 +1252,11 @@ msgid "Default Terms & Conditions"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__property_delivery_carrier_id
+msgid "Default delivery method used in sales orders."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__incoterm_id
 msgid "Default incoterm"
 msgstr ""
@@ -1350,6 +1355,11 @@ msgstr ""
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Delivery"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_delivery_carrier_id
+msgid "Delivery Method"
 msgstr ""
 
 #. module: shopinvader
@@ -1864,6 +1874,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.view_shopinvader_category_search
 msgid "Group By"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__hs_code
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__hs_code
+msgid "HS Code"
 msgstr ""
 
 #. module: shopinvader
@@ -4158,6 +4174,14 @@ msgid ""
 "        Average Cost (AVCO): The products are valued at weighted average cost.\n"
 "        First In First Out (FIFO): The products are valued supposing those that enter the company first will also leave it first.\n"
 "        "
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__hs_code
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__hs_code
+msgid ""
+"Standardized code for international shipping and goods declaration. At the "
+"moment, only used for the FedEx shipping provider."
 msgstr ""
 
 #. module: shopinvader
