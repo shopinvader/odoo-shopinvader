@@ -13,7 +13,7 @@ class InvoiceService(Component):
         "abstract.shopinvader.download",
     ]
     _name = "shopinvader.invoice.service"
-    _usage = "invoice"
+    _usage = "invoices"
     _expose_model = "account.move"
     _description = __doc__
 
@@ -119,3 +119,12 @@ class InvoiceService(Component):
         if not report:
             report = self.env.ref("account.account_invoices")
         return report.report_action(target, config=False)
+
+
+class DeprecatedInvoiceService(Component):
+    """Deprecated Service use 'invoices' instead"""
+
+    _inherit = "shopinvader.invoice.service"
+    _name = "shopinvader.deprecated.invoice.service"
+    _usage = "invoice"
+    _description = __doc__

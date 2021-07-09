@@ -7,10 +7,13 @@ from odoo.addons.component.core import Component
 
 
 class DeliveryService(Component):
+    """Service for getting information on stock.picking"""
+
     _inherit = ["base.shopinvader.service", "abstract.shopinvader.download"]
     _name = "shopinvader.delivery.service"
-    _usage = "delivery"
+    _usage = "deliveries"
     _expose_model = "stock.picking"
+    _description = __doc__
 
     def search(self, **params):
         """
@@ -179,3 +182,13 @@ class DeliveryService(Component):
         sale_domain = sale_service._get_base_search_domain()
         sales = self.env[sale_service._expose_model].search(sale_domain)
         return [("sale_id", "in", sales.ids)] + self._get_allowed_picking_domain()
+
+
+class DeprecatedDeliveryService(Component):
+    """Deprecated Service use 'deliveries'"""
+
+    _inherit = "shopinvader.delivery.service"
+    _name = "shopinvader.deprecated.delivery.service"
+    _usage = "delivery"
+    _expose_model = "stock.picking"
+    _description = __doc__

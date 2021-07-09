@@ -12,7 +12,7 @@ class DeliveryCarrierService(Component):
 
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.delivery.carrier.service"
-    _usage = "delivery_carrier"
+    _usage = "delivery_carriers"
     _description = __doc__
 
     # Public services:
@@ -152,3 +152,12 @@ class DeliveryCarrierService(Component):
     @property
     def _json_parser_carrier(self):
         return ["id", "name", "code", "description"]
+
+
+class DeprecatedDeliveryCarrierService(Component):
+    """Deprecated use 'delivery_carriers' instead"""
+
+    _inherit = "shopinvader.delivery.carrier.service"
+    _name = "shopinvader.deprecated.delivery.carrier.service"
+    _usage = "delivery_carrier"
+    _description = __doc__

@@ -27,7 +27,7 @@ class CommonInvoiceCase(CommonCase):
         )
         self.precision = 2
         with self.work_on_services(partner=self.partner) as work:
-            self.service = work.component(usage="invoice")
+            self.service = work.component(usage="invoices")
         with self.work_on_services(partner=self.backend.anonymous_partner_id) as work:
             self.service_guest = work.component(usage="invoice")
 

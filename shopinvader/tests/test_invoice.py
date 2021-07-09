@@ -31,7 +31,7 @@ class TestInvoice(CommonCase, CommonTestDownload):
         super(TestInvoice, self).setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.sale_service = work.component(usage="sales")
-            self.invoice_service = work.component(usage="invoice")
+            self.invoice_service = work.component(usage="invoices")
 
     def _confirm_and_invoice_sale(self, sale):
         sale.action_confirm()
@@ -180,3 +180,10 @@ class TestInvoice(CommonCase, CommonTestDownload):
             self.invoice_service._get_report_action(self.invoice)["name"],
             "My custom report",
         )
+
+
+class DeprecatedTestInvoice(TestInvoice):
+    def setUp(self, *args, **kwargs):
+        super(DeprecatedTestInvoice, self).setUp(*args, **kwargs)
+        with self.work_on_services(partner=self.partner) as work:
+            self.invoice_service = work.component(usage="invoice")

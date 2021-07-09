@@ -141,7 +141,7 @@ class TestInvoiceService(CommonInvoiceCase):
         self.service.dispatch("get", invoice1.id)
         # Now use another user/partner
         with self.work_on_services(partner=self.partner2) as work:
-            self.service = work.component(usage="invoice")
+            self.service = work.component(usage="invoices")
         with self.assertRaises(exceptions.MissingError) as cm:
             self.service.dispatch("get", invoice1.id)
         self.assertIn("does not exist", cm.exception.args[0])
