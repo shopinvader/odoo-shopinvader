@@ -22,8 +22,16 @@ class PartnerAccess(Component):
         return getattr(self.work, "partner", None)
 
     @property
+    def invader_partner(self):
+        return getattr(self.work, "invader_partner", None)
+
+    @property
     def partner_user(self):
         return getattr(self.work, "partner_user", self.partner)
+
+    @property
+    def invader_partner_user(self):
+        return getattr(self.work, "invader_partner_user", self.partner)
 
     def is_main_partner(self):
         return self.partner == self.partner_user

@@ -9,17 +9,22 @@ class TestPartnerAccessInfo(CommonCase):
     def setUpClass(cls):
         super(TestPartnerAccessInfo, cls).setUpClass()
         cls.partner = cls.env.ref("shopinvader.partner_1")
-        cls.contact = cls.partner.create(
-            {
-                "name": "Just an address",
-                "type": "contact",
-                "parent_id": cls.partner.id,
-            }
+        cls.invader_partner = cls.partner._get_invader_partner(cls.backend)
+        cls.invader_contact = cls._create_invader_partner(
+            cls.env,
+            name="Just A User",
+            parent_id=cls.partner.id,
+            email="just@auser.com",
         )
+        cls.contact = cls.invader_contact.record_id
 
     def test_access_info_owner1(self):
         with self.backend.work_on(
-            "res.partner", partner=self.partner, partner_user=self.partner
+            "res.partner",
+            partner=self.partner,
+            partner_user=self.partner,
+            invader_partner=self.invader_partner,
+            invader_partner_user=self.invader_partner,
         ) as work:
             info = work.component(usage="access.info")
 
@@ -38,7 +43,11 @@ class TestPartnerAccessInfo(CommonCase):
 
     def test_access_info_owner2(self):
         with self.backend.work_on(
-            "res.partner", partner=self.partner, partner_user=self.partner
+            "res.partner",
+            partner=self.partner,
+            partner_user=self.partner,
+            invader_partner=self.invader_partner,
+            invader_partner_user=self.invader_partner,
         ) as work:
             info = work.component(usage="access.info")
 
@@ -62,7 +71,11 @@ class TestPartnerAccessInfo(CommonCase):
 
     def test_access_info_non_owner1(self):
         with self.backend.work_on(
-            "res.partner", partner=self.partner, partner_user=self.contact
+            "res.partner",
+            partner=self.partner,
+            invader_partner=self.invader_partner,
+            partner_user=self.contact,
+            invader_partner_user=self.invader_contact,
         ) as work:
             info = work.component(usage="access.info")
 
@@ -82,7 +95,11 @@ class TestPartnerAccessInfo(CommonCase):
 
     def test_access_info_non_owner2(self):
         with self.backend.work_on(
-            "res.partner", partner=self.partner, partner_user=self.contact
+            "res.partner",
+            partner=self.partner,
+            invader_partner=self.invader_partner,
+            partner_user=self.contact,
+            invader_partner_user=self.invader_contact,
         ) as work:
             info = work.component(usage="access.info")
 

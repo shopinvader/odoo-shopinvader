@@ -11,13 +11,11 @@ from odoo import fields
 from odoo.exceptions import MissingError
 from odoo.tests import SavepointCase
 
-from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
-from odoo.addons.component.core import WorkContext
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
 
-from .. import shopinvader_response
+from .. import shopinvader_response, utils
 from ..services import abstract_download
 
 
@@ -99,30 +97,24 @@ class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
 
     @contextmanager
     def work_on_services(self, **params):
-        params = params or {}
-        if params.get("partner") and not params.get("partner_user"):
-            params["partner_user"] = params["partner"]
+        params = self._work_on_services_default_params(self, **params)
+        with utils.work_on_service(self.env, **params) as work:
+            yield work
+
+    @staticmethod
+    def _work_on_services_default_params(class_or_instance, **params):
         if "shopinvader_backend" not in params:
-            params["shopinvader_backend"] = self.backend
+            params["shopinvader_backend"] = class_or_instance.backend
         if "shopinvader_session" not in params:
             params["shopinvader_session"] = {}
-        if not params.get("partner_user") and params.get("partner"):
-            params["partner_user"] = params["partner"]
-        if params.get("partner_user"):
-            params["invader_partner"] = params["partner_user"]._get_invader_partner(
-                self.backend
-            )
-        # Safe defaults as these keys are mandatory for work ctx
-        if "partner" not in params:
-            params["partner"] = self.env["res.partner"].browse()
-        if "partner_user" not in params:
-            params["partner_user"] = self.env["res.partner"].browse()
-        if "invader_partner" not in params:
-            params["invader_partner"] = self.env["shopinvader.partner"].browse()
-        collection = _PseudoCollection("shopinvader.backend", self.env)
-        yield WorkContext(
-            model_name="rest.service.registration", collection=collection, **params
+        utils.partner_work_context_defaults(
+            class_or_instance.env, class_or_instance.backend, params
         )
+        return params
+
+    def _update_work_ctx(self, service, **params):
+        params = self._work_on_services_default_params(self, **params)
+        utils.update_work_ctx(service, params)
 
     def _init_job_counter(self):
         self.existing_jobs = self.env["queue.job"].search([])

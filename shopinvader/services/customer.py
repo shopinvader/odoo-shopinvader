@@ -31,9 +31,7 @@ class CustomerService(Component):
     def create(self, **params):
         vals = self._prepare_params(params)
         binding = self.env["shopinvader.partner"].create(vals)
-        # TODO: move to `service._[init|update]_context` to centralize it
-        self.work.invader_partner = binding
-        self.work.partner = binding.record_id
+        self._load_partner_work_context(binding)
         self._post_create(self.work.partner)
         return self._prepare_create_response(binding)
 
@@ -121,8 +119,8 @@ class CustomerService(Component):
     def _prepare_create_response(self, binding):
         response = self._assign_cart_and_get_store_cache()
         response["data"] = {
-            "id": self.partner.id,
-            "name": self.partner.name,
+            "id": binding.record_id.id,
+            "name": binding.name,
             "role": binding.role,
         }
         return response

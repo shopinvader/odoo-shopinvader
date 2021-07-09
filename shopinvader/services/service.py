@@ -12,7 +12,7 @@ from odoo.osv import expression
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import AbstractComponent
 
-from .. import shopinvader_response
+from .. import shopinvader_response, utils
 
 _logger = logging.getLogger(__name__)
 
@@ -22,6 +22,13 @@ class BaseShopinvaderService(AbstractComponent):
     _name = "base.shopinvader.service"
     _collection = "shopinvader.backend"
     _expose_model = None
+
+    def _load_partner_work_context(self, invader_partner, force=False):
+        utils.load_partner_work_ctx(self, invader_partner, force=force)
+
+    def _reset_partner_work_context(self):
+        # Basically like logging out a user
+        utils.reset_partner_work_ctx(self)
 
     @property
     def partner(self):
@@ -43,6 +50,10 @@ class BaseShopinvaderService(AbstractComponent):
         # TODO: check if there are place wher it's better to use
         # `partner_user` instead of `partner`.
         return getattr(self.work, "partner_user", self.partner)
+
+    @property
+    def invader_partner_user(self):
+        return self.work.invader_partner_user
 
     @property
     def shopinvader_session(self):
