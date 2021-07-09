@@ -22,20 +22,16 @@ class StockPicking(models.Model):
         :param notification: str
         :return: bool
         """
-        picking_outgoing = self.filtered(
-            lambda p: p.picking_type_id.code == "outgoing"
-        )
+        picking_outgoing = self.filtered(lambda p: p.picking_type_id.code == "outgoing")
         all_move_lines = picking_outgoing.mapped("move_lines")
         backends = picking_outgoing._get_related_backends()
 
-        def filter_line(l, b):
-            lbackend = l.sale_line_id.order_id.shopinvader_backend_id
-            return lbackend == b
+        def filter_line(line, backend):
+            line_backend = line.sale_line_id.order_id.shopinvader_backend_id
+            return line_backend == backend
 
         for backend in backends:
-            move_lines = all_move_lines.filtered(
-                lambda l, b=backend: filter_line(l, b)
-            )
+            move_lines = all_move_lines.filtered(lambda l, b=backend: filter_line(l, b))
             pickings = move_lines.mapped("picking_id")
             for picking in pickings:
                 backend._send_notification(notification, picking)
@@ -48,16 +44,14 @@ class StockPicking(models.Model):
         """
         move_lines = self.mapped("move_lines")
         # Load backend from related sale order lines
-        backends = move_lines.mapped(
-            "sale_line_id.order_id.shopinvader_backend_id"
-        )
+        backends = move_lines.mapped("sale_line_id.order_id.shopinvader_backend_id")
         return backends
 
-    def action_done(self):
+    def _action_done(self):
         """
         Inherit to update the invoice state if necessary
         :return:
         """
-        result = super(StockPicking, self).action_done()
+        result = super(StockPicking, self)._action_done()
         self._notify_backend("stock_picking_outgoing_validated")
         return result

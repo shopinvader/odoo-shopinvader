@@ -5,13 +5,13 @@
 {
     "name": "Shopinvader Carrier",
     "summary": "Carrier integration for Shopinvader",
-    "version": "13.0.2.5.1",
+    "version": "14.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,
-    "installable": False,
+    "installable": True,
     "external_dependencies": {"python": [], "bin": []},
     "depends": [
         "delivery",

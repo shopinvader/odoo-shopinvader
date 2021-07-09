@@ -86,7 +86,7 @@ class TestDeliveryCarrier(CommonCarrierCase):
         }
         self._check_response(res, expected)
         # Check if partner country hasn't been modified
-        self.assertEquals(partner_country, self.cart.partner_id.country_id)
+        self.assertEqual(partner_country, self.cart.partner_id.country_id)
 
     def test_search_current_cart_no_zip(self):
         # Limit both carriers to countries, one to BE, one to FR
@@ -106,7 +106,7 @@ class TestDeliveryCarrier(CommonCarrierCase):
         expected = {"size": 0, "data": []}
         self._check_response(res, expected)
         # Check if partner zip hasn't been modified
-        self.assertEquals(partner_zip, self.cart.partner_id.zip)
+        self.assertEqual(partner_zip, self.cart.partner_id.zip)
 
     def test_search_current_cart_zip(self):
         # Limit both carriers to countries, one to BE, one to FR

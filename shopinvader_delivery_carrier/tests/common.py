@@ -19,9 +19,7 @@ class CommonCarrierCase(CommonConnectedCartCase):
         cls.precision = 2
 
     def extract_cart(self, response):
-        self.shopinvader_session["cart_id"] = response["set_session"][
-            "cart_id"
-        ]
+        self.shopinvader_session["cart_id"] = response["set_session"]["cart_id"]
         self.assertEqual(response["store_cache"], {"cart": response["data"]})
         return response["data"]
 

@@ -8,8 +8,7 @@ from odoo.addons.component.core import Component
 
 
 class DeliveryCarrierService(Component):
-    """Shopinvader service to retrieve delivery carrier information.
-    """
+    """Shopinvader service to retrieve delivery carrier information."""
 
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.delivery.carrier.service"
@@ -35,9 +34,7 @@ class DeliveryCarrierService(Component):
         delivery_carriers = self._search(cart=cart, **params)
         vals = {
             "size": len(delivery_carriers),
-            "data": [
-                self._prepare_carrier(dc, cart) for dc in delivery_carriers
-            ],
+            "data": [self._prepare_carrier(dc, cart) for dc in delivery_carriers],
         }
         # TODO DEPRECATED this old API is deprecated
         #  keep returing the result but this should be not used anymore

@@ -32,9 +32,7 @@ class DeliveryCarrier(models.Model):
         :param partner: res.partner recordset
         :return:
         """
-        partner_values, protected_fields = self._get_protected_partner_fields(
-            partner
-        )
+        partner_values, protected_fields = self._get_protected_partner_fields(partner)
         with self.env.protecting(protected_fields, partner):
             yield
             # Restore values
@@ -75,9 +73,7 @@ class DeliveryCarrier(models.Model):
                 # current zip could be related to another country and simulate
                 # a wrong price.
                 contact.update({"country_id": country.id, "zip": zip_code})
-                result = super(DeliveryCarrier, self).available_carriers(
-                    contact
-                )
+                result = super(DeliveryCarrier, self).available_carriers(contact)
         else:
             result = super(DeliveryCarrier, self).available_carriers(contact)
         return result

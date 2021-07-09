@@ -7,7 +7,6 @@ exclude: |
   ^shopinvader_category_image_for_product/|
   ^shopinvader_contact_company/|
   ^shopinvader_customer_multi_user_wishlist/|
-  ^shopinvader_delivery_carrier/|
   ^shopinvader_delivery_instruction/|
   ^shopinvader_demo_app/|
   ^shopinvader_guest_mode/|

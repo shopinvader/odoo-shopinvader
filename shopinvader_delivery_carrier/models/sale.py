@@ -21,8 +21,7 @@ class SaleOrder(models.Model):
                 order.shopinvader_available_carrier_ids = carrier
                 continue
             order.shopinvader_available_carrier_ids = (
-                order._available_carriers()
-                & order.shopinvader_backend_id.carrier_ids
+                order._available_carriers() & order.shopinvader_backend_id.carrier_ids
             )
 
     def _available_carriers(self):
