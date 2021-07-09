@@ -13,7 +13,7 @@ class LeadService(Component):
 
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.lead.service"
-    _usage = "lead"
+    _usage = "leads"
     _expose_model = "crm.lead"
     _description = __doc__
 
@@ -70,3 +70,10 @@ class LeadService(Component):
                 params[key] = params.pop(human_key)
         params["shopinvader_backend_id"] = self.shopinvader_backend.id
         return params
+
+
+class DeprecatedLeadService(Component):
+    _inherit = "shopinvader.lead.service"
+    _name = "shopinvader.deprecated.lead.service"
+    _usage = "lead"
+    _description = "Deprecated Service use 'leads' instead"
