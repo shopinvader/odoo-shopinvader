@@ -19,6 +19,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_image',
         'odoo14-addon-shopinvader_invoice',
         'odoo14-addon-shopinvader_locomotive',
+        'odoo14-addon-shopinvader_locomotive_algolia',
         'odoo14-addon-shopinvader_multi_category',
         'odoo14-addon-shopinvader_notification_default',
         'odoo14-addon-shopinvader_partner_firstname',
