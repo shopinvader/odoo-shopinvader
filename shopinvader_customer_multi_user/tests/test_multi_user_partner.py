@@ -10,9 +10,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
 
     def test_get_shop_partner_default(self):
         self.backend.customer_multi_user = False
-        self.assertEqual(
-            self.company.get_shop_partner(self.backend), self.company
-        )
+        self.assertEqual(self.company.get_shop_partner(self.backend), self.company)
         self.assertEqual(
             self.user_binding.record_id.get_shop_partner(self.backend),
             self.user_binding.record_id,

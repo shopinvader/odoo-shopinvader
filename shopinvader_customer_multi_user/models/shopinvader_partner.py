@@ -39,9 +39,7 @@ class ShopinvaderPartner(models.Model):
         ondelete="restrict",
     )
     is_main_account = fields.Boolean(compute="_compute_is_main_account")
-    can_manage_users = fields.Boolean(
-        help="Authorize this user to manage the account."
-    )
+    can_manage_users = fields.Boolean(help="Authorize this user to manage the account.")
     is_admin_account = fields.Boolean(compute="_compute_permission_flags")
     is_users_manager = fields.Boolean(compute="_compute_permission_flags")
 
