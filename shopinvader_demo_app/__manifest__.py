@@ -24,6 +24,7 @@
         "shopinvader_payment_manual",
         "shopinvader_payment_stripe",
         "product_brand",
+        "connector_elasticsearch",
     ],
     "data": ["data/ir_export_product.xml"],
     "demo": [
