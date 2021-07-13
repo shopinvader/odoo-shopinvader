@@ -43,6 +43,7 @@ addon | version | summary
 [shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.0.0 | Manage Promotion and Coupon programs in Shopinvader
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.0.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.1.0 | Shopinvader Catalog Search Engine Connector
+[shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.0.0 | Handle shop wishlist
 
 
 Unported addons
@@ -78,6 +79,5 @@ addon | version | summary
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.1 (unported) | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 (unported) | Add packaging information to wishlists
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
-[shopinvader_wishlist](shopinvader_wishlist/) | 13.0.2.2.1 (unported) | Handle shop wishlist
 
 [//]: # (end addons)
