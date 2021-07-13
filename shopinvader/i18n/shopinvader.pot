@@ -82,6 +82,11 @@ msgid "# Products"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__wishlists_count
+msgid "# Wishlists"
+msgstr ""
+
+#. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "<span class=\"o_stat_text\">Categories</span>"
 msgstr ""
