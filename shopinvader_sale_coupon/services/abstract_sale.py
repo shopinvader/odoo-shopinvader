@@ -22,8 +22,12 @@ class AbstractSaleService(AbstractComponent):
                 "no_code_promo_program_ids": self._convert_coupon_programs(
                     sale.no_code_promo_program_ids
                 ),
-                "code_promo_program_id": self._convert_coupon_programs(
-                    sale.code_promo_program_id
+                "code_promo_program_id": (
+                    sale.code_promo_program_id.jsonify(
+                        self._parser_coupon_program(), one=True
+                    )
+                    if sale.code_promo_program_id
+                    else False
                 ),
             }
         )
@@ -39,7 +43,17 @@ class AbstractSaleService(AbstractComponent):
         return res
 
     def _parser_coupon(self):
-        return ["id", "code", "state", "expiration_date", "partner_id", "program_id"]
+        return [
+            "id",
+            "code",
+            "state",
+            "expiration_date",
+            ("partner_id:partner", self._parser_coupon_partner()),
+            ("program_id:program", self._parser_coupon_program()),
+        ]
+
+    def _parser_coupon_partner(self):
+        return ["id", "name"]
 
     def _parser_coupon_program(self):
         return ["id", "name"]
