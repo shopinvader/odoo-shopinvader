@@ -18,9 +18,9 @@ class ShopinvaderVariant(models.Model):
         for sale_profile in self.backend_id.sale_profile_ids:
             fposition = first(sale_profile.fiscal_position_ids)
             price = self._get_price(
-                sale_profile.pricelist_id,
-                fposition,
-                self.backend_id.company_id,
+                pricelist=sale_profile.pricelist_id,
+                fposition=fposition,
+                company=self.backend_id.company_id,
             )
             res.update({sale_profile.code: price})
         return res
