@@ -40,7 +40,7 @@ addon | version | summary
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 | Expose the amount by tax to shopinvader
-[shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.0.0 | Manage Promotion and Coupon programs in Shopinvader
+[shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.0.1 | Manage Promotion and Coupon programs in Shopinvader
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.0.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.1.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.0.0 | Handle shop wishlist
