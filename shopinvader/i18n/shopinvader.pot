@@ -3867,7 +3867,7 @@ msgid "Shipped"
 msgstr ""
 
 #. module: shopinvader
-#: model:mail.activity.type,name:shopinvader.mail_activity_validate_customer
+#: model:mail.activity.type,name:shopinvader.mail_activity_review_customer
 msgid "Shop - Validate customer"
 msgstr ""
 

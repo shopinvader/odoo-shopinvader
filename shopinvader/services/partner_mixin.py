@@ -14,13 +14,6 @@ class PartnerServiceMixin(AbstractComponent):
     _name = "shopinvader.partner.service.mixin"
 
     @property
-    def partner_validator(self):
-        with self.shopinvader_backend.work_on(
-            "res.partner", service_work=self.work
-        ) as work:
-            return work.component(usage="partner.validator")
-
-    @property
     def access_info(self):
         with self.shopinvader_backend.work_on(
             "res.partner",
@@ -42,9 +35,6 @@ class PartnerServiceMixin(AbstractComponent):
 
     def _notify_salesman(self, partner, mode):
         needed = False
-        if not self.partner_validator.is_partner_validated(partner):
-            # always notify if validation needed
-            needed = True
         backend_policy = self.shopinvader_backend["salesman_notify_" + mode]
         needed = self._notify_salesman_needed(backend_policy, partner, mode)
         if needed:
@@ -62,7 +52,7 @@ class PartnerServiceMixin(AbstractComponent):
             "res_id": self._notify_salesman_recipient(partner, mode).id,
             "user_id": self._get_salesman(partner).id,
             "activity_type_id": self.env.ref(
-                "shopinvader.mail_activity_validate_customer"
+                "shopinvader.mail_activity_review_customer"
             ).id,
             "summary": msg,
         }
@@ -110,8 +100,6 @@ class PartnerServiceMixin(AbstractComponent):
         notif = None
         if mode == "create":
             notif = "new_customer_welcome"
-            if not self.partner_validator.is_partner_validated(partner):
-                notif = "new_customer_welcome_not_validated"
         elif mode == "update":
             notif = "customer_updated"
         return notif
@@ -120,8 +108,6 @@ class PartnerServiceMixin(AbstractComponent):
         notif = None
         if mode == "create":
             notif = "address_created"
-            if not self.partner_validator.is_partner_validated(partner):
-                notif = "address_created_not_validated"
         elif mode == "update":
             notif = "address_updated"
         return notif

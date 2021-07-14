@@ -34,7 +34,6 @@
                 <field name="external_id" />
                 <field name="create_date" readonly="1" />
                 <field name="sync_date" />
-                <field name="shopinvader_enabled" />
             </tree>
         </field>
     </record>
@@ -46,7 +45,7 @@
                 <field name="name" />
                 <field name="email" />
                 <field name="external_id" />
-                <field name="shopinvader_enabled" />
+                <field name="parent_id" />
                 <group string="Group By">
                     <filter
                         name="group_by_backend_id"
@@ -55,10 +54,10 @@
                         context="{'group_by':'backend_id'}"
                     />
                     <filter
-                        name="group_by_shopinvader_enabled"
-                        string="Enabled"
+                        name="group_by_parent"
+                        string="Parent"
                         domain="[]"
-                        context="{'group_by':'shopinvader_enabled'}"
+                        context="{'group_by':'parent_id'}"
                     />
                 </group>
             </search>

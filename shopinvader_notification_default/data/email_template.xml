@@ -49,6 +49,7 @@
     <field name="body_view_id" ref="new_customer_welcome" />
   </record>
 
+<!-- TODO: split to its own module -->
   <record
         id="email_new_customer_welcome_not_validated_notification"
         model="mail.template"

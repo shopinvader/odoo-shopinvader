@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record
+        id="email_new_customer_welcome_not_validated_notification"
+        model="mail.template"
+    >
+        <field name="name">Welcome customer not validated notification</field>
+        <field name="email_from">${(object.user_id.email or '')|safe}</field>
+        <field
+            name="subject"
+        >Welcome notification ${object.name} - Account to be validated</field>
+        <field name="partner_to">${object.id}</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="auto_delete" eval="False" />
+        <field name="lang">${object.lang}</field>
+        <field
+            name="body_html"
+        ><![CDATA[ Welcome, your account will be validated and activated soon]]></field>
+    </record>
+
+    <record id="email_customer_validated_notification" model="mail.template">
+        <field name="name">Customer validated notification</field>
+        <field name="email_from">${(object.user_id.email or '')|safe}</field>
+        <field
+            name="subject"
+        >Welcome notification ${object.name} - Account validated</field>
+        <field name="partner_to">${object.id}</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="auto_delete" eval="False" />
+        <field name="lang">${object.lang}</field>
+        <field
+            name="body_html"
+        ><![CDATA[ Welcome, your account has been validated and activated]]></field>
+    </record>
+
+    <record id="email_address_created_not_validated_notification" model="mail.template">
+        <field name="name">Address created not validated notification</field>
+        <field name="email_from">${(object.user_id.email or '')|safe}</field>
+        <field
+            name="subject"
+        >Notification ${object.name} - Address created to be validated</field>
+        <field name="partner_to">${object.id}</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="auto_delete" eval="False" />
+        <field name="lang">${object.lang}</field>
+        <field
+            name="body_html"
+        ><![CDATA[ A new address has been added to your account, will be validated and activated soon]]></field>
+    </record>
+
+    <record id="email_address_validated_notification" model="mail.template">
+        <field name="name">Address validated notification</field>
+        <field name="email_from">${(object.user_id.email or '')|safe}</field>
+        <field name="subject">Notification ${object.name} - Address validated</field>
+        <field name="partner_to">${object.id}</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="auto_delete" eval="False" />
+        <field name="lang">${object.lang}</field>
+        <field
+            name="body_html"
+        ><![CDATA[ A new address has been validated and activated]]></field>
+    </record>
+
+</odoo>

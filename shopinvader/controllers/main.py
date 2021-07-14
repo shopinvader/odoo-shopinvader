@@ -64,9 +64,7 @@ class InvaderController(main.RestController):
 
     @classmethod
     def _validate_partner(cls, backend, partner):
-        with backend.work_on("res.partner") as work:
-            validator = work.component(usage="partner.validator")
-            validator.validate_partner(partner)
+        return backend._validate_partner(partner)
 
     @classmethod
     def _get_shopinvader_backend_from_request(cls):

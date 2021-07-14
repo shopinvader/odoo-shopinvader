@@ -288,3 +288,45 @@ class CommonTestDownload(object):
             }
         )
         register_payments._create_payments()
+
+
+class NotificationCaseMixin(object):
+    def _check_notification(self, notif_type, record):
+        notif = self.env["shopinvader.notification"].search(
+            [
+                ("backend_id", "=", self.backend.id),
+                ("notification_type", "=", notif_type),
+            ]
+        )
+        vals = notif.template_id.generate_email(
+            record.id,
+            [
+                "subject",
+                "body_html",
+                "email_from",
+                "email_to",
+                "partner_to",
+                "email_cc",
+                "reply_to",
+                "scheduled_date",
+            ],
+        )
+        message = self.env["mail.message"].search(
+            [
+                ("subject", "=", vals["subject"]),
+                ("model", "=", record._name),
+                ("res_id", "=", record.id),
+            ]
+        )
+        self.assertEqual(len(message), 1)
+
+    def _find_notification_job(self, **kw):
+        leafs = dict(
+            channel_method_name="<shopinvader.notification>.send",
+            model_name="shopinvader.notification",
+        )
+        leafs.update(kw)
+        domain = []
+        for k, v in leafs.items():
+            domain.append((k, "=", v))
+        return self.env["queue.job"].search(domain, limit=1)

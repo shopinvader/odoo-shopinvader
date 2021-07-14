@@ -77,9 +77,6 @@ class CustomerService(Component):
         if mode == "create":
             if params.get("is_company"):
                 params["is_company"] = True
-            params["shopinvader_enabled"] = self.partner_validator.enabled_by_params(
-                params, "profile"
-            )
         return params
 
     def _get_and_assign_cart(self):

@@ -20,8 +20,6 @@ class TestCustomer(CommonCase):
             "is_company": False,
             "external_id": "12345678",
         }
-        # validation is not active
-        cls.backend.validate_customers = False
         cls.partner = cls.env.ref("shopinvader.partner_1")
 
     def setUp(self):
@@ -40,7 +38,7 @@ class TestCustomer(CommonCase):
             (
                 "activity_type_id",
                 "=",
-                self.env.ref("shopinvader.mail_activity_validate_customer").id,
+                self.env.ref("shopinvader.mail_activity_review_customer").id,
             ),
         ]
         return self.env["mail.activity"].search_count(domain)

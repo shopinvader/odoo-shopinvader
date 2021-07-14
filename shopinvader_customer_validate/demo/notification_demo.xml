@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record
+        id="shopinvader_notification_new_customer_welcome_not_validated"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="shopinvader.backend_1" />
+        <field name="notification_type">new_customer_welcome_not_validated</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="template_id"
+            ref="email_new_customer_welcome_not_validated_notification"
+        />
+    </record>
+
+    <record
+        id="shopinvader_notification_customer_validated"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="shopinvader.backend_1" />
+        <field name="notification_type">customer_validated</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="template_id" ref="email_customer_validated_notification" />
+    </record>
+
+    <record
+        id="shopinvader_notification_address_created_not_validated"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="shopinvader.backend_1" />
+        <field name="notification_type">address_created_not_validated</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="template_id"
+            ref="email_address_created_not_validated_notification"
+        />
+    </record>
+
+    <record
+        id="shopinvader_notification_address_validated"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="shopinvader.backend_1" />
+        <field name="notification_type">address_validated</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="template_id" ref="email_address_validated_notification" />
+    </record>
+
+</odoo>

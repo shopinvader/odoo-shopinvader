@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="shopinvader_partner_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_form" />
+        <field name="arch" type="xml">
+            <field name="sync_date" position="after">
+                <field name="state" />
+            </field>
+        </field>
+    </record>
+
+
+    <record id="shopinvader_partner_view_tree" model="ir.ui.view">
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree" />
+        <field name="arch" type="xml">
+            <field name="sync_date" position="after">
+                <field name="state" />
+            </field>
+        </field>
+    </record>
+
+    <record id="shopinvader_partner_view_search" model="ir.ui.view">
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search" />
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+                <field name="state" />
+                <filter
+                    name="active"
+                    string="State: Active"
+                    domain="[('state','=','active')]"
+                />
+                <filter
+                    name="inactive"
+                    string="State: Inactive"
+                    domain="[('state','=','inactive')]"
+                />
+                <filter
+                    name="pending"
+                    string="State: Pending"
+                    domain="[('state','=','pending')]"
+                />
+            </field>
+            <filter name="group_by_backend_id" position="after">
+                <filter
+                    name="group_by_state"
+                    string="State"
+                    domain="[]"
+                    context="{'group_by':'state'}"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>

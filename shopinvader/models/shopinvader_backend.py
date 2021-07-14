@@ -147,45 +147,6 @@ class ShopinvaderBackend(models.Model):
         " if the client does not pass the invoice address explicitly "
         " the shipping one will be used as invoice address as well.\n",
     )
-    validate_customers = fields.Boolean(
-        default=False,  # let's be explicit here :)
-        help="Turn on this flag to block non validated customers. "
-        "If customers' partners are not validated, "
-        "registered users cannot log in. "
-        "Salesman will get notified via mail activity.",
-    )
-    validate_customers_type = fields.Selection(
-        selection=[
-            ("all", "Companies, simple users and addresses"),
-            ("company", "Company users only"),
-            ("user", "Simple users only"),
-            ("company_and_user", "Companies and simple users"),
-            ("address", "Addresses only"),
-        ],
-        default="all",
-    )
-    salesman_notify_create = fields.Selection(
-        selection=[
-            ("", "None"),
-            ("all", "Companies, simple users and addresses"),
-            ("company", "Company users only"),
-            ("user", "Simple users only"),
-            ("company_and_user", "Companies and simple users"),
-            ("address", "Addresses only"),
-        ],
-        default="company",
-    )
-    salesman_notify_update = fields.Selection(
-        selection=[
-            ("", "None"),
-            ("all", "Companies, simple users and addresses"),
-            ("company", "Company users only"),
-            ("user", "Simple users only"),
-            ("company_and_user", "Companies and simple users"),
-            ("address", "Addresses only"),
-        ],
-        default="",
-    )
     partner_title_ids = fields.Many2many(
         "res.partner.title",
         string="Available partner titles",
@@ -226,6 +187,28 @@ class ShopinvaderBackend(models.Model):
     )
     customer_default_role = fields.Char(
         compute="_compute_customer_default_role",
+    )
+    salesman_notify_create = fields.Selection(
+        selection=[
+            ("", "None"),
+            ("all", "Companies, simple users and addresses"),
+            ("company", "Company users only"),
+            ("user", "Simple users only"),
+            ("company_and_user", "Companies and simple users"),
+            ("address", "Addresses only"),
+        ],
+        default="company",
+    )
+    salesman_notify_update = fields.Selection(
+        selection=[
+            ("", "None"),
+            ("all", "Companies, simple users and addresses"),
+            ("company", "Company users only"),
+            ("user", "Simple users only"),
+            ("company_and_user", "Companies and simple users"),
+            ("address", "Addresses only"),
+        ],
+        default="",
     )
 
     _sql_constraints = [
@@ -604,3 +587,7 @@ class ShopinvaderBackend(models.Model):
         if partner:
             pricelist = self._get_partner_pricelist(partner) or pricelist
         return pricelist
+
+    def _validate_partner(self, partner):
+        """Hook to validate partners when required."""
+        return True
