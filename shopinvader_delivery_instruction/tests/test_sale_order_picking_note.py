@@ -12,7 +12,7 @@ class TestSaleOrderDeliveryNote(CommonCase):
     """
 
     def setUp(self):
-        super(TestSaleOrderDeliveryNote, self).setUp()
+        super().setUp()
         self.cart = self.env.ref("shopinvader.sale_order_2")
         self.shopinvader_session = {"cart_id": self.cart.id}
         self.partner = self.env.ref("shopinvader.partner_1")
