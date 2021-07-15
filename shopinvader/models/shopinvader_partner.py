@@ -1,7 +1,7 @@
 # Copyright 2016 Akretion (http://www.akretion.com)
 # Sébastien BEAU <sebastien.beau@akretion.com>
 # Copyright 2020 Camptocamp (http://www.camptocamp.com).
-# @author Simone Orsi <simahawk@gmail.com>
+# @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 
@@ -24,6 +24,24 @@ class ShopinvaderPartner(models.Model):
         string="Partner Email",
     )
     role = fields.Char(compute="_compute_role")
+    # Common interface to mimic the same behavior as res.partner.
+    # On the binding we have a selection for the state
+    # and we can set the value for each backend.
+    # On addresses is relevant only if the record is enabled or not for the shop.
+    # Having the same field on both models allows to use simple conditions to check.
+    # The compute methods offers a hook to modify the behavior.
+    is_shopinvader_active = fields.Boolean(compute="_compute_is_shopinvader_active")
+
+    def _compute_is_shopinvader_active_depends(self):
+        return ()
+
+    @api.depends(lambda self: self._compute_is_shopinvader_active_depends())
+    def _compute_is_shopinvader_active(self):
+        for rec in self:
+            rec.is_shopinvader_active = rec._is_shopinvader_user_active()
+
+    def _is_shopinvader_user_active(self):
+        return True
 
     _sql_constraints = [
         (

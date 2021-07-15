@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="shopinvader_backend_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="arch" type="xml">
+            <field name="anonymous_partner_id" position="after">
+                <group name="validate" string="Validation">
+                    <field name="validate_customers" />
+                    <field name="validate_customers_type" />
+                </group>
+            </field>
+        </field>
+    </record>
+</odoo>

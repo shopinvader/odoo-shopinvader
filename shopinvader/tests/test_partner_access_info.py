@@ -7,7 +7,7 @@ from .common import CommonCase
 class TestPartnerAccessInfo(CommonCase):
     @classmethod
     def setUpClass(cls):
-        super(TestPartnerAccessInfo, cls).setUpClass()
+        super().setUpClass()
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.invader_partner = cls.partner._get_invader_partner(cls.backend)
         cls.invader_contact = cls._create_invader_partner(
@@ -41,34 +41,6 @@ class TestPartnerAccessInfo(CommonCase):
             {"read": True, "update": True, "delete": True},
         )
 
-    def test_access_info_owner2(self):
-        with self.backend.work_on(
-            "res.partner",
-            partner=self.partner,
-            partner_user=self.partner,
-            invader_partner=self.invader_partner,
-            invader_partner_user=self.invader_partner,
-        ) as work:
-            info = work.component(usage="access.info")
-
-        self.assertTrue(info.is_owner(self.partner.id))
-
-        # partner is enabled, can do everything
-        self.partner.shopinvader_enabled = True
-        expected = {
-            "addresses": {"create": True},
-            "cart": {"add_item": True, "update_item": True},
-        }
-        self.assertEqual(info.permissions(), expected)
-
-        # partner is disabled, can do nothing
-        self.partner.shopinvader_enabled = False
-        expected = {
-            "addresses": {"create": False},
-            "cart": {"add_item": False, "update_item": False},
-        }
-        self.assertEqual(info.permissions(), expected)
-
     def test_access_info_non_owner1(self):
         with self.backend.work_on(
             "res.partner",
@@ -92,35 +64,3 @@ class TestPartnerAccessInfo(CommonCase):
             info.for_address(self.contact.id),
             {"read": True, "update": True, "delete": False},
         )
-
-    def test_access_info_non_owner2(self):
-        with self.backend.work_on(
-            "res.partner",
-            partner=self.partner,
-            invader_partner=self.invader_partner,
-            partner_user=self.contact,
-            invader_partner_user=self.invader_contact,
-        ) as work:
-            info = work.component(usage="access.info")
-
-        self.assertFalse(info.is_owner(self.partner.id))
-        self.assertTrue(info.is_owner(self.contact.id))
-
-        # no matter if the partner user is enabled
-        self.contact.shopinvader_enabled = True
-
-        # partner is enabled, can do everything
-        self.partner.shopinvader_enabled = True
-        expected = {
-            "addresses": {"create": True},
-            "cart": {"add_item": True, "update_item": True},
-        }
-        self.assertEqual(info.permissions(), expected)
-
-        # partner is disabled, can do nothing
-        self.partner.shopinvader_enabled = False
-        expected = {
-            "addresses": {"create": False},
-            "cart": {"add_item": False, "update_item": False},
-        }
-        self.assertEqual(info.permissions(), expected)

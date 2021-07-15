@@ -53,28 +53,12 @@ class ShopinvaderNotification(models.Model):
                 "name": _("New customer Welcome"),
                 "model": "res.partner",
             },
-            "new_customer_welcome_not_validated": {
-                "name": _("New customer Welcome not validated"),
-                "model": "res.partner",
-            },
-            "customer_validated": {
-                "name": _("New customer validated"),
-                "model": "res.partner",
-            },
             "customer_updated": {
                 "name": _("Customer updated"),
                 "model": "res.partner",
             },
             "address_created": {
                 "name": _("Address created"),
-                "model": "res.partner",
-            },
-            "address_created_not_validated": {
-                "name": _("Address created not validated"),
-                "model": "res.partner",
-            },
-            "address_validated": {
-                "name": _("Address validated"),
                 "model": "res.partner",
             },
             "address_updated": {
