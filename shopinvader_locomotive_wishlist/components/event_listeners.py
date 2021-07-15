@@ -7,8 +7,7 @@ from odoo.addons.component_event import skip_if
 
 
 class ShopinvaderWishlistListener(Component):
-    """Export info on partner when wishlist is updated.
-    """
+    """Export info on partner when wishlist is updated."""
 
     _name = "shopinvader.wishlist.event.listener"
     _inherit = "base.connector.listener"
@@ -47,8 +46,7 @@ class ShopinvaderWishlistListener(Component):
 
 
 class ShopinvaderWishlistLineListener(Component):
-    """Export info on partner when wishlist line is updated.
-    """
+    """Export info on partner when wishlist line is updated."""
 
     _name = "shopinvader.wishlist.line.event.listener"
     _inherit = "base.connector.listener"
@@ -58,11 +56,7 @@ class ShopinvaderWishlistLineListener(Component):
     def _get_fields_to_export(self):
         return [
             "product_id",
-            "quantity",
             "product_set_id",
-            "active",
-            "sequence",
-            "discount",
         ]
 
     def _skip_if(self, record, fields=None):
