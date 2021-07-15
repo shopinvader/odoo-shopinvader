@@ -32,6 +32,7 @@ addon | version | summary
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.0.0 | Shopinvader Invoice module
 [shopinvader_locomotive](shopinvader_locomotive/) | 14.0.1.0.1 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
+[shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.0 | Synchronize wishlist details to Locomotive users record.
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 | Shopinvader Customer firstname/lastname
@@ -68,7 +69,6 @@ addon | version | summary
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 13.0.1.0.2 (unported) | Shopinvader guest mode for locomotive
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 13.0.1.2.0 (unported) | Synchronize the sale profile info to customer record on Locomotive
-[shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 13.0.1.1.0 (unported) | Synchronize wishlist details to Locomotive users record.
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 12.0.1.0.0 (unported) | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
