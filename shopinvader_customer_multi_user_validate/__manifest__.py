@@ -6,7 +6,7 @@
     "summary": """
     Glue module for `shopinvader_customer_validate` and `shopinvader_customer_multi_user`.
     """,
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.1.0",
     "license": "AGPL-3",
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
