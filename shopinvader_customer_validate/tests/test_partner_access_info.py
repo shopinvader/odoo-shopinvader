@@ -36,7 +36,10 @@ class TestPartnerAccessInfo(CommonCase):
             "addresses": {"create": True},
             "cart": {"add_item": True, "update_item": True},
         }
-        self.assertEqual(info.permissions(), expected)
+        perms = info.permissions()
+        # Other modules might add other keys: let's compare them atomically.
+        for k, v in expected.items():
+            self.assertEqual(perms[k], v)
 
         # partner is disabled, can do nothing
         self.invader_partner.state = "inactive"
@@ -44,7 +47,10 @@ class TestPartnerAccessInfo(CommonCase):
             "addresses": {"create": False},
             "cart": {"add_item": False, "update_item": False},
         }
-        self.assertEqual(info.permissions(), expected)
+        perms = info.permissions()
+        # Other modules might add other keys: let's compare them atomically.
+        for k, v in expected.items():
+            self.assertEqual(perms[k], v)
 
     def test_access_info_non_owner2(self):
         with self.backend.work_on(
@@ -68,12 +74,15 @@ class TestPartnerAccessInfo(CommonCase):
             "addresses": {"create": True},
             "cart": {"add_item": True, "update_item": True},
         }
-        self.assertEqual(info.permissions(), expected)
-
+        perms = info.permissions()
+        for k, v in expected.items():
+            self.assertEqual(perms[k], v)
         # partner is disabled, can do nothing
         self.invader_partner.state = "inactive"
         expected = {
             "addresses": {"create": False},
             "cart": {"add_item": False, "update_item": False},
         }
-        self.assertEqual(info.permissions(), expected)
+        perms = info.permissions()
+        for k, v in expected.items():
+            self.assertEqual(perms[k], v)
