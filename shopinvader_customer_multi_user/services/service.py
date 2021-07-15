@@ -22,7 +22,7 @@ class BaseShopinvaderService(AbstractComponent):
         # Remove partner leaf
         domain_no_partner = [x for x in domain if x[0] != partner_field]
         # Get a new partner domain
-        partner_domain = self.invader_partner._make_partner_domain(
+        partner_domain = self.invader_partner_user._make_partner_domain(
             partner_field, operator=operator, **kw
         )
         return expression.AND([domain_no_partner, partner_domain])

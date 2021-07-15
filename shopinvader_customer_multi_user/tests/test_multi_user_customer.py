@@ -9,6 +9,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
     """Test interaction with /customer endpoint."""
 
     def test_create_customer_no_multi_user(self):
+        self.backend.customer_multi_user = False
         self.data.update({"external_id": "cust1"})
         params = dict(self.data, company_token="ABCDEF")
         res = self.service.dispatch("create", params=params)["data"]
@@ -53,6 +54,7 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         # Update happens via address service. To be changed as per
         # https://github.com/shopinvader/odoo-shopinvader/issues/530
         params["name"] = params["name"] + " UPDATED!"
+        self._update_work_ctx(self.address_service, partner=partner1)
         res = self.address_service.dispatch("update", partner1.id, params=params)
         # By default the customer partner is the main partner
         # hence we are not editing the main profile and we don't need cache
@@ -77,34 +79,29 @@ class TestMultiUserCustomer(TestMultiUserCommon):
         self.assertNotIn(partner, self.company.child_ids)
         self.assertFalse(self.company.has_invader_user)
 
-    def test_customer_data(self):
-        with self.work_on_services(
-            partner=self.company, shopinvader_session=self.shopinvader_session
-        ) as work:
-            service = work.component(usage="customer")
-
+    def test_company_data_multi_user_off(self):
+        self.backend.customer_multi_user = False
+        service = self._get_service(partner=self.company, usage="customer")
         res = service._to_customer_info(self.company)
         # multi user not enabled
         self.assertNotIn("company_token", res)
         self.assertNotIn("main_account", res)
         self.assertNotIn("is_simple_user", res)
 
-        # enable it
-        self.backend.customer_multi_user = True
-
+    def test_company_data_multi_user_on(self):
         # check on the company
+        service = self._get_service(partner=self.company, usage="customer")
         res = service._to_customer_info(self.company)
         self.assertEqual(res["company_token"], "ABCDEF")
         self.assertFalse(res["is_simple_user"])
         # same user of the company
         self.assertEqual(res["main_account"], None)
 
+    def test_simple_user_data_multi_user_on(self):
         # check on a simple user
-        with self.work_on_services(
-            partner=self.user_binding.record_id,
-            shopinvader_session=self.shopinvader_session,
-        ) as work:
-            service = work.component(usage="customer")
+        service = self._get_service(
+            partner=self.user_binding.record_id, usage="customer"
+        )
         res = service._to_customer_info(self.user_binding.record_id)
         self.assertTrue(res["is_simple_user"])
         self.assertNotIn("company_token", res)

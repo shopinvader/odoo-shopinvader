@@ -9,6 +9,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
     """Test partner methods and fields."""
 
     def test_get_shop_partner_default(self):
+        self.backend.customer_multi_user = False
         self.assertEqual(self.company.get_shop_partner(self.backend), self.company)
         self.assertEqual(
             self.user_binding.record_id.get_shop_partner(self.backend),
@@ -31,6 +32,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(self.user_binding.invader_parent_id, self.company_binding)
 
     def test_is_invader_user(self):
+        self.backend.customer_multi_user = False
         self.assertFalse(self.company_binding.is_invader_user)
         self.assertFalse(self.company.has_invader_user)
         self.assertTrue(self.user_binding.is_invader_user)
@@ -61,12 +63,10 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(customer_partner, self.user_binding.record_id)
 
     def test_main_partner_recompute(self):
-        self.backend.customer_multi_user = True
         self.assertEqual(self.user_binding.main_partner_id, self.company)
 
         new_parent = self.env["res.partner"].create({"name": "New parent"})
         self.user_binding.parent_id = new_parent
-        # gets recomputed on new parent
         self.assertEqual(self.user_binding.main_partner_id, new_parent)
 
         self.backend.multi_user_main_partner_domain = "[('type', '=', 'delivery')]"
@@ -82,7 +82,6 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(self.user_binding.main_partner_id, new_parent)
 
     def test_main_partner_manual(self):
-        self.backend.customer_multi_user = True
         self.assertEqual(self.user_binding.main_partner_id, self.company)
         custom_partner = self.env["res.partner"].create({"name": "Custom"})
 
@@ -96,6 +95,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
                 "name": "New Binding",
                 "email": "new@test.com",
                 "main_partner_id": custom_partner.id,
+                "external_id": "new-binding",
             }
         )
         self.assertEqual(new_binding.main_partner_id, custom_partner)
@@ -107,5 +107,6 @@ class TestMultiUserPartner(TestMultiUserCommon):
             name="New Binding 2",
             email="new2@test.com",
             main_partner_id=custom_partner.id,
+            external_id="new-binding-2",
         )
         self.assertEqual(new_binding2.main_partner_id, custom_partner)
