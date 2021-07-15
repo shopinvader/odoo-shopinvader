@@ -77,7 +77,6 @@ class TestUserManagementCommmon(TestMultiUserCommon):
                     "id": x.id,
                     "name": x.name,
                     "parent_id": x.parent_id.id,
-                    "state": x.state,
                     "can_manage_users": x.can_manage_users,
                 }
                 for x in expected.sorted("email")
@@ -96,7 +95,6 @@ class TestUserManagementCommmon(TestMultiUserCommon):
         expected = dict(
             params,
             parent_id=partner.id,
-            state="active",
             id=invader_partner.id,
             can_manage_users=invader_partner.can_manage_users,
         )

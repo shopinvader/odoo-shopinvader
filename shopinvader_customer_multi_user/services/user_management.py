@@ -9,7 +9,6 @@ from odoo.osv import expression
 
 from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
-from odoo.addons.shopinvader.models.shopinvader_partner import ALL_STATES
 
 
 # TODO: move it to core module
@@ -129,11 +128,6 @@ class UsersService(Component):
         for key in res:
             if "required" in res[key]:
                 del res[key]["required"]
-        res["state"] = {
-            "type": "string",
-            "required": False,
-            "allowed": ALL_STATES,
-        }
         return res
 
     def _get_base_search_domain(self):
@@ -182,7 +176,6 @@ class UsersService(Component):
             "id",
             "name",
             "email",
-            "state",
             "can_manage_users",
             ("parent_id", lambda rec, fname: rec[fname].id),
         ]
