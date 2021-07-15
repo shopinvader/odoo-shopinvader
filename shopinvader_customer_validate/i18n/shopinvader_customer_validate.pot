@@ -333,11 +333,6 @@ msgstr ""
 
 #. module: shopinvader_customer_validate
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.view_res_partner_filter
-msgid "Shopinvader: active user"
-msgstr ""
-
-#. module: shopinvader_customer_validate
-#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.view_res_partner_filter
 msgid "Shopinvader: address to validate"
 msgstr ""
 
