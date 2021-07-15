@@ -21,7 +21,7 @@ class TestMultiUserToken(TestMultiUserCommon):
                 name="ACME %s" % x,
                 email="acme%s@test.com" % x,
                 is_company=True,
-                external_id="acme%s" % (x + random.randint(1, 100)),
+                external_id="acme{}-{}".format(x, random.getrandbits(64)),
             )
             if comp.invader_user_token:
                 tokens.add(comp.invader_user_token)
