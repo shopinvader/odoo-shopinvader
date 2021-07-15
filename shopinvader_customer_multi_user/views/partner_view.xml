@@ -6,6 +6,7 @@
     <field name="inherit_id" ref="shopinvader.res_partner_view_form" />
     <field name="arch" type="xml">
       <field name="shopinvader_bind_ids" position="after">
+        <field name="address_type" invisible="1" />
         <group
                     name="multi_user"
                     string="Multi user"
