@@ -124,6 +124,11 @@ msgid "Multi User Records Policy"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.res_partner_view_form
+msgid "Multi user"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.shopinvader_backend_form_view
 msgid "Multiple users"
 msgstr ""
