@@ -119,17 +119,17 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="shopinvader.view_res_partner_filter" />
         <field name="arch" type="xml">
+            <filter name="shopinvader_active_user" position="attributes">
+                <attribute
+                    name="domain"
+                >[('has_shopinvader_user_active', '=', True)]</attribute>
+            </filter>
             <filter name="inactive" position="after">
                 <separator />
                 <filter
                     string="Shopinvader: address to validate"
                     name="shopinvader_address_to_validate"
                     domain="[('parent_has_shopinvader_user','=', True), ('has_shopinvader_user_active','=', False),('is_shopinvader_active','=',False),('address_type','=','address')]"
-                />
-                <filter
-                    string="Shopinvader: active user"
-                    name="shopinvader_active_user"
-                    domain="[('has_shopinvader_user_active', '=', True)]"
                 />
                 <filter
                     string="Shopinvader: user to validate"
