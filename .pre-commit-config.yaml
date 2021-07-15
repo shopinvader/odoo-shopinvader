@@ -25,7 +25,6 @@ exclude: |
   ^shopinvader_product_template_multi_link/|
   ^shopinvader_product_variant_multi_link/|
   ^shopinvader_promotion_rule/|
-  ^shopinvader_quotation/|
   ^shopinvader_sale_communication/|
   ^shopinvader_sale_packaging/|
   ^shopinvader_sale_packaging_wishlist/|

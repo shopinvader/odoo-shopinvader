@@ -6,10 +6,20 @@ from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
 
 class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
-    def test_request_quotation(self):
+    def setUp(self, *args, **kwargs):
+        super().setUp(*args, **kwargs)
+        with self.work_on_services(
+            partner=self.partner, shopinvader_session=self.shopinvader_session
+        ) as work:
+            self.quotation_service = work.component(usage="quotations")
+
+    def test_quotation(self):
         self.assertEqual(self.cart.typology, "cart")
         self.service.dispatch("request_quotation", params={})
         self.assertEqual(self.cart.typology, "quotation")
+        # Confirm it to sale
+        self.quotation_service.dispatch("confirm", self.cart.id)
+        self.assertEqual(self.cart.typology, "sale")
 
     def test_only_quotation_in_cart_info(self):
         response = self.service.dispatch("search")
