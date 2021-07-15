@@ -4,13 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-07-26 10:23+0000\n"
-"PO-Revision-Date: 2018-07-26 10:23+0000\n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -74,15 +71,14 @@ msgstr ""
 
 #. module: shopinvader_quotation
 #: model:ir.model.fields.selection,name:shopinvader_quotation.selection__sale_order__typology__quotation
-#, fuzzy
 msgid "Quotation"
-msgstr "Quotation Requests"
+msgstr ""
 
 #. module: shopinvader_quotation
 #: model:ir.actions.act_window,name:shopinvader_quotation.action_quotation_request
 #: model:ir.ui.menu,name:shopinvader_quotation.menu_sale_order_quotation
 msgid "Quotation Requests"
-msgstr "Quotation Requests"
+msgstr ""
 
 #. module: shopinvader_quotation
 #: model:mail.template,subject:shopinvader_quotation.email_quotation_notification
@@ -91,14 +87,14 @@ msgstr ""
 
 #. module: shopinvader_quotation
 #: code:addons/shopinvader_quotation/models/shopinvader_notification.py:0
-#, fuzzy, python-format
+#, python-format
 msgid "Quotation request"
-msgstr "Quotation Requests"
+msgstr ""
 
 #. module: shopinvader_quotation
 #: model:ir.model,name:shopinvader_quotation.model_sale_order
 msgid "Sales Order"
-msgstr "Commande de vente"
+msgstr ""
 
 #. module: shopinvader_quotation
 #: model:ir.model,name:shopinvader_quotation.model_shopinvader_notification
@@ -114,6 +110,3 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_sale_order__typology
 msgid "Typology"
 msgstr ""
-
-#~ msgid "Impossible to create quotation the order is in the wrong state"
-#~ msgstr "Impossible to create quotation the order is in the wrong state"
