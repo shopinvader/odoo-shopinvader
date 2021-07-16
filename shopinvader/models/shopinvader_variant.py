@@ -248,44 +248,52 @@ class ShopinvaderVariant(models.Model):
         order_by = [
             x.strip() for x in self.env["product.product"]._order.split(",")
         ]
-        fields_to_read = ["tmpl_record_id"] + order_by
-        tmpl_ids = self.mapped("tmpl_record_id").ids
+        fields_to_read = ["shopinvader_product_id"] + order_by
+        product_ids = self.mapped("shopinvader_product_id").ids
         # Use sudo to bypass permissions (we don't care)
         _variants = self.sudo().search(
-            [("tmpl_record_id", "in", tmpl_ids)], order="tmpl_record_id"
+            [("shopinvader_product_id", "in", product_ids)],
+            order="shopinvader_product_id",
         )
         # Use `load=False` to not load template name
         variants = _variants.read(fields_to_read, load=False)
-        var_by_tmpl = groupby(variants, lambda x: x["tmpl_record_id"])
+        var_by_product = groupby(
+            variants, lambda x: x["shopinvader_product_id"]
+        )
 
-        def pick_1st_variant(prods):
+        def pick_1st_variant(variants):
             # NOTE: if the order is changed by adding `asc/desc` this can be broken
             # but it's very unlikely that the default order for product.product
             # will be changed.
             try:
                 ordered = sorted(
-                    prods, key=lambda var: [var[x] for x in order_by]
+                    variants, key=lambda var: [var[x] for x in order_by]
                 )
             except TypeError as orig_exception:
                 # TypeError: '<' not supported between instances of 'bool' and 'str'
                 # It means we don't have all values to determine this value.
                 msg = _(
-                    "Cannot determine main variant for template ID: %s."
+                    "Cannot determine main variant for shopinvader.product ID: %s."
                     "\nAt least one variant misses one of these values: %s."
                     "\nWill try again later till 'max retries' count is reached."
-                ) % (prods[0]["tmpl_record_id"], ", ".join(order_by))
+                ) % (
+                    variants[0]["shopinvader_product_id"],
+                    ", ".join(order_by),
+                )
                 # This issue might depend on incomplete state of product info.
                 # Eg: missing translation for variant matching current lang.
                 # Let's retry later a bunch of times (5 by default).
                 raise RetryableJobError(msg) from orig_exception
             return ordered[0].get("id") if ordered else None
 
-        main_by_tmpl = {
-            tmpl: pick_1st_variant(tuple(prods)) for tmpl, prods in var_by_tmpl
+        main_by_product = {
+            product: pick_1st_variant(tuple(variants))
+            for product, variants in var_by_product
         }
         for record in self:
             record.main = (
-                main_by_tmpl.get(record.tmpl_record_id.id) == record.id
+                main_by_product.get(record.shopinvader_product_id.id)
+                == record.id
             )
 
     def get_shop_data(self):
