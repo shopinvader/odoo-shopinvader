@@ -37,7 +37,7 @@ class ShopinvaderVariant(models.Model):
         contained_mapping = rec.packaging_contained_mapping or {}
         packaging = rec._ordered_packaging()
         for pkg in packaging:
-            pkg_info = pkg._asdict()
+            pkg_info = self._prepare_qty_by_packaging_values(pkg, pkg.qty)
             pkg_info["contained"] = contained_mapping.get(str(pkg.id))
             res.append(pkg_info)
         return res
@@ -47,4 +47,14 @@ class ShopinvaderVariant(models.Model):
             "lang": self.lang_id.code,
             # consider only packaging that can be sold
             "_packaging_filter": lambda x: x.can_be_sold,
+            "_packaging_values_handler": self._prepare_qty_by_packaging_values,
+        }
+
+    def _prepare_qty_by_packaging_values(self, packaging, qty_per_pkg):
+        return {
+            "id": packaging.id,
+            "qty": qty_per_pkg,
+            "name": packaging.name,
+            "is_unit": packaging.is_unit,
+            "barcode": packaging.barcode,
         }
