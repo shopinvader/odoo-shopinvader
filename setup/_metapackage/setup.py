@@ -32,6 +32,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_product_media',
         'odoo14-addon-shopinvader_product_stock',
         'odoo14-addon-shopinvader_product_stock_state',
+        'odoo14-addon-shopinvader_product_template_tags',
         'odoo14-addon-shopinvader_product_variant_selector',
         'odoo14-addon-shopinvader_quotation',
         'odoo14-addon-shopinvader_sale_amount_by_group',
