@@ -693,7 +693,7 @@ msgstr ""
 #: code:addons/shopinvader/models/shopinvader_variant.py:0
 #, python-format
 msgid ""
-"Cannot determine main variant for template ID: %s.\n"
+"Cannot determine main variant for shopinvader.product ID: %s.\n"
 "At least one variant misses one of these values: %s.\n"
 "Will try again later till 'max retries' count is reached."
 msgstr ""
