@@ -43,6 +43,7 @@ addon | version | summary
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 | Index storage media data into external search engine
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
+[shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 | Index Product Template Tags in Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.1.0.1 | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 | Expose the amount by tax to shopinvader
