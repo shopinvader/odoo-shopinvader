@@ -26,6 +26,7 @@ addon | version | summary
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.1.0 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_validate](shopinvader_customer_multi_user_validate/) | 14.0.1.1.0 | Glue module for `shopinvader_customer_validate` and `shopinvader_customer_multi_user`.
+[shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 14.0.1.0.0 | Integrate customer multi user and wishlist.
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.1.0 | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.0.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.1.0.0 | Shopinvader Elasticsearch Connector
@@ -59,7 +60,6 @@ addon | version | summary
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 (unported) | Shopinvader Display category image for product
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
-[shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.0.1 (unported) | Integrate customer multi user and wishlist.
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 (unported) | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.0 (unported) | Guest mode for Shopinvader
