@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="product_import_image_form_view" model="ir.ui.view">
         <field name="name">product.import.image.form</field>
@@ -6,52 +6,69 @@
         <field name="arch" type="xml">
             <form string="Import shopinvader product images">
                 <header>
-                    <field
-                        name="state"
-                        widget="statusbar"
-                    />
+                    <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="active_button_box" attrs="{'invisible': [('id','=',False)]}">
-                        <button class="oe_highlight" string="Import images"
-                                name="action_import" type="object"
-                                states="new"
-                                />
-                        <button class="oe_highlight" string="Import images again"
-                                name="action_import" type="object"
-                                states="done"
-                                />
+                    <div
+                        class="oe_button_box"
+                        name="active_button_box"
+                        attrs="{'invisible': [('id','=',False)]}"
+                    >
+                        <button
+                            class="oe_highlight"
+                            string="Import images"
+                            name="action_import"
+                            type="object"
+                            states="new"
+                        />
+                        <button
+                            class="oe_highlight"
+                            string="Import images again"
+                            name="action_import"
+                            type="object"
+                            states="done"
+                        />
                     </div>
                     <field name="id" invisible="1" />
                     <group name="main">
-                        <field name="storage_backend_id"/>
-                        <field name="product_model"/>
-                        <field name="source_type"/>
-                        <field name="file_csv" filename="filename"
-                                attrs="{
+                        <field name="storage_backend_id" />
+                        <field name="product_model" />
+                        <field name="source_type" />
+                        <field
+                            name="file_csv"
+                            filename="filename"
+                            attrs="{
                                     'required': [('source_type', '!=', 'external_storage')],
                                     'invisible': [('source_type', '=', 'external_storage')]
-                                }"/>
-                        <field name="source_zipfile" filename="filename"
-                                attrs="{
+                                }"
+                        />
+                        <field
+                            name="source_zipfile"
+                            filename="filename"
+                            attrs="{
                                     'required': [('source_type', '=', 'zip_file')],
                                     'invisible': [('source_type', '!=', 'zip_file')]
-                                }"/>
-                        <field name="source_storage_backend_id"
-                                attrs="{
+                                }"
+                        />
+                        <field
+                            name="source_storage_backend_id"
+                            attrs="{
                                     'required': [('source_type', '=', 'external_storage')],
                                     'invisible': [('source_type', '!=', 'external_storage')],
-                                }"/>
-                        <field name="external_csv_path"
-                                attrs="{
+                                }"
+                        />
+                        <field
+                            name="external_csv_path"
+                            attrs="{
                                     'required': [('source_type', '=', 'external_storage')],
                                     'invisible': [('source_type', '!=', 'external_storage')],
-                                }"/>
-                        <field name="csv_header"/>
-                        <field name="csv_delimiter"/>
-                        <field name="overwrite"/>
-                        <field name="create_missing_tags"/>
-                        <field name="chunk_size"/>
+                                }"
+                        />
+                        <field name="csv_header" />
+                        <field name="csv_delimiter" />
+                        <field name="overwrite" />
+                        <field name="create_missing_tags" />
+                        <field name="chunk_size" />
                     </group>
                     <separator string="Report" />
                     <field name="report_html" nolabel="1" />
@@ -66,15 +83,16 @@
         <field name="name">product.import.image.tree</field>
         <field name="model">shopinvader.import.product_image</field>
         <field name="arch" type="xml">
-            <tree string="Import shopinvader product images"
+            <tree
+                string="Import shopinvader product images"
                 decoration-warning="state == 'scheduled'"
                 decoration-success="state == 'done'"
             >
-                <field name="storage_backend_id"/>
-                <field name="product_model"/>
-                <field name="source_type"/>
-                <field name="state"/>
-                <field name="done_on"/>
+                <field name="storage_backend_id" />
+                <field name="product_model" />
+                <field name="source_type" />
+                <field name="state" />
+                <field name="done_on" />
             </tree>
         </field>
     </record>
@@ -93,13 +111,13 @@
         parent="sale.product_menu_catalog"
         action="import_image_action"
         sequence="999"
-        />
+    />
 
     <record model="ir.ui.menu" id="menu_backend_shopinvader_image_import">
         <field name="name">Import product images</field>
-        <field name="parent_id" ref="shopinvader.menu_shopinvader_root"/>
-        <field name="action" ref="import_image_action"/>
-        <field name="sequence" eval="30"/>
+        <field name="parent_id" ref="shopinvader.menu_shopinvader_root" />
+        <field name="action" ref="import_image_action" />
+        <field name="sequence" eval="30" />
     </record>
 
 </odoo>

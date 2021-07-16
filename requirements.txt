@@ -1,6 +1,8 @@
 # generated from manifests external_dependencies
 cerberus
 locomotivecms
+python-magic
 python-slugify
 slugify
 unidecode
+validators

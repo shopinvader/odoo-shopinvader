@@ -6,7 +6,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Import Shopinvader product image",
-    "version": "13.0.3.0.0",
+    "version": "14.0.1.0.0",
     "summary": "Import product images",
     "author": "Akretion, Camptocamp",
     "company": "Akretion",
@@ -14,7 +14,10 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "Product",
     "depends": ["shopinvader_image"],
-    "external_dependencies": {"python": ["python-magic", "validators"]},
+    "external_dependencies": {
+        "python": ["python-magic", "validators"],
+        "deb": ["libmagic1"],
+    },
     "data": [
         "data/ir_cron.xml",
         "data/queue_job_channel_data.xml",
@@ -24,5 +27,5 @@
         "views/report_html.xml",
     ],
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
 }
