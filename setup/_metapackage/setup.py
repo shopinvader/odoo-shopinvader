@@ -15,6 +15,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_cart_expiry',
         'odoo14-addon-shopinvader_customer_multi_user',
         'odoo14-addon-shopinvader_customer_multi_user_validate',
+        'odoo14-addon-shopinvader_customer_multi_user_wishlist',
         'odoo14-addon-shopinvader_customer_validate',
         'odoo14-addon-shopinvader_delivery_carrier',
         'odoo14-addon-shopinvader_elasticsearch',
