@@ -200,19 +200,19 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_chair_mid_century_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_chair_mid_century_attribute_color_white',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century_product_template_attribute_line_color').product_template_value_ids[1],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_chair_mid_century_attribute_color_black',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century_product_template_attribute_line_color').product_template_value_ids[2],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_chair_mid_century_attribute_color_red',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century_product_template_attribute_line_color').product_template_value_ids[3],
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -440,7 +440,7 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">1.0</field>
         <field name="standard_price">0</field>
-        <field name="default_code" />
+        <field name="default_code">PARK-H</field>
         <field name="type">consu</field>
     </record>
 
@@ -451,6 +451,7 @@
         <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">600.0</field>
         <field name="standard_price">600.0</field>
+        <field name="default_code">TV-CAB</field>
         <field name="type">consu</field>
     </record>
 
