@@ -20,6 +20,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_delivery_carrier',
         'odoo14-addon-shopinvader_elasticsearch',
         'odoo14-addon-shopinvader_image',
+        'odoo14-addon-shopinvader_import_image',
         'odoo14-addon-shopinvader_invoice',
         'odoo14-addon-shopinvader_locomotive',
         'odoo14-addon-shopinvader_locomotive_algolia',
