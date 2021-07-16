@@ -31,6 +31,7 @@ addon | version | summary
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.0.0 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.1.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_image](shopinvader_image/) | 14.0.1.0.0 | Add the export of Image for Shopinvader
+[shopinvader_import_image](shopinvader_import_image/) | 14.0.1.0.0 | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.0.0 | Shopinvader Invoice module
 [shopinvader_locomotive](shopinvader_locomotive/) | 14.0.1.0.1 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
@@ -63,7 +64,6 @@ addon | version | summary
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 (unported) | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.0 (unported) | Guest mode for Shopinvader
-[shopinvader_import_image](shopinvader_import_image/) | 13.0.3.0.0 (unported) | Import product images
 [shopinvader_lead](shopinvader_lead/) | 13.0.1.0.1 (unported) | Shopinvader Lead Management
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
