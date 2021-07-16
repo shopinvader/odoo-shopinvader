@@ -59,27 +59,14 @@ class TestProductPackagingData(CommonCase):
         return [
             make_pkg_values(
                 self.pkg_pallet,
-                name=self.type_pallet.name,
-                contained=[
-                    make_pkg_values(
-                        self.pkg_big_box,
-                        name=self.type_transport_box.name,
-                        qty=10,
-                    )
-                ],
+                contained=[make_pkg_values(self.pkg_big_box, qty=10,)],
             ),
             make_pkg_values(
                 self.pkg_big_box,
-                name=self.type_transport_box.name,
-                contained=[
-                    make_pkg_values(
-                        self.pkg_box, name=self.type_retail_box.name, qty=4
-                    )
-                ],
+                contained=[make_pkg_values(self.pkg_box, qty=4)],
             ),
             make_pkg_values(
                 self.pkg_box,
-                name=self.type_retail_box.name,
                 contained=[make_pkg_values(self.product.uom_id, qty=50)],
             ),
             make_pkg_values(self.product.uom_id, qty=1, contained=None),
