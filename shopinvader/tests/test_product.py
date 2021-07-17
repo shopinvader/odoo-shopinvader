@@ -251,7 +251,6 @@ class ProductCase(ProductCommonCase):
                 self.assertEqual(binding.url_key, u"all/saleable")
 
     def test_product_category_with_one_lang(self):
-        self.backend.bind_all_product()
         self.backend.bind_all_category()
         product = self.env.ref("product.product_product_4")
         self.assertEqual(len(product.shopinvader_bind_ids), 1)
@@ -454,7 +453,6 @@ class ProductCase(ProductCommonCase):
     def test_editing_product_with_sale_manager_user(self):
         # test that product can still be edited without issue
         # when automatically generating a new url
-        self.backend.bind_all_product()
         self.user = self.env.ref("base.user_demo")
         self.user.write(
             {
@@ -478,7 +476,6 @@ class ProductCase(ProductCommonCase):
     def test_multicompany_product(self):
         # Test that default code change with user on company 2
         # changes the url_key on company 1 backend
-        self.backend.bind_all_product()
         product_12 = self.env.ref("product.product_product_12")
         shopinvader_product_12 = self.env["shopinvader.product"].search(
             [
@@ -514,12 +511,11 @@ class ProductCase(ProductCommonCase):
             }
         )
         result = shopinvader_product_12.with_context(
-            allowed_company_ids=company_2.id
+            allowed_company_ids=[company_2.id]
         ).url_key.find("product_12_mc")
         self.assertTrue(result)
 
     def test_product_shopinvader_name(self):
-        self.backend.bind_all_product()
         product = self.shopinvader_variant.shopinvader_product_id
         product.shopinvader_name = "Test shopinvader name"
         self.assertEqual(product.shopinvader_display_name, product.name)
@@ -689,6 +685,7 @@ class ProductCase(ProductCommonCase):
             ("backend_id", "=", self.backend.id),
         ]
         bind_categ = self.env["shopinvader.category"].search(domain)
+
         # For this case, the category should have children
         if bind_categ.shopinvader_child_ids:
             bind_categ.shopinvader_child_ids.unlink()
@@ -713,9 +710,12 @@ class ProductCase(ProductCommonCase):
         urls = bind_product.url_url_ids
         self.assertEqual(urls.mapped("model_id"), bind_product)
         bind_product.write({"active": False})
-        self.assertEqual(urls.mapped("model_id"), bind_categ)
+        bind_product.flush()
+        self.assertEqual(urls.model_id, bind_categ)
         bind_product.write({"active": True})
-        self.assertEqual(urls.mapped("model_id"), bind_product)
+
+        bind_product.flush()
+        self.assertEqual(urls.model_id, bind_product)
 
     def test_product_url2(self):
         """
@@ -773,10 +773,12 @@ class ProductCase(ProductCommonCase):
         urls = bind_product.url_url_ids
         self.assertEqual(urls.mapped("model_id"), bind_product)
         bind_product.write({"active": False})
-        self.assertEqual(urls.mapped("model_id"), bind_categ2)
+        bind_product.flush()
+        self.assertEqual(urls.model_id, bind_categ2)
         bind_product.write({"active": True})
-        self.assertEqual(urls.mapped("model_id"), bind_product)
-        self.assertFalse(bind_product.is_urls_sync_required)
+
+        bind_product.flush()
+        self.assertEqual(urls.model_id, bind_product)
 
     @contextmanager
     def _check_correct_unbind_active(self, variants):
