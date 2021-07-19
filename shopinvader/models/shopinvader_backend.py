@@ -7,11 +7,9 @@
 from collections import defaultdict
 from contextlib import contextmanager
 
-from odoo import _, api, fields, models, tools
-from odoo.http import request
+from odoo import _, api, fields, models
 
 from odoo.addons.base_sparse_field.models.fields import Serialized
-from odoo.addons.server_environment import serv_config
 
 
 class ShopinvaderBackend(models.Model):
@@ -55,14 +53,7 @@ class ShopinvaderBackend(models.Model):
     sequence_id = fields.Many2one(
         "ir.sequence", "Sequence", help="Naming policy for orders and carts"
     )
-    auth_api_key_id = fields.Many2one(
-        "auth.api.key",
-        "Api Key",
-        required=True,
-        help="Api_key section used for the authentication of"
-        "calls to services dedicated to this backend",
-        copy=False,
-    )
+
     lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
     pricelist_id = fields.Many2one(
         "product.pricelist",
@@ -99,10 +90,10 @@ class ShopinvaderBackend(models.Model):
         "etc.",
     )
     user_id = fields.Many2one(
-        related="auth_api_key_id.user_id",
         readonly=True,
         help="The technical user used to process calls to the services "
         "provided by the backend",
+        comodel_name="res.users",
     )
     website_public_name = fields.Char(
         help="Public name of your backend/website.\n"
@@ -210,14 +201,6 @@ class ShopinvaderBackend(models.Model):
         ],
         default="",
     )
-
-    _sql_constraints = [
-        (
-            "auth_api_key_id_uniq",
-            "unique(auth_api_key_id)",
-            "An authentication API Key can be used by only one backend.",
-        )
-    ]
 
     @property
     def _server_env_fields(self):
@@ -502,26 +485,6 @@ class ShopinvaderBackend(models.Model):
     def _extract_configuration(self):
         return {}
 
-    @classmethod
-    def _get_api_key_name(cls, auth_api_key):
-        for section in serv_config.sections():
-            if section.startswith("api_key_") and serv_config.has_option(
-                section, "key"
-            ):
-                if tools.consteq(auth_api_key, serv_config.get(section, "key")):
-                    return section
-        return None
-
-    @api.model
-    @tools.ormcache("self._uid", "auth_api_key_id")
-    def _get_id_from_auth_api_key(self, auth_api_key_id):
-        return self.search([("auth_api_key_id", "=", auth_api_key_id)]).id
-
-    @api.model
-    def _get_from_http_request(self):
-        auth_api_key_id = getattr(request, "auth_api_key_id", None)
-        return self.browse(self._get_id_from_auth_api_key(auth_api_key_id))
-
     def _bind_langs(self, lang_ids):
         self.ensure_one()
         self.env["shopinvader.variant.binding.wizard"].bind_langs(self, lang_ids)
@@ -551,8 +514,6 @@ class ShopinvaderBackend(models.Model):
                 record._unbind_langs(list(removed_lang_ids))
 
     def write(self, values):
-        if "auth_api_key_id" in values:
-            self._get_id_from_auth_api_key.clear_cache(self.env[self._name])
         with self._keep_binding_sync_with_langs():
             return super(ShopinvaderBackend, self).write(values)
 

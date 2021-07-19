@@ -20,30 +20,6 @@ class InvoiceService(Component):
     # The following method are 'public' and can be called from the controller.
     # All params are untrusted so please check it !
 
-    def to_openapi(self):
-        res = super(InvoiceService, self).to_openapi()
-        # Manually add route for HTTP GET download
-        response = self._get_openapi_default_responses()
-        response["200"] = {"description": "The file to download"}
-        parameters = self._get_openapi_default_parameters()
-        parameters.append(
-            {
-                "schema": {"type": "integer"},
-                "description": "Item id",
-                "required": True,
-                "name": "id",
-                "in": "path",
-            }
-        )
-        res["paths"]["/{id}/download"] = {
-            "get": {
-                "responses": response,
-                "parameters": parameters,
-                "summary": "Get the invoice file",
-            }
-        }
-        return res
-
     # Private implementation
 
     def _get_allowed_invoice_states(self):

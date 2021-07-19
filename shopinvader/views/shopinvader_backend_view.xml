@@ -59,7 +59,6 @@
                                     name="location"
                                     placeholder="e.g. https://ecommerce.shopinvader.com"
                                 />
-                                <field name="auth_api_key_id" required="True" />
                             </group>
                         </page>
                         <page name="search_eng" string="Search engine">
