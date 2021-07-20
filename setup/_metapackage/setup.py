@@ -21,6 +21,7 @@ setuptools.setup(
         'odoo13-addon-shopinvader_customer_price_wishlist',
         'odoo13-addon-shopinvader_delivery_carrier',
         'odoo13-addon-shopinvader_delivery_instruction',
+        'odoo13-addon-shopinvader_delivery_state',
         'odoo13-addon-shopinvader_elasticsearch',
         'odoo13-addon-shopinvader_guest_mode',
         'odoo13-addon-shopinvader_image',
