@@ -10,7 +10,7 @@ class ShopinvaderNotification(models.Model):
     _inherit = "shopinvader.notification"
 
     def _get_all_notification(self):
-        res = super(ShopinvaderNotification, self)._get_all_notification()
+        res = super()._get_all_notification()
         res.update(
             {
                 "lead_confirmation": {

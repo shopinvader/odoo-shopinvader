@@ -3,15 +3,14 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import models
+
 from odoo.addons.shopinvader.tests.common import CommonCase
-from odoo.addons.shopinvader.tests.test_notification import (
-    NotificationCaseMixin,
-)
+from odoo.addons.shopinvader.tests.test_notification import NotificationCaseMixin
 
 
 class LeadCase(CommonCase, NotificationCaseMixin):
     def setUp(self):
-        super(LeadCase, self).setUp()
+        super().setUp()
         with self.work_on_services(
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
@@ -49,12 +48,3 @@ class LeadCase(CommonCase, NotificationCaseMixin):
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification("lead_confirmation", lead)
-
-
-class DeprecatedLeadCase(CommonNotificationCase):
-    def setUp(self):
-        super(DeprecatedLeadCase, self).setUp()
-        with self.work_on_services(
-            partner=None, shopinvader_session=self.shopinvader_session
-        ) as work:
-            self.service = work.component(usage="lead")

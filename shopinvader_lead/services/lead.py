@@ -8,8 +8,7 @@ from odoo.addons.component.core import Component
 
 
 class LeadService(Component):
-    """Shopinvader service to expose crm.lead features.
-    """
+    """Shopinvader service to expose crm.lead features."""
 
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.lead.service"
@@ -22,7 +21,7 @@ class LeadService(Component):
     # secure params and the linked validator !
 
     def create(self, **params):
-        vals = self._prepare_lead(params)
+        vals = self._prepare_lead_vals(params)
         lead = self.env["crm.lead"].create(vals)
         self.shopinvader_backend._send_notification("lead_confirmation", lead)
         return {}
@@ -47,7 +46,7 @@ class LeadService(Component):
             "country_id": {"coerce": to_int},
             "team_id": {"coerce": to_int},
         }
-
+        # Lazy dependency to crm_lead_firstname
         if "crm_lead_firstname" in self.env.registry._init_modules:
             res.update(
                 {
@@ -59,7 +58,18 @@ class LeadService(Component):
             res["contact_name"] = {"type": "string"}
         return res
 
-    def _prepare_lead(self, params):
+    def _prepare_lead_vals(self, params):
+        """Prepare values for crm.lead creation
+
+        Some service values don't match exactly the odoo model field names.
+        We do this to provide a better mapping to the frontend.
+
+        For example:
+            "email" is named "email_from" in the backend.
+
+        :param params: The params sent by the frontend.
+        :returns: dict of values to create the crm.lead
+        """
         map_key = [
             ("contact_firstname", "contact_name"),
             ("company", "partner_name"),
@@ -70,10 +80,3 @@ class LeadService(Component):
                 params[key] = params.pop(human_key)
         params["shopinvader_backend_id"] = self.shopinvader_backend.id
         return params
-
-
-class DeprecatedLeadService(Component):
-    _inherit = "shopinvader.lead.service"
-    _name = "shopinvader.deprecated.lead.service"
-    _usage = "lead"
-    _description = "Deprecated Service use 'leads' instead"
