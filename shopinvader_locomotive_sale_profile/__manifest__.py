@@ -7,12 +7,12 @@
 {
     "name": "Shopinvader Locomotive Sale Profile",
     "summary": "Synchronize the sale profile info to customer record on Locomotive",
-    "version": "13.0.1.2.0",
+    "version": "14.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,Camptocamp",
     "license": "AGPL-3",
     "depends": ["shopinvader_locomotive", "shopinvader_sale_profile"],
     "auto_install": True,
-    "installable": False,
+    "installable": True,
 }

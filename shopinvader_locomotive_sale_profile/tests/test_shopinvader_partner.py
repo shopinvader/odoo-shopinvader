@@ -20,14 +20,10 @@ except (ImportError, IOError) as err:
 class TestShopinvaderPartner(CommonShopinvaderPartner):
     def _get_shopinvader_partner(self, shopinvader_partner, external_id):
         with requests_mock.mock() as m:
-            m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
-            )
+            m.post(self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
             # Request to modify / fake json arg
             res = m.put(
-                self.base_url
-                + "/content_types/customers/entries/"
-                + external_id,
+                self.base_url + "/content_types/customers/entries/" + external_id,
                 json={"test": 1},
             )
             self._perform_created_job()
@@ -39,7 +35,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             self.data, u"5a953d6aae1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
-        self.assertEquals("default", role)
+        self.assertEqual("default", role)
         # Use Sale profile from now
         self._init_job_counter()
         self.backend.pricelist_id = False
@@ -51,12 +47,10 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             shop_partner, u"5a953d6aae1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
-        self.assertEquals("public_tax_inc", role)
+        self.assertEqual("public_tax_inc", role)
 
     def test_profile_no_fiscal_pos(self):
-        pricelist = self.env["product.pricelist"].create(
-            {"name": "TEST profile"}
-        )
+        pricelist = self.env["product.pricelist"].create({"name": "TEST profile"})
         profile = self.env["shopinvader.sale.profile"].create(
             {
                 "code": "NoFPos",
@@ -82,4 +76,4 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             shop_partner, u"5a953dmpefe1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
-        self.assertEquals(role, profile.code)
+        self.assertEqual(role, profile.code)

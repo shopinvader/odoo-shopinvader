@@ -13,7 +13,6 @@ exclude: |
   ^shopinvader_locomotive_elasticsearch/|
   ^shopinvader_locomotive_guest_mode/|
   ^shopinvader_locomotive_reset_password/|
-  ^shopinvader_locomotive_sale_profile/|
   ^shopinvader_partner_vat/|
   ^shopinvader_pending_cart_reminder/|
   ^shopinvader_product_new/|
