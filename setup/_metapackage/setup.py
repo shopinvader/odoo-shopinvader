@@ -25,6 +25,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_lead',
         'odoo14-addon-shopinvader_locomotive',
         'odoo14-addon-shopinvader_locomotive_algolia',
+        'odoo14-addon-shopinvader_locomotive_sale_profile',
         'odoo14-addon-shopinvader_locomotive_wishlist',
         'odoo14-addon-shopinvader_multi_category',
         'odoo14-addon-shopinvader_notification_default',
