@@ -8,7 +8,7 @@
     "summary": "Rate your product",
     "version": "8.0.1.0.0",
     "category": "Uncategorized",
-    "website": "www.akretion.com",
+    "website": "http://www.akretion.com/fr",
     "author": " Akretion",
     "license": "AGPL-3",
     "application": False,
