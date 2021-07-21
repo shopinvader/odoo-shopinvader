@@ -2937,11 +2937,6 @@ msgid "Number of unread messages"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__object_id
-msgid "Object"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__portal_confirmation_pay
 msgid "Online Payment"
 msgstr ""
