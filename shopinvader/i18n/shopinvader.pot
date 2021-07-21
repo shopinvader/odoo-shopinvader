@@ -49,6 +49,11 @@ msgid " Your profile has been modified"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__meeting_count
+msgid "# Meetings"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__product_variant_count
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_count
 msgid "# Product Variants"
@@ -1030,6 +1035,16 @@ msgid "Coupons & Promotions"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_crm_iap_lead_website
+msgid "Create Leads/Opportunities from your website's traffic"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__lead_mining_in_pipeline
+msgid "Create a lead mining request directly from the opportunity pipeline."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__create_uid
@@ -1181,6 +1196,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__user_default_rights
 msgid "Default Access Rights"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__crm_alias_prefix
+msgid "Default Alias Name for Leads"
 msgstr ""
 
 #. module: shopinvader
@@ -1571,6 +1591,18 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__lead_enrich_auto
+msgid "Enrich lead automatically"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_crm_iap_lead_enrich
+msgid ""
+"Enrich your leads automatically with company data based on their email "
+"address."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__tracking
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
@@ -1774,6 +1806,11 @@ msgstr ""
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
 msgid "General"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_crm_iap_lead
+msgid "Generate new leads based on their country, industries, size, etc."
 msgstr ""
 
 #. module: shopinvader
@@ -2417,6 +2454,11 @@ msgid "Last name"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__calendar_last_notif_ack
+msgid "Last notification marked as read from base Calendar"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_binding__sync_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__sync_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__sync_date
@@ -2436,6 +2478,31 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__last_time_entries_checked
 msgid "Latest Invoices & Payments Matching Date"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_fields
+msgid "Lead Scoring Frequency Fields"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_fields_str
+msgid "Lead Scoring Frequency Fields in String"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_start_date
+msgid "Lead Scoring Starting Date"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_start_date_str
+msgid "Lead Scoring Starting Date in String"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_use_lead
+msgid "Leads"
 msgstr ""
 
 #. module: shopinvader
@@ -2536,6 +2603,11 @@ msgid "Manage Inter Company"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__generate_lead_from_alias
+msgid "Manual Assignment of Emails"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_seo_title_mixin__manual_seo_title
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__manual_seo_title
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__manual_seo_title
@@ -2602,6 +2674,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__media_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__media_ids
 msgid "Media"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__meeting_ids
+msgid "Meetings"
 msgstr ""
 
 #. module: shopinvader
@@ -2959,6 +3036,16 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__invoice_access_open
 msgid "Open invoices"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__opportunity_ids
+msgid "Opportunities"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__opportunity_count
+msgid "Opportunity"
 msgstr ""
 
 #. module: shopinvader
@@ -3413,6 +3500,11 @@ msgid "Record"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_use_recurring_revenues
+msgid "Recurring Revenues"
+msgstr ""
+
+#. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.view_shopinvader_category_form
 msgid "Redirect Url"
@@ -3713,6 +3805,12 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__use_security_lead
 msgid "Security Lead Time for Sales"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_mail_client_extension
+msgid ""
+"See and manage users, companies, and leads from our mail client extensions."
 msgstr ""
 
 #. module: shopinvader
