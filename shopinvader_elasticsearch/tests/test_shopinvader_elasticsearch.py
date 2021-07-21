@@ -79,7 +79,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         bindings.write({"data": {}})
         self.index_product.recompute_all_binding()
         for binding in bindings:
-            self.assertEqual(binding.data["objectID"], binding.record_id.id)
+            self.assertEqual(binding.data["id"], binding.record_id.id)
 
     def _test_export_all_binding(self, index):
         index.recompute_all_binding()

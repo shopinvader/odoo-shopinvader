@@ -22,8 +22,6 @@ class ShopinvaderCategory(models.Model):
     record_id = fields.Many2one(
         "product.category", required=True, ondelete="cascade", index=True
     )
-    # TODO: get rid of this as done for shopinvader.variant
-    object_id = fields.Integer(compute="_compute_object_id", store=True, index=True)
     sequence = fields.Integer()
     meta_description = fields.Char()
     meta_keywords = fields.Char()
@@ -66,11 +64,6 @@ class ShopinvaderCategory(models.Model):
             for url in record.redirect_url_url_ids:
                 res.append(url.url_key)
             record.redirect_url_key = res
-
-    @api.depends("record_id")
-    def _compute_object_id(self):
-        for record in self:
-            record.object_id = record.record_id.id
 
     @api.depends("parent_id.shopinvader_bind_ids")
     def _compute_parent_category(self):

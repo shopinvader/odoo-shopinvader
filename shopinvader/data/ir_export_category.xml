@@ -6,9 +6,10 @@
         <field name="resource">shopinvader.category</field>
     </record>
 
-    <record id="ir_exp_shopinvader_category_object_id" model="ir.exports.line">
-        <field name="name">object_id</field>
-        <field name="target">object_id:objectID</field>
+    <record id="ir_exp_shopinvader_category_record_id" model="ir.exports.line">
+        <field name="name">record_id</field>
+        <field name="target">record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_category" />
     </record>
 
@@ -71,8 +72,9 @@
         id="ir_exp_shopinvader_category_shopinvader_parent_id"
         model="ir.exports.line"
     >
-        <field name="name">shopinvader_parent_id/object_id</field>
-        <field name="target">shopinvader_parent_id:parent/object_id:id</field>
+        <field name="name">shopinvader_parent_id/record_id</field>
+        <field name="target">shopinvader_parent_id:parent/record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_category" />
     </record>
 
@@ -92,10 +94,11 @@
         id="ir_exp_shopinvader_category_parent_shopinvader_parent_id"
         model="ir.exports.line"
     >
-        <field name="name">shopinvader_parent_id/shopinvader_parent_id/object_id</field>
+        <field name="name">shopinvader_parent_id/shopinvader_parent_id/record_id</field>
         <field
             name="target"
-        >shopinvader_parent_id:parent/shopinvader_parent_id:parent/object_id:id</field>
+        >shopinvader_parent_id:parent/shopinvader_parent_id:parent/record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_category" />
     </record>
 
@@ -124,10 +127,11 @@
     >
         <field
             name="name"
-        >shopinvader_parent_id/shopinvader_parent_id/shopinvader_parent_id/object_id</field>
+        >shopinvader_parent_id/shopinvader_parent_id/shopinvader_parent_id/record_id</field>
         <field
             name="target"
-        >shopinvader_parent_id:parent/shopinvader_parent_id:parent/shopinvader_parent_id:parent/object_id:id</field>
+        >shopinvader_parent_id:parent/shopinvader_parent_id:parent/shopinvader_parent_id:parent/record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_category" />
     </record>
 
@@ -179,8 +183,9 @@
     </record>
 
     <record id="ir_exp_shopinvader_category_childs_id" model="ir.exports.line">
-        <field name="name">shopinvader_child_ids/object_id</field>
-        <field name="target">shopinvader_child_ids:childs/object_id:id</field>
+        <field name="name">shopinvader_child_ids/record_id</field>
+        <field name="target">shopinvader_child_ids:childs/record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_category" />
     </record>
 
@@ -197,10 +202,11 @@
     </record>
 
     <record id="ir_exp_shopinvader_category_childs_childs_id" model="ir.exports.line">
-        <field name="name">shopinvader_child_ids/shopinvader_child_ids/object_id</field>
+        <field name="name">shopinvader_child_ids/shopinvader_child_ids/record_id</field>
         <field
             name="target"
-        >shopinvader_child_ids:childs/shopinvader_child_ids:childs/object_id:id</field>
+        >shopinvader_child_ids:childs/shopinvader_child_ids:childs/record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_category" />
     </record>
 
@@ -229,10 +235,11 @@
     >
         <field
             name="name"
-        >shopinvader_child_ids/shopinvader_child_ids/shopinvader_child_ids/object_id</field>
+        >shopinvader_child_ids/shopinvader_child_ids/shopinvader_child_ids/record_id</field>
         <field
             name="target"
-        >shopinvader_child_ids:childs/shopinvader_child_ids:childs/shopinvader_child_ids:childs/object_id</field>
+        >shopinvader_child_ids:childs/shopinvader_child_ids:childs/shopinvader_child_ids:childs/record_id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_category" />
     </record>
 
