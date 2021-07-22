@@ -43,6 +43,7 @@ addon | version | summary
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 | Index storage media data into external search engine
+[shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.0.0 | Exposes product prices with and without taxes
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 | Index Product Template Tags in Shopinvader
