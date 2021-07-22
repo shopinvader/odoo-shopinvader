@@ -37,3 +37,32 @@ class AddressService(Component):
             self.invader_partner_user._make_address_domain(),
         ]
         return expression.AND(domains)
+
+    def _get_allowed_share_policy_values(self):
+        field = self.env["res.partner"]._fields["invader_address_share_policy"]
+        return [x[0] for x in field.selection]
+
+    def _validator_create(self):
+        res = super()._validator_create()
+        res.update(
+            {
+                "share_policy": {
+                    "type": "string",
+                    "required": False,
+                    "empty": False,
+                    "allowed": self._get_allowed_share_policy_values(),
+                }
+            }
+        )
+        return res
+
+    def _json_parser(self):
+        res = super()._json_parser()
+        res.append("invader_address_share_policy:share_policy")
+        return res
+
+    def _prepare_params(self, params, mode="create"):
+        res = super()._prepare_params(params, mode=mode)
+        if res.get("share_policy"):
+            res["invader_address_share_policy"] = res.pop("share_policy")
+        return res

@@ -163,12 +163,12 @@ class ShopinvaderPartner(models.Model):
         Admin users and main account users will see every address
         included the ones having a bound shopinvader user.
 
-        Normal users will see their own addresses
-        + the ones from their direct parent.
+        Normal users will see their own addresses, plus:
+        * The ones from their direct parent.
+        * Publicly shared addresses from their siblings.
 
-        If the policy is set to `main account`
-        and the main account differs from the parent account
-        they'll be able to see main account addresses too.
+        If the policy is set to `main account` and the main account differs from
+        the parent account they'll be able to see main account addresses too.
         """
         # Main users can always see everything down their hierarchy
         if self.is_admin_account or self.is_main_account:
@@ -181,23 +181,32 @@ class ShopinvaderPartner(models.Model):
         main_account = self.main_partner_id
 
         def _make_parent_domain_leaf(partner):
-            # children records which are not users themselves
+            # public children records which are not users themselves
             return [
-                ("parent_id", "=", partner.id),
+                ("id", "child_of", partner.id),
                 ("shopinvader_bind_ids", "=", False),
+                ("invader_address_share_policy", "=", "public"),
             ]
 
         specific_ids = [self.record_id.id]
-        partner_domains = [_make_parent_domain_leaf(self.record_id)]
+        partner_domains = []
+
+        # Always see own private or public addresses
+        partner_domains.append(
+            [
+                ("parent_id", "=", self.record_id.id),
+                ("shopinvader_bind_ids", "=", False),
+            ]
+        )
 
         if self.record_id != related_partner:
             if related_partner:
-                # See records from its related_partner (normally the parent)
-                # but not other belonging to other users (like w/ child_of)
+                # See public records from its related_partner (normally the parent)
                 partner_domains.append(_make_parent_domain_leaf(related_partner))
                 specific_ids.append(related_partner.id)
 
             if main_account and main_account != related_partner:
+                # See public records from the main account
                 partner_domains.append(_make_parent_domain_leaf(main_account))
                 specific_ids.append(main_account.id)
 

@@ -20,6 +20,11 @@
                         string="Re-generate token"
                         attrs="{'invisible': [('invader_user_token','=',False)]}"
                     />
+          <field
+                        name="invader_address_share_policy"
+                        options="{'horizontal': True}"
+                        attrs="{'invisible': [('address_type', '!=', 'address')]}"
+                    />
         </group>
       </field>
       <xpath
