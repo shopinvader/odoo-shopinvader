@@ -28,7 +28,7 @@ class StockMove(models.Model):
             description = _("Update shopinvader variants (stock update trigger)")
             products.with_delay(
                 description=description, identity_key=identity_exact
-            ).synchronize_all_binding_stock_level()
+            ).synchronize_all_binding_stock_level(company_id=self.env.company)
         return True
 
     def _action_cancel(self):

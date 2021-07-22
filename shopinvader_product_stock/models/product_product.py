@@ -11,7 +11,7 @@ from odoo import models
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    def synchronize_all_binding_stock_level(self):
+    def synchronize_all_binding_stock_level(self, company_id=None):
         """Compute new stock information and update index data.
 
         If data changed and binding is in done state it forces it to 'to_update'.
@@ -20,13 +20,20 @@ class ProductProduct(models.Model):
         # Use `sudo` because this action might be triggered
         # from a low access level user (eg: external user on portal/website).
         # In any case, the real operation is done w/ the backend user below.
-        all_bindinds = self.sudo().mapped("shopinvader_bind_ids")
+
+        # ensure user company propagation if the method has bee delayed...
+        # this feature should be provide by queue job ...
+        # see https://github.com/OCA/queue/issues/363
+        products = self
+        if company_id:
+            products = self.with_company(company_id)
+
+        all_bindinds = products.mapped("shopinvader_bind_ids")
         backends = all_bindinds.mapped("backend_id")
         for backend in backends:
             bindings = all_bindinds.filtered(lambda r, b=backend: r.backend_id == b)
-            # To avoid access rights issues, execute the job with the user
-            # related to the backend
-            bindings = bindings.with_user(backend.user_id.id)
+            # To avoid access rights issues, execute the job with sudo
+            bindings = bindings.sudo()
             for binding in bindings:
                 if binding.sync_state == "new":
                     # this binding has been not yet computed

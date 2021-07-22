@@ -53,7 +53,6 @@ class ShopinvaderBackend(models.Model):
     sequence_id = fields.Many2one(
         "ir.sequence", "Sequence", help="Naming policy for orders and carts"
     )
-
     lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
     pricelist_id = fields.Many2one(
         "product.pricelist",
@@ -88,12 +87,6 @@ class ShopinvaderBackend(models.Model):
         "Set 1 to auto-bind the direct category.\n"
         "Set 2 to auto-bind the direct category and his parent.\n"
         "etc.",
-    )
-    user_id = fields.Many2one(
-        readonly=True,
-        help="The technical user used to process calls to the services "
-        "provided by the backend",
-        comodel_name="res.users",
     )
     website_public_name = fields.Char(
         help="Public name of your backend/website.\n"

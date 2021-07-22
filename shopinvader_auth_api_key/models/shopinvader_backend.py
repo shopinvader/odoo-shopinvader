@@ -16,12 +16,6 @@ class ShopinvaderBackend(models.Model):
         "calls to services dedicated to this backend",
         copy=False,
     )
-    user_id = fields.Many2one(
-        related="auth_api_key_id.user_id",
-        readonly=True,
-        help="The technical user used to process calls to the services "
-        "provided by the backend",
-    )
 
     _sql_constraints = [
         (
