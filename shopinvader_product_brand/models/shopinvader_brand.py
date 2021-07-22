@@ -26,9 +26,6 @@ class ShopinvaderBrand(models.Model):
     meta_keywords = fields.Char()
     short_description = fields.Html()
     description = fields.Html()
-    redirect_url_key = fields.Serialized(
-        compute="_compute_redirect_url_key", string="Redirect Url Keys"
-    )
     active = fields.Boolean(default=True)
 
     _sql_constraints = [
@@ -38,13 +35,6 @@ class ShopinvaderBrand(models.Model):
             "A category can only have one binding by backend.",
         )
     ]
-
-    def _compute_redirect_url_key(self):
-        for record in self:
-            res = []
-            for url in record.redirect_url_url_ids:
-                res.append(url.url_key)
-            record.redirect_url_key = res
 
     def _compute_automatic_url_key(self):
         self._generic_compute_automatic_url_key()

@@ -12,3 +12,10 @@ class ShopinvaderBinding(models.AbstractModel):
     backend_id = fields.Many2one("shopinvader.backend", string="Backend", required=True)
     external_id = fields.Char(string="External ID")
     sync_date = fields.Datetime(string="Last synchronization date")
+    redirect_url_key = fields.Serialized(
+        compute="_compute_redirect_url_key", string="Redirect Url Keys"
+    )
+
+    def _compute_redirect_url_key(self):
+        for record in self:
+            record.redirect_url_key = record.mapped("redirect_url_url_ids.url_key")
