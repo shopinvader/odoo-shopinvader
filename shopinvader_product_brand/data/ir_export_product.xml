@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="ir_exp_shopinvader_variant_brand_id" model="ir.exports.line">
+        <field name="name">shopinvader_brand_id/record_id</field>
+        <field name="target">shopinvader_brand_id:brand/record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_brand_name" model="ir.exports.line">
+        <field name="name">shopinvader_brand_id/name</field>
+        <field name="target">shopinvader_brand_id:brand/name</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_brand_url_key" model="ir.exports.line">
+        <field name="name">shopinvader_brand_id/url_key</field>
+        <field name="target">shopinvader_brand_id:brand/url_key</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+</odoo>

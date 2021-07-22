@@ -46,9 +46,6 @@ class ShopinvaderVariant(models.Model):
         compute="_compute_variant_attributes", string="Shopinvader Attributes"
     )
     main = fields.Boolean(compute="_compute_main_product")
-    redirect_url_key = fields.Serialized(
-        compute="_compute_redirect_url_key", string="Redirect Url Keys"
-    )
     active = fields.Boolean(default=True)
     price = fields.Serialized(compute="_compute_price", string="Shopinvader Price")
     short_name = fields.Char(compute="_compute_names")
@@ -160,13 +157,6 @@ class ShopinvaderVariant(models.Model):
                 pricelist=pricelist, company=self.backend_id.company_id
             )
         return res
-
-    def _compute_redirect_url_key(self):
-        for record in self:
-            res = []
-            for url in record.redirect_url_url_ids:
-                res.append(url.url_key)
-            record.redirect_url_key = res
 
     def _compute_variant_attributes(self):
         for record in self:
