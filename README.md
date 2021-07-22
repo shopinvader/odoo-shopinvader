@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.0 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.3.0.0 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.3.1.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.1.1 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
@@ -43,7 +43,7 @@ addon | version | summary
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 | Index storage media data into external search engine
-[shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.0.0 | Exposes product prices with and without taxes
+[shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.1.0 | Exposes product prices with and without taxes
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.0 | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 | Index Product Template Tags in Shopinvader
@@ -51,7 +51,7 @@ addon | version | summary
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.1.0.1 | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 | Expose the amount by tax to shopinvader
 [shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.0.1 | Manage Promotion and Coupon programs in Shopinvader
-[shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.0.0 | ShopInvader - Sale profile
+[shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.1.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.1.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.0.0 | Handle shop wishlist
 
