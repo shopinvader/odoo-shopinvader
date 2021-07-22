@@ -613,6 +613,12 @@ msgid "Bounce"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__product_brand_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_brand_id
+msgid "Brand"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_budget
 msgid "Budget Management"
 msgstr ""
@@ -3504,7 +3510,10 @@ msgid "Redirect Url"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_binding__redirect_url_key
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__redirect_url_key
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__redirect_url_key
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__redirect_url_key
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__redirect_url_key
 msgid "Redirect Url Keys"
 msgstr ""
@@ -3804,6 +3813,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_mail_client_extension
 msgid ""
 "See and manage users, companies, and leads from our mail client extensions."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__product_brand_id
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__product_brand_id
+msgid "Select a brand for this product"
 msgstr ""
 
 #. module: shopinvader
