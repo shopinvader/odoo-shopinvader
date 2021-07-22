@@ -588,6 +588,6 @@ class ShopinvaderBackend(models.Model):
             pricelist = self._get_partner_pricelist(partner) or pricelist
         return pricelist
 
-    def _validate_partner(self, partner):
+    def _validate_partner(self, shopinvader_partner):
         """Hook to validate partners when required."""
         return True

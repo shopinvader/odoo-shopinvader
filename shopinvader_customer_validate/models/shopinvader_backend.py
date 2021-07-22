@@ -27,8 +27,14 @@ class ShopinvaderBackend(models.Model):
         default="all",
     )
 
-    def _validate_partner(self, partner):
+    def _validate_partner(self, shopinvader_partner):
         """Hook to validate partners when required."""
-        with self.work_on(partner._name) as work:
+        # TODO: test this
+        # TODO: `partner` passed here is actually the shopinvader partner.
+        # The component is registered against `res.partner` tho.
+        # It must be clarified w/ proper var names
+        # in all validation methods.
+        # Consider refactoring if needed.
+        with self.work_on("res.partner") as work:
             validator = work.component(usage="partner.validator")
-            validator.validate_partner(partner)
+            validator.validate_partner(shopinvader_partner)
