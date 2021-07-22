@@ -4,37 +4,37 @@ from odoo.addons.shopinvader.tests.common import ProductCommonCase
 from odoo.addons.storage_image_product.tests.common import ProductImageCommonCase
 
 
-class TestShopinvaderImageMixin(ProductCommonCase, ProductImageCommonCase):
+class TestShopinvaderImageMixin(ProductImageCommonCase, ProductCommonCase):
     """
     Tests for shopinvader.image.mixin
     """
 
-    def setUp(self):
-        super(TestShopinvaderImageMixin, self).setUp()
-        self.backend.write({"image_proxy_url": "http://custom.website.dev"})
-        self.env.ref("base.user_demo").write(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.backend.write({"image_proxy_url": "http://custom.website.dev"})
+        cls.env.ref("base.user_demo").write(
             {
                 "groups_id": [
                     (
                         4,
-                        self.env.ref("shopinvader.group_shopinvader_manager").id,
+                        cls.env.ref("shopinvader.group_shopinvader_manager").id,
                     )
                 ]
             }
         )
-        ProductImageCommonCase.setUp(self)
-        img_relation_obj = self.env["product.image.relation"]
-        product_attr = self.env.ref("product.product_attribute_value_4")
-        self.logo = img_relation_obj.create(
+        img_relation_obj = cls.env["product.image.relation"]
+        product_attr = cls.env.ref("product.product_attribute_value_4")
+        cls.logo = img_relation_obj.create(
             {
-                "product_tmpl_id": self.template.id,
-                "image_id": self.logo_image.id,
+                "product_tmpl_id": cls.template.id,
+                "image_id": cls.logo_image.id,
             }
         )
-        self.image_bk = img_relation_obj.create(
+        cls.image_bk = img_relation_obj.create(
             {
-                "product_tmpl_id": self.template.id,
-                "image_id": self.black_image.id,
+                "product_tmpl_id": cls.template.id,
+                "image_id": cls.black_image.id,
                 "attribute_value_ids": [(6, 0, product_attr.ids)],
             }
         )
