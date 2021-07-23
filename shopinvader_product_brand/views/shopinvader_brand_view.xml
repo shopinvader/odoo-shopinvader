@@ -42,6 +42,9 @@
                         </field>
                     </group>
                 </page>
+                <page name="index_data" string="Index data">
+                    <field name="data_display" />
+                </page>
             </notebook>
         </form>
     </field>
