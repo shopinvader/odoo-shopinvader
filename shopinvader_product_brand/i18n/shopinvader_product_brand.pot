@@ -14,6 +14,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_product_brand
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.shopinvader_backend_form_view
+msgid "<span class=\"o_stat_text\">Brands</span>"
+msgstr ""
+
+#. module: shopinvader_product_brand
 #: model:ir.model.constraint,message:shopinvader_product_brand.constraint_shopinvader_brand_record_uniq
 msgid "A category can only have one binding by backend."
 msgstr ""
@@ -36,7 +41,13 @@ msgid "Backend"
 msgstr ""
 
 #. module: shopinvader_product_brand
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.shopinvader_backend_form_view
+msgid "Bind all brands"
+msgstr ""
+
+#. module: shopinvader_product_brand
 #: model:ir.ui.menu,name:shopinvader_product_brand.menu_shopinvader_brand
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.shopinvader_backend_form_view
 msgid "Brand"
 msgstr ""
 
@@ -95,6 +106,7 @@ msgstr ""
 
 #. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__display_name
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend__display_name
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__display_name
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_product__display_name
 msgid "Display Name"
@@ -112,6 +124,7 @@ msgstr ""
 
 #. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__id
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend__id
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__id
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_product__id
 msgid "ID"
@@ -135,6 +148,11 @@ msgid "Index"
 msgstr ""
 
 #. module: shopinvader_product_brand
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_form
+msgid "Index data"
+msgstr ""
+
+#. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__data_size
 msgid "Index record size"
 msgstr ""
@@ -146,6 +164,7 @@ msgstr ""
 
 #. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand____last_update
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend____last_update
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand____last_update
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_product____last_update
 msgid "Last Modified on"
@@ -164,6 +183,11 @@ msgstr ""
 #. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__sync_date
 msgid "Last synchronization date"
+msgstr ""
+
+#. module: shopinvader_product_brand
+#: model:ir.model,name:shopinvader_product_brand.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
 msgstr ""
 
 #. module: shopinvader_product_brand
@@ -192,6 +216,11 @@ msgid "Meta Keywords"
 msgstr ""
 
 #. module: shopinvader_product_brand
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend__nbr_brand
+msgid "Nbr Brand"
+msgstr ""
+
+#. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__products_count
 msgid "Number of products"
 msgstr ""
@@ -204,6 +233,12 @@ msgstr ""
 #. module: shopinvader_product_brand
 #: model:ir.model,name:shopinvader_product_brand.model_product_brand
 msgid "Product Brand"
+msgstr ""
+
+#. module: shopinvader_product_brand
+#: model:ir.actions.server,name:shopinvader_product_brand.action_recompute_shopinvader_brand_on_binding
+#: model:ir.actions.server,name:shopinvader_product_brand.action_recompute_shopinvader_brand_on_brand
+msgid "Recompute shopinvader brand"
 msgstr ""
 
 #. module: shopinvader_product_brand
