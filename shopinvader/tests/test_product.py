@@ -53,6 +53,22 @@ class ProductCase(ProductCommonCase):
             },
         )
 
+    def test_product_price_rounding(self):
+        # See issue: https://github.com/shopinvader/odoo-shopinvader/issues/1041
+        # Odony example: https://gist.github.com/odony/5269a695545902e7e23e761e20a9ec8c
+        self.env["product.pricelist.item"].create(
+            {
+                "pricelist_id": self.base_pricelist.id,
+                "product_id": self.variant.id,
+                "base": "list_price",
+                "applied_on": "0_product_variant",
+                "compute_price": "percentage",
+                "percent_price": 50,
+            }
+        )
+        self.variant.price = 423.4
+        self.assertEqual(self.shopinvader_variant.price["default"]["value"], 211.70)
+
     @contextmanager
     def _check_url(self, shopinvader_variants):
         """
