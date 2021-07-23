@@ -12,6 +12,8 @@
                 name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d"
                 position="after"
             >
+                <!-- TODO: this action should stay only in `developer` tab and should be replaced by a wizard
+                similar to product and category binding wizard to be able to select specific brands. -->
                 <button
                     name="bind_all_brands"
                     type="object"
@@ -35,6 +37,20 @@
                     </div>
                 </button>
             </div>
+
+            <xpath
+                expr="//page[@name='developer']//group[@name='product']"
+                position="after"
+            >
+                <group name="brand" string="Brand" col="10" colspan="4">
+                    <field name="nbr_brand" />
+                    <button
+                        name="bind_all_brands"
+                        string="Bind all brands"
+                        type="object"
+                    />
+                </group>
+            </xpath>
         </field>
     </record>
 
