@@ -26,6 +26,7 @@
     "data": [
         "views/product_brand_view.xml",
         "views/shopinvader_brand_view.xml",
+        "views/shopinvader_backend_view.xml",
         "data/ir_export_brand.xml",
         "data/ir_export_product.xml",
         "security/ir.model.access.csv",

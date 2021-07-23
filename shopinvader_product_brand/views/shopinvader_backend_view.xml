@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_backend_form_view">
+        <field
+            name="name"
+        >shopinvader.backend.form (in shopinvader_product_brand)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="arch" type="xml">
+            <button
+                name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d"
+                position="after"
+            >
+                <!-- TODO: this action should stay only in `developer` tab and should be replaced by a wizard
+                similar to product and category binding wizard to be able to select specific brands. -->
+                <button
+                    name="bind_all_brands"
+                    type="object"
+                    string="Bind all brands"
+                    class="oe_highlight"
+                    groups="shopinvader.group_shopinvader_manager"
+                />
+            </button>
+
+            <div class="oe_button_box" position="inside">
+                <button
+                    class="oe_stat_button"
+                    name="%(act_open_shopinvader_brand_view)d"
+                    type="action"
+                    icon="fa-file-text-o"
+                    context="{'search_default_backend_id': active_id}"
+                >
+                    <div class="o_stat_info">
+                        <field name="nbr_brand" class="o_stat_value" />
+                        <span class="o_stat_text">Brands</span>
+                    </div>
+                </button>
+            </div>
+
+            <xpath
+                expr="//page[@name='developer']//group[@name='product']"
+                position="after"
+            >
+                <group name="brand" string="Brand" col="10" colspan="4">
+                    <field name="nbr_brand" />
+                    <button
+                        name="bind_all_brands"
+                        string="Bind all brands"
+                        type="object"
+                    />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
