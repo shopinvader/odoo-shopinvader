@@ -35,12 +35,25 @@ class ProductProduct(models.Model):
         compute="_compute_is_shopinvader_binded",
         store=True,
         index=True,
-        help="Technical field to know if this product is related by a"
+        help="Technical field to know if this product is related by a "
         "(at least one) shopinvader backend",
     )
 
+    is_shopinvader_active_binded = fields.Boolean(
+        "Shopinvader binded active",
+        compute="_compute_is_shopinvader_binded",
+        store=True,
+        index=True,
+        help="Technical field to know if this product is actively binded to "
+        "at least one shopinvader backend",
+    )
+
     @api.multi
-    @api.depends("shopinvader_bind_ids", "shopinvader_bind_ids.backend_id")
+    @api.depends(
+        "shopinvader_bind_ids",
+        "shopinvader_bind_ids.backend_id",
+        "shopinvader_bind_ids.active",
+    )
     def _compute_is_shopinvader_binded(self):
         """
         Compute function to determine if the product is used in at least
@@ -49,7 +62,13 @@ class ProductProduct(models.Model):
         """
         for rec in self:
             binded = bool(rec.shopinvader_bind_ids.mapped("backend_id"))
+            active_binded = bool(
+                rec.shopinvader_bind_ids.filtered(lambda b: b.active).mapped(
+                    "backend_id"
+                )
+            )
             rec.is_shopinvader_binded = binded
+            rec.is_shopinvader_active_binded = active_binded
 
     @api.multi
     def _inverse_active(self):
