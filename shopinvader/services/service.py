@@ -194,9 +194,12 @@ class BaseShopinvaderService(AbstractComponent):
         defaults = super(BaseShopinvaderService, self)._get_openapi_default_parameters()
         defaults.append(
             {
-                "name": "PARTNER-EMAIL",
+                "name": "WEBSITE-UNIQUE-KEY",
                 "in": "header",
-                "description": "Logged partner email",
+                "description": "The unique key to identify the originating "
+                "website into Odoo. If this information is not provided,"
+                "we expect to receive this information from the authentication"
+                "system.",
                 "required": False,
                 "schema": {"type": "string"},
                 "style": "simple",

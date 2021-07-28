@@ -163,3 +163,16 @@ class BackendCase(CommonCase):
         self.backend.write({"lang_ids": [(5, None, None)]})
         self.assertEqual(self.env["shopinvader.variant"].search_count([]), 0)
         self.assertEqual(self.env["shopinvader.category"].search_count([]), 0)
+
+    def test_lookup_by_website_unique_key(self):
+        website_unique_key = self.backend.website_unique_key
+        self.assertTrue(website_unique_key)
+        backend = self.env["shopinvader.backend"]._get_from_website_unique_key(
+            website_unique_key
+        )
+        self.assertEqual(self.backend, backend)
+        self.backend.website_unique_key = "new_key"
+        backend = self.env["shopinvader.backend"]._get_from_website_unique_key(
+            "new_key"
+        )
+        self.assertEqual(self.backend, backend)

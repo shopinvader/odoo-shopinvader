@@ -3,11 +3,12 @@
 # Copyright 2020 Camptocamp (http://www.camptocamp.com).
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+import hashlib
+import os
 from collections import defaultdict
 from contextlib import contextmanager
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, tools
 
 from odoo.addons.base_sparse_field.models.fields import Serialized
 
@@ -194,6 +195,24 @@ class ShopinvaderBackend(models.Model):
         ],
         default="",
     )
+    website_unique_key = fields.Char(
+        required=True,
+        help="This identifier should be provided by each REST request through "
+        "a WEBSITE-UNIQUE-KEY http header to identify the target backend. "
+        "If not provided by the request, you must pu in place a way to"
+        "lookup the target request for a given request by overriding the"
+        "method _get_backend into the service context provider component. "
+        "The shopinvader_auth_api_key and shopinvader_auth_jwt addons "
+        "provides a fallback mechanism in such a case.",
+        default=lambda self: self._default_website_unique_key(),
+    )
+    _sql_constraints = [
+        (
+            "unique_website_unique_key",
+            "unique(website_unique_key)",
+            _("This website unique key already exists in database"),
+        )
+    ]
 
     @property
     def _server_env_fields(self):
@@ -214,6 +233,12 @@ class ShopinvaderBackend(models.Model):
     @api.model
     def _default_partner_industry_ids(self):
         return self.env["res.partner.industry"].search([])
+
+    @api.model
+    def _default_website_unique_key(self):
+        return hashlib.pbkdf2_hmac(
+            "sha256", os.urandom(32), os.urandom(32), 100000
+        ).hex()
 
     def _compute_customer_default_role(self):
         for rec in self:
@@ -506,10 +531,6 @@ class ShopinvaderBackend(models.Model):
             if removed_lang_ids:
                 record._unbind_langs(list(removed_lang_ids))
 
-    def write(self, values):
-        with self._keep_binding_sync_with_langs():
-            return super(ShopinvaderBackend, self).write(values)
-
     def _get_backend_pricelist(self):
         """The pricelist configure by this backend."""
         # There must be a pricelist somehow: safe fallback to default Odoo one
@@ -545,3 +566,18 @@ class ShopinvaderBackend(models.Model):
     def _validate_partner(self, shopinvader_partner):
         """Hook to validate partners when required."""
         return True
+
+    @api.model
+    @tools.ormcache("self._uid", "website_unique_key")
+    def _get_id_from_website_unique_key(self, website_unique_key):
+        return self.search([("website_unique_key", "=", website_unique_key)]).id
+
+    @api.model
+    def _get_from_website_unique_key(self, website_unique_key):
+        return self.browse(self._get_id_from_website_unique_key(website_unique_key))
+
+    def write(self, values):
+        if "website_unique_key" in values:
+            self._get_id_from_website_unique_key.clear_cache(self.env[self._name])
+        with self._keep_binding_sync_with_langs():
+            return super(ShopinvaderBackend, self).write(values)

@@ -1,7 +1,8 @@
 # Copyright 2021 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 from odoo.addons.component.core import Component
-from odoo.addons.shopinvader.utils import get_partner_work_context
+
+from ..utils import get_partner_work_context
 
 
 class ShopinvaderServiceContextProvider(Component):
@@ -35,11 +36,16 @@ class ShopinvaderServiceContextProvider(Component):
         At this stage, the partner returned by this method must be the shopinvader
         partner...
         """
-        raise NotImplementedError()
+        return self.env["shopinvader.partner"].browse()
 
     def _get_backend(self):
         """Get the requested shopinvader backend instance"""
-        raise NotImplementedError()
+        website_unique_key = self.request.httprequest.environ.get(
+            "HTTP_WEBSITE_UNIQUE_KEY"
+        )
+        return self.env["shopinvader.backend"]._get_from_website_unique_key(
+            website_unique_key
+        )
 
     def _get_component_context(self):
         res = super(ShopinvaderServiceContextProvider, self)._get_component_context()

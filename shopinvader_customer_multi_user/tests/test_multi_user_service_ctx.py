@@ -25,9 +25,6 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
         class TestShopinvaderServiceContextProvider(Component):
             _inherit = "shopinvader.service.context.provider"
 
-            def _get_backend(self):
-                return cls.backend
-
             def _get_shopinvader_partner(self):
                 headers = self.request.httprequest.environ
                 partner_email = headers.get("HTTP_PARTNER_EMAIL")
@@ -42,9 +39,11 @@ class TestMultiUserServiceCtx(TestMultiUserCommon):
     def _get_mocked_request(self, partner):
         with MockRequest(self.env) as mocked_request:
             mocked_request.httprequest.environ.update(
-                {"HTTP_PARTNER_EMAIL": partner.email}
+                {
+                    "HTTP_PARTNER_EMAIL": partner.email,
+                    "HTTP_WEBSITE_UNIQUE_KEY": self.backend.website_unique_key,
+                }
             )
-            mocked_request.auth_api_key_id = self.backend.auth_api_key_id.id
             yield mocked_request
 
     def test_partner_ctx_default_multi_disabled(self):
