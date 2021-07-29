@@ -7,7 +7,7 @@ from odoo.exceptions import MissingError
 from odoo.http import content_disposition, request
 from odoo.tools.safe_eval import safe_eval, time
 
-from odoo.addons.base_rest.components.service import skip_secure_response, to_int
+from odoo.addons.base_rest import restapi
 from odoo.addons.component.core import AbstractComponent
 
 
@@ -41,14 +41,10 @@ class AbstractDownload(AbstractComponent):
         """
         raise NotImplementedError()
 
-    def _validator_download(self):
-        """
-        Validate the input of download function
-        :return: dict
-        """
-        return {"id": {"type": "integer", "required": True, "coerce": to_int}}
-
-    @skip_secure_response
+    @restapi.method(
+        routes=[(["/<int:_id>/download"], "GET")],
+        output_param=restapi.BinaryData(required=True),
+    )
     def download(self, _id, **params):
         """
         Get target file. This method is also callable by HTTP GET

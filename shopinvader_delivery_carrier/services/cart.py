@@ -6,7 +6,8 @@ import logging
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
-from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.base_rest import restapi
+from odoo.addons.base_rest.components.service import skip_secure_response, to_int
 from odoo.addons.component.core import Component
 
 _logger = logging.getLogger(__name__)
@@ -30,6 +31,13 @@ class CartService(Component):
             return self._to_json(cart)
 
     # DEPRECATED METHODS #
+    @restapi.method(
+        routes=[(["/get_delivery_methods"], "GET")],
+        output_param=restapi.CerberusValidator(
+            "_validator_get_delivery_methods",
+        ),
+    )
+    @skip_secure_response
     def get_delivery_methods(self):
         """
             !!!!DEPRECATED!!!!! Uses delivery_carrier.search

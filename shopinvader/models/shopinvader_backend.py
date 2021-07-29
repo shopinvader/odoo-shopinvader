@@ -3,15 +3,14 @@
 # Copyright 2020 Camptocamp (http://www.camptocamp.com).
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+import hashlib
+import os
 from collections import defaultdict
 from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
-from odoo.http import request
 
 from odoo.addons.base_sparse_field.models.fields import Serialized
-from odoo.addons.server_environment import serv_config
 
 
 class ShopinvaderBackend(models.Model):
@@ -55,14 +54,6 @@ class ShopinvaderBackend(models.Model):
     sequence_id = fields.Many2one(
         "ir.sequence", "Sequence", help="Naming policy for orders and carts"
     )
-    auth_api_key_id = fields.Many2one(
-        "auth.api.key",
-        "Api Key",
-        required=True,
-        help="Api_key section used for the authentication of"
-        "calls to services dedicated to this backend",
-        copy=False,
-    )
     lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
     pricelist_id = fields.Many2one(
         "product.pricelist",
@@ -97,12 +88,6 @@ class ShopinvaderBackend(models.Model):
         "Set 1 to auto-bind the direct category.\n"
         "Set 2 to auto-bind the direct category and his parent.\n"
         "etc.",
-    )
-    user_id = fields.Many2one(
-        related="auth_api_key_id.user_id",
-        readonly=True,
-        help="The technical user used to process calls to the services "
-        "provided by the backend",
     )
     website_public_name = fields.Char(
         help="Public name of your backend/website.\n"
@@ -210,12 +195,22 @@ class ShopinvaderBackend(models.Model):
         ],
         default="",
     )
-
+    website_unique_key = fields.Char(
+        required=True,
+        help="This identifier should be provided by each REST request through "
+        "a WEBSITE-UNIQUE-KEY http header to identify the target backend. "
+        "If not provided by the request, you must pu in place a way to"
+        "lookup the target request for a given request by overriding the"
+        "method _get_backend into the service context provider component. "
+        "The shopinvader_auth_api_key and shopinvader_auth_jwt addons "
+        "provides a fallback mechanism in such a case.",
+        default=lambda self: self._default_website_unique_key(),
+    )
     _sql_constraints = [
         (
-            "auth_api_key_id_uniq",
-            "unique(auth_api_key_id)",
-            "An authentication API Key can be used by only one backend.",
+            "unique_website_unique_key",
+            "unique(website_unique_key)",
+            _("This website unique key already exists in database"),
         )
     ]
 
@@ -238,6 +233,12 @@ class ShopinvaderBackend(models.Model):
     @api.model
     def _default_partner_industry_ids(self):
         return self.env["res.partner.industry"].search([])
+
+    @api.model
+    def _default_website_unique_key(self):
+        return hashlib.pbkdf2_hmac(
+            "sha256", os.urandom(32), os.urandom(32), 100000
+        ).hex()
 
     def _compute_customer_default_role(self):
         for rec in self:
@@ -502,26 +503,6 @@ class ShopinvaderBackend(models.Model):
     def _extract_configuration(self):
         return {}
 
-    @classmethod
-    def _get_api_key_name(cls, auth_api_key):
-        for section in serv_config.sections():
-            if section.startswith("api_key_") and serv_config.has_option(
-                section, "key"
-            ):
-                if tools.consteq(auth_api_key, serv_config.get(section, "key")):
-                    return section
-        return None
-
-    @api.model
-    @tools.ormcache("self._uid", "auth_api_key_id")
-    def _get_id_from_auth_api_key(self, auth_api_key_id):
-        return self.search([("auth_api_key_id", "=", auth_api_key_id)]).id
-
-    @api.model
-    def _get_from_http_request(self):
-        auth_api_key_id = getattr(request, "auth_api_key_id", None)
-        return self.browse(self._get_id_from_auth_api_key(auth_api_key_id))
-
     def _bind_langs(self, lang_ids):
         self.ensure_one()
         self.env["shopinvader.variant.binding.wizard"].bind_langs(self, lang_ids)
@@ -549,12 +530,6 @@ class ShopinvaderBackend(models.Model):
             removed_lang_ids = old_lang_ids - actual_lang_ids
             if removed_lang_ids:
                 record._unbind_langs(list(removed_lang_ids))
-
-    def write(self, values):
-        if "auth_api_key_id" in values:
-            self._get_id_from_auth_api_key.clear_cache(self.env[self._name])
-        with self._keep_binding_sync_with_langs():
-            return super(ShopinvaderBackend, self).write(values)
 
     def _get_backend_pricelist(self):
         """The pricelist configure by this backend."""
@@ -591,3 +566,18 @@ class ShopinvaderBackend(models.Model):
     def _validate_partner(self, shopinvader_partner):
         """Hook to validate partners when required."""
         return True
+
+    @api.model
+    @tools.ormcache("self._uid", "website_unique_key")
+    def _get_id_from_website_unique_key(self, website_unique_key):
+        return self.search([("website_unique_key", "=", website_unique_key)]).id
+
+    @api.model
+    def _get_from_website_unique_key(self, website_unique_key):
+        return self.browse(self._get_id_from_website_unique_key(website_unique_key))
+
+    def write(self, values):
+        if "website_unique_key" in values:
+            self._get_id_from_website_unique_key.clear_cache(self.env[self._name])
+        with self._keep_binding_sync_with_langs():
+            return super(ShopinvaderBackend, self).write(values)

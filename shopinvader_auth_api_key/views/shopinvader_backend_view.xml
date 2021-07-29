@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_backend_form_view">
+        <field
+            name="name"
+        >shopinvader.backend.form (in shopinvader_auth_api_key)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="model">shopinvader.backend</field>
+        <field name="arch" type="xml">
+            <field name="location" position="after">
+                <field name="auth_api_key_id" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

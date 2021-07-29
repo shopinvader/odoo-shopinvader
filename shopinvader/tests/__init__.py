@@ -1,4 +1,3 @@
-from . import test_controller
 from . import test_backend
 from . import test_cart
 from . import test_cart_copy

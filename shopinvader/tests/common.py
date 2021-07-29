@@ -11,6 +11,8 @@ from odoo import fields
 from odoo.exceptions import MissingError
 from odoo.tests import SavepointCase
 
+from odoo.addons.base_rest.controllers.main import RestController
+from odoo.addons.base_rest.core import _rest_controllers_per_module
 from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
@@ -145,6 +147,14 @@ class CommonCase(SavepointCase, CommonMixin):
         cls.env = cls.env(
             context=dict(cls.env.context, tracking_disable=cls.tracking_disable)
         )
+
+        class ControllerTest(RestController):
+            _root_path = "/test_shopinvader/"
+            _collection_name = "shopinvader.backend"
+            _default_auth = "public"
+
+        # Force service registration by the creation of a fake controller
+        cls._ShopinvaderControllerTest = ControllerTest
         CommonMixin._setup_backend(cls)
         # TODO FIXME
         # It seem that setUpComponent / setUpRegistry loose stuff from
@@ -152,6 +162,11 @@ class CommonCase(SavepointCase, CommonMixin):
         cls.env["base"].flush()
         cls.setUpComponent()
         cls.setUpRegistry()
+
+    @classmethod
+    def tearDownClass(cls):
+        super().tearDownClass()
+        _rest_controllers_per_module["shopinvader"] = []
 
     def setUp(self):
         SavepointCase.setUp(self)

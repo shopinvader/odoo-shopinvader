@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "14.0.3.2.0",
+    "version": "14.0.4.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
@@ -15,7 +15,6 @@
     "external_dependencies": {"python": ["cerberus", "unidecode"], "bin": []},
     "depends": [
         "base_rest",
-        "auth_api_key",
         "base_jsonify",
         "base_sparse_field_list_support",
         "base_url",
@@ -23,6 +22,7 @@
         "component_event",
         "sale",
         "sale_discount_display_amount",
+        "server_environment",
         "onchange_helper",
         "queue_job",
         "mail",
@@ -64,7 +64,6 @@
     "demo": [
         "demo/account_demo.xml",
         "demo/pricelist_demo.xml",
-        "demo/auth_api_key_demo.xml",
         "demo/backend_demo.xml",
         "demo/partner_demo.xml",
         "demo/sale_demo.xml",
