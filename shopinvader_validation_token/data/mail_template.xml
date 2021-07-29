@@ -1,15 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="1">
 
     <record id="mail_template_security_token" model="mail.template" forcecreate="True">
         <field name="name">Shopinvader - Security token</field>
-        <field name="email_from">${(object.shopinvader_backend_id.company_id.email or '')|safe}</field>
+        <field
+            name="email_from"
+        >${(object.shopinvader_backend_id.company_id.email or '')|safe}</field>
         <field name="subject">Security token</field>
         <field name="email_to">${object.email|safe}</field>
-        <field name="model_id" ref="model_shopinvader_security_token"/>
-        <field name="auto_delete" eval="False"/>
+        <field name="model_id" ref="model_shopinvader_security_token" />
+        <field name="auto_delete" eval="False" />
         <field name="lang">${object.lang}</field>
-        <field name="body_html"><![CDATA[ Your token: ${object.token} valid until ${format_tz(object.expiration_datetime)} ]]></field>
+        <field
+            name="body_html"
+        ><![CDATA[ Your token: ${object.token} valid until ${format_tz(object.expiration_datetime)} ]]></field>
     </record>
 
 </odoo>

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from contextlib import contextmanager
@@ -78,9 +77,9 @@ class CommonValidationToken(CommonCase):
         :param token: str
         :return: bool
         """
-        shopinvader_token = self.ShopEmailToken.with_context(
-            active_test=False
-        ).search([("token", "=", token)], limit=1)
+        shopinvader_token = self.ShopEmailToken.with_context(active_test=False).search(
+            [("token", "=", token)], limit=1
+        )
         self.assertFalse(shopinvader_token.active)
         return True
 

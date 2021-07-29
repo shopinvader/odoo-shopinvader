@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import _, api, exceptions, fields, models
@@ -8,7 +7,8 @@ class ShopinvaderBackend(models.Model):
     _inherit = "shopinvader.backend"
 
     token_validity = fields.Integer(
-        string="Token validity (minutes)", default=20,
+        string="Token validity (minutes)",
+        default=20,
     )
 
     @api.multi

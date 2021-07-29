@@ -1,10 +1,11 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from random import randint
 
 from dateutil.relativedelta import relativedelta
+
 from odoo import api, fields, models
+
 from odoo.addons.base.res.res_partner import _lang_get
 
 
@@ -12,20 +13,32 @@ class ShopinvaderSecurityToken(models.Model):
     _name = "shopinvader.security.token"
     _description = "Shopinvader security token"
 
-    email = fields.Char(required=True,)
-    expiration_datetime = fields.Datetime(
-        string="Token's expiration", required=True, readonly=True,
+    email = fields.Char(
+        required=True,
     )
-    token = fields.Char(required=True, index=True, readonly=True,)
+    expiration_datetime = fields.Datetime(
+        string="Token's expiration",
+        required=True,
+        readonly=True,
+    )
+    token = fields.Char(
+        required=True,
+        index=True,
+        readonly=True,
+    )
     active = fields.Boolean(
-        default=True, help="Become inactive when the token is used.",
+        default=True,
+        help="Become inactive when the token is used.",
     )
     shopinvader_backend_id = fields.Many2one(
-        comodel_name="shopinvader.backend", required=True,
+        comodel_name="shopinvader.backend",
+        required=True,
     )
     notification_type = fields.Char(required=True)
     lang = fields.Selection(
-        _lang_get, string="Language", default=lambda self: self.env.lang,
+        _lang_get,
+        string="Language",
+        default=lambda self: self.env.lang,
     )
 
     _sql_constraints = [
@@ -87,8 +100,7 @@ class ShopinvaderSecurityToken(models.Model):
             notif_type = self._service_notification_map().get(service_name, "")
             if notif_type:
                 should_trigger = any(
-                    n.notification_type == notif_type
-                    for n in backend.notification_ids
+                    n.notification_type == notif_type for n in backend.notification_ids
                 )
         return should_trigger
 
@@ -100,9 +112,7 @@ class ShopinvaderSecurityToken(models.Model):
         :return:
         """
         self.ensure_one()
-        self.shopinvader_backend_id._send_notification(
-            self.notification_type, self
-        )
+        self.shopinvader_backend_id._send_notification(self.notification_type, self)
 
     @api.model
     def _get_new_token(self, backend, email):
