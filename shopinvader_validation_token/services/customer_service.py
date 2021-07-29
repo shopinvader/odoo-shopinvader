@@ -12,7 +12,6 @@ class ShopinvaderCustomerService(Component):
 
     def security_code_enabled(self, **params):
         """
-        The shopinvader.partner should be created BEFORE calling this function
         :param params: json/dict
         :return: dict/json
         """
@@ -59,7 +58,7 @@ class ShopinvaderCustomerService(Component):
 
     def create(self, **params):
         self._ensure_token_valid(params)
-        return super(ShopinvaderCustomerService, self).create(**params)
+        return super().create(**params)
 
     # Validators
 
@@ -78,6 +77,6 @@ class ShopinvaderCustomerService(Component):
         return schema
 
     def _validator_create(self):
-        schema = super(ShopinvaderCustomerService, self)._validator_create()
+        schema = super()._validator_create()
         schema.update({"token": {"type": "string", "required": False}})
         return schema

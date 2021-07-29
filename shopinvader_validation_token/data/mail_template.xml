@@ -13,7 +13,7 @@
         <field name="lang">${object.lang}</field>
         <field
             name="body_html"
-        ><![CDATA[ Your token: ${object.token} valid until ${format_tz(object.expiration_datetime)} ]]></field>
+        ><![CDATA[ Your token: ${object.token} valid until ${format_datetime(object.expiration_datetime, tz='UTC', dt_format='yyyy/MM/dd HH:mm:ss')} ]]></field>
     </record>
 
 </odoo>

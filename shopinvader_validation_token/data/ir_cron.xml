@@ -10,9 +10,8 @@
         <field name="interval_type">hours</field>
         <field name="numbercall">-1</field>
         <field name="doall" eval="False" />
-        <field name="model">shopinvader.security.token</field>
-        <field name="function">_disable_expired_token</field>
-        <field name="args">()</field>
+        <field name="model_id" ref="model_shopinvader_security_token" />
+        <field name="code">model._disable_expired_token()</field>
         <field name="nextcall" eval="(DateTime.now()).strftime('%Y-%m-%d 03:00:00')" />
     </record>
 </odoo>

@@ -11,7 +11,6 @@ class ShopinvaderBackend(models.Model):
         default=20,
     )
 
-    @api.multi
     @api.constrains("token_validity")
     def _constrains_token_validity(self):
         """

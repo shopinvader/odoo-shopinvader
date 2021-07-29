@@ -33,7 +33,7 @@
         <field name="global" eval="True" />
         <field
             name="domain_force"
-        >['|', ('shopinvader_backend_id.company_id','=',False), ('shopinvader_backend_id.company_id','child_of',[user.company_id.id])]</field>
+        >['|', ('shopinvader_backend_id.company_id','=',False), ('shopinvader_backend_id.company_id','child_of',company_ids)]</field>
     </record>
 
 </odoo>

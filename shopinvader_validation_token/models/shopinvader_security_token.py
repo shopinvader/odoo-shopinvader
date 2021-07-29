@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
 
-from odoo.addons.base.res.res_partner import _lang_get
+from odoo.addons.base.models.res_partner import _lang_get
 
 
 class ShopinvaderSecurityToken(models.Model):
@@ -45,7 +45,6 @@ class ShopinvaderSecurityToken(models.Model):
         ("uniq_token", "unique(token)", "This token already exists!"),
     ]
 
-    @api.multi
     def _consume(self):
         """
 
@@ -104,7 +103,6 @@ class ShopinvaderSecurityToken(models.Model):
                 )
         return should_trigger
 
-    @api.multi
     def _trigger_token_notification(self):
         """
         Generate the shopinvader.security.token and trigger the notification
@@ -122,7 +120,7 @@ class ShopinvaderSecurityToken(models.Model):
         :param email: str
         :return: str
         """
-        return u"{:06d}".format(randint(0, 999999))
+        return "{:06d}".format(randint(0, 999999))
 
     @api.model
     def _generate_token(self, backend, email, service_name):

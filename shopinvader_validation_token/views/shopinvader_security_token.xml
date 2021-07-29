@@ -75,7 +75,6 @@
     <record model="ir.actions.act_window" id="shopinvader_security_token_action">
         <field name="name">shopinvader.security.token.action</field>
         <field name="res_model">shopinvader.security.token</field>
-        <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
     </record>
 

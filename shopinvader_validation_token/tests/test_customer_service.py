@@ -18,7 +18,7 @@ class TestCustomerService(CommonValidationToken):
         return "partner_token_customer"
 
     def setUp(self, *args, **kwargs):
-        super(TestCustomerService, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         self.data.update(
             {
                 "external_id": "D5CdkqOEL",
@@ -52,7 +52,7 @@ class TestCustomerService(CommonValidationToken):
             )
             self.assertTrue(result.get("ask_security_code"))
             self.service.dispatch("create", params=self.data.copy())
-        self.assertIn("Invalid/Expired token", em.exception.name)
+        self.assertIn("Invalid/Expired token", em.exception.args[0])
 
     def test_create_with_token2(self):
         """
@@ -87,4 +87,4 @@ class TestCustomerService(CommonValidationToken):
                 data = data.copy()
                 data.update({"email": "new-customer@customer.example.com"})
                 self.service.dispatch("create", params=data)
-            self.assertIn("Invalid/Expired token", em.exception.name)
+            self.assertIn("Invalid/Expired token", em.exception.args[0])

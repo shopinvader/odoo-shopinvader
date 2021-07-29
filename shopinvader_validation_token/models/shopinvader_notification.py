@@ -20,6 +20,6 @@ class ShopinvaderNotification(models.Model):
         return values
 
     def _get_all_notification(self):
-        values = super(ShopinvaderNotification, self)._get_all_notification()
+        values = super()._get_all_notification()
         values.update(self._get_security_token_notification())
         return values
