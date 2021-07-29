@@ -4,6 +4,7 @@
 from uuid import uuid4
 
 from odoo import exceptions
+
 from odoo.addons.shopinvader_validation_token.tests.common import (
     CommonValidationToken,
 )

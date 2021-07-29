@@ -4,7 +4,9 @@
 from random import randint
 
 from dateutil.relativedelta import relativedelta
+
 from odoo import api, fields, models
+
 from odoo.addons.base.res.res_partner import _lang_get
 
 
