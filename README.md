@@ -20,9 +20,10 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.3.2.0 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.4.0.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.1.1 | Shopinvader Assortment
+[shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.0 | Shopinvader API_KEY Authentication
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.1.1 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_validate](shopinvader_customer_multi_user_validate/) | 14.0.1.1.0 | Glue module for `shopinvader_customer_validate` and `shopinvader_customer_multi_user`.
