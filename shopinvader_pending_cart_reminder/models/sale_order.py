@@ -39,12 +39,9 @@ class SaleOrder(models.Model):
         :param last_write_dt: str
         :return: sale.order recordset
         """
-        domain = self._get_sale_order_domain_for_reminder(
-            backend, last_write_dt
-        )
+        domain = self._get_sale_order_domain_for_reminder(backend, last_write_dt)
         return self.search(domain)
 
-    @api.multi
     def _execute_pending_cart_reminder(self):
         """
         Send the email and update the sale order (to avoid multi reminder)
@@ -53,9 +50,7 @@ class SaleOrder(models.Model):
         for sale_order in self:
             backend = sale_order.shopinvader_backend_id
             if backend.pending_cart_reminder_template_id:
-                backend.pending_cart_reminder_template_id.send_mail(
-                    sale_order.id
-                )
+                backend.pending_cart_reminder_template_id.send_mail(sale_order.id)
         # Even if the pending_cart_reminder_template_id is not filled we have
         # to fill this pending_cart_reminder_sent_dt. Otherwise, when the
         # pending_cart_reminder_template_id will be filled, old SO could
@@ -70,9 +65,7 @@ class SaleOrder(models.Model):
         :return: datetime
         """
         reminder_date_dt = fields.Datetime.from_string(fields.Datetime.now())
-        reminder_date_dt -= timedelta(
-            hours=backend.pending_cart_reminder_delay
-        )
+        reminder_date_dt -= timedelta(hours=backend.pending_cart_reminder_delay)
         return reminder_date_dt
 
     @api.model
@@ -89,8 +82,6 @@ class SaleOrder(models.Model):
         for backend in backends:
             reminder_date = self._get_pending_cart_last_write_dt(backend)
             reminder_date_txt = fields.Datetime.to_string(reminder_date)
-            sale_orders = self._get_pending_cart_to_remind(
-                backend, reminder_date_txt
-            )
+            sale_orders = self._get_pending_cart_to_remind(backend, reminder_date_txt)
             if sale_orders:
                 sale_orders._execute_pending_cart_reminder()

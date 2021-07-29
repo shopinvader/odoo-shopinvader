@@ -3,6 +3,7 @@
 from datetime import timedelta
 
 from odoo import api, fields
+
 from odoo.addons.shopinvader.tests.test_notification import CommonCase
 
 
@@ -12,7 +13,7 @@ class TestSaleOrder(CommonCase):
     """
 
     def setUp(self):
-        super(TestSaleOrder, self).setUp()
+        super().setUp()
         self.sale_obj = self.env["sale.order"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
         self.template = self.env.ref(
@@ -52,9 +53,7 @@ class TestSaleOrder(CommonCase):
         self.sale_obj._patch_method(
             "_get_pending_cart_last_write_dt", _get_reminder_date
         )
-        self.addCleanup(
-            self.sale_obj._revert_method, "_get_pending_cart_last_write_dt"
-        )
+        self.addCleanup(self.sale_obj._revert_method, "_get_pending_cart_last_write_dt")
         return True
 
     def _check_reminder_empty(self):
@@ -88,9 +87,7 @@ class TestSaleOrder(CommonCase):
         self._patch_sale_reminder()
         self.sale_obj.launch_pending_cart_reminder()
         self.assertGreaterEqual(
-            fields.Datetime.from_string(
-                self.sale.pending_cart_reminder_sent_dt
-            ),
+            fields.Datetime.from_string(self.sale.pending_cart_reminder_sent_dt),
             now,
         )
         return
@@ -119,7 +116,7 @@ class TestSaleOrder(CommonCase):
         self.sale.write({"pending_cart_reminder_sent_dt": now})
         self._patch_sale_reminder()
         self.sale_obj.launch_pending_cart_reminder()
-        self.assertEquals(self.sale.pending_cart_reminder_sent_dt, now)
+        self.assertEqual(self.sale.pending_cart_reminder_sent_dt, now)
         return
 
     def test_reminder4(self):
