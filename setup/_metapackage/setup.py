@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader',
         'odoo14-addon-shopinvader_algolia',
         'odoo14-addon-shopinvader_assortment',
+        'odoo14-addon-shopinvader_auth_api_key',
         'odoo14-addon-shopinvader_cart_expiry',
         'odoo14-addon-shopinvader_customer_multi_user',
         'odoo14-addon-shopinvader_customer_multi_user_validate',
