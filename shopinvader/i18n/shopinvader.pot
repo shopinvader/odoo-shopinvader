@@ -377,11 +377,6 @@ msgid "Ameriwood Home 1783213COM - Meuble TV"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.constraint,message:shopinvader.constraint_shopinvader_backend_auth_api_key_id_uniq
-msgid "An authentication API Key can be used by only one backend."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.constraint,message:shopinvader.constraint_shopinvader_partner_email_uniq
 msgid "An email must be uniq per backend."
 msgstr ""
@@ -404,18 +399,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__anonymous_partner_id
 msgid "Anonymous Partner"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__auth_api_key_id
-msgid "Api Key"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__auth_api_key_id
-msgid ""
-"Api_key section used for the authentication ofcalls to services dedicated to"
-" this backend"
 msgstr ""
 
 #. module: shopinvader
@@ -4502,12 +4485,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/controllers/main.py:0
-#, python-format
-msgid "The given partner is not found!"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__user_id
 msgid "The internal user in charge of this contact."
 msgstr ""
@@ -4557,13 +4534,6 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__property_stock_supplier
 msgid ""
 "The stock location used as source when receiving goods from this contact."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__user_id
-msgid ""
-"The technical user used to process calls to the services provided by the "
-"backend"
 msgstr ""
 
 #. module: shopinvader
@@ -4626,6 +4596,17 @@ msgstr ""
 msgid ""
 "This field is used to search on email address as the primary email field can"
 " contain more than strictly an email address."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__website_unique_key
+msgid ""
+"This identifier should be provided by each REST request through a WEBSITE-"
+"UNIQUE-KEY http header to identify the target backend. If not provided by "
+"the request, you must pu in place a way tolookup the target request for a "
+"given request by overriding themethod _get_backend into the service context "
+"provider component. The shopinvader_auth_api_key and shopinvader_auth_jwt "
+"addons provides a fallback mechanism in such a case."
 msgstr ""
 
 #. module: shopinvader
@@ -4710,6 +4691,13 @@ msgstr ""
 msgid ""
 "This user will be responsible of the next activities related to logistic "
 "operations for this product."
+msgstr ""
+
+#. module: shopinvader
+#: code:addons/shopinvader/models/shopinvader_backend.py:0
+#: model:ir.model.constraint,message:shopinvader.constraint_shopinvader_backend_unique_website_unique_key
+#, python-format
+msgid "This website unique key already exists in database"
 msgstr ""
 
 #. module: shopinvader
@@ -4959,11 +4947,6 @@ msgid "Use external authentication providers (OAuth)"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__user_id
-msgid "User"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__user_ids
 msgid "Users"
 msgstr ""
@@ -5138,6 +5121,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__website_public_name
 msgid "Website Public Name"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__website_unique_key
+msgid "Website Unique Key"
 msgstr ""
 
 #. module: shopinvader
