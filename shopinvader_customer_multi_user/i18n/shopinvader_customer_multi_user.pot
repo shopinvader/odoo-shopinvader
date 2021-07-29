@@ -74,6 +74,17 @@ msgid "ID"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_res_partner__invader_address_share_policy
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_res_users__invader_address_share_policy
+#: model:ir.model.fields,help:shopinvader_customer_multi_user.field_shopinvader_partner__invader_address_share_policy
+msgid ""
+"In a multi user environment, controls who can view this address\n"
+"\n"
+"* `Public`: Shared among all company's users.\n"
+"* `Private`: Only the user who created it and company's admin users.\n"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
 #: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_partner__invader_user_token
 #: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_users__invader_user_token
 #: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__invader_user_token
@@ -164,8 +175,25 @@ msgid "Permissions"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__res_partner__invader_address_share_policy__private
+msgid "Private"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user.selection__res_partner__invader_address_share_policy__public
+msgid "Public"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_multi_user.res_partner_view_form
 msgid "Re-generate token"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_partner__invader_address_share_policy
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_res_users__invader_address_share_policy
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user.field_shopinvader_partner__invader_address_share_policy
+msgid "Shop Address Share Policy"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user
