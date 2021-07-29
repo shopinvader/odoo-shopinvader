@@ -39,40 +39,76 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
             cls.all_invoices |= sale._create_invoices()
 
         # Create address per each partner
-        cls.address_company = cls.env["res.partner"].create(
+        ResPartner = cls.env["res.partner"]
+        cls.address_company = ResPartner.create(
             {
+                "name": "Delivery Address Company",
                 "parent_id": cls.company.id,
                 "type": "delivery",
-                "name": "Delivery Address Company",
+                "invader_address_share_policy": "public",
             }
         )
-        cls.address_user1 = cls.env["res.partner"].create(
+        cls.address_user1_public = ResPartner.create(
             {
+                "name": "Delivery Address User 1 (public)",
                 "parent_id": cls.user_binding.record_id.id,
                 "type": "delivery",
-                "name": "Delivery Address User 1",
+                "invader_address_share_policy": "public",
             }
         )
-        cls.address_user2 = cls.env["res.partner"].create(
+        cls.address_user1_private = ResPartner.create(
             {
+                "name": "Delivery Address User 1 (private)",
+                "parent_id": cls.user_binding.record_id.id,
+                "type": "delivery",
+                "invader_address_share_policy": "private",
+            }
+        )
+        cls.address_user2_public = ResPartner.create(
+            {
+                "name": "Delivery Address User 2 (public)",
                 "parent_id": cls.user_binding2.record_id.id,
                 "type": "delivery",
-                "name": "Delivery Address User 2",
+                "invader_address_share_policy": "public",
             }
         )
-        cls.address_user3 = cls.env["res.partner"].create(
+        cls.address_user2_private = ResPartner.create(
             {
+                "name": "Delivery Address User 2 (private)",
+                "parent_id": cls.user_binding2.record_id.id,
+                "type": "delivery",
+                "invader_address_share_policy": "private",
+            }
+        )
+        cls.address_user3_public = ResPartner.create(
+            {
+                "name": "Delivery Address User 3 (public)",
                 "parent_id": cls.user_binding3.record_id.id,
                 "type": "delivery",
-                "name": "Delivery Address User 3",
+                "invader_address_share_policy": "public",
+            }
+        )
+        cls.address_user3_private = ResPartner.create(
+            {
+                "name": "Delivery Address User 3 (private)",
+                "parent_id": cls.user_binding3.record_id.id,
+                "type": "delivery",
+                "invader_address_share_policy": "private",
             }
         )
         cls.all_addresses = (
             cls.address_company
-            + cls.address_user1
-            + cls.address_user2
-            + cls.address_user3
+            + cls.address_user1_public
+            + cls.address_user1_private
+            + cls.address_user2_public
+            + cls.address_user2_private
+            + cls.address_user3_public
+            + cls.address_user3_private
         )
+        cls.all_public_addresses = cls.all_addresses.filtered(
+            lambda r: r.invader_address_share_policy == "public"
+        )
+        cls.all_private_addresses = cls.all_addresses - cls.all_public_addresses
 
     def _get_service(self, partner, usage):
         with self.work_on_services(
@@ -99,8 +135,12 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
                 {found}
             """.format(
                 partner=partner,
-                expected=" + ".join(["%s (%d)" % (x.name, x.id) for x in expected]),
-                found=" + ".join(["%s (%d)" % (x["name"], x["id"]) for x in found]),
+                expected=("\n" + " " * 16).join(
+                    ["%s (%d)" % (x.name, x.id) for x in expected]
+                ),
+                found=("\n" + " " * 16).join(
+                    ["%s (%d)" % (x["name"], x["id"]) for x in found]
+                ),
             ),
         )
 
@@ -147,9 +187,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         self._test_sale(partner, self.all_orders)
         self._test_invoice(partner, self.all_invoices)
 
-    def _test_user_direct_child_of_company__record_id(
-        self, partner, expected_addresses=None
-    ):
+    def _test_user_direct_child_of_company__record_id(self, partner):
         self._test_address(
             partner,
             partner + partner.child_ids.filtered(lambda x: not x.shopinvader_bind_ids),
@@ -167,6 +205,8 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
 
     def test_user_direct_child_of_company__record_id(self):
         """Direct child sees only its own records."""
+        # For this test, consider all addresses as private
+        self.all_public_addresses.write({"invader_address_share_policy": "private"})
         partner = self.user_binding.record_id
         self._test_user_direct_child_of_company__record_id(partner)
         partner = self.user_binding2.record_id
@@ -189,37 +229,53 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
     def test_user_direct_child_of_company__parent_id(self):
         """Direct child sees only its own records and the ones from direct parent."""
         self.backend.multi_user_records_policy = "parent_id"
+        # Case 1: User 1 sees only its own records, the ones from its direct parent,
+        # and the publicly shared ones from their sibilings
         partner = self.user_binding.record_id
         expected_addresses = (
-            self.company + self.address_company + partner + self.address_user1
+            partner
+            | self.company
+            | self.address_company
+            | self.address_user1_private
+            | self.all_public_addresses
         )
         self._test_user_direct_child_of_company__parent_id(
             partner, self.company, expected_addresses=expected_addresses
         )
+        # Case 2: User 2 sees only its own records, the ones from its direct parent,
+        # and the publicly shared ones from their sibilings
         partner = self.user_binding2.record_id
         expected_addresses = (
-            self.company + self.address_company + partner + self.address_user2
+            partner
+            | self.company
+            | self.address_company
+            | self.address_user2_private
+            | self.all_public_addresses
         )
         self._test_user_direct_child_of_company__parent_id(
             partner, self.company, expected_addresses=expected_addresses
         )
+        # Case 3: User 3 sees only its own records, the ones from its direct parent,
+        # and the publicly shared ones from their sibilings
         partner = self.user_binding3.record_id
         expected_addresses = (
             partner
-            + self.address_user3
-            + self.user_binding2.record_id
-            + self.address_user2
+            | self.user_binding2.record_id
+            | self.address_user3_private
+            | self.address_user3_public
+            | self.address_user2_public
         )
         self._test_user_direct_child_of_company__parent_id(
             partner,
             self.user_binding2.record_id,
             expected_addresses=expected_addresses,
         )
-        # main partner is the parent in this case
+        # Case 4: main partner is the parent in this case
         # but if we set the company, then they can see records from the company as well
         self.user_binding3.main_partner_id = self.company
-        expected_addresses += self.company + self.address_company
-        # self.user_binding3.with_context(foo=1)._make_address_domain()
+        expected_addresses |= (
+            self.company | self.address_company | self.all_public_addresses
+        )
         self._test_user_direct_child_of_company__parent_id(
             partner,
             self.company + self.user_binding2.record_id,
@@ -229,30 +285,40 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
     def test_user_direct_child_of_company__main_partner_id(self):
         """Direct child sees only its own records and the ones from main partner."""
         self.backend.multi_user_records_policy = "main_partner_id"
-
+        # Case 1: User 1 sees only its own records, the ones from its main partner,
+        # and the publicly shared ones from their sibilings
         partner = self.user_binding.record_id
         expected_addresses = (
-            self.company + self.address_company + partner + self.address_user1
+            partner
+            | self.company
+            | self.address_company
+            | self.address_user1_private
+            | self.all_public_addresses
         )
         self._test_user_direct_child_of_company__parent_id(
             partner, self.company, expected_addresses=expected_addresses
         )
-
+        # Case 2: User 2 sees only its own records, the ones from its main partner,
+        # and the publicly shared ones from their sibilings
         partner = self.user_binding2.record_id
         expected_addresses = (
-            self.company + self.address_company + partner + self.address_user2
+            partner
+            | self.company
+            | self.address_company
+            | self.address_user2_private
+            | self.all_public_addresses
         )
         self._test_user_direct_child_of_company__parent_id(
             partner, self.company, expected_addresses=expected_addresses
         )
-
-        # Change main partner to user 1
+        # Case 3: Change User 2's main partner to user 1
         self.user_binding2.main_partner_id = self.user_binding.record_id
         expected_addresses = (
             partner
-            + self.address_user2
-            + self.address_user1
-            + self.user_binding.record_id
+            | self.address_user2_private
+            | self.address_user2_public
+            | self.address_user1_public
+            | self.user_binding.record_id
         )
         self._test_user_direct_child_of_company__parent_id(
             partner,
@@ -262,22 +328,29 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         self.assertEqual(
             self.user_binding3.main_partner_id, self.user_binding2.record_id
         )
+        # Case 4: User 3 sees only its own records, the ones from its main partner,
+        # and the publicly shared ones from their sibilings
         partner = self.user_binding3.record_id
         expected_addresses = (
             partner
-            + self.address_user3
-            + self.user_binding2.record_id
-            + self.address_user2
+            | self.address_user3_private
+            | self.address_user3_public
+            | self.address_user2_public
+            | self.user_binding2.record_id
         )
         self._test_user_direct_child_of_company__parent_id(
             partner,
             self.user_binding2.record_id,
             expected_addresses=expected_addresses,
         )
-        # Change main partner to company
+        # Case 5: Change User 3's main partner to company
         self.user_binding3.main_partner_id = self.company
         expected_addresses = (
-            self.company + self.address_company + partner + self.address_user3
+            partner
+            | self.company
+            | self.address_company
+            | self.address_user3_private
+            | self.all_public_addresses
         )
         self._test_user_direct_child_of_company__parent_id(
             partner, self.company, expected_addresses=expected_addresses

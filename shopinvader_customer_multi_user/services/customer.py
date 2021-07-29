@@ -9,7 +9,7 @@ class CustomerService(Component):
     _inherit = "shopinvader.customer.service"
 
     def _prepare_params(self, params, mode="create"):
-        vals = super()._prepare_params(params)
+        vals = super()._prepare_params(params, mode=mode)
         company_token = vals.pop("company_token", None)
         if company_token and self.shopinvader_backend.customer_multi_user:
             # retrieve the company
