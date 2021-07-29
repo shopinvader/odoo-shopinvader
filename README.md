@@ -24,7 +24,7 @@ addon | version | summary
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.1.1 | Shopinvader Assortment
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
-[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.1.0 | Enable registration of multiple users per each company customer.
+[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.1.1 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_validate](shopinvader_customer_multi_user_validate/) | 14.0.1.1.0 | Glue module for `shopinvader_customer_validate` and `shopinvader_customer_multi_user`.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 14.0.1.0.0 | Integrate customer multi user and wishlist.
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.1.1 | Provide configuration and machinery to validate customers.
