@@ -1,0 +1,59 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_auth_api_key
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_auth_api_key
+#: code:addons/shopinvader_auth_api_key/models/shopinvader_backend.py:0
+#: model:ir.model.constraint,message:shopinvader_auth_api_key.constraint_shopinvader_backend_auth_api_key_id_uniq
+#, python-format
+msgid "An authentication API Key can be used by only one backend."
+msgstr ""
+
+#. module: shopinvader_auth_api_key
+#: model:ir.model.fields,field_description:shopinvader_auth_api_key.field_shopinvader_backend__auth_api_key_id
+msgid "Api Key"
+msgstr ""
+
+#. module: shopinvader_auth_api_key
+#: model:ir.model.fields,help:shopinvader_auth_api_key.field_shopinvader_backend__auth_api_key_id
+msgid ""
+"Api_key section used for the authentication ofcalls to services dedicated to"
+" this backend"
+msgstr ""
+
+#. module: shopinvader_auth_api_key
+#: model:ir.model.fields,field_description:shopinvader_auth_api_key.field_shopinvader_backend__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_auth_api_key
+#: model:ir.model.fields,field_description:shopinvader_auth_api_key.field_shopinvader_backend__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_auth_api_key
+#: model:ir.model.fields,field_description:shopinvader_auth_api_key.field_shopinvader_backend____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_auth_api_key
+#: model:ir.model,name:shopinvader_auth_api_key.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_auth_api_key
+#: code:addons/shopinvader_auth_api_key/components/service_context_provider.py:0
+#, python-format
+msgid "The given partner is not found!"
+msgstr ""
