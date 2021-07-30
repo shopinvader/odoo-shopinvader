@@ -19,3 +19,4 @@ class BaseShopinvaderService(AbstractComponent):
                 "style": "simple",
             }
         )
+        return defaults
