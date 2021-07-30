@@ -59,6 +59,7 @@
                                     name="location"
                                     placeholder="e.g. https://ecommerce.shopinvader.com"
                                 />
+                                <field name="website_unique_key" />
                             </group>
                         </page>
                         <page name="search_eng" string="Search engine">
