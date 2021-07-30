@@ -75,23 +75,23 @@ class CommonSettingsCase(CommonCase):
 
 class AddressTestCase(object):
     def test_country(self):
-        res = self.settings_service.dispatch("get_country")
+        res = self.settings_service.dispatch("countries")
         self._check_names_identical(res, EXPECTED_GET_COUNTRY)
 
     def test_title(self):
-        res = self.settings_service.dispatch("get_title")
+        res = self.settings_service.dispatch("titles")
         self._check_names_identical(res, EXPECTED_GET_TITLE)
 
     def test_industry(self):
-        res = self.settings_service.dispatch("get_industry")
+        res = self.settings_service.dispatch("industries")
         self._check_names_identical(res, EXPECTED_GET_INDUSTRY)
 
     def test_currency(self):
-        res = self.settings_service.dispatch("get_currency")
+        res = self.settings_service.dispatch("currencies")
         self._check_names_identical(res, EXPECTED_GET_CURRENCY)
 
     def test_lang(self):
-        res = self.settings_service.dispatch("get_lang")
+        res = self.settings_service.dispatch("languages")
         self._check_names_identical(res, EXPECTED_GET_LANG)
 
     def test_all(self):

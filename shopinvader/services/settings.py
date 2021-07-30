@@ -6,22 +6,22 @@ from odoo.addons.component.core import Component
 
 
 class ExportSettingsService(Component):
-    """Shopinvader service to export allowed settings"""
+    """Shopinvader service to expose allowed settings"""
 
     _inherit = [
         "base.shopinvader.service",
     ]
-    _name = "shopinvader.export.settings.service"
+    _name = "shopinvader.settings.service"
     _usage = "settings"
     _description = __doc__
 
     def get(self):
         return {
-            **self._get_country(),
-            **self._get_title(),
-            **self._get_industry(),
-            **self._get_currency(),
-            **self._get_lang(),
+            **self._get_countries(),
+            **self._get_titles(),
+            **self._get_industries(),
+            **self._get_currencies(),
+            **self._get_languages(),
         }
 
     def _jsonify_fields_country(self):
@@ -31,18 +31,18 @@ class ExportSettingsService(Component):
             "id",
         ]
 
-    def _get_country(self):
+    def _get_countries(self):
         countries = self.shopinvader_backend.allowed_country_ids.jsonify(
             self._jsonify_fields_country()
         )
         return {"countries": countries}
 
     @restapi.method(
-        [(["/country/get"], "GET")],
+        [(["/countries"], "GET")],
         auth="api_key",
     )
-    def get_country(self):
-        return self._get_country()
+    def countries(self):
+        return self._get_countries()
 
     def _jsonify_fields_title(self):
         return [
@@ -50,17 +50,17 @@ class ExportSettingsService(Component):
             "name",
         ]
 
-    def _get_title(self):
+    def _get_titles(self):
         titles = self.shopinvader_backend.partner_title_ids.jsonify(
             self._jsonify_fields_title()
         )
         return {"titles": titles}
 
     @restapi.method(
-        [(["/title/get"], "GET")],
+        [(["/titles"], "GET")],
     )
-    def get_title(self):
-        return self._get_title()
+    def titles(self):
+        return self._get_titles()
 
     def _jsonify_fields_industry(self):
         return [
@@ -68,17 +68,17 @@ class ExportSettingsService(Component):
             "name",
         ]
 
-    def _get_industry(self):
+    def _get_industries(self):
         industries = self.shopinvader_backend.partner_industry_ids.jsonify(
             self._jsonify_fields_industry()
         )
         return {"industries": industries}
 
     @restapi.method(
-        [(["/industry/get"], "GET")],
+        [(["/industries"], "GET")],
     )
-    def get_industry(self):
-        return self._get_industry()
+    def industries(self):
+        return self._get_industries()
 
     def _jsonify_fields_currency(self):
         return [
@@ -86,17 +86,17 @@ class ExportSettingsService(Component):
             "name",
         ]
 
-    def _get_currency(self):
+    def _get_currencies(self):
         currencies = self.shopinvader_backend.currency_ids.jsonify(
             self._jsonify_fields_currency()
         )
         return {"currencies": currencies}
 
     @restapi.method(
-        [(["/currency/get"], "GET")],
+        [(["/currencies"], "GET")],
     )
-    def get_currency(self):
-        return self._get_currency()
+    def currencies(self):
+        return self._get_currencies()
 
     def _jsonify_fields_lang(self):
         return [
@@ -105,14 +105,14 @@ class ExportSettingsService(Component):
             "iso_code",
         ]
 
-    def _get_lang(self):
+    def _get_languages(self):
         languages = self.shopinvader_backend.lang_ids.jsonify(
             self._jsonify_fields_lang()
         )
         return {"languages": languages}
 
     @restapi.method(
-        [(["/lang/get"], "GET")],
+        [(["/languages"], "GET")],
     )
-    def get_lang(self):
-        return self._get_lang()
+    def languages(self):
+        return self._get_languages()
