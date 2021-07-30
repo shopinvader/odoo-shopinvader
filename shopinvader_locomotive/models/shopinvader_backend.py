@@ -25,7 +25,6 @@ class ShopinvaderBackend(models.Model):
     handle = fields.Char(
         help="Locomotive site handle (see Developers section in " "Locomotive site)"
     )
-    currency_ids = fields.Many2many(comodel_name="res.currency", string="Currency")
     visible_filter_ids = fields.Many2many(
         comodel_name="product.filter", compute="_compute_visible_filter_ids"
     )

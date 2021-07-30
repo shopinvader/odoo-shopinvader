@@ -206,6 +206,8 @@ class ShopinvaderBackend(models.Model):
         "provides a fallback mechanism in such a case.",
         default=lambda self: self._default_website_unique_key(),
     )
+    currency_ids = fields.Many2many(comodel_name="res.currency", string="Currency")
+
     _sql_constraints = [
         (
             "unique_website_unique_key",
