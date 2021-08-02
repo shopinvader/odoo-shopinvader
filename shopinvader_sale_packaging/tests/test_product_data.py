@@ -59,17 +59,25 @@ class TestProductPackagingData(CommonCase):
         return [
             make_pkg_values(
                 self.pkg_pallet,
+                can_be_sold=self.pkg_pallet.can_be_sold,
                 contained=[make_pkg_values(self.pkg_big_box, qty=10,)],
             ),
             make_pkg_values(
                 self.pkg_big_box,
+                can_be_sold=self.pkg_pallet.can_be_sold,
                 contained=[make_pkg_values(self.pkg_box, qty=4)],
             ),
             make_pkg_values(
                 self.pkg_box,
+                can_be_sold=self.pkg_pallet.can_be_sold,
                 contained=[make_pkg_values(self.product.uom_id, qty=50)],
             ),
-            make_pkg_values(self.product.uom_id, qty=1, contained=None),
+            make_pkg_values(
+                self.product.uom_id,
+                can_be_sold=not self.product.sell_only_by_packaging,
+                qty=1.0,
+                contained=None,
+            ),
         ]
 
     def test_product_data(self):
@@ -93,3 +101,20 @@ class TestProductPackagingData(CommonCase):
         expected[1]["contained"][0]["qty"] = 20.0
         expected[2]["contained"][0]["qty"] = 20.0
         self.assertEqual(self.shop_variant.packaging, expected)
+
+    def test_product_data_recompute3(self):
+        self.assertIn(
+            self.pkg_pallet.id, [x["id"] for x in self.shop_variant.packaging]
+        )
+        self.pkg_pallet.shopinvader_display = False
+        self.assertNotIn(
+            self.pkg_pallet.id, [x["id"] for x in self.shop_variant.packaging]
+        )
+
+    def test_product_data_recompute4(self):
+        unit = self.shop_variant.packaging[-1]
+        self.assertTrue(unit["is_unit"])
+        self.assertTrue(unit["can_be_sold"])
+        self.product.sell_only_by_packaging = True
+        unit = self.shop_variant.packaging[-1]
+        self.assertFalse(unit["can_be_sold"])
