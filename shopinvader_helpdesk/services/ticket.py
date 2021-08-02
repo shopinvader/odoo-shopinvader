@@ -3,8 +3,15 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-from odoo import _
+import base64
+import datetime
 
+from babel.dates import format_datetime
+
+from odoo import _
+from odoo.http import request
+
+from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
@@ -43,6 +50,27 @@ class TicketService(Component):
     def cancel(self, _id):
         self._get(_id).unlink()
         return self.search()
+
+    @restapi.method(
+        routes=[(["/<int:_id>/upload"], "POST")],
+        input_param=restapi.BinaryData(
+            mediatypes=["application/pdf", "image/jpeg", "image/png"], required=True
+        ),
+    )
+    def upload(self, _id, **params):
+        record = self._get(_id)
+        req = request.httprequest
+        self.env["ir.attachment"].create(
+            {
+                "res_id": record.id,
+                "res_model": record._name,
+                "name": "Client upload: {}".format(
+                    format_datetime(datetime.datetime.now())
+                ),
+                "datas": base64.encodebytes(req.get_data()),
+            }
+        )
+        return self._to_json(record)
 
     def _validator_get(self):
         return {}
@@ -105,6 +133,7 @@ class TicketService(Component):
                 "last_stage_update",
                 ("category_id:category", ["id", "name"]),
                 ("stage_id:stage", ["id", "name"]),
+                ("attachment_ids:attachments", ["id", "name"]),
             ]
         )
         return res
