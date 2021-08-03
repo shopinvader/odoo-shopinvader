@@ -3,15 +3,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-import base64
-import datetime
-
-from babel.dates import format_datetime
-
 from odoo import _
-from odoo.http import request
+from odoo.exceptions import AccessError, UserError
 
-from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
@@ -20,7 +14,10 @@ class TicketService(Component):
     """Shopinvader service to manage helpdesk tickets."""
 
     _name = "shopinvader.helpdesk.ticket.service"
-    _inherit = "shopinvader.mail.thread.abstract.service"
+    _inherit = [
+        "shopinvader.mail.thread.abstract.service",
+        "shopinvader.abstract.attachment.service",
+    ]
     _usage = "helpdesk.ticket"
     _expose_model = "helpdesk.ticket"
     _description = __doc__
@@ -37,40 +34,16 @@ class TicketService(Component):
 
     # pylint: disable=W8106
     def create(self, **params):
-        vals = self._prepare_params(params.copy())
-        record = self.env[self._expose_model].create(vals)
-        return {"data": self._to_json(record)}
+        return super().create(**params)
 
     def update(self, _id, **params):
-        # TODO: delete and only allow to add attachments
         record = self._get(_id)
         record.write(self._prepare_params(params.copy(), mode="update"))
         return self.search()
 
     def cancel(self, _id):
-        self._get(_id).unlink()
+        self._get(_id).unlink()  # TODO: cancel instead of delete
         return self.search()
-
-    @restapi.method(
-        routes=[(["/<int:_id>/upload"], "POST")],
-        input_param=restapi.BinaryData(
-            mediatypes=["application/pdf", "image/jpeg", "image/png"], required=True
-        ),
-    )
-    def upload(self, _id, **params):
-        record = self._get(_id)
-        req = request.httprequest
-        self.env["ir.attachment"].create(
-            {
-                "res_id": record.id,
-                "res_model": record._name,
-                "name": "Client upload: {}".format(
-                    format_datetime(datetime.datetime.now())
-                ),
-                "datas": base64.encodebytes(req.get_data()),
-            }
-        )
-        return self._to_json(record)
 
     def _validator_get(self):
         return {}
@@ -88,23 +61,37 @@ class TicketService(Component):
         }
 
     def _validator_create(self):
-        return {
-            "name": {"type": "string", "required": True, "empty": False},
-            "description": {"type": "string", "required": True, "empty": False},
-            "partner_email": {
-                "type": "string",
-                "nullable": True,
-            },
-            "partner_name": {
-                "type": "string",
-                "nullable": True,
-            },
-            "category_id": {
-                "type": "integer",
-                "coerce": to_int,
-                "nullable": True,
-            },
-        }
+        res = super()._validator_create()
+        res.update(
+            {
+                "name": {"type": "string", "required": True, "empty": False},
+                "description": {"type": "string", "required": True, "empty": False},
+                "partner": {
+                    "type": "dict",
+                    "schema": {
+                        "email": {
+                            "type": "string",
+                            "nullable": True,
+                        },
+                        "name": {
+                            "type": "string",
+                            "nullable": True,
+                        },
+                    },
+                },
+                "category": {
+                    "type": "dict",
+                    "schema": {
+                        "id": {
+                            "coerce": to_int,
+                            "nullable": True,
+                            "type": "integer",
+                        },
+                    },
+                },
+            }
+        )
+        return res
 
     def _prepare_params(self, params, mode="create"):
         if mode == "create":
@@ -112,14 +99,26 @@ class TicketService(Component):
             params["channel_id"] = self.shopinvader_backend.helpdesk_channel_id.id
             if self.partner_user:
                 params["partner_id"] = self.partner_user.id
-            elif params.get("partner_email"):
-                params["partner_id"] = (
-                    self.env["res.partner"]
-                    .find_or_create(params["partner_email"], assert_valid_email=True)
-                    .id
-                )
-            else:
-                raise AttributeError(_("The email is mandatory"))
+            elif params.get("partner"):
+                partner = params.pop("partner")
+                params["partner_name"] = partner.pop("name")
+                if partner.get("email"):
+                    try:
+                        params["partner_id"] = (
+                            self.env["res.partner"]
+                            .find_or_create(partner["email"], assert_valid_email=True)
+                            .id
+                        )
+                        params["partner_email"] = partner.pop("email")
+                    except ValueError:
+                        raise UserError(_("The email is not valid"))
+                else:
+                    raise UserError(_("The partner is mandatory"))
+        for key in ["category"]:
+            if key in params:
+                val = params.pop(key)
+                if val.get("id"):
+                    params["%s_id" % key] = val["id"]
         return params
 
     def _json_parser(self):
@@ -133,7 +132,6 @@ class TicketService(Component):
                 "last_stage_update",
                 ("category_id:category", ["id", "name"]),
                 ("stage_id:stage", ["id", "name"]),
-                ("attachment_ids:attachments", ["id", "name"]),
             ]
         )
         return res
@@ -141,3 +139,10 @@ class TicketService(Component):
     def _to_json(self, ticket, **kw):
         data = ticket.jsonify(self._json_parser())
         return data
+
+    def _get_base_search_domain(self):
+        if not self.partner_user:
+            raise AccessError(
+                _("You should be connected to search for Helpdesk Tickets")
+            )
+        return [("partner_id", "=", self.partner_user.id)]

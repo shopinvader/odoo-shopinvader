@@ -5,8 +5,10 @@
 
 from odoo.addons.component.core import AbstractComponent
 
+from .abstract_attachment import AbstractAttachmentService
 
-class MailThreadService(AbstractComponent):
+
+class AbstractMailThreadService(AbstractComponent):
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.mail.thread.abstract.service"
 
@@ -17,13 +19,20 @@ class MailThreadService(AbstractComponent):
         return self._to_json(record)
 
     def _validator_send_message(self):
-        return {
-            "body": {"type": "string", "required": True},
-        }
+        res = AbstractAttachmentService._validator_attachment(self)
+        res.update(
+            {
+                "body": {"type": "string", "required": True},
+            }
+        )
+        return res
 
     def _prepare_message_params(self, record, params):
         params["model"] = self._expose_model
         params["author_id"] = self.partner_user.id
+        if params.get("attachments"):
+            attachments = params.pop("attachments")
+            params["attachment_ids"] = [(6, 0, [item["id"] for item in attachments])]
         return params
 
     def _json_parser(self):
