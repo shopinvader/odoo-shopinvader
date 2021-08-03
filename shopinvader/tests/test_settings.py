@@ -54,16 +54,12 @@ EXPECTED_GET_CURRENCY = ("currencies", ["EUR", "USD"])
 EXPECTED_GET_LANG = ("languages", ["English (US)"])
 
 
-class CommonSettingsCase(CommonCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.backend_1 = cls.env.ref("shopinvader.backend_1")
-        cls.partner = cls.env.ref("shopinvader.partner_1")
-
+class SettingsTestCase(CommonCase):
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)
-        with self.work_on_services(partner=self.partner) as work:
+        with self.work_on_services(
+            partner=self.env.ref("shopinvader.partner_1")
+        ) as work:
             self.settings_service = work.component(usage="settings")
 
     def _check_names_identical(self, to_check, expected_vals):
@@ -72,8 +68,6 @@ class CommonSettingsCase(CommonCase):
         actual_vals = [el["name"] for el in to_check[resource_name]].sort()
         self.assertEqual(expected_vals, actual_vals)
 
-
-class SettingsTestCase(object):
     def test_country(self):
         res = self.settings_service.dispatch("countries")
         self._check_names_identical(res, EXPECTED_GET_COUNTRY)
@@ -101,7 +95,3 @@ class SettingsTestCase(object):
         self._check_names_identical(res, EXPECTED_GET_INDUSTRY)
         self._check_names_identical(res, EXPECTED_GET_CURRENCY)
         self._check_names_identical(res, EXPECTED_GET_LANG)
-
-
-class AddressCase(CommonSettingsCase, AddressTestCase):
-    """ Test address"""
