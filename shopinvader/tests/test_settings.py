@@ -73,7 +73,7 @@ class CommonSettingsCase(CommonCase):
         self.assertEqual(expected_vals, actual_vals)
 
 
-class AddressTestCase(object):
+class SettingsTestCase(object):
     def test_country(self):
         res = self.settings_service.dispatch("countries")
         self._check_names_identical(res, EXPECTED_GET_COUNTRY)
