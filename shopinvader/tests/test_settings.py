@@ -89,7 +89,7 @@ class SettingsTestCase(CommonCase):
         self._check_names_identical(res, EXPECTED_GET_LANG)
 
     def test_all(self):
-        res = self.settings_service.dispatch("get")
+        res = self.settings_service.dispatch("get_all")
         self._check_names_identical(res, EXPECTED_GET_COUNTRY)
         self._check_names_identical(res, EXPECTED_GET_TITLE)
         self._check_names_identical(res, EXPECTED_GET_INDUSTRY)

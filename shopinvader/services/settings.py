@@ -25,11 +25,11 @@ class ExportSettingsService(Component):
         }
 
     @restapi.method(
-        [(["/", "/get"], "GET")],
+        [(["/", "/all"], "GET")],
         output_param=restapi.CerberusValidator("_get_all_schema"),
         auth="public",
     )
-    def get(self):
+    def get_all(self):
         return {
             **self._get_countries(),
             **self._get_titles(),
