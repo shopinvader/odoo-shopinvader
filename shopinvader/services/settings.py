@@ -15,8 +15,18 @@ class ExportSettingsService(Component):
     _usage = "settings"
     _description = __doc__
 
+    def _get_all_schema(self):
+        return {
+            **self._get_countries_schema(),
+            **self._get_titles_schema(),
+            **self._get_industries_schema(),
+            **self._get_currencies_schema(),
+            **self._get_languages_schema(),
+        }
+
     @restapi.method(
         [(["/", "/get"], "GET")],
+        output_param=restapi.CerberusValidator("_get_all_schema"),
         auth="public",
     )
     def get(self):
@@ -41,8 +51,38 @@ class ExportSettingsService(Component):
         )
         return {"countries": countries}
 
+    def _get_countries_schema(self):
+        return {
+            "countries": {
+                "type": "list",
+                "required": True,
+                "nullable": False,
+                "schema": {
+                    "type": "dict",
+                    "schema": {
+                        "name": {
+                            "type": "string",
+                            "required": True,
+                            "nullable": False,
+                        },
+                        "code": {
+                            "type": "string",
+                            "required": True,
+                            "nullable": False,
+                        },
+                        "id": {
+                            "type": "integer",
+                            "required": True,
+                            "nullable": False,
+                        },
+                    },
+                },
+            }
+        }
+
     @restapi.method(
         [(["/countries"], "GET")],
+        output_param=restapi.CerberusValidator("_get_countries_schema"),
         auth="public",
     )
     def countries(self):
@@ -60,8 +100,33 @@ class ExportSettingsService(Component):
         )
         return {"titles": titles}
 
+    def _get_titles_schema(self):
+        return {
+            "titles": {
+                "type": "list",
+                "required": True,
+                "nullable": False,
+                "schema": {
+                    "type": "dict",
+                    "schema": {
+                        "name": {
+                            "type": "string",
+                            "required": True,
+                            "nullable": False,
+                        },
+                        "id": {
+                            "type": "integer",
+                            "required": True,
+                            "nullable": False,
+                        },
+                    },
+                },
+            }
+        }
+
     @restapi.method(
         [(["/titles"], "GET")],
+        output_param=restapi.CerberusValidator("_get_titles_schema"),
         auth="public",
     )
     def titles(self):
@@ -79,8 +144,33 @@ class ExportSettingsService(Component):
         )
         return {"industries": industries}
 
+    def _get_industries_schema(self):
+        return {
+            "industries": {
+                "type": "list",
+                "required": True,
+                "nullable": False,
+                "schema": {
+                    "type": "dict",
+                    "schema": {
+                        "name": {
+                            "type": "string",
+                            "required": True,
+                            "nullable": False,
+                        },
+                        "id": {
+                            "type": "integer",
+                            "required": True,
+                            "nullable": False,
+                        },
+                    },
+                },
+            }
+        }
+
     @restapi.method(
         [(["/industries"], "GET")],
+        output_param=restapi.CerberusValidator("_get_industries_schema"),
         auth="public",
     )
     def industries(self):
@@ -98,8 +188,33 @@ class ExportSettingsService(Component):
         )
         return {"currencies": currencies}
 
+    def _get_currencies_schema(self):
+        return {
+            "currencies": {
+                "type": "list",
+                "required": True,
+                "nullable": False,
+                "schema": {
+                    "type": "dict",
+                    "schema": {
+                        "name": {
+                            "type": "string",
+                            "required": True,
+                            "nullable": False,
+                        },
+                        "id": {
+                            "type": "integer",
+                            "required": True,
+                            "nullable": False,
+                        },
+                    },
+                },
+            }
+        }
+
     @restapi.method(
         [(["/currencies"], "GET")],
+        output_param=restapi.CerberusValidator("_get_currencies_schema"),
         auth="public",
     )
     def currencies(self):
@@ -118,8 +233,38 @@ class ExportSettingsService(Component):
         )
         return {"languages": languages}
 
+    def _get_languages_schema(self):
+        return {
+            "languages": {
+                "type": "list",
+                "required": True,
+                "nullable": False,
+                "schema": {
+                    "type": "dict",
+                    "schema": {
+                        "name": {
+                            "type": "string",
+                            "required": True,
+                            "nullable": False,
+                        },
+                        "id": {
+                            "type": "integer",
+                            "required": True,
+                            "nullable": False,
+                        },
+                        "iso_code": {
+                            "type": "string",
+                            "required": True,
+                            "nullable": False,
+                        },
+                    },
+                },
+            }
+        }
+
     @restapi.method(
         [(["/languages"], "GET")],
+        output_param=restapi.CerberusValidator("_get_languages_schema"),
         auth="public",
     )
     def languages(self):
