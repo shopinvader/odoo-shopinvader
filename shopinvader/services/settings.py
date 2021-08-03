@@ -15,6 +15,10 @@ class ExportSettingsService(Component):
     _usage = "settings"
     _description = __doc__
 
+    @restapi.method(
+        [(["/", "/get"], "GET")],
+        auth="public",
+    )
     def get(self):
         return {
             **self._get_countries(),
@@ -39,7 +43,7 @@ class ExportSettingsService(Component):
 
     @restapi.method(
         [(["/countries"], "GET")],
-        auth="api_key",
+        auth="public",
     )
     def countries(self):
         return self._get_countries()
@@ -58,6 +62,7 @@ class ExportSettingsService(Component):
 
     @restapi.method(
         [(["/titles"], "GET")],
+        auth="public",
     )
     def titles(self):
         return self._get_titles()
@@ -76,6 +81,7 @@ class ExportSettingsService(Component):
 
     @restapi.method(
         [(["/industries"], "GET")],
+        auth="public",
     )
     def industries(self):
         return self._get_industries()
@@ -94,6 +100,7 @@ class ExportSettingsService(Component):
 
     @restapi.method(
         [(["/currencies"], "GET")],
+        auth="public",
     )
     def currencies(self):
         return self._get_currencies()
@@ -113,6 +120,7 @@ class ExportSettingsService(Component):
 
     @restapi.method(
         [(["/languages"], "GET")],
+        auth="public",
     )
     def languages(self):
         return self._get_languages()
