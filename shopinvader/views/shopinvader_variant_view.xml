@@ -57,11 +57,12 @@
         <field name="model">shopinvader.variant</field>
         <field name="arch" type="xml">
              <tree string="Product" create="0">
-                <field name="backend_id" />
-                <field name="lang_id" />
-                <field name="default_code" />
+                <field name="default_code" optional="show" />
                 <field name="name" />
-                <field name="tmpl_record_id" />
+                <field name="backend_id" />
+                <field name="record_id" optional="hide" />
+                <field name="tmpl_record_id" optional="hide" />
+                <field name="lang_id" optional="show" />
              </tree>
         </field>
     </record>
@@ -92,7 +93,7 @@
                         </group>
                         <group name="variant">
                             <field name="default_code" />
-                            <field name="tmpl_record_id" invisible="1" />
+                            <field name="tmpl_record_id" />
                             <field name="record_id" />
                         </group>
                     </group>
