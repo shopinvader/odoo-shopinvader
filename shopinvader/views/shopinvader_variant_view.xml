@@ -31,11 +31,12 @@
         <field name="model">shopinvader.variant</field>
         <field name="arch" type="xml">
              <tree string="Product" create="0">
-                <field name="backend_id"/>
-                <field name="lang_id"/>
-                <field name="default_code"/>
-                <field name="name"/>
-                <field name="tmpl_record_id"/>
+                <field name="default_code" optional="show" />
+                <field name="name" />
+                <field name="backend_id" />
+                <field name="record_id" optional="hide" />
+                <field name="tmpl_record_id" optional="hide" />
+                <field name="lang_id" optional="show" />
              </tree>
         </field>
     </record>
@@ -46,14 +47,29 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
-                    <group name="variant">
-                            <field name="name"/>
-                            <field name="shopinvader_product_id"/>
-                            <field name="lang_id"/>
-                            <field name="default_code"/>
-                            <field name="backend_id"/>
-                            <field name="tmpl_record_id"/>
-                            <field name="record_id"/>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        text="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="oe_inline" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="backend">
+                            <field name="backend_id" />
+                            <field name="lang_id" />
+                            <field name="shopinvader_product_id" />
+                        </group>
+                        <group name="variant">
+                            <field name="default_code" />
+                            <field name="tmpl_record_id" />
+                            <field name="record_id" />
+                        </group>
                     </group>
                 </sheet>
             </form>
