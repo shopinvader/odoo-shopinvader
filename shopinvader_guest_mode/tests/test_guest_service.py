@@ -22,7 +22,6 @@ class TestGuestService(CommonCase):
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
             self.service = work.component(usage="guest")
-        self.shopinvader_config = self.env["shopinvader.config.settings"]
         self.backend.is_guest_mode_allowed = True
 
     def _create_guest(self):
@@ -39,9 +38,9 @@ class TestGuestService(CommonCase):
         # if we create a new guest with the same email, a new binding is
         # created and the first one is archived
         # moreover in no duplicate mode, the partner remains the same
-        self.shopinvader_config.create(
-            {"no_partner_duplicate": True}
-        ).execute()
+        self.env["ir.config_parameter"].sudo().set_param(
+            "shopinvader.no_partner_duplicate", "True"
+        )
         res = self.service.dispatch("create", params=self.data)["data"]
         new_partner = self.env["res.partner"].browse(res["id"])
         self.assertEqual(partner, new_partner)
