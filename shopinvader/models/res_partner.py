@@ -44,6 +44,7 @@ class ResPartner(models.Model):
     )
     parent_has_shopinvader_user = fields.Boolean(
         related="parent_id.has_shopinvader_user",
+        string="Parent Has Shopinvader User",
         help="This partner belongs to Shopinvader user.",
         store=True,
     )
