@@ -17,5 +17,5 @@ from . import shopinvader_notification
 from . import shopinvader_category
 from . import shopinvader_product
 from . import shopinvader_variant
-from . import shopinvader_config_settings
+from . import res_config_settings
 from . import res_partner

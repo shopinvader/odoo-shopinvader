@@ -97,9 +97,8 @@ class ShopinvaderPartner(models.Model):
 
     @api.model
     def _get_or_create_partner(self, vals):
-        config = self.env["shopinvader.config.settings"]
         partner = self.env["res.partner"].browse()
-        if not config.is_partner_duplication_allowed():
+        if not partner._is_partner_duplicate_allowed():
             domain = self._get_unique_partner_domain(vals)
             partner = partner.search(domain, limit=1)
         if partner:
