@@ -18,8 +18,8 @@
     ],
     "data": [
         "views/shopinvader_backend_view.xml",
-        "views/product_view.xml",
-        "views/product_category_view.xml",
+        "views/shopinvader_variant_view.xml",
+        "views/shopinvader_category_view.xml",
         "data/ir_export_product.xml",
     ],
     "installable": True,

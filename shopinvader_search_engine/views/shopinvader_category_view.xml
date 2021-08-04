@@ -7,9 +7,9 @@
     <field name="arch" type="xml">
         <field name="backend_id" position="after">
             <field name="index_id" />
-            <field name="sync_state" />
-            <field name="date_modified" />
-            <field name="date_syncronized" />
+            <field name="sync_state" optional="show" />
+            <field name="date_modified" optional="show" />
+            <field name="date_syncronized" optional="show" />
         </field>
     </field>
 </record>
