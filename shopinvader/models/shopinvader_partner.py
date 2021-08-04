@@ -13,9 +13,14 @@ class ShopinvaderPartner(models.Model):
     _description = "Shopinvader Partner"
     _inherit = "shopinvader.binding"
     _inherits = {"res.partner": "record_id"}
+    _check_company_auto = True
 
     record_id = fields.Many2one(
-        "res.partner", string="Partner", required=True, ondelete="restrict"
+        "res.partner",
+        string="Partner",
+        required=True,
+        ondelete="restrict",
+        check_company=True,
     )
     partner_email = fields.Char(
         related="record_id.email",

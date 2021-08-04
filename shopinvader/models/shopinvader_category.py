@@ -20,7 +20,10 @@ class ShopinvaderCategory(models.Model):
     _order = "sequence"
 
     record_id = fields.Many2one(
-        "product.category", required=True, ondelete="cascade", index=True
+        "product.category",
+        required=True,
+        ondelete="cascade",
+        index=True,
     )
     sequence = fields.Integer()
     meta_description = fields.Char()

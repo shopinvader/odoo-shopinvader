@@ -8,9 +8,9 @@
         <field name="name">Shopinvader Product multi-company</field>
         <field name="model_id" ref="model_shopinvader_product" />
         <field name="global" eval="True" />
-        <field
-            name="domain_force"
-        >['|',('backend_id.company_id','=',False),('backend_id.company_id','child_of',[user.company_id.id])]</field>
+        <field name="domain_force">
+            ['|', ('company_id','=',False), ('company_id','in',company_ids)]
+        </field>
     </record>
 
 </odoo>

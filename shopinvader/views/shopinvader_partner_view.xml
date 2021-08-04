@@ -14,6 +14,11 @@
                     <field name="backend_id" />
                     <field name="external_id" />
                     <field name="create_date" readonly="1" />
+                    <field
+                        name="company_id"
+                        widget="selection"
+                        groups="base.group_multi_company"
+                    />
                     <field name="sync_date" />
                 </group>
             </form>
@@ -33,6 +38,12 @@
                 <field name="backend_id" />
                 <field name="external_id" />
                 <field name="create_date" readonly="1" />
+                <field
+                    name="company_id"
+                    widget="selection"
+                    groups="base.group_multi_company"
+                    optional="show"
+                />
                 <field name="sync_date" />
             </tree>
         </field>
@@ -46,6 +57,7 @@
                 <field name="email" />
                 <field name="external_id" />
                 <field name="parent_id" />
+                <field name="company_id" groups="base.group_multi_company" />
                 <group string="Group By">
                     <filter
                         name="group_by_backend_id"

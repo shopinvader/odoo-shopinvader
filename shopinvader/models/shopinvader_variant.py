@@ -21,16 +21,22 @@ class ShopinvaderVariant(models.Model):
         "shopinvader.product": "shopinvader_product_id",
         "product.product": "record_id",
     }
+    _check_company_auto = True
 
     default_code = fields.Char(related="record_id.default_code", store=True)
     shopinvader_product_id = fields.Many2one(
-        "shopinvader.product", required=True, ondelete="cascade", index=True
+        "shopinvader.product",
+        required=True,
+        ondelete="cascade",
+        index=True,
+        check_company=True,
     )
     tmpl_record_id = fields.Many2one(
         string="Product template",
         related="shopinvader_product_id.record_id",
         store=True,
         index=True,
+        check_company=True,
     )
     record_id = fields.Many2one(
         string="Product",
@@ -38,6 +44,7 @@ class ShopinvaderVariant(models.Model):
         required=True,
         ondelete="cascade",
         index=True,
+        check_company=True,
     )
     variant_count = fields.Integer(
         related="product_variant_count", string="Shopinvader Variant Count"
@@ -55,7 +62,8 @@ class ShopinvaderVariant(models.Model):
     price = fields.Serialized(compute="_compute_price", string="Shopinvader Price")
     short_name = fields.Char(compute="_compute_names")
     full_name = fields.Char(compute="_compute_names")
-
+    # Special case for company_id, as it's present in both inherits models
+    company_id = fields.Many2one(related="shopinvader_product_id.company_id")
     # As field is defined on product.template, avoid 'inherits' bypass
     description = fields.Html(
         related="shopinvader_product_id.description", readonly=False
