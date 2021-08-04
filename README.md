@@ -25,6 +25,7 @@ addon | version | summary
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.1.1 | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.2 | Shopinvader API_KEY Authentication
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
+[shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 | Glue module to expose the invoicing_mode field to shopinvader
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.1.2 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_validate](shopinvader_customer_multi_user_validate/) | 14.0.1.1.0 | Glue module for `shopinvader_customer_validate` and `shopinvader_customer_multi_user`.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 14.0.1.0.0 | Integrate customer multi user and wishlist.
