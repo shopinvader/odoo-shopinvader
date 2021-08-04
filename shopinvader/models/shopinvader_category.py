@@ -42,7 +42,12 @@ class ShopinvaderCategory(models.Model):
         compute="_compute_child_category",
     )
     level = fields.Integer(compute="_compute_level")
-    active = fields.Boolean(default=True)
+    active = fields.Boolean(
+        default=True,
+        compute="_compute_active",
+        store=True,
+        readonly=False,
+    )
 
     _sql_constraints = [
         (
@@ -54,6 +59,12 @@ class ShopinvaderCategory(models.Model):
 
     def name_get(self):
         return [(cat.id, cat.record_id.display_name) for cat in self]
+
+    @api.depends("record_id.active")
+    def _compute_active(self):
+        """Deactivate bindings if record is archived"""
+        for rec in self:
+            rec.active = rec.active and rec.record_id.active
 
     @api.depends("parent_id.shopinvader_bind_ids")
     def _compute_parent_category(self):

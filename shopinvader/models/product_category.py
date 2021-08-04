@@ -16,12 +16,7 @@ class ProductCategory(models.Model):
         context={"active_test": False},
     )
     filter_ids = fields.Many2many(comodel_name="product.filter", string="Filter")
-    active = fields.Boolean(default=True, inverse="_inverse_active")
-
-    def _inverse_active(self):
-        categories = self.filtered(lambda p: not p.active)
-        categories = categories.with_prefetch(self._prefetch_ids)
-        categories.mapped("shopinvader_bind_ids").write({"active": False})
+    active = fields.Boolean(default=True)
 
     # V13 restore translate on category name...
     # This code is a transversal fix and should go into a dedicated addon...

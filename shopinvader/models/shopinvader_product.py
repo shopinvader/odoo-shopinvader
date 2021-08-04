@@ -21,7 +21,12 @@ class ShopinvaderProduct(models.Model):
     shopinvader_variant_ids = fields.One2many(
         "shopinvader.variant", "shopinvader_product_id", "Shopinvader Variant"
     )
-    active = fields.Boolean(default=True, inverse="_inverse_active")
+    active = fields.Boolean(
+        default=True,
+        compute="_compute_active",
+        store=True,
+        readonly=False,
+    )
     url_key = fields.Char(compute_sudo=True)
     use_shopinvader_product_name = fields.Boolean(
         related="backend_id.use_shopinvader_product_name", store=True
@@ -45,6 +50,12 @@ class ShopinvaderProduct(models.Model):
         )
     ]
 
+    @api.depends("record_id.active")
+    def _compute_active(self):
+        """Deactivate bindings if record is archived"""
+        for rec in self:
+            rec.active = rec.active and rec.record_id.active
+
     @api.depends("use_shopinvader_product_name", "shopinvader_name")
     def _compute_name(self):
         for record in self:
@@ -61,14 +72,6 @@ class ShopinvaderProduct(models.Model):
         self.ensure_one()
         return u"{} | {}".format(
             self.name or u"", self.backend_id.website_public_name or u""
-        )
-
-    def _inverse_active(self):
-        self.filtered(lambda p: not p.active).mapped("shopinvader_variant_ids").write(
-            {"active": False}
-        )
-        self.filtered(lambda p: p.active).mapped("shopinvader_variant_ids").write(
-            {"active": True}
         )
 
     def _get_categories(self):
@@ -152,22 +155,6 @@ class ShopinvaderProduct(models.Model):
             backend = self.env["shopinvader.backend"].search([], limit=1)
             res["backend_id"] = backend.id
         return res
-
-    def toggle_published(self):
-        """
-        Toggle the active field
-        :return: dict
-        """
-        actual_active = self.filtered(lambda s: s.active).with_prefetch(
-            self._prefetch_ids
-        )
-        actual_inactive = self - actual_active
-        actual_inactive = actual_inactive.with_prefetch(self._prefetch_ids)
-        if actual_inactive:
-            actual_inactive.write({"active": True})
-        if actual_active:
-            actual_active.write({"active": False})
-        return {}
 
     def _redirect_existing_url(self):
         """

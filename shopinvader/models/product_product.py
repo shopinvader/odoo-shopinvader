@@ -11,7 +11,6 @@ class ProductProduct(models.Model):
     def _search_shopinvader_backend_ids(self, operator, value):
         si_var_obj = self.env["shopinvader.variant"]
         bindings = si_var_obj.search([("backend_id.name", operator, value)])
-
         return [("id", "in", bindings.mapped("record_id").ids)]
 
     shopinvader_bind_ids = fields.One2many(
@@ -20,7 +19,6 @@ class ProductProduct(models.Model):
         string="Shopinvader Binding",
         context={"active_test": False},
     )
-
     shopinvader_backend_ids = fields.Many2many(
         string="ShopInvader Backends",
         comodel_name="shopinvader.backend",
@@ -28,8 +26,6 @@ class ProductProduct(models.Model):
         store=False,
         search=_search_shopinvader_backend_ids,
     )
-    active = fields.Boolean(inverse="_inverse_active")
-
     is_shopinvader_binded = fields.Boolean(
         "Shopinvader binded",
         compute="_compute_is_shopinvader_binded",
@@ -49,11 +45,6 @@ class ProductProduct(models.Model):
         for rec in self:
             binded = bool(rec.shopinvader_bind_ids.mapped("backend_id"))
             rec.is_shopinvader_binded = binded
-
-    def _inverse_active(self):
-        self.filtered(lambda p: not p.active).mapped("shopinvader_bind_ids").write(
-            {"active": False}
-        )
 
     def _compute_shopinvader_backend_ids(self):
         for rec in self:

@@ -5,45 +5,63 @@
     <field name="model">shopinvader.category</field>
     <field name="arch" type="xml">
         <form>
-            <group name="top">
-                <field name="backend_id" />
-                <field name="lang_id" />
-                <field name="active" />
-            </group>
-            <notebook>
-                <page name="description" string="Description">
-                    <group name="description">
-                        <field name="subtitle" />
-                        <separator string="Short Description" colspan="2" />
-                        <field name="short_description" nolabel="1" colspan="2" />
-                        <separator string="Description" colspan="2" />
-                        <field name="description" nolabel="1" colspan="2" />
+            <sheet>
+                <field name="active" invisible="1" />
+                <widget
+                        name="web_ribbon"
+                        text="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                <div class="oe_title">
+                    <h1>
+                        <field name="name" class="oe_inline" readonly="1" />
+                    </h1>
+                </div>
+                <group name="top">
+                    <group name="backend">
+                        <field name="backend_id" />
+                        <field name="lang_id" />
                     </group>
-                </page>
-                <page name="seo" string="SEO">
-                    <group name="meta_and_url">
-                        <field name="seo_title" />
-                        <field name="meta_keywords" />
-                        <field name="meta_description" />
-                        <field name="url_builder" />
-                        <field
-                                name="manual_url_key"
-                                attrs="{'invisible': [('url_builder', '!=', 'manual')], 'required': [('url_builder', '=', 'manual')]}"
-                            />
-                        <field
-                                name="url_key"
-                                attrs="{'invisible': [('url_builder', '=', 'manual')]}"
-                            />
+                    <group name="record">
+                        <field name="record_id" />
                     </group>
-                    <group name="redirect_url" string="Redirect Url">
-                        <field name="redirect_url_url_ids" nolabel="1" colspan="2">
-                            <tree>
-                                <field name="url_key" />
-                            </tree>
-                        </field>
-                    </group>
-                </page>
-            </notebook>
+                </group>
+                <notebook>
+                    <page name="description" string="Description">
+                        <group name="description">
+                            <field name="subtitle" />
+                            <separator string="Short Description" colspan="2" />
+                            <field name="short_description" nolabel="1" colspan="2" />
+                            <separator string="Description" colspan="2" />
+                            <field name="description" nolabel="1" colspan="2" />
+                        </group>
+                    </page>
+                    <page name="seo" string="SEO">
+                        <group name="meta_and_url">
+                            <field name="seo_title" />
+                            <field name="meta_keywords" />
+                            <field name="meta_description" />
+                            <field name="url_builder" />
+                            <field
+                                    name="manual_url_key"
+                                    attrs="{'invisible': [('url_builder', '!=', 'manual')], 'required': [('url_builder', '=', 'manual')]}"
+                                />
+                            <field
+                                    name="url_key"
+                                    attrs="{'invisible': [('url_builder', '=', 'manual')]}"
+                                />
+                        </group>
+                        <group name="redirect_url" string="Redirect Url">
+                            <field name="redirect_url_url_ids" nolabel="1" colspan="2">
+                                <tree>
+                                    <field name="url_key" />
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </sheet>
         </form>
     </field>
 </record>
