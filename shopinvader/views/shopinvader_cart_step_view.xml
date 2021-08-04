@@ -44,7 +44,7 @@
     <menuitem
         id="menu_shopinvader_cart_step"
         name="Cart Step"
-        parent="menu_shopinvader_root"
+        parent="menu_shopinvader_config_cart"
         sequence="10"
         action="act_open_shopinvader_cart_step_view"
     />

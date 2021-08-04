@@ -10,6 +10,7 @@
             <tree
                 decoration-danger="active != True"
                 decoration-success="active == True"
+                create="0"
             >
 
                 <field name="backend_id" />
@@ -113,6 +114,23 @@
                 </notebook>
             </form>
         </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="shopinvader_product_act_window">
+        <field name="name">Shopinvader Product</field>
+        <field name="res_model">shopinvader.product</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="groups_id" eval="[(4, ref('group_shopinvader_manager'))]" />
+    </record>
+
+    <record model="ir.ui.menu" id="shopinvader_product_menu">
+        <field name="name">Products</field>
+        <field name="parent_id" ref="menu_shopinvader_products" />
+        <field name="action" ref="shopinvader_product_act_window" />
+        <field name="sequence" eval="10" />
     </record>
 
 </odoo>
