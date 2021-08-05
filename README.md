@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.4.0.4 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.4.1.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.1.1 | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.3 | Shopinvader API_KEY Authentication
@@ -32,7 +32,7 @@ addon | version | summary
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.1.1 | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.0.1 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.2.0.0 | Shopinvader Elasticsearch Connector
-[shopinvader_image](shopinvader_image/) | 14.0.1.0.0 | Add the export of Image for Shopinvader
+[shopinvader_image](shopinvader_image/) | 14.0.1.1.0 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.0.0 | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.0.0 | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.0.0 | Shopinvader Lead Management
@@ -45,7 +45,7 @@ addon | version | summary
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 | Expose all PIM' Attribute sets with Shopinvader
-[shopinvader_product_brand](shopinvader_product_brand/) | 14.0.1.1.1 | Shopinvader product Brand
+[shopinvader_product_brand](shopinvader_product_brand/) | 14.0.1.2.0 | Shopinvader product Brand
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 | Index storage media data into external search engine
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.1.0 | Exposes product prices with and without taxes
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.1 | This module is used to choose a stock field during theexport (by backend)
