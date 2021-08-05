@@ -111,9 +111,9 @@
 
 <menuitem
         id="menu_shopinvader_brand"
-        name="Brand"
-        parent="shopinvader.menu_shopinvader_root"
-        sequence="40"
+        name="Brands"
+        parent="shopinvader.menu_shopinvader_products"
+        sequence="25"
         action="act_open_shopinvader_brand_view"
     />
 

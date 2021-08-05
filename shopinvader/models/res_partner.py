@@ -7,6 +7,7 @@
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.tools.misc import str2bool
 
 
 class ResPartner(models.Model):
@@ -49,6 +50,16 @@ class ResPartner(models.Model):
         store=True,
     )
 
+    @api.model
+    def _is_partner_duplicate_allowed(self):
+        """Check if partner duplication is allowed
+
+        This parameter is configured through res.config.settings
+        """
+        get_param = self.env["ir.config_parameter"].sudo().get_param
+        param = get_param("shopinvader.no_partner_duplicate")
+        return not str2bool(param, True)
+
     @api.depends("is_blacklisted")
     def _compute_opt_in(self):
         for record in self:
@@ -77,8 +88,7 @@ class ResPartner(models.Model):
 
     @api.constrains("email")
     def _check_unique_email(self):
-        config = self.env["shopinvader.config.settings"]
-        if config.is_partner_duplication_allowed():
+        if self._is_partner_duplicate_allowed():
             return True
         self.env.cr.execute(
             """

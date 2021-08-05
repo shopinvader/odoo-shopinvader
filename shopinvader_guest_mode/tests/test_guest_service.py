@@ -21,7 +21,6 @@ class TestGuestService(CommonCase):
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
             self.service = work.component(usage="guest")
-        self.shopinvader_config = self.env["shopinvader.config.settings"]
         self.backend.is_guest_mode_allowed = True
 
     def _create_guest(self):
