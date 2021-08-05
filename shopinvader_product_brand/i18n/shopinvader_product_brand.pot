@@ -46,7 +46,6 @@ msgid "Bind all brands"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.ui.menu,name:shopinvader_product_brand.menu_shopinvader_brand
 #: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.shopinvader_backend_form_view
 msgid "Brand"
 msgstr ""
@@ -59,6 +58,11 @@ msgstr ""
 #. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__product_ids
 msgid "Brand Products"
+msgstr ""
+
+#. module: shopinvader_product_brand
+#: model:ir.ui.menu,name:shopinvader_product_brand.menu_shopinvader_brand
+msgid "Brands"
 msgstr ""
 
 #. module: shopinvader_product_brand
