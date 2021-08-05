@@ -52,6 +52,7 @@ msgid "Image Resize"
 msgstr ""
 
 #. module: shopinvader_image
+#: model:ir.ui.menu,name:shopinvader_image.menu_shopinvader_config_image
 #: model_terms:ir.ui.view,arch_db:shopinvader_image.shopinvader_backend_view_form
 msgid "Images"
 msgstr ""
