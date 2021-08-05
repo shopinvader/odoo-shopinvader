@@ -7,7 +7,9 @@
     </record>
 
     <record id="ir_exp_shopinvader_brand_id" model="ir.exports.line">
-        <field name="name">id</field>
+        <field name="name">record_id</field>
+        <field name="target">record_id:id</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field name="export_id" ref="ir_exp_shopinvader_brand" />
     </record>
 
