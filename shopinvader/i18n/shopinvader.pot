@@ -1882,11 +1882,8 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_res_partner__has_shopinvader_user
-#: model:ir.model.fields,field_description:shopinvader.field_res_partner__parent_has_shopinvader_user
 #: model:ir.model.fields,field_description:shopinvader.field_res_users__has_shopinvader_user
-#: model:ir.model.fields,field_description:shopinvader.field_res_users__parent_has_shopinvader_user
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__has_shopinvader_user
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__parent_has_shopinvader_user
 msgid "Has Shopinvader User"
 msgstr ""
 
@@ -3121,6 +3118,13 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__parent_id
 msgid "Parent Category"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_partner__parent_has_shopinvader_user
+#: model:ir.model.fields,field_description:shopinvader.field_res_users__parent_has_shopinvader_user
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__parent_has_shopinvader_user
+msgid "Parent Has Shopinvader User"
 msgstr ""
 
 #. module: shopinvader
