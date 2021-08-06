@@ -176,12 +176,12 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_category__active
-#: model:ir.model.fields,field_description:shopinvader.field_product_product__active
-#: model:ir.model.fields,field_description:shopinvader.field_product_template__active
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__active
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__active
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__active
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__active
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Active"
 msgstr ""
 
@@ -348,6 +348,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__backend_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__backend_id
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.view_shopinvader_category_search
 msgid "Backend"
@@ -612,17 +613,8 @@ msgid "Clear cart"
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Click to publish"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Click to unpublish"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__code
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Code"
 msgstr ""
@@ -1367,6 +1359,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_view_search
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.view_shopinvader_category_search
 msgid "Group By"
@@ -1528,13 +1521,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_product_product__active
-#: model:ir.model.fields,help:shopinvader.field_product_template__active
-msgid ""
-"If unchecked, it will allow you to hide the product without removing it."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_seo_title_mixin__seo_title
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_category__seo_title
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__seo_title
@@ -1594,6 +1580,12 @@ msgid ""
 "        In FIFO: value of the last unit that left the stock (automatically computed).\n"
 "        Used to value the product when the purchase cost is not known (e.g. inventory adjustment).\n"
 "        Used to compute margins on sale orders."
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
+msgid "Inactive"
 msgstr ""
 
 #. module: shopinvader
@@ -1801,6 +1793,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__lang_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__lang_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__lang_id
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Lang"
 msgstr ""
@@ -2551,6 +2544,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__record_id
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_kanban_view
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_kanban_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_tree_view
 msgid "Product"
@@ -2589,6 +2585,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model,name:shopinvader.model_product_template
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_tmpl_id
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
 msgid "Product Template"
 msgstr ""
 
@@ -2662,11 +2659,6 @@ msgstr ""
 msgid ""
 "Public name of your backend/website.\n"
 " Used for products name referencing."
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Publish"
 msgstr ""
 
 #. module: shopinvader
@@ -3126,6 +3118,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_account_bank_statement_line__shopinvader_backend_id
 #: model:ir.model.fields,field_description:shopinvader.field_account_move__shopinvader_backend_id
 #: model:ir.model.fields,field_description:shopinvader.field_account_payment__shopinvader_backend_id
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Shopinvader Backend"
 msgstr ""
@@ -3914,11 +3907,6 @@ msgstr ""
 #: model:product.template,uom_name:shopinvader.product_template_tv_cabinet_shaker_wood
 #: model:product.template,uom_name:shopinvader.product_template_tv_stand_wood_and_glass
 msgid "Units"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Unpublish"
 msgstr ""
 
 #. module: shopinvader
