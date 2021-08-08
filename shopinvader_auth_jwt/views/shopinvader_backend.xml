@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="view_id" model="ir.ui.view">
+        <field name="name">shopinvader.backend.inherit.view.form</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="arch" type="xml">
+            <field name="location" position="after">
+                <field name="jwt_aud" />
+            </field>
+        </field>
+    </record>
+</odoo>
