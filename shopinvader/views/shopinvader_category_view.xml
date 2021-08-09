@@ -22,6 +22,11 @@
                     <group name="backend">
                         <field name="backend_id" />
                         <field name="lang_id" />
+                        <field
+                                name="company_id"
+                                widget="selection"
+                                groups="base.group_multi_company"
+                            />
                     </group>
                     <group name="record">
                         <field name="record_id" />
@@ -73,6 +78,12 @@
             <field name="sequence" widget="handle" />
             <field name="display_name" />
             <field name="backend_id" />
+            <field
+                    name="company_id"
+                    widget="selection"
+                    groups="base.group_multi_company"
+                    optional="show"
+                />
         </tree>
     </field>
 </record>
@@ -83,6 +94,7 @@
         <search string="Shopinvader Product">
             <field name="name" />
             <field name="backend_id" />
+            <field name="company_id" groups="base.group_multi_company" />
             <group string="Group By">
                 <filter
                         name="group_by_backend_id"

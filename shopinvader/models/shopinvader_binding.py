@@ -10,6 +10,7 @@ class ShopinvaderBinding(models.AbstractModel):
     _description = "Shopinvader Binding"
 
     backend_id = fields.Many2one("shopinvader.backend", string="Backend", required=True)
+    company_id = fields.Many2one(related="backend_id.company_id", store=True)
     external_id = fields.Char(string="External ID")
     sync_date = fields.Datetime(string="Last synchronization date")
     redirect_url_key = fields.Serialized(

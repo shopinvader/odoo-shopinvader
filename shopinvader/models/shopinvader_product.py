@@ -10,9 +10,14 @@ class ShopinvaderProduct(models.Model):
     _description = "Shopinvader Product"
     _inherit = ["shopinvader.binding", "abstract.url", "seo.title.mixin"]
     _inherits = {"product.template": "record_id"}
+    _check_company_auto = True
 
     record_id = fields.Many2one(
-        "product.template", required=True, ondelete="cascade", index=True
+        "product.template",
+        required=True,
+        ondelete="cascade",
+        index=True,
+        check_company=True,
     )
     meta_description = fields.Char()
     meta_keywords = fields.Char()
