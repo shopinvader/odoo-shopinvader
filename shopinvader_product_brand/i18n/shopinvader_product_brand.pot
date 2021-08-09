@@ -66,6 +66,11 @@ msgid "Brands"
 msgstr ""
 
 #. module: shopinvader_product_brand
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__company_id
+msgid "Company"
+msgstr ""
+
+#. module: shopinvader_product_brand
 #: model:ir.model.fields,help:shopinvader_product_brand.field_shopinvader_brand__data_size
 msgid ""
 "Computed size of the index. Algolia limits record size to 10KB and exports "
