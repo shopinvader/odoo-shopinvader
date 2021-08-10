@@ -7,17 +7,9 @@ import logging
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
-from odoo.addons.component.core import AbstractComponent, Component
+from odoo.addons.component.core import Component
 
 _logger = logging.getLogger(__name__)
-
-
-class AbstractSaleService(AbstractComponent):
-    _inherit = "shopinvader.abstract.sale.service"
-
-    def _is_item(self, line):
-        res = super(AbstractSaleService, self)._is_item(line)
-        return res and not line.is_promotion_line
 
 
 class CartService(Component):
@@ -35,7 +27,7 @@ class CartService(Component):
                             "not be done in the same call"
                         )
                     )
-        res = super(CartService, self)._update(cart, params)
+        res = super()._update(cart, params)
         if is_coupon_code_specified:
             if coupon_code:
                 cart.add_coupon(coupon_code)
@@ -50,37 +42,37 @@ class CartService(Component):
         return res
 
     def _add_item(self, cart, params):
-        res = super(CartService, self)._add_item(cart, params)
+        res = super()._add_item(cart, params)
         if cart.current_step_id and cart.current_step_id.code != "cart_init":
             cart.apply_promotions()
         return res
 
     def _update_item(self, cart, params, item=False):
-        res = super(CartService, self)._update_item(cart, params, item)
+        res = super()._update_item(cart, params, item)
         if cart.current_step_id and cart.current_step_id.code != "cart_init":
             cart.apply_promotions()
         return res
 
     def _delete_item(self, cart, params):
-        res = super(CartService, self)._delete_item(cart, params)
+        res = super()._delete_item(cart, params)
         if cart.current_step_id and cart.current_step_id.code != "cart_init":
             cart.apply_promotions()
         return res
 
     # Validator
     def _validator_update(self):
-        res = super(CartService, self)._validator_update()
+        res = super()._validator_update()
         res["coupon_code"] = {"type": "string", "nullable": True}
         return res
 
     # converter
     def _convert_one_sale(self, sale):
-        res = super(CartService, self)._convert_one_sale(sale)
+        res = super()._convert_one_sale(sale)
         res.update(self._get_promotions_info(sale))
         return res
 
     def _convert_one_line(self, line):
-        res = super(CartService, self)._convert_one_line(line)
+        res = super()._convert_one_line(line)
         res.update(self._get_promotions_info(line))
         return res
 

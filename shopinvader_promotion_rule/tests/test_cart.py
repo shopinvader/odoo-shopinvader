@@ -15,7 +15,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         return self.service.dispatch("update", params={"coupon_code": coupon_code})
 
     def setUp(self, *args, **kwargs):
-        super(TestCart, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         self.set_up("shopinvader.sale_order_2")
         self.product_1 = self.env.ref("product.product_product_4b")
 
@@ -141,7 +141,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         # Update the fiscal position to have reset_price
         # set to True (cfr shopinvader module)
         self.cart.write_with_onchange({"fiscal_position_id": fiscal_position.id})
-        self.assertAlmostEquals(
+        self.assertAlmostEqual(
             self.cart.amount_total,
             save_price_with_promo,
             places=self.price_precision_digits,

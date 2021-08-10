@@ -11,7 +11,7 @@ class SaleOrder(models.Model):
         Inherit to apply the promotion rules when prices are updated
         :return:
         """
-        result = super(SaleOrder, self).reset_price_tax()
+        result = super().reset_price_tax()
         if self.has_promotion_rules:
             self.apply_promotions()
         return result
