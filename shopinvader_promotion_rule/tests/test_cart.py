@@ -2,18 +2,17 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.exceptions import UserError
+
 from odoo.addons.sale_promotion_rule.tests.test_promotion import (
     AbstractCommonPromotionCase,
 )
 from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
-from odoo.exceptions import UserError
 
 
 class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
     def add_coupon_code(self, coupon_code):
-        return self.service.dispatch(
-            "update", params={"coupon_code": coupon_code}
-        )
+        return self.service.dispatch("update", params={"coupon_code": coupon_code})
 
     def setUp(self, *args, **kwargs):
         super(TestCart, self).setUp(*args, **kwargs)
@@ -141,9 +140,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         )
         # Update the fiscal position to have reset_price
         # set to True (cfr shopinvader module)
-        self.cart.write_with_onchange(
-            {"fiscal_position_id": fiscal_position.id}
-        )
+        self.cart.write_with_onchange({"fiscal_position_id": fiscal_position.id})
         self.assertAlmostEquals(
             self.cart.amount_total,
             save_price_with_promo,
