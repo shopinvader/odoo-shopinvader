@@ -7,7 +7,7 @@ from odoo.addons.shopinvader_delivery_carrier.tests.common import CommonCarrierC
 class CarrierCase(CommonCarrierCase):
     @classmethod
     def setUpClass(cls):
-        super(CarrierCase, cls).setUpClass()
+        super().setUpClass()
         cls.category_dropoff = cls.env.ref(
             "delivery_carrier_category.delivery_carrier_category_dropoff"
         )
@@ -21,7 +21,7 @@ class CarrierCase(CommonCarrierCase):
             "update", params={"shipping": {"address": {"id": self.address.id}}}
         )["data"]
         self.assertEqual(cart["shipping"]["amount"]["total"], 20.0)
-        self.assertEquals(
+        self.assertEqual(
             self.poste_carrier.code,
             cart["shipping"]["selected_carrier"]["code"],
         )

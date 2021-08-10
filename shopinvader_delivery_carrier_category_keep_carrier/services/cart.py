@@ -14,10 +14,10 @@ class CartService(Component):
     def _check_carrier_unset(self, cart, params):
         """
         The carrier category does not need to unset
-        :param cart:
-        :param params:
-        :return:
+        :param cart: sale.order recordset
+        :param params: dict
+        :return: bool
         """
         if cart.carrier_id.category_id.keep_carrier_on_shipping_change:
             return False
-        return super(CartService, self)._check_carrier_unset(cart, params)
+        return super()._check_carrier_unset(cart, params)
