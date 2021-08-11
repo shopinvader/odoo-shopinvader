@@ -1,0 +1,120 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_pending_cart_reminder
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_pending_cart_reminder
+#: model:mail.template,body_html:shopinvader_pending_cart_reminder.mail_template_shopinvader_sale_reminder
+msgid ""
+"\n"
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
+"        Dear ${object.partner_id.name},\n"
+"        <br /><br />\n"
+"        When you visited our website you started a shopping cart. This one seems to have been open for a long time.\n"
+"        If you have encountered a technical problem or have any question, do not hesitate to contact us.\n"
+"        <br />\n"
+"        Thank you for visiting our website,\n"
+"        <br />\n"
+"        Sincerely\n"
+"    </p>\n"
+"</div>\n"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,help:shopinvader_pending_cart_reminder.field_shopinvader_backend__pending_cart_reminder_delay
+msgid ""
+"Determine after how many hours the customer should receive a reminder to "
+"confirm his sale. Let 0 (or less) to disable the feature."
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,help:shopinvader_pending_cart_reminder.field_shopinvader_backend__reminder_start_date
+msgid ""
+"Determine the date start to send reminder emails.\n"
+"This field is automatically updated when the Quotation Reminder field have a value <= 0 (considered as disabled) and updated to > 0 (considered as enable)."
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_sale_order__display_name
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_shopinvader_backend__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_sale_order__id
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_shopinvader_backend__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_sale_order____last_update
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_shopinvader_backend____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model,name:shopinvader_pending_cart_reminder.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_sale_order__pending_cart_reminder_sent_dt
+msgid "Pending Cart Reminder Sent Dt"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,help:shopinvader_pending_cart_reminder.field_sale_order__pending_cart_reminder_sent_dt
+msgid "Pending cart reminder sent date/hour"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: code:addons/shopinvader_pending_cart_reminder/models/shopinvader_backend.py:0
+#, python-format
+msgid ""
+"Please define an email template to send reminder for these backends:\n"
+"- %s"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_shopinvader_backend__pending_cart_reminder_delay
+msgid "Quotation reminder (hours)"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_shopinvader_backend__pending_cart_reminder_template_id
+msgid "Quotation reminder e-mail template"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model.fields,field_description:shopinvader_pending_cart_reminder.field_shopinvader_backend__reminder_start_date
+msgid "Reminder Start Date"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.model,name:shopinvader_pending_cart_reminder.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:ir.actions.server,name:shopinvader_pending_cart_reminder.ir_cron_shopinvader_sale_reminder_ir_actions_server
+#: model:ir.cron,cron_name:shopinvader_pending_cart_reminder.ir_cron_shopinvader_sale_reminder
+#: model:ir.cron,name:shopinvader_pending_cart_reminder.ir_cron_shopinvader_sale_reminder
+msgid "Shopinvader carts - Reminder (not confirmed carts)"
+msgstr ""
+
+#. module: shopinvader_pending_cart_reminder
+#: model:mail.template,subject:shopinvader_pending_cart_reminder.mail_template_shopinvader_sale_reminder
+msgid ""
+"Thank you for visiting our website ${object.shopinvader_backend_id.name}"
+msgstr ""
