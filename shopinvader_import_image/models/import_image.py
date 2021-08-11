@@ -113,7 +113,7 @@ class ProductImageImportWizard(models.Model):
             if not record.report:
                 record.report_html = ""
                 continue
-            report_html = tmpl.render({"record": record})
+            report_html = tmpl._render({"record": record})
             record.report_html = report_html
 
     @api.model
