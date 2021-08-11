@@ -5,25 +5,25 @@
 from odoo.addons.component.core import Component
 
 
+def update_schema_firstname(schema):
+    schema.update(
+        {
+            # TODO: now all the fields are not required.
+            # Is it possible (desireadable?) to make name required
+            # if the others are not passed and viceversa.
+            "name": {"type": "string", "required": False, "nullable": True},
+            "firstname": {"type": "string", "required": False},
+            "lastname": {"type": "string", "required": False},
+        }
+    )
+
+
 class CustomerService(Component):
     _inherit = "shopinvader.customer.service"
 
     def _validator_create(self):
         schema = super()._validator_create()
-        schema.update(
-            {
-                # TODO: now all the fields are not required.
-                # Is it possible (desireadable?) to make name required
-                # if the others are not passed and viceversa.
-                "name": {
-                    "type": "string",
-                    "required": False,
-                    "nullable": True,
-                },
-                "firstname": {"type": "string", "required": False},
-                "lastname": {"type": "string", "required": False},
-            }
-        )
+        update_schema_firstname(schema)
         return schema
 
     def _prepare_params(self, params, mode="create"):
@@ -37,6 +37,11 @@ class CustomerService(Component):
 
 class AddressService(Component):
     _inherit = "shopinvader.address.service"
+
+    def _validator_create(self):
+        schema = super()._validator_create()
+        update_schema_firstname(schema)
+        return schema
 
     def _json_parser(self):
         parser = super()._json_parser()
