@@ -14,7 +14,6 @@ exclude: |
   ^shopinvader_locomotive_guest_mode/|
   ^shopinvader_locomotive_reset_password/|
   ^shopinvader_partner_vat/|
-  ^shopinvader_pending_cart_reminder/|
   ^shopinvader_product_new/|
   ^shopinvader_product_stock_assortment/|
   ^shopinvader_product_template_multi_link/|
