@@ -72,6 +72,7 @@ class ProductImageImportWizard(models.Model):
         required=True,
         default="url",
     )
+    filename = fields.Char()
     file_csv = fields.Binary(string="CSV file", required=True)
     csv_header = fields.Char(
         string="CSV file header",
