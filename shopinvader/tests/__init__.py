@@ -21,3 +21,4 @@ from . import test_notification
 from . import test_salesman_notification
 from . import test_search
 from . import test_utils
+from . import test_settings
