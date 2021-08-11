@@ -6,21 +6,28 @@
         <field name="arch" type="xml">
             <form string="Import shopinvader product images">
                 <header>
-                    <field
-                        name="state"
-                        widget="statusbar"
+                    <button
+                        class="oe_highlight"
+                        string="Import images"
+                        name="action_import"
+                        type="object"
+                        states="new"
                     />
+                    <button
+                        class="oe_highlight"
+                        string="Import images again"
+                        name="action_import"
+                        type="object"
+                        states="done"
+                    />
+                    <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
-                    <div class="oe_button_box" name="active_button_box" attrs="{'invisible': [('id','=',False)]}">
-                        <button class="oe_highlight" string="Import images"
-                                name="action_import" type="object"
-                                states="new"
-                                />
-                        <button class="oe_highlight" string="Import images again"
-                                name="action_import" type="object"
-                                states="done"
-                                />
+                    <div
+                        class="oe_button_box"
+                        name="active_button_box"
+                        attrs="{'invisible': [('id','=',False)]}"
+                    >
                     </div>
                     <field name="id" invisible="1" />
                     <group name="main">
