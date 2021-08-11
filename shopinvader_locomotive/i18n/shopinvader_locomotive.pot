@@ -50,11 +50,6 @@ msgid "Contact"
 msgstr ""
 
 #. module: shopinvader_locomotive
-#: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__currency_ids
-msgid "Currency"
-msgstr ""
-
-#. module: shopinvader_locomotive
 #: model:ir.model.fields,field_description:shopinvader_locomotive.field_locomotive_binding__display_name
 #: model:ir.model.fields,field_description:shopinvader_locomotive.field_product_filter__display_name
 #: model:ir.model.fields,field_description:shopinvader_locomotive.field_res_partner__display_name
