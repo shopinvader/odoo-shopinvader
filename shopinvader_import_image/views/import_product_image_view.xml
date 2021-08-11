@@ -34,6 +34,7 @@
                         <field name="storage_backend_id" />
                         <field name="product_model" />
                         <field name="source_type" />
+                        <field name="filename" invisible="1" />
                         <field
                             name="file_csv"
                             filename="filename"
