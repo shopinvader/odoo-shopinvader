@@ -30,11 +30,11 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_chair_vortex_attribute_color_white',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_chair_vortex_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex_product_template_attribute_line_color').product_template_value_ids[1],
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -45,11 +45,11 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_chair_vortex_white',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_vortex_attribute_color_white')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_chair_vortex_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_vortex_attribute_color_blue')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -93,19 +93,19 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_armchair_mid_century_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_armchair_mid_century_attribute_color_grey',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century_product_template_attribute_line_color').product_template_value_ids[1],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_armchair_mid_century_attribute_color_yellow',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century_product_template_attribute_line_color').product_template_value_ids[2],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_armchair_mid_century_attribute_color_red',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century_product_template_attribute_line_color').product_template_value_ids[3],
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -116,19 +116,19 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_armchair_mid_century_blue',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_armchair_mid_century_attribute_color_blue')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_armchair_mid_century_grey',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_armchair_mid_century_attribute_color_grey')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_armchair_mid_century_yellow',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_armchair_mid_century_attribute_color_yellow')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_armchair_mid_century_red',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_armchair_mid_century_attribute_color_red')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -223,19 +223,19 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_chair_mid_century_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_mid_century_attribute_color_blue')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_chair_mid_century_white',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_mid_century_attribute_color_white')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_chair_mid_century_black',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_mid_century_attribute_color_black')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_chair_mid_century_red',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_mid_century_attribute_color_red')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -293,7 +293,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_concept_design_attribute_color_white',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_concept_design_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -304,7 +304,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_concept_design_white',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_concept_design')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_concept_design_attribute_color_white')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -348,7 +348,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_coffee_table_caftman_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_coffee_table_caftman_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -359,7 +359,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_coffee_table_caftman_brown',
                 'record': obj().env.ref('shopinvader.product_template_coffee_table_caftman')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_coffee_table_caftman_attribute_color_brown')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -410,7 +410,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_tv_stand_wood_and_glass_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_tv_stand_wood_and_glass_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -421,7 +421,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_tv_stand_wood_and_glass_white',
                 'record': obj().env.ref('shopinvader.product_template_tv_stand_wood_and_glass')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_stand_wood_and_glass_attribute_color_blue')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -473,7 +473,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_cmcharper_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_cmcharper_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -484,7 +484,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_cmcharper_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_cmcharper')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_cmcharper_attribute_color_brown')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -521,11 +521,11 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_grey',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_product_template_attribute_line_color').product_template_value_ids[1],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -536,11 +536,11 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_shaker_wood_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_brown')),
-                'noupdate': False,
+                'noupdate': True,
             },{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_shaker_wood_grey',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_grey')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -583,7 +583,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_mid_century_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -594,7 +594,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_mid_century_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_mid_century_attribute_color_brown')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -632,7 +632,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_round_table_mid_century_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_round_table_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -643,7 +643,7 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_round_table_mid_century_white',
                 'record': obj().env.ref('shopinvader.product_template_round_table_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_round_table_mid_century_attribute_color_blue')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
@@ -681,15 +681,15 @@
             eval="[{
                 'xml_id': 'shopinvader.product_template_thelma_attribute_color_red',
                 'record': obj().env.ref('shopinvader.product_template_thelma_product_template_attribute_line_color').product_template_value_ids[0],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_thelma_attribute_color_grey',
                 'record': obj().env.ref('shopinvader.product_template_thelma_product_template_attribute_line_color').product_template_value_ids[1],
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_template_thelma_attribute_color_black',
                 'record': obj().env.ref('shopinvader.product_template_thelma_product_template_attribute_line_color').product_template_value_ids[2],
-                'noupdate': False,
+                'noupdate': True,
             }]"
         />
         </function>
@@ -700,15 +700,15 @@
             eval="[{
                 'xml_id': 'shopinvader.product_product_thelma_red',
                 'record': obj().env.ref('shopinvader.product_template_thelma')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_thelma_attribute_color_red')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_thelma_grey',
                 'record': obj().env.ref('shopinvader.product_template_thelma')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_thelma_attribute_color_grey')),
-                'noupdate': False,
+                'noupdate': True,
             }, {
                 'xml_id': 'shopinvader.product_product_thelma_black',
                 'record': obj().env.ref('shopinvader.product_template_thelma')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_thelma_attribute_color_black')),
-                'noupdate': False,
+                'noupdate': True,
             },]"
         />
         </function>
