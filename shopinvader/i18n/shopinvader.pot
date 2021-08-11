@@ -824,6 +824,7 @@ msgid "Cuisine"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__currency_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__currency_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__currency_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__currency_id
