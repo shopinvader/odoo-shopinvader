@@ -91,8 +91,11 @@
                                 groups="base.group_multi_company"
                             />
                         </group>
-                        <group name="record">
-                            <field name="record_id" />
+                        <group name="record" invisible="context.get('hide_record_id')">
+                            <field
+                                name="record_id"
+                                required="not context.get('hide_record_id')"
+                            />
                         </group>
                     </group>
                     <notebook>
