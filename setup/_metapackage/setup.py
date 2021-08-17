@@ -22,6 +22,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_customer_validate',
         'odoo14-addon-shopinvader_delivery_carrier',
         'odoo14-addon-shopinvader_elasticsearch',
+        'odoo14-addon-shopinvader_guest_mode',
         'odoo14-addon-shopinvader_image',
         'odoo14-addon-shopinvader_import_image',
         'odoo14-addon-shopinvader_invoice',
