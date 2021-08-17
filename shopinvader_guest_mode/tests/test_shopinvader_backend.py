@@ -1,14 +1,15 @@
 # Copyright 2018-2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.exceptions import ValidationError
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestShopinvaderBackend(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
-        super(TestShopinvaderBackend, cls).setUpClass()
+        super().setUpClass()
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.backend.is_guest_mode_allowed = True
 

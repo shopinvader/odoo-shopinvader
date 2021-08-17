@@ -4,15 +4,16 @@
 from datetime import timedelta
 
 from odoo import fields
-from odoo.addons.component.tests.common import SavepointComponentCase
 from odoo.exceptions import ValidationError
 from odoo.tools import mute_logger
+
+from odoo.addons.component.tests.common import SavepointComponentCase
 
 
 class TestShopinvaderPartner(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
-        super(TestShopinvaderPartner, cls).setUpClass()
+        super().setUpClass()
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.backend.is_guest_mode_allowed = True
         cls.shopinvader_partner = cls.env["shopinvader.partner"].create(
@@ -95,9 +96,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.assertFalse(self.shopinvader_partner.active)
 
     def test_guest_constrains(self):
-        self.shopinvader_partner.search([(1, "=", 1)]).write(
-            {"is_guest": False}
-        )
+        self.shopinvader_partner.search([(1, "=", 1)]).write({"is_guest": False})
         self.backend.is_guest_mode_allowed = False
         with self.assertRaises(ValidationError), self.env.cr.savepoint():
             self.env["shopinvader.partner"].create(

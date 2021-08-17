@@ -3,11 +3,10 @@
 
 {
     "name": "Shopinvader Guest Mode",
-    "summary": """
-        Guest mode for Shopinvader""",
-    "version": "13.0.1.1.0",
+    "summary": """Guest mode for Shopinvader""",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
-    "development_status": "Stable/Production",
+    "development_status": "Production/Stable",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader"],
@@ -16,5 +15,5 @@
         "views/shopinvader_backend.xml",
         "views/shopinvader_partner.xml",
     ],
-    "installable": False,
+    "installable": True,
 }

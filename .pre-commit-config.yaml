@@ -8,7 +8,6 @@ exclude: |
   ^shopinvader_contact_company/|
   ^shopinvader_delivery_instruction/|
   ^shopinvader_demo_app/|
-  ^shopinvader_guest_mode/|
   ^shopinvader_locomotive_contact_company/|
   ^shopinvader_locomotive_elasticsearch/|
   ^shopinvader_locomotive_guest_mode/|

@@ -11,4 +11,4 @@ class CustomerService(Component):
     def create(self, **params):
         guest = self.component(usage="guest")
         guest._archive_existing_binding(email=params["email"])
-        return super(CustomerService, self).create(**params)
+        return super().create(**params)
