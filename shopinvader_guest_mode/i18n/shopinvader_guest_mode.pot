@@ -1,0 +1,142 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_guest_mode
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner__active
+msgid "Active"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_backend__is_guest_mode_allowed
+msgid "Allows guest mode"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model_terms:ir.ui.view,arch_db:shopinvader_guest_mode.shopinvader_partner_search_view
+msgid "Archived"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,help:shopinvader_guest_mode.field_shopinvader_partner__expiry_dt
+msgid ""
+"Date on which the account will be automatically deactivated ifthe customer "
+"has not created an account."
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_backend__display_name
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner__expiry_dt
+msgid "Expiry date and time"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model_terms:ir.ui.view,arch_db:shopinvader_guest_mode.shopinvader_partner_search_view
+msgid "Guest"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_backend__guest_account_expiry_delay
+msgid "Guest Account Expiry Delay"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_backend__id
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,help:shopinvader_guest_mode.field_shopinvader_partner__is_guest
+msgid ""
+"If true, the partner will be automatically deactivated once the expiry date "
+"will be passed"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner__is_guest
+msgid "Is Guest"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_backend____last_update
+#: model:ir.model.fields,field_description:shopinvader_guest_mode.field_shopinvader_partner____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model,name:shopinvader_guest_mode.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,help:shopinvader_guest_mode.field_shopinvader_backend__guest_account_expiry_delay
+msgid ""
+"Number of days a guest account remains active. If at the end ofthe delay "
+"(create date + delay), the guest_mode flag is still True on the shopinvader "
+"partner, the record becomes inactive"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: code:addons/shopinvader_guest_mode/models/shopinvader_partner.py:0
+#: model:ir.model.constraint,message:shopinvader_guest_mode.constraint_shopinvader_partner_unique_shopinvader_partner_email
+#, python-format
+msgid "Only one active binding with the same email is allowed by backend."
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model,name:shopinvader_guest_mode.model_shopinvader_partner
+msgid "Shopinvader Partner"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.actions.server,name:shopinvader_guest_mode.ir_cron_product_pricelist_assortment_ir_actions_server
+#: model:ir.cron,cron_name:shopinvader_guest_mode.ir_cron_product_pricelist_assortment
+#: model:ir.cron,name:shopinvader_guest_mode.ir_cron_product_pricelist_assortment
+msgid "Shopinvader: archive expired Guest accounts"
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: model:ir.model.fields,help:shopinvader_guest_mode.field_shopinvader_backend__is_guest_mode_allowed
+msgid ""
+"When true, the customer can place an order without having to create a "
+"customer account."
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: code:addons/shopinvader_guest_mode/models/shopinvader_partner.py:0
+#, python-format
+msgid ""
+"You can't create guest binding if the guest mode is notallowed on the "
+"backend."
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: code:addons/shopinvader_guest_mode/models/shopinvader_backend.py:0
+#, python-format
+msgid "You can't remove guest mode since guest partners already exists."
+msgstr ""
+
+#. module: shopinvader_guest_mode
+#: code:addons/shopinvader_guest_mode/models/shopinvader_backend.py:0
+#, python-format
+msgid ""
+"You must specify a positive value for the expiry delay if guest mode is "
+"allowed"
+msgstr ""
