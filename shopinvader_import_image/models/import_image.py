@@ -74,9 +74,7 @@ class ProductImageImportWizard(models.Model):
     filename = fields.Char()
     file_csv = fields.Binary(string="CSV file", required=True)
     csv_delimiter = fields.Char(
-        string="CSV file delimiter",
-        default=",",
-        required=True,
+        string="CSV file delimiter", default=",", required=True,
     )
     csv_column_default_code = fields.Char(
         string="Product Reference column",
@@ -187,7 +185,9 @@ class ProductImageImportWizard(models.Model):
             csv.field_size_limit(sys.maxsize)
             for row in reader:
                 try:
-                    line = {key: row[column] for key, column in mapping.items()}
+                    line = {
+                        key: row[column] for key, column in mapping.items()
+                    }
                 except KeyError as e:
                     _logger.error(e)
                     raise exceptions.UserError(_("CSV Schema Incompatible"))
