@@ -38,7 +38,8 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         }
 
     def setUp(self):
-        super(TestElasticsearchBackend, self).setUp()
+        with mute_logger("vcr.cassette"):
+            super().setUp()
         if self.vcr_enabled:
             # TODO we should discuss about this
             # @laurent @simone @guewen
@@ -56,6 +57,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
 
             self.cassette.play_response = play_response
 
+    @mute_logger("vcr.cassette")
     def test_10_export_one_product(self):
         product = self.env.ref("product.product_product_3_product_template")
         si_variant = product.shopinvader_bind_ids[0].shopinvader_variant_ids[0]
@@ -112,9 +114,10 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
             self.assertIn("index", index_data)
             self.assertEqual(index_data["index"]["_index"], index.name.lower())
 
-    @mute_logger("odoo.addons.product.models.product")
+    @mute_logger("vcr.cassette", "odoo.addons.product.models.product")
     def test_20_export_all_products(self):
         self._test_export_all_binding(self.index_product)
 
+    @mute_logger("vcr.cassette")
     def test_30_export_all_categories(self):
         self._test_export_all_binding(self.index_categ)

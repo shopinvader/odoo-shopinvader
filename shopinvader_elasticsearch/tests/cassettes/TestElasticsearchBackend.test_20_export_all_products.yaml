@@ -2,842 +2,634 @@ interactions:
 - request:
     body: null
     headers:
-      connection: [keep-alive]
-      content-type: [application/json]
-    method: HEAD
-    uri: http://127.0.0.1:9200/
+      accept:
+      - application/json
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1
+    method: GET
+    uri: http://elastic:9200/
   response:
-    body: {string: !!python/unicode ''}
+    body:
+      string: "{\n  \"name\" : \"38027ae09c39\",\n  \"cluster_name\" : \"docker-cluster\"\
+        ,\n  \"cluster_uuid\" : \"H7DXRU0gReSqODLeZzZeYg\",\n  \"version\" : {\n \
+        \   \"number\" : \"7.0.0\",\n    \"build_flavor\" : \"default\",\n    \"build_type\"\
+        \ : \"docker\",\n    \"build_hash\" : \"b7e28a7\",\n    \"build_date\" : \"\
+        2019-04-05T22:55:32.697037Z\",\n    \"build_snapshot\" : false,\n    \"lucene_version\"\
+        \ : \"8.0.0\",\n    \"minimum_wire_compatibility_version\" : \"6.7.0\",\n\
+        \    \"minimum_index_compatibility_version\" : \"6.0.0-beta1\"\n  },\n  \"\
+        tagline\" : \"You Know, for Search\"\n}\n"
     headers:
-      content-length: ['493']
-      content-type: [application/json; charset=UTF-8]
-    status: {code: 200, message: OK}
+      content-length:
+      - '508'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
 - request:
     body: null
     headers:
-      connection: [keep-alive]
-      content-type: [application/json]
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1
     method: HEAD
-    uri: http://127.0.0.1:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
+    uri: http://elastic:9200/
   response:
-    body: {string: !!python/unicode ''}
+    body:
+      string: ''
     headers:
-      content-length: ['1715']
-      content-type: [application/json; charset=UTF-8]
-      warning: ['299 Elasticsearch-6.7.0-8453f77 "[types removal] The parameter include_type_name
-          should be explicitly specified in get indices requests to prepare for 7.0.
-          In 7.0 include_type_name will default to ''false'', which means responses
-          will omit the type name in mapping definitions."']
-    status: {code: 200, message: OK}
+      content-length:
+      - '508'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
 - request:
-    body: "{\"index\":{\"_type\":\"odoo\",\"_id\":52,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"B077VY7G5S-G\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":52,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":311.39,\"tax_included\":false,\"original_value\"\
-      :311.39}},\"short_name\":\"\",\"seo_title\":\"Ameriwood Home 1783213COM - Meuble\
-      \ TV | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\"\
-      :[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\"\
-      :\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Meuble\
-      \ TV\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"model\"\
-      :{\"name\":\"Ameriwood Home 1783213COM - Meuble TV\"},\"main\":true,\"url_key\"\
-      :\"ameriwood-home-1783213com-meuble-tv-B077VY7G5S-G\",\"id\":1,\"categories\"\
-      :[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"},{\"level\"\
-      :1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\":\"Salon\"},{\"level\":2,\"\
-      url_key\":\"meuble/salon/meuble-tv\",\"id\":20,\"name\":\"Meuble TV\"}],\"name\"\
-      :\"Ameriwood Home 1783213COM - Meuble TV\"}\n{\"index\":{\"_type\":\"odoo\"\
-      ,\"_id\":17,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM08\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":17,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":79.0,\"tax_included\":false,\"original_value\"\
-      :79.0}},\"short_name\":\"\",\"seo_title\":\"Apple In-Ear Headphones | \",\"\
-      redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\"\
-      :\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\"\
-      :2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"\
-      variant_count\":1,\"short_description\":null,\"model\":{\"name\":\"Apple In-Ear\
-      \ Headphones\"},\"main\":true,\"url_key\":\"apple-in-ear-headphones-E-COM08\"\
-      ,\"id\":2,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Apple In-Ear Headphones\"}\n{\"index\":{\"_type\":\"odoo\",\"\
-      _id\":19,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM10\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":19,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":47.0,\"tax_included\":false,\"original_value\"\
-      :47.0}},\"short_name\":\"\",\"seo_title\":\"Apple Wireless Keyboard | \",\"\
-      redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\"\
-      :\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\"\
-      :2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"\
-      variant_count\":1,\"short_description\":null,\"model\":{\"name\":\"Apple Wireless\
-      \ Keyboard\"},\"main\":true,\"url_key\":\"apple-wireless-keyboard-E-COM10\"\
-      ,\"id\":3,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Apple Wireless Keyboard\"}\n{\"index\":{\"_type\":\"odoo\",\"\
-      _id\":32,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"CONS_DEL03\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":32,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":23500.0,\"tax_included\":false,\"original_value\"\
-      :23500.0}},\"short_name\":\"\",\"seo_title\":\"Basic Computer | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Basic Computer\"},\"main\"\
-      :true,\"url_key\":\"basic-computer-CONS_DEL03\",\"id\":4,\"categories\":[{\"\
-      level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\"\
-      :\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"\
-      all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"name\":\"Basic Computer\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":14,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM05\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":14,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":247.0,\"tax_included\":false,\"original_value\"\
-      :247.0}},\"short_name\":\"\",\"seo_title\":\"Bose Mini Bluetooth Speaker | \"\
-      ,\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\"\
-      :\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\"\
-      :2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"\
-      variant_count\":1,\"short_description\":null,\"model\":{\"name\":\"Bose Mini\
-      \ Bluetooth Speaker\"},\"main\":true,\"url_key\":\"bose-mini-bluetooth-speaker-E-COM05\"\
-      ,\"id\":6,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Bose Mini Bluetooth Speaker\"}\n{\"index\":{\"_type\":\"odoo\"\
-      ,\"_id\":25,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"C-Case\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":25,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":25.0,\"tax_included\":false,\"original_value\"\
-      :25.0}},\"short_name\":\"\",\"seo_title\":\"Computer Case | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Computer Case\"},\"main\"\
-      :true,\"url_key\":\"computer-case-C-Case\",\"id\":7,\"categories\":[{\"level\"\
-      :0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\":\"\
-      all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"all/saleable/physical\"\
-      ,\"id\":6,\"name\":\"Physical\"}],\"name\":\"Computer Case\"}\n{\"index\":{\"\
-      _type\":\"odoo\",\"_id\":9,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"PCSC234\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":9,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":450.0,\"tax_included\":false,\"original_value\"\
-      :450.0}},\"short_name\":\"\",\"seo_title\":\"Computer SC234 | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Computer SC234\"},\"main\"\
-      :true,\"url_key\":\"computer-sc234-PCSC234\",\"id\":8,\"categories\":[{\"level\"\
-      :0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\":\"\
-      all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"all/saleable/physical\"\
-      ,\"id\":6,\"name\":\"Physical\"}],\"name\":\"Computer SC234\"}\n{\"index\":{\"\
-      _type\":\"odoo\",\"_id\":50,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"B011RACHQ6\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":50,\"variant_attributes\":{\"color\":\"white\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":156.4,\"tax_included\"\
-      :false,\"original_value\":156.4}},\"short_name\":\"\",\"seo_title\":\"Convenience\
-      \ Concepts Designs2Go Oslo - meuble TV | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"\
-      ],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"\
-      value\":\"Meuble TV\",\"level\":3}],\"variant_count\":1,\"short_description\"\
-      :null,\"model\":{\"name\":\"Convenience Concepts Designs2Go Oslo - meuble TV\"\
-      },\"main\":true,\"url_key\":\"convenience-concepts-designs2go-oslo-meuble-tv-B011RACHQ6\"\
-      ,\"id\":9,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"name\"\
-      :\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\":\"\
-      Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/meuble-tv\",\"id\":20,\"name\"\
-      :\"Meuble TV\"}],\"name\":\"Convenience Concepts Designs2Go Oslo - meuble TV\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":2,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"SERV_DEL\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":2,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":180.0,\"tax_included\":false,\"original_value\"\
-      :180.0}},\"short_name\":\"\",\"seo_title\":\"Cost-plus Contract | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Cost-plus Contract\"},\"\
-      main\":true,\"url_key\":\"cost-plus-contract-SERV_DEL\",\"id\":10,\"categories\"\
-      :[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"\
-      url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\"\
-      :\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"name\":\"Cost-plus\
-      \ Contract\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":15,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM06\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":15,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":147.0,\"tax_included\":false,\"original_value\"\
-      :147.0}},\"short_name\":\"\",\"seo_title\":\"Custom Computer (kit) | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Custom Computer (kit)\"\
-      },\"main\":true,\"url_key\":\"custom-computer-kit-E-COM06\",\"id\":11,\"categories\"\
-      :[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"\
-      url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\"\
-      :\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"name\":\"Custom\
-      \ Computer (kit)\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":5,\"_index\":\"\
-      demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"PROD_DEL02\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :5,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\":0.0,\"value\"\
-      :40.0,\"tax_included\":false,\"original_value\":40.0}},\"short_name\":\"\",\"\
-      seo_title\":\"Datacard | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Datacard\"},\"main\":true,\"url_key\":\"datacard-PROD_DEL02\"\
-      ,\"id\":12,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Datacard\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":38,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":null,\"\
-      meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :38,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\":0.0,\"value\"\
-      :150.0,\"tax_included\":false,\"original_value\":150.0}},\"short_name\":\"\"\
-      ,\"seo_title\":\"Deposit | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2}],\"variant_count\":1,\"short_description\"\
-      :null,\"model\":{\"name\":\"Deposit\"},\"main\":true,\"url_key\":\"deposit\"\
-      ,\"id\":13,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      }],\"name\":\"Deposit\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":3,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"SERV_COST\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :3,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\":0.0,\"value\"\
-      :180.0,\"tax_included\":false,\"original_value\":180.0}},\"short_name\":\"\"\
-      ,\"seo_title\":\"External Audit | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Services\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"External Audit\"},\"main\":true,\"url_key\":\"external-audit-SERV_COST\"\
-      ,\"id\":14,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/services\",\"id\":4,\"name\":\"Services\"\
-      }],\"name\":\"External Audit\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":41,\"\
-      _index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\"\
-      :\"B00RX-001\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":41,\"variant_attributes\":{\"color\":\"blue\"},\"price\"\
-      :{\"default\":{\"discount\":0.0,\"value\":333.0,\"tax_included\":false,\"original_value\"\
-      :333.0}},\"short_name\":\"\",\"seo_title\":\"Fauteuil Style Mid-Century avec\
-      \ assise tapiss\xE9e | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"\
-      ],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"\
-      value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"short_description\":null,\"\
-      model\":{\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e\"},\"\
-      main\":true,\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\"\
-      ,\"id\":15,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":42,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"B00RX-002\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":42,\"variant_attributes\":{\"color\":\"Grey\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":333.0,\"tax_included\"\
-      :false,\"original_value\":333.0}},\"short_name\":\"\",\"seo_title\":\"Fauteuil\
-      \ Style Mid-Century avec assise tapiss\xE9e | \",\"redirect_url_key\":{},\"\
-      hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"\
-      ancestors\":[\"Meuble\"],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"\
-      Salon\",\"Meuble\"],\"value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"\
-      short_description\":null,\"model\":{\"name\":\"Fauteuil Style Mid-Century avec\
-      \ assise tapiss\xE9e\"},\"main\":false,\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\"\
-      ,\"id\":16,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":43,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"B00RX-003\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":43,\"variant_attributes\":{\"color\":\"yellow\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":333.0,\"tax_included\"\
-      :false,\"original_value\":333.0}},\"short_name\":\"\",\"seo_title\":\"Fauteuil\
-      \ Style Mid-Century avec assise tapiss\xE9e | \",\"redirect_url_key\":{},\"\
-      hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"\
-      ancestors\":[\"Meuble\"],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"\
-      Salon\",\"Meuble\"],\"value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"\
-      short_description\":null,\"model\":{\"name\":\"Fauteuil Style Mid-Century avec\
-      \ assise tapiss\xE9e\"},\"main\":false,\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\"\
-      ,\"id\":17,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":44,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"B00RX-004\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":44,\"variant_attributes\":{\"color\":\"red\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":333.0,\"tax_included\"\
-      :false,\"original_value\":333.0}},\"short_name\":\"\",\"seo_title\":\"Fauteuil\
-      \ Style Mid-Century avec assise tapiss\xE9e | \",\"redirect_url_key\":{},\"\
-      hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"\
-      ancestors\":[\"Meuble\"],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"\
-      Salon\",\"Meuble\"],\"value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"\
-      short_description\":null,\"model\":{\"name\":\"Fauteuil Style Mid-Century avec\
-      \ assise tapiss\xE9e\"},\"main\":false,\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\"\
-      ,\"id\":18,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":7,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":null,\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":7,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":30.75,\"tax_included\":false,\"original_value\":30.75}},\"short_name\"\
-      :\"\",\"seo_title\":\"GAP Analysis Service | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Services\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"GAP Analysis Service\"},\"main\":true,\"url_key\":\"gap-analysis-service\"\
-      ,\"id\":19,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/services\",\"id\":4,\"name\":\"Services\"\
-      }],\"name\":\"GAP Analysis Service\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\"\
-      :29,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
-      {\"sku\":\"CARD\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":29,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":885.0,\"tax_included\":false,\"original_value\":885.0}},\"short_name\"\
-      :\"\",\"seo_title\":\"Graphics Card | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Graphics Card\"},\"main\":true,\"url_key\":\"graphics-card-CARD\"\
-      ,\"id\":21,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Graphics Card\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":26,\"\
-      _index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\"\
-      :\"HDD-SH1\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":26,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":975.0,\"tax_included\":false,\"original_value\":975.0}},\"short_name\"\
-      :\"\",\"seo_title\":\"HDD SH-1 | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"HDD SH-1\"},\"main\":true,\"url_key\":\"hdd-sh-1-HDD-SH1\"\
-      ,\"id\":22,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"HDD SH-1\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":18,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"E-COM09\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :18,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\":0.0,\"value\"\
-      :1799.0,\"tax_included\":false,\"original_value\":1799.0}},\"short_name\":\"\
-      \",\"seo_title\":\"iMac | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"iMac\"},\"main\":true,\"url_key\":\"imac-E-COM09\",\"id\"\
-      :23,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"\
-      },{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"\
-      level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"iMac\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":16,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"E-COM07\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :16,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\":0.0,\"value\"\
-      :320.0,\"tax_included\":false,\"original_value\":320.0}},\"short_name\":\"\"\
-      ,\"seo_title\":\"iPad Mini | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"iPad Mini\"},\"main\":true,\"url_key\":\"ipad-mini-E-COM07\"\
-      ,\"id\":24,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"iPad Mini\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":10,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"E-COM01\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :10,\"variant_attributes\":{\"color\":\"White\",\"wi-fi\":\"2.4 GHz\",\"memory\"\
-      :\"16 GB\"},\"price\":{\"default\":{\"discount\":0.0,\"value\":750.0,\"tax_included\"\
-      :false,\"original_value\":750.0}},\"short_name\":\"White, 16 GB\",\"seo_title\"\
-      :\"iPad Retina Display | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":3,\"short_description\":null,\"\
-      model\":{\"name\":\"iPad Retina Display\"},\"main\":true,\"url_key\":\"ipad-retina-display\"\
-      ,\"id\":25,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"iPad Retina Display (White, 16 GB)\"}\n{\"index\":{\"_type\":\"\
-      odoo\",\"_id\":11,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM02\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":11,\"variant_attributes\":{\"color\":\"Black\"\
-      ,\"wi-fi\":\"2.4 GHz\",\"memory\":\"16 GB\"},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":750.0,\"tax_included\":false,\"original_value\":750.0}},\"short_name\"\
-      :\"Black, 16 GB\",\"seo_title\":\"iPad Retina Display | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :3,\"short_description\":null,\"model\":{\"name\":\"iPad Retina Display\"},\"\
-      main\":false,\"url_key\":\"ipad-retina-display\",\"id\":26,\"categories\":[{\"\
-      level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\"\
-      :\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"\
-      all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"name\":\"iPad Retina\
-      \ Display (Black, 16 GB)\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":12,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"E-COM03\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :12,\"variant_attributes\":{\"color\":\"White\",\"wi-fi\":\"2.4 GHz\",\"memory\"\
-      :\"32 GB\"},\"price\":{\"default\":{\"discount\":0.0,\"value\":800.4,\"tax_included\"\
-      :false,\"original_value\":800.4}},\"short_name\":\"White, 32 GB\",\"seo_title\"\
-      :\"iPad Retina Display | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":3,\"short_description\":null,\"\
-      model\":{\"name\":\"iPad Retina Display\"},\"main\":false,\"url_key\":\"ipad-retina-display\"\
-      ,\"id\":27,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"iPad Retina Display (White, 32 GB)\"}\n{\"index\":{\"_type\":\"\
-      odoo\",\"_id\":21,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM12\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":21,\"variant_attributes\":{\"memory\":\"16 GB\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":16.5,\"tax_included\":false,\"\
-      original_value\":16.5}},\"short_name\":\"16 GB\",\"seo_title\":\"iPod | \",\"\
-      redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\"\
-      :\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\"\
-      :2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"\
-      variant_count\":2,\"short_description\":null,\"model\":{\"name\":\"iPod\"},\"\
-      main\":true,\"url_key\":\"ipod\",\"id\":29,\"categories\":[{\"level\":0,\"url_key\"\
-      :\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\":\"all/saleable\"\
-      ,\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"all/saleable/physical\"\
-      ,\"id\":6,\"name\":\"Physical\"}],\"name\":\"iPod (16 GB)\"}\n{\"index\":{\"\
-      _type\":\"odoo\",\"_id\":22,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM13\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":22,\"variant_attributes\":{\"memory\":\"32 GB\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":22.9,\"tax_included\":false,\"\
-      original_value\":22.9}},\"short_name\":\"32 GB\",\"seo_title\":\"iPod | \",\"\
-      redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\"\
-      :\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\"\
-      :2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"\
-      variant_count\":2,\"short_description\":null,\"model\":{\"name\":\"iPod\"},\"\
-      main\":false,\"url_key\":\"ipod\",\"id\":30,\"categories\":[{\"level\":0,\"\
-      url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\":\"all/saleable\"\
-      ,\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"all/saleable/physical\"\
-      ,\"id\":6,\"name\":\"Physical\"}],\"name\":\"iPod (32 GB)\"}\n{\"index\":{\"\
-      _type\":\"odoo\",\"_id\":31,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"LAP-CUS\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":31,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":3645.0,\"tax_included\":false,\"original_value\"\
-      :3645.0}},\"short_name\":\"\",\"seo_title\":\"Laptop Customized | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Laptop Customized\"},\"\
-      main\":true,\"url_key\":\"laptop-customized-LAP-CUS\",\"id\":31,\"categories\"\
-      :[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"\
-      url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\"\
-      :\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"name\":\"Laptop\
-      \ Customized\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":30,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"LAP-E5\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":30,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":2950.0,\"tax_included\":false,\"original_value\"\
-      :2950.0}},\"short_name\":\"\",\"seo_title\":\"Laptop E5023 | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Laptop E5023\"},\"main\"\
-      :true,\"url_key\":\"laptop-e5023-LAP-E5\",\"id\":32,\"categories\":[{\"level\"\
-      :0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\":\"\
-      all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"all/saleable/physical\"\
-      ,\"id\":6,\"name\":\"Physical\"}],\"name\":\"Laptop E5023\"}\n{\"index\":{\"\
-      _type\":\"odoo\",\"_id\":33,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"CONS_DEL02\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":33,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":40000.0,\"tax_included\":false,\"original_value\"\
-      :40000.0}},\"short_name\":\"\",\"seo_title\":\"Little server | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Little server\"},\"main\"\
-      :true,\"url_key\":\"little-server-CONS_DEL02\",\"id\":33,\"categories\":[{\"\
-      level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\"\
-      :\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"\
-      all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"name\":\"Little server\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":55,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"HARPTV-001\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":55,\"variant_attributes\":{\"color\":\"brown\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":600.0,\"tax_included\"\
-      :false,\"original_value\":600.0}},\"short_name\":\"\",\"seo_title\":\"Meuble\
-      \ TV 40 cmHARPER | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"\
-      ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"\
-      ],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"\
-      value\":\"Meuble TV\",\"level\":3}],\"variant_count\":1,\"short_description\"\
-      :null,\"model\":{\"name\":\"Meuble TV 40 cmHARPER\"},\"main\":true,\"url_key\"\
-      :\"meuble-tv-40-cmharper-HARPTV-001\",\"id\":34,\"categories\":[{\"level\":0,\"\
-      url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"},{\"level\":1,\"url_key\"\
-      :\"meuble/salon\",\"id\":16,\"name\":\"Salon\"},{\"level\":2,\"url_key\":\"\
-      meuble/salon/meuble-tv\",\"id\":20,\"name\":\"Meuble TV\"}],\"name\":\"Meuble\
-      \ TV 40 cmHARPER\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":56,\"_index\":\"\
-      demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"CDAPMAK9-B\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :56,\"variant_attributes\":{\"color\":\"brown\"},\"price\":{\"default\":{\"\
-      discount\":0.0,\"value\":789.99,\"tax_included\":false,\"original_value\":789.99}},\"\
-      short_name\":\"\",\"seo_title\":\"Meuble TV Warm Shaker bois massif 183cm |\
-      \ \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"\
-      value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\":\"Salon\"\
-      ,\"level\":2}],\"variant_count\":2,\"short_description\":null,\"model\":{\"\
-      name\":\"Meuble TV Warm Shaker bois massif 183cm\"},\"main\":true,\"url_key\"\
-      :\"meuble-tv-warm-shaker-bois-massif-183cm\",\"id\":35,\"categories\":[{\"level\"\
-      :0,\"url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"},{\"level\":1,\"url_key\"\
-      :\"meuble/salon\",\"id\":16,\"name\":\"Salon\"}],\"name\":\"Meuble TV Warm Shaker\
-      \ bois massif 183cm\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":57,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"CDAPMAK9-G\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :57,\"variant_attributes\":{\"color\":\"Grey\"},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":789.99,\"tax_included\":false,\"original_value\":789.99}},\"\
-      short_name\":\"\",\"seo_title\":\"Meuble TV Warm Shaker bois massif 183cm |\
-      \ \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"\
-      value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\":\"Salon\"\
-      ,\"level\":2}],\"variant_count\":2,\"short_description\":null,\"model\":{\"\
-      name\":\"Meuble TV Warm Shaker bois massif 183cm\"},\"main\":false,\"url_key\"\
-      :\"meuble-tv-warm-shaker-bois-massif-183cm\",\"id\":36,\"categories\":[{\"level\"\
-      :0,\"url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"},{\"level\":1,\"url_key\"\
-      :\"meuble/salon\",\"id\":16,\"name\":\"Salon\"}],\"name\":\"Meuble TV Warm Shaker\
-      \ bois massif 183cm\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":1,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"SERV_ORDER\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :1,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\":0.0,\"value\"\
-      :90.0,\"tax_included\":false,\"original_value\":90.0}},\"short_name\":\"\",\"\
-      seo_title\":\"Prepaid Consulting | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Services\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Prepaid Consulting\"},\"main\":true,\"url_key\":\"prepaid-consulting-SERV_ORDER\"\
-      ,\"id\":44,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/services\",\"id\":4,\"name\":\"Services\"\
-      }],\"name\":\"Prepaid Consulting\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\"\
-      :47,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
-      {\"sku\":\"B01E4IL4TY\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":47,\"variant_attributes\":{\"color\":\"white\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":54.0,\"tax_included\":false,\"\
-      original_value\":54.0}},\"short_name\":\"\",\"seo_title\":\"Mid Century Modern\
-      \ Eames Chair with Molded Arms and Wood Legs | \",\"redirect_url_key\":{},\"\
-      hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"\
-      ancestors\":[\"Meuble\"],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"\
-      Salon\",\"Meuble\"],\"value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"\
-      short_description\":null,\"model\":{\"name\":\"Mid Century Modern Eames Chair\
-      \ with Molded Arms and Wood Legs\"},\"main\":true,\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
-      ,\"id\":37,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Mid Century Modern Eames Chair with Molded Arms and\
-      \ Wood Legs\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":46,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"MIDCHAIR-001\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":46,\"variant_attributes\":{\"color\":\"blue\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":54.0,\"tax_included\":false,\"\
-      original_value\":54.0}},\"short_name\":\"\",\"seo_title\":\"Mid Century Modern\
-      \ Eames Chair with Molded Arms and Wood Legs | \",\"redirect_url_key\":{},\"\
-      hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"\
-      ancestors\":[\"Meuble\"],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"\
-      Salon\",\"Meuble\"],\"value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"\
-      short_description\":null,\"model\":{\"name\":\"Mid Century Modern Eames Chair\
-      \ with Molded Arms and Wood Legs\"},\"main\":false,\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
-      ,\"id\":38,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Mid Century Modern Eames Chair with Molded Arms and\
-      \ Wood Legs\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":48,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"MIDCHAIR-002\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":48,\"variant_attributes\":{\"color\":\"Black\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":54.0,\"tax_included\":false,\"\
-      original_value\":54.0}},\"short_name\":\"\",\"seo_title\":\"Mid Century Modern\
-      \ Eames Chair with Molded Arms and Wood Legs | \",\"redirect_url_key\":{},\"\
-      hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"\
-      ancestors\":[\"Meuble\"],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"\
-      Salon\",\"Meuble\"],\"value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"\
-      short_description\":null,\"model\":{\"name\":\"Mid Century Modern Eames Chair\
-      \ with Molded Arms and Wood Legs\"},\"main\":false,\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
-      ,\"id\":39,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Mid Century Modern Eames Chair with Molded Arms and\
-      \ Wood Legs\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":49,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"re\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":49,\"variant_attributes\":{\"color\":\"red\"},\"price\":{\"\
-      default\":{\"discount\":0.0,\"value\":54.0,\"tax_included\":false,\"original_value\"\
-      :54.0}},\"short_name\":\"\",\"seo_title\":\"Mid Century Modern Eames Chair with\
-      \ Molded Arms and Wood Legs | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"\
-      ],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"\
-      value\":\"Chaise\",\"level\":3}],\"variant_count\":4,\"short_description\":null,\"\
-      model\":{\"name\":\"Mid Century Modern Eames Chair with Molded Arms and Wood\
-      \ Legs\"},\"main\":false,\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
-      ,\"id\":40,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Mid Century Modern Eames Chair with Molded Arms and\
-      \ Wood Legs\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":27,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"MBi9\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":27,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":1950.0,\"tax_included\":false,\"original_value\":1950.0}},\"\
-      short_name\":\"\",\"seo_title\":\"Motherboard I9P57 | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Motherboard I9P57\"},\"\
-      main\":true,\"url_key\":\"motherboard-i9p57-MBi9\",\"id\":41,\"categories\"\
-      :[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"\
-      url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\"\
-      :\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"name\":\"Motherboard\
-      \ I9P57\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":20,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"E-COM11\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":20,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":14.0,\"tax_included\":false,\"original_value\"\
-      :14.0}},\"short_name\":\"\",\"seo_title\":\"Mouse, Optical | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Mouse, Optical\"},\"main\"\
-      :true,\"url_key\":\"mouse-optical-E-COM11\",\"id\":42,\"categories\":[{\"level\"\
-      :0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\":\"\
-      all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"all/saleable/physical\"\
-      ,\"id\":6,\"name\":\"Physical\"}],\"name\":\"Mouse, Optical\"}\n{\"index\":{\"\
-      _type\":\"odoo\",\"_id\":23,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"M-Wir\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":23,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":12.5,\"tax_included\":false,\"original_value\":12.5}},\"short_name\"\
-      :\"\",\"seo_title\":\"Mouse, Wireless | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Mouse, Wireless\"},\"main\":true,\"url_key\":\"mouse-wireless-M-Wir\"\
-      ,\"id\":43,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Mouse, Wireless\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":28,\"\
-      _index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\"\
-      :\"CPUi5\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":28,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":2100.0,\"tax_included\":false,\"original_value\":2100.0}},\"\
-      short_name\":\"\",\"seo_title\":\"Processor Core i5 2.70 Ghz | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Physical\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Processor Core i5 2.70 Ghz\"\
-      },\"main\":true,\"url_key\":\"processor-core-i5-270-ghz-CPUi5\",\"id\":45,\"\
-      categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"\
-      level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\"\
-      :2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"}],\"\
-      name\":\"Processor Core i5 2.70 Ghz\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\"\
-      :24,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
-      {\"sku\":\"RAM-SR5\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":24,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":85.0,\"tax_included\":false,\"original_value\":85.0}},\"short_name\"\
-      :\"\",\"seo_title\":\"RAM SR5 | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"RAM SR5\"},\"main\":true,\"url_key\":\"ram-sr5-RAM-SR5\"\
-      ,\"id\":46,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"RAM SR5\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":51,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"SAUDERTABLE-001\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :51,\"variant_attributes\":{\"color\":\"brown\"},\"price\":{\"default\":{\"\
-      discount\":0.0,\"value\":143.99,\"tax_included\":false,\"original_value\":143.99}},\"\
-      short_name\":\"\",\"seo_title\":\"Sauder 420011 Coffee Table, Furniture, Craftsman\
-      \ Oak | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\"\
-      :[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\"\
-      :\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Meuble\
-      \ TV\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"model\"\
-      :{\"name\":\"Sauder 420011 Coffee Table, Furniture, Craftsman Oak\"},\"main\"\
-      :true,\"url_key\":\"sauder-420011-coffee-table-furniture-craftsman-oak-SAUDERTABLE-001\"\
-      ,\"id\":47,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/meuble-tv\",\"id\":20,\"\
-      name\":\"Meuble TV\"}],\"name\":\"Sauder 420011 Coffee Table, Furniture, Craftsman\
-      \ Oak\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":54,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":null,\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":54,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":1.0,\"tax_included\":false,\"original_value\":1.0}},\"short_name\"\
-      :\"\",\"seo_title\":\"Sauder Harvey Park Entertainment Credenza, ch\xEAne clair\
-      \ | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"\
-      value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\":\"Salon\"\
-      ,\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Meuble TV\"\
-      ,\"level\":3}],\"variant_count\":1,\"short_description\":null,\"model\":{\"\
-      name\":\"Sauder Harvey Park Entertainment Credenza, ch\xEAne clair\"},\"main\"\
-      :true,\"url_key\":\"sauder-harvey-park-entertainment-credenza-chene-clair\"\
-      ,\"id\":48,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/meuble-tv\",\"id\":20,\"\
-      name\":\"Meuble TV\"}],\"name\":\"Sauder Harvey Park Entertainment Credenza,\
-      \ ch\xEAne clair\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":34,\"_index\":\"\
-      demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"CONS_DEL01\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :34,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\":0.0,\"value\"\
-      :60000.0,\"tax_included\":false,\"original_value\":60000.0}},\"short_name\"\
-      :\"\",\"seo_title\":\"Server | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Server\"},\"main\":true,\"url_key\":\"server-CONS_DEL01\"\
-      ,\"id\":49,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Server\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":53,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"C\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :53,\"variant_attributes\":{\"color\":\"white\"},\"price\":{\"default\":{\"\
-      discount\":0.0,\"value\":849.95,\"tax_included\":false,\"original_value\":849.95}},\"\
-      short_name\":\"\",\"seo_title\":\"ST-160B Wood and Glass TV Stand with Hidden\
-      \ Wheels for Sizes up to 70\\\" | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"\
-      ],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"\
-      value\":\"Meuble TV\",\"level\":3}],\"variant_count\":1,\"short_description\"\
-      :null,\"model\":{\"name\":\"ST-160B Wood and Glass TV Stand with Hidden Wheels\
-      \ for Sizes up to 70\\\"\"},\"main\":true,\"url_key\":\"st-160b-wood-and-glass-tv-stand-with-hidden-wheels-for-sizes-up-to-70-C\"\
-      ,\"id\":51,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/meuble-tv\",\"id\":20,\"\
-      name\":\"Meuble TV\"}],\"name\":\"ST-160B Wood and Glass TV Stand with Hidden\
-      \ Wheels for Sizes up to 70\\\"\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":8,\"\
-      _index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\"\
-      :null,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"\
-      objectID\":8,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":38.25,\"tax_included\":false,\"original_value\":38.25}},\"short_name\"\
-      :\"\",\"seo_title\":\"Support Services | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Services\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Support Services\"},\"main\":true,\"url_key\":\"support-services\"\
-      ,\"id\":52,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/services\",\"id\":4,\"name\":\"Services\"\
-      }],\"name\":\"Support Services\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":4,\"\
-      _index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\"\
-      :\"PROD_DEL\",\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":4,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":70.0,\"tax_included\":false,\"original_value\":70.0}},\"short_name\"\
-      :\"\",\"seo_title\":\"Switch, 24 ports | \",\"redirect_url_key\":{},\"hierarchicalCategories\"\
-      :[{\"ancestors\":[],\"value\":\"All\",\"level\":1},{\"ancestors\":[\"All\"],\"\
-      value\":\"Saleable\",\"level\":2},{\"ancestors\":[\"Saleable\",\"All\"],\"value\"\
-      :\"Physical\",\"level\":3}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Switch, 24 ports\"},\"main\":true,\"url_key\":\"switch-24-ports-PROD_DEL\"\
-      ,\"id\":53,\"categories\":[{\"level\":0,\"url_key\":\"all\",\"id\":1,\"name\"\
-      :\"All\"},{\"level\":1,\"url_key\":\"all/saleable\",\"id\":2,\"name\":\"Saleable\"\
-      },{\"level\":2,\"url_key\":\"all/saleable/physical\",\"id\":6,\"name\":\"Physical\"\
-      }],\"name\":\"Switch, 24 ports\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":59,\"\
-      _index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\"\
-      :\"/\",\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"\
-      objectID\":59,\"variant_attributes\":{\"color\":\"white\"},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":99.72,\"tax_included\":false,\"original_value\"\
-      :99.72}},\"short_name\":\"\",\"seo_title\":\"Table ronde style mid-century plateau\
-      \ laqu\xE9 | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\"\
-      :[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\"\
-      :\"Salle \xE0 manger\",\"level\":2}],\"variant_count\":1,\"short_description\"\
-      :null,\"model\":{\"name\":\"Table ronde style mid-century plateau laqu\xE9\"\
-      },\"main\":true,\"url_key\":\"table-ronde-style-mid-century-plateau-laque-/\"\
-      ,\"id\":54,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salle-a-manger\",\"id\"\
-      :13,\"name\":\"Salle \xE0 manger\"}],\"name\":\"Table ronde style mid-century\
-      \ plateau laqu\xE9\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":58,\"_index\"\
-      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"sku\":\"TABLEMID-001\"\
-      ,\"meta_description\":null,\"meta_keywords\":null,\"description\":null,\"objectID\"\
-      :58,\"variant_attributes\":{\"color\":\"brown\"},\"price\":{\"default\":{\"\
-      discount\":0.0,\"value\":149.99,\"tax_included\":false,\"original_value\":149.99}},\"\
-      short_name\":\"\",\"seo_title\":\"Table style Mid-Century Modern Ch\xEAne |\
-      \ \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"\
-      value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\":\"Salle\
-      \ \xE0 manger\",\"level\":2}],\"variant_count\":1,\"short_description\":null,\"\
-      model\":{\"name\":\"Table style Mid-Century Modern Ch\xEAne\"},\"main\":true,\"\
-      url_key\":\"table-style-mid-century-modern-chene-TABLEMID-001\",\"id\":55,\"\
-      categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"\
-      },{\"level\":1,\"url_key\":\"meuble/salle-a-manger\",\"id\":13,\"name\":\"Salle\
-      \ \xE0 manger\"}],\"name\":\"Table style Mid-Century Modern Ch\xEAne\"}\n{\"\
-      index\":{\"_type\":\"odoo\",\"_id\":60,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"THELMA-BLACK\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":60,\"variant_attributes\":{\"color\":\"Black\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":149.0,\"tax_included\"\
-      :false,\"original_value\":149.0}},\"short_name\":\"\",\"seo_title\":\"Thelma\
-      \ | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"\
-      value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\":\"Salon\"\
-      ,\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Chaise\",\"\
-      level\":3}],\"variant_count\":3,\"short_description\":null,\"model\":{\"name\"\
-      :\"Thelma\"},\"main\":true,\"url_key\":\"thelma\",\"id\":56,\"categories\":[{\"\
-      level\":0,\"url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"},{\"level\":1,\"\
-      url_key\":\"meuble/salon\",\"id\":16,\"name\":\"Salon\"},{\"level\":2,\"url_key\"\
-      :\"meuble/salon/chaise\",\"id\":17,\"name\":\"Chaise\"}],\"name\":\"Thelma\"\
-      }\n{\"index\":{\"_type\":\"odoo\",\"_id\":61,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"THELMA-GREY\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":61,\"variant_attributes\":{\"color\":\"Grey\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":149.0,\"tax_included\"\
-      :false,\"original_value\":149.0}},\"short_name\":\"\",\"seo_title\":\"Thelma\
-      \ | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"\
-      value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\":\"Salon\"\
-      ,\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Chaise\",\"\
-      level\":3}],\"variant_count\":3,\"short_description\":null,\"model\":{\"name\"\
-      :\"Thelma\"},\"main\":false,\"url_key\":\"thelma\",\"id\":57,\"categories\"\
-      :[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"},{\"level\"\
-      :1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\":\"Salon\"},{\"level\":2,\"\
-      url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\":\"Chaise\"}],\"name\":\"\
-      Thelma\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":62,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"THELMA-RED\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":62,\"variant_attributes\":{\"color\":\"red\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":149.0,\"tax_included\"\
-      :false,\"original_value\":149.0}},\"short_name\":\"\",\"seo_title\":\"Thelma\
-      \ | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\":[],\"\
-      value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\":\"Salon\"\
-      ,\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Chaise\",\"\
-      level\":3}],\"variant_count\":3,\"short_description\":null,\"model\":{\"name\"\
-      :\"Thelma\"},\"main\":false,\"url_key\":\"thelma\",\"id\":58,\"categories\"\
-      :[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"name\":\"Meuble\"},{\"level\"\
-      :1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\":\"Salon\"},{\"level\":2,\"\
-      url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\":\"Chaise\"}],\"name\":\"\
-      Thelma\"}\n{\"index\":{\"_type\":\"odoo\",\"_id\":39,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"VORCHAIR-001\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":39,\"variant_attributes\":{\"color\":\"white\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":50.99,\"tax_included\"\
-      :false,\"original_value\":50.99}},\"short_name\":\"\",\"seo_title\":\"Vortex\
-      \ Side Chair | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\"\
-      :[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\"\
-      :\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Chaise\"\
-      ,\"level\":3}],\"variant_count\":2,\"short_description\":null,\"model\":{\"\
-      name\":\"Vortex Side Chair\"},\"main\":true,\"url_key\":\"vortex-side-chair\"\
-      ,\"id\":59,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Vortex Side Chair\"}\n{\"index\":{\"_type\":\"odoo\"\
-      ,\"_id\":40,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"VORCHAIR-002\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":40,\"variant_attributes\":{\"color\":\"blue\"\
-      },\"price\":{\"default\":{\"discount\":0.0,\"value\":50.99,\"tax_included\"\
-      :false,\"original_value\":50.99}},\"short_name\":\"\",\"seo_title\":\"Vortex\
-      \ Side Chair | \",\"redirect_url_key\":{},\"hierarchicalCategories\":[{\"ancestors\"\
-      :[],\"value\":\"Meuble\",\"level\":1},{\"ancestors\":[\"Meuble\"],\"value\"\
-      :\"Salon\",\"level\":2},{\"ancestors\":[\"Salon\",\"Meuble\"],\"value\":\"Chaise\"\
-      ,\"level\":3}],\"variant_count\":2,\"short_description\":null,\"model\":{\"\
-      name\":\"Vortex Side Chair\"},\"main\":false,\"url_key\":\"vortex-side-chair\"\
-      ,\"id\":60,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/chaise\",\"id\":17,\"name\"\
-      :\"Chaise\"}],\"name\":\"Vortex Side Chair\"}\n{\"index\":{\"_type\":\"odoo\"\
-      ,\"_id\":45,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":null,\"meta_description\":null,\"meta_keywords\":null,\"description\"\
-      :null,\"objectID\":45,\"variant_attributes\":{},\"price\":{\"default\":{\"discount\"\
-      :0.0,\"value\":79.99,\"tax_included\":false,\"original_value\":79.99}},\"short_name\"\
-      :\"\",\"seo_title\":\"Walnut Side End Table Nightstand with Storage Drawer Solid\
-      \ Wood Legs Living Room Furniture\\n         | \",\"redirect_url_key\":{},\"\
-      hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"Meuble\",\"level\":1},{\"\
-      ancestors\":[\"Meuble\"],\"value\":\"Salon\",\"level\":2},{\"ancestors\":[\"\
-      Salon\",\"Meuble\"],\"value\":\"Tables\",\"level\":3}],\"variant_count\":1,\"\
-      short_description\":null,\"model\":{\"name\":\"Walnut Side End Table Nightstand\
-      \ with Storage Drawer Solid Wood Legs Living Room Furniture\\n        \"},\"\
-      main\":true,\"url_key\":\"walnut-side-end-table-nightstand-with-storage-drawer-solid-wood-legs-living-room-furniture\"\
-      ,\"id\":61,\"categories\":[{\"level\":0,\"url_key\":\"meuble\",\"id\":10,\"\
-      name\":\"Meuble\"},{\"level\":1,\"url_key\":\"meuble/salon\",\"id\":16,\"name\"\
-      :\"Salon\"},{\"level\":2,\"url_key\":\"meuble/salon/tables\",\"id\":19,\"name\"\
-      :\"Tables\"}],\"name\":\"Walnut Side End Table Nightstand with Storage Drawer\
-      \ Solid Wood Legs Living Room Furniture\\n        \"}\n{\"index\":{\"_type\"\
-      :\"odoo\",\"_id\":6,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
-      }}\n{\"sku\":\"PROD_ORDER\",\"meta_description\":null,\"meta_keywords\":null,\"\
-      description\":null,\"objectID\":6,\"variant_attributes\":{},\"price\":{\"default\"\
-      :{\"discount\":0.0,\"value\":280.0,\"tax_included\":false,\"original_value\"\
-      :280.0}},\"short_name\":\"\",\"seo_title\":\"Zed+ Antivirus | \",\"redirect_url_key\"\
-      :{},\"hierarchicalCategories\":[{\"ancestors\":[],\"value\":\"All\",\"level\"\
-      :1},{\"ancestors\":[\"All\"],\"value\":\"Saleable\",\"level\":2},{\"ancestors\"\
-      :[\"Saleable\",\"All\"],\"value\":\"Software\",\"level\":3}],\"variant_count\"\
-      :1,\"short_description\":null,\"model\":{\"name\":\"Zed+ Antivirus\"},\"main\"\
-      :true,\"url_key\":\"zed-antivirus-PROD_ORDER\",\"id\":62,\"categories\":[{\"\
-      level\":0,\"url_key\":\"all\",\"id\":1,\"name\":\"All\"},{\"level\":1,\"url_key\"\
-      :\"all/saleable\",\"id\":2,\"name\":\"Saleable\"},{\"level\":2,\"url_key\":\"\
-      all/saleable/software\",\"id\":5,\"name\":\"Software\"}],\"name\":\"Zed+ Antivirus\"\
-      }\n"
+    body: null
     headers:
-      connection: [keep-alive]
-      content-type: [!!python/unicode 'application/x-ndjson']
-    method: POST
-    uri: http://127.0.0.1:9200/_bulk
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1
+    method: HEAD
+    uri: http://elastic:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
   response:
-    body: {string: !!python/unicode '{"took":115,"errors":false,"items":[{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"52","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"17","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"19","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"32","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"14","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":2,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"25","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":3,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"9","_version":2,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":2,"_primary_term":1,"status":200}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"50","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"2","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"15","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"5","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":3,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"38","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":2,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"3","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":2,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"41","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":4,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"42","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":4,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"43","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":3,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"44","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":5,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"7","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"29","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":6,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"26","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":7,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"18","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"16","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":2,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"10","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":5,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"11","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":3,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"12","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":6,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"21","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":7,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"22","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":8,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"31","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":4,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"30","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":8,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"33","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":9,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"55","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":4,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"56","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":5,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"57","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":5,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"1","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":3,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"47","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":6,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"46","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":4,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"48","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":9,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"49","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":5,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"27","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":6,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"20","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":7,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"23","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":7,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"28","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":6,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"24","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":10,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"51","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":8,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"54","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":9,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"34","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":10,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"53","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":8,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"8","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":11,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"4","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":10,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"59","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":12,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"58","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":9,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"60","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":11,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"61","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":10,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"62","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":13,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"39","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":7,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"40","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":12,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"45","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":11,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"6","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":11,"_primary_term":1,"status":201}}]}'}
+    body:
+      string: ''
     headers:
-      content-length: ['13089']
-      content-type: [application/json; charset=UTF-8]
-    status: {code: 200, message: OK}
+      content-length:
+      - '641'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 404
+      message: Not Found
+- request:
+    body: '{"settings":{"analysis":{"char_filter":{"replace":{"type":"mapping","mappings":["&=>
+      and "]}},"filter":{"word_delimiter":{"type":"word_delimiter","split_on_numerics":false,"split_on_case_change":true,"generate_word_parts":true,"generate_number_parts":true,"catenate_all":true,"preserve_original":true,"catenate_numbers":true}},"analyzer":{"default":{"type":"custom","char_filter":["html_strip","replace"],"tokenizer":"whitespace","filter":["lowercase","word_delimiter"]}},"index":{"sort.field":["main","id"],"sort.order":["desc","asc"]}}},"mappings":{"properties":{"hierarchicalCategories":{"type":"nested","properties":{"ancestors":{"type":"keyword"},"order":{"type":"integer"},"value":{"type":"keyword"},"level":{"type":"integer"}}},"url_key":{"type":"keyword"},"variant_attributes":{"properties":{"color":{"type":"text","fielddata":true}}},"main":{"type":"boolean"},"id":{"type":"integer"},"redirect_url_key":{"type":"keyword"}}}}'
+    headers:
+      Content-Length:
+      - '933'
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1
+    method: PUT
+    uri: http://elastic:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
+  response:
+    body:
+      string: '{"acknowledged":true,"shards_acknowledged":true,"index":"demo_elasticsearch_backend_shopinvader_variant_en_us"}'
+    headers:
+      content-length:
+      - '111'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
+- request:
+    body: "{\"index\":{\"_id\":20,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1724,\"objectID\":20,\"model\":{\"name\":\"Pedal Bin\"},\"url_key\"\
+      :\"pedal-bin-e-com10\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Pedal Bin\",\"short_name\":\"\",\"seo_title\"\
+      :\"Pedal Bin | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"E-COM10\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":47.0,\"tax_included\":false,\"original_value\":47.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":1,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1725,\"\
+      objectID\":1,\"model\":{\"name\":\"Restaurant Expenses\"},\"url_key\":\"restaurant-expenses-exp-rest\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Restaurant Expenses\",\"short_name\":\"\",\"seo_title\":\"\
+      Restaurant Expenses | \",\"meta_keywords\":null,\"meta_description\":null,\"\
+      variant_count\":1,\"categories\":[],\"sku\":\"EXP_REST\",\"variant_attributes\"\
+      :{},\"price\":{\"default\":{\"value\":14.0,\"tax_included\":false,\"original_value\"\
+      :14.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :56,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1726,\"objectID\":56,\"model\":{\"name\":\"ST-160B Wood and Glass TV\
+      \ Stand with Hidden Wheels for Sizes up to 70\\\"\"},\"url_key\":\"st-160b-wood-and-glass-tv-stand-with-hidden-wheels-for-sizes-up-to-70-c\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes\
+      \ up to 70\\\" (white)\",\"short_name\":\"white\",\"seo_title\":\"ST-160B Wood\
+      \ and Glass TV Stand with Hidden Wheels for Sizes up to 70\\\" | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :\"C\",\"variant_attributes\":{\"color\":\"white\"},\"price\":{\"default\":{\"\
+      value\":849.95,\"tax_included\":false,\"original_value\":849.95,\"discount\"\
+      :0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":54,\"_index\":\"\
+      demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1727,\"objectID\"\
+      :54,\"model\":{\"name\":\"Sauder 420011 Coffee Table, Furniture, Craftsman Oak\"\
+      },\"url_key\":\"sauder-420011-coffee-table-furniture-craftsman-oak-saudertable-001\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Sauder 420011 Coffee Table, Furniture, Craftsman Oak (brown)\"\
+      ,\"short_name\":\"brown\",\"seo_title\":\"Sauder 420011 Coffee Table, Furniture,\
+      \ Craftsman Oak | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"SAUDERTABLE-001\",\"variant_attributes\":{\"\
+      color\":\"brown\"},\"price\":{\"default\":{\"value\":143.99,\"tax_included\"\
+      :false,\"original_value\":143.99,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":57,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1728,\"objectID\":57,\"model\":{\"name\":\"Sauder Harvey Park Entertainment\
+      \ Credenza, ch\xEAne clair\"},\"url_key\":\"sauder-harvey-park-entertainment-credenza-chene-clair\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Sauder Harvey Park Entertainment Credenza, ch\xEAne clair\"\
+      ,\"short_name\":\"\",\"seo_title\":\"Sauder Harvey Park Entertainment Credenza,\
+      \ ch\xEAne clair | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"\",\"variant_attributes\":{},\"price\":{\"default\"\
+      :{\"value\":1.0,\"tax_included\":false,\"original_value\":1.0,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":18,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1729,\"objectID\":18,\"model\":{\"name\":\"Storage Box\"},\"url_key\"\
+      :\"storage-box-e-com08\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Storage Box\",\"short_name\":\"\",\"seo_title\"\
+      :\"Storage Box | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"E-COM08\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":79.0,\"tax_included\":false,\"original_value\":79.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":63,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1730,\"\
+      objectID\":63,\"model\":{\"name\":\"Table ronde style mid-century plateau laqu\xE9\
+      \"},\"url_key\":\"table-ronde-style-mid-century-plateau-laque\",\"redirect_url_key\"\
+      :[],\"main\":true,\"short_description\":null,\"description\":null,\"name\":\"\
+      Table ronde style mid-century plateau laqu\xE9 (white)\",\"short_name\":\"white\"\
+      ,\"seo_title\":\"Table ronde style mid-century plateau laqu\xE9 | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :\"/\",\"variant_attributes\":{\"color\":\"white\"},\"price\":{\"default\":{\"\
+      value\":99.72,\"tax_included\":false,\"original_value\":99.72,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":62,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1731,\"objectID\":62,\"model\":{\"name\":\"Table style Mid-Century\
+      \ Modern Ch\xEAne\"},\"url_key\":\"table-style-mid-century-modern-chene-tablemid-001\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Table style Mid-Century Modern Ch\xEAne (brown)\",\"short_name\"\
+      :\"brown\",\"seo_title\":\"Table style Mid-Century Modern Ch\xEAne | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :\"TABLEMID-001\",\"variant_attributes\":{\"color\":\"brown\"},\"price\":{\"\
+      default\":{\"value\":149.99,\"tax_included\":false,\"original_value\":149.99,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":14,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1696,\"\
+      objectID\":14,\"model\":{\"name\":\"Customizable Desk (CONFIG)\"},\"url_key\"\
+      :\"customizable-desk-config\",\"redirect_url_key\":[],\"main\":false,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Customizable Desk (CONFIG) (Aluminium,\
+      \ White)\",\"short_name\":\"Aluminium, White\",\"seo_title\":\"Customizable\
+      \ Desk (CONFIG) | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :6,\"categories\":[],\"sku\":\"FURN_0098\",\"variant_attributes\":{\"legs\"\
+      :\"Aluminium\",\"color\":\"White\"},\"price\":{\"default\":{\"value\":800.4,\"\
+      tax_included\":false,\"original_value\":800.4,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":15,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1691,\"objectID\":15,\"model\":{\"name\":\"Customizable Desk (CONFIG)\"\
+      },\"url_key\":\"customizable-desk-config\",\"redirect_url_key\":[],\"main\"\
+      :true,\"short_description\":null,\"description\":null,\"name\":\"Customizable\
+      \ Desk (CONFIG) (Aluminium, Black)\",\"short_name\":\"Aluminium, Black\",\"\
+      seo_title\":\"Customizable Desk (CONFIG) | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":6,\"categories\":[],\"sku\":\"DESK0004\",\"variant_attributes\"\
+      :{\"legs\":\"Aluminium\",\"color\":\"Black\"},\"price\":{\"default\":{\"value\"\
+      :800.4,\"tax_included\":false,\"original_value\":800.4,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":38,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1693,\"objectID\":38,\"model\":{\"name\":\"Customizable Desk (CONFIG)\"\
+      },\"url_key\":\"customizable-desk-config\",\"redirect_url_key\":[],\"main\"\
+      :false,\"short_description\":null,\"description\":null,\"name\":\"Customizable\
+      \ Desk (CONFIG) (Custom, Black)\",\"short_name\":\"Custom, Black\",\"seo_title\"\
+      :\"Customizable Desk (CONFIG) | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":6,\"categories\":[],\"sku\":\"DESK0006\",\"variant_attributes\"\
+      :{\"legs\":\"Custom\",\"color\":\"Black\"},\"price\":{\"default\":{\"value\"\
+      :750.0,\"tax_included\":false,\"original_value\":750.0,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":37,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1692,\"objectID\":37,\"model\":{\"name\":\"Customizable Desk (CONFIG)\"\
+      },\"url_key\":\"customizable-desk-config\",\"redirect_url_key\":[],\"main\"\
+      :false,\"short_description\":null,\"description\":null,\"name\":\"Customizable\
+      \ Desk (CONFIG) (Custom, White)\",\"short_name\":\"Custom, White\",\"seo_title\"\
+      :\"Customizable Desk (CONFIG) | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":6,\"categories\":[],\"sku\":\"DESK0005\",\"variant_attributes\"\
+      :{\"legs\":\"Custom\",\"color\":\"White\"},\"price\":{\"default\":{\"value\"\
+      :750.0,\"tax_included\":false,\"original_value\":750.0,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":31,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1683,\"objectID\":31,\"model\":{\"name\":\"Acoustic Bloc Screens\"\
+      },\"url_key\":\"acoustic-bloc-screens-furn-6666\",\"redirect_url_key\":[],\"\
+      main\":true,\"short_description\":null,\"description\":null,\"name\":\"Acoustic\
+      \ Bloc Screens\",\"short_name\":\"\",\"seo_title\":\"Acoustic Bloc Screens |\
+      \ \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":1,\"\
+      categories\":[],\"sku\":\"FURN_6666\",\"variant_attributes\":{},\"price\":{\"\
+      default\":{\"value\":2950.0,\"tax_included\":false,\"original_value\":2950.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":55,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1684,\"\
+      objectID\":55,\"model\":{\"name\":\"Ameriwood Home 1783213COM - Meuble TV\"\
+      },\"url_key\":\"ameriwood-home-1783213com-meuble-tv-b077vy7g5s-g\",\"redirect_url_key\"\
+      :[],\"main\":true,\"short_description\":null,\"description\":null,\"name\":\"\
+      Ameriwood Home 1783213COM - Meuble TV\",\"short_name\":\"\",\"seo_title\":\"\
+      Ameriwood Home 1783213COM - Meuble TV | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":1,\"categories\":[],\"sku\":\"B077VY7G5S-G\",\"variant_attributes\"\
+      :{},\"price\":{\"default\":{\"value\":311.39,\"tax_included\":false,\"original_value\"\
+      :311.39,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :21,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1685,\"objectID\":21,\"model\":{\"name\":\"Cabinet with Doors\"},\"\
+      url_key\":\"cabinet-with-doors-e-com11\",\"redirect_url_key\":[],\"main\":true,\"\
+      short_description\":null,\"description\":null,\"name\":\"Cabinet with Doors\"\
+      ,\"short_name\":\"\",\"seo_title\":\"Cabinet with Doors | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :\"E-COM11\",\"variant_attributes\":{},\"price\":{\"default\":{\"value\":14.0,\"\
+      tax_included\":false,\"original_value\":14.0,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":24,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1687,\"objectID\":24,\"model\":{\"name\":\"Conference Chair (CONFIG)\"\
+      },\"url_key\":\"conference-chair-config\",\"redirect_url_key\":[],\"main\":false,\"\
+      short_description\":null,\"description\":null,\"name\":\"Conference Chair (CONFIG)\
+      \ (Aluminium)\",\"short_name\":\"Aluminium\",\"seo_title\":\"Conference Chair\
+      \ (CONFIG) | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :2,\"categories\":[],\"sku\":\"E-COM13\",\"variant_attributes\":{\"legs\":\"\
+      Aluminium\"},\"price\":{\"default\":{\"value\":22.9,\"tax_included\":false,\"\
+      original_value\":22.9,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"\
+      index\":{\"_id\":23,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1686,\"objectID\":23,\"model\":{\"name\":\"Conference Chair (CONFIG)\"\
+      },\"url_key\":\"conference-chair-config\",\"redirect_url_key\":[],\"main\":true,\"\
+      short_description\":null,\"description\":null,\"name\":\"Conference Chair (CONFIG)\
+      \ (Steel)\",\"short_name\":\"Steel\",\"seo_title\":\"Conference Chair (CONFIG)\
+      \ | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":2,\"\
+      categories\":[],\"sku\":\"E-COM12\",\"variant_attributes\":{\"legs\":\"Steel\"\
+      },\"price\":{\"default\":{\"value\":16.5,\"tax_included\":false,\"original_value\"\
+      :16.5,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :53,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1688,\"objectID\":53,\"model\":{\"name\":\"Convenience Concepts Designs2Go\
+      \ Oslo - meuble TV\"},\"url_key\":\"convenience-concepts-designs2go-oslo-meuble-tv-b011rachq6\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Convenience Concepts Designs2Go Oslo - meuble TV (white)\"\
+      ,\"short_name\":\"white\",\"seo_title\":\"Convenience Concepts Designs2Go Oslo\
+      \ - meuble TV | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"B011RACHQ6\",\"variant_attributes\":{\"color\"\
+      :\"white\"},\"price\":{\"default\":{\"value\":156.4,\"tax_included\":false,\"\
+      original_value\":156.4,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"\
+      index\":{\"_id\":26,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1689,\"objectID\":26,\"model\":{\"name\":\"Corner Desk Black\"},\"\
+      url_key\":\"corner-desk-black-furn-1118\",\"redirect_url_key\":[],\"main\":true,\"\
+      short_description\":null,\"description\":null,\"name\":\"Corner Desk Black\"\
+      ,\"short_name\":\"\",\"seo_title\":\"Corner Desk Black | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :\"FURN_1118\",\"variant_attributes\":{},\"price\":{\"default\":{\"value\":85.0,\"\
+      tax_included\":false,\"original_value\":85.0,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":16,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1690,\"objectID\":16,\"model\":{\"name\":\"Corner Desk Right Sit\"\
+      },\"url_key\":\"corner-desk-right-sit-e-com06\",\"redirect_url_key\":[],\"main\"\
+      :true,\"short_description\":null,\"description\":null,\"name\":\"Corner Desk\
+      \ Right Sit\",\"short_name\":\"\",\"seo_title\":\"Corner Desk Right Sit | \"\
+      ,\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":1,\"categories\"\
+      :[],\"sku\":\"E-COM06\",\"variant_attributes\":{},\"price\":{\"default\":{\"\
+      value\":147.0,\"tax_included\":false,\"original_value\":147.0,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":12,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1694,\"objectID\":12,\"model\":{\"name\":\"Customizable Desk (CONFIG)\"\
+      },\"url_key\":\"customizable-desk-config\",\"redirect_url_key\":[],\"main\"\
+      :false,\"short_description\":null,\"description\":null,\"name\":\"Customizable\
+      \ Desk (CONFIG) (Steel, White)\",\"short_name\":\"Steel, White\",\"seo_title\"\
+      :\"Customizable Desk (CONFIG) | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":6,\"categories\":[],\"sku\":\"FURN_0096\",\"variant_attributes\"\
+      :{\"legs\":\"Steel\",\"color\":\"White\"},\"price\":{\"default\":{\"value\"\
+      :750.0,\"tax_included\":false,\"original_value\":750.0,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":13,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1695,\"objectID\":13,\"model\":{\"name\":\"Customizable Desk (CONFIG)\"\
+      },\"url_key\":\"customizable-desk-config\",\"redirect_url_key\":[],\"main\"\
+      :false,\"short_description\":null,\"description\":null,\"name\":\"Customizable\
+      \ Desk (CONFIG) (Steel, Black)\",\"short_name\":\"Steel, Black\",\"seo_title\"\
+      :\"Customizable Desk (CONFIG) | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":6,\"categories\":[],\"sku\":\"FURN_0097\",\"variant_attributes\"\
+      :{\"legs\":\"Steel\",\"color\":\"Black\"},\"price\":{\"default\":{\"value\"\
+      :750.0,\"tax_included\":false,\"original_value\":750.0,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":36,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1697,\"objectID\":36,\"model\":{\"name\":\"Deposit\"},\"url_key\"\
+      :\"deposit-deposit\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Deposit\",\"short_name\":\"\",\"seo_title\"\
+      :\"Deposit | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"Deposit\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":150.0,\"tax_included\":false,\"original_value\":150.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":8,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1698,\"\
+      objectID\":8,\"model\":{\"name\":\"Desk Combination\"},\"url_key\":\"desk-combination-furn-7800\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Desk Combination\",\"short_name\":\"\",\"seo_title\":\"Desk\
+      \ Combination | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"FURN_7800\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":450.0,\"tax_included\":false,\"original_value\":450.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":29,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1699,\"\
+      objectID\":29,\"model\":{\"name\":\"Desk Stand with Screen\"},\"url_key\":\"\
+      desk-stand-with-screen-furn-7888\",\"redirect_url_key\":[],\"main\":true,\"\
+      short_description\":null,\"description\":null,\"name\":\"Desk Stand with Screen\"\
+      ,\"short_name\":\"\",\"seo_title\":\"Desk Stand with Screen | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :\"FURN_7888\",\"variant_attributes\":{},\"price\":{\"default\":{\"value\":2100.0,\"\
+      tax_included\":false,\"original_value\":2100.0,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":32,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1700,\"objectID\":32,\"model\":{\"name\":\"Drawer\"},\"url_key\"\
+      :\"drawer-furn-8855\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Drawer\",\"short_name\":\"\",\"seo_title\"\
+      :\"Drawer | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"FURN_8855\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":3645.0,\"tax_included\":false,\"original_value\":3645.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":27,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1701,\"\
+      objectID\":27,\"model\":{\"name\":\"Drawer Black\"},\"url_key\":\"drawer-black-furn-8900\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Drawer Black\",\"short_name\":\"\",\"seo_title\":\"Drawer Black\
+      \ | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":1,\"\
+      categories\":[],\"sku\":\"FURN_8900\",\"variant_attributes\":{},\"price\":{\"\
+      default\":{\"value\":25.0,\"tax_included\":false,\"original_value\":25.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":46,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1705,\"\
+      objectID\":46,\"model\":{\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9\
+      e\"},\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\",\"redirect_url_key\"\
+      :[],\"main\":false,\"short_description\":null,\"description\":null,\"name\"\
+      :\"Fauteuil Style Mid-Century avec assise tapiss\xE9e (red)\",\"short_name\"\
+      :\"red\",\"seo_title\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e\
+      \ | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":4,\"\
+      categories\":[],\"sku\":\"B00RX-004\",\"variant_attributes\":{\"color\":\"red\"\
+      },\"price\":{\"default\":{\"value\":333.0,\"tax_included\":false,\"original_value\"\
+      :333.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :43,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1702,\"objectID\":43,\"model\":{\"name\":\"Fauteuil Style Mid-Century\
+      \ avec assise tapiss\xE9e\"},\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e (blue)\"\
+      ,\"short_name\":\"blue\",\"seo_title\":\"Fauteuil Style Mid-Century avec assise\
+      \ tapiss\xE9e | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :4,\"categories\":[],\"sku\":\"B00RX-001\",\"variant_attributes\":{\"color\"\
+      :\"blue\"},\"price\":{\"default\":{\"value\":333.0,\"tax_included\":false,\"\
+      original_value\":333.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"\
+      index\":{\"_id\":44,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1703,\"objectID\":44,\"model\":{\"name\":\"Fauteuil Style Mid-Century\
+      \ avec assise tapiss\xE9e\"},\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\"\
+      ,\"redirect_url_key\":[],\"main\":false,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e (Grey)\"\
+      ,\"short_name\":\"Grey\",\"seo_title\":\"Fauteuil Style Mid-Century avec assise\
+      \ tapiss\xE9e | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :4,\"categories\":[],\"sku\":\"B00RX-002\",\"variant_attributes\":{\"color\"\
+      :\"Grey\"},\"price\":{\"default\":{\"value\":333.0,\"tax_included\":false,\"\
+      original_value\":333.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"\
+      index\":{\"_id\":45,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1704,\"objectID\":45,\"model\":{\"name\":\"Fauteuil Style Mid-Century\
+      \ avec assise tapiss\xE9e\"},\"url_key\":\"fauteuil-style-mid-century-avec-assise-tapissee\"\
+      ,\"redirect_url_key\":[],\"main\":false,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Fauteuil Style Mid-Century avec assise tapiss\xE9e (yellow)\"\
+      ,\"short_name\":\"yellow\",\"seo_title\":\"Fauteuil Style Mid-Century avec assise\
+      \ tapiss\xE9e | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :4,\"categories\":[],\"sku\":\"B00RX-003\",\"variant_attributes\":{\"color\"\
+      :\"yellow\"},\"price\":{\"default\":{\"value\":333.0,\"tax_included\":false,\"\
+      original_value\":333.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"\
+      index\":{\"_id\":28,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1706,\"objectID\":28,\"model\":{\"name\":\"Flipover\"},\"url_key\"\
+      :\"flipover-furn-9001\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Flipover\",\"short_name\":\"\",\"seo_title\"\
+      :\"Flipover | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"FURN_9001\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":1950.0,\"tax_included\":false,\"original_value\":1950.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":33,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1707,\"\
+      objectID\":33,\"model\":{\"name\":\"Four Person Desk\"},\"url_key\":\"four-person-desk-furn-8220\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Four Person Desk\",\"short_name\":\"\",\"seo_title\":\"Four\
+      \ Person Desk | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"FURN_8220\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":23500.0,\"tax_included\":false,\"original_value\":23500.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":2,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1708,\"\
+      objectID\":2,\"model\":{\"name\":\"Hotel Accommodation\"},\"url_key\":\"hotel-accommodation-exp-ha\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Hotel Accommodation\",\"short_name\":\"\",\"seo_title\":\"\
+      Hotel Accommodation | \",\"meta_keywords\":null,\"meta_description\":null,\"\
+      variant_count\":1,\"categories\":[],\"sku\":\"EXP_HA\",\"variant_attributes\"\
+      :{},\"price\":{\"default\":{\"value\":400.0,\"tax_included\":false,\"original_value\"\
+      :400.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :30,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1709,\"objectID\":30,\"model\":{\"name\":\"Individual Workplace\"},\"\
+      url_key\":\"individual-workplace-furn-0789\",\"redirect_url_key\":[],\"main\"\
+      :true,\"short_description\":null,\"description\":null,\"name\":\"Individual\
+      \ Workplace\",\"short_name\":\"\",\"seo_title\":\"Individual Workplace | \"\
+      ,\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":1,\"categories\"\
+      :[],\"sku\":\"FURN_0789\",\"variant_attributes\":{},\"price\":{\"default\":{\"\
+      value\":885.0,\"tax_included\":false,\"original_value\":885.0,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":17,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1710,\"objectID\":17,\"model\":{\"name\":\"Large Cabinet\"},\"url_key\"\
+      :\"large-cabinet-e-com07\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Large Cabinet\",\"short_name\":\"\",\"\
+      seo_title\":\"Large Cabinet | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":1,\"categories\":[],\"sku\":\"E-COM07\",\"variant_attributes\"\
+      :{},\"price\":{\"default\":{\"value\":320.0,\"tax_included\":false,\"original_value\"\
+      :320.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :19,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1711,\"objectID\":19,\"model\":{\"name\":\"Large Desk\"},\"url_key\"\
+      :\"large-desk-e-com09\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Large Desk\",\"short_name\":\"\",\"seo_title\"\
+      :\"Large Desk | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"E-COM09\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":1799.0,\"tax_included\":false,\"original_value\":1799.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":34,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1712,\"\
+      objectID\":34,\"model\":{\"name\":\"Large Meeting Table\"},\"url_key\":\"large-meeting-table-furn-6741\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Large Meeting Table\",\"short_name\":\"\",\"seo_title\":\"\
+      Large Meeting Table | \",\"meta_keywords\":null,\"meta_description\":null,\"\
+      variant_count\":1,\"categories\":[],\"sku\":\"FURN_6741\",\"variant_attributes\"\
+      :{},\"price\":{\"default\":{\"value\":40000.0,\"tax_included\":false,\"original_value\"\
+      :40000.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :58,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1713,\"objectID\":58,\"model\":{\"name\":\"Meuble TV 40 cmHARPER\"},\"\
+      url_key\":\"meuble-tv-40-cmharper-harptv-001\",\"redirect_url_key\":[],\"main\"\
+      :true,\"short_description\":null,\"description\":null,\"name\":\"Meuble TV 40\
+      \ cmHARPER (brown)\",\"short_name\":\"brown\",\"seo_title\":\"Meuble TV 40 cmHARPER\
+      \ | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":1,\"\
+      categories\":[],\"sku\":\"HARPTV-001\",\"variant_attributes\":{\"color\":\"\
+      brown\"},\"price\":{\"default\":{\"value\":600.0,\"tax_included\":false,\"original_value\"\
+      :600.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :61,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1715,\"objectID\":61,\"model\":{\"name\":\"Meuble TV Warm Shaker bois\
+      \ massif 183cm\"},\"url_key\":\"meuble-tv-warm-shaker-bois-massif-183cm\",\"\
+      redirect_url_key\":[],\"main\":false,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Meuble TV Warm Shaker bois massif 183cm (Grey)\",\"short_name\"\
+      :\"Grey\",\"seo_title\":\"Meuble TV Warm Shaker bois massif 183cm | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":2,\"categories\":[],\"sku\"\
+      :\"CDAPMAK9-G\",\"variant_attributes\":{\"color\":\"Grey\"},\"price\":{\"default\"\
+      :{\"value\":789.99,\"tax_included\":false,\"original_value\":789.99,\"discount\"\
+      :0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":60,\"_index\":\"\
+      demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1714,\"objectID\"\
+      :60,\"model\":{\"name\":\"Meuble TV Warm Shaker bois massif 183cm\"},\"url_key\"\
+      :\"meuble-tv-warm-shaker-bois-massif-183cm\",\"redirect_url_key\":[],\"main\"\
+      :true,\"short_description\":null,\"description\":null,\"name\":\"Meuble TV Warm\
+      \ Shaker bois massif 183cm (brown)\",\"short_name\":\"brown\",\"seo_title\"\
+      :\"Meuble TV Warm Shaker bois massif 183cm | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":2,\"categories\":[],\"sku\":\"CDAPMAK9-B\",\"variant_attributes\"\
+      :{\"color\":\"brown\"},\"price\":{\"default\":{\"value\":789.99,\"tax_included\"\
+      :false,\"original_value\":789.99,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":6,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1723,\"objectID\":6,\"model\":{\"name\":\"Office Lamp\"},\"url_key\"\
+      :\"office-lamp-furn-8888\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Office Lamp\",\"short_name\":\"\",\"seo_title\"\
+      :\"Office Lamp | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"FURN_8888\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":40.0,\"tax_included\":false,\"original_value\":40.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":52,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1719,\"\
+      objectID\":52,\"model\":{\"name\":\"Mid Century Modern Eames Chair with Molded\
+      \ Arms and Wood Legs\"},\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
+      ,\"redirect_url_key\":[],\"main\":false,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Mid Century Modern Eames Chair with Molded Arms and Wood Legs\
+      \ (white)\",\"short_name\":\"white\",\"seo_title\":\"Mid Century Modern Eames\
+      \ Chair with Molded Arms and Wood Legs | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":4,\"categories\":[],\"sku\":\"re\",\"variant_attributes\"\
+      :{\"color\":\"white\"},\"price\":{\"default\":{\"value\":54.0,\"tax_included\"\
+      :false,\"original_value\":54.0,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":50,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1716,\"objectID\":50,\"model\":{\"name\":\"Mid Century Modern Eames\
+      \ Chair with Molded Arms and Wood Legs\"},\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Mid Century Modern Eames Chair with Molded Arms and Wood Legs\
+      \ (blue)\",\"short_name\":\"blue\",\"seo_title\":\"Mid Century Modern Eames\
+      \ Chair with Molded Arms and Wood Legs | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":4,\"categories\":[],\"sku\":\"B01E4IL4TY\",\"variant_attributes\"\
+      :{\"color\":\"blue\"},\"price\":{\"default\":{\"value\":54.0,\"tax_included\"\
+      :false,\"original_value\":54.0,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":49,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1717,\"objectID\":49,\"model\":{\"name\":\"Mid Century Modern Eames\
+      \ Chair with Molded Arms and Wood Legs\"},\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
+      ,\"redirect_url_key\":[],\"main\":false,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Mid Century Modern Eames Chair with Molded Arms and Wood Legs\
+      \ (Black)\",\"short_name\":\"Black\",\"seo_title\":\"Mid Century Modern Eames\
+      \ Chair with Molded Arms and Wood Legs | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":4,\"categories\":[],\"sku\":\"MIDCHAIR-001\",\"variant_attributes\"\
+      :{\"color\":\"Black\"},\"price\":{\"default\":{\"value\":54.0,\"tax_included\"\
+      :false,\"original_value\":54.0,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":51,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1718,\"objectID\":51,\"model\":{\"name\":\"Mid Century Modern Eames\
+      \ Chair with Molded Arms and Wood Legs\"},\"url_key\":\"mid-century-modern-eames-chair-with-molded-arms-and-wood-legs\"\
+      ,\"redirect_url_key\":[],\"main\":false,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Mid Century Modern Eames Chair with Molded Arms and Wood Legs\
+      \ (red)\",\"short_name\":\"red\",\"seo_title\":\"Mid Century Modern Eames Chair\
+      \ with Molded Arms and Wood Legs | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":4,\"categories\":[],\"sku\":\"MIDCHAIR-002\",\"variant_attributes\"\
+      :{\"color\":\"red\"},\"price\":{\"default\":{\"value\":54.0,\"tax_included\"\
+      :false,\"original_value\":54.0,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":5,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1720,\"objectID\":5,\"model\":{\"name\":\"Office Chair\"},\"url_key\"\
+      :\"office-chair-furn-7777\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Office Chair\",\"short_name\":\"\",\"\
+      seo_title\":\"Office Chair | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":1,\"categories\":[],\"sku\":\"FURN_7777\",\"variant_attributes\"\
+      :{},\"price\":{\"default\":{\"value\":70.0,\"tax_included\":false,\"original_value\"\
+      :70.0,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :25,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n\
+      {\"id\":1721,\"objectID\":25,\"model\":{\"name\":\"Office Chair Black\"},\"\
+      url_key\":\"office-chair-black-furn-0269\",\"redirect_url_key\":[],\"main\"\
+      :true,\"short_description\":null,\"description\":null,\"name\":\"Office Chair\
+      \ Black\",\"short_name\":\"\",\"seo_title\":\"Office Chair Black | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :\"FURN_0269\",\"variant_attributes\":{},\"price\":{\"default\":{\"value\":12.5,\"\
+      tax_included\":false,\"original_value\":12.5,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":7,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1722,\"objectID\":7,\"model\":{\"name\":\"Office Design Software\"\
+      },\"url_key\":\"office-design-software-furn-9999\",\"redirect_url_key\":[],\"\
+      main\":true,\"short_description\":null,\"description\":null,\"name\":\"Office\
+      \ Design Software\",\"short_name\":\"\",\"seo_title\":\"Office Design Software\
+      \ | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\":1,\"\
+      categories\":[],\"sku\":\"FURN_9999\",\"variant_attributes\":{},\"price\":{\"\
+      default\":{\"value\":280.0,\"tax_included\":false,\"original_value\":280.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":65,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1734,\"\
+      objectID\":65,\"model\":{\"name\":\"Thelma\"},\"url_key\":\"thelma\",\"redirect_url_key\"\
+      :[],\"main\":false,\"short_description\":null,\"description\":null,\"name\"\
+      :\"Thelma (Black)\",\"short_name\":\"Black\",\"seo_title\":\"Thelma | \",\"\
+      meta_keywords\":null,\"meta_description\":null,\"variant_count\":3,\"categories\"\
+      :[],\"sku\":\"THELMA-RED\",\"variant_attributes\":{\"color\":\"Black\"},\"price\"\
+      :{\"default\":{\"value\":149.0,\"tax_included\":false,\"original_value\":149.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":67,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1732,\"\
+      objectID\":67,\"model\":{\"name\":\"Thelma\"},\"url_key\":\"thelma\",\"redirect_url_key\"\
+      :[],\"main\":true,\"short_description\":null,\"description\":null,\"name\":\"\
+      Thelma (red)\",\"short_name\":\"red\",\"seo_title\":\"Thelma | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":3,\"categories\":[],\"sku\"\
+      :\"THELMA-BLACK\",\"variant_attributes\":{\"color\":\"red\"},\"price\":{\"default\"\
+      :{\"value\":149.0,\"tax_included\":false,\"original_value\":149.0,\"discount\"\
+      :0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":66,\"_index\":\"\
+      demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1733,\"objectID\"\
+      :66,\"model\":{\"name\":\"Thelma\"},\"url_key\":\"thelma\",\"redirect_url_key\"\
+      :[],\"main\":false,\"short_description\":null,\"description\":null,\"name\"\
+      :\"Thelma (Grey)\",\"short_name\":\"Grey\",\"seo_title\":\"Thelma | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":3,\"categories\":[],\"sku\"\
+      :\"THELMA-GREY\",\"variant_attributes\":{\"color\":\"Grey\"},\"price\":{\"default\"\
+      :{\"value\":149.0,\"tax_included\":false,\"original_value\":149.0,\"discount\"\
+      :0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":35,\"_index\":\"\
+      demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1735,\"objectID\"\
+      :35,\"model\":{\"name\":\"Three-Seat Sofa\"},\"url_key\":\"three-seat-sofa-furn-8999\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Three-Seat Sofa\",\"short_name\":\"\",\"seo_title\":\"Three-Seat\
+      \ Sofa | \",\"meta_keywords\":null,\"meta_description\":null,\"variant_count\"\
+      :1,\"categories\":[],\"sku\":\"FURN_8999\",\"variant_attributes\":{},\"price\"\
+      :{\"default\":{\"value\":60000.0,\"tax_included\":false,\"original_value\":60000.0,\"\
+      discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\":4,\"_index\"\
+      :\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"id\":1736,\"\
+      objectID\":4,\"model\":{\"name\":\"Virtual Home Staging\"},\"url_key\":\"virtual-home-staging\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Virtual Home Staging\",\"short_name\":\"\",\"seo_title\":\"\
+      Virtual Home Staging | \",\"meta_keywords\":null,\"meta_description\":null,\"\
+      variant_count\":1,\"categories\":[],\"sku\":null,\"variant_attributes\":{},\"\
+      price\":{\"default\":{\"value\":38.25,\"tax_included\":false,\"original_value\"\
+      :38.25,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n{\"index\":{\"_id\"\
+      :3,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"}}\n{\"\
+      id\":1737,\"objectID\":3,\"model\":{\"name\":\"Virtual Interior Design\"},\"\
+      url_key\":\"virtual-interior-design\",\"redirect_url_key\":[],\"main\":true,\"\
+      short_description\":null,\"description\":null,\"name\":\"Virtual Interior Design\"\
+      ,\"short_name\":\"\",\"seo_title\":\"Virtual Interior Design | \",\"meta_keywords\"\
+      :null,\"meta_description\":null,\"variant_count\":1,\"categories\":[],\"sku\"\
+      :null,\"variant_attributes\":{},\"price\":{\"default\":{\"value\":30.75,\"tax_included\"\
+      :false,\"original_value\":30.75,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":41,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1739,\"objectID\":41,\"model\":{\"name\":\"Vortex Side Chair\"},\"\
+      url_key\":\"vortex-side-chair\",\"redirect_url_key\":[],\"main\":false,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Vortex Side Chair (white)\",\"short_name\"\
+      :\"white\",\"seo_title\":\"Vortex Side Chair | \",\"meta_keywords\":null,\"\
+      meta_description\":null,\"variant_count\":2,\"categories\":[],\"sku\":\"VORCHAIR-002\"\
+      ,\"variant_attributes\":{\"color\":\"white\"},\"price\":{\"default\":{\"value\"\
+      :50.99,\"tax_included\":false,\"original_value\":50.99,\"discount\":0.0}},\"\
+      hierarchicalCategories\":[]}\n{\"index\":{\"_id\":40,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1738,\"objectID\":40,\"model\":{\"name\":\"Vortex Side Chair\"},\"\
+      url_key\":\"vortex-side-chair\",\"redirect_url_key\":[],\"main\":true,\"short_description\"\
+      :null,\"description\":null,\"name\":\"Vortex Side Chair (blue)\",\"short_name\"\
+      :\"blue\",\"seo_title\":\"Vortex Side Chair | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":2,\"categories\":[],\"sku\":\"VORCHAIR-001\",\"variant_attributes\"\
+      :{\"color\":\"blue\"},\"price\":{\"default\":{\"value\":50.99,\"tax_included\"\
+      :false,\"original_value\":50.99,\"discount\":0.0}},\"hierarchicalCategories\"\
+      :[]}\n{\"index\":{\"_id\":47,\"_index\":\"demo_elasticsearch_backend_shopinvader_variant_en_us\"\
+      }}\n{\"id\":1740,\"objectID\":47,\"model\":{\"name\":\"Walnut Side End Table\
+      \ Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture\\n  \
+      \      \"},\"url_key\":\"walnut-side-end-table-nightstand-with-storage-drawer-solid-wood-legs-living-room-furniture\"\
+      ,\"redirect_url_key\":[],\"main\":true,\"short_description\":null,\"description\"\
+      :null,\"name\":\"Walnut Side End Table Nightstand with Storage Drawer Solid\
+      \ Wood Legs Living Room Furniture\\n        \",\"short_name\":\"\",\"seo_title\"\
+      :\"Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living\
+      \ Room Furniture\\n         | \",\"meta_keywords\":null,\"meta_description\"\
+      :null,\"variant_count\":1,\"categories\":[],\"sku\":\"\",\"variant_attributes\"\
+      :{},\"price\":{\"default\":{\"value\":79.99,\"tax_included\":false,\"original_value\"\
+      :79.99,\"discount\":0.0}},\"hierarchicalCategories\":[]}\n"
+    headers:
+      Content-Length:
+      - '37342'
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1,h=bp
+    method: POST
+    uri: http://elastic:9200/_bulk
+  response:
+    body:
+      string: '{"took":187,"errors":false,"items":[{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"20","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"1","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":1,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"56","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":2,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"54","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":3,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"57","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":4,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"18","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":5,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"63","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":6,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"62","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":7,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"14","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":8,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"15","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":9,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"38","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":10,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"37","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":11,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"31","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":12,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"55","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":13,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"21","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":14,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"24","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":15,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"23","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":16,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"53","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":17,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"26","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":18,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"16","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":19,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"12","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":20,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"13","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":21,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"36","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":22,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"8","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":23,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"29","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":24,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"32","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":25,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"27","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":26,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"46","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":27,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"43","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":28,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"44","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":29,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"45","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":30,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"28","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":31,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"33","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":32,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"2","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":33,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"30","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":34,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"17","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":35,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"19","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":36,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"34","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":37,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"58","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":38,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"61","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":39,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"60","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":40,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"6","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":41,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"52","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":42,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"50","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":43,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"49","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":44,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"51","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":45,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"5","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":46,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"25","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":47,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"7","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":48,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"65","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":49,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"67","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":50,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"66","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":51,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"35","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":52,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"4","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":53,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"3","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":54,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"41","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":55,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"40","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":56,"_primary_term":1,"status":201}},{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"47","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":57,"_primary_term":1,"status":201}}]}'
+    headers:
+      content-length:
+      - '13127'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
 version: 1
