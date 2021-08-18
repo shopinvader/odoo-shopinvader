@@ -6,6 +6,20 @@
         <field name="arch" type="xml">
             <form string="Import shopinvader product images">
                 <header>
+                    <button
+                        class="oe_highlight"
+                        string="Import images"
+                        name="action_import"
+                        type="object"
+                        states="new"
+                    />
+                    <button
+                        class="oe_highlight"
+                        string="Import images again"
+                        name="action_import"
+                        type="object"
+                        states="done"
+                    />
                     <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
@@ -14,61 +28,65 @@
                         name="active_button_box"
                         attrs="{'invisible': [('id','=',False)]}"
                     >
-                        <button
-                            class="oe_highlight"
-                            string="Import images"
-                            name="action_import"
-                            type="object"
-                            states="new"
-                        />
-                        <button
-                            class="oe_highlight"
-                            string="Import images again"
-                            name="action_import"
-                            type="object"
-                            states="done"
-                        />
                     </div>
                     <field name="id" invisible="1" />
                     <group name="main">
-                        <field name="storage_backend_id" />
-                        <field name="product_model" />
-                        <field name="source_type" />
-                        <field
-                            name="file_csv"
-                            filename="filename"
-                            attrs="{
-                                    'required': [('source_type', '!=', 'external_storage')],
-                                    'invisible': [('source_type', '=', 'external_storage')]
-                                }"
-                        />
-                        <field
-                            name="source_zipfile"
-                            filename="filename"
-                            attrs="{
-                                    'required': [('source_type', '=', 'zip_file')],
-                                    'invisible': [('source_type', '!=', 'zip_file')]
-                                }"
-                        />
-                        <field
-                            name="source_storage_backend_id"
-                            attrs="{
-                                    'required': [('source_type', '=', 'external_storage')],
-                                    'invisible': [('source_type', '!=', 'external_storage')],
-                                }"
-                        />
-                        <field
-                            name="external_csv_path"
-                            attrs="{
-                                    'required': [('source_type', '=', 'external_storage')],
-                                    'invisible': [('source_type', '!=', 'external_storage')],
-                                }"
-                        />
-                        <field name="csv_header" />
-                        <field name="csv_delimiter" />
-                        <field name="overwrite" />
-                        <field name="create_missing_tags" />
-                        <field name="chunk_size" />
+                        <group name="file" string="Source">
+                            <field
+                                name="source_type"
+                                widget="radio"
+                                options="{'horizontal': True}"
+                            />
+                            <field name="filename" invisible="1" />
+                            <field
+                                name="file_csv"
+                                filename="filename"
+                                attrs="{
+                                        'required': [('source_type', '!=', 'external_storage')],
+                                        'invisible': [('source_type', '=', 'external_storage')]
+                                    }"
+                            />
+                            <field
+                                name="source_zipfile"
+                                filename="filename"
+                                attrs="{
+                                        'required': [('source_type', '=', 'zip_file')],
+                                        'invisible': [('source_type', '!=', 'zip_file')]
+                                    }"
+                            />
+                            <field
+                                name="source_storage_backend_id"
+                                attrs="{
+                                        'required': [('source_type', '=', 'external_storage')],
+                                        'invisible': [('source_type', '!=', 'external_storage')],
+                                    }"
+                            />
+                            <field
+                                name="external_csv_path"
+                                attrs="{
+                                        'required': [('source_type', '=', 'external_storage')],
+                                        'invisible': [('source_type', '!=', 'external_storage')],
+                                    }"
+                            />
+                            <field name="csv_delimiter" />
+                        </group>
+                        <group name="destination" string="Destination">
+                            <field name="storage_backend_id" />
+                            <field name="product_model" />
+                        </group>
+                        <group name="mapping" string="Column Mapping">
+                            <field
+                                name="csv_column_default_code"
+                                string="Product Reference"
+                            />
+                            <field name="csv_column_tag_name" string="Tag Name" />
+                            <field name="csv_column_file_path" string="File Path" />
+                        </group>
+                        <group name="options" string="Options">
+                            <field name="overwrite" />
+                            <field name="create_missing_tags" />
+                            <field name="chunk_size" />
+                        </group>
                     </group>
                     <separator string="Report" />
                     <field name="report_html" nolabel="1" />
@@ -115,9 +133,9 @@
 
     <record model="ir.ui.menu" id="menu_backend_shopinvader_image_import">
         <field name="name">Import product images</field>
-        <field name="parent_id" ref="shopinvader.menu_shopinvader_root" />
+        <field name="parent_id" ref="shopinvader.menu_shopinvader_products" />
         <field name="action" ref="import_image_action" />
-        <field name="sequence" eval="30" />
+        <field name="sequence" eval="200" />
     </record>
 
 </odoo>

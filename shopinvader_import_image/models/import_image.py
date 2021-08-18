@@ -18,7 +18,6 @@ from zipfile import ZipFile
 
 from odoo import _, api, exceptions, fields, models
 from odoo.tools import date_utils
-from odoo.tools.pycompat import csv_reader
 
 _logger = logging.getLogger(__name__)
 
@@ -72,13 +71,31 @@ class ProductImageImportWizard(models.Model):
         required=True,
         default="url",
     )
+    filename = fields.Char()
     file_csv = fields.Binary(string="CSV file", required=True)
-    csv_header = fields.Char(
-        string="CSV file header",
-        default="default_code,tag,path",
+    csv_delimiter = fields.Char(
+        string="CSV file delimiter",
+        default=",",
         required=True,
     )
-    csv_delimiter = fields.Char(string="CSV file delimiter", default=",", required=True)
+    csv_column_default_code = fields.Char(
+        string="Product Reference column",
+        help="The CSV File column name that holds the product reference.",
+        default="default_code",
+        required=True,
+    )
+    csv_column_tag_name = fields.Char(
+        string="Image Tag Name column",
+        help="The CSV File column name that holds the image tag name.",
+        default="tag",
+        required=True,
+    )
+    csv_column_file_path = fields.Char(
+        string="Image file path column",
+        help="The CSV File column name that holds the image file path or url.",
+        default="path",
+        required=True,
+    )
     source_zipfile = fields.Binary("ZIP with images", required=False)
     source_storage_backend_id = fields.Many2one(
         "storage.backend", "Storage Backend with images"
@@ -113,7 +130,7 @@ class ProductImageImportWizard(models.Model):
             if not record.report:
                 record.report_html = ""
                 continue
-            report_html = tmpl.render({"record": record})
+            report_html = tmpl._render({"record": record})
             record.report_html = report_html
 
     @api.model
@@ -157,27 +174,22 @@ class ProductImageImportWizard(models.Model):
 
     def _get_lines(self):
         lines = []
-        with closing(io.BytesIO(self._read_csv())) as file_csv:
-            reader = csv_reader(file_csv, delimiter=self.csv_delimiter)
-            headers = next(reader, None)
-
-            if headers != self.csv_header.split(self.csv_delimiter):
-                raise exceptions.UserError(
-                    _("Invalid CSV file headers found! Expected: %s") % self.csv_header
-                )
+        mapping = {
+            "default_code": self.csv_column_default_code,
+            "tag_name": self.csv_column_tag_name,
+            "file_path": self.csv_column_file_path,
+        }
+        with closing(io.BytesIO(self._read_csv())) as binary_file:
+            csv_file = (line.decode("utf8") for line in binary_file)
+            reader = csv.DictReader(csv_file, delimiter=self.csv_delimiter)
             csv.field_size_limit(sys.maxsize)
-
             for row in reader:
-                if not row:
-                    continue
-                default_code, tag_name, file_path = row
-                lines.append(
-                    {
-                        "default_code": default_code,
-                        "tag_name": tag_name,
-                        "file_path": file_path,
-                    }
-                )
+                try:
+                    line = {key: row[column] for key, column in mapping.items()}
+                except KeyError as e:
+                    _logger.error(e)
+                    raise exceptions.UserError(_("CSV Schema Incompatible"))
+                lines.append(line)
         return lines
 
     def _get_options(self):
