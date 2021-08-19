@@ -33,7 +33,7 @@ addon | version | summary
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 13.0.3.1.0 | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 | Shopinvader addons to let user define delivery instructions
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 13.0.1.1.0 | Shopinvader delivery state
-[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.1.0 | Shopinvader Elasticsearch Connector
+[shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.1.1 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.1.1 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 13.0.2.0.1 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 13.0.3.0.0 | Import product images
