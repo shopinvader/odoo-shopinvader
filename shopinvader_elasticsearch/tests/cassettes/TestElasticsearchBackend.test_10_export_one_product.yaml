@@ -2,71 +2,105 @@ interactions:
 - request:
     body: null
     headers:
-      connection: [keep-alive]
-      content-type: [application/json]
-    method: HEAD
-    uri: http://127.0.0.1:9200/
+      accept:
+      - application/json
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1
+    method: GET
+    uri: http://elastic:9200/
   response:
-    body: {string: !!python/unicode ''}
+    body:
+      string: "{\n  \"name\" : \"38027ae09c39\",\n  \"cluster_name\" : \"docker-cluster\"\
+        ,\n  \"cluster_uuid\" : \"H7DXRU0gReSqODLeZzZeYg\",\n  \"version\" : {\n \
+        \   \"number\" : \"7.0.0\",\n    \"build_flavor\" : \"default\",\n    \"build_type\"\
+        \ : \"docker\",\n    \"build_hash\" : \"b7e28a7\",\n    \"build_date\" : \"\
+        2019-04-05T22:55:32.697037Z\",\n    \"build_snapshot\" : false,\n    \"lucene_version\"\
+        \ : \"8.0.0\",\n    \"minimum_wire_compatibility_version\" : \"6.7.0\",\n\
+        \    \"minimum_index_compatibility_version\" : \"6.0.0-beta1\"\n  },\n  \"\
+        tagline\" : \"You Know, for Search\"\n}\n"
     headers:
-      content-length: ['493']
-      content-type: [application/json; charset=UTF-8]
-    status: {code: 200, message: OK}
+      content-length:
+      - '508'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
 - request:
     body: null
     headers:
-      connection: [keep-alive]
-      content-type: [application/json]
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1
     method: HEAD
-    uri: http://127.0.0.1:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
+    uri: http://elastic:9200/
   response:
-    body: {string: !!python/unicode ''}
+    body:
+      string: ''
     headers:
-      content-length: ['531']
-      content-type: [application/json; charset=UTF-8]
-      warning: ['299 Elasticsearch-6.7.0-8453f77 "[types removal] The parameter include_type_name
-          should be explicitly specified in get indices requests to prepare for 7.0.
-          In 7.0 include_type_name will default to ''false'', which means responses
-          will omit the type name in mapping definitions."']
-    status: {code: 404, message: Not Found}
+      content-length:
+      - '508'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
 - request:
-    body: !!python/unicode '{"mappings":{"odoo":{"properties":{"hierarchicalCategories":{"type":"nested","properties":{"ancestors":{"type":"text","fielddata":true,"analyzer":"keyword"},"order":{"type":"integer"},"value":{"type":"text","fielddata":true,"analyzer":"keyword"},"level":{"type":"integer"}}},"url_key":{"type":"text","analyzer":"keyword"},"variant_attributes":{"properties":{"color":{"type":"text","fielddata":true}}}}}}}'
+    body: null
     headers:
-      connection: [keep-alive]
-      content-type: [application/json]
-    method: PUT
-    uri: http://127.0.0.1:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1
+    method: HEAD
+    uri: http://elastic:9200/demo_elasticsearch_backend_shopinvader_variant_en_us
   response:
-    body: {string: !!python/unicode '{"acknowledged":true,"shards_acknowledged":true,"index":"demo_elasticsearch_backend_shopinvader_variant_en_us"}'}
+    body:
+      string: ''
     headers:
-      content-length: ['111']
-      content-type: [application/json; charset=UTF-8]
-      warning: ['299 Elasticsearch-6.7.0-8453f77 "the default number of shards will
-          change from [5] to [1] in 7.0.0; if you wish to continue using the default
-          of [5] shards, you must manage this on the create index request or with
-          an index template"', '299 Elasticsearch-6.7.0-8453f77 "[types removal] The
-          parameter include_type_name should be explicitly specified in create index
-          requests to prepare for 7.0. In 7.0 include_type_name will default to ''false'',
-          and requests are expected to omit the type name in mapping definitions."']
-    status: {code: 200, message: OK}
+      content-length:
+      - '2000'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
 - request:
-    body: !!python/unicode '{"index":{"_type":"odoo","_id":9,"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us"}}
+    body: '{"index":{"_id":8,"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us"}}
 
-      {"sku":"PCSC234","meta_description":null,"meta_keywords":null,"description":null,"objectID":9,"variant_attributes":{},"price":{"default":{"discount":0.0,"value":450.0,"tax_included":false,"original_value":450.0}},"short_name":"","seo_title":"Computer
-      SC234 | ","redirect_url_key":{},"hierarchicalCategories":[{"ancestors":[],"value":"All","level":1},{"ancestors":["All"],"value":"Saleable","level":2},{"ancestors":["Saleable","All"],"value":"Physical","level":3}],"variant_count":1,"short_description":null,"model":{"name":"Computer
-      SC234"},"main":true,"url_key":"computer-sc234-PCSC234","id":8,"categories":[{"level":0,"url_key":"all","id":1,"name":"All"},{"level":1,"url_key":"all/saleable","id":2,"name":"Saleable"},{"level":2,"url_key":"all/saleable/physical","id":6,"name":"Physical"}],"name":"Computer
-      SC234"}
+      {"id":1930,"objectID":8,"model":{"name":"Desk Combination"},"url_key":"desk-combination-furn-7800","redirect_url_key":[],"main":true,"short_description":null,"description":null,"name":"Desk
+      Combination","short_name":"","seo_title":"Desk Combination | ","meta_keywords":null,"meta_description":null,"variant_count":1,"categories":[],"sku":"FURN_7800","variant_attributes":{},"price":{"default":{"value":450.0,"tax_included":false,"original_value":450.0,"discount":0.0}},"hierarchicalCategories":[]}
 
       '
     headers:
-      connection: [keep-alive]
-      content-type: [!!python/unicode 'application/x-ndjson']
+      Content-Length:
+      - '582'
+      content-type:
+      - application/json
+      user-agent:
+      - elasticsearch-py/7.14.0 (Python 3.8.10)
+      x-elastic-client-meta:
+      - es=7.14.0,py=3.8.10,t=7.14.0,rq=2.19.1,h=bp
     method: POST
-    uri: http://127.0.0.1:9200/_bulk
+    uri: http://elastic:9200/_bulk
   response:
-    body: {string: !!python/unicode '{"took":138,"errors":false,"items":[{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"odoo","_id":"9","_version":1,"result":"created","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":0,"_primary_term":1,"status":201}}]}'}
+    body:
+      string: '{"took":24,"errors":false,"items":[{"index":{"_index":"demo_elasticsearch_backend_shopinvader_variant_en_us","_type":"_doc","_id":"8","_version":2,"result":"updated","_shards":{"total":2,"successful":1,"failed":0},"_seq_no":58,"_primary_term":1,"status":200}}]}'
     headers:
-      content-length: ['261']
-      content-type: [application/json; charset=UTF-8]
-    status: {code: 200, message: OK}
+      content-length:
+      - '261'
+      content-type:
+      - application/json; charset=UTF-8
+    status:
+      code: 200
+      message: OK
 version: 1
