@@ -34,11 +34,19 @@
         <field name="groups_id" eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"/>
     </record>
 
-    <record model="ir.ui.menu" id="shopinvader_image_resize_menu">
-        <field name="name">Image Resize</field>
-        <field name="parent_id" ref="shopinvader.menu_shopinvader_root"/>
-        <field name="action" ref="shopinvader_image_resize_act_window"/>
-        <field name="sequence" eval="20"/>
-    </record>
+    <menuitem
+        id="menu_shopinvader_config_image"
+        name="Images"
+        parent="shopinvader.menu_shopinvader_config"
+        sequence="150"
+    />
+
+    <menuitem
+        id="shopinvader_image_resize_menu"
+        name="Image Resize"
+        parent="menu_shopinvader_config_image"
+        sequence="20"
+        action="shopinvader_image_resize_act_window"
+    />
 
 </odoo>

@@ -61,19 +61,19 @@
     </record>
 
     <record model="ir.actions.act_window" id="shopinvader_variant_act_window">
-        <field name="name">Shopinvader Variant</field>
+        <field name="name">Shopinvader Variants</field>
         <field name="res_model">shopinvader.variant</field>
         <field name="view_mode">tree,form</field>
         <field name="domain">[]</field>
-         <field name="context">{}</field>
-        <field name="groups_id" eval="[(4, ref('group_shopinvader_manager'))]"/>
+        <field name="context">{}</field>
+        <field name="groups_id" eval="[(4, ref('group_shopinvader_manager'))]" />
     </record>
 
     <record model="ir.ui.menu" id="shopinvader_variant_menu">
-        <field name="name">Variant</field>
-        <field name="parent_id" ref="menu_shopinvader_root"/>
-        <field name="action" ref="shopinvader_variant_act_window"/>
-        <field name="sequence" eval="40"/>
+        <field name="name">Variants</field>
+        <field name="parent_id" ref="menu_shopinvader_products" />
+        <field name="action" ref="shopinvader_variant_act_window" />
+        <field name="sequence" eval="20" />
     </record>
 
 </odoo>

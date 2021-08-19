@@ -54,7 +54,7 @@
         "views/partner_view.xml",
         "views/product_category_view.xml",
         "views/sale_view.xml",
-        "views/shopinvader_config_settings.xml",
+        "views/res_config_settings.xml",
         "data/res_partner.xml",
         "data/ir_export_product.xml",
         "data/ir_export_category.xml",

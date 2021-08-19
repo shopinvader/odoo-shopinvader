@@ -16,7 +16,6 @@ class TestShopinvaderPartner(SavepointComponentCase):
         super(TestShopinvaderPartner, cls).setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.backend = cls.env.ref("shopinvader.backend_1")
-        cls.shopinvader_config = cls.env["shopinvader.config.settings"]
         cls.unique_email = datetime.now().isoformat() + "@test.com"
 
     @mute_logger("odoo.sql_db")
@@ -45,7 +44,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         :return:
         """
         self.assertTrue(
-            self.shopinvader_config.is_partner_duplication_allowed()
+            self.env["res.partner"]._is_partner_duplicate_allowed()
         )
         # we create a first binding
         binding = self.env["shopinvader.partner"].create(
@@ -89,7 +88,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
         self.assertFalse(
-            self.shopinvader_config.is_partner_duplication_allowed()
+            self.env["res.partner"]._is_partner_duplicate_allowed()
         )
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
@@ -119,7 +118,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
         self.assertFalse(
-            self.shopinvader_config.is_partner_duplication_allowed()
+            self.env["res.partner"]._is_partner_duplicate_allowed()
         )
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...

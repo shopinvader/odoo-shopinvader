@@ -73,10 +73,12 @@
     <field name="search_view_id" ref="view_shopinvader_category_search"/>
 </record>
 
-<menuitem id="menu_shopinvader_category"
-    name="Category"
-    parent="menu_shopinvader_root"
-    sequence="30"
-    action="act_open_shopinvader_category_view"/>
+<menuitem
+        id="menu_shopinvader_category"
+        name="Categories"
+        parent="menu_shopinvader_products"
+        sequence="30"
+        action="act_open_shopinvader_category_view"
+    />
 
 </odoo>

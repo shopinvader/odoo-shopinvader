@@ -77,10 +77,12 @@
         <field name="view_id" ref="shopinvader_partner_view_form"/>
     </record>
 
-    <menuitem id="menu_shopinvader_partner"
-              name="Partner"
-              parent="menu_shopinvader_root"
-              sequence="50"
-              action="act_open_shopinvader_partner_view"/>
+    <menuitem
+        id="menu_shopinvader_partner"
+        name="Partners"
+        parent="menu_shopinvader_root"
+        sequence="50"
+        action="act_open_shopinvader_partner_view"
+    />
 
 </odoo>
