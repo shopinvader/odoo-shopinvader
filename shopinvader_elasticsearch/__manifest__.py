@@ -5,7 +5,7 @@
     "name": "Shopinvader Elasticsearch",
     "summary": """
         Shopinvader Elasticsearch Connector""",
-    "version": "13.0.1.1.0",
+    "version": "13.0.1.1.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
