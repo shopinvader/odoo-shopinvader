@@ -5,7 +5,7 @@
     "name": "Shopinvader Guest Mode",
     "summary": """
         Guest mode for Shopinvader""",
-    "version": "13.0.1.1.1",
+    "version": "13.0.1.2.0",
     "license": "AGPL-3",
     "development_status": "Production/Stable",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
