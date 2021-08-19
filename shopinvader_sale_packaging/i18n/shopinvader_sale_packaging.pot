@@ -14,8 +14,25 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_sale_packaging
+#: model:ir.model.fields,help:shopinvader_sale_packaging.field_product_packaging__shopinvader_display
+#: model:ir.model.fields,help:shopinvader_sale_packaging.field_product_packaging_type__shopinvader_display
+msgid "Include this packaging into Shopinvader product metadata."
+msgstr ""
+
+#. module: shopinvader_sale_packaging
 #: model:ir.model.fields,field_description:shopinvader_sale_packaging.field_shopinvader_variant__packaging
 msgid "Packaging"
+msgstr ""
+
+#. module: shopinvader_sale_packaging
+#: model:ir.model,name:shopinvader_sale_packaging.model_product_packaging
+msgid "Product Packaging"
+msgstr ""
+
+#. module: shopinvader_sale_packaging
+#: model:ir.model.fields,field_description:shopinvader_sale_packaging.field_product_packaging__shopinvader_display
+#: model:ir.model.fields,field_description:shopinvader_sale_packaging.field_product_packaging_type__shopinvader_display
+msgid "Shopinvader Display"
 msgstr ""
 
 #. module: shopinvader_sale_packaging
@@ -26,4 +43,9 @@ msgstr ""
 #. module: shopinvader_sale_packaging
 #: model:ir.model.fields,help:shopinvader_sale_packaging.field_shopinvader_variant__packaging
 msgid "Technical field to store packaging for the shop"
+msgstr ""
+
+#. module: shopinvader_sale_packaging
+#: model:ir.model,name:shopinvader_sale_packaging.model_product_packaging_type
+msgid "Type management for product.packaging"
 msgstr ""
