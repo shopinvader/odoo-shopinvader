@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+  <record id="shopinvader_backend_view_form" model="ir.ui.view">
+    <field name="model">shopinvader.backend</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+    <field name="arch" type="xml">
+      <field name="pricelist_id" position="after">
+        <field name="cart_pricelist_partner_field_id" />
+      </field>
+    </field>
+  </record>
+
+</odoo>
