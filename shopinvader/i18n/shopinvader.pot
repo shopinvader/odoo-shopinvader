@@ -170,11 +170,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__unsplash_access_key
-msgid "Access Key"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_account_payable_id
 msgid "Account Payable"
 msgstr ""
@@ -182,16 +177,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_account_receivable_id
 msgid "Account Receivable"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_taxcloud
-msgid "Account TaxCloud"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_accountant
-msgid "Accounting"
 msgstr ""
 
 #. module: shopinvader
@@ -261,18 +246,6 @@ msgid "Activity State"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__snailmail_cover
-msgid "Add a Cover Page"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__group_stock_adv_location
-msgid ""
-"Add and customize route operations to process product moves in your warehouse(s): e.g. unload > quality control > stock for incoming products, pick > pack > ship for outgoing products. \n"
-" You can also set putaway strategies on warehouse locations in order to send incoming products into specific child locations straight away (e.g. specific bins, racks)."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__additional_info
 msgid "Additional info"
 msgstr ""
@@ -324,32 +297,6 @@ msgid "Addresses only"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__account_check_printing_margin_left
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__account_check_printing_margin_right
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__account_check_printing_margin_top
-msgid ""
-"Adjust the margins of generated checks to make it fit your printer's "
-"settings."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_sale_pricelist
-msgid "Advanced Pricelists"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__module_stock_landed_costs
-msgid ""
-"Affect landed costs on reception operations and split them among products to"
-" update their cost price."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__alias_domain
-msgid "Alias Domain"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__lang
 msgid ""
 "All the emails and documents sent to this contact will be translated in this"
@@ -357,50 +304,8 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_product_margin
-msgid "Allow Product Margin"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_check_printing
-msgid "Allow check printing and deposits"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_google_calendar
-msgid "Allow the users to synchronize their calendar  with Google Calendar"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_base_import
-msgid "Allow users to import data from CSV/XLS/XLSX/ODS files"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__allowed_country_ids
 msgid "Allowed Country"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__group_sale_pricelist
-msgid ""
-"Allows to manage different prices based on rules per category of customers.\n"
-"                Example: 10% for retailers, promotion of 5 EUR on this product, etc."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__group_multi_currency
-msgid "Allows to work in a multi currency environment"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__group_proforma_sales
-msgid "Allows you to send pro-forma invoice."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_sale_amazon
-msgid "Amazon Sync"
 msgstr ""
 
 #. module: shopinvader
@@ -417,16 +322,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.constraint,message:shopinvader.constraint_shopinvader_partner_email_uniq
 msgid "An email must be uniq per backend."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_analytic_accounting
-msgid "Analytic Accounting"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_analytic_tags
-msgid "Analytic Tags"
 msgstr ""
 
 #. module: shopinvader
@@ -458,20 +353,9 @@ msgstr ""
 
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_address_validate_form_view
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_binding_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_validate_form_view
 msgid "Apply"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_voip
-msgid "Asterisk (VoIP)"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_google_drive
-msgid "Attach Google documents to any record"
 msgstr ""
 
 #. module: shopinvader
@@ -494,16 +378,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_template_attribute_value_ids
 msgid "Attribute Values"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_currency_rate_live
-msgid "Automatic Currency Rates"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__automatic_invoice
-msgid "Automatic Invoice"
 msgstr ""
 
 #. module: shopinvader
@@ -543,16 +417,6 @@ msgid "Bank"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_yodlee
-msgid "Bank Interface - Sync your bank feeds automatically"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_bank_reconciliation_start
-msgid "Bank Reconciliation Threshold"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__bank_ids
 msgid "Banks"
 msgstr ""
@@ -564,23 +428,8 @@ msgid "Barcode"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_barcode
-msgid "Barcode Scanner"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__based_on
 msgid "Based On"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_picking_batch
-msgid "Batch Pickings"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_invoice_extract
-msgid "Bill Digitalization"
 msgstr ""
 
 #. module: shopinvader
@@ -631,11 +480,6 @@ msgid "Bounce"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_budget
-msgid "Budget Management"
-msgstr ""
-
-#. module: shopinvader
 #: model:product.pricelist,name:shopinvader.pricelist_1
 msgid "Business Pricelist"
 msgstr ""
@@ -681,7 +525,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_address_validate_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_binding_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_category_unbinding_wizard_form_view
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_binding_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_partner_validate_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_binding_wizard_form_view
@@ -702,6 +545,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:shopinvader.action_cart
 #: model:ir.model.fields.selection,name:shopinvader.selection__sale_order__typology__cart
 #: model:ir.ui.menu,name:shopinvader.menu_sale_order
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_cart
 msgid "Cart"
 msgstr ""
 
@@ -739,23 +583,13 @@ msgid "Cart notification ${object.name}"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__tax_exigibility
-msgid "Cash Basis"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_cash_rounding
-msgid "Cash Rounding"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__product_category_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__shopinvader_category_ids
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_category
 msgid "Categories"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_category
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Category"
 msgstr ""
@@ -789,26 +623,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__channel_ids
 msgid "Channels"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_check_printing_layout
-msgid "Check Layout"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_check_printing_margin_left
-msgid "Check Left Margin"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_check_printing_margin_right
-msgid "Check Right Margin"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_check_printing_margin_top
-msgid "Check Top Margin"
 msgstr ""
 
 #. module: shopinvader
@@ -863,11 +677,6 @@ msgid "Code"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_pad
-msgid "Collaborative Pads"
-msgstr ""
-
-#. module: shopinvader
 #: model:product.filter,name:shopinvader.product_filter_2
 msgid "Color"
 msgstr ""
@@ -915,7 +724,6 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__company_id
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__company_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__company_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__company_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__company_id
@@ -923,17 +731,6 @@ msgid "Company"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__country_code
-msgid "Company Country code"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__company_informations
-msgid "Company Informations"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__company_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__company_name
 msgid "Company Name"
 msgstr ""
@@ -954,11 +751,6 @@ msgid "Company database ID"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__has_chart_of_accounts
-msgid "Company has a chart of accounts"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__salesman_notify_create__company
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__salesman_notify_update__company
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__validate_customers_type__company
@@ -976,28 +768,13 @@ msgid "Complete Name"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model,name:shopinvader.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config
 msgid "Configuration"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.actions.act_window,name:shopinvader.shopinvader_config_settings_act_window
-msgid "Configure Shopinvader"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
-msgid "Configure Warehouse"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__confirmation_template_id
-msgid "Confirmation Email"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_tracking_owner
-msgid "Consignment"
 msgstr ""
 
 #. module: shopinvader
@@ -1052,21 +829,6 @@ msgid "Country"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_sale_coupon
-msgid "Coupons & Promotions"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_crm_iap_lead_website
-msgid "Create Leads/Opportunities from your website's traffic"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__lead_mining_in_pipeline
-msgid "Create a lead mining request directly from the opportunity pipeline."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__create_uid
@@ -1074,7 +836,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__create_uid
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_notification__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__create_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__create_uid
@@ -1095,7 +856,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__create_date
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_notification__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__create_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__create_date
@@ -1119,7 +879,6 @@ msgid "Cuisine"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__currency_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__currency_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__currency_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__currency_id
@@ -1139,21 +898,6 @@ msgid ""
 "In a context with a single Warehouse, this includes goods stored in the Stock Location of this Warehouse, or any of its children.\n"
 "stored in the Stock Location of the Warehouse of this Shop, or any of its children.\n"
 "Otherwise, this includes goods stored in any Stock Location with 'internal' type."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__report_footer
-msgid "Custom Report Footer"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__auth_signup_uninvited
-msgid "Customer Account"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_sale_delivery_address
-msgid "Customer Addresses"
 msgstr ""
 
 #. module: shopinvader
@@ -1205,11 +949,6 @@ msgid "Customer updated"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_dhl
-msgid "DHL Connector"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__date
 msgid "Date"
 msgstr ""
@@ -1220,58 +959,8 @@ msgid "Deactivate address for Shopinvader"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__user_default_rights
-msgid "Default Access Rights"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__crm_alias_prefix
-msgid "Default Alias Name for Leads"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__purchase_tax_id
-msgid "Default Purchase Tax"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__use_quotation_validity_days
-msgid "Default Quotation Validity"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__quotation_validity_days
-msgid "Default Quotation Validity (Days)"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__sale_tax_id
-msgid "Default Sale Tax"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__default_sale_order_template_id
-msgid "Default Template"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__use_invoice_terms
-msgid "Default Terms & Conditions"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__property_delivery_carrier_id
 msgid "Default delivery method used in sales orders."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__incoterm_id
-msgid "Default incoterm"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__deposit_default_product_id
-msgid "Default product used for payment advances"
 msgstr ""
 
 #. module: shopinvader
@@ -1298,13 +987,6 @@ msgstr ""
 msgid ""
 "Default unit of measure used for purchase orders. It must be in the same "
 "category as the default unit of measure."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__stock_state_threshold
-msgid ""
-"Define custom value under which the stock state will pass from 'In Stock' to"
-" 'In Limited Stock' State."
 msgstr ""
 
 #. module: shopinvader
@@ -1371,11 +1053,6 @@ msgid "Delivery Method"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_tracking_lot
-msgid "Delivery Packages"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sale_delay
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sale_delay
 msgid ""
@@ -1390,11 +1067,6 @@ msgid ""
 "Depending on the modules installed, this will allow you to define the route "
 "of the product: whether it will be bought, manufactured, replenished on "
 "order, etc."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__deposit_default_product_id
-msgid "Deposit Product"
 msgstr ""
 
 #. module: shopinvader
@@ -1435,36 +1107,6 @@ msgid "Developer"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__digest_id
-msgid "Digest Email"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__digest_emails
-msgid "Digest Emails"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_website_sale_digital
-msgid "Digital Content"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_discount_per_so_line
-msgid "Discounts"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_lot_on_delivery_slip
-msgid "Display Lots & Serial Numbers on Delivery Slips"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_lot_on_invoice
-msgid "Display Lots & Serial Numbers on Invoices"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_seo_title_mixin__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_address_validate__display_name
@@ -1474,7 +1116,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__display_name
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_notification__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__display_name
@@ -1485,11 +1126,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard__display_name
 msgid "Display Name"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__qr_code
-msgid "Display SEPA QR code"
 msgstr ""
 
 #. module: shopinvader
@@ -1515,28 +1151,8 @@ msgid "Do you really want to unbind these products ?"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__external_report_layout_id
-msgid "Document Template"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_sale_order__done_step_ids
 msgid "Done Cart Step"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_reports
-msgid "Dynamic Reports"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_l10n_eu_service
-msgid "EU Intra-community Distance Selling"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_easypost
-msgid "Easypost Connector"
 msgstr ""
 
 #. module: shopinvader
@@ -1570,44 +1186,14 @@ msgid "Email"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_move_email_validation
-msgid "Email Confirmation picking"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__template_id
-msgid "Email Template"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_mail_confirmation_template_id
-msgid "Email Template confirmation picking"
-msgstr ""
-
-#. module: shopinvader
 #: code:addons/shopinvader/models/res_partner.py:0
 #, python-format
 msgid "Email must be unique: The following mails are not unique: %s"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__stock_mail_confirmation_template_id
-msgid "Email sent to the customer once the order is done."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__confirmation_template_id
-msgid "Email sent to the customer once the order is paid."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__employee
 msgid "Employee"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__auth_signup_reset_password
-msgid "Enable password reset from Login page"
 msgstr ""
 
 #. module: shopinvader
@@ -1619,26 +1205,9 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__lead_enrich_auto
-msgid "Enrich lead automatically"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_crm_iap_lead_enrich
-msgid ""
-"Enrich your leads automatically with company data based on their email "
-"address."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__tracking
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__currency_exchange_journal_id
-msgid "Exchange Gain or Loss Journal"
 msgstr ""
 
 #. module: shopinvader
@@ -1658,16 +1227,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_product_expiry
-msgid "Expiration Dates"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__external_email_server_default
-msgid "External Email Servers"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_binding__external_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__external_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__external_id
@@ -1677,22 +1236,12 @@ msgid "External ID"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__fail_counter
-msgid "Fail Mail"
-msgstr ""
-
-#. module: shopinvader
 #: model:product.product,name:shopinvader.product_product_armchair_mid_century_blue
 #: model:product.product,name:shopinvader.product_product_armchair_mid_century_grey
 #: model:product.product,name:shopinvader.product_product_armchair_mid_century_red
 #: model:product.product,name:shopinvader.product_product_armchair_mid_century_yellow
 #: model:product.template,name:shopinvader.product_product_armchair_mid_century_blue_product_template
 msgid "Fauteuil Style Mid-Century avec assise tapissée"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_fedex
-msgid "FedEx Connector"
 msgstr ""
 
 #. module: shopinvader
@@ -1734,11 +1283,6 @@ msgid "Fiscal Position"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_fiscal_year
-msgid "Fiscal Years"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__message_follower_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_follower_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_follower_ids
@@ -1757,11 +1301,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_partner_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__report_footer
-msgid "Footer text displayed at the bottom of all reports."
 msgstr ""
 
 #. module: shopinvader
@@ -1823,16 +1362,6 @@ msgid "Full Name"
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_config_settings_form_view
-msgid "General"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_crm_iap_lead
-msgid "Generate new leads based on their country, industries, size, etc."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_latitude
 msgid "Geo Latitude"
 msgstr ""
@@ -1840,11 +1369,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_longitude
 msgid "Geo Longitude"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_base_geolocalize
-msgid "GeoLocalize"
 msgstr ""
 
 #. module: shopinvader
@@ -1862,11 +1386,6 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sequence
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sequence
 msgid "Gives the sequence order when displaying a product list"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_google_spreadsheet
-msgid "Google Spreadsheet"
 msgstr ""
 
 #. module: shopinvader
@@ -1898,11 +1417,6 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__variant_image_medium_url
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__variant_image_small_url
 msgid "HTTP accessible path to the file"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__has_accounting_entries
-msgid "Has Accounting Entries"
 msgstr ""
 
 #. module: shopinvader
@@ -1954,7 +1468,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__id
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_notification__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__id
@@ -2016,7 +1529,16 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__no_partner_duplicate
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_config_settings_view_form
+msgid ""
+"If checked, when a binding is created for a backend, we first\n"
+"                                    try to find a partner with the same email and if found we link\n"
+"                                    the new binding to the first partner found. Otherwise we always\n"
+"                                    create a new partner."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_res_config_settings__shopinvader_no_partner_duplicate
 msgid ""
 "If checked, when a binding is created for a backend, we first try to find a "
 "partner with the same email and if found we link the new binding to the "
@@ -2050,13 +1572,6 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_product_template__active
 msgid ""
 "If unchecked, it will allow you to hide the product without removing it."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__alias_domain
-msgid ""
-"If you have setup a catch-all email domain redirected to the Odoo server, "
-"enter the domain name here."
 msgstr ""
 
 #. module: shopinvader
@@ -2112,26 +1627,6 @@ msgid "Images"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_bank_statement_import_qif
-msgid "Import .qif files"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_bank_statement_import_csv
-msgid "Import in .csv format"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_bank_statement_import_ofx
-msgid "Import in .ofx format"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_bank_statement_import_camt
-msgid "Import in CAMT.053 format"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__standard_price
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__standard_price
 msgid ""
@@ -2161,18 +1656,8 @@ msgid "Incoming"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_display_incoterm
-msgid "Incoterms"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__industry_id
 msgid "Industry"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__partner_autocomplete_insufficient_credit
-msgid "Insufficient credit"
 msgstr ""
 
 #. module: shopinvader
@@ -2185,18 +1670,6 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__barcode
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__barcode
 msgid "International Article Number used for product identification."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__incoterm_id
-msgid ""
-"International Commercial Terms are a series of predefined commercial terms "
-"used in international transactions."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_intrastat
-msgid "Intrastat"
 msgstr ""
 
 #. module: shopinvader
@@ -2239,11 +1712,6 @@ msgstr ""
 msgid ""
 "Invoice & Delivery addresses are used in sales orders. Private addresses are"
 " only visible by authorized users."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_payment
-msgid "Invoice Online Payment"
 msgstr ""
 
 #. module: shopinvader
@@ -2290,7 +1758,6 @@ msgid "Invoices"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__default_invoice_policy
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__invoice_policy
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__invoice_policy
 msgid "Invoicing Policy"
@@ -2368,16 +1835,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_auth_ldap
-msgid "LDAP Authentication"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_landed_costs
-msgid "Landed Costs"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__lang_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__lang_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__lang_id
@@ -2412,7 +1869,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard____last_update
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_notification____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding____last_update
@@ -2433,7 +1889,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__write_uid
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_notification__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__write_uid
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__write_uid
@@ -2454,7 +1909,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__write_date
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_notification__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__write_date
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding__write_date
@@ -2500,38 +1954,8 @@ msgid "Latest Invoices & Payments Matching Date"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_fields
-msgid "Lead Scoring Frequency Fields"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_fields_str
-msgid "Lead Scoring Frequency Fields in String"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_start_date
-msgid "Lead Scoring Starting Date"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__predictive_lead_scoring_start_date_str
-msgid "Lead Scoring Starting Date in String"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_use_lead
-msgid "Leads"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__level
 msgid "Level"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__show_line_subtotals_tax_selection
-msgid "Line Subtotals Tax Display"
 msgstr ""
 
 #. module: shopinvader
@@ -2570,11 +1994,6 @@ msgid "Location Env Is Editable"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_auto_done_setting
-msgid "Lock Confirmed Sales"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model,name:shopinvader.model_shopinvader_backend
 msgid "Locomotive CMS Backend"
 msgstr ""
@@ -2582,11 +2001,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__location
 msgid "Locomotive URL (see Developers section Locomotive site)"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_production_lot
-msgid "Lots & Serial Numbers"
 msgstr ""
 
 #. module: shopinvader
@@ -2613,11 +2027,6 @@ msgid "Main Image"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__currency_id
-msgid "Main currency of the company."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__image_medium_url
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__image_medium_url
 msgid "Main medium image URL"
@@ -2632,16 +2041,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_partner_validate__next_state__pending
 msgid "Make pending"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_inter_company_rules
-msgid "Manage Inter Company"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__generate_lead_from_alias
-msgid "Manual Assignation of Emails"
 msgstr ""
 
 #. module: shopinvader
@@ -2683,27 +2082,6 @@ msgid ""
 "Manually set quantities on order: Invoice based on the manually entered quantity, without creating an analytic account.\n"
 "Timesheets on contract: Invoice based on the tracked hours on the related timesheet.\n"
 "Create a task and track hours: Create a task on the sales order validation and track the work hours."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__use_security_lead
-msgid ""
-"Margin of error for dates promised to customers. Products will be scheduled "
-"for delivery that many days earlier than the actual promised date, to cope "
-"with unexpected delays in the supply chain."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__security_lead
-msgid ""
-"Margin of error for dates promised to customers. Products will be scheduled "
-"for procurement and delivery that many days earlier than the actual promised"
-" date, to cope with unexpected delays in the supply chain."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_sale_margin
-msgid "Margins"
 msgstr ""
 
 #. module: shopinvader
@@ -2831,33 +2209,6 @@ msgid "Model"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_multi_currency
-msgid "Multi-Currencies"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_check_printing_multi_stub
-msgid "Multi-Pages Check Stub"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_adv_location
-msgid "Multi-Step Routes"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_multi_warehouses
-msgid "Multi-Warehouses"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__product_pricelist_setting
-msgid ""
-"Multiple prices: Pricelists with fixed price rules by product,\n"
-"Advanced rules: enables advanced price rules for pricelists."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_category__name
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__name
@@ -2931,11 +2282,6 @@ msgid "Next Activity Type"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__no_partner_duplicate
-msgid "No Partner Duplicate"
-msgstr ""
-
-#. module: shopinvader
 #: model_terms:ir.actions.act_window,help:shopinvader.action_sale_shopinvader_customer_to_validate
 msgid "No Shopinvader customer to be validated."
 msgstr ""
@@ -2954,6 +2300,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__cart_checkout_address_policy__no_defaults
 msgid "No defaults"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_res_config_settings__shopinvader_no_partner_duplicate
+msgid "No partner duplicate"
 msgstr ""
 
 #. module: shopinvader
@@ -3027,21 +2378,6 @@ msgid "Number of Actions"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__active_user_count
-msgid "Number of Active Users"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__company_count
-msgid "Number of Companies"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__language_count
-msgid "Number of Languages"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__nbr_product
 msgid "Number of bound products"
 msgstr ""
@@ -3083,16 +2419,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__object_id
 msgid "Object"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__portal_confirmation_pay
-msgid "Online Payment"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__portal_confirmation_sign
-msgid "Online Signature"
 msgstr ""
 
 #. module: shopinvader
@@ -3139,11 +2465,6 @@ msgid "Opt In"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__partner_names_order
-msgid "Order to compose partner fullname"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__invoice_policy
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__invoice_policy
 msgid ""
@@ -3170,11 +2491,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__packaging_contained_mapping
 msgid "Packaging Contained Mapping"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__paperformat_id
-msgid "Paper format"
 msgstr ""
 
 #. module: shopinvader
@@ -3207,13 +2523,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__record_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner_binding_line__partner_id
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_partner
 msgid "Partner"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_partner_autocomplete
-msgid "Partner Autocomplete"
 msgstr ""
 
 #. module: shopinvader
@@ -3227,18 +2537,14 @@ msgid "Partner Email"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__partner_names_order_changed
-msgid "Partner Names Order Changed"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__partner_names_order
-msgid "Partner names order"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__same_vat_partner_id
 msgid "Partner with same Tax ID"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_partners
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_partner
+msgid "Partners"
 msgstr ""
 
 #. module: shopinvader
@@ -3272,16 +2578,6 @@ msgid "Phone Blacklisted"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__default_picking_policy
-msgid "Picking Policy"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_plaid
-msgid "Plaid Connector"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__price
 msgid "Price"
 msgstr ""
@@ -3299,41 +2595,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__pricelist_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__pricelist_id
 msgid "Pricelist"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_product_pricelist
-msgid "Pricelists"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__product_pricelist_setting
-msgid "Pricelists Method"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__invoice_is_print
-msgid "Print"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__snailmail_duplex
-msgid "Print Both sides"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__account_check_printing_date_label
-msgid "Print Date Label"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__snailmail_color
-msgid "Print In Color"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_proforma_sales
-msgid "Pro-Forma Invoice"
 msgstr ""
 
 #. module: shopinvader
@@ -3372,11 +2633,6 @@ msgid "Product Category"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_sale_product_configurator
-msgid "Product Configurator"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model,name:shopinvader.model_product_filter
 msgid "Product Filter"
 msgstr ""
@@ -3397,11 +2653,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__packaging_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__packaging_ids
 msgid "Product Packages"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_packaging
-msgid "Product Packagings"
 msgstr ""
 
 #. module: shopinvader
@@ -3456,6 +2707,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__product_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard__shopinvader_variant_ids
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_products
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_products
+#: model:ir.ui.menu,name:shopinvader.shopinvader_product_menu
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Products"
@@ -3543,16 +2797,6 @@ msgid "Quantity visible in configurator"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_sale_quotation_builder
-msgid "Quotation Builder"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_sale_order_template
-msgid "Quotation Templates"
-msgstr ""
-
-#. module: shopinvader
 #: model:product.category,name:shopinvader.product_category_26
 msgid "Rangement"
 msgstr ""
@@ -3630,19 +2874,6 @@ msgid "Reordering Rules"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_procurement_jit
-msgid "Reservation"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__module_procurement_jit
-msgid ""
-"Reserving products manually in delivery orders or by running the scheduler "
-"is advised to better manage priorities in case of long customer lead times "
-"or/and frequent stock-outs."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__responsible_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__responsible_id
 msgid "Responsible"
@@ -3699,35 +2930,10 @@ msgid "SEO Title Mixin"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_sepa
-msgid "SEPA Credit Transfer (SCT)"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_stock_sms
-msgid "SMS Confirmation"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__message_has_sms_error
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_has_sms_error
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_sms_confirmation_template_id
-msgid "SMS Template"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_move_sms_validation
-msgid "SMS Validation with stock move"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__stock_sms_confirmation_template_id
-msgid "SMS sent to the customer once the order is done."
 msgstr ""
 
 #. module: shopinvader
@@ -3751,11 +2957,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__sale_order_count
 msgid "Sale Order Count"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_warning_sale
-msgid "Sale Order Warnings"
 msgstr ""
 
 #. module: shopinvader
@@ -3783,11 +2984,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__description_sale
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__description_sale
 msgid "Sales Description"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_sale_product_matrix
-msgid "Sales Grid Entry"
 msgstr ""
 
 #. module: shopinvader
@@ -3872,16 +3068,6 @@ msgid "Search engine"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__security_lead
-msgid "Security Lead Time"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__use_security_lead
-msgid "Security Lead Time for Sales"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__invoice_report_id
 msgid ""
 "Select a specific report for invoice download, if none are selected default "
@@ -3892,13 +3078,6 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__categ_id
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__categ_id
 msgid "Select category for the current product"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__account_check_printing_layout
-msgid ""
-"Select the format corresponding to the check paper you will be printing your checks on.\n"
-"In order to disable the printing feature, select 'None'."
 msgstr ""
 
 #. module: shopinvader
@@ -3927,16 +3106,6 @@ msgid "Self"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__invoice_is_email
-msgid "Send Email"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__invoice_is_snailmail
-msgid "Send by Post"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__sequence
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__sequence_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__sequence
@@ -3958,6 +3127,12 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.shopinvader_config_settings_act_window
+#: model:ir.ui.menu,name:shopinvader.shopinvader_config_settings_menu
+msgid "Settings"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_share
 msgid "Share Partner"
 msgstr ""
@@ -3965,11 +3140,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__sale_order__shopinvader_state__shipped
 msgid "Shipped"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery
-msgid "Shipping Costs"
 msgstr ""
 
 #. module: shopinvader
@@ -4039,6 +3209,7 @@ msgstr ""
 #: model:ir.module.category,name:shopinvader.module_category_shopinvader
 #: model:ir.ui.menu,name:shopinvader.menu_shopinvader_root
 #: model_terms:ir.ui.view,arch_db:shopinvader.product_category_view_form
+#: model_terms:ir.ui.view,arch_db:shopinvader.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
 #: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
 msgid "Shopinvader"
@@ -4118,11 +3289,6 @@ msgid "Shopinvader Child"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.ui.menu,name:shopinvader.shopinvader_config_settings_menu
-msgid "Shopinvader Config Settings"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__shopinvader_display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__shopinvader_display_name
 msgid "Shopinvader Display Name"
@@ -4174,6 +3340,7 @@ msgid "Shopinvader Price"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.shopinvader_product_act_window
 #: model:ir.model,name:shopinvader.model_shopinvader_product
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__shopinvader_product_id
 #: model_terms:ir.ui.view,arch_db:shopinvader.view_shopinvader_category_search
@@ -4186,7 +3353,6 @@ msgid "Shopinvader State"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.actions.act_window,name:shopinvader.shopinvader_variant_act_window
 #: model:ir.model,name:shopinvader.model_shopinvader_variant
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__shopinvader_variant_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__shopinvader_variant_ids
@@ -4209,6 +3375,11 @@ msgstr ""
 #: model:ir.actions.act_window,name:shopinvader.shopinvader_variant_unbinding_wizard_act_window
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_unbinding_wizard_form_view
 msgid "Shopinvader Variant Unbinding Wizard"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.shopinvader_variant_act_window
+msgid "Shopinvader Variants"
 msgstr ""
 
 #. module: shopinvader
@@ -4242,11 +3413,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_product_product__is_shopinvader_binded
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__is_shopinvader_binded
 msgid "Shopinvader binded"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model,name:shopinvader.model_shopinvader_config_settings
-msgid "Shopinvader configuration"
 msgstr ""
 
 #. module: shopinvader
@@ -4305,21 +3471,6 @@ msgid "Short Name"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__show_effect
-msgid "Show Effect"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_show_line_subtotals_tax_included
-msgid "Show line subtotals with taxes (B2C)"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_show_line_subtotals_tax_excluded
-msgid "Show line subtotals without taxes (B2B)"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__signup_expiration
 msgid "Signup Expiration"
 msgstr ""
@@ -4352,19 +3503,9 @@ msgid "Simple users only"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_snailmail_account
-msgid "Snailmail"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__sales_count
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__sales_count
 msgid "Sold"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_product_email_template
-msgid "Specific Email"
 msgstr ""
 
 #. module: shopinvader
@@ -4461,7 +3602,6 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__stock_state_threshold
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__stock_state_threshold
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__stock_state_threshold
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__stock_state_threshold
 msgid "Stock State Threshold"
@@ -4475,18 +3615,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__stock_valuation_layer_ids
 msgid "Stock Valuation Layer"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_stock_multi_locations
-msgid "Storage Locations"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__group_stock_multi_locations
-msgid ""
-"Store products in specific locations of your warehouse (e.g. bins, racks) "
-"and to track inventory accordingly."
 msgstr ""
 
 #. module: shopinvader
@@ -4532,18 +3660,8 @@ msgid "Tags"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__tax_cash_basis_journal_id
-msgid "Tax Cash Basis Journal"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__vat
 msgid "Tax ID"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__tax_calculation_rounding_method
-msgid "Tax calculation rounding method"
 msgstr ""
 
 #. module: shopinvader
@@ -4556,6 +3674,11 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_res_users__display_validate_address
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__display_validate_address
 msgid "Tech field to be used in views to display/hide validate action."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_technical
+msgid "Technical"
 msgstr ""
 
 #. module: shopinvader
@@ -4596,26 +3719,8 @@ msgid "Technical: used to compute quantities."
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__chart_template_id
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Template"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__auth_signup_template_user_id
-msgid "Template user for new users created through signup"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__invoice_terms
-msgid "Terms & Conditions"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__country_code
-msgid ""
-"The ISO country code in two chars. \n"
-"You can use this field for quick search."
 msgstr ""
 
 #. module: shopinvader
@@ -4623,21 +3728,6 @@ msgstr ""
 msgid ""
 "The Tax Identification Number. Complete it if the contact is subjected to "
 "government taxes. Used in some legal statements."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__currency_exchange_journal_id
-msgid ""
-"The accounting journal where automatic exchange differences will be "
-"registered"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__account_bank_reconciliation_start
-msgid ""
-"The bank reconciliation widget won't ask to reconcile payments older than this date.\n"
-"               This is useful if you install accounting after having used invoicing for some time and\n"
-"               don't want to reconcile all the past payments with bank statements."
 msgstr ""
 
 #. module: shopinvader
@@ -4678,14 +3768,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__user_id
 msgid "The internal user in charge of this contact."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__automatic_invoice
-msgid ""
-"The invoice is generated automatically and available in the customer portal when the transaction is confirmed by the payment acquirer.\n"
-"The invoice is marked as paid and the payment is registered in the payment journal defined in the configuration of the payment acquirer.\n"
-"This mode is advised if you issue the final invoice at the order and not after the delivery."
 msgstr ""
 
 #. module: shopinvader
@@ -4791,13 +3873,6 @@ msgid "This address is enabled to be used for Shopinvader."
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__module_account_batch_payment
-msgid ""
-"This allows you grouping payments into a single batch and eases the reconciliation process.\n"
-"-This installs the account_batch_payment module."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__account_analytic_id
 msgid ""
 "This analytic account will be used to fill the field on the sale order "
@@ -4814,20 +3889,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__price_extra
 msgid "This is the sum of the extra price of all attributes"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__account_check_printing_multi_stub
-msgid ""
-"This option allows you to print check details (stub) on multiple pages if "
-"they don't fit on a single page."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__account_check_printing_date_label
-msgid ""
-"This option allows you to print the date label on the check as per CPA. "
-"Disable this if your pre-printed check includes the date label."
 msgstr ""
 
 #. module: shopinvader
@@ -4967,21 +4028,9 @@ msgid "Track Service"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_config_settings__module_product_expiry
-msgid ""
-"Track following dates on lots & serial numbers: best before, removal, end of life, alert. \n"
-" Such dates are set automatically at lot/serial number creation based on values set on the product (in days)."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__tracking
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__tracking
 msgid "Tracking"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_base_gengo
-msgid "Translate Your Website with Gengo"
 msgstr ""
 
 #. module: shopinvader
@@ -5002,16 +4051,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_sale_order__typology
 msgid "Typology"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_ups
-msgid "UPS Connector"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_usps
-msgid "USPS Connector"
 msgstr ""
 
 #. module: shopinvader
@@ -5084,11 +4123,6 @@ msgid "Units"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_uom
-msgid "Units of Measure"
-msgstr ""
-
-#. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
 msgid "Unpublish"
 msgstr ""
@@ -5105,11 +4139,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_unread_counter
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_unread_counter
 msgid "Unread Messages Counter"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_web_unsplash
-msgid "Unsplash Image Library"
 msgstr ""
 
 #. module: shopinvader
@@ -5139,25 +4168,10 @@ msgid "Url key"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_sepa_direct_debit
-msgid "Use SEPA Direct Debit"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__use_shopinvader_product_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__use_shopinvader_product_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__use_shopinvader_product_name
 msgid "Use Shopinvader product display name"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_account_batch_payment
-msgid "Use batch payments"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_auth_oauth
-msgid "Use external authentication providers (OAuth)"
 msgstr ""
 
 #. module: shopinvader
@@ -5226,7 +4240,6 @@ msgid "Value Svl"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.ui.menu,name:shopinvader.shopinvader_variant_menu
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_form_view
 msgid "Variant"
 msgstr ""
@@ -5293,7 +4306,7 @@ msgid "Variant main small image URL"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_product_variant
+#: model:ir.ui.menu,name:shopinvader.shopinvader_variant_menu
 msgid "Variants"
 msgstr ""
 
@@ -5325,11 +4338,6 @@ msgid "Vendors"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__vat_check_vies
-msgid "Verify VAT Numbers"
-msgstr ""
-
-#. module: shopinvader
 #: model_terms:ir.actions.act_window,help:shopinvader.action_sale_shopinvader_customer_to_validate
 msgid "View all partners that have a Shopinvader user to be validated."
 msgstr ""
@@ -5343,11 +4351,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__volume
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__volume
 msgid "Volume"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__product_volume_volume_in_cubic_feet
-msgid "Volume unit of measure"
 msgstr ""
 
 #. module: shopinvader
@@ -5375,16 +4378,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__warehouse_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__warehouse_id
 msgid "Warehouse"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_warning_stock
-msgid "Warnings for Stock"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__group_warning_account
-msgid "Warnings in Invoices"
 msgstr ""
 
 #. module: shopinvader
@@ -5420,11 +4413,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__weight
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__weight
 msgid "Weight"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__product_weight_in_lbs
-msgid "Weight unit of measure"
 msgstr ""
 
 #. module: shopinvader
@@ -5527,11 +4515,6 @@ msgstr ""
 #: model:product.template.attribute.value,name:shopinvader.product_template_chair_mid_century_attribute_color_white
 #: model:product.template.attribute.value,name:shopinvader.product_template_chair_vortex_attribute_color_white
 msgid "blue"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_config_settings__module_delivery_bpost
-msgid "bpost Connector"
 msgstr ""
 
 #. module: shopinvader
