@@ -2,7 +2,7 @@
 openupgradelib @ git+https://github.com/OCA/openupgradelib.git
 locomotivecms @ git+https://github.com/akretion/locomotivecms-python-client.git
 # test requirements
-requests_mock
+requests-mock
 vcrpy
 vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
