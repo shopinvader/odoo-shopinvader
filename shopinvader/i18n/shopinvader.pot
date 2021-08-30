@@ -1202,16 +1202,6 @@ msgid "Extra Categories"
 msgstr ""
 
 #. module: shopinvader
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_blue
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_grey
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_red
-#: model:product.product,name:shopinvader.product_product_armchair_mid_century_yellow
-#: model:product.product,name:shopinvader.product_product_table_walmut
-#: model:product.template,name:shopinvader.product_template_armchair_mid_century
-msgid "Fauteuil Style Mid-Century avec assise tapissée"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__field_id
 #: model:ir.model.fields.selection,name:shopinvader.selection__product_filter__based_on__field
 msgid "Field"
@@ -4115,6 +4105,18 @@ msgstr ""
 #: model:product.product,name:shopinvader.product_product_chair_vortex_white
 #: model:product.template,name:shopinvader.product_template_chair_vortex
 msgid "Vortex Side Chair"
+msgstr ""
+
+#. module: shopinvader
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_blue
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_grey
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_red
+#: model:product.product,name:shopinvader.product_product_armchair_mid_century_yellow
+#: model:product.product,name:shopinvader.product_product_table_walmut
+#: model:product.template,name:shopinvader.product_template_armchair_mid_century
+msgid ""
+"Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture\n"
+"        "
 msgstr ""
 
 #. module: shopinvader
