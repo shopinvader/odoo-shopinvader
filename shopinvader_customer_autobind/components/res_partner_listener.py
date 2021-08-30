@@ -33,7 +33,7 @@ class PartnerEventListener(Component):
                 continue
             wizard = (
                 self.env["shopinvader.partner.binding"]
-                .with_context(active_ids=record.ids, active_model="res.partner")
+                .with_context(active_ids=record.ids, active_model=record._name)
                 .create({"shopinvader_backend_id": backend.id})
             )
             wizard._onchange_shopinvader_backend_id()
@@ -76,7 +76,7 @@ class PartnerEventListener(Component):
         # shopinvader.partner automatically
         if self.env.context.get("shopinvader_request"):
             return True
-        return not record.customer
+        return not bool(record.customer_rank)
 
     @skip_if(
         lambda self, record, **kwargs: self._get_skip_if_condition(record, **kwargs)
