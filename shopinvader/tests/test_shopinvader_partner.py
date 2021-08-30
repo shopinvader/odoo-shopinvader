@@ -134,3 +134,19 @@ class TestShopinvaderPartner(SavepointComponentCase):
         # only one partner should exists with this email
         res = self.env["res.partner"].search([("email", "=", self.unique_email)])
         self.assertEqual(len(res), 1)
+
+    @mute_logger("odoo.models.unlink")
+    def test_partner_is_customer(self):
+        """
+        Ensure the new shopinvader partner is marked as customer
+        :return:
+        """
+        self.assertFalse(self.env["res.partner"]._is_partner_duplicate_prevented())
+        binding = self.env["shopinvader.partner"].create(
+            {
+                "email": self.unique_email,
+                "name": "test partner customer",
+                "backend_id": self.backend.id,
+            }
+        )
+        self.assertTrue(binding.customer_rank)
