@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import _
+
 from odoo.addons.component.core import Component
 from odoo.addons.component_event import skip_if
 
@@ -29,15 +29,11 @@ class PartnerEventListener(Component):
             [("bind_new_customers", "=", True)]
         ):
             # Don't bind if record is already bound
-            if record.shopinvader_bind_ids.filtered(
-                lambda b: b.backend_id == backend
-            ):
+            if record.shopinvader_bind_ids.filtered(lambda b: b.backend_id == backend):
                 continue
             wizard = (
                 self.env["shopinvader.partner.binding"]
-                .with_context(
-                    active_ids=record.ids, active_model="res.partner"
-                )
+                .with_context(active_ids=record.ids, active_model="res.partner")
                 .create({"shopinvader_backend_id": backend.id})
             )
             wizard._onchange_shopinvader_backend_id()
@@ -83,9 +79,7 @@ class PartnerEventListener(Component):
         return not record.customer
 
     @skip_if(
-        lambda self, record, **kwargs: self._get_skip_if_condition(
-            record, **kwargs
-        )
+        lambda self, record, **kwargs: self._get_skip_if_condition(record, **kwargs)
     )
     def on_record_create(self, record, fields=None):
         if not self._check_partner(record):
@@ -93,9 +87,7 @@ class PartnerEventListener(Component):
         self._bind_customers(record)
 
     @skip_if(
-        lambda self, record, **kwargs: self._get_skip_if_condition(
-            record, **kwargs
-        )
+        lambda self, record, **kwargs: self._get_skip_if_condition(record, **kwargs)
     )
     def on_record_write(self, record, fields=None):
         """
