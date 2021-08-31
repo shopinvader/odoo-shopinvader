@@ -143,7 +143,7 @@ class BaseShopinvaderService(AbstractComponent):
             offset=per_page * (page - 1),
             order=self._get_search_order(order, **params),
         )
-        return {"size": total_count, "data": self._to_json(records, **params)}
+        return {"size": total_count, "data": self._to_json(records)}
 
     def _get_search_order(self, order, **params):
         """Customize search results order.

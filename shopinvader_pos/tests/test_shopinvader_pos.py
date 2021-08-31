@@ -1,5 +1,7 @@
 # Copyright 2021 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from odoo import fields
+
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
@@ -8,23 +10,33 @@ class TestShopinvaderPos(CommonCase):
     Tests for shopinvader.pos.service
     """
 
-    def setUp(self):
-        super(TestShopinvaderPos, self).setUp()
-        self.env = self.env(context=dict(self.env.context, tracking_disable=True))
-        self.PosOrder = self.env["pos.order"]
-        self.partner = self.env.ref("base.res_partner_2")
-        self.pricelist = self.env.ref("product.list0")
-        self.pick_type_out = self.env.ref("point_of_sale.picking_type_posout")
-        self.product1 = self.env.ref("product.product_product_4")
-        self.product2 = self.env.ref("product.product_product_2")
-        self.pos_config = self.env["pos.config"].create(
-            {"name": "Test POS", "picking_type_id": self.pick_type_out.id}
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.PosOrder = cls.env["pos.order"]
+        cls.partner = cls.env.ref("base.res_partner_2")
+        cls.pricelist = cls.env.ref("product.list0")
+        cls.pick_type_out = cls.env["stock.picking.type"].search(
+            [("code", "=", "outgoing")], limit=1
         )
-        self.pos_config.open_session_cb()
-        self.pos_values = {
-            "partner_id": self.partner.id,
-            "pricelist_id": self.pricelist.id,
-            "session_id": self.pos_config.current_session_id.id,
+        cls.product1 = cls.env.ref("product.product_product_4")
+        cls.product2 = cls.env.ref("product.product_product_2")
+        cls.pos_config = cls.env["pos.config"].create(
+            {"name": "Test POS", "picking_type_id": cls.pick_type_out.id}
+        )
+        cls.pos_config.open_session_cb()
+        amount_base = 1 * 100 + 12 * 30
+        amount_tax = amount_base * 0.21
+        amount_total = amount_base + amount_tax
+        cls.pos_values = {
+            "partner_id": cls.partner.id,
+            "pricelist_id": cls.pricelist.id,
+            "session_id": cls.pos_config.current_session_id.id,
+            "amount_tax": amount_tax,
+            "amount_total": amount_total,
+            "amount_paid": 0,
+            "amount_return": 0,
             "lines": [
                 (
                     0,
@@ -33,7 +45,9 @@ class TestShopinvaderPos(CommonCase):
                         "name": "Test line 1",
                         "qty": 1,
                         "price_unit": 100,
-                        "product_id": self.product1.id,
+                        "product_id": cls.product1.id,
+                        "price_subtotal": 1 * 100,
+                        "price_subtotal_incl": 1 * 100 * 1.21,
                     },
                 ),
                 (
@@ -43,11 +57,20 @@ class TestShopinvaderPos(CommonCase):
                         "name": "Test line 2",
                         "qty": 12,
                         "price_unit": 30,
-                        "product_id": self.product2.id,
+                        "product_id": cls.product2.id,
+                        "price_subtotal": 12 * 30,
+                        "price_subtotal_incl": 12 * 30 * 1.21,
                     },
                 ),
             ],
         }
+        cls.pos_order1 = cls.PosOrder.create(cls.pos_values)
+        cls.pos_order2 = cls.PosOrder.create(cls.pos_values)
+        cls.pos_order1.write({"state": "done"})
+        cls.pos_order2.write({"state": "done"})
+
+    def setUp(self):
+        super().setUp()
         usage = "point_of_sale"
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
@@ -57,10 +80,6 @@ class TestShopinvaderPos(CommonCase):
             shopinvader_session=self.shopinvader_session
         ) as work:
             self.service_guest = work.component(usage=usage)
-        self.pos_order1 = self.PosOrder.create(self.pos_values)
-        self.pos_order2 = self.PosOrder.create(self.pos_values)
-        self.pos_order1.action_pos_order_done()
-        self.pos_order2.action_pos_order_done()
 
     def _build_json(self, pos_order):
         result = {
@@ -69,11 +88,7 @@ class TestShopinvaderPos(CommonCase):
             "name": pos_order.name,
             "reference": pos_order.pos_reference or None,
             "amount_tax": pos_order.amount_tax,
-            "location": {
-                "location_id": pos_order.location_id.id,
-                "name": pos_order.location_id.name,
-            },
-            "date": pos_order.date_order,
+            "date": fields.Datetime.to_string(pos_order.date_order),
             "partner": {
                 "partner_id": pos_order.partner_id.id,
                 "name": pos_order.partner_id.name,

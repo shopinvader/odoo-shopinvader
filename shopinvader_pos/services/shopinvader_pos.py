@@ -1,5 +1,6 @@
 # Copyright 2021 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+from odoo import fields
 from odoo.osv import expression
 from odoo.tools import float_round
 
@@ -27,7 +28,7 @@ class ShopinvaderPoS(Component):
         :param _id: int (optional)
         :return: dict/json
         """
-        pos_order = super(ShopinvaderPoS, self)._get(_id)
+        pos_order = super()._get(_id)
         jsonified_record = self._to_json(pos_order)[0]
         values = {"data": jsonified_record}
         return values
@@ -52,7 +53,7 @@ class ShopinvaderPoS(Component):
         The partner is empty if the current logged user is the anonymous one
         :return: res.partner recordset
         """
-        if self._is_logged():
+        if self._is_logged_in():
             return self.partner
         return self.env["res.partner"].browse()
 
@@ -115,13 +116,6 @@ class ShopinvaderPoS(Component):
                         "name": {"type": "string"},
                     },
                 },
-                "location": {
-                    "type": "dict",
-                    "schema": {
-                        "location_id": {"type": "integer", "required": True},
-                        "name": {"type": "string"},
-                    },
-                },
                 "lines": {
                     "type": "list",
                     "schema": {
@@ -181,11 +175,15 @@ class ShopinvaderPoS(Component):
             "id:pos_id",
             "name",
             "pos_reference:reference",
-            "date_order:date",
+            (
+                "date_order:date",
+                lambda rec, field_name, ts=fields.Datetime.to_string: ts(
+                    rec[field_name]
+                ),
+            ),
             "amount_tax",
             "amount_total",
             ("partner_id:partner", ("id:partner_id", "name")),
-            ("location_id:location", ("id:location_id", "name")),
             ("lines:pos_lines", self._json_parser_line()),
         ]
         return to_parse
@@ -222,7 +220,7 @@ class ShopinvaderPoS(Component):
         """
         pos_parser = self._json_parser()
         precision = self.env["decimal.precision"].precision_get("Account")
-        values = pos_order.jsonify(pos_parser)[0]
+        values = pos_order.jsonify(pos_parser, one=True)
         amount_untaxed = pos_order.amount_total - pos_order.amount_tax
         amount_untaxed = float_round(amount_untaxed, precision_rounding=precision)
         values.update({"amount_untaxed": amount_untaxed})
