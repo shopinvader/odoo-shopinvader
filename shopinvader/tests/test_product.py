@@ -258,22 +258,31 @@ class ProductCase(ProductCommonCase):
         )
 
     def test_category_child_with_one_lang(self):
+        """
+        Main category children should equal shopinvader children
+        """
         self.backend.bind_all_category()
         categ = self.env.ref("product.product_category_1")
+        # Use this to compare, as the amount can vary depending
+        # on base modules installed
+        children = categ.child_id
         shopinvader_categ = categ.shopinvader_bind_ids
         self.assertEqual(len(shopinvader_categ), 1)
-        self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
+        self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), len(children))
 
     def test_category_child_with_two_lang(self):
         lang = self._install_lang("base.lang_fr")
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         categ = self.env.ref("product.product_category_1")
+        # Use this to compare, as the amount can vary depending
+        # on base modules installed
+        children = categ.child_id
         categ.with_context(lang="fr_FR").write({"name": "En Vente"})
         categ.parent_id.with_context(lang="fr_FR").write({"name": "Tous"})
         self.assertEqual(len(categ.shopinvader_bind_ids), 2)
         shopinvader_categ = categ.shopinvader_bind_ids[0]
-        self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
+        self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), len(children))
         for binding in categ.shopinvader_bind_ids:
             self.assertEqual(binding.shopinvader_parent_id.lang_id, binding.lang_id)
             if binding.lang_id.code == "fr_FR":
