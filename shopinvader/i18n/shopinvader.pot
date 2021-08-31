@@ -2580,6 +2580,18 @@ msgid "Product Filter"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__product_template_link_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_template_link_ids
+msgid "Product Links"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__product_template_link_count
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_template_link_count
+msgid "Product Links Count"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__packaging_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__packaging_ids
 msgid "Product Packages"
