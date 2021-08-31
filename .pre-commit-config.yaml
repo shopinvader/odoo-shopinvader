@@ -15,7 +15,6 @@ exclude: |
   ^shopinvader_partner_vat/|
   ^shopinvader_product_new/|
   ^shopinvader_product_stock_assortment/|
-  ^shopinvader_product_template_multi_link/|
   ^shopinvader_product_variant_multi_link/|
   ^shopinvader_promotion_rule/|
   ^shopinvader_sale_communication/|

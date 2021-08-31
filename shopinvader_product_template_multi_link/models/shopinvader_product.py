@@ -6,68 +6,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from collections import defaultdict
-
 from odoo import models
-from odoo.addons.base_sparse_field.models.fields import Serialized
-from odoo.addons.http_routing.models.ir_http import slugify
-
-
-class ShopinvaderProductLinkMixin(models.AbstractModel):
-    _name = "shopinvader.product.link.mixin"
-    _description = "Shopinvader product link mixin"
-
-    product_links = Serialized(
-        string="Product template links", compute="_compute_product_links"
-    )
-
-    def _compute_product_links(self):
-        for record in self:
-            record.product_links = record._get_product_links_by_type(
-                record._get_product_links()
-            )
-
-    def _get_product_links(self):
-        return self.product_template_link_ids
-
-    def _get_product_links_by_type(self, links):
-        """Retrieve variants as list of ids by link type.
-
-        Eg: {"up_selling": [{id: 1}, {id: 2}, {id: 3}]}
-
-        :return: dict
-        """
-        self.ensure_one()
-        grouped = defaultdict(self.env["product.template.link"].browse)
-        for link in links:
-            code = self._product_link_code(link)
-            grouped[code] |= link
-        res = {}
-        for code, links in grouped.items():
-            res[code] = [self._get_product_link_data(x) for x in links]
-        return res
-
-    def _product_link_code(self, link):
-        """Normalize link code, default to `generic` when missing."""
-        return slugify(link.type_id.code or "generic").replace("-", "_")
-
-    def _get_product_link_data(self, link):
-        target = self._product_link_target(link)
-        variant = self._product_link_target_variant(target)
-        if variant:
-            return {"id": variant.record_id.id}
-        return {}
-
-    def _product_link_target(self, link):
-        """Retrieve the target of the link."""
-        raise NotImplementedError()
-
-    def _product_link_target_variant(self, target):
-        """Retrieve variant ids for given target product
-
-        :return: set
-        """
-        raise NotImplementedError()
 
 
 class ShopinvaderProduct(models.Model):
@@ -78,19 +17,17 @@ class ShopinvaderProduct(models.Model):
     ]
 
     def _product_link_target(self, link):
-        if link.left_product_tmpl_id != self.record_id:
-            return link.left_product_tmpl_id
-        else:
+        if link.left_product_tmpl_id == self.record_id:
             return link.right_product_tmpl_id
+        elif link.type_id.is_symmetric:
+            return link.left_product_tmpl_id
 
     def _product_link_target_variant(self, target):
         """Retrieve variant for given template
 
         :return: set
         """
-        for (
-            shopinvader_variant
-        ) in target.shopinvader_bind_ids.shopinvader_variant_ids:
+        for shopinvader_variant in target.shopinvader_bind_ids.shopinvader_variant_ids:
             # Get bindings of the correct backend and lang, pick only the main one
             if (
                 shopinvader_variant.backend_id == self.backend_id
