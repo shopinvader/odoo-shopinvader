@@ -226,7 +226,7 @@ class ShopinvaderPoS(Component):
         values.update({"amount_untaxed": amount_untaxed})
         return values
 
-    def _to_json(self, pos_orders):
+    def _to_json(self, pos_orders, **kw):
         """
         Jsonify the gift.list (multi) recordset
         :param pos_orders: gift.list recordset
