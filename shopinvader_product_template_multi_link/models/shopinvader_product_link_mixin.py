@@ -61,7 +61,7 @@ class ShopinvaderProductLinkMixin(models.AbstractModel):
             return {}
         variant = self._product_link_target_variant(target)
         if variant:
-            return {"id": variant.id}
+            return {"id": variant.record_id.id}
         return {}
 
     def _product_link_target(self, link):
