@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo.addons.shopinvader.tests.common import CommonCase
@@ -11,9 +10,7 @@ class TestShopinvaderPos(CommonCase):
 
     def setUp(self):
         super(TestShopinvaderPos, self).setUp()
-        self.env = self.env(
-            context=dict(self.env.context, tracking_disable=True)
-        )
+        self.env = self.env(context=dict(self.env.context, tracking_disable=True))
         self.PosOrder = self.env["pos.order"]
         self.partner = self.env.ref("base.res_partner_2")
         self.pricelist = self.env.ref("product.list0")
@@ -89,9 +86,7 @@ class TestShopinvaderPos(CommonCase):
         result = self.service.dispatch("search")
         result_data = result.get("data", {})
         pos_orders = self.pos_order2 | self.pos_order1
-        expected_result = [
-            self._build_json(pos_order) for pos_order in pos_orders
-        ]
+        expected_result = [self._build_json(pos_order) for pos_order in pos_orders]
         for result, expected in zip(result_data, expected_result):
             self.assertDictEqual(result, expected)
 

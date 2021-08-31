@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2021 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo.osv import expression
@@ -225,9 +224,7 @@ class ShopinvaderPoS(Component):
         precision = self.env["decimal.precision"].precision_get("Account")
         values = pos_order.jsonify(pos_parser)[0]
         amount_untaxed = pos_order.amount_total - pos_order.amount_tax
-        amount_untaxed = float_round(
-            amount_untaxed, precision_rounding=precision
-        )
+        amount_untaxed = float_round(amount_untaxed, precision_rounding=precision)
         values.update({"amount_untaxed": amount_untaxed})
         return values
 
@@ -237,7 +234,5 @@ class ShopinvaderPoS(Component):
         :param pos_orders: gift.list recordset
         :return: list of dict
         """
-        results = [
-            self._to_json_pos_order(pos_order) for pos_order in pos_orders
-        ]
+        results = [self._to_json_pos_order(pos_order) for pos_order in pos_orders]
         return results
