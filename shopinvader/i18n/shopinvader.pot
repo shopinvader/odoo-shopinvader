@@ -1058,6 +1058,11 @@ msgid "Description on Receptions"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sequence
+msgid "Determine the display order in the frontend shop"
+msgstr ""
+
+#. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Developer"
 msgstr ""
@@ -1347,7 +1352,6 @@ msgid "Gives the different ways to package the same product."
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sequence
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sequence
 msgid "Gives the sequence order when displaying a product list"
 msgstr ""
