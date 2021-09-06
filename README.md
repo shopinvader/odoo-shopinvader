@@ -36,7 +36,7 @@ addon | version | summary
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 13.0.1.1.1 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 13.0.1.2.0 | Guest mode for Shopinvader
 [shopinvader_image](shopinvader_image/) | 13.0.2.1.0 | Add the export of Image for Shopinvader
-[shopinvader_import_image](shopinvader_import_image/) | 13.0.3.0.0 | Import product images
+[shopinvader_import_image](shopinvader_import_image/) | 13.0.3.1.0 | Import product images
 [shopinvader_lead](shopinvader_lead/) | 13.0.1.0.1 | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 13.0.3.1.1 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 13.0.1.0.1 | This addons is used to push the initial algolia configuration to locomotive
