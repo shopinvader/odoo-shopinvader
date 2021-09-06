@@ -38,7 +38,7 @@ class ShopinvaderBackend(models.Model):
     @api.model
     @tools.ormcache("self._uid", "auth_api_key_id")
     def _get_id_from_auth_api_key(self, auth_api_key_id):
-        return self.search([("auth_api_key_id", "=", auth_api_key_id)]).id
+        return self.sudo().search([("auth_api_key_id", "=", auth_api_key_id)]).id
 
     @api.model
     def _get_from_auth_api_key(self, auth_api_key_id):

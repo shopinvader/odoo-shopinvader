@@ -572,11 +572,13 @@ class ShopinvaderBackend(models.Model):
     @api.model
     @tools.ormcache("self._uid", "website_unique_key")
     def _get_id_from_website_unique_key(self, website_unique_key):
-        return self.search([("website_unique_key", "=", website_unique_key)]).id
+        return self.sudo().search([("website_unique_key", "=", website_unique_key)]).id
 
     @api.model
     def _get_from_website_unique_key(self, website_unique_key):
-        return self.browse(self._get_id_from_website_unique_key(website_unique_key))
+        return self.sudo().browse(
+            self._get_id_from_website_unique_key(website_unique_key)
+        )
 
     def write(self, values):
         if "website_unique_key" in values:
