@@ -34,9 +34,9 @@ class InvoiceService(Component):
 
         :return: list of str
         """
-        states = ["paid"]
+        states = ["paid", "reversed"]
         if self.shopinvader_backend.invoice_access_open:
-            states += ["not_paid", "in_payment"]
+            states += ["not_paid", "in_payment", "partial"]
         return states
 
     def _get_base_search_domain(self):
