@@ -14,6 +14,12 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_import_image
+#: code:addons/shopinvader_import_image/models/import_image.py:0
+#, python-format
+msgid "CSV Schema Incompatible"
+msgstr ""
+
+#. module: shopinvader_import_image
 #: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__file_csv
 msgid "CSV file"
 msgstr ""
@@ -24,13 +30,13 @@ msgid "CSV file delimiter"
 msgstr ""
 
 #. module: shopinvader_import_image
-#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__csv_header
-msgid "CSV file header"
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__chunk_size
+msgid "Chunk Size"
 msgstr ""
 
 #. module: shopinvader_import_image
-#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__chunk_size
-msgid "Chunk Size"
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Column Mapping"
 msgstr ""
 
 #. module: shopinvader_import_image
@@ -55,6 +61,11 @@ msgid "Created on"
 msgstr ""
 
 #. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Destination"
+msgstr ""
+
+#. module: shopinvader_import_image
 #: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__display_name
 msgid "Display Name"
 msgstr ""
@@ -75,6 +86,16 @@ msgid "External storage"
 msgstr ""
 
 #. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "File Path"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__filename
+msgid "Filename"
+msgstr ""
+
+#. module: shopinvader_import_image
 #: model:ir.model,name:shopinvader_import_image.model_shopinvader_import_product_image
 msgid "Handle import of shopinvader product images"
 msgstr ""
@@ -90,9 +111,19 @@ msgid "ID"
 msgstr ""
 
 #. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__csv_column_tag_name
+msgid "Image Tag Name column"
+msgstr ""
+
+#. module: shopinvader_import_image
 #: code:addons/shopinvader_import_image/models/import_image.py:0
 #, python-format
 msgid "Image file not found"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__csv_column_file_path
+msgid "Image file path column"
 msgstr ""
 
 #. module: shopinvader_import_image
@@ -125,12 +156,6 @@ msgstr ""
 #. module: shopinvader_import_image
 #: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__state
 msgid "Import state"
-msgstr ""
-
-#. module: shopinvader_import_image
-#: code:addons/shopinvader_import_image/models/import_image.py:0
-#, python-format
-msgid "Invalid CSV file headers found! Expected: %s"
 msgstr ""
 
 #. module: shopinvader_import_image
@@ -167,6 +192,7 @@ msgstr ""
 
 #. module: shopinvader_import_image
 #: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__options
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
 msgid "Options"
 msgstr ""
 
@@ -183,6 +209,16 @@ msgstr ""
 #. module: shopinvader_import_image
 #: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__product_model
 msgid "Product Model"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Product Reference"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__csv_column_default_code
+msgid "Product Reference column"
 msgstr ""
 
 #. module: shopinvader_import_image
@@ -230,6 +266,11 @@ msgid "Shopinvader image imports cleanup"
 msgstr ""
 
 #. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Source"
+msgstr ""
+
+#. module: shopinvader_import_image
 #: model:ir.model.fields,field_description:shopinvader_import_image.field_shopinvader_import_product_image__source_type
 msgid "Source type"
 msgstr ""
@@ -245,9 +286,29 @@ msgid "Storage Backend with images"
 msgstr ""
 
 #. module: shopinvader_import_image
+#: model_terms:ir.ui.view,arch_db:shopinvader_import_image.product_import_image_form_view
+msgid "Tag Name"
+msgstr ""
+
+#. module: shopinvader_import_image
 #: code:addons/shopinvader_import_image/models/import_image.py:0
 #, python-format
 msgid "Tags not found"
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,help:shopinvader_import_image.field_shopinvader_import_product_image__csv_column_file_path
+msgid "The CSV File column name that holds the image file path or url."
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,help:shopinvader_import_image.field_shopinvader_import_product_image__csv_column_tag_name
+msgid "The CSV File column name that holds the image tag name."
+msgstr ""
+
+#. module: shopinvader_import_image
+#: model:ir.model.fields,help:shopinvader_import_image.field_shopinvader_import_product_image__csv_column_default_code
+msgid "The CSV File column name that holds the product reference."
 msgstr ""
 
 #. module: shopinvader_import_image
