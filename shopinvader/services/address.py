@@ -205,6 +205,8 @@ class AddressService(Component):
         return data
 
     def _prepare_params(self, params, mode="create"):
+        if not params.get("type"):
+            params["type"] = "other"
         for key in ["country", "state"]:
             if key in params:
                 val = params.pop(key)
