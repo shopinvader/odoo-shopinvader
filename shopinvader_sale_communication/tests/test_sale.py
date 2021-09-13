@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -6,9 +5,13 @@ from odoo.addons.shopinvader.tests.common import CommonCase
 
 
 class TestSale(CommonCase):
-    def setUp(self):
-        super(TestSale, self).setUp()
-        self.partner = self.env.ref("base.res_partner_2")
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.partner = cls.env.ref("shopinvader.partner_1")
+
+    def setUp(self, *args, **kwargs):
+        super(TestSale, self).setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="sales")
 
@@ -16,12 +19,11 @@ class TestSale(CommonCase):
         online_information_for_customer = "TEST"
         so = self.env["sale.order"].create(
             {
-                "partner_id": self.env.ref("base.res_partner_2").id,
+                "partner_id": self.partner.id,
                 "online_information_for_customer": online_information_for_customer,
                 "shopinvader_backend_id": self.env.ref(
                     "shopinvader.backend_1"
                 ).id,
-                "typology": "sale",
             }
         )
         so.action_confirm()
