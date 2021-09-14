@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="shopinvader_sale_communication_tree_view" model="ir.ui.view">
+        <field name="name">sale.communication.tree</field>
+        <field name="model">sale.communication</field>
+        <field name="arch" type="xml">
+            <tree string="Sale Communications">
+                <field name="name" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+    <record id="shopinvader_sale_communication_form_view" model="ir.ui.view">
+        <field name="name">sale.communication.form</field>
+        <field name="model">sale.communication</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <widget
+                        name="web_ribbon"
+                        title="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
+                    <group name="top" colspan="2" col="2">
+                        <field name="name" />
+                        <field name="description" />
+                        <field name="active" invisible="1" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <act_window
+        id="action_sale_communication"
+        name="Sale Communications"
+        res_model="sale.communication"
+        view_mode="tree,form"
+    />
+    <menuitem
+        id="menu_sale_communication"
+        name="Sale Communications"
+        parent="sale.menu_sale_config"
+        action="action_sale_communication"
+    />
+</odoo>

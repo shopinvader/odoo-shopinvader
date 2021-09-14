@@ -10,7 +10,11 @@
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["sale", "shopinvader"],
-    "data": ["views/sale_order.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/sale_order.xml",
+        "views/sale_communication.xml",
+    ],
     "demo": [],
     "installable": True,
     "application": False,

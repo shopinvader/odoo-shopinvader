@@ -11,7 +11,10 @@
         <field name="arch" type="xml">
             <xpath expr="//notebook" postion="inside">
                 <page string="Information for Customer" name="customer_info">
-                    <field name="online_information_for_customer"/>
+                    <group>
+                        <field name="sale_communication_id"/>
+                    </group>
+                    <field name="online_information_for_customer" attrs="{'readonly': [('sale_communication_id', '!=', False)]}" force_save="1"/>
                 </page>
                 <page string="Information for Salesperson" name="salesperson_info">
                     <field name="online_information_request"/>
