@@ -39,7 +39,7 @@ addon | version | summary
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.0 | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.0.0 | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.0.0 | Shopinvader Lead Management
-[shopinvader_locomotive](shopinvader_locomotive/) | 14.0.1.1.0 | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive](shopinvader_locomotive/) | 14.0.2.0.0 | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 14.0.1.0.0 | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.1 | Synchronize wishlist details to Locomotive users record.
