@@ -16,6 +16,7 @@
         "shopinvader_search_engine",
         "queue_job",
         "shopinvader",
+        "shopinvader_auth_api_key",
     ],
     "data": [
         "views/shopinvader_backend_view.xml",
