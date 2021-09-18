@@ -57,6 +57,12 @@ msgid "Product Assortment"
 msgstr ""
 
 #. module: shopinvader_assortment
+#: code:addons/shopinvader_assortment/models/shopinvader_backend.py:0
+#, python-format
+msgid "Product Assortment is required for automatic binding"
+msgstr ""
+
+#. module: shopinvader_assortment
 #: model:ir.model.fields,field_description:shopinvader_assortment.field_shopinvader_backend__product_manual_binding
 msgid "Product Manual Binding"
 msgstr ""
@@ -64,4 +70,11 @@ msgstr ""
 #. module: shopinvader_assortment
 #: model:ir.model,name:shopinvader_assortment.model_se_index
 msgid "Se Index"
+msgstr ""
+
+#. module: shopinvader_assortment
+#: model:ir.actions.server,name:shopinvader_assortment.ir_cron_autobind_product_from_assortment_ir_actions_server
+#: model:ir.cron,cron_name:shopinvader_assortment.ir_cron_autobind_product_from_assortment
+#: model:ir.cron,name:shopinvader_assortment.ir_cron_autobind_product_from_assortment
+msgid "Shopinvader Assortment: Autobind Products from Assortment"
 msgstr ""
