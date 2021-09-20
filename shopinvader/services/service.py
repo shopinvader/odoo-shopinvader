@@ -198,8 +198,7 @@ class BaseShopinvaderService(AbstractComponent):
                 "in": "header",
                 "description": "The unique key to identify the originating "
                 "website into Odoo. If this information is not provided,"
-                "we expect to receive this information from the authentication"
-                "system.",
+                "we expect to receive this information from the authentication system.",
                 "required": False,
                 "schema": {"type": "string"},
                 "style": "simple",
