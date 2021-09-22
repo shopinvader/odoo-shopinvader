@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_backend_form_view">
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="arch" type="xml">
+            <page name="sale" position="inside">
+                <group name="quotation" string="Quotation">
+                    <field name="quotation_expose_all" />
+                </group>
+            </page>
+        </field>
+    </record>
+
+</odoo>

@@ -17,6 +17,7 @@
     "data": [
         "views/product_view.xml",
         "views/sale_view.xml",
+        "views/shopinvader_backend_view.xml",
         "data/ir_export_product.xml",
     ],
     "installable": True,

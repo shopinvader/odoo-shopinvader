@@ -39,15 +39,24 @@ class SaleOrder(models.Model):
         return super()._get_shopinvader_state()
 
     def action_request_quotation(self):
-        if any(rec.state != "draft" or rec.typology != "cart" for rec in self):
-            raise UserError(
-                _(
-                    "Only orders of cart typology in draft state "
-                    "can be converted to quotation"
-                )
-            )
         for rec in self:
+            if rec.shopinvader_backend_id:
+                if rec.typology != "cart" and not rec.env.context.get(
+                    "_skip_cart_check"
+                ):
+                    raise UserError(
+                        _(
+                            "Only orders of cart typology in draft state "
+                            "can be converted to quotation"
+                        )
+                    )
             rec.typology = "quotation"
             if rec.shopinvader_backend_id:
                 rec.shopinvader_backend_id._send_notification("quotation_request", rec)
         return True
+
+    def action_quotation_sent(self):
+        res = super().action_quotation_sent()
+        # If the order is sent from the backend make it visible to the shop.
+        self.typology = "quotation"
+        return res
