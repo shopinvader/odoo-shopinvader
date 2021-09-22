@@ -103,6 +103,7 @@
                     class="float-right"
                 >
                     <a
+                        role="button"
                         class="btn btn-sm btn-success"
                         name="action_shopinvader_validate_address"
                         type="object"
