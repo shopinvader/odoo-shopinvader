@@ -16,8 +16,8 @@ class TestResPartner(SavepointComponentCase):
         cls.unique_email = datetime.now().isoformat() + "@test.com"
 
     def test_unique_email_partner(self):
-        self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_allowed()
+        self.assertFalse(
+            self.env["res.partner"]._is_partner_duplicate_prevented()
         )
         partner_1 = self.env["res.partner"].create(
             {"email": self.unique_email, "name": "test partner"}
@@ -29,8 +29,8 @@ class TestResPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertFalse(
-            self.env["res.partner"]._is_partner_duplicate_allowed()
+        self.assertTrue(
+            self.env["res.partner"]._is_partner_duplicate_prevented()
         )
         # once you've changed the config to dispable duplicate partner
         # it's no more possible to create a partner with the same email
