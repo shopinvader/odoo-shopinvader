@@ -177,10 +177,11 @@ class ResPartner(models.Model):
             else:
                 partner.address_type = "profile"
 
-    @api.constrains("email")
+    @api.constrains("email", "has_shopinvader_user_active")
     def _check_unique_email(self):
         if self._is_partner_duplicate_allowed():
             return True
+        self.env["res.partner"].flush(["email", "has_shopinvader_user_active"])
         self.env.cr.execute(
             """
             SELECT
@@ -192,7 +193,9 @@ class ResPartner(models.Model):
                     ROW_NUMBER() OVER (PARTITION BY email) AS Row
                 FROM
                     res_partner
-                WHERE email is not null and active = True
+                WHERE email is not null
+                    and active = True
+                    and has_shopinvader_user_active = True
                 ) dups
             WHERE dups.Row > 1;
         """
