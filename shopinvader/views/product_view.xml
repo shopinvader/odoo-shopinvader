@@ -40,13 +40,22 @@
                             />
                         </tree>
                     </field>
+                    <group name="shopinvader">
+                        <group name="shopinvader_bindings" string="Bindings">
+                            <field
+                                name="shopinvader_backend_ids"
+                                string="Backends"
+                                widget="many2many_tags"
+                            />
+                        </group>
+                        <group
+                            name="shopinvader_options"
+                            string="Options"
+                            invisible="1"
+                        />
+                    </group>
                 </page>
             </xpath>
-            <page name="sales" position="inside">
-                <group name="shopinvader" string="Shopinvader">
-                    <field name="shopinvader_backend_ids" widget="many2many_tags" />
-                </group>
-            </page>
         </field>
     </record>
 
@@ -55,14 +64,10 @@
         <field name="inherit_id" ref="product.product_normal_form_view" />
         <field name="priority" eval="90" />
         <field name="arch" type="xml">
-            <field name="shopinvader_bind_ids" position="before">
-                <group>
-                    <group>
-                        <field name="is_shopinvader_binded" />
-                    </group>
-                    <group />
-                </group>
+            <field name="shopinvader_backend_ids" position="before">
+                <field name="is_shopinvader_binded" string="Binded" />
             </field>
         </field>
     </record>
+
 </odoo>
