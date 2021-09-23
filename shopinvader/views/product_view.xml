@@ -65,7 +65,7 @@
         <field name="priority" eval="90" />
         <field name="arch" type="xml">
             <field name="shopinvader_backend_ids" position="before">
-                <field name="is_shopinvader_binded" string="Binded" />
+                <field name="is_shopinvader_binded" string="Bound" />
             </field>
         </field>
     </record>
