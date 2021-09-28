@@ -198,6 +198,7 @@
                                     />]</t>
                                 <div name="backend" class="mt-1">
                                     <field name="backend_id" widget="badge" />
+                                    <field name="lang_id" widget="badge" />
                                 </div>
                             </div>
                         </div>
