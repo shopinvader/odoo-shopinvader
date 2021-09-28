@@ -51,14 +51,9 @@ class ResPartner(models.Model):
     )
 
     @api.model
-    def _is_partner_duplicate_allowed(self):
-        """Check if partner duplication is allowed
-
-        This parameter is configured through res.config.settings
-        """
+    def _is_partner_duplicate_prevented(self):
         get_param = self.env["ir.config_parameter"].sudo().get_param
-        param = get_param("shopinvader.no_partner_duplicate")
-        return not str2bool(param, True)
+        return str2bool(get_param("shopinvader.no_partner_duplicate"))
 
     @api.depends("is_blacklisted")
     def _compute_opt_in(self):
@@ -88,7 +83,7 @@ class ResPartner(models.Model):
 
     @api.constrains("email")
     def _check_unique_email(self):
-        if self._is_partner_duplicate_allowed():
+        if not self._is_partner_duplicate_prevented():
             return True
         self.env.cr.execute(
             """
