@@ -43,8 +43,8 @@ class TestShopinvaderPartner(SavepointComponentCase):
         email (after having removed the first binding)
         :return:
         """
-        self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_allowed()
+        self.assertFalse(
+            self.env["res.partner"]._is_partner_duplicate_prevented()
         )
         # we create a first binding
         binding = self.env["shopinvader.partner"].create(
@@ -87,8 +87,8 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertFalse(
-            self.env["res.partner"]._is_partner_duplicate_allowed()
+        self.assertTrue(
+            self.env["res.partner"]._is_partner_duplicate_prevented()
         )
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
@@ -117,8 +117,8 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertFalse(
-            self.env["res.partner"]._is_partner_duplicate_allowed()
+        self.assertTrue(
+            self.env["res.partner"]._is_partner_duplicate_prevented()
         )
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
