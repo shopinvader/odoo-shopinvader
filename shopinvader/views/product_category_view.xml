@@ -4,13 +4,12 @@
     <record id="product_category_view_form" model="ir.ui.view">
         <field name="model">product.category</field>
         <field name="inherit_id" ref="product.product_category_form_view" />
+        <field name="priority" eval="99999" />
         <field name="arch" type="xml">
-            <xpath expr="//sheet/group" position="after">
+            <sheet position="inside">
                 <notebook>
                     <page name="filter" string="Filter">
-                        <group colspan="4">
-                            <field name="filter_ids" nolabel="1" />
-                        </group>
+                        <field name="filter_ids" nolabel="1" />
                     </page>
                     <page name="shopinvader" string="Shopinvader">
                         <field name="shopinvader_bind_ids" nolabel="1">
@@ -23,7 +22,7 @@
                         </field>
                     </page>
                 </notebook>
-            </xpath>
+            </sheet>
         </field>
     </record>
 
