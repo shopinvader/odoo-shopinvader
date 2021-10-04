@@ -4,9 +4,8 @@
 
 import mock
 
+from odoo.addons.helpdesk_mgmt_rest_api.services import attachment
 from odoo.addons.shopinvader.tests.common import CommonCase
-
-from ..services import attachment
 
 
 class HelpdeskTicketCase(CommonCase):
@@ -15,7 +14,7 @@ class HelpdeskTicketCase(CommonCase):
         with self.work_on_services(
             partner=None, shopinvader_session=self.shopinvader_session
         ) as work:
-            self.service = work.component(usage="helpdesk.ticket")
+            self.service = work.component(usage="helpdesk_ticket")
             self.attachment_service = work.component(usage="attachment")
 
     def create_attachment(self):
@@ -81,7 +80,7 @@ class HelpdeskTicketCase(CommonCase):
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:
-            self.service = work.component(usage="helpdesk.ticket")
+            self.service = work.component(usage="helpdesk_ticket")
             self.attachment_service = work.component(usage="attachment")
 
         data = self.generate_ticket_data()
@@ -96,7 +95,7 @@ class HelpdeskTicketCase(CommonCase):
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:
-            self.service = work.component(usage="helpdesk.ticket")
+            self.service = work.component(usage="helpdesk_ticket")
             self.attachment_service = work.component(usage="attachment")
 
         data = self.generate_ticket_data(with_attachment=False)

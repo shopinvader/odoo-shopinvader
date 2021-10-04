@@ -9,7 +9,7 @@
     "installable": True,
     "depends": [
         "shopinvader",
-        "helpdesk_mgmt",  # OCA version
+        "helpdesk_mgmt_rest_api",  # OCA version
     ],
     "data": [],
     "demo": [],
