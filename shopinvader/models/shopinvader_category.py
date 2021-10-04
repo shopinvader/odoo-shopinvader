@@ -17,7 +17,7 @@ class ShopinvaderCategory(models.Model):
     _description = "Shopinvader Category"
     _inherit = ["shopinvader.binding", "abstract.url", "seo.title.mixin"]
     _inherits = {"product.category": "record_id"}
-    _order = "sequence"
+    _order = "sequence, id desc"
 
     record_id = fields.Many2one(
         "product.category",
