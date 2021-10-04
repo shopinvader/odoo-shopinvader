@@ -2,32 +2,17 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from .common import ProductBrandCommonCase
 
-from odoo.addons.shopinvader.tests.common import ProductCommonCase
 
-
-class ProductBrandCase(ProductCommonCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.brand = cls.env["product.brand"].create({"name": "Foo"})
-        cls.lang_en = cls.env.ref("base.lang_en")
-        cls.binding = cls.env["shopinvader.brand"].create(
-            {
-                "backend_id": cls.backend.id,
-                "lang_id": cls.lang_en.id,
-                "record_id": cls.brand.id,
-                "active": True,
-            }
-        )
-
+class ProductBrandCase(ProductBrandCommonCase):
     def test_url_key(self):
         binding = self.binding
-        self.assertEqual(binding.url_key, "foo")
-        self.brand.write({"name": "BAR"})
+        self.assertEqual(binding.url_key, "foo-brand")
+        self.brand.write({"name": "BAR Brand"})
         binding.refresh()
-        self.assertEqual(binding.url_key, "bar")
-        self.assertEqual(binding.redirect_url_key, ["foo"])
+        self.assertEqual(binding.url_key, "bar-brand")
+        self.assertEqual(binding.redirect_url_key, ["foo-brand"])
 
     def test_inactive(self):
         self.brand.active = False
