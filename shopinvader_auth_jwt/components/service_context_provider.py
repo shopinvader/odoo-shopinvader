@@ -11,10 +11,10 @@ from odoo.addons.component.core import Component
 _logger = logging.getLogger(__name__)
 
 
-class AuthJwtServiceContextProvider(Component):
+class ShopinvaderAuthJwtServiceContextProvider(Component):
     _name = "auth_jwt.shopinvader.service.context.provider"
     _inherit = "shopinvader.service.context.provider"
-    _usage = "auth_jwt_component_context_provider"
+    _usage = "shopinvader_auth_jwt_context_provider"
 
     @property
     def _jwt_payload(self):
@@ -42,7 +42,7 @@ class AuthJwtServiceContextProvider(Component):
         return super()._get_shopinvader_partner()
 
     def _get_backend(self):
-        backend = super(AuthJwtServiceContextProvider, self)._get_backend()
+        backend = super(ShopinvaderAuthJwtServiceContextProvider, self)._get_backend()
         if self._jwt_payload:
             # no jwt_payload = public services...
             audience = self._jwt_payload.get("aud")

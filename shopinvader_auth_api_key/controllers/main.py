@@ -10,4 +10,4 @@ class InvaderController(main.RestController):
     _collection_name = "shopinvader.backend"
     _default_auth = "api_key"
     _default_save_session = False
-    _component_context_provider = "auth_api_key_component_context_provider"
+    _component_context_provider = "shopinvader_auth_api_key_context_provider"
