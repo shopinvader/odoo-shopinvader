@@ -4,17 +4,15 @@
 {
     "name": "Shopinvader category image for product",
     "summary": "Shopinvader Display category image for product",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "category": "e-commerce",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
-    "installable": False,
     "depends": [
         "shopinvader",
         "shopinvader_search_engine",
         "shopinvader_image",
     ],
     "data": ["data/ir_export.xml"],
-    "demo": [],
 }
