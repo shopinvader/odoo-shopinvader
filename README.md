@@ -36,7 +36,7 @@ addon | version | summary
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.0.1 | Carrier integration for Shopinvader
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.2.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 14.0.1.0.1 | Guest mode for Shopinvader
-[shopinvader_image](shopinvader_image/) | 14.0.1.1.1 | Add the export of Image for Shopinvader
+[shopinvader_image](shopinvader_image/) | 14.0.1.1.2 | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.0 | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.1.0 | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.0.0 | Shopinvader Lead Management
