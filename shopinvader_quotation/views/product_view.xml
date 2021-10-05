@@ -5,9 +5,12 @@
         <field name="model">product.template</field>
         <field name="inherit_id" ref="shopinvader.view_product_template_form" />
         <field name="arch" type="xml">
-            <field name="shopinvader_backend_ids" position="before">
+            <group name="shopinvader_options" position="attributes">
+                <attribute name="invisible">0</attribute>
+            </group>
+            <group name="shopinvader_options" position="inside">
                 <field name="only_quotation" />
-            </field>
+            </group>
         </field>
     </record>
 
