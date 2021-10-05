@@ -12,10 +12,10 @@ from odoo.addons.component.core import Component
 _logger = logging.getLogger(__name__)
 
 
-class AuthApiKeyServiceContextProvider(Component):
+class ShopinvaderAuthApiKeyServiceContextProvider(Component):
     _name = "auth_api_key.shopinvader.service.context.provider"
     _inherit = "shopinvader.service.context.provider"
-    _usage = "auth_api_key_component_context_provider"
+    _usage = "shopinvader_auth_api_key_context_provider"
 
     def _get_shopinvader_partner(self):
         headers = self.request.httprequest.environ
