@@ -7,7 +7,7 @@ from contextlib import contextmanager
 from itertools import groupby
 
 from odoo import _, api, fields, models
-from odoo.tools import float_compare, float_round
+from odoo.tools import float_compare, float_is_zero, float_round
 
 from odoo.addons.queue_job.exception import RetryableJobError
 
@@ -247,8 +247,12 @@ class ShopinvaderVariant(models.Model):
             original_price_unit, currency = SaleOrderLine._get_real_price_currency(
                 product, rule_id, qty, product.uom_id, pricelist.id
             )
+            price_dp = self.env["decimal.precision"].precision_get("Product Price")
             # Convert currency if necessary
-            if original_price_unit != 0 and pricelist.currency_id != currency:
+            if (
+                not float_is_zero(original_price_unit, precision_digits=price_dp)
+                and pricelist.currency_id != currency
+            ):
                 original_price_unit = currency._convert(
                     original_price_unit,
                     pricelist.currency_id,
@@ -256,8 +260,9 @@ class ShopinvaderVariant(models.Model):
                     fields.Date.today(),
                 )
             # Compute discount
-            price_dp = self.env["decimal.precision"].precision_get("Product Price")
-            if float_compare(
+            if not float_is_zero(
+                original_price_unit, precision_digits=price_dp
+            ) and float_compare(
                 original_price_unit, price_unit, precision_digits=price_dp
             ):
                 discount = (

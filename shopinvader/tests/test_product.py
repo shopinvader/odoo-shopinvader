@@ -148,6 +148,31 @@ class ProductCase(ProductCommonCase):
             },
         )
 
+    def test_product_get_price_zero(self):
+        # Test that discount calculation does not fail if original price is 0
+        self.shopinvader_variant.list_price = 0
+        self.base_pricelist.discount_policy = "without_discount"
+        self.env["product.pricelist.item"].create(
+            {
+                "product_id": self.shopinvader_variant.record_id.id,
+                "pricelist_id": self.base_pricelist.id,
+                "fixed_price": 10,
+            }
+        )
+        fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
+        price = self.shopinvader_variant._get_price(
+            pricelist=self.base_pricelist, fposition=fiscal_position_fr
+        )
+        self.assertDictEqual(
+            price,
+            {
+                "discount": 0.0,
+                "original_value": 0.0,
+                "tax_included": True,
+                "value": 10.0,
+            },
+        )
+
     def test_product_get_price_per_qty(self):
         # Define a promotion price for the product with min_qty = 10
         fposition = self.env.ref("shopinvader.fiscal_position_0")
