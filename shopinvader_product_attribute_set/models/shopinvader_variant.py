@@ -29,7 +29,13 @@ class ShopinvaderVariant(models.Model):
     def _get_attr_vals(self, attr, string_mode=False):
         """The value of the attribute as string."""
         self.ensure_one()
-        if attr.attribute_type == "select":
+        if (
+            attr.attribute_type == "select"
+            and attr.nature == "native"
+            and attr.ttype == "selection"
+        ):
+            return self[attr.name]
+        elif attr.attribute_type == "select":
             return self._get_attribute_value(attr.name, one=True)
         elif attr.attribute_type == "multiselect":
             return self._get_attribute_value(attr.name)
