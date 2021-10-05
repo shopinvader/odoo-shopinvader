@@ -3,7 +3,7 @@
 
 {
     "name": "Shopinvader JWT Authentication",
-    "version": "14.0.1.0.2",
+    "version": "14.0.1.0.3",
     "summary": "Find shopinvader backend and partner from JWT token",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
