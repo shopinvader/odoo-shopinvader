@@ -19,20 +19,8 @@ Shopinvader image
 
 |badge1| |badge2| |badge3| 
 
-This module allows to store product (variant) and category images
-in an external system like a content delivery network (CDN).
-The images will be available directly to the browser by url link.
-
-This external system can be:
-- storage object like AWS S3, Openstack Swift
-- traditionnal file server (sftp, http)
-- odoo
-- etc.
-
-
-See storage_backend_* modules from storage repository
-(https://github.com/akretion/storage) to pick one of
-the available storage solution.
+This module builds up on functionality defined in storage_image to define new Shopinvader-specific functionality,
+and implements them on the Shopinvader version of categories and variants.
 
 **Table of contents**
 
@@ -44,10 +32,13 @@ Installation
 
 Follow the documentation of the storage_backend module
 
-Configuration
-=============
+Usage
+=====
 
-Follow the documentation of the storage_backend module
+Essentially, call _compute_images whenever you want to refresh all image thumbnails/resizes
+on your records. Resized images are then accessible through the "images" serialized field.
+
+For an example of full implementation on a new model, you can view shopinvader_banner.
 
 Changelog
 =========
