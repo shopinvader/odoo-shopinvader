@@ -39,6 +39,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_notification_default',
         'odoo14-addon-shopinvader_partner_firstname',
         'odoo14-addon-shopinvader_pending_cart_reminder',
+        'odoo14-addon-shopinvader_pos',
         'odoo14-addon-shopinvader_product_attribute_set',
         'odoo14-addon-shopinvader_product_brand',
         'odoo14-addon-shopinvader_product_media',
