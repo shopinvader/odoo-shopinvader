@@ -355,6 +355,11 @@ msgid "Backend"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
+msgid "Backends"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__bank_account_count
 msgid "Bank"
 msgstr ""
@@ -408,6 +413,11 @@ msgid "Bind all product"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
+msgid "Bindings"
+msgstr ""
+
+#. module: shopinvader
 #: model:product.template.attribute.value,name:shopinvader.product_template_chair_mid_century_attribute_color_blue
 #: model:product.template.attribute.value,name:shopinvader.product_template_thelma_attribute_color_red
 msgid "Black"
@@ -431,6 +441,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__message_bounce
 msgid "Bounce"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.product_product_form_view
+msgid "Bound"
 msgstr ""
 
 #. module: shopinvader
@@ -2393,6 +2408,11 @@ msgid "Opt In"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
+msgid "Options"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__invoice_policy
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__invoice_policy
 msgid ""
@@ -3127,7 +3147,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:shopinvader.product_category_view_form
 #: model_terms:ir.ui.view,arch_db:shopinvader.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
-#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
 msgid "Shopinvader"
 msgstr ""
 
