@@ -26,7 +26,7 @@ addon | version | summary
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.4 | Shopinvader API_KEY Authentication
 [shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.0.3 | Find shopinvader backend and partner from JWT token
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
-[shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.0 | Shopinvader Display category image for product
+[shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 | Shopinvader Display category image for product
 [shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 | Glue module to expose the invoicing_mode field to shopinvader
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.1.2 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_company_group](shopinvader_customer_multi_user_company_group/) | 14.0.1.0.0 | Share shopinvader records within the Company Group
