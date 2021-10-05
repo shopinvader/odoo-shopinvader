@@ -330,6 +330,12 @@ msgid "Automatic Url Key"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__available_in_pos
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__available_in_pos
+msgid "Available in POS"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__partner_industry_ids
 msgid "Available partner industries"
 msgstr ""
@@ -578,6 +584,12 @@ msgid "Category Routes"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__pos_categ_id
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__pos_categ_id
+msgid "Category used in the Point of Sale."
+msgstr ""
+
+#. module: shopinvader
 #: model:product.category,name:shopinvader.product_category_27
 msgid "Chaise"
 msgstr ""
@@ -595,6 +607,20 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__is_company
 msgid "Check if the contact is a company, otherwise it is a person"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__to_weight
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__to_weight
+msgid ""
+"Check if the product should be weighted using the hardware scale "
+"integration."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__available_in_pos
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__available_in_pos
+msgid "Check if you want this product to appear in the Point of Sale."
 msgstr ""
 
 #. module: shopinvader
@@ -2532,6 +2558,22 @@ msgid "Phone Blacklisted"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__pos_categ_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__pos_categ_id
+msgid "Point of Sale Category"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__pos_order_ids
+msgid "Pos Order"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__pos_order_count
+msgid "Pos Order Count"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__property_payment_method_id
 msgid ""
 "Preferred payment method when paying this vendor. This is used to filter "
@@ -3634,6 +3676,11 @@ msgid "The internal user in charge of this contact."
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__pos_order_count
+msgid "The number of point of sales orders related to this customer"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_category__product_count
 msgid ""
 "The number of products under this category (Does not consider the children "
@@ -3833,6 +3880,12 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__title
 msgid "Title"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__to_weight
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__to_weight
+msgid "To Weigh With Scale"
 msgstr ""
 
 #. module: shopinvader
