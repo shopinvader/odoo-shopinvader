@@ -58,7 +58,7 @@ addon | version | summary
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.0.0 | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.1.0 | Exposes product prices with and without taxes
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.1 | This module is used to choose a stock field during theexport (by backend)
-[shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.0 | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
+[shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.1 | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 14.0.1.1.0 | Shopinvader Product Link
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 | Index Product Template Tags in Shopinvader
