@@ -127,16 +127,16 @@ class BaseShopinvaderService(AbstractComponent):
         """
         domain = self._get_base_search_domain()
         if params.get("scope"):
-            scope_domain = self._scope_to_domain(params.get("scope"))
+            scope_domain = self._scope_to_domain(params.pop("scope"))
             scope_domain = expression.normalize_domain(scope_domain)
             domain = expression.AND([domain, scope_domain])
         if params.get("domain"):
-            custom_domain = expression.normalize_domain(params.get("domain"))
+            custom_domain = expression.normalize_domain(params.pop("domain"))
             domain = expression.AND([domain, custom_domain])
         model_obj = self.env[self._expose_model]
         total_count = model_obj.search_count(domain)
-        page = params.get("page", default_page)
-        per_page = params.get("per_page", default_per_page)
+        page = params.pop("page", default_page)
+        per_page = params.pop("per_page", default_per_page)
         records = model_obj.search(
             domain,
             limit=per_page,
