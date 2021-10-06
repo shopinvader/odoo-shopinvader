@@ -118,7 +118,7 @@ class InvoiceService(Component):
         )
         return values
 
-    def _to_json(self, invoices):
+    def _to_json(self, invoices, **kw):
         res = []
         for invoice in invoices:
             res.append(self._to_json_invoice(invoice))
