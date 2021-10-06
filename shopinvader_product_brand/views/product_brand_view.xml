@@ -5,8 +5,8 @@
         <field name="model">product.brand</field>
         <field name="inherit_id" ref="product_brand.view_product_brand_form" />
         <field name="arch" type="xml">
-            <group name="desc" position="after">
-                <group name="shopinvader" string="Shopinvader">
+            <notebook position="inside">
+                <page name="shopinvader" string="Shopinvader">
                     <field name="shopinvader_bind_ids" nolabel="1">
                         <tree>
                             <field name="backend_id" />
@@ -14,8 +14,8 @@
                             <field name="sync_date" />
                         </tree>
                     </field>
-                </group>
-            </group>
+                </page>
+            </notebook>
         </field>
     </record>
 
