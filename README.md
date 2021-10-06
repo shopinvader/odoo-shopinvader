@@ -89,7 +89,7 @@ addon | version | summary
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 (unported) | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) | This module adds information fields for customers and vendors.
-[shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.1.0.1 (unported) | Shopinvader Sale Packaging
+[shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.0.0 (unported) | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 (unported) | Add packaging information to wishlists
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
 
