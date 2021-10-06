@@ -50,7 +50,7 @@ class ExportSettingsService(Component):
     @restapi.method(
         [(["/elasticsearch"], "GET")],
         output_param=restapi.CerberusValidator("_get_es_settings_schema"),
-        auth="public",
+        auth="public_or_default",
     )
     def get_es_settings(self):
         return self._get_es_settings()

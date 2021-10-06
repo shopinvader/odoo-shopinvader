@@ -27,7 +27,7 @@ class ExportSettingsService(Component):
     @restapi.method(
         [(["/", "/all"], "GET")],
         output_param=restapi.CerberusValidator("_get_all_schema"),
-        auth="public",
+        auth="public_or_default",
     )
     def get_all(self):
         return self._get_all()
@@ -86,7 +86,7 @@ class ExportSettingsService(Component):
     @restapi.method(
         [(["/countries"], "GET")],
         output_param=restapi.CerberusValidator("_get_countries_schema"),
-        auth="public",
+        auth="public_or_default",
     )
     def countries(self):
         return self._get_countries()
@@ -130,7 +130,7 @@ class ExportSettingsService(Component):
     @restapi.method(
         [(["/titles"], "GET")],
         output_param=restapi.CerberusValidator("_get_titles_schema"),
-        auth="public",
+        auth="public_or_default",
     )
     def titles(self):
         return self._get_titles()
@@ -174,7 +174,7 @@ class ExportSettingsService(Component):
     @restapi.method(
         [(["/industries"], "GET")],
         output_param=restapi.CerberusValidator("_get_industries_schema"),
-        auth="public",
+        auth="public_or_default",
     )
     def industries(self):
         return self._get_industries()
@@ -218,7 +218,7 @@ class ExportSettingsService(Component):
     @restapi.method(
         [(["/currencies"], "GET")],
         output_param=restapi.CerberusValidator("_get_currencies_schema"),
-        auth="public",
+        auth="public_or_default",
     )
     def currencies(self):
         return self._get_currencies()
@@ -268,7 +268,7 @@ class ExportSettingsService(Component):
     @restapi.method(
         [(["/languages"], "GET")],
         output_param=restapi.CerberusValidator("_get_languages_schema"),
-        auth="public",
+        auth="public_or_default",
     )
     def languages(self):
         return self._get_languages()
