@@ -7,16 +7,16 @@ class TestProductAutoBind(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestProductAutoBind, cls).setUpClass()
-        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend = cls.env.ref("shopinvader.backend_1").with_context(
+            bind_products_immediately=True
+        )
         cls.variant_obj = cls.env["shopinvader.variant"]
         cls.product_obj = cls.env["product.product"]
         cls.product_qty_obj = cls.env["stock.change.product.qty"]
         cls.wh_obj = cls.env["stock.warehouse"]
         cls.product = cls.env.ref("product.product_product_9")
         cls.product.write({"sale_ok": True})
-        cls.filter = cls.env.ref(
-            "shopinvader_assortment.shopinvader_assortment1"
-        )
+        cls.filter = cls.env.ref("shopinvader_assortment.shopinvader_assortment1")
         cls._create_warehouses()
         cls.backend.write({"warehouse_ids": [(6, False, cls.warehouses.ids)]})
 
@@ -26,9 +26,7 @@ class TestProductAutoBind(SavepointCase):
         cls.wh2 = cls.wh_obj.create({"name": "WH2", "code": "W2"})
         cls.warehouses = cls.wh1 | cls.wh2
 
-    def _update_product_quantity(
-        self, quantity=20, product=False, location=False
-    ):
+    def _update_product_quantity(self, quantity=20, product=False, location=False):
         """
         Create a product and change the stock available.
         This function create a new product if it's not given.
@@ -37,11 +35,13 @@ class TestProductAutoBind(SavepointCase):
         :param location: stock.location recordset or False
         :return: product.product recordset
         """
-        values = {"product_id": product.id, "new_quantity": quantity}
-        if location:
-            values.update({"location_id": location.id})
-        wizard = self.product_qty_obj.create(values)
-        wizard.change_product_qty()
+        self.env["stock.quant"].with_context(inventory_mode=True).create(
+            {
+                "product_id": product.id,
+                "location_id": location.id,
+                "inventory_quantity": quantity,
+            }
+        )
         return product
 
     def test_shopinvader_auto_product_auto_bind(self):
@@ -62,17 +62,13 @@ class TestProductAutoBind(SavepointCase):
         self._update_product_quantity(0, self.product, location2)
         # Ensure it's correct
         product = self.product.with_context(warehouse=self.warehouses.ids)
-        product_obj = self.product_obj.with_context(
-            warehouse=self.warehouses.ids
-        )
+        product_obj = self.product_obj.with_context(warehouse=self.warehouses.ids)
         self.assertAlmostEqual(product.qty_available, 0)
         self.filter.write(
             {"domain": [("sale_ok", "=", True), ("qty_available", ">", 0)]}
         )
         # Test bind all products from assortment domain
-        variants = self.variant_obj.search(
-            [("backend_id", "=", self.backend.id)]
-        )
+        variants = self.variant_obj.search([("backend_id", "=", self.backend.id)])
         self.assertFalse(variants)
         domain = self.backend.product_assortment_id._get_eval_domain()
         products_to_bind = product_obj.search(domain)
@@ -80,9 +76,7 @@ class TestProductAutoBind(SavepointCase):
         # Important to not use the env who contains warehouse ids.
         # It should be automatically into the binding.
         self.backend.autobind_product_from_assortment()
-        variants = self.variant_obj.search(
-            [("backend_id", "=", self.backend.id)]
-        )
+        variants = self.variant_obj.search([("backend_id", "=", self.backend.id)])
         self.assertNotIn(product, variants.mapped("record_id"))
         # Now use quantities > 0
         first_qty = 250
@@ -96,7 +90,5 @@ class TestProductAutoBind(SavepointCase):
             {"domain": [("sale_ok", "=", True), ("qty_available", "=", total)]}
         )
         self.backend.autobind_product_from_assortment()
-        variants = self.variant_obj.search(
-            [("backend_id", "=", self.backend.id)]
-        )
+        variants = self.variant_obj.search([("backend_id", "=", self.backend.id)])
         self.assertIn(product, variants.mapped("record_id"))
