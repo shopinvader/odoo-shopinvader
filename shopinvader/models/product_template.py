@@ -2,7 +2,7 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
@@ -36,3 +36,14 @@ class ProductTemplate(models.Model):
             # TODO we should propose to redirect the old url
             record.shopinvader_bind_ids.unlink()
         return super(ProductTemplate, self).unlink()
+
+    @api.model
+    def create(self, vals):
+        """Due to the order in which product.template, product.product,
+        and bindings, are created, this is to handle the case in which
+        a product.template + its bindings are created in one function call"""
+        result = super().create(vals)
+        bindings = result.shopinvader_bind_ids
+        if bindings:
+            bindings.active = True
+        return result
