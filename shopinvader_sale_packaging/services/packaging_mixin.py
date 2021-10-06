@@ -33,15 +33,24 @@ class PackagingServiceMixin(AbstractComponent):
         return {
             # consider only packaging that can be sold
             "_packaging_filter": lambda x: x.can_be_sold,
-            # to support multilang shop we rely on packaging type's name
-            # which is already translatable.
-            "_packaging_name_getter": lambda x: x.packaging_type_id.name,
         }
 
     def _packaging_values_from_params(self, params):
         if "packaging_id" in params and "packaging_qty" in params:
             return {
-                "product_packaging": params.pop("packaging_id"),
+                # Make sure packaging_id is wiped if we pass 0
+                "product_packaging": params.pop("packaging_id") or False,
                 "product_packaging_qty": params.pop("packaging_qty"),
             }
         return {}
+
+    def _packaging_to_json(self, packaging):
+        if not packaging:
+            return None
+        return {
+            "id": packaging.id,
+            # Use packaging type name because it's translated
+            "name": packaging.packaging_type_id.name,
+            "code": packaging.packaging_type_id.code,
+            "barcode": packaging.barcode,
+        }

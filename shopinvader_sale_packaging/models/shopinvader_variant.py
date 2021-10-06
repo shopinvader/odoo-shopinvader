@@ -12,12 +12,22 @@ class ShopinvaderVariant(models.Model):
     packaging = Serialized(
         compute="_compute_packaging",
         help="Technical field to store packaging for the shop",
+        store=True,
     )
 
-    @api.depends("record_id.packaging_ids.qty")
+    @api.depends(lambda self: self._compute_packaging_depends())
     def _compute_packaging(self):
         for rec in self:
             rec.packaging = rec._get_variant_packaging()
+
+    def _compute_packaging_depends(self):
+        return (
+            "lang_id",
+            "record_id.packaging_ids.qty",
+            "record_id.packaging_ids.can_be_sold",
+            "record_id.packaging_ids.barcode",
+            "record_id.packaging_ids.packaging_type_id.name",
+        )
 
     def _get_variant_packaging(self):
         res = []
@@ -26,7 +36,7 @@ class ShopinvaderVariant(models.Model):
         contained_mapping = rec.packaging_contained_mapping or {}
         packaging = rec._ordered_packaging()
         for pkg in packaging:
-            pkg_info = pkg._asdict()
+            pkg_info = self._prepare_qty_by_packaging_values(pkg, pkg.qty)
             pkg_info["contained"] = contained_mapping.get(str(pkg.id))
             res.append(pkg_info)
         return res
@@ -36,7 +46,14 @@ class ShopinvaderVariant(models.Model):
             "lang": self.lang_id.code,
             # consider only packaging that can be sold
             "_packaging_filter": lambda x: x.can_be_sold,
-            # to support multilang shop we rely on packaging type's name
-            # which is already translatable.
-            "_packaging_name_getter": lambda x: x.packaging_type_id.name,
+            "_packaging_values_handler": self._prepare_qty_by_packaging_values,
+        }
+
+    def _prepare_qty_by_packaging_values(self, packaging, qty_per_pkg):
+        return {
+            "id": packaging.id,
+            "qty": qty_per_pkg,
+            "name": packaging.name,
+            "is_unit": packaging.is_unit,
+            "barcode": packaging.barcode,
         }

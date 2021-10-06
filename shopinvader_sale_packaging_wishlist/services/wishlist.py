@@ -26,7 +26,10 @@ class WishlistService(Component):
                 "product_id:packaging_by_qty",
                 self._json_parser_product_packaging,
             ),
-            ("product_packaging_id:packaging", ("id", "name")),
+            (
+                "product_packaging_id:packaging",
+                lambda rec, fname: self._packaging_to_json(rec[fname]),
+            ),
             "product_packaging_qty:packaging_qty",
         ]
 
