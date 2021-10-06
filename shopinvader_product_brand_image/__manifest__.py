@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Product Brand Image",
     "summary": "Shopinvader product Brand Image",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
