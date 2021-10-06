@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2021 Camptocamp (http://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@gmail.com>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="shopinvader.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div name="shopinvader_settings_container" position="inside">
+                <div
+                    class="col-lg-6 o_setting_box col-12"
+                    name="shopinvader_company_backend_id"
+                >
+                    <div class="o_setting_right_pane">
+                        <label for="shopinvader_company_backend_id" />
+                        <span
+                            role="img"
+                            class="fa fa-lg fa-building-o"
+                            title="Values set here are company-specific."
+                            aria-label="Values set here are company-specific."
+                            groups="base.group_multi_company"
+                        />
+                        <div class="text-muted">
+                            If set, it allows to easily manage your Shopinvader bindings.
+                        </div>
+                        <div class="mt16">
+                            <field name="shopinvader_company_backend_id" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+
+</odoo>
