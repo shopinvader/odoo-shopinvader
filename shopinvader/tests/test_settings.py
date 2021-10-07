@@ -5,53 +5,44 @@
 from .common import CommonCase
 
 EXPECTED_GET_COUNTRY = (
-    "countries",
-    [
-        "Belgium",
-        "France",
-        "Italy",
-        "Luxembourg",
-        "Spain",
-    ],
+    "Belgium",
+    "France",
+    "Italy",
+    "Luxembourg",
+    "Spain",
 )
 EXPECTED_GET_TITLE = (
-    "titles",
-    [
-        "Doctor",
-        "Madam",
-        "Miss",
-        "Mister",
-        "Professor",
-    ],
+    "Doctor",
+    "Madam",
+    "Miss",
+    "Mister",
+    "Professor",
 )
 EXPECTED_GET_INDUSTRY = (
-    "industries",
-    [
-        "Administrative",
-        "Agriculture",
-        "Construction",
-        "Education",
-        "Energy supply",
-        "Entertainment",
-        "Extraterritorial",
-        "Finance/Insurance",
-        "Food",
-        "Health/Social",
-        "Households",
-        "IT/Communication",
-        "Manufacturing",
-        "Mining",
-        "Other Services",
-        "Public Administration",
-        "Real Estate",
-        "Scientific",
-        "Transportation",
-        "Water supply",
-        "Wholesale/Retail",
-    ],
+    "Administrative",
+    "Agriculture",
+    "Construction",
+    "Education",
+    "Energy supply",
+    "Entertainment",
+    "Extraterritorial",
+    "Finance/Insurance",
+    "Food",
+    "Health/Social",
+    "Households",
+    "IT/Communication",
+    "Manufacturing",
+    "Mining",
+    "Other Services",
+    "Public Administration",
+    "Real Estate",
+    "Scientific",
+    "Transportation",
+    "Water supply",
+    "Wholesale/Retail",
 )
-EXPECTED_GET_CURRENCY = ("currencies", ["EUR", "USD"])
-EXPECTED_GET_LANG = ("languages", ["English (US)"])
+EXPECTED_GET_CURRENCY = ["EUR", "USD"]
+EXPECTED_GET_LANG = ["English (US)"]
 
 
 class SettingsTestCase(CommonCase):
@@ -63,10 +54,8 @@ class SettingsTestCase(CommonCase):
             self.settings_service = work.component(usage="settings")
 
     def _check_names_identical(self, to_check, expected_vals):
-        resource_name = expected_vals[0]
-        expected_vals = expected_vals[1].sort()
-        actual_vals = [el["name"] for el in to_check[resource_name]].sort()
-        self.assertEqual(expected_vals, actual_vals)
+        actual_vals = {el["name"] for el in to_check}
+        self.assertSetEqual(set(expected_vals), actual_vals)
 
     def test_country(self):
         res = self.settings_service.dispatch("countries")
@@ -90,8 +79,8 @@ class SettingsTestCase(CommonCase):
 
     def test_all(self):
         res = self.settings_service.dispatch("get_all")
-        self._check_names_identical(res, EXPECTED_GET_COUNTRY)
-        self._check_names_identical(res, EXPECTED_GET_TITLE)
-        self._check_names_identical(res, EXPECTED_GET_INDUSTRY)
-        self._check_names_identical(res, EXPECTED_GET_CURRENCY)
-        self._check_names_identical(res, EXPECTED_GET_LANG)
+        self._check_names_identical(res["countries"], EXPECTED_GET_COUNTRY)
+        self._check_names_identical(res["titles"], EXPECTED_GET_TITLE)
+        self._check_names_identical(res["industries"], EXPECTED_GET_INDUSTRY)
+        self._check_names_identical(res["currencies"], EXPECTED_GET_CURRENCY)
+        self._check_names_identical(res["languages"], EXPECTED_GET_LANG)

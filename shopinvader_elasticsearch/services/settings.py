@@ -33,6 +33,17 @@ class ExportSettingsService(Component):
                         "nullable": False,
                     },
                     "indexes": {
+                        "meta": {
+                            "description": "A key/value mapping where Key is the "
+                            "model name used to fill the index "
+                            "and value is the index name",
+                            "example": {
+                                "shopinvader.category": "demo_elasticsearch_backend"
+                                "_shopinvader_category_en_US",
+                                "shopinvader.variant": "demo_elasticsearch_backend"
+                                "_shopinvader_variant_en_US",
+                            },
+                        },
                         "type": "dict",
                         "required": True,
                         "nullable": True,
