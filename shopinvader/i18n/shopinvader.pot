@@ -661,16 +661,6 @@ msgid "Clear cart"
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Click to publish"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Click to unpublish"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__code
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 msgid "Code"
@@ -2608,6 +2598,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__record_id
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_kanban_view
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_kanban_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_tree_view
 msgid "Product"
@@ -2736,11 +2728,6 @@ msgstr ""
 msgid ""
 "Public name of your backend/website.\n"
 " Used for products name referencing."
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Publish"
 msgstr ""
 
 #. module: shopinvader
@@ -4120,11 +4107,6 @@ msgstr ""
 #: model:product.template,uom_name:shopinvader.product_product_tv_cbinet_ameriwood_product_template
 #: model:product.template,uom_name:shopinvader.product_product_tv_stand_wood_and_glass_white_product_template
 msgid "Units"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_tree_view
-msgid "Unpublish"
 msgstr ""
 
 #. module: shopinvader
