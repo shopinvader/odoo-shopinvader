@@ -25,7 +25,7 @@ addon | version | summary
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.4 | Shopinvader API_KEY Authentication
 [shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.0.3 | Find shopinvader backend and partner from JWT token
-[shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
+[shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.1 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 | Shopinvader Display category image for product
 [shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 | Glue module to expose the invoicing_mode field to shopinvader
