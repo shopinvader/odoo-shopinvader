@@ -79,11 +79,28 @@ class InvoiceService(Component):
             "amount_untaxed_signed": {"type": "float"},
             "amount_due": {"type": "float"},
             "type": {"type": "string"},
-            "state": {"type": "string"},
+            "state": {"type": "string", "allowed": ["draft", "open", "cancel"]},
+            "payment_state": {
+                "type": "string",
+                "allowed": [
+                    "not_paid",
+                    "paid",
+                    "partial",
+                    "reversed",
+                    "invoicing_legacy",
+                ],
+            },
             "type_label": {"type": "string"},
             "state_label": {"type": "string"},
+            "payment_state_label": {"type": "string"},
         }
         return invoice_schema
+
+    def _get_shopinvader_state(self, record, field):
+        """Allows to not redefine service exposed values.
+        "posted" state => "open"
+        """
+        return "open" if record.state == "posted" else record.state
 
     def _get_parser_invoice(self):
         """
@@ -100,7 +117,8 @@ class InvoiceService(Component):
             "amount_tax",
             "amount_untaxed",
             "amount_untaxed_signed",
-            "payment_state:state",
+            ("state", self._get_shopinvader_state),
+            "payment_state",
             "move_type:type",
             "amount_residual:amount_due",
         ]
@@ -113,7 +131,10 @@ class InvoiceService(Component):
         values.update(
             {
                 "type_label": self._get_selection_label(invoice, "move_type"),
-                "state_label": self._get_selection_label(invoice, "payment_state"),
+                "state_label": self._get_selection_label(invoice, "state"),
+                "payment_state_label": self._get_selection_label(
+                    invoice, "payment_state"
+                ),
             }
         )
         return values

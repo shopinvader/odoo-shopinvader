@@ -42,7 +42,8 @@ class CommonInvoiceCase(CommonCase):
         invoices = invoices.search([("id", "in", invoices.ids)])
         self.assertEqual(len(data), len(invoices))
         for current_data, invoice in zip(data, invoices):
-            state_label = self._get_selection_label(invoice, "payment_state")
+            payment_state_label = self._get_selection_label(invoice, "payment_state")
+            state_label = self._get_selection_label(invoice, "state")
             type_label = self._get_selection_label(invoice, "move_type")
             self.assertEqual(current_data.get("invoice_id"), invoice.id)
             self.assertEqual(current_data.get("number"), invoice.payment_reference)
@@ -50,9 +51,16 @@ class CommonInvoiceCase(CommonCase):
                 current_data.get("date_invoice"),
                 fields.Date.to_string(invoice.invoice_date),
             )
-            self.assertEqual(current_data.get("state"), invoice.payment_state)
+            self.assertEqual(
+                current_data.get("state"),
+                "open" if invoice.state == "posted" else invoice.state,
+            )
+            self.assertEqual(current_data.get("payment_state"), invoice.payment_state)
             self.assertEqual(current_data.get("type"), invoice.move_type)
             self.assertEqual(current_data.get("state_label"), state_label)
+            self.assertEqual(
+                current_data.get("payment_state_label"), payment_state_label
+            )
             self.assertEqual(current_data.get("type_label"), type_label)
             self.assertEqual(current_data.get("amount_total"), invoice.amount_total)
             self.assertEqual(
