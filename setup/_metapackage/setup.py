@@ -37,6 +37,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_locomotive_guest_mode',
         'odoo14-addon-shopinvader_locomotive_sale_profile',
         'odoo14-addon-shopinvader_locomotive_wishlist',
+        'odoo14-addon-shopinvader_membership',
         'odoo14-addon-shopinvader_multi_cart',
         'odoo14-addon-shopinvader_multi_category',
         'odoo14-addon-shopinvader_notification_default',
