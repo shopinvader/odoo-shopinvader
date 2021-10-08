@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 13.0.1.1.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 13.0.6.6.2 | Shopinvader
+[shopinvader](shopinvader/) | 13.0.6.7.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 13.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 13.0.2.0.0 | Shopinvader Assortment
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
@@ -56,7 +56,7 @@ addon | version | summary
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 13.0.2.7.0 | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.2.2.0 | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 13.0.1.2.0 | ShopInvader - Sale profile
-[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.2.0.0 | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 13.0.2.1.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 13.0.3.4.1 | Handle shop wishlist
 
 
