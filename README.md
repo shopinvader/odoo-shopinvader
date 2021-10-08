@@ -25,6 +25,7 @@ addon | version | summary
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.4 | Shopinvader API_KEY Authentication
 [shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.0.3 | Find shopinvader backend and partner from JWT token
+[shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 | Shopinvader Display category image for product
 [shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 | Glue module to expose the invoicing_mode field to shopinvader
@@ -79,7 +80,6 @@ addon | version | summary
 --- | --- | ---
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) | Product categories dedicated to online shop
-[shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 (unported) | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) | Make available the field company in the address form
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 (unported) | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
