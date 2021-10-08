@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Product Brand",
     "summary": "Shopinvader product Brand",
-    "version": "14.0.1.3.0",
+    "version": "14.0.1.3.1",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
