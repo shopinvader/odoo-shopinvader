@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* shopinvader_membership
+# 	* shopinvader_membership
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -14,14 +14,13 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_membership
-#: code:addons/shopinvader_membership/services/membership.py:52
+#: code:addons/shopinvader_membership/services/membership.py:0
 #, python-format
 msgid "A user should be logged"
 msgstr ""
 
 #. module: shopinvader_membership
-#: code:addons/shopinvader_membership/services/membership.py:57
+#: code:addons/shopinvader_membership/services/membership.py:0
 #, python-format
 msgid "No membership product found with id %s"
 msgstr ""
-
