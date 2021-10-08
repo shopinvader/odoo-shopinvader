@@ -1,0 +1,55 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_backend_image_proxy
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_backend_image_proxy
+#: model:ir.model.fields,field_description:shopinvader_backend_image_proxy.field_shopinvader_backend__display_name
+#: model:ir.model.fields,field_description:shopinvader_backend_image_proxy.field_shopinvader_image_mixin__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_backend_image_proxy
+#: model:ir.model.fields,field_description:shopinvader_backend_image_proxy.field_shopinvader_backend__id
+#: model:ir.model.fields,field_description:shopinvader_backend_image_proxy.field_shopinvader_image_mixin__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_backend_image_proxy
+#: model:ir.model.fields,field_description:shopinvader_backend_image_proxy.field_shopinvader_backend__image_proxy_url
+msgid "Image Proxy Url"
+msgstr ""
+
+#. module: shopinvader_backend_image_proxy
+#: model:ir.model.fields,field_description:shopinvader_backend_image_proxy.field_shopinvader_backend____last_update
+#: model:ir.model.fields,field_description:shopinvader_backend_image_proxy.field_shopinvader_image_mixin____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_backend_image_proxy
+#: model:ir.model,name:shopinvader_backend_image_proxy.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_backend_image_proxy
+#: model:ir.model.fields,help:shopinvader_backend_image_proxy.field_shopinvader_backend__image_proxy_url
+msgid ""
+"Replace the original url (base part) by this proxy url during export of images serialized field.\n"
+"Fill without specifying the protocol or anything else than the complete website name (with subdomain if any).\n"
+"Example: my.website.com"
+msgstr ""
+
+#. module: shopinvader_backend_image_proxy
+#: model:ir.model,name:shopinvader_backend_image_proxy.model_shopinvader_image_mixin
+msgid "Shopinvader Image Mixin"
+msgstr ""
