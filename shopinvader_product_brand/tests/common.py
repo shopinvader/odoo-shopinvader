@@ -5,7 +5,7 @@
 from odoo.addons.shopinvader.tests.common import ProductCommonCase
 
 
-class ProductBrandCase(ProductCommonCase):
+class ProductBrandCommonCase(ProductCommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
