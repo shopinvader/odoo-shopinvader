@@ -4,7 +4,7 @@
 {
     "name": "Shopinvader backend image proxy",
     "summary": "Add possibility to replace the image URL by the proxy url set on the SE backend",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "e-commerce",
     "author": "Akretion,ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
