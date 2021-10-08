@@ -3,7 +3,6 @@ exclude: |
   # NOT INSTALLABLE ADDONS
   ^partner_contact_company/|
   ^product_online_category/|
-  ^shopinvader_backend_image_proxy/|
   ^shopinvader_contact_company/|
   ^shopinvader_delivery_instruction/|
   ^shopinvader_demo_app/|
