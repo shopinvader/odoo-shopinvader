@@ -909,6 +909,26 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(prod._get_invader_variant(self.backend, "en_US"), variant_en)
         self.assertEqual(prod._get_invader_variant(self.backend, "fr_FR"), variant_fr)
 
+    def test_create_product_template_with_bindings(self):
+        """
+        Ensure the product bindings are created in a correct state,
+        if they are created during a call to product.template.create()
+        """
+        vals_binding = [
+            (
+                0,
+                0,
+                {
+                    "backend_id": self.backend.id,
+                    "lang_id": self.env.ref("base.lang_en").id,
+                },
+            )
+        ]
+        vals_product = {"name": "aNewProduct", "shopinvader_bind_ids": vals_binding}
+        product = self.env["product.template"].create(vals_product)
+        self.assertEqual(len(product.shopinvader_bind_ids.ids), 1)
+        self.assertTrue(product.shopinvader_bind_ids.active)
+
     # TODO: split this and other computed field tests to its own class
     def test_main_product(self):
         invader_variants = self.shopinvader_variants
