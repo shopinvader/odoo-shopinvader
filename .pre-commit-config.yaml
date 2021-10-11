@@ -10,7 +10,6 @@ exclude: |
   ^shopinvader_locomotive_elasticsearch/|
   ^shopinvader_locomotive_reset_password/|
   ^shopinvader_partner_vat/|
-  ^shopinvader_product_new/|
   ^shopinvader_product_variant_multi_link/|
   ^shopinvader_promotion_rule/|
   ^shopinvader_sale_communication/|
