@@ -4,12 +4,12 @@
 {
     "name": "Shopinvader Product Variant Link",
     "summary": "Integrate product_variant_multi_link with Shopinvader",
-    "version": "13.0.1.0.1",
+    "version": "14.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp",
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
     "auto_install": True,
     "depends": [
         "shopinvader_product_template_multi_link",
