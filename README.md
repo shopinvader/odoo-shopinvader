@@ -68,6 +68,7 @@ addon | version | summary
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 14.0.1.1.0 | Shopinvader Product Link
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 | Index Product Template Tags in Shopinvader
+[shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 14.0.1.0.0 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.1.1.1 | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 | Expose the amount by tax to shopinvader
@@ -89,7 +90,6 @@ addon | version | summary
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
-[shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 (unported) | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) | This module adds information fields for customers and vendors.
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.0.0 (unported) | Shopinvader Sale Packaging
