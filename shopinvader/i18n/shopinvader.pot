@@ -677,16 +677,6 @@ msgid "Clear cart"
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
-msgid "Click to publish"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
-msgid "Click to unpublish"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_cart_step__code
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_search_view
@@ -2838,11 +2828,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
-msgid "Publish"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__description_purchase
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__description_purchase
 msgid "Purchase Description"
@@ -4108,11 +4093,6 @@ msgstr ""
 #: model:product.template,uom_name:shopinvader.product_template_tv_cabinet_shaker_wood
 #: model:product.template,uom_name:shopinvader.product_template_tv_stand_wood_and_glass
 msgid "Units"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.view_product_template_form
-msgid "Unpublish"
 msgstr ""
 
 #. module: shopinvader
