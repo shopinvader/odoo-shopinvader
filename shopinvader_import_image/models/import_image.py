@@ -19,6 +19,8 @@ from zipfile import ZipFile
 from odoo import _, api, exceptions, fields, models
 from odoo.tools import date_utils
 
+from odoo.addons.http_routing.models.ir_http import slugify
+
 _logger = logging.getLogger(__name__)
 
 try:
@@ -333,7 +335,7 @@ class ProductImageImportWizard(models.Model):
         return report
 
     def _prepare_file_values(self, file_path, filetype="image"):
-        name = os.path.basename(file_path)
+        name = self._clean_filename(os.path.basename(file_path))
         file_data = self._get_base64(file_path)
         if not file_data:
             return {}
@@ -345,6 +347,15 @@ class ProductImageImportWizard(models.Model):
             "backend_id": self.storage_backend_id.id,
         }
         return vals
+
+    # TODO: this should be probably integrated into storage_file (optionally)
+    def _clean_filename(self, orig_name):
+        # No querystring or state if coming from URL
+        fname = orig_name.split("?", 1)[0].split("#", 1)[0]
+        # preserve extension if any
+        fname, ext = os.path.splitext(fname)
+        # make sure is really clean
+        return slugify(fname) + ext.lower()
 
     @api.model
     def _cron_cleanup_obsolete(self, days=7):
