@@ -41,12 +41,16 @@ class AddressService(Component):
     # pylint: disable=W8106
     def create(self, **params):
         params["parent_id"] = self.partner.id
+        response_one = params.pop("one", False)
         partner = self.env["res.partner"].create(self._prepare_params(params))
         self._post_create(partner)
+        if response_one:
+            return self._to_address_info(partner.id)
         return self.search()
 
     def update(self, _id, **params):
         address = self._get(_id)
+        response_one = params.pop("one", False)
         address.write(self._prepare_params(params, mode="update"))
         res = self.search()
         if self._store_cache_needed(address):
@@ -55,8 +59,9 @@ class AddressService(Component):
             response = shopinvader_response.get()
             customer_data = customer._to_customer_info(address)
             response.set_store_cache("customer", customer_data)
-
         self._post_update(address)
+        if response_one:
+            return self._to_address_info(address.id)
         return res
 
     def delete(self, _id):
@@ -148,6 +153,19 @@ class AddressService(Component):
             "opt_in": {"coerce": to_bool, "type": "boolean"},
             "opt_out": {"coerce": to_bool, "type": "boolean"},
             "lang": {"type": "string", "required": False},
+            "one": {
+                "meta": {
+                    "description": """
+                        If true, the response of the create/update should return the
+                        single created record. If not passed, or passed as false, then
+                        return the list of customer addresses
+                    """
+                },
+                "coerce": to_bool,
+                "type": "boolean",
+                "nullable": True,
+                "required": False,
+            },
         }
         return res
 
