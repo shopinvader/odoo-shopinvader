@@ -17,6 +17,7 @@ def get_partner_work_context(shopinvader_partner):
 
     partner_user = shopinvader_partner.record_id
     ctx["partner_user"] = partner_user
+    ctx["authenticated_partner_id"] = partner_user.id
     # The partner user for the main account or for sale order may differ.
     partner_shop = partner_user.get_shop_partner(shopinvader_partner.backend_id)
     ctx["partner"] = partner_shop
