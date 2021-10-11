@@ -4,18 +4,16 @@
 
 {
     "name": "Shopinvader Reset Password",
-    "summary": "Give the possibility to send a email to reset the"
-    "password from odoo",
-    "version": "10.0.1.0.0",
+    "summary": "Give the possibility to send a email to reset the" "password from odoo",
+    "version": "14.0.1.0.0",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
-    "application": False,
-    "installable": False,
-    "external_dependencies": {"python": [], "bin": []},
+    "installable": True,
     "depends": ["shopinvader_locomotive"],
     "data": [
+        "security/ir_model_access.xml",
         "views/shopinvader_backend.xml",
         "wizards/reset_password_view.xml",
         "views/partner_view.xml",

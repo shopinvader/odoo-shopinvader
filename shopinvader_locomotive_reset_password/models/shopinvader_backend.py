@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -64,12 +63,11 @@ class ShopinvaderBackend(models.Model):
         ):
             backend.with_delay().reset_expired_password()
 
-    @api.multi
     def _get_expired_password_domain(self):
         self.ensure_one()
-        pivot_date = fields.Datetime.from_string(
-            fields.Datetime.now()
-        ) + timedelta(days=self.password_validity)
+        pivot_date = fields.Datetime.from_string(fields.Datetime.now()) + timedelta(
+            days=self.password_validity
+        )
         pivot_date_string = fields.Datetime.to_string(pivot_date)
         domain = [
             ("backend_id", "=", self.id),

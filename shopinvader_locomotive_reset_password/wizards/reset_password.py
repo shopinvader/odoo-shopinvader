@@ -52,12 +52,9 @@ class ShopinvaderResetPassword(models.TransientModel):
             res["partner_ids"] = active_ids
         return res
 
-    @api.multi
     def confirm(self):
         self.ensure_one()
         partners = self.partner_ids
         partners.write({"last_pwd_reset_datetime": False})
         for partner in partners:
-            partner.with_delay().reset_password(
-                self.template_id.id, self.date_validity
-            )
+            partner.with_delay().reset_password(self.template_id.id, self.date_validity)
