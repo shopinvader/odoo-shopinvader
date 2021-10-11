@@ -2762,6 +2762,11 @@ msgid "Product Type"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_link_ids
+msgid "Product Variant Links"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.actions.act_window,name:shopinvader.product_filter_action
 #: model:ir.ui.menu,name:shopinvader.menu_product_filter_action
 msgid "Product filter"
