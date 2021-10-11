@@ -59,6 +59,7 @@ addon | version | summary
 [shopinvader_product_brand](shopinvader_product_brand/) | 14.0.1.3.1 | Shopinvader product Brand
 [shopinvader_product_brand_image](shopinvader_product_brand_image/) | 14.0.1.1.0 | Shopinvader product Brand Image
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 | Index storage media data into external search engine
+[shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.0 | Shopinvader product new
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.0.0 | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.1.0 | Exposes product prices with and without taxes
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.1 | This module is used to choose a stock field during theexport (by backend)
@@ -88,7 +89,6 @@ addon | version | summary
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 10.0.1.0.0 (unported) | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
-[shopinvader_product_new](shopinvader_product_new/) | 10.0.0.0.0 (unported) | Shopinvader product new
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 13.0.1.0.1 (unported) | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) | This module adds information fields for customers and vendors.
