@@ -54,6 +54,7 @@ addon | version | summary
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 | Shopinvader Customer firstname/lastname
+[shopinvader_partner_vat](shopinvader_partner_vat/) | 14.0.1.0.0 | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 14.0.1.0.0 | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_pos](shopinvader_pos/) | 14.0.2.2.0 | Shopinvader for PoS
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 | Expose all PIM' Attribute sets with Shopinvader
@@ -89,7 +90,6 @@ addon | version | summary
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) | Shopinvader Demo App
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) | Synchronize the contact_name with customer name
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
-[shopinvader_partner_vat](shopinvader_partner_vat/) | 12.0.1.0.0 (unported) | Shopinvader Check VAT with invader environnement
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) | This module adds information fields for customers and vendors.
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.0.0 (unported) | Shopinvader Sale Packaging
