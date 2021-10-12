@@ -9,7 +9,7 @@
                 <attribute name="invisible">0</attribute>
             </group>
             <group name="shopinvader_options" position="inside">
-                <field name="only_quotation" />
+                <field name="shop_only_quotation" string="Only for Quotation" />
             </group>
         </field>
     </record>
