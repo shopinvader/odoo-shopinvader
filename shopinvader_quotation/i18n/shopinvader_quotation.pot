@@ -19,6 +19,7 @@ msgid " Thanks for your quotation "
 msgstr ""
 
 #. module: shopinvader_quotation
+#: model:ir.model.fields,field_description:shopinvader_quotation.field_product_product__display_name
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_product_template__display_name
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_sale_order__display_name
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_shopinvader_notification__display_name
@@ -36,6 +37,7 @@ msgid "Estimating Quotation"
 msgstr ""
 
 #. module: shopinvader_quotation
+#: model:ir.model.fields,field_description:shopinvader_quotation.field_product_product__id
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_product_template__id
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_sale_order__id
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_shopinvader_notification__id
@@ -43,6 +45,7 @@ msgid "ID"
 msgstr ""
 
 #. module: shopinvader_quotation
+#: model:ir.model.fields,field_description:shopinvader_quotation.field_product_product____last_update
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_product_template____last_update
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_sale_order____last_update
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_shopinvader_notification____last_update
@@ -50,11 +53,8 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: shopinvader_quotation
-#: model:ir.model.fields,field_description:shopinvader_quotation.field_product_product__only_quotation
-#: model:ir.model.fields,field_description:shopinvader_quotation.field_product_template__only_quotation
-#: model:ir.model.fields,field_description:shopinvader_quotation.field_shopinvader_product__only_quotation
-#: model:ir.model.fields,field_description:shopinvader_quotation.field_shopinvader_variant__only_quotation
-msgid "Only for quotation"
+#: model_terms:ir.ui.view,arch_db:shopinvader_quotation.view_product_template_form
+msgid "Only for Quotation"
 msgstr ""
 
 #. module: shopinvader_quotation
@@ -62,6 +62,11 @@ msgstr ""
 #, python-format
 msgid ""
 "Only orders of cart typology in draft state can be converted to quotation"
+msgstr ""
+
+#. module: shopinvader_quotation
+#: model:ir.model,name:shopinvader_quotation.model_product_product
+msgid "Product"
 msgstr ""
 
 #. module: shopinvader_quotation
@@ -104,6 +109,14 @@ msgstr ""
 #. module: shopinvader_quotation
 #: model:ir.model.fields,field_description:shopinvader_quotation.field_sale_order__shopinvader_state
 msgid "Shopinvader State"
+msgstr ""
+
+#. module: shopinvader_quotation
+#: model:ir.model.fields,field_description:shopinvader_quotation.field_product_product__shop_only_quotation
+#: model:ir.model.fields,field_description:shopinvader_quotation.field_product_template__shop_only_quotation
+#: model:ir.model.fields,field_description:shopinvader_quotation.field_shopinvader_product__shop_only_quotation
+#: model:ir.model.fields,field_description:shopinvader_quotation.field_shopinvader_variant__shop_only_quotation
+msgid "Shopinvader: Only for Quotation"
 msgstr ""
 
 #. module: shopinvader_quotation
