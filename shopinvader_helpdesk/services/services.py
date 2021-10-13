@@ -24,3 +24,9 @@ class AttachmentService(Component):
     _name = "attachment.service"
     _inherit = ["attachment.service", "base.shopinvader.service"]
     _collection = "shopinvader.backend"
+
+
+class HelpdeskSettingsService(Component):
+    _name = "helpdesk.settings.service"
+    _inherit = ["helpdesk.settings.service", "base.shopinvader.service"]
+    _collection = "shopinvader.backend"
