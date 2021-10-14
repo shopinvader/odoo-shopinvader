@@ -188,3 +188,34 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(
             self.shopinvader_variant.attributes["type"], self.product.type,
         )
+
+    def test_native_attribute_float(self):
+        self.env["attribute.attribute"].create(
+            {
+                "nature": "native",
+                "field_id": self.env.ref(
+                    "product.field_product_template__weight"
+                ).id,
+                "attribute_set_ids": [(6, 0, [self.attr_set.id])],
+                "attribute_group_id": self.template_group.id,
+            }
+        )
+        self.product.write({"attribute_set_id": self.attr_set.id})
+        weight_field = {}
+        for field in self.shopinvader_variant.structured_attributes[1][
+            "fields"
+        ]:
+            if field["key"] == "weight":
+                weight_field = field
+        self.assertEqual(
+            weight_field,
+            {
+                "value": "9.54",
+                "name": "Weight",
+                "key": "weight",
+                "type": "float",
+            },
+        )
+        self.assertEqual(
+            self.shopinvader_variant.attributes["weight"], self.product.weight,
+        )

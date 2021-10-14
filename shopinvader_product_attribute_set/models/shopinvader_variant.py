@@ -5,6 +5,7 @@
 
 
 from odoo import fields, models
+from odoo.tools import float_repr, float_round
 
 
 class ShopinvaderVariant(models.Model):
@@ -26,6 +27,18 @@ class ShopinvaderVariant(models.Model):
         else:
             return self[fieldname].mapped(name_key)
 
+    def _get_native_float_value(self, attr, string_mode):
+        digits = (
+            self.env[attr.field_id.model]
+            ._fields[attr.field_id.name]
+            .get_digits(self.env)[1]
+        )
+        val = float_repr(
+            float_round(self[attr.name], precision_digits=digits),
+            precision_digits=digits,
+        )
+        return val if string_mode else float(val)
+
     def _get_attr_vals(self, attr, string_mode=False):
         """The value of the attribute as string."""
         self.ensure_one()
@@ -41,6 +54,8 @@ class ShopinvaderVariant(models.Model):
             return self._get_attribute_value(attr.name)
         elif string_mode and attr.attribute_type == "boolean":
             return self[attr.name] and "true" or "false"
+        elif attr.nature == "native" and attr.attribute_type == "float":
+            return self._get_native_float_value(attr, string_mode)
         elif string_mode or attr.attribute_type in ("char", "text"):
             return "%s" % (self[attr.name] or "")
         else:
