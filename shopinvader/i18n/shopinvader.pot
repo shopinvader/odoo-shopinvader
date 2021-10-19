@@ -2487,6 +2487,12 @@ msgid "Only sale invoices"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__sell_only_by_packaging
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__sell_only_by_packaging
+msgid "Only sell by packaging"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__invoice_linked_to_sale_only
 msgid "Only serve invoices that are linked to a sale order."
 msgstr ""
@@ -2546,6 +2552,11 @@ msgstr ""
 #. module: shopinvader
 #: model:product.category,name:shopinvader.product_category_228
 msgid "PC Portable"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__packaging_contained_mapping
+msgid "Packaging Contained Mapping"
 msgstr ""
 
 #. module: shopinvader
@@ -2976,6 +2987,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__activity_user_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__activity_user_id
 msgid "Responsible User"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sell_only_by_packaging
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sell_only_by_packaging
+msgid ""
+"Restrict the usage of this product on sale order lines without packaging "
+"defined"
 msgstr ""
 
 #. module: shopinvader
@@ -3699,6 +3718,11 @@ msgstr ""
 msgid ""
 "Technical field to know if this product is related by a(at least one) "
 "shopinvader backend"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__packaging_contained_mapping
+msgid "Technical field to store contained packaging. "
 msgstr ""
 
 #. module: shopinvader
