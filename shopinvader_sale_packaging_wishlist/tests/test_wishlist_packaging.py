@@ -2,9 +2,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader_wishlist.tests.test_wishlist import (
-    CommonWishlistCase,
-)
+from odoo.addons.shopinvader_wishlist.tests.test_wishlist import CommonWishlistCase
 
 
 class WishlistCase(CommonWishlistCase):
@@ -27,9 +25,9 @@ class WishlistCase(CommonWishlistCase):
             }
         )
         # Make sure our products' data is up to date
-        cls._refresh_json_data(
-            cls, cls.prod_set.mapped("set_line_ids.product_id")
-        )
+        cls._refresh_json_data(cls, cls.prod_set.mapped("set_line_ids.product_id"))
+        # Make sure our products' data is up to date
+        cls._refresh_json_data(cls, cls.prod_set.mapped("set_line_ids.product_id"))
 
     def test_create(self):
         params = dict(self.wl_params)
@@ -38,9 +36,7 @@ class WishlistCase(CommonWishlistCase):
         )
         res = self.wishlist_service.dispatch("create", params=params)["data"]
         record = self.env["product.set"].browse(res["id"])
-        line = record.set_line_ids.filtered(
-            lambda x: x.product_id == self.prod1
-        )
+        line = record.set_line_ids.filtered(lambda x: x.product_id == self.prod1)
         self.assertEqual(line.product_packaging_id, self.product_packaging)
         self.assertEqual(line.product_packaging_qty, 2)
         self.assertEqual(line.quantity, 8)
@@ -62,9 +58,7 @@ class WishlistCase(CommonWishlistCase):
                 }
             ]
         }
-        self.wishlist_service.dispatch(
-            "update_items", self.prod_set.id, params=params
-        )
+        self.wishlist_service.dispatch("update_items", self.prod_set.id, params=params)
         self.assertEqual(line.product_packaging_id, self.product_packaging)
         self.assertEqual(line.product_packaging_qty, 4)
         self.assertEqual(line.quantity, 16)
@@ -79,9 +73,7 @@ class WishlistCase(CommonWishlistCase):
                 }
             ]
         }
-        self.wishlist_service.dispatch(
-            "update_items", self.prod_set.id, params=params
-        )
+        self.wishlist_service.dispatch("update_items", self.prod_set.id, params=params)
         self.assertFalse(line.product_packaging_id)
         self.assertEqual(line.product_packaging_qty, 0.0)
         self.assertEqual(line.quantity, 7)
@@ -107,6 +99,7 @@ class WishlistCase(CommonWishlistCase):
             res_line["packaging_by_qty"],
             [
                 {
+                    "barcode": None,
                     "contained": None,
                     "id": 1,
                     "is_unit": True,
@@ -131,6 +124,7 @@ class WishlistCase(CommonWishlistCase):
                 "id": packaging.id,
                 "name": self.packaging_type.name,
                 "code": self.packaging_type.code,
+                "barcode": packaging.barcode,
             },
         )
         self.assertEqual(
@@ -143,12 +137,14 @@ class WishlistCase(CommonWishlistCase):
                             "is_unit": True,
                             "name": "Units",
                             "qty": 100,
+                            "barcode": None,
                         }
                     ],
                     "id": packaging.id,
                     "is_unit": False,
                     "name": packaging.packaging_type_id.name,
                     "qty": 3,
+                    "barcode": packaging.barcode,
                 }
             ],
         )

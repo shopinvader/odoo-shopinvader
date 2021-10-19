@@ -59,7 +59,12 @@ class TestProductPackagingData(CommonCase):
         return [
             make_pkg_values(
                 self.pkg_pallet,
-                contained=[make_pkg_values(self.pkg_big_box, qty=10,)],
+                contained=[
+                    make_pkg_values(
+                        self.pkg_big_box,
+                        qty=10,
+                    )
+                ],
             ),
             make_pkg_values(
                 self.pkg_big_box,
