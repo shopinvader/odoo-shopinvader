@@ -74,6 +74,8 @@ addon | version | summary
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.2.1.0 | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 | Expose the amount by tax to shopinvader
 [shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.0.1 | Manage Promotion and Coupon programs in Shopinvader
+[shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.0.0 | Shopinvader Sale Packaging
+[shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.1.0 | ShopInvader - Sale profile
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.3.0 | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.0.0 | Handle shop wishlist
@@ -92,8 +94,6 @@ addon | version | summary
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) | This addons is used to push the initial elasticsearch configuration to locomotive
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) | This module adds information fields for customers and vendors.
-[shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.0.0 (unported) | Shopinvader Sale Packaging
-[shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 13.0.1.0.0 (unported) | Add packaging information to wishlists
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) | Shopinvader addons to extend sale report with backend
 
 [//]: # (end addons)
