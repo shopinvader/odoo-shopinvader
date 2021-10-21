@@ -6,7 +6,7 @@
     "Summary": """
         Integrate `sale_order_line_delivery_state` with Shopinvader
     """,
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.1",
     "license": "AGPL-3",
     "author": "ForgeFlow",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
