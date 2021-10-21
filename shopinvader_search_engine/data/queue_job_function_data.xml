@@ -1,0 +1,68 @@
+<odoo noupdate="1">
+    <record
+        id="job_function_shopinvader_category_jobify_recompute_json"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_category" />
+        <field name="method">jobify_recompute_json</field>
+        <field
+            name="channel_id"
+            ref="connector_search_engine.channel_search_engine_recompute"
+        />
+    </record>
+    <record
+        id="job_function_shopinvader_category_recompute_json"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_category" />
+        <field name="method">recompute_json</field>
+        <field
+            name="channel_id"
+            ref="connector_search_engine.channel_search_engine_recompute"
+        />
+    </record>
+    <record
+        id="job_function_shopinvader_category_synchronize"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_category" />
+        <field name="method">synchronize</field>
+        <field
+            name="channel_id"
+            ref="connector_search_engine.channel_search_engine_synchronize"
+        />
+    </record>
+    <record
+        id="job_function_shopinvader_variant_jobify_recompute_json"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_variant" />
+        <field name="method">jobify_recompute_json</field>
+        <field
+            name="channel_id"
+            ref="connector_search_engine.channel_search_engine_recompute"
+        />
+    </record>
+    <record
+        id="job_function_shopinvader_variant_recompute_json"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_variant" />
+        <field name="method">recompute_json</field>
+        <field
+            name="channel_id"
+            ref="connector_search_engine.channel_search_engine_recompute"
+        />
+    </record>
+    <record
+        id="job_function_shopinvader_variant_synchronize"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_variant" />
+        <field name="method">synchronize</field>
+        <field
+            name="channel_id"
+            ref="connector_search_engine.channel_search_engine_synchronize"
+        />
+    </record>
+</odoo>
