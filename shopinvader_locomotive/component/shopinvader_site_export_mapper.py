@@ -36,6 +36,9 @@ class ShopinvaderSiteExportMapper(Component):
                 res[lang.code[0:2]].append(rec.jsonify(parser, one=True))
         return res
 
+    def _get_country_state_mapper(self):
+        return ["id", "code", "name"]
+
     @mapping
     @changed_by("allowed_country_ids")
     def country(self, record):
@@ -43,7 +46,7 @@ class ShopinvaderSiteExportMapper(Component):
             "available_countries": self._m2m_to_external(
                 record,
                 "allowed_country_ids",
-                ["id", "name", ("state_ids:states", ["code", "name"])],
+                ["id", "name", ("state_ids:states", self._get_country_state_mapper())],
             )
         }
 
