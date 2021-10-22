@@ -70,6 +70,7 @@ class InvoiceService(Component):
         invoice_schema = {
             "invoice_id": {"type": "integer"},
             "number": {"type": "string"},
+            "pay_ref": {"type": "string"},
             "date_invoice": {"type": "string"},
             "date_due": {"type": "string"},
             "amount_total": {"type": "float"},
@@ -93,7 +94,8 @@ class InvoiceService(Component):
         """
         to_parse = [
             "id:invoice_id",
-            "invoice_payment_ref:number",
+            "name:number",
+            "invoice_payment_ref:pay_ref",
             "invoice_date:date_invoice",
             "invoice_date_due:date_due",
             "amount_total",

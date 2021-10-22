@@ -50,8 +50,9 @@ class CommonInvoiceCase(CommonCase):
             type_label = self._get_selection_label(invoice, "type")
             self.assertEqual(current_data.get("invoice_id"), invoice.id)
             self.assertEqual(
-                current_data.get("number"), invoice.invoice_payment_ref
+                current_data.get("pay_ref"), invoice.invoice_payment_ref
             )
+            self.assertEqual(current_data.get("number"), invoice.name)
             self.assertEqual(
                 current_data.get("date_invoice"),
                 fields.Date.to_string(invoice.invoice_date),
