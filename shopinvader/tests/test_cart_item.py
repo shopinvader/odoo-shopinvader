@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import time
+
 from odoo import exceptions
 from odoo.tools import mute_logger
 
@@ -183,34 +184,22 @@ class AbstractItemCase(ItemCaseMixin):
         self.assertEqual(amount["total"], 14.85)
 
     def test_upgrade_last_update_date(self):
-        last_external_update_date = self._get_last_external_update_date(
-            self.cart
-        )
+        last_external_update_date = self._get_last_external_update_date(self.cart)
         self.add_item(self.product_1.id, 2)
-        self._check_last_external_update_date(
-            self.cart, last_external_update_date
-        )
+        self._check_last_external_update_date(self.cart, last_external_update_date)
 
         time.sleep(1)
 
-        last_external_update_date = self._get_last_external_update_date(
-            self.cart
-        )
+        last_external_update_date = self._get_last_external_update_date(self.cart)
         line_id = self.cart.order_line[0].id
         self.update_item(line_id, 5)
-        self._check_last_external_update_date(
-            self.cart, last_external_update_date
-        )
+        self._check_last_external_update_date(self.cart, last_external_update_date)
 
         time.sleep(1)
 
-        last_external_update_date = self._get_last_external_update_date(
-            self.cart
-        )
+        last_external_update_date = self._get_last_external_update_date(self.cart)
         self.delete_item(line_id)
-        self._check_last_external_update_date(
-            self.cart, last_external_update_date
-        )
+        self._check_last_external_update_date(self.cart, last_external_update_date)
 
 
 class AnonymousItemCase(AbstractItemCase, CommonCase):

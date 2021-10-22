@@ -16,9 +16,8 @@ from odoo.addons.base_rest.core import _rest_controllers_per_module
 from odoo.addons.base_rest.tests.common import BaseRestCase, RegistryMixin
 from odoo.addons.component.tests.common import ComponentMixin
 from odoo.addons.queue_job.job import Job
-from odoo.addons.shopinvader.models.track_external_mixin import (
-    TrackExternalMixin,
-)
+from odoo.addons.shopinvader.models.track_external_mixin import TrackExternalMixin
+
 from .. import shopinvader_response, utils
 from ..services import abstract_download
 
@@ -196,7 +195,9 @@ class CommonCase(SavepointCase, CommonMixin):
 
     def _check_last_external_update_date(self, record, previous_date):
         if isinstance(record, TrackExternalMixin):
-            self.assertTrue(record.last_external_update_date > previous_date)
+            self.assertTrue(record.last_external_update_date)
+            if previous_date:
+                self.assertTrue(record.last_external_update_date > previous_date)
 
 
 class ProductCommonCase(CommonCase):
