@@ -5,22 +5,34 @@
         <field name="model">shopinvader.partner</field>
         <field name="arch" type="xml">
             <form string="Shopinvader Partner">
-                <group name="main">
-                    <field
-                        name="record_id"
-                        invisible="not context.get('shopinvader_partner_main_view')"
-                    />
-                    <field name="partner_email" />
-                    <field name="backend_id" />
-                    <field name="external_id" />
-                    <field name="create_date" readonly="1" />
-                    <field
-                        name="company_id"
-                        widget="selection"
-                        groups="base.group_multi_company"
-                    />
-                    <field name="sync_date" />
-                </group>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" class="oe_inline" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group name="backend">
+                            <field name="backend_id" widget="selection" />
+                            <field
+                                name="company_id"
+                                widget="selection"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="create_date" readonly="1" />
+                            <field name="sync_date" />
+                        </group>
+                        <group name="record">
+                            <field
+                                name="record_id"
+                                invisible="not context.get('shopinvader_partner_main_view')"
+                            />
+                            <field name="partner_email" />
+                            <field name="external_id" />
+                        </group>
+                    </group>
+                    <notebook />
+                </sheet>
             </form>
         </field>
     </record>
