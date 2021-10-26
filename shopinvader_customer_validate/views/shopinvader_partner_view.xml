@@ -6,7 +6,13 @@
         <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_form" />
         <field name="arch" type="xml">
             <field name="sync_date" position="after">
-                <field name="state" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'active'"
+                    decoration-warning="state == 'pending'"
+                    decoration-danger="state == 'inactive'"
+                />
             </field>
         </field>
     </record>
@@ -17,7 +23,13 @@
         <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree" />
         <field name="arch" type="xml">
             <field name="sync_date" position="after">
-                <field name="state" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-success="state == 'active'"
+                    decoration-warning="state == 'pending'"
+                    decoration-danger="state == 'inactive'"
+                />
             </field>
         </field>
     </record>
