@@ -1,9 +1,11 @@
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
-# @author Sébastien BEAU <sebastien.beau@akretion.com>
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
+# @author Sébastien BEAU <sebastien.beau@akretion.com>
 # @author Simone Orsi <simahawk@gmail.com>
+# @author Iván Todorovich <ivan.todorovich@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import _, api, exceptions, fields, models
 
 
@@ -25,10 +27,10 @@ class ShopinvaderBackend(models.Model):
     @api.depends("use_sale_profile", "sale_profile_ids.default")
     def _compute_pricelist_id(self):
         for rec in self:
-            pricelist = rec._default_pricelist_id()
             if rec.use_sale_profile:
-                pricelist = rec._get_default_profile().pricelist_id
-            rec.pricelist_id = pricelist
+                rec.pricelist_id = rec._get_default_profile().pricelist_id
+            else:
+                rec.pricelist_id = rec._default_pricelist_id()
 
     def _compute_customer_default_role(self):
         for rec in self:
