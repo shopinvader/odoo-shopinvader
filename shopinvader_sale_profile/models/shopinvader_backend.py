@@ -72,4 +72,5 @@ class ShopinvaderBackend(models.Model):
         return default_profile.pricelist_id
 
     def _get_default_profile(self):
+        self.ensure_one()
         return self.sale_profile_ids.filtered("default")
