@@ -43,7 +43,7 @@ class ShopinvaderBackend(models.Model):
 
     @api.constrains("use_sale_profile", "pricelist_id")
     def _check_use_sale_profile(self):
-        if not self.pricelist_id and self.use_sale_profile:
+        if any(rec.use_sale_profile and not rec.pricelist_id for rec in self):
             raise exceptions.ValidationError(
                 _("You must have a default profile that provides a default pricelist.")
             )
