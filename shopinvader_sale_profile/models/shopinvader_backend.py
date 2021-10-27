@@ -73,4 +73,4 @@ class ShopinvaderBackend(models.Model):
 
     def _get_default_profile(self):
         self.ensure_one()
-        return self.sale_profile_ids.filtered("default")
+        return fields.first(self.sale_profile_ids.filtered("default"))
