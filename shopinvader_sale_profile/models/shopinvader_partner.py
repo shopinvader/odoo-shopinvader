@@ -1,7 +1,9 @@
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
+# @author Iván Todorovich <ivan.todorovich@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import _, api, exceptions, fields, models
 from odoo.fields import first
 
@@ -26,10 +28,9 @@ class ShopinvaderPartner(models.Model):
 
     def _get_role(self):
         # Override to use the sale profile role/code when required
-        role = super()._get_role()
         if self.backend_id.use_sale_profile and self.sale_profile_id:
-            role = self.sale_profile_id.code
-        return role
+            return self.sale_profile_id.code
+        return super()._get_role()
 
     @api.depends(
         "record_id.country_id",
