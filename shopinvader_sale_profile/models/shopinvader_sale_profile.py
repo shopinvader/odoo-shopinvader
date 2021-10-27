@@ -2,6 +2,7 @@
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import _, api, exceptions, fields, models
 
 
@@ -13,7 +14,11 @@ class ShopinvaderSaleProfile(models.Model):
     _rec_name = "code"
 
     backend_id = fields.Many2one(
-        "shopinvader.backend", "Backend", required=True, index=True
+        "shopinvader.backend",
+        string="Backend",
+        required=True,
+        index=True,
+        ondelete="cascade",
     )
     pricelist_id = fields.Many2one(
         "product.pricelist",
@@ -36,11 +41,12 @@ class ShopinvaderSaleProfile(models.Model):
         "backend (only one default is authorized by backend)",
         index=True,
     )
+
     _sql_constraints = [
         (
             "constraint_unique_code",
             "unique(backend_id, code)",
-            _("Code must be unique per backend."),
+            "Code must be unique per backend.",
         )
     ]
 
