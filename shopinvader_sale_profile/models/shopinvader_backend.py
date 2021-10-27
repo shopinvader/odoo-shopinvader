@@ -33,11 +33,13 @@ class ShopinvaderBackend(models.Model):
                 rec.pricelist_id = rec._default_pricelist_id()
 
     def _compute_customer_default_role(self):
-        for rec in self:
-            if rec.use_sale_profile:
-                rec.customer_default_role = rec._get_default_profile().code
-            else:
-                rec.customer_default_role = "default"
+        # Override. Get default role from default profile
+        # If the backend doesn't use_sale_profile, fallback to super()
+        using_sale_profile = self.filtered("use_sale_profile")
+        for rec in using_sale_profile:
+            rec.customer_default_role = rec._get_default_profile().code
+        other_records = self - using_sale_profile
+        super(ShopinvaderBackend, other_records)._compute_customer_default_role()
 
     @api.constrains("use_sale_profile", "pricelist_id")
     def _check_use_sale_profile(self):
