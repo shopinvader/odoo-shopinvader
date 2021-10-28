@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ir_exp_shopinvader_variant_configurable_option_has_message" model="ir.exports.line">
+        <field name="name">configurable_option_ids/has_message</field>
+        <field name="target">configurable_option_ids:option/has_message</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+</odoo>

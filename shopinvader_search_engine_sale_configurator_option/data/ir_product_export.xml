@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="ir_exp_shopinvader_variant_is_configurable_opt" model="ir.exports.line">
+        <field name="name">is_configurable_opt</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_is_option" model="ir.exports.line">
+        <field name="name">is_option</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_configurable_option_product_id" model="ir.exports.line">
+        <field name="name">configurable_option_ids/product_id/id</field>
+        <field name="target">configurable_option_ids:option/product_id:product/id</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_configurable_option_product_uom" model="ir.exports.line">
+        <field name="name">configurable_option_ids/product_uom_id/id</field>
+        <field name="target">configurable_option_ids:option/product_uom_id:product_uom/id</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+</odoo>
