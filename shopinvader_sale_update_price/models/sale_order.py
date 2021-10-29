@@ -8,6 +8,18 @@ class SaleOrder(models.Model):
 
     _inherit = "sale.order"
 
+    def _get_sale_pricelist(self):
+        """
+        By default use the pricelist set on the partner.
+        But if a pricelist is set on the backend, use it.
+        :return: product.pricelist recordset
+        """
+        self.ensure_one()
+        pricelist = self.partner_id.property_product_pricelist
+        if self.shopinvader_backend_id.pricelist_id:
+            pricelist = self.shopinvader_backend_id.pricelist_id
+        return pricelist
+
     def _update_pricelist_and_update_line_prices(self):
         """
         On current sale orders (self):
@@ -16,23 +28,13 @@ class SaleOrder(models.Model):
         - Then launch the price update (module sale_order_price_recalculation).
         :return: bool
         """
-        backends = self.mapped("shopinvader_backend_id").filtered(
-            lambda b: b.pricelist_id
-        )
-        other_sales = self
-        for backend in backends:
-            pricelist = backend.pricelist_id
-            sales = self.filtered(lambda s, b=backend: s.shopinvader_backend_id == b)
-            other_sales -= sales
-            sales.write({"pricelist_id": pricelist.id})
-        # We don't have a pricelist on the backend so use the one set
-        # on the partner
-        partner_pricelists = other_sales.mapped("partner_id.property_product_pricelist")
-        # Group by pricelist to do less write as possible.
-        for pricelist in partner_pricelists:
-            sales = other_sales.filtered(
-                lambda s, p=pricelist: s.partner_id.property_product_pricelist == p
-            )
+        pricelist_sales = {}
+        for sale in self:
+            pricelist = sale._get_sale_pricelist()
+            sales = pricelist_sales.get(pricelist, self.browse())
+            sales |= sale
+            pricelist_sales.update({pricelist: sales})
+        for pricelist, sales in pricelist_sales.items():
             sales.write({"pricelist_id": pricelist.id})
         # The date_der should be updated because some prices rules depends on the date.
         self.write({"date_order": fields.Datetime.now()})
