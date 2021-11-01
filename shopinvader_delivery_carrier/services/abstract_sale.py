@@ -64,11 +64,7 @@ class AbstractSaleService(AbstractComponent):
         return not line.is_delivery and super()._is_item(line)
 
     def _convert_one_line(self, line):
-        """
-        Inherit to add the qty_delivered
-        :param line: sale.order.line
-        :return: dict
-        """
-        values = super(AbstractSaleService, self)._convert_one_line(line)
+        # Override to add the qty_delivered
+        values = super()._convert_one_line(line)
         values.update({"qty_delivered": line.qty_delivered})
         return values
