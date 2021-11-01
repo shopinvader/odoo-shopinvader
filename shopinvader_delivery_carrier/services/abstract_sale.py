@@ -60,13 +60,6 @@ class AbstractSaleService(AbstractComponent):
         service = self.component(usage="delivery_carrier")
         return service._prepare_carrier(carrier, cart=cart)
 
-    # TODO: this method seems not used
-    def _get_available_carrier(self, cart):
-        return [
-            self._prepare_carrier(carrier, cart)
-            for carrier in cart._invader_available_carriers()
-        ]
-
     def _is_item(self, line):
         res = super(AbstractSaleService, self)._is_item(line)
         return res and not line.is_delivery
