@@ -31,26 +31,16 @@ class AbstractSaleService(AbstractComponent):
         return res
 
     def _convert_amount(self, sale):
-        """
-        Inherit to add amounts without shipping prices included
-        :param sale: sale.order recordset
-        :return: dict
-        """
-        result = super(AbstractSaleService, self)._convert_amount(sale)
-        # Remove the shipping amounts for originals amounts
-        shipping_amounts = self._convert_shipping(sale).get("amount", {})
-        tax = result.get("tax", 0) - shipping_amounts.get("tax", 0)
-        untaxed = result.get("untaxed", 0) - shipping_amounts.get("untaxed", 0)
-        total = result.get("total", 0) - shipping_amounts.get("total", 0)
-        precision = sale.currency_id.decimal_places
-        total_without_shipping_without_discount = total - sale.discount_total
+        # Override to add amounts without shipping
+        result = super()._convert_amount(sale)
         result.update(
             {
-                "tax_without_shipping": float_round(tax, precision),
-                "untaxed_without_shipping": float_round(untaxed, precision),
-                "total_without_shipping": float_round(total, precision),
+                "tax_without_shipping": sale.item_amount_tax,
+                "untaxed_without_shipping": sale.item_amount_untaxed,
+                "total_without_shipping": sale.item_amount_total,
                 "total_without_shipping_without_discount": float_round(
-                    total_without_shipping_without_discount, precision
+                    sale.item_amount_total - sale.discount_total,
+                    sale.currency_id.decimal_places,
                 ),
             }
         )
