@@ -61,8 +61,7 @@ class AbstractSaleService(AbstractComponent):
         return service._prepare_carrier(carrier, cart=cart)
 
     def _is_item(self, line):
-        res = super(AbstractSaleService, self)._is_item(line)
-        return res and not line.is_delivery
+        return not line.is_delivery and super()._is_item(line)
 
     def _convert_one_line(self, line):
         """
