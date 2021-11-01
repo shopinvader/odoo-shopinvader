@@ -124,7 +124,6 @@ class CartService(Component):
         cart._set_carrier_and_price(carrier_id)
 
     def _unset_carrier(self, cart):
-        cart.write({"carrier_id": False})
         cart._remove_delivery_line()
 
     def _get_lines_to_copy(self, cart):
