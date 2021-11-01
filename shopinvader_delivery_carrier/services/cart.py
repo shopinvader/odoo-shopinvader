@@ -119,7 +119,7 @@ class CartService(Component):
         return res
 
     def _set_carrier(self, cart, carrier_id):
-        if carrier_id not in [x["id"] for x in cart._invader_available_carriers()]:
+        if carrier_id not in cart.shopinvader_available_carrier_ids.ids:
             raise UserError(_("This delivery method is not available for you order"))
         cart._set_carrier_and_price(carrier_id)
 
