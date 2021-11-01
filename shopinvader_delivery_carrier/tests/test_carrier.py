@@ -28,7 +28,6 @@ class CarrierCase(CommonCarrierCase):
                 "id": self.free_carrier.id,
                 "name": self.free_carrier.name,
                 "code": self.free_carrier.code,
-                "type": None,
             },
         )
 
@@ -71,7 +70,6 @@ class CarrierCase(CommonCarrierCase):
                 "id": self.poste_carrier.id,
                 "name": self.poste_carrier.name,
                 "code": self.poste_carrier.code,
-                "type": None,
             },
         )
 
