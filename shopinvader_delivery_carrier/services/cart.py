@@ -127,10 +127,6 @@ class CartService(Component):
         cart._remove_delivery_line()
 
     def _get_lines_to_copy(self, cart):
-        """
-        Don't copy delivery lines
-        :param cart:
-        :return:
-        """
-        res = super(CartService, self)._get_lines_to_copy(cart)
+        # Override. Don't copy delivery lines.
+        res = super()._get_lines_to_copy(cart)
         return res.filtered(lambda l: not l.is_delivery)
