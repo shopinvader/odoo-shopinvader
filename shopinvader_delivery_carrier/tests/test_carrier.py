@@ -208,7 +208,10 @@ class CarrierCase(CommonCarrierCase):
         partner = self.cart.partner_id
         partner.write({"country_id": french_country.id})
         # set carrier
-        self.cart._set_carrier_and_price(self.poste_carrier.id)
+        self.cart.set_delivery_line(
+            self.poste_carrier,
+            self.poste_carrier.rate_shipment(self.cart).get("price", 0.0),
+        )
         # Force load every fields
         self.cart.read()
         cart_values_before = self.cart._convert_to_write(self.cart._cache)
