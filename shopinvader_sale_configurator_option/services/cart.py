@@ -1,10 +1,12 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 
+from werkzeug.exceptions import NotFound
+
+from odoo.exceptions import UserError
+
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
-from odoo.exceptions import UserError
-from werkzeug.exceptions import NotFound
 
 
 class CartService(Component):
@@ -41,7 +43,7 @@ class CartService(Component):
 
         if option.id not in product.mapped("configurable_option_ids.product_id").ids:
             raise UserError(
-                "Option %s is not an option of %s." % (option.name, product.name)
+                "Option {} is not an option of {}.".format(option.name, product.name)
             )
 
         params.update(

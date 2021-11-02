@@ -26,3 +26,13 @@ class CartService(Component):
             }
         )
         return schema
+
+    def _upgrade_cart_item_quantity_vals(self, item, params, action="replace"):
+        vals = super()._upgrade_cart_item_quantity_vals(
+            item, params, "replace" if "message" in params else action
+        )
+
+        if "message" in params:
+            vals["option_message"] = params["message"]
+
+        return vals
