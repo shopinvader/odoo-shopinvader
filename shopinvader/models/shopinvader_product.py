@@ -91,22 +91,29 @@ class ShopinvaderProduct(models.Model):
             return rec.backend_id.id, rec.lang_id.id
 
         grouped_categs = {}
-        grouped_prods = {}
+        # group products by backend, lang_id then by categories
         for record in self:
-            grouped_categs.setdefault(group_key(record), []).extend(
-                record._get_categories().ids
-            )
-            grouped_prods.setdefault(group_key(record), []).append(record.id)
+            categs = tuple(sorted(record._get_categories().ids))
+            grouped_categs.setdefault(group_key(record), {}).setdefault(
+                categs, []
+            ).append(record.id)
+            # prod1.categories = catA, catB, catC
+            # prod2.categories = catA
+            # prod3.categories = catA, catB, catC
+            # {
+            #   (catA.id): [prod1.id],
+            #   (catA.id,catB.id,catC.id): [prod1.id, prod3.id]
+            # }
 
-        for (backend_id, lang_id), categ_ids in grouped_categs.items():
-            domain = [
-                ("record_id", "parent_of", set(categ_ids)),
-                ("backend_id", "=", backend_id),
-                ("lang_id", "=", lang_id),
-            ]
-            categories = categ_model.search(domain)
-            prod_ids = grouped_prods[(backend_id, lang_id)]
-            self.browse(prod_ids).update({"shopinvader_categ_ids": categories.ids})
+        for (backend_id, lang_id), prod_by_categ in grouped_categs.items():
+            for categ_ids, prod_ids in prod_by_categ.items():
+                domain = [
+                    ("record_id", "parent_of", set(categ_ids)),
+                    ("backend_id", "=", backend_id),
+                    ("lang_id", "=", lang_id),
+                ]
+                categories = categ_model.search(domain)
+                self.browse(prod_ids).update({"shopinvader_categ_ids": categories.ids})
 
     def _prepare_shopinvader_variant(self, variant):
         values = {"record_id": variant.id, "shopinvader_product_id": self.id}
