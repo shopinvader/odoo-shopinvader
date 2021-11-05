@@ -36,7 +36,7 @@ addon | version | summary
 [shopinvader_customer_price](shopinvader_customer_price/) | 14.0.1.0.0 | Expose customer's specific prices.
 [shopinvader_customer_price_wishlist](shopinvader_customer_price_wishlist/) | 14.0.1.0.0 | Expose customer's specific prices.
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.1.2 | Provide configuration and machinery to validate customers.
-[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.0.1 | Carrier integration for Shopinvader
+[shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.1.0 | Carrier integration for Shopinvader
 [shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 | Easily manage Shopinvader bindings for your company backend.
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.3.0.0 | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 14.0.1.0.1 | Guest mode for Shopinvader
