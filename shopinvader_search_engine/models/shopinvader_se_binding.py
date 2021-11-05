@@ -32,3 +32,7 @@ class ShopinvaderSeBinding(models.AbstractModel):
                 and r.lang_id == i.lang_id
             )
             record.index_id = fields.first(index)
+
+    def _is_indexed(self):
+        self.ensure_one()
+        return self.index_id and super()._is_indexed()

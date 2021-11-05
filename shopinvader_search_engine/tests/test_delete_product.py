@@ -2,14 +2,13 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.exceptions import UserError
 from odoo.tests import SavepointCase
 
 
 class BindingCase(SavepointCase):
     @classmethod
     def setUpClass(cls):
-        super(BindingCase, cls).setUpClass()
+        super().setUpClass()
         cls.template = cls.env["product.template"].create({"name": "Test"})
         cls.product = cls.template.product_variant_ids
         cls.shopinvader_product = (
@@ -29,26 +28,23 @@ class BindingCase(SavepointCase):
 class BindingDoneCase(BindingCase):
     @classmethod
     def setUpClass(cls):
-        super(BindingDoneCase, cls).setUpClass()
+        super().setUpClass()
         cls.shopinvader_variant.write({"sync_state": "done"})
 
     def test_unlink_shopinvader_product(self):
-        with self.assertRaises(UserError):
-            self.shopinvader_product.unlink()
+        self.shopinvader_product.unlink()
 
     def test_unlink_product_product(self):
-        with self.assertRaises(UserError):
-            self.product.unlink()
+        self.product.unlink()
 
     def test_unlink_product_template(self):
-        with self.assertRaises(UserError):
-            self.template.unlink()
+        self.template.unlink()
 
 
 class BindingInactiveDoneCase(BindingCase):
     @classmethod
     def setUpClass(cls):
-        super(BindingInactiveDoneCase, cls).setUpClass()
+        super().setUpClass()
         cls.shopinvader_variant.active = False
         cls.shopinvader_variant.sync_state = "done"
 
