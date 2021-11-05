@@ -37,21 +37,3 @@ class SaleOrder(models.Model):
             if self.partner_id
             else carriers
         )
-
-    def _invader_available_carriers(self):
-        self.ensure_one()
-        return self.shopinvader_available_carrier_ids.sorted(
-            lambda c: c.rate_shipment(self).get("price", 0.0)
-        )
-
-    def _set_carrier_and_price(self, carrier_id):
-        wizard = (
-            self.env["choose.delivery.carrier"]
-            .with_context(
-                {"default_order_id": self.id, "default_carrier_id": carrier_id}
-            )
-            .create({})
-        )
-        wizard._onchange_carrier_id()
-        wizard.button_confirm()
-        return wizard.delivery_price

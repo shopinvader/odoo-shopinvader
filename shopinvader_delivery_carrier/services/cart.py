@@ -119,19 +119,15 @@ class CartService(Component):
         return res
 
     def _set_carrier(self, cart, carrier_id):
-        if carrier_id not in [x["id"] for x in cart._invader_available_carriers()]:
+        if carrier_id not in cart.shopinvader_available_carrier_ids.ids:
             raise UserError(_("This delivery method is not available for you order"))
-        cart._set_carrier_and_price(carrier_id)
+        carrier = self.env["delivery.carrier"].browse(carrier_id)
+        cart.set_delivery_line(carrier, carrier.rate_shipment(cart).get("price", 0.0))
 
     def _unset_carrier(self, cart):
-        cart.write({"carrier_id": False})
         cart._remove_delivery_line()
 
     def _get_lines_to_copy(self, cart):
-        """
-        Don't copy delivery lines
-        :param cart:
-        :return:
-        """
-        res = super(CartService, self)._get_lines_to_copy(cart)
+        # Override. Don't copy delivery lines.
+        res = super()._get_lines_to_copy(cart)
         return res.filtered(lambda l: not l.is_delivery)

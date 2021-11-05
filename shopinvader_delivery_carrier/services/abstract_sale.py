@@ -1,5 +1,7 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
+# Copyright 2021 Camptocamp (https://www.camptocamp.com).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
 from odoo.tools import float_round
 
 from odoo.addons.component.core import AbstractComponent
@@ -9,15 +11,7 @@ class AbstractSaleService(AbstractComponent):
     _inherit = "shopinvader.abstract.sale.service"
 
     def _convert_shipping(self, cart):
-        res = super(AbstractSaleService, self)._convert_shipping(cart)
-        if cart.carrier_id:
-            # we do not need an estimation of the price
-            # so we do not pass the cart to the _prepare_carrier method
-            # and we remove the field
-            selected_carrier = self._prepare_carrier(cart.carrier_id)
-            selected_carrier.pop("price")
-        else:
-            selected_carrier = {}
+        res = super()._convert_shipping(cart)
         res.update(
             {
                 "amount": {
@@ -25,58 +19,39 @@ class AbstractSaleService(AbstractComponent):
                     "untaxed": cart.shipping_amount_untaxed,
                     "total": cart.shipping_amount_total,
                 },
-                "selected_carrier": selected_carrier,
+                "selected_carrier": (
+                    cart.carrier_id.jsonify(self._json_parser_carrier(), one=True)
+                    if cart.carrier_id
+                    else {}
+                ),
             }
         )
         return res
 
     def _convert_amount(self, sale):
-        """
-        Inherit to add amounts without shipping prices included
-        :param sale: sale.order recordset
-        :return: dict
-        """
-        result = super(AbstractSaleService, self)._convert_amount(sale)
-        # Remove the shipping amounts for originals amounts
-        shipping_amounts = self._convert_shipping(sale).get("amount", {})
-        tax = result.get("tax", 0) - shipping_amounts.get("tax", 0)
-        untaxed = result.get("untaxed", 0) - shipping_amounts.get("untaxed", 0)
-        total = result.get("total", 0) - shipping_amounts.get("total", 0)
-        precision = sale.currency_id.decimal_places
-        total_without_shipping_without_discount = total - sale.discount_total
+        # Override to add amounts without shipping
+        result = super()._convert_amount(sale)
         result.update(
             {
-                "tax_without_shipping": float_round(tax, precision),
-                "untaxed_without_shipping": float_round(untaxed, precision),
-                "total_without_shipping": float_round(total, precision),
+                "tax_without_shipping": sale.item_amount_tax,
+                "untaxed_without_shipping": sale.item_amount_untaxed,
+                "total_without_shipping": sale.item_amount_total,
                 "total_without_shipping_without_discount": float_round(
-                    total_without_shipping_without_discount, precision
+                    sale.item_amount_total - sale.discount_total,
+                    sale.currency_id.decimal_places,
                 ),
             }
         )
         return result
 
-    def _prepare_carrier(self, carrier, cart=None):
-        service = self.component(usage="delivery_carrier")
-        return service._prepare_carrier(carrier, cart=cart)
-
-    # TODO: this method seems not used
-    def _get_available_carrier(self, cart):
-        return [
-            self._prepare_carrier(carrier, cart)
-            for carrier in cart._invader_available_carriers()
-        ]
-
     def _is_item(self, line):
-        res = super(AbstractSaleService, self)._is_item(line)
-        return res and not line.is_delivery
+        return not line.is_delivery and super()._is_item(line)
 
     def _convert_one_line(self, line):
-        """
-        Inherit to add the qty_delivered
-        :param line: sale.order.line
-        :return: dict
-        """
-        values = super(AbstractSaleService, self)._convert_one_line(line)
+        # Override to add the qty_delivered
+        values = super()._convert_one_line(line)
         values.update({"qty_delivered": line.qty_delivered})
         return values
+
+    def _json_parser_carrier(self):
+        return self.component(usage="delivery_carrier")._json_parser_carrier
