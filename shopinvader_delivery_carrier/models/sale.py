@@ -40,9 +40,14 @@ class SaleOrder(models.Model):
 
     def _invader_available_carriers(self):
         self.ensure_one()
-        return self.shopinvader_available_carrier_ids.sorted(
-            lambda c: c.rate_shipment(self).get("price", 0.0)
-        )
+        sort_key = {}
+        available_carriers = self.shopinvader_available_carrier_ids.browse()
+        for carrier in self.shopinvader_available_carrier_ids:
+            result = carrier.rate_shipment(self)
+            if result.get("success"):
+                available_carriers |= carrier
+                sort_key.update({carrier: result.get("price", 0.0)})
+        return available_carriers.sorted(lambda c: sort_key.get(c))
 
     def _set_carrier_and_price(self, carrier_id):
         wizard = (
