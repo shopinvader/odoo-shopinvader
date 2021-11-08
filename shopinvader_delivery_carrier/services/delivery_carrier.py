@@ -31,12 +31,10 @@ class DeliveryCarrierService(Component):
         cart = None
         if params.get("target") == "current_cart":
             cart = self.component(usage="cart")._get()
-        carriers = self._search(cart=cart, **params)
-        data = [self._prepare_carrier(rec, cart) for rec in carriers]
-        data.sort(key=lambda rec: rec["price"])
+        delivery_carriers = self._search(cart=cart, **params)
         vals = {
-            "size": len(data),
-            "data": data,
+            "size": len(delivery_carriers),
+            "data": [self._prepare_carrier(dc, cart) for dc in delivery_carriers],
         }
         # TODO DEPRECATED this old API is deprecated
         #  keep returing the result but this should be not used anymore
@@ -118,13 +116,16 @@ class DeliveryCarrierService(Component):
                     delivery_force_country_id=country.id,
                     delivery_force_zip_code=zip_code,
                 )
-            return cart.shopinvader_available_carrier_ids
+            return cart._invader_available_carriers()
         return self.shopinvader_backend.carrier_ids
 
     def _prepare_carrier(self, carrier, cart=None):
         res = carrier.jsonify(self._json_parser_carrier, one=True)
         res["type"] = None
-        res["price"] = carrier.rate_shipment(cart).get("price", 0.0) if cart else 0.0
+        price = 0.0
+        if cart:
+            price = carrier.rate_shipment(cart).get("price", 0.0)
+        res["price"] = price
         return res
 
     def _load_country(self, params):
