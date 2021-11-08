@@ -292,15 +292,19 @@ class ShopinvaderVariant(models.Model):
     def _compute_main_product(self):
         # Respect same order.
         order_by = [x.strip() for x in self.env["product.product"]._order.split(",")]
-        fields_to_read = ["tmpl_record_id"] + order_by
+        backends = self.mapped("backend_id")
+        fields_to_read = ["tmpl_record_id", "backend_id"] + order_by
         tmpl_ids = self.mapped("tmpl_record_id").ids
         # Use sudo to bypass permissions (we don't care)
         _variants = self.sudo().search(
-            [("tmpl_record_id", "in", tmpl_ids)], order="tmpl_record_id"
+            [("tmpl_record_id", "in", tmpl_ids), ("backend_id", "in", backends.ids)],
+            order="tmpl_record_id",
         )
         # Use `load=False` to not load template name
         variants = _variants.read(fields_to_read, load=False)
-        var_by_tmpl = groupby(variants, lambda x: x["tmpl_record_id"])
+        var_by_tmpl = groupby(
+            variants, lambda x: (x["tmpl_record_id"], x["backend_id"])
+        )
 
         def pick_1st_variant(prods):
             # NOTE: if the order is changed by adding `asc/desc` this can be broken
@@ -321,7 +325,10 @@ class ShopinvaderVariant(models.Model):
             tmpl: pick_1st_variant(tuple(prods)) for tmpl, prods in var_by_tmpl
         }
         for record in self:
-            record.main = main_by_tmpl.get(record.tmpl_record_id.id) == record.id
+            record.main = (
+                main_by_tmpl.get((record.tmpl_record_id.id, record.backend_id.id))
+                == record.id
+            )
 
     def get_shop_data(self):
         """Return product data for the shop."""
