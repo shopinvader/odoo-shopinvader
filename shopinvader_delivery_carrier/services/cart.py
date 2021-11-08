@@ -121,8 +121,7 @@ class CartService(Component):
     def _set_carrier(self, cart, carrier_id):
         if carrier_id not in cart.shopinvader_available_carrier_ids.ids:
             raise UserError(_("This delivery method is not available for you order"))
-        carrier = self.env["delivery.carrier"].browse(carrier_id)
-        cart.set_delivery_line(carrier, carrier.rate_shipment(cart).get("price", 0.0))
+        cart._set_carrier_and_price(carrier_id)
 
     def _unset_carrier(self, cart):
         cart._remove_delivery_line()
