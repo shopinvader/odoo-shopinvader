@@ -11,8 +11,7 @@ class TestSalesService(PortalModeCommonCase):
         res = service.search()
         res_ids = sorted([x["id"] for x in res["data"]])
         self.assertTrue(
-            "draft"
-            not in self.env["sale.order"].browse(res_ids).mapped("state")
+            "draft" not in self.env["sale.order"].browse(res_ids).mapped("state")
         )
         self.assertEqual(res_ids, sorted(self.shop_sales.ids))
 
@@ -22,9 +21,6 @@ class TestSalesService(PortalModeCommonCase):
         res = service.search()
         res_ids = sorted([x["id"] for x in res["data"]])
         self.assertTrue(
-            "draft"
-            not in self.env["sale.order"].browse(res_ids).mapped("state")
+            "draft" not in self.env["sale.order"].browse(res_ids).mapped("state")
         )
-        self.assertEqual(
-            res_ids, sorted((self.shop_sales + self.non_shop_sales).ids)
-        )
+        self.assertEqual(res_ids, sorted((self.shop_sales + self.non_shop_sales).ids))
