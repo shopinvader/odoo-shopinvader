@@ -16,12 +16,13 @@ class ShopinvaderVariant(models.Model):
     # stock information
     # shopinvader_product_stock_variant_selector
     # should inherit this method
-    def _prepare_selector_value(self, variant, value):
+    def _prepare_selector_value(self, variant, value, multi_variation):
         return {
             "name": value.name,
             "sku": variant.default_code or "",
             "available": variant.active,
             "selected": variant == self,
+            "multi_variation": multi_variation,
         }
 
     def _get_matching_variant(self, values):
@@ -41,6 +42,7 @@ class ShopinvaderVariant(models.Model):
             lambda l: l.attribute_id == attribute
         ).value_ids
         for value in values:
+            multi_variation = False
             if value in self.attribute_value_ids:
                 variant = self
             else:
@@ -55,7 +57,11 @@ class ShopinvaderVariant(models.Model):
                     variant = self._get_matching_variant(
                         selected_values + value
                     )
-            res["values"].append(self._prepare_selector_value(variant, value))
+                    if variant:
+                        multi_variation = True
+            res["values"].append(
+                self._prepare_selector_value(variant, value, multi_variation)
+            )
 
         return res
 
