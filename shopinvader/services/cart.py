@@ -289,12 +289,15 @@ class CartService(Component):
             raise NotImplementedError(_("Missing feature to clear the cart!"))
         return cart
 
-    def _add_item(self, cart, params):
+    def _check_allowed_product(self, cart, params):
         product = self.env["product.product"].browse(params["product_id"])
         if not product._add_to_cart_allowed(
             self.shopinvader_backend, partner=self.partner
         ):
             raise UserError(_("Product %s is not allowed") % product.name)
+
+    def _add_item(self, cart, params):
+        self._check_allowed_product(cart, params)
         existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
             self._upgrade_cart_item_quantity(cart, existing_item, params, action="sum")
@@ -321,12 +324,11 @@ class CartService(Component):
         partner = cart.partner_id
         ctx_lang = self.env.context.get("lang", partner.lang)
         if partner.lang != ctx_lang:
-            product_id = vals["product_id"]
-            vals["name"] = self._get_sale_order_line_name(product_id)
+            vals["name"] = self._get_sale_order_line_name(vals)
         return self.env["sale.order.line"].create(vals)
 
-    def _get_sale_order_line_name(self, product_id):
-        product = self.env["product.product"].browse(product_id)
+    def _get_sale_order_line_name(self, vals):
+        product = self.env["product.product"].browse(vals["product_id"])
         name = product.name_get()[0][1]
         if product.description_sale:
             name += "\n" + product.description_sale
