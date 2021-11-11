@@ -15,6 +15,14 @@
     />
 
     <menuitem
+        id="menu_shopinvader_orders"
+        name="Orders"
+        parent="menu_shopinvader_root"
+        sequence="5"
+        groups="sales_team.group_sale_salesman"
+    />
+
+    <menuitem
         id="menu_shopinvader_products"
         name="Products"
         parent="menu_shopinvader_root"
