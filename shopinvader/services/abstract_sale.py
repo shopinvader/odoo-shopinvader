@@ -60,6 +60,7 @@ class AbstractSaleService(AbstractComponent):
         product = self._convert_one_line_product(variant)
         return {
             "id": line.id,
+            "name": line.name,
             "product": product,
             "amount": {
                 "price": line.price_unit,
