@@ -120,13 +120,7 @@ repos:
     rev: 3.8.3
     hooks:
       - id: flake8
-        name: flake8 except __init__.py
-        exclude: /__init__\.py$
-        additional_dependencies: ["flake8-bugbear==20.1.4"]
-      - id: flake8
-        name: flake8 only __init__.py
-        args: ["--extend-ignore=F401"] # ignore unused imports in __init__.py
-        files: /__init__\.py$
+        name: flake8
         additional_dependencies: ["flake8-bugbear==20.1.4"]
   - repo: https://github.com/PyCQA/pylint
     rev: pylint-2.5.3
