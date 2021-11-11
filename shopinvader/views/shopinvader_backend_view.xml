@@ -26,25 +26,45 @@
                             class="oe_stat_button"
                             name="%(shopinvader_variant_act_window)d"
                             type="action"
-                            icon="fa-file-text-o"
+                            icon="fa-th-list"
                             context="{'search_default_backend_id': active_id}"
                         >
-                            <div class="o_stat_info">
-                                <field name="nbr_variant" class="o_stat_value" />
-                                <span class="o_stat_text">Products</span>
-                            </div>
+                            <field
+                                name="nbr_variant"
+                                string="Products"
+                                widget="statinfo"
+                            />
                         </button>
                         <button
                             class="oe_stat_button"
                             name="%(act_open_shopinvader_category_view)d"
                             type="action"
-                            icon="fa-file-text-o"
+                            icon="fa-th-list"
                             context="{'search_default_backend_id': active_id}"
                         >
-                            <div class="o_stat_info">
-                                <field name="nbr_category" class="o_stat_value" />
-                                <span class="o_stat_text">Categories</span>
-                            </div>
+                            <field
+                                name="nbr_category"
+                                string="Categories"
+                                widget="statinfo"
+                            />
+                        </button>
+                        <button
+                            class="oe_stat_button"
+                            name="%(action_cart)d"
+                            type="action"
+                            icon="fa-shopping-cart"
+                            context="{'search_default_shopinvader_backend_id': active_id}"
+                        >
+                            <field name="nbr_cart" string="Carts" widget="statinfo" />
+                        </button>
+                        <button
+                            class="oe_stat_button"
+                            name="%(action_sale)d"
+                            type="action"
+                            icon="fa-credit-card"
+                            context="{'search_default_shopinvader_backend_id': active_id}"
+                        >
+                            <field name="nbr_sale" string="Orders" widget="statinfo" />
                         </button>
                     </div>
                     <label for="name" class="oe_edit_only" />
