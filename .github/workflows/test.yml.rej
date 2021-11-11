@@ -1,0 +1,7 @@
+diff a/.github/workflows/test.yml b/.github/workflows/test.yml	(rejected hunks)
+@@ -36,2 +36,5 @@ jobs:
+           persist-credentials: false
++      - run: |
++          echo "running_env = dev" >> $ODOO_RC
++          echo "keychain_key_dev = HRdthrkXp28SCHX0kmwOgIob-82N-w8zWoE_UsctE7E=" >> $ODOO_RC
+       - run: oca_install_addons
