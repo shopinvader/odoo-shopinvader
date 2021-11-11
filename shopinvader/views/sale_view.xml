@@ -11,9 +11,6 @@
                 <field name="current_step_id" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
                 <field name="done_step_ids" widget="many2many_tags" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
             </field>
-            <!-- field name="company_id" position="before">
-                <field name="shopinvader_backend_id"/>
-            </field -->
         </field>
     </record>
 
@@ -25,10 +22,6 @@
         <field name="search_view_id" ref="sale.view_sales_order_filter"/>
         <field name="context">{'default_typology': 'cart'}</field>
         <field name="domain">[('typology', '=', 'cart')]</field>
-    </record>
-
-    <record id="sale.action_quotations" model="ir.actions.act_window">
-        <field name="domain">[('typology', '=', 'sale'), ('state','in',('draft','sent','cancel'))]</field>
     </record>
 
     <menuitem
