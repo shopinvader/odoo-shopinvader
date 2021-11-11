@@ -1,6 +1,6 @@
-# Copyright 2021 Camptocamp SA
-# @author Iván Todorovich <ivan.todorovich@gmail.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2021 Camptocamp SA (https://www.camptocamp.com).
+# @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
     "name": "Shopinvader Multi-Cart",
@@ -10,5 +10,5 @@
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader"],
-    "installable": True,
+    "data": ["views/sale_order.xml"],
 }
