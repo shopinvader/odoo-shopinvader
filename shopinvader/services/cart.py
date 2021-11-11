@@ -298,13 +298,14 @@ class CartService(Component):
 
     def _add_item(self, cart, params):
         self._check_allowed_product(cart, params)
-        existing_item = self._check_existing_cart_item(cart, params)
-        if existing_item:
-            self._upgrade_cart_item_quantity(cart, existing_item, params, action="sum")
+        item = self._check_existing_cart_item(cart, params)
+        if item:
+            self._upgrade_cart_item_quantity(cart, item, params, action="sum")
         else:
             with self.env.norecompute():
                 self._create_cart_line(cart, params)
             cart.recompute()
+        return item
 
     def _create_cart_line(self, cart, params):
         vals = self._prepare_cart_item(params, cart)
