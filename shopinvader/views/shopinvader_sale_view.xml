@@ -17,9 +17,6 @@
             <field name="user_id" position="attributes">
                 <attribute name="optional">hide</attribute>
             </field>
-            <field name="activity_ids" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </field>
             <field name="shopinvader_backend_id" position="attributes">
                 <attribute name="optional">show</attribute>
             </field>
@@ -38,9 +35,6 @@
                 <attribute name="create">false</attribute>
             </tree>
             <field name="user_id" position="attributes">
-                <attribute name="optional">hide</attribute>
-            </field>
-            <field name="activity_ids" position="attributes">
                 <attribute name="optional">hide</attribute>
             </field>
             <field name="shopinvader_backend_id" position="attributes">
@@ -74,7 +68,7 @@
         <field name="view_id" ref="view_shop_order_tree" />
         <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale" />
         <field name="context">{"default_typology": "sale"}</field>
-        <field name="domain">[("typology", "=", "sale")]</field>
+        <field name="domain">[("typology", "=", "sale"),("shopinvader_backend_id", "!=", False)]</field>
     </record>
 
     <menuitem

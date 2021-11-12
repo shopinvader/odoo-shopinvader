@@ -51,8 +51,6 @@
                 <field
                     name="shopinvader_state"
                     optional="hide"
-                    decoration-info="shopinvader_state in ['pending', 'processing']"
-                    decoration-success="shopinvader_state == 'shipped'"
                     widget="badge"
                 />
             </field>
@@ -71,8 +69,6 @@
                 <field
                     name="shopinvader_state"
                     optional="hide"
-                    decoration-info="shopinvader_state in ['pending', 'processing']"
-                    decoration-success="shopinvader_state == 'shipped'"
                     widget="badge"
                 />
             </field>
