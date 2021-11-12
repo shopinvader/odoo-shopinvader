@@ -4,8 +4,6 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import hashlib
-import os
 from collections import defaultdict
 from contextlib import contextmanager
 
@@ -344,7 +342,9 @@ class ShopinvaderBackend(models.Model):
                 groupby=["shopinvader_backend_id"],
                 lazy=False,
             )
-            counts = {r["shopinvader_backend_id"][0]: r["__count"] for r in res}
+            counts = {
+                r["shopinvader_backend_id"][0]: r["__count"] for r in res
+            }
             for rec in self:
                 rec[fname] = counts.get(rec.id, 0)
 
