@@ -6,10 +6,8 @@
 from contextlib import contextmanager
 from itertools import groupby
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.tools import float_compare, float_is_zero, float_round
-
-from odoo.addons.queue_job.exception import RetryableJobError
 
 from .tools import sanitize_attr_name
 
@@ -302,20 +300,15 @@ class ShopinvaderVariant(models.Model):
             # NOTE: if the order is changed by adding `asc/desc` this can be broken
             # but it's very unlikely that the default order for product.product
             # will be changed.
-            try:
-                ordered = sorted(prods, key=lambda var: [var[x] for x in order_by])
-            except TypeError as orig_exception:
-                # TypeError: '<' not supported between instances of 'bool' and 'str'
-                # It means we don't have all values to determine this value.
-                msg = _(
-                    "Cannot determine main variant for template ID: %s."
-                    "\nAt least one variant misses one of these values: %s."
-                    "\nWill try again later till 'max retries' count is reached."
-                ) % (prods[0]["tmpl_record_id"], ", ".join(order_by))
-                # This issue might depend on incomplete state of product info.
-                # Eg: missing translation for variant matching current lang.
-                # Let's retry later a bunch of times (5 by default).
-                raise RetryableJobError(msg) from orig_exception
+            def get_value(record, key):
+                if record[key] is False and self._fields[key].type in ("char", "text"):
+                    return ""
+                else:
+                    return record[key]
+
+            ordered = sorted(
+                prods, key=lambda var: [get_value(var, x) for x in order_by]
+            )
             return ordered[0].get("id") if ordered else None
 
         main_by_tmpl = {
