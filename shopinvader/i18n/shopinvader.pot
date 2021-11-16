@@ -71,16 +71,6 @@ msgstr ""
 
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
-msgid "<span class=\"o_stat_text\">Categories</span>"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
-msgid "<span class=\"o_stat_text\">Products</span>"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "<span>- 0: none</span>"
 msgstr ""
 
@@ -523,9 +513,7 @@ msgid "Cancel Membership Date"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.actions.act_window,name:shopinvader.action_cart
 #: model:ir.model.fields.selection,name:shopinvader.selection__sale_order__typology__cart
-#: model:ir.ui.menu,name:shopinvader.menu_sale_order
 #: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_cart
 msgid "Cart"
 msgstr ""
@@ -564,9 +552,17 @@ msgid "Cart notification ${object.name}"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.action_cart
+#: model:ir.ui.menu,name:shopinvader.menu_cart
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
+msgid "Carts"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_binding_wizard__product_category_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category_unbinding_wizard__shopinvader_category_ids
 #: model:ir.ui.menu,name:shopinvader.menu_shopinvader_category
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Categories"
 msgstr ""
 
@@ -2316,8 +2312,18 @@ msgid "Naming policy for orders and carts"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__nbr_cart
+msgid "Nbr Cart"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__nbr_category
 msgid "Nbr Category"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__nbr_sale
+msgid "Nbr Sale"
 msgstr ""
 
 #. module: shopinvader
@@ -2521,6 +2527,14 @@ msgstr ""
 msgid ""
 "Ordered Quantity: Invoice quantities ordered by the customer.\n"
 "Delivered Quantity: Invoice quantities delivered to the customer."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.actions.act_window,name:shopinvader.action_sale
+#: model:ir.ui.menu,name:shopinvader.menu_sale
+#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_orders
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
+msgid "Orders"
 msgstr ""
 
 #. module: shopinvader
@@ -3335,6 +3349,11 @@ msgid "Shopinvader Cart Step"
 msgstr ""
 
 #. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_sales_order_filter
+msgid "Shopinvader Carts"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__shopinvader_categ_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__shopinvader_categ_ids
 msgid "Shopinvader Categories"
@@ -3383,6 +3402,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model,name:shopinvader.model_shopinvader_notification
 msgid "Shopinvader Notification"
+msgstr ""
+
+#. module: shopinvader
+#: model_terms:ir.ui.view,arch_db:shopinvader.view_sales_order_filter
+msgid "Shopinvader Orders"
 msgstr ""
 
 #. module: shopinvader
