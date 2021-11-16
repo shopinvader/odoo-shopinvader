@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.1.1 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.2.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.4 | Shopinvader API_KEY Authentication
@@ -73,7 +73,7 @@ addon | version | summary
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 | Index Product Template Tags in Shopinvader
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 14.0.1.0.0 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
-[shopinvader_quotation](shopinvader_quotation/) | 14.0.2.1.0 | Shopinvader Quotation
+[shopinvader_quotation](shopinvader_quotation/) | 14.0.2.2.0 | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 | Expose the amount by tax to shopinvader
 [shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.0.1 | Manage Promotion and Coupon programs in Shopinvader
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.0.0 | Shopinvader Sale Packaging
