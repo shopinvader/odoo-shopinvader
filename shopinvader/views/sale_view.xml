@@ -18,34 +18,72 @@
                     attrs="{'invisible': [('typology', '!=', 'cart')]}"
                 />
             </field>
-            <!-- field name="company_id" position="before">
-                <field name="shopinvader_backend_id"/>
-            </field -->
         </field>
     </record>
 
-    <record id="action_cart" model="ir.actions.act_window">
-        <field name="name">Cart</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">sale.order</field>
-        <field name="view_mode">tree,form,calendar,graph</field>
-        <field name="search_view_id" ref="sale.view_sales_order_filter" />
-        <field name="context">{'default_typology': 'cart'}</field>
-        <field name="domain">[('typology', '=', 'cart')]</field>
+    <record id="view_sales_order_filter" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter" />
+        <field name="arch" type="xml">
+            <field name="team_id" position="after">
+                <field name="shopinvader_backend_id" />
+                <field name="typology" />
+            </field>
+            <filter name="activities_overdue" position="before">
+                <separator />
+                <filter
+                    name="shopinvader_cart"
+                    string="Shopinvader Carts"
+                    domain="[('typology', '=', 'cart')]"
+                />
+                <filter
+                    name="shopinvader_sale"
+                    string="Shopinvader Orders"
+                    domain="[('typology', '=', 'sale')]"
+                />
+                <separator />
+            </filter>
+        </field>
     </record>
 
-    <record id="sale.action_quotations" model="ir.actions.act_window">
-        <field
-            name="domain"
-        >[('typology', '=', 'sale'), ('state','in',('draft','sent','cancel'))]</field>
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="arch" type="xml">
+            <field name="invoice_status" position="before">
+                <field name="shopinvader_backend_id" optional="hide" />
+                <field name="typology" optional="hide" />
+            </field>
+            <field name="invoice_status" position="after">
+                <field
+                    name="shopinvader_state"
+                    optional="hide"
+                    decoration-info="shopinvader_state in ['pending', 'processing']"
+                    decoration-success="shopinvader_state == 'shipped'"
+                    widget="badge"
+                />
+            </field>
+        </field>
     </record>
 
-    <menuitem
-        action="action_cart"
-        id="menu_sale_order"
-        parent="sale.sale_menu_root"
-        sequence="4"
-        groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"
-    />
+    <record id="view_quotation_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="shopinvader_backend_id" optional="hide" />
+                <field name="typology" optional="hide" />
+            </field>
+            <field name="state" position="after">
+                <field
+                    name="shopinvader_state"
+                    optional="hide"
+                    decoration-info="shopinvader_state in ['pending', 'processing']"
+                    decoration-success="shopinvader_state == 'shipped'"
+                    widget="badge"
+                />
+            </field>
+        </field>
+    </record>
 
 </odoo>
