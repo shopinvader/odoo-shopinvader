@@ -57,6 +57,7 @@ addon | version | summary
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 | Shopinvader Customer firstname/lastname
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 14.0.1.0.1 | Shopinvader Check VAT with invader environnement
 [shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 14.0.1.0.0 | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
+[shopinvader_portal_mode](shopinvader_portal_mode/) | 14.0.1.0.0 | Shopinvader portal mode
 [shopinvader_pos](shopinvader_pos/) | 14.0.2.2.0 | Shopinvader for PoS
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_brand](shopinvader_product_brand/) | 14.0.1.3.1 | Shopinvader product Brand
