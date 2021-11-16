@@ -80,12 +80,6 @@ msgid "Quotation"
 msgstr ""
 
 #. module: shopinvader_quotation
-#: model:ir.actions.act_window,name:shopinvader_quotation.action_quotation_request
-#: model:ir.ui.menu,name:shopinvader_quotation.menu_sale_order_quotation
-msgid "Quotation Requests"
-msgstr ""
-
-#. module: shopinvader_quotation
 #: model:mail.template,subject:shopinvader_quotation.email_quotation_notification
 msgid "Quotation notification ${object.name}"
 msgstr ""
@@ -97,6 +91,12 @@ msgid "Quotation request"
 msgstr ""
 
 #. module: shopinvader_quotation
+#: model:ir.actions.act_window,name:shopinvader_quotation.action_quotations
+#: model:ir.ui.menu,name:shopinvader_quotation.menu_quotations
+msgid "Quotations"
+msgstr ""
+
+#. module: shopinvader_quotation
 #: model:ir.model,name:shopinvader_quotation.model_sale_order
 msgid "Sales Order"
 msgstr ""
@@ -104,6 +104,11 @@ msgstr ""
 #. module: shopinvader_quotation
 #: model:ir.model,name:shopinvader_quotation.model_shopinvader_notification
 msgid "Shopinvader Notification"
+msgstr ""
+
+#. module: shopinvader_quotation
+#: model_terms:ir.ui.view,arch_db:shopinvader_quotation.view_sales_order_filter
+msgid "Shopinvader Quotations"
 msgstr ""
 
 #. module: shopinvader_quotation
