@@ -83,7 +83,7 @@ class InvoiceService(Component):
         return invoices
 
     def _get_sale_order_domain(self):
-        return self._default_domain_for_partner_records() + [("typology", "=", "sale")]
+        return self.component(usage="sales")._get_base_search_domain()
 
     def _get_report_action(self, target, params=None):
         """Get the action/dict to generate the report.
