@@ -32,7 +32,7 @@
                 <filter
                     name="shopinvader_sale"
                     string="Shopinvader Orders"
-                    domain="[('typology', '=', 'sale')]"
+                    domain="[('typology', '=', 'sale'), ('shopinvader_backend_id','!=',False)]"
                 />
                 <separator />
             </filter>
