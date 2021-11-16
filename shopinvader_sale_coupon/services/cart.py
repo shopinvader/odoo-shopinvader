@@ -61,27 +61,23 @@ class CartService(Component):
         return res
 
     def _get_lines_to_copy(self, cart):
-        return super()._get_lines_to_copy(cart).filtered(lambda l: not l.is_reward_line)
+        return (
+            super()
+            ._get_lines_to_copy(cart)
+            .filtered(lambda l: not l.is_reward_line)
+        )
 
     # Validator
 
     def _validator_apply_coupon(self):
-        return {
-            "code": {
-                "type": "string",
-                "required": True,
-            }
-        }
+        return {"code": {"type": "string", "required": True}}
 
     def _validator_recompute_coupon_lines(self):
         return {}
 
     def _subvalidator_skip_coupon_recompute(self):
         return {
-            "skip_coupon_recompute": {
-                "type": "boolean",
-                "required": False,
-            }
+            "skip_coupon_recompute": {"type": "boolean", "required": False}
         }
 
     def _validator_add_item(self):

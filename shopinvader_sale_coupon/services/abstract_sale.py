@@ -40,11 +40,7 @@ class AbstractSaleService(AbstractComponent):
 
     def _convert_one_line(self, line):
         res = super()._convert_one_line(line)
-        res.update(
-            {
-                "is_reward_line": line.is_reward_line,
-            }
-        )
+        res.update({"is_reward_line": line.is_reward_line})
         return res
 
     def _parser_coupon(self):

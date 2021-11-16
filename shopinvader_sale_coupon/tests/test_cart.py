@@ -21,11 +21,10 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
     def _generate_coupons(self, program, qty=1):
         existing_coupons = program.coupon_ids
         # Create coupons
-        self.env["coupon.generate.wizard"].with_context(active_id=program.id).create(
-            {
-                "generation_type": "nbr_coupon",
-                "nbr_coupons": qty,
-            }
+        self.env["sale.coupon.generate"].with_context(
+            active_id=program.id
+        ).create(
+            {"generation_type": "nbr_coupon", "nbr_coupons": qty}
         ).generate_coupon()
         # Return only the created coupons
         return program.coupon_ids - existing_coupons
@@ -35,10 +34,7 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         # as the product B is missing
         res = self.service.dispatch(
             "add_item",
-            params={
-                "product_id": self.product_A.id,
-                "item_qty": 1.0,
-            },
+            params={"product_id": self.product_A.id, "item_qty": 1.0},
         )
         self.assertEqual(
             len(self.cart.order_line),
@@ -56,10 +52,7 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         # as the product B is now in the order
         res = self.service.dispatch(
             "add_item",
-            params={
-                "product_id": self.product_B.id,
-                "item_qty": 1.0,
-            },
+            params={"product_id": self.product_B.id, "item_qty": 1.0},
         )
         self.assertEqual(
             len(self.cart.order_line), 3, "The promo should've been applied"
@@ -77,10 +70,7 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         # Test case 3 (1 B): Assert that the reward is removed when the order
         # is modified and doesn't match the rules anymore
         res = self.service.dispatch(
-            "delete_item",
-            params={
-                "item_id": self.cart.order_line[0].id,
-            },
+            "delete_item", params={"item_id": self.cart.order_line[0].id},
         )
         self.assertEqual(
             len(self.cart.order_line),
@@ -101,10 +91,7 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         # Buy 1 A + Enter code, 1 A is free
         res = self.service.dispatch(
             "add_item",
-            params={
-                "product_id": self.product_A.id,
-                "item_qty": 1.0,
-            },
+            params={"product_id": self.product_A.id, "item_qty": 1.0},
         )
         self.assertEqual(
             len(self.cart.order_line),
@@ -121,7 +108,9 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         with self.assertRaisesRegex(UserError, "This coupon is invalid"):
             self.service.dispatch("apply_coupon", params={"code": "fakecode"})
         # Enter code
-        res = self.service.dispatch("apply_coupon", params={"code": "promocode"})
+        res = self.service.dispatch(
+            "apply_coupon", params={"code": "promocode"}
+        )
         self.assertEqual(
             len(self.cart.order_line.ids),
             2,
@@ -138,18 +127,18 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         # Buy 1 A + Enter code, 1 A is free
         self.service.dispatch(
             "add_item",
-            params={
-                "product_id": self.product_A.id,
-                "item_qty": 1.0,
-            },
+            params={"product_id": self.product_A.id, "item_qty": 1.0},
         )
         self.assertEqual(
             len(self.cart.order_line),
             1,
-            "The coupon shouldn't have been applied as the code hasn't been entered yet",
+            "The coupon shouldn't have been applied as the code hasn't "
+            "been entered yet",
         )
         # Enter code
-        res = self.service.dispatch("apply_coupon", params={"code": coupon.code})
+        res = self.service.dispatch(
+            "apply_coupon", params={"code": coupon.code}
+        )
         self.assertEqual(
             len(self.cart.order_line.ids),
             2,
@@ -167,11 +156,13 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         )
         self.assertEqual(coupon.state, "used")
         # Try to apply twice
-        with self.assertRaisesRegex(UserError, "This coupon has already been used"):
+        with self.assertRaisesRegex(
+            UserError, "This coupon has already been used"
+        ):
             self.service.dispatch("apply_coupon", params={"code": coupon.code})
 
     def test_promotion_on_next_order(self):
-        program = self.env["coupon.program"].create(
+        program = self.env["sale.coupon.program"].create(
             {
                 "name": "Free Product A if at least 1 article",
                 "promo_code_usage": "no_code_needed",
@@ -185,10 +176,7 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         # Buy 2 B, 1 A coupon should be given
         res = self.service.dispatch(
             "add_item",
-            params={
-                "product_id": self.product_B.id,
-                "item_qty": 2.0,
-            },
+            params={"product_id": self.product_B.id, "item_qty": 2.0},
         )
         generated_coupon = res["data"]["generated_coupon_ids"]["items"][0]
         self.assertEqual(
