@@ -3060,6 +3060,11 @@ msgid "Sale Order Count"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__sale_settings
+msgid "Sale Settings"
+msgstr ""
+
+#. module: shopinvader
 #: code:addons/shopinvader/models/shopinvader_notification.py:0
 #, python-format
 msgid "Sale ask by email"
