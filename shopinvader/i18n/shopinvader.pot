@@ -523,15 +523,6 @@ msgid "Cancel Membership Date"
 msgstr ""
 
 #. module: shopinvader
-#: code:addons/shopinvader/models/shopinvader_variant.py:0
-#, python-format
-msgid ""
-"Cannot determine main variant for template ID: %s.\n"
-"At least one variant misses one of these values: %s.\n"
-"Will try again later till 'max retries' count is reached."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.actions.act_window,name:shopinvader.action_cart
 #: model:ir.model.fields.selection,name:shopinvader.selection__sale_order__typology__cart
 #: model:ir.ui.menu,name:shopinvader.menu_sale_order
