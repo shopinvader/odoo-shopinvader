@@ -51,6 +51,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_product_attribute_set',
         'odoo14-addon-shopinvader_product_brand',
         'odoo14-addon-shopinvader_product_brand_image',
+        'odoo14-addon-shopinvader_product_brand_tag',
         'odoo14-addon-shopinvader_product_media',
         'odoo14-addon-shopinvader_product_new',
         'odoo14-addon-shopinvader_product_order',
