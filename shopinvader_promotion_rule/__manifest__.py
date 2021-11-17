@@ -12,5 +12,5 @@
     "application": False,
     "installable": True,
     "depends": ["shopinvader", "component", "sale_promotion_rule"],
-    "data": ["data/cart_step.xml", "views/shopinvader_backend.xml"],
+    "data": ["data/cart_step.xml"],
 }
