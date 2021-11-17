@@ -15,6 +15,16 @@ _logger = logging.getLogger(__name__)
 class CartService(Component):
     _inherit = "shopinvader.cart.service"
 
+    def _can_apply_promotions(self, cart):
+        """
+        Allow to determine if we can apply promotions
+        """
+        if self.shopinvader_backend.always_apply_promotion or (
+            cart.current_step_id and cart.current_step_id.code != "cart_init"
+        ):
+            return True
+        return False
+
     def _update(self, cart, params):
         is_coupon_code_specified = "coupon_code" in params
         coupon_code = params.pop("coupon_code", None)
@@ -43,19 +53,19 @@ class CartService(Component):
 
     def _add_item(self, cart, params):
         res = super()._add_item(cart, params)
-        if cart.current_step_id and cart.current_step_id.code != "cart_init":
+        if self._can_apply_promotions(cart):
             cart.apply_promotions()
         return res
 
     def _update_item(self, cart, params, item=False):
         res = super()._update_item(cart, params, item)
-        if cart.current_step_id and cart.current_step_id.code != "cart_init":
+        if self._can_apply_promotions(cart):
             cart.apply_promotions()
         return res
 
     def _delete_item(self, cart, params):
         res = super()._delete_item(cart, params)
-        if cart.current_step_id and cart.current_step_id.code != "cart_init":
+        if self._can_apply_promotions(cart):
             cart.apply_promotions()
         return res
 
