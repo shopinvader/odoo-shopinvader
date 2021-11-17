@@ -359,6 +359,11 @@ msgid "Sync State"
 msgstr ""
 
 #. module: shopinvader_product_brand
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__tag_ids
+msgid "Tags"
+msgstr ""
+
+#. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__url_builder
 msgid "Url Builder"
 msgstr ""
