@@ -113,6 +113,10 @@ class BaseShopinvaderService(AbstractComponent):
             "order": {"type": "string", "nullable": True},
         }
 
+    @property
+    def _exposed_model(self):
+        return self.env[self._expose_model]
+
     def _paginate_search(
         self, default_page=1, default_per_page=5, order=None, **params
     ):
@@ -133,11 +137,10 @@ class BaseShopinvaderService(AbstractComponent):
         if params.get("domain"):
             custom_domain = expression.normalize_domain(params.pop("domain"))
             domain = expression.AND([domain, custom_domain])
-        model_obj = self.env[self._expose_model]
-        total_count = model_obj.search_count(domain)
+        total_count = self._exposed_model.search_count(domain)
         page = params.pop("page", default_page)
         per_page = params.pop("per_page", default_per_page)
-        records = model_obj.search(
+        records = self._exposed_model.search(
             domain,
             limit=per_page,
             offset=per_page * (page - 1),
@@ -158,7 +161,7 @@ class BaseShopinvaderService(AbstractComponent):
     def _get(self, _id):
         domain = expression.normalize_domain(self._get_base_search_domain())
         domain = expression.AND([domain, [("id", "=", _id)]])
-        record = self.env[self._expose_model].search(domain)
+        record = self._exposed_model.search(domain)
         if not record:
             raise MissingError(
                 _("The record %s %s does not exist") % (self._expose_model, _id)
