@@ -8,15 +8,26 @@ class BaseShopinvaderService(AbstractComponent):
 
     def _get_openapi_default_parameters(self):
         defaults = super(BaseShopinvaderService, self)._get_openapi_default_parameters()
-        defaults.append(
-            {
-                "name": "PARTNER-EMAIL",
-                "in": "header",
-                "description": "Logged partner email "
-                "(Only used when authenticated by auth_api_key)",
-                "required": False,
-                "schema": {"type": "string"},
-                "style": "simple",
-            }
+        defaults.extend(
+            [
+                {
+                    "name": "API-KEY",
+                    "in": "header",
+                    "description": "Auth API key "
+                    "(Only used when authenticated by API key)",
+                    "required": False,
+                    "schema": {"type": "string"},
+                    "style": "simple",
+                },
+                {
+                    "name": "PARTNER-EMAIL",
+                    "in": "header",
+                    "description": "Logged partner email "
+                    "(Only used when authenticated by API key)",
+                    "required": False,
+                    "schema": {"type": "string"},
+                    "style": "simple",
+                },
+            ]
         )
         return defaults
