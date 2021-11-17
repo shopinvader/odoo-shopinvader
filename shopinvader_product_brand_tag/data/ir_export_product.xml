@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2021 Camptocamp (http://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@gmail.com>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="ir_exp_shopinvader_variant_brand_tag_ids" model="ir.exports.line">
+        <field name="name">shopinvader_brand_id/serialized_tag_ids</field>
+        <field
+            name="target"
+        >shopinvader_brand_id:brand/serialized_tag_ids:tag_ids</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+</odoo>
