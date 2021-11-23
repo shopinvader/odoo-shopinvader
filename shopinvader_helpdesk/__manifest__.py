@@ -10,8 +10,11 @@
     "depends": [
         "shopinvader",
         "helpdesk_mgmt_rest_api",  # OCA version
+        "helpdesk_mgmt_sale",  # Sale info on helpdesk tickets
     ],
-    "data": [],
+    "data": [
+        "security/ir.model.access.csv",
+    ],
     "demo": [],
     "qweb": [],
 }

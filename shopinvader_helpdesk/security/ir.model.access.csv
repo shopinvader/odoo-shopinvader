@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdesk_ticket_sale_line_rest_api,helpdesk.ticket.sale.line.rest_api,helpdesk_mgmt_sale.model_helpdesk_ticket_sale_line,helpdesk_mgmt_rest_api.group_helpdesk_rest_api,1,1,1,1
