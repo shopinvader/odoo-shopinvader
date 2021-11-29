@@ -20,6 +20,9 @@ class AddressService(Component):
         # then we want to cache it.
         return needed or shop_partner == partner
 
+    def _get_type_domain(self):
+        return ["contact", "invoice", "delivery", "other"]
+
     def _default_domain_for_partner_records(
         self, partner_field="partner_id", operator="=", with_backend=True, **kw
     ):
@@ -33,7 +36,7 @@ class AddressService(Component):
         # Complete override of domain generation as there's complex logic
         # which is delegated completely to `_make_address_domain`
         domains = [
-            [("type", "in", ("delivery", "invoice", "contact", "other"))],
+            [("type", "in", self._get_type_domain())],
             self.invader_partner_user._make_address_domain(),
         ]
         return expression.AND(domains)
