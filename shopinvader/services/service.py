@@ -115,7 +115,7 @@ class BaseShopinvaderService(AbstractComponent):
 
     @property
     def _exposed_model(self):
-        return self.env[self._expose_model]
+        return self.env.get(self._expose_model)
 
     def _paginate_search(
         self, default_page=1, default_per_page=5, order=None, **params
