@@ -26,7 +26,7 @@ addon | version | summary
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 13.0.1.0.0 | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 13.0.2.0.0 | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 13.0.1.0.0 | Shopinvader Display category image for product
-[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.2.2.1 | Enable registration of multiple users per each company customer.
+[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 13.0.2.2.2 | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 13.0.1.1.1 | Integrate customer multi user and wishlist.
 [shopinvader_customer_price](shopinvader_customer_price/) | 13.0.1.0.1 | Expose customer's specific prices.
 [shopinvader_customer_price_wishlist](shopinvader_customer_price_wishlist/) | 13.0.1.1.0 | Expose customer's specific prices.
