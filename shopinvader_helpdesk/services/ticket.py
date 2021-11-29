@@ -51,7 +51,12 @@ class TicketService(Component):
 
     def _json_parser(self):
         res = super()._json_parser()
-        res += [("sale_line_ids:sale_lines", ["sale_line_id", "product_name", "qty"])]
+        res += [
+            (
+                "sale_line_ids:sale_lines",
+                [("sale_line_id", lambda rec, fname: rec.id), "product_name", "qty"],
+            )
+        ]
         return res
 
     @restapi.method(
