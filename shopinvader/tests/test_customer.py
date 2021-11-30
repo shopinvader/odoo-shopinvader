@@ -4,6 +4,7 @@
 
 import logging
 
+from odoo.exceptions import MissingError, UserError
 from odoo.tools import mute_logger
 
 from .common import CommonCase
@@ -13,6 +14,14 @@ _logger = logging.getLogger(__name__)
 
 
 class TestCustomerCommon(CommonCase):
+    @classmethod
+    def setUpClass(cls):
+        super(TestCustomerCommon, cls).setUpClass()
+        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner_binding = cls.env.ref("shopinvader.shopinvader_partner_1")
+        cls.address = cls.env.ref("shopinvader.partner_1_address_1")
+        cls.partner_2 = cls.env.ref("shopinvader.partner_2")
+
     def setUp(self, *args, **kwargs):
         super(TestCustomerCommon, self).setUp(*args, **kwargs)
         self.data = {
@@ -30,6 +39,11 @@ class TestCustomerCommon(CommonCase):
         ) as work:
             self.service = work.component(usage="customer")
             self.address_service = work.component(usage="addresses")
+
+        with self.work_on_services(
+            partner=self.partner, shopinvader_session=self.shopinvader_session
+        ) as work:
+            self.service_with_partner = work.component(usage="customer")
 
     def _test_partner_data(self, partner, data):
         _check_partner_data(self, partner, data)
@@ -99,3 +113,38 @@ class TestCustomer(TestCustomerCommon):
         self.service._load_partner_work_context(invader_partner)
         self.service.sign_in()
         self.assertFalse(SaleOrder.search(sale_domain))
+
+    def test_update_customer(self):
+        params = {"street": "New Street"}
+        res = self.service_with_partner.dispatch(
+            "update", self.partner.id, params=params
+        )
+        self.assertEqual(res["data"]["id"], self.partner.id)
+        self.assertEquals(self.partner.street, "New Street")
+        self.assertEquals(self.partner_binding.street, "New Street")
+
+    def test_update_customer_no_partner(self):
+        params = {"street": "New Street"}
+        with self.assertRaises(UserError):
+            self.service.dispatch("update", self.partner.id, params=params)
+
+    def test_update_customer_binding(self):
+        params = {"external_id": "D5CdkqOEL"}
+        res = self.service_with_partner.dispatch(
+            "update", self.partner.id, params=params
+        )
+        self.assertEqual(res["data"]["id"], self.partner.id)
+        self.assertEquals(self.partner_binding.external_id, "D5CdkqOEL")
+
+    def test_update_customer_not_allowed(self):
+        params = {"street": "New Street"}
+
+        with self.assertRaises(MissingError):
+            self.service_with_partner.dispatch(
+                "update", self.partner_2.id, params=params
+            )
+
+    def test_update_customer_child_not_allowed(self):
+        params = {"street": "New Street"}
+        with self.assertRaises(UserError):
+            self.service_with_partner.dispatch("update", self.address.id, params=params)

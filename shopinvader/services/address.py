@@ -72,6 +72,7 @@ class AddressService(Component):
         return self._to_json(self._get(_id))
 
     def _store_cache_needed(self, partner):
+        # TODO remove this kind of checks
         return partner.address_type == "profile"
 
     # Validator
