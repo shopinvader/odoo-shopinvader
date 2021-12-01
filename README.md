@@ -71,6 +71,7 @@ addon | version | summary
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.1 | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 14.0.1.1.0 | Shopinvader Product Link
+[shopinvader_product_template_multi_link_date_span](shopinvader_product_template_multi_link_date_span/) | 14.0.1.0.0 | Integrate `product_template_multi_link_date_span` in Shopinvader
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 | Index Product Template Tags in Shopinvader
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 14.0.1.0.0 | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 | Ease creation of variants selector on shopinvader sites
