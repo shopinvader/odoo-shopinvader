@@ -55,8 +55,11 @@ class SaleOrder(models.Model):
                 rec.shopinvader_backend_id._send_notification("quotation_request", rec)
         return True
 
-    def action_quotation_sent(self):
-        res = super().action_quotation_sent()
-        # If the order is sent from the backend make it visible to the shop.
-        self.typology = "quotation"
-        return res
+    def write(self, vals):
+        # Set the typology to "quotation" when the quotation is sent.
+        # Normally there are two cases where this happens:
+        # * When the :meth:`action_quotation_sent` is called.
+        # * When a message is posted with context `mark_so_as_sent=True`.
+        if vals.get("state") == "sent":
+            vals["typology"] = "quotation"
+        return super().write(vals)

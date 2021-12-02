@@ -36,6 +36,15 @@ class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
         self.assertEqual(order.state, "sent")
         self.assertEqual(order.typology, "quotation")
 
+    def test_send_message_post(self):
+        order = self.cart.copy({"typology": "sale"})
+        self.assertEqual(order.typology, "sale")
+        action = order.action_quotation_send()
+        # pylint: disable=translation-required
+        order.with_context(action["context"]).message_post(body="Test")
+        self.assertEqual(order.state, "sent")
+        self.assertEqual(order.typology, "quotation")
+
     def test_visibility(self):
         order = self.cart.copy({"typology": "sale"})
         response = self.quotation_service.dispatch("search")
