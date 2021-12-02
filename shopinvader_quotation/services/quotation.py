@@ -4,6 +4,7 @@
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 
@@ -49,6 +50,12 @@ class QuotationService(Component):
 
     def _validator_confirm(self):
         return {}
+
+    def _validator_search(self):
+        res = self._default_validator_search()
+        res.pop("domain", None)
+        res.update({"id": {"coerce": to_int, "type": "integer"}})
+        return res
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
