@@ -20,7 +20,7 @@ Available addons
 addon | version | summary
 --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.3.1 | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.4.0 | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.5 | Shopinvader API_KEY Authentication
