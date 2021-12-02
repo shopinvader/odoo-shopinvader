@@ -2604,6 +2604,12 @@ msgid "Partner"
 msgstr ""
 
 #. module: shopinvader
+#: code:addons/shopinvader/services/customer.py:0
+#, python-format
+msgid "Partner %s is not a customer"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__contract_ids
 msgid "Partner Contracts"
 msgstr ""
@@ -4295,6 +4301,11 @@ msgid "Variants"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_product_link_count
+msgid "Variants Links Count"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__property_stock_supplier
 msgid "Vendor Location"
 msgstr ""
@@ -4468,6 +4479,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__x_linux_compatible
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__x_linux_compatible
 msgid "X Linux Compatible"
+msgstr ""
+
+#. module: shopinvader
+#: code:addons/shopinvader/services/customer.py:0
+#, python-format
+msgid "You must provide a partner"
 msgstr ""
 
 #. module: shopinvader
