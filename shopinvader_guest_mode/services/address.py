@@ -21,6 +21,8 @@ class AddressService(Component):
         res = super().update(_id=_id, **params)
         guest = self.component(usage="guest")
         binding = guest._get_binding(address.email)
+        # TODO: this should be trashed or moved
+        # as the frontend can now use customer/update
         if binding.is_guest and binding.address_type == "profile":
             response = shopinvader_response.get()
             store_cache = response.store_cache
