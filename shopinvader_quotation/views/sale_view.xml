@@ -14,7 +14,7 @@
                 <filter
                     string="Shopinvader Quotations"
                     name="shopinvader_quotation"
-                    domain="[('typology', '=', 'quotation')]"
+                    domain="[('typology', '=', 'quotation'), ('shopinvader_backend_id', '!=', False)]"
                 />
             </filter>
         </field>
@@ -31,7 +31,9 @@
             ref="sale.sale_order_view_search_inherit_quotation"
         />
         <field name="context">{"default_typology": "quotation"}</field>
-        <field name="domain">[("typology", "=", "quotation")]</field>
+        <field name="domain">
+            [("typology", "=", "quotation"), ("shopinvader_backend_id", "!=", False)]
+        </field>
     </record>
 
     <menuitem
