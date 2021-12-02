@@ -17,6 +17,7 @@ class AbstractSaleService(AbstractComponent):
             {
                 "promo_code": sale.promo_code,
                 "reward_amount": sale.reward_amount,
+                "reward_amount_tax_incl": sale.reward_amount_tax_incl,
                 "applied_coupon_ids": self._convert_coupon(sale.applied_coupon_ids),
                 "generated_coupon_ids": self._convert_coupon(sale.generated_coupon_ids),
                 "no_code_promo_program_ids": self._convert_coupon_programs(
