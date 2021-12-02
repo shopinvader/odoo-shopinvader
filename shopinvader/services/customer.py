@@ -68,36 +68,56 @@ class CustomerService(Component):
     def _validator_create(self):
         address = self.component(usage="addresses")
         schema = address._validator_create()
-        exclude_keys = ["type"]
-        for key in exclude_keys:
-            schema.pop(key, None)
         schema.update(
             {
-                "email": {"type": "string", "required": True},
-                "external_id": {"type": "string", "required": True},
-                "vat": {"type": "string", "required": False},
-                "company_name": {"type": "string", "required": False},
-                "function": {"type": "string", "required": False},
+                # Email is mandatory as of today
+                "email": {"type": "string", "required": True, "nullable": False},
             }
         )
+        schema.update(self._validator_external_ref())
+        for key in self._validator_create_exclude_keys():
+            schema.pop(key, None)
+        for key in self._validator_create_non_required_address_keys():
+            if key in schema:
+                schema[key]["required"] = False
+                schema[key]["nullable"] = True
         return schema
 
     def _validator_update(self):
         address = self.component(usage="addresses")
         schema = address._validator_update()
-        exclude_keys = ["type"]
-        for key in exclude_keys:
+        schema.update(self._validator_external_ref())
+        for key in self._validator_update_exclude_keys():
             schema.pop(key, None)
-        schema.update(
-            {
-                "email": {"type": "string", "required": False},
-                "external_id": {"type": "string", "required": False},
-                "vat": {"type": "string", "required": False},
-                "company_name": {"type": "string", "required": False},
-                "function": {"type": "string", "required": False},
-            }
-        )
+        for key in self._validator_update_non_required_address_keys():
+            if key in schema:
+                schema[key]["required"] = False
+                schema[key]["nullable"] = True
         return schema
+
+    def _validator_create_exclude_keys(self):
+        return ["type"]
+
+    def _validator_update_exclude_keys(self):
+        return self._validator_create_exclude_keys()
+
+    def _validator_create_non_required_address_keys(self):
+        # fmt: off
+        return [
+            "external_id",
+            "vat",
+            "company_name",
+            "function",
+        ]
+        # fmt: on
+
+    def _validator_update_non_required_address_keys(self):
+        return self._validator_create_non_required_address_keys() + ["email"]
+
+    def _validator_external_ref(self):
+        return {
+            "external_id": {"type": "string", "required": False, "nullable": True},
+        }
 
     def _get_base_search_domain(self):
         return self._default_domain_for_partner_records(

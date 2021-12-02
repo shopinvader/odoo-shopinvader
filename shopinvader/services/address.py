@@ -155,6 +155,9 @@ class AddressService(Component):
             "opt_in": {"coerce": to_bool, "type": "boolean"},
             "opt_out": {"coerce": to_bool, "type": "boolean"},
             "lang": {"type": "string", "required": False},
+            "vat": {"type": "string", "required": False, "nullable": True},
+            "company_name": {"type": "string", "required": False, "nullable": True},
+            "function": {"type": "string", "required": False, "nullable": True},
         }
         return res
 
