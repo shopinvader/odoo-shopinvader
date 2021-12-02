@@ -202,6 +202,36 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
             "Coupons for next order should've been generated for this partner",
         )
 
+    def test_reward_amount(self):
+        self.service.dispatch(
+            "add_item",
+            params={
+                "product_id": self.product_A.id,
+                "item_qty": 1.0,
+            },
+        )
+        cart = self.service.dispatch(
+            "add_item",
+            params={
+                "product_id": self.product_B.id,
+                "item_qty": 2.0,
+            },
+        )
+        self.assertAlmostEqual(
+            cart["data"]["reward_amount"],
+            -self.product_B.taxes_id.compute_all(self.product_B.list_price)[
+                "total_excluded"
+            ],
+            2,
+            "Untaxed reward amount should be untaxed unit price of product B",
+        )
+        self.assertAlmostEqual(
+            cart["data"]["reward_amount_tax_incl"],
+            -self.product_B.list_price,
+            2,
+            "Tax included reward amount should be tax included unit price of product B",
+        )
+
     def test_manual_recompute(self):
         # Test case 1 (1 A 1 B): Assert that no reward is given because
         # we're skipping the recompute
