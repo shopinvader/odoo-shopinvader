@@ -89,3 +89,14 @@ class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
         self.quotation_service.dispatch("confirm", order.id)
         self.assertEqual(order.typology, "sale")
         self.assertEqual(order.shopinvader_backend_id, self.backend)
+
+    def test_search_pagination(self):
+        quotation = self.cart.copy({"typology": "quotation"})
+        quotation.copy()
+        quotation.copy()
+        params = {"per_page": 2}
+        res = self.quotation_service.dispatch("search", params=params)["data"]
+        self.assertEqual(len(res), 2)
+        params = {"per_page": 2, "page": 2}
+        res = self.quotation_service.dispatch("search", params=params)["data"]
+        self.assertEqual(len(res), 1)
