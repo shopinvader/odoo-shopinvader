@@ -70,7 +70,7 @@ class CustomerService(Component):
         schema = address._validator_create()
         schema.update(
             {
-                # Email is mandatory as of today
+                # Email is mandatory anyway
                 "email": {"type": "string", "required": True, "nullable": False},
             }
         )
