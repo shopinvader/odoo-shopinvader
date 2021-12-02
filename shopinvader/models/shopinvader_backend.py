@@ -538,7 +538,13 @@ class ShopinvaderBackend(models.Model):
             record.id,
         )
         for notif in notifs:
-            notif.with_delay(description=description).send(record.id)
+            job_priority = notif.queue_job_priority
+            if job_priority < 0:
+                notif.send(record.id)
+            else:
+                notif.with_delay(description=description, priority=job_priority).send(
+                    record.id
+                )
         return True
 
     def _extract_configuration(self):

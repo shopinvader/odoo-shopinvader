@@ -18,14 +18,22 @@ class NotificationCartCase(CommonCase, NotificationCaseMixin):
         self._init_job_counter()
         self.cart.action_confirm_cart()
         self._check_nbr_job_created(1)
+        self._check_job_priority(self.created_jobs, "cart_confirmation")
         self._perform_created_job()
         self._check_notification("cart_confirmation", self.cart)
 
     def test_sale_notification(self):
+        priority = 30
+        self.env["shopinvader.notification"].search([]).write(
+            {"queue_job_priority": priority}
+        )
         self.cart.action_confirm_cart()
         self._init_job_counter()
         self.cart.action_confirm()
         self._check_nbr_job_created(1)
+        self._check_job_priority(
+            self.created_jobs, "sale_confirmation", force_priority=priority
+        )
         self._perform_created_job()
         self._check_notification("sale_confirmation", self.cart)
 
@@ -38,6 +46,7 @@ class NotificationCartCase(CommonCase, NotificationCaseMixin):
         self._init_job_counter()
         self.cart.invoice_ids._post()
         self._check_nbr_job_created(1)
+        self._check_job_priority(self.created_jobs, "invoice_open")
         self._perform_created_job()
         self._check_notification("invoice_open", self.cart.invoice_ids[0])
 

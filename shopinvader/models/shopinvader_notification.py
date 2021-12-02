@@ -5,6 +5,8 @@
 from odoo import api, fields, models
 from odoo.tools.translate import _
 
+from odoo.addons.queue_job.job import DEFAULT_PRIORITY
+
 
 class ShopinvaderNotification(models.Model):
     _name = "shopinvader.notification"
@@ -18,6 +20,14 @@ class ShopinvaderNotification(models.Model):
     )
     model_id = fields.Many2one("ir.model", "Model", required=True, ondelete="cascade")
     template_id = fields.Many2one("mail.template", "Mail Template", required=True)
+    queue_job_priority = fields.Integer(
+        string="Priority",
+        default=DEFAULT_PRIORITY,
+        help="Determine the priority to execute the job who trigger the "
+        "notification.\n"
+        "0 being the higher priority. Default is 10 (cfr queue job).\n"
+        "You can set a negative value to bypass the queue",
+    )
 
     def _selection_notification_type(self):
         notifications = self._get_all_notification()
@@ -81,10 +91,11 @@ class ShopinvaderNotification(models.Model):
 
     def send(self, record_id):
         self.ensure_one()
+        force_send = bool(self.queue_job_priority < 0)
         return (
             self.sudo()
             .template_id.with_context(**self._get_template_context())
-            .send_mail(record_id)
+            .send_mail(record_id, force_send=force_send)
         )
 
     def _get_template_context(self):

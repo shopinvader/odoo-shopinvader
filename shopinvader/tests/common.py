@@ -349,3 +349,25 @@ class NotificationCaseMixin(object):
         for k, v in leafs.items():
             domain.append((k, "=", v))
         return self.env["queue.job"].search(domain, limit=1)
+
+    def _check_job_priority(self, job, notif_type=False, force_priority=False):
+        """
+        Ensure the job priority is correct
+        :param job: queue.job recordset
+        :param notif_type: str
+        :param force_priority: int
+        :return: bool
+        """
+        if isinstance(force_priority, bool):
+            notification = self.env["shopinvader.notification"].search(
+                [
+                    ("backend_id", "=", self.backend.id),
+                    ("notification_type", "=", notif_type),
+                ],
+                limit=1,
+            )
+            priority = notification.queue_job_priority
+        else:
+            priority = force_priority
+        self.assertEquals(priority, job.priority)
+        return True
