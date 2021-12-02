@@ -4,6 +4,8 @@
 # Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=consider-merging-classes-inherited,method-required-super
+from odoo import _
+from odoo.exceptions import UserError
 
 from odoo.addons.component.core import Component
 
@@ -17,6 +19,7 @@ class CustomerService(Component):
     ]
     _name = "shopinvader.customer.service"
     _usage = "customer"
+    _expose_model = "res.partner"
     _description = __doc__
 
     # The following method are 'public' and can be called from the controller.
@@ -34,6 +37,23 @@ class CustomerService(Component):
         self._load_partner_work_context(binding)
         self._post_create(self.work.partner)
         return self._prepare_create_response(binding)
+
+    def update(self, _id, **params):
+        # We get the binding from the partner
+        if not self._is_logged_in():
+            raise UserError(_("You must provide a partner"))
+
+        partner = self._get(_id)
+        binding = partner._get_invader_partner(self.shopinvader_backend)
+        if not binding:
+            raise UserError(_("Partner %s is not a customer") % partner.id)
+
+        vals = self._prepare_params(params, mode="update")
+        binding.write(vals)
+
+        self._post_update(self.work.partner)
+
+        return self.get()
 
     def sign_in(self, **params):
         return self._assign_cart_and_get_store_cache()
@@ -61,6 +81,31 @@ class CustomerService(Component):
             }
         )
         return schema
+
+    def _validator_update(self):
+        address = self.component(usage="addresses")
+        schema = address._validator_update()
+        exclude_keys = ["type"]
+        for key in exclude_keys:
+            schema.pop(key, None)
+        schema.update(
+            {
+                "email": {"type": "string", "required": False},
+                "external_id": {"type": "string", "required": False},
+                "vat": {"type": "string", "required": False},
+                "company_name": {"type": "string", "required": False},
+                "function": {"type": "string", "required": False},
+            }
+        )
+        return schema
+
+    def _get_base_search_domain(self):
+        return self._default_domain_for_partner_records(
+            # NOTE: here we must use `child_of` as default operator
+            partner_field="id",
+            operator="child_of",
+            with_backend=False,
+        )
 
     def _prepare_params(self, params, mode="create"):
         address = self.component(usage="addresses")
