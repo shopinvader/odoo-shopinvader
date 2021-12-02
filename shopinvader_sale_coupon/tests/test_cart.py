@@ -260,3 +260,68 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         self.assertEqual(
             len(self.cart.order_line), 3, "The promo should've been applied"
         )
+
+    def test_remove_code_promotion_program(self):
+        self.code_promotion_program.promo_code = "promocode"
+        # Buy 1 A + Enter code, 1 A is free
+        res = self.service.dispatch(
+            "add_item",
+            params={
+                "product_id": self.product_A.id,
+                "item_qty": 1.0,
+            },
+        )
+        res = self.service.dispatch("apply_coupon", params={"code": "promocode"})
+        self.assertEqual(
+            len(self.cart.order_line.ids),
+            2,
+            "The promo should've been applied",
+        )
+
+        self.assertEqual(
+            res["data"]["code_promo_program_id"]["id"],
+            self.code_promotion_program.id,
+            "The promo should've been applied",
+        )
+
+        # Remove an invalid code
+        with self.assertRaisesRegex(UserError, "No coupon found for .+"):
+            self.service.dispatch("remove_coupon", params={"code": "fakecode"})
+
+        # Remove a valid code
+        self.service.dispatch("remove_coupon", params={"code": "promocode"})
+
+        self.assertEqual(
+            len(self.cart.order_line.ids),
+            1,
+            "The promo should've been removed",
+        )
+
+    def test_remove_code_promotion_program_coupons(self):
+        coupon = self._generate_coupons(self.code_promotion_program)
+        # Buy 1 A + Enter code, 1 A is free
+        self.service.dispatch(
+            "add_item",
+            params={
+                "product_id": self.product_A.id,
+                "item_qty": 1.0,
+            },
+        )
+        self.service.dispatch("apply_coupon", params={"code": coupon.code})
+        self.assertEqual(
+            len(self.cart.order_line.ids),
+            2,
+            "The coupon should've been applied",
+        )
+        self.assertEqual(coupon.state, "used")
+
+        self.service.dispatch("remove_coupon", params={"code": coupon.code})
+
+        self.assertEqual(
+            len(self.cart.order_line.ids),
+            1,
+            "The coupon should've been removed",
+        )
+        self.assertEqual(coupon.state, "new")
+        with self.assertRaisesRegex(UserError, "No coupon found for .+"):
+            self.service.dispatch("remove_coupon", params={"code": coupon.code})
