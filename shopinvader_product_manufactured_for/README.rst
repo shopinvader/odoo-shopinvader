@@ -13,14 +13,11 @@ Shopinvader Product Manufactured For
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
-.. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/OCA/odoo-shopinvader/tree/14.0/shopinvader_product_manufactured_for
-    :alt: OCA/odoo-shopinvader
-.. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/odoo-shopinvader-14-0/odoo-shopinvader-14-0-shopinvader_product_manufactured_for
-    :alt: Translate me on Weblate
+.. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/14.0/shopinvader_product_manufactured_for
+    :alt: shopinvader/odoo-shopinvader
 
-|badge1| |badge2| |badge3| |badge4| 
+|badge1| |badge2| |badge3| 
 
 Glue module between `sale_product_manufactured_for` and Shopinvader.
 
@@ -32,10 +29,10 @@ Glue module between `sale_product_manufactured_for` and Shopinvader.
 Bug Tracker
 ===========
 
-Bugs are tracked on `GitHub Issues <https://github.com/OCA/odoo-shopinvader/issues>`_.
+Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/odoo-shopinvader/issues/new?body=module:%20shopinvader_product_manufactured_for%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_product_manufactured_for%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -67,16 +64,6 @@ Other credits
 Maintainers
 ~~~~~~~~~~~
 
-This module is maintained by the OCA.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/14.0/shopinvader_product_manufactured_for>`_ project on GitHub.
 
-.. image:: https://odoo-community.org/logo.png
-   :alt: Odoo Community Association
-   :target: https://odoo-community.org
-
-OCA, or the Odoo Community Association, is a nonprofit organization whose
-mission is to support the collaborative development of Odoo features and
-promote its widespread use.
-
-This module is part of the `OCA/odoo-shopinvader <https://github.com/OCA/odoo-shopinvader/tree/14.0/shopinvader_product_manufactured_for>`_ project on GitHub.
-
-You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
+You are welcome to contribute.
