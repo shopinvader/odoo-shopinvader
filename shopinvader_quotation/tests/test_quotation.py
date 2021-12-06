@@ -1,6 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # Copyright 2021 Camptocamp (http://www.camptocamp.com)
+# @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 

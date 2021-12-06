@@ -1,6 +1,7 @@
 # Copyright 2016 Akretion (http://www.akretion.com)
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # Copyright 2021 Camptocamp (http://www.camptocamp.com)
+# @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
@@ -67,4 +68,4 @@ class QuotationService(Component):
         ]
 
     def _confirm(self, order):
-        return order.action_confirm_cart()
+        return order.action_confirm()
