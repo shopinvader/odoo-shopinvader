@@ -14,7 +14,7 @@
                 <filter
                     string="Shopinvader Saved Carts"
                     name="shopinvader_saved"
-                    domain="[('typology', '=', 'saved')]"
+                    domain="[('typology', '=', 'saved'), ('shopinvader_backend_id', '!=', False)]"
                 />
             </filter>
         </field>
@@ -31,7 +31,9 @@
             ref="sale.sale_order_view_search_inherit_quotation"
         />
         <field name="context">{"default_typology": "saved"}</field>
-        <field name="domain">[("typology", "=", "saved")]</field>
+        <field
+            name="domain"
+        >[("typology", "=", "saved"), ("shopinvader_backend_id", "!=", False)]</field>
     </record>
 
     <menuitem
