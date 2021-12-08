@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2021 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="view_sales_order_filter" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="shopinvader.view_sales_order_filter" />
+        <field name="arch" type="xml">
+            <filter name="shopinvader_cart" position="after">
+                <filter
+                    string="Shopinvader Saved Carts"
+                    name="shopinvader_saved"
+                    domain="[('typology', '=', 'saved'), ('shopinvader_backend_id', '!=', False)]"
+                />
+            </filter>
+        </field>
+    </record>
+
+    <record id="action_saved_carts" model="ir.actions.act_window">
+        <field name="name">Saved Carts</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="view_id" ref="shopinvader.view_shop_quotation_tree" />
+        <field
+            name="search_view_id"
+            ref="sale.sale_order_view_search_inherit_quotation"
+        />
+        <field name="context">{"default_typology": "saved"}</field>
+        <field
+            name="domain"
+        >[("typology", "=", "saved"), ("shopinvader_backend_id", "!=", False)]</field>
+    </record>
+
+    <menuitem
+        action="action_saved_carts"
+        id="menu_saved_cart"
+        parent="shopinvader.menu_shopinvader_orders"
+        sequence="11"
+    />
+
+</odoo>
