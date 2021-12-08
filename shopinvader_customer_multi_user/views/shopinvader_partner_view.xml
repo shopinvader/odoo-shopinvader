@@ -5,19 +5,25 @@
     <field name="model">shopinvader.partner</field>
     <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_form" />
     <field name="arch" type="xml">
-      <field name="external_id" position="after">
+      <group name="record" position="inside">
         <field name="invader_parent_id" />
         <field name="main_partner_id" />
-        <field name="is_invader_user" />
-      </field>
-      <group name="main" position="after">
-        <group name="permissions" string="Permissions">
-          <field name="can_manage_users" />
-          <field name="is_admin_account" />
-          <field name="is_main_account" />
-          <field name="is_users_manager" />
-        </group>
       </group>
+      <notebook position="inside">
+        <page name="permissions" string="Permissions">
+          <group>
+            <group name="roles">
+              <field name="is_invader_user" />
+              <field name="is_admin_account" />
+              <field name="is_main_account" />
+              <field name="is_users_manager" />
+            </group>
+            <group name="permissions">
+              <field name="can_manage_users" />
+            </group>
+          </group>
+        </page>
+      </notebook>
     </field>
   </record>
 

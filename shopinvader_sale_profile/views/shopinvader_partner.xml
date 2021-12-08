@@ -3,10 +3,18 @@
      Copyright 2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
+
+    <record model="ir.ui.view" id="shopinvader_partner_view_form">
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_form" />
+        <field name="arch" type="xml">
+            <field name="partner_email" position="after">
+                <field name="sale_profile_id" widget="selection" />
+            </field>
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="shopinvader_partner_view_tree">
-        <field
-            name="name"
-        >Shopinvader.partner tree (in shopinvader_sale_profile)</field>
         <field name="model">shopinvader.partner</field>
         <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree" />
         <field name="priority" eval="90" />
@@ -18,9 +26,6 @@
     </record>
 
     <record model="ir.ui.view" id="shopinvader_partner_view_search">
-        <field
-            name="name"
-        >Shopinvader.partner search (in shopinvader_sale_profile)</field>
         <field name="model">shopinvader.partner</field>
         <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search" />
         <field name="priority" eval="90" />
