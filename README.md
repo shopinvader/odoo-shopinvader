@@ -51,7 +51,7 @@ addon | version | maintainers | summary
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 14.0.1.0.0 |  | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.1 |  | Synchronize wishlist details to Locomotive users record.
 [shopinvader_membership](shopinvader_membership/) | 14.0.1.0.1 |  | Shopinvader Membership module
-[shopinvader_multi_cart](shopinvader_multi_cart/) | 14.0.1.0.0 |  | Manage multiple carts in Shopinvader
+[shopinvader_multi_cart](shopinvader_multi_cart/) | 14.0.1.1.0 |  | Manage multiple carts in Shopinvader
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 |  | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.0 |  | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 |  | Shopinvader Customer firstname/lastname
