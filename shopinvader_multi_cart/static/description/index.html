@@ -369,8 +369,11 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 <p><a class="reference external" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/tree/14.0/shopinvader_multi_cart"><img alt="shopinvader/odoo-shopinvader" src="https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github" /></a></p>
 <p>This allows to manage multiple carts per user.</p>
-<p>It exposes a new service <cite>carts</cite> to fetch the user’s carts, read them,
-select as current cart and/or delete them.</p>
+<p>It exposes a new service <cite>carts</cite> to fetch the user’s saved carts, read them,
+delete them, or select any of them as the current cart.</p>
+<p>It also adds a new method <cite>save</cite> on the <cite>cart</cite> service, to store the current
+cart. It can later be accessed and eventually restored from the <cite>carts</cite> service.</p>
+<p>Saved carts are identified with the typology <cite>saved</cite>.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
