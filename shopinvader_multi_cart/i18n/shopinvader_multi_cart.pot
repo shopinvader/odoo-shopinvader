@@ -1,5 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
+# 	* shopinvader_multi_cart
 #
 msgid ""
 msgstr ""
@@ -11,3 +12,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: shopinvader_multi_cart
+#: model:ir.model.fields,field_description:shopinvader_multi_cart.field_sale_order__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_multi_cart
+#: model:ir.model.fields,field_description:shopinvader_multi_cart.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_multi_cart
+#: model:ir.model.fields,field_description:shopinvader_multi_cart.field_sale_order____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_multi_cart
+#: model:ir.model,name:shopinvader_multi_cart.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: shopinvader_multi_cart
+#: model:ir.model.fields.selection,name:shopinvader_multi_cart.selection__sale_order__typology__saved
+msgid "Saved Cart"
+msgstr ""
+
+#. module: shopinvader_multi_cart
+#: model:ir.actions.act_window,name:shopinvader_multi_cart.action_saved_carts
+#: model:ir.ui.menu,name:shopinvader_multi_cart.menu_saved_cart
+msgid "Saved Carts"
+msgstr ""
+
+#. module: shopinvader_multi_cart
+#: model_terms:ir.ui.view,arch_db:shopinvader_multi_cart.view_sales_order_filter
+msgid "Shopinvader Saved Carts"
+msgstr ""
+
+#. module: shopinvader_multi_cart
+#: model:ir.model.fields,field_description:shopinvader_multi_cart.field_sale_order__typology
+msgid "Typology"
+msgstr ""
