@@ -34,12 +34,12 @@
                 <filter
                     name="shopinvader_cart"
                     string="Shopinvader Carts"
-                    domain="[('typology', '=', 'cart')]"
+                    domain="[('typology', '=', 'cart'), ('shopinvader_backend_id', '!=', False)]"
                 />
                 <filter
                     name="shopinvader_sale"
                     string="Shopinvader Orders"
-                    domain="[('typology', '=', 'sale')]"
+                    domain="[('typology', '=', 'sale'), ('shopinvader_backend_id', '!=', False)]"
                 />
                 <separator />
             </filter>
