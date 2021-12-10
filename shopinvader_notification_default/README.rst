@@ -27,12 +27,8 @@ Provides the following notification types and their email templates:
 * sale_confirmation
 * invoice_open
 * new_customer_welcome
-* new_customer_welcome_not_validated
-* customer_validated
 * customer_updated
 * address_created
-* address_created_not_validated
-* address_validated
 * address_updated
 
 Email templates are cooked using
