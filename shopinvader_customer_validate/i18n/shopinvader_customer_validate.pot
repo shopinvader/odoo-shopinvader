@@ -36,6 +36,23 @@ msgid " Welcome, your account will be validated and activated soon"
 msgstr ""
 
 #. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.address_created_not_validated
+msgid ""
+"A new address has been added to your account, will be validated and "
+"activated soon."
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.address_validated
+msgid "A new address has been validated and activated."
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.customer_validated
+msgid "Account validated"
+msgstr ""
+
+#. module: shopinvader_customer_validate
 #: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_address_validate__next_state
 #: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_partner_validate__next_state
 msgid "Action"
@@ -48,6 +65,11 @@ msgid "Activate"
 msgstr ""
 
 #. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.address_created_not_validated
+msgid "Address created but not validated"
+msgstr ""
+
+#. module: shopinvader_customer_validate
 #: code:addons/shopinvader_customer_validate/models/shopinvader_notification.py:0
 #, python-format
 msgid "Address created not validated"
@@ -55,6 +77,7 @@ msgstr ""
 
 #. module: shopinvader_customer_validate
 #: code:addons/shopinvader_customer_validate/models/shopinvader_notification.py:0
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.address_validated
 #, python-format
 msgid "Address validated"
 msgstr ""
@@ -482,4 +505,14 @@ msgstr ""
 #. module: shopinvader_customer_validate
 #: model:mail.template,subject:shopinvader_customer_validate.email_customer_validated_notification
 msgid "Welcome notification ${object.name} - Account validated"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.new_customer_not_validated
+msgid "Welcome, your account will be validated and activated soon"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.customer_validated
+msgid "Your account has been validated and activated"
 msgstr ""
