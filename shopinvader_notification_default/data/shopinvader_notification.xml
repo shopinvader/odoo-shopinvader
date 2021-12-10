@@ -41,30 +41,6 @@
   </record>
 
   <record
-        id="shopinvader_notification_new_customer_welcome_not_validated"
-        model="shopinvader.notification"
-    >
-    <field name="notification_type">new_customer_welcome_not_validated</field>
-    <field name="model_id" ref="base.model_res_partner" />
-    <field
-            name="template_id"
-            ref="shopinvader_notification_default.email_new_customer_welcome_not_validated_notification"
-        />
-  </record>
-
-  <record
-        id="shopinvader_notification_customer_validated"
-        model="shopinvader.notification"
-    >
-    <field name="notification_type">customer_validated</field>
-    <field name="model_id" ref="base.model_res_partner" />
-    <field
-            name="template_id"
-            ref="shopinvader_notification_default.email_customer_validated_notification"
-        />
-  </record>
-
-  <record
         id="shopinvader_notification_customer_updated"
         model="shopinvader.notification"
     >
@@ -85,30 +61,6 @@
     <field
             name="template_id"
             ref="shopinvader_notification_default.email_address_created_notification"
-        />
-  </record>
-
-  <record
-        id="shopinvader_notification_address_created_not_validated"
-        model="shopinvader.notification"
-    >
-    <field name="notification_type">address_created_not_validated</field>
-    <field name="model_id" ref="base.model_res_partner" />
-    <field
-            name="template_id"
-            ref="shopinvader_notification_default.email_address_created_not_validated_notification"
-        />
-  </record>
-
-  <record
-        id="shopinvader_notification_address_validated"
-        model="shopinvader.notification"
-    >
-    <field name="notification_type">address_validated</field>
-    <field name="model_id" ref="base.model_res_partner" />
-    <field
-            name="template_id"
-            ref="shopinvader_notification_default.email_address_validated_notification"
         />
   </record>
 
