@@ -300,27 +300,30 @@ class CartService(Component):
             self._upgrade_cart_item_quantity(cart, existing_item, params, action="sum")
         else:
             with self.env.norecompute():
-                vals = self._prepare_cart_item(params, cart)
-                # the next statement is done with suspending the security for
-                #  performance reasons. It is safe only if both 3 following
-                # fields are filled on the sale order:
-                # - company_id
-                # - fiscal_position_id
-                # - pricelist_id
-                new_values = (
-                    self.env["sale.order.line"].sudo().play_onchanges(vals, vals.keys())
-                )
-                vals.update(new_values)
-                # As the frontend could be in several languages but we have only
-                # one anonymous parnter with his language set, we need to ensure
-                # that description on the line is in the right language
-                partner = cart.partner_id
-                ctx_lang = self.env.context.get("lang", partner.lang)
-                if partner.lang != ctx_lang:
-                    product_id = vals["product_id"]
-                    vals["name"] = self._get_sale_order_line_name(product_id)
-                self.env["sale.order.line"].create(vals)
+                self._create_cart_line(cart, params)
             cart.recompute()
+
+    def _create_cart_line(self, cart, params):
+        vals = self._prepare_cart_item(params, cart)
+        # the next statement is done with suspending the security for
+        #  performance reasons. It is safe only if both 3 following
+        # fields are filled on the sale order:
+        # - company_id
+        # - fiscal_position_id
+        # - pricelist_id
+        new_values = (
+            self.env["sale.order.line"].sudo().play_onchanges(vals, vals.keys())
+        )
+        vals.update(new_values)
+        # As the frontend could be in several languages but we have only
+        # one anonymous parnter with his language set, we need to ensure
+        # that description on the line is in the right language
+        partner = cart.partner_id
+        ctx_lang = self.env.context.get("lang", partner.lang)
+        if partner.lang != ctx_lang:
+            product_id = vals["product_id"]
+            vals["name"] = self._get_sale_order_line_name(product_id)
+        return self.env["sale.order.line"].create(vals)
 
     def _get_sale_order_line_name(self, product_id):
         product = self.env["product.product"].browse(product_id)
