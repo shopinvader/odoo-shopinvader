@@ -63,9 +63,12 @@ class ShopinvaderPartner(models.Model):
         default_sale_profiles = self._get_default_profiles(backend_ids)
         # company_id field is mandatory so we don't have manage empty value
         for company in self.mapped("backend_id.company_id"):
-            fposition_by_partner = self._get_fiscal_position_by_partner(
-                partners, company=company
-            )
+            fposition_by_partner = {}
+            # Don't trust on fiscal position if are not configured on sale profile
+            if self.mapped("backend_id.sale_profile_ids.fiscal_position_ids"):
+                fposition_by_partner = self._get_fiscal_position_by_partner(
+                    partners, company=company
+                )
             # Get every fiscal position ids (without duplicates)
             fposition_ids = list(set(fposition_by_partner.values()))
             sale_profiles = self._get_sale_profiles(
