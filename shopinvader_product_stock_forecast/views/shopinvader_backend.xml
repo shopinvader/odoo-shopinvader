@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2021 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="se_backend_form_view">
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader_product_stock.se_backend_form_view" />
+        <field name="arch" type="xml">
+            <group name="stock" position="inside">
+                <field name="product_stock_forecast" />
+                <field name="product_stock_field_name" invisible="1" />
+                <div
+                    class="alert alert-danger"
+                    role="alert"
+                    colspan="4"
+                    attrs="{'invisible': ['|', ('product_stock_forecast', '=', False), ('product_stock_field_name', '=', 'qty_available')]}"
+                >
+                    <strong>Warning</strong>:
+                    The stock forecast is prepared to work best with <code
+                    >qty_available</code> as <strong>Product stock field</strong>.
+                    <br
+                    />The forecast data may not make sense otherwise. Use at your own risk.
+                </div>
+                <label
+                    for="product_stock_forecast_horizon"
+                    string="Forecast Horizon"
+                    attrs="{'invisible': [('product_stock_forecast', '=', False)]}"
+                />
+                <div
+                    name="product_stock_forecast_horizon"
+                    attrs="{'invisible': [('product_stock_forecast', '=', False)]}"
+                >
+                    <field name="product_stock_forecast_horizon" class="oe_inline" />
+                    <span class="ml-1">days</span>
+                </div>
+            </group>
+        </field>
+    </record>
+</odoo>
