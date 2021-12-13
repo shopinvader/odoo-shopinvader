@@ -1764,6 +1764,11 @@ msgid "Invoice Validated"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_invoice_id
+msgid "Invoice address"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__cart_checkout_address_policy__invoice_defaults_to_shipping
 msgid "Invoice address defaults to shipping"
 msgstr ""
@@ -3277,6 +3282,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__sale_order__shopinvader_state__shipped
 msgid "Shipped"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_delivery_id
+msgid "Shipping address"
 msgstr ""
 
 #. module: shopinvader
