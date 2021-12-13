@@ -60,6 +60,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_product_price_tax',
         'odoo14-addon-shopinvader_product_stock',
         'odoo14-addon-shopinvader_product_stock_assortment',
+        'odoo14-addon-shopinvader_product_stock_forecast',
         'odoo14-addon-shopinvader_product_stock_state',
         'odoo14-addon-shopinvader_product_template_multi_link',
         'odoo14-addon-shopinvader_product_template_multi_link_date_span',
