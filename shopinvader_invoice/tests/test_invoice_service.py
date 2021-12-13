@@ -83,6 +83,41 @@ class TestInvoiceService(CommonInvoiceCase):
         self._check_data_content(data, invoice)
         return
 
+    def test_get_invoice_no_number(self):
+        """
+        Test the get on an invoice without payment_reference ("number" into json result)
+        :return:
+        """
+        # Check first without invoice related to the partner
+        result = self.service.dispatch("search")
+        data = result.get("data", [])
+        self.assertFalse(data)
+        # Then create a invoice related to partner
+        invoice = self._confirm_and_invoice_sale(self.sale, payment=False)
+        self._make_payment(invoice)
+        invoice.write({"payment_reference": False})
+        result = self.service.dispatch("get", invoice.id)
+        data = result.get("data", [])
+        self.assertTrue(data.get("number"))
+        self.assertFalse(data.get("payment_reference"))
+
+    def test_get_invoice_no_date_due(self):
+        """
+        Test the get on an invoice without date_due ("date_due" into json result)
+        :return:
+        """
+        # Check first without invoice related to the partner
+        result = self.service.dispatch("search")
+        data = result.get("data", [])
+        self.assertFalse(data)
+        # Then create a invoice related to partner
+        invoice = self._confirm_and_invoice_sale(self.sale, payment=False)
+        self._make_payment(invoice)
+        invoice.write({"invoice_date_due": False})
+        result = self.service.dispatch("get", invoice.id)
+        data = result.get("data", [])
+        self.assertFalse(data.get("date_due"))
+
     def test_get_multi_invoice(self):
         """
         Test the get on a logged user.

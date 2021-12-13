@@ -70,8 +70,17 @@ class InvoiceService(Component):
         invoice_schema = {
             "invoice_id": {"type": "integer"},
             "number": {"type": "string"},
+            "payment_reference": {
+                "type": "string",
+                "required": False,
+                "nullable": True,
+            },
             "date_invoice": {"type": "string"},
-            "date_due": {"type": "string"},
+            "date_due": {
+                "type": "string",
+                "required": False,
+                "nullable": True,
+            },
             "amount_total": {"type": "float"},
             "amount_total_signed": {"type": "float"},
             "amount_tax": {"type": "float"},
@@ -109,7 +118,8 @@ class InvoiceService(Component):
         """
         to_parse = [
             "id:invoice_id",
-            "payment_reference:number",
+            "name:number",
+            "payment_reference",
             "invoice_date:date_invoice",
             "invoice_date_due:date_due",
             "amount_total",
