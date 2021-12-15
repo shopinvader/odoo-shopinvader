@@ -144,16 +144,16 @@ class TestMembershipService(CommonCase):
     def test_subscription(self):
         # Check first not logged
         with self.assertRaises(UserError) as e:
-            self.service_guest.dispatch("subscribe", self.product.id)
+            self.service_guest.dispatch("get_subscribe", self.product.id)
         self.assertEqual(e.exception.args[0], "A user should be logged")
         # Then with a logged user but with a non membership product
         self.product.write({"membership": False})
         with self.assertRaises(UserError) as e:
-            self.service.dispatch("subscribe", self.product.id)
+            self.service.dispatch("get_subscribe", self.product.id)
         self.assertIn("No membership product found with", e.exception.args[0])
         # Then user logged and real membership product
         self.product.write({"membership": True})
-        result = self.service.dispatch("subscribe", self.product.id)
+        result = self.service.dispatch("get_subscribe", self.product.id)
         invoice_id = result.get("invoice_id")
         invoice = self.env["account.move"].browse(invoice_id)
         self.assertEqual(self.partner, invoice.partner_id)
