@@ -5,7 +5,7 @@ order is set to quotation).
 
 Initially, the quotation has the `shopinvader_state` "estimating".
 After updating the price manually when the button "sent" on Odoo backend
-is summited, the quotation will be sent by email (native behaviour) and the
+is submitted, the quotation will be sent by email (native behaviour) and the
 shopinvader_state will switch to "estimated".
 
 On Shopinvader site, the customer can see the state, the amount ... of quotation.
