@@ -22,6 +22,7 @@ class ShopinvaderVariant(models.Model):
             [
                 ("product_id", "=", self.record_id.id),
                 ("location_id", "child_of", warehouses.lot_stock_id.ids),
+                (f"lot_id.{expiry_fname}", "!=", False),
             ]
         )
         return [
