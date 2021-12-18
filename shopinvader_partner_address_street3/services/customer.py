@@ -22,3 +22,8 @@ class AddressService(Component):
         parser = super(AddressService, self)._json_parser()
         parser.append("street3")
         return parser
+
+    def _validator_create(self):
+        schema = super(AddressService, self)._validator_create()
+        schema["street3"] = {"type": "string", "required": False}
+        return schema
