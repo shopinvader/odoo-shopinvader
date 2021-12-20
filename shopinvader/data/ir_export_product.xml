@@ -120,4 +120,9 @@
     </record>
     -->
 
+    <record id="ir_exp_shopinvader_variant_price" model="ir.exports.line">
+        <field name="name">price</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
 </odoo>

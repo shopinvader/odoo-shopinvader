@@ -20,7 +20,6 @@
         "views/shopinvader_backend_view.xml",
         "views/shopinvader_variant_view.xml",
         "views/shopinvader_category_view.xml",
-        "data/ir_export_product.xml",
         "data/queue_job_function_data.xml",
     ],
     "installable": True,
