@@ -1,5 +1,5 @@
+openupgradelib
 # TODO these should be on PyPI
-openupgradelib @ git+https://github.com/OCA/openupgradelib.git
 locomotivecms @ git+https://github.com/akretion/locomotivecms-python-client.git
 # test requirements
 requests_mock
