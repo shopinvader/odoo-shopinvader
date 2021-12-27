@@ -53,16 +53,22 @@ class ShopinvaderImageMixin(models.AbstractModel):
         return str(hash(self._get_images_store_hash_tuple()))
 
     def _get_images_store_hash_tuple(self):
+        images = self[self._image_field].image_id
+        # Get fresh URLs.
+        # Normally we have only one backend
+        # but potentially you can have different backends by image record.
+        # If any base URL changes, images should be recomputed.
+        # Eg: swap an image to another backend or change the CDN URL.
+        # NOTE: this is not perfect in terms of perf because it will cause
+        # calls to `get_or_create_thumbnail` when no image data has changed
+        # but it's better than having broken URLs.
+        public_urls = tuple(images.mapped("url"))
         resize_scales = tuple(
             self._resize_scales().mapped(lambda r: (r.key, r.size_x, r.size_y))
         )
-        images_timestamp = self[self._image_field].mapped("image_id.write_date")
-        # fmt: off
-        # FIXME: may vary by _get_image_url_key -> is this needed for real?
-        url_key = (self.display_name, )
-        # fmt: on
+        images_timestamp = tuple(images.mapped("write_date"))
         # TODO: any other bit to consider here?
-        return resize_scales + tuple(images_timestamp) + url_key
+        return resize_scales + images_timestamp + public_urls
 
     def _get_image_url_key(self, image_relation):
         # You can inherit this method to change the name of the image of

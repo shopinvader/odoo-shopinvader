@@ -61,3 +61,13 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
             # recomputed
             self.assertEqual(variant.images, [{"c": 3, "d": 4}])
             mocked.assert_called()
+
+        # Simulate base URL change
+        self.assertFalse(variant._images_must_recompute())
+        random_image = variant.variant_image_ids[0].image_id
+        # test backend serves images via odoo base url
+        self.env["ir.config_parameter"].sudo().set_param(
+            "web.base.url", "https://foo.com"
+        )
+        random_image.invalidate_cache()
+        self.assertTrue(variant._images_must_recompute())
