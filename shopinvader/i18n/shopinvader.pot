@@ -249,6 +249,12 @@ msgid "Addresses only"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__alert_time
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__alert_time
+msgid "Alert Time"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__lang
 msgid ""
 "All the emails and documents sent to this contact will be translated in this"
@@ -387,6 +393,12 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__based_on
 msgid "Based On"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__use_time
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__use_time
+msgid "Best Before Time"
 msgstr ""
 
 #. module: shopinvader
@@ -1259,6 +1271,18 @@ msgid ""
 "Expenses and vendor bills can be re-invoiced to a customer.With this option,"
 " a validated expense can be re-invoice to a customer at its cost or sales "
 "price."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__use_expiration_date
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__use_expiration_date
+msgid "Expiration Date"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__expiration_time
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__expiration_time
+msgid "Expiration Time"
 msgstr ""
 
 #. module: shopinvader
@@ -2451,6 +2475,41 @@ msgid "Number of bound products"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__expiration_time
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__expiration_time
+msgid ""
+"Number of days after the receipt of the products (from the vendor or in "
+"stock after production) after which the goods may become dangerous and must "
+"not be consumed. It will be computed on the lot/serial number."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__alert_time
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__alert_time
+msgid ""
+"Number of days before the Expiration Date after which an alert should be "
+"raised on the lot/serial number. It will be computed on the lot/serial "
+"number."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__removal_time
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__removal_time
+msgid ""
+"Number of days before the Expiration Date after which the goods should be "
+"removed from the stock. It will be computed on the lot/serial number."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__use_time
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__use_time
+msgid ""
+"Number of days before the Expiration Date after which the goods starts "
+"deteriorating, without being dangerous yet. It will be computed on the "
+"lot/serial number."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__message_has_error_counter
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_has_error_counter
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_has_error_counter
@@ -2978,6 +3037,12 @@ msgstr ""
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Related records"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__removal_time
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__removal_time
+msgid "Removal Time"
 msgstr ""
 
 #. module: shopinvader
@@ -4453,6 +4518,15 @@ msgid ""
 "When printing documents and exporting/importing data, time values are computed according to this timezone.\n"
 "If the timezone is not set, UTC (Coordinated Universal Time) is used.\n"
 "Anywhere else, time values are computed according to the time offset of your web client."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__use_expiration_date
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__use_expiration_date
+msgid ""
+"When this box is ticked, you have the possibility to specify dates to manage"
+" product expiration, on the product and on the corresponding lot/serial "
+"numbers"
 msgstr ""
 
 #. module: shopinvader
