@@ -72,6 +72,7 @@ addon | version | maintainers | summary
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.1 |  | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.1 |  | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_forecast](shopinvader_product_stock_forecast/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Export Stock Forecast data along with product stocks.
+[shopinvader_product_stock_forecast_expiry](shopinvader_product_stock_forecast_expiry/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates product lot expiration into the forecast
 [shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 |  | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 14.0.1.1.0 |  | Shopinvader Product Link
 [shopinvader_product_template_multi_link_date_span](shopinvader_product_template_multi_link_date_span/) | 14.0.1.0.0 |  | Integrate `product_template_multi_link_date_span` in Shopinvader
