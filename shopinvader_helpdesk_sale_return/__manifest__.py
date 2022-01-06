@@ -11,7 +11,7 @@
         "shopinvader_helpdesk",
         "helpdesk_mgmt_sale_return",
     ],
-    "data": [],
+    "data": ["views/helpdesk_category.xml"],
     "demo": [],
     "qweb": [],
 }

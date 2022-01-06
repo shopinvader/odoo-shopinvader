@@ -2,7 +2,6 @@
 # @author Pierrick Brun <pierrick.brun@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-
 from odoo.addons.base_rest import restapi
 from odoo.addons.component.core import Component
 
@@ -18,6 +17,12 @@ class TicketService(Component):
     def request_return(self, _ticket_id):
         ticket = self._get(_ticket_id)
         ticket.return_sale_lines()
-        if len(ticket.return_picking_ids) == 1:
-            ticket.return_picking_ids.button_validate()
+        if (
+            len(ticket.return_picking_ids) == 1
+            and ticket.category_id.automatically_generate_return_for
+        ):
+            picking = ticket.return_picking_ids
+            picking.carrier_id = ticket.category_id.automatically_generate_return_for
+            picking._put_in_pack(picking.move_line_ids)
+            picking.print_return_label()
         return self._return_record(ticket)

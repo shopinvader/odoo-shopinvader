@@ -31,4 +31,4 @@ class HelpdeskTicketSaleReturnCase(HelpdeskTicketSaleCase):
         self.assertEqual(len(ticket.sale_line_ids), 2)
         res = self.service.dispatch("request_return", ticket.id, params={})
         self.assertEqual(len(ticket.return_picking_ids), 1)
-        self.assertEqual(ticket.return_picking_ids.state, "done")
+        self.assertNotIn(ticket.return_picking_ids.state, ["draft", "cancel"])
