@@ -3,7 +3,7 @@
 
 import logging
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -16,14 +16,22 @@ class ShopinvaderBackend(models.Model):
         help="Use this backend when the JWT aud claim matches this.",
     )
 
-    @api.model
-    def _get_from_jwt_aud(self, aud):
+    def _ensure_jwt_aud(self, aud):
+        """Ensure aud is valid on self
+
+        Returns self if aud is valid
+            else an empty recordset
+        """
+        self.ensure_one()
         if not aud:
             return self.browse([])
         if isinstance(aud, str):
             aud = [aud]
-        backends = self.search([("jwt_aud", "in", aud)])
-        if len(backends) != 1:
-            _logger.warning("%d backends found for JWT aud %r", aud)
-            return self.browse([])
-        return backends
+        if self.jwt_aud in aud:
+            return self
+        _logger.warning(
+            "Inconsistency between provided backend"
+            " and audience in jwt: "
+            f"Backend {self.name} ({self.jwt_aud} != {aud})"
+        )
+        return self.browse([])
