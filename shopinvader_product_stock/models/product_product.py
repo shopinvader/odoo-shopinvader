@@ -31,7 +31,9 @@ class ProductProduct(models.Model):
         all_bindinds = products.mapped("shopinvader_bind_ids")
         backends = all_bindinds.mapped("backend_id")
         for backend in backends:
-            bindings = all_bindinds.filtered(lambda r, b=backend: r.backend_id == b)
+            bindings = all_bindinds.filtered(
+                lambda r, b=backend: r.backend_id == b and r.active
+            )
             # To avoid access rights issues, execute the job with sudo
             bindings = bindings.sudo()
             for binding in bindings:
