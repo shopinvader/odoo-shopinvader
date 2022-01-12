@@ -24,7 +24,7 @@ class ProductProduct(models.Model):
         backends = all_bindinds.mapped("backend_id")
         for backend in backends:
             bindings = all_bindinds.filtered(
-                lambda r, b=backend: r.backend_id == b
+                lambda r, b=backend: r.backend_id == b and r.active
             )
             # To avoid access rights issues, execute the job with the user
             # related to the backend
