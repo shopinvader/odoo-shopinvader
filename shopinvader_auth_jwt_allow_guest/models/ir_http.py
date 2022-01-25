@@ -1,3 +1,4 @@
+from logging import exception
 from odoo import models
 from odoo import SUPERUSER_ID, api, models, registry as registry_get
 from odoo.http import request
@@ -5,6 +6,11 @@ from odoo.addons.auth_jwt.exceptions import (
     UnauthorizedInvalidToken,
     JwtValidatorNotFound,
 )
+from odoo.exceptions import AccessDenied
+
+
+class CompositeJwtError(Exception):
+    pass
 
 
 class IrHttpJwt(models.AbstractModel):
@@ -25,10 +31,18 @@ class IrHttpJwt(models.AbstractModel):
 
         if not len(validator_names):
             raise JwtValidatorNotFound()
+
+        exceptions = {}
+
         for validator_name in validator_names:
             try:
                 super()._auth_method_jwt(validator_name)
                 return
-            except UnauthorizedInvalidToken:
+            except Exception as e:
+                exceptions[validator_name] = e
                 continue
-        raise UnauthorizedInvalidToken()
+
+        if len(exceptions) == 1:
+            raise list(exceptions.values())[0]
+
+        raise CompositeJwtError(exceptions)
