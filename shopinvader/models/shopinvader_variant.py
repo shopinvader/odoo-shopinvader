@@ -37,7 +37,7 @@ class ShopinvaderVariant(models.Model):
         check_company=True,
     )
     record_id = fields.Many2one(
-        string="Product",
+        string="Related Product",
         comodel_name="product.product",
         required=True,
         ondelete="cascade",
