@@ -30,6 +30,7 @@ class ShopinvaderAuthJwtServiceContextProvider(Component):
                             "backend_id": backend.id,
                             "is_guest": True,
                             "record_id": partner.id,
+                            "external_id": self._jwt_payload.get("sub"),
                         }
                     )
 
