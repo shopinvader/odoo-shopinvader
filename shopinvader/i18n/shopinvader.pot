@@ -2788,7 +2788,6 @@ msgstr ""
 #: model:ir.model,name:shopinvader.model_product_product
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__product_variant_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_id
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__record_id
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_kanban_view
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_product_search_view
@@ -3032,6 +3031,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__parent_id
 msgid "Related Company"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__record_id
+msgid "Related Product"
 msgstr ""
 
 #. module: shopinvader
