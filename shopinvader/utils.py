@@ -10,10 +10,11 @@ from odoo.addons.component.core import WorkContext
 def get_partner_work_context(shopinvader_partner):
     """Retrieve service work context for given shopinvader.partner"""
     ctx = {}
+    # TODO: `invader_partner` and `invader_partner_user` could be abandoned as soon as
+    # all `shopinvader` modules stop relying on `self.invader_partner`.
     ctx["invader_partner"] = shopinvader_partner
     ctx["invader_partner_user"] = shopinvader_partner
-    # TODO: `partner` and `partner_user` could be abandoned as soon as
-    # all `shopinvader` modules stop relying on `self.partner`.
+
     partner_user = shopinvader_partner.record_id
     ctx["partner_user"] = partner_user
     # The partner user for the main account or for sale order may differ.
