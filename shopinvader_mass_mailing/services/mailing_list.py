@@ -16,6 +16,11 @@ class MailingListsService(Component):
     _expose_model = "mailing.list"
     _description = __doc__
 
+    @property
+    def _exposed_model(self):
+        # As auth is "public" the tech user is not taken into account here
+        return super()._exposed_model.sudo()
+
     @restapi.method(
         [(["/<int:id>/get", "/<int:id>"], "GET")],
         input_param=restapi.CerberusValidator("_validator_get"),
@@ -67,7 +72,7 @@ class MailingListsService(Component):
     )
     def unsubscribe_all(self, **params):
         """Unsubscribe email from all mailing lists"""
-        records = self.env[self._expose_model].search(self._get_base_search_domain())
+        records = self._exposed_model.search(self._get_base_search_domain())
         return self._unsubscribe(records, **params)
 
     def _subscribe(self, records, **params):
@@ -81,7 +86,7 @@ class MailingListsService(Component):
 
     def _unsubscribe(self, records, **params):
         """Unsubscribe email from the given mailing lists"""
-        __, email = self.env["mailing.contact"].get_name_email(params["email"])
+        __, email = self.env["mailing.contact"].sudo().get_name_email(params["email"])
         Subscription = self.env["mailing.contact.subscription"].sudo()
         subscriptions = Subscription.search(
             [
