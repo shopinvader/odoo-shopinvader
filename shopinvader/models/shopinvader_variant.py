@@ -187,13 +187,16 @@ class ShopinvaderVariant(models.Model):
                 variant_attributes[sanitized_key] = att_value.name
             record.variant_attributes = variant_attributes
 
-    def _get_price(self, qty=1.0, pricelist=None, fposition=None, company=None):
+    def _get_price(
+        self, qty=1.0, pricelist=None, fposition=None, company=None, date=None
+    ):
         """Computes the product prices
 
         :param qty:         The product quantity, used to apply pricelist rules.
         :param pricelist:   Optional. Get prices for a specific pricelist.
         :param fposition:   Optional. Apply fiscal position to product taxes.
         :param company:     Optional.
+        :param date:        Optional.
 
         :returns: dict with the following keys:
 
@@ -220,6 +223,7 @@ class ShopinvaderVariant(models.Model):
             quantity=qty,
             pricelist=pricelist.id if pricelist else None,
             fiscal_position=fposition,
+            date=date,
         )
         product = product.with_context(**product_context)
         pricelist = pricelist.with_context(**product_context) if pricelist else None
@@ -232,14 +236,16 @@ class ShopinvaderVariant(models.Model):
         res = {
             "value": price_unit,
             "tax_included": any(tax.price_include for tax in taxes),
-            # Default values in case price.discuont_policy != "without_discount"
+            # Default values in case price.discount_policy != "without_discount"
             "original_value": price_unit,
             "discount": 0.0,
         }
         # Handle pricelists.discount_policy == "without_discount"
         if pricelist and pricelist.discount_policy == "without_discount":
             # Get the price rule
-            price_unit, rule_id = pricelist.get_product_price_rule(product, qty, None)
+            price_unit, rule_id = pricelist.get_product_price_rule(
+                product, qty, None, date=date
+            )
             # Get the price before applying the pricelist
             SaleOrderLine = self.env["sale.order.line"].with_context(**product_context)
             original_price_unit, currency = SaleOrderLine._get_real_price_currency(
