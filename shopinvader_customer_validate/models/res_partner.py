@@ -100,12 +100,10 @@ class ResPartner(models.Model):
 
     def action_shopinvader_validate_address(self):
         wiz = self._get_shopinvader_validate_address_wizard()
-        action = self.env.ref(
-            "shopinvader_customer_validate.shopinvader_address_validate_act_window"
-        )
-        action_data = action.read()[0]
-        action_data["res_id"] = wiz.id
-        return action_data
+        xmlid = "shopinvader_customer_validate.shopinvader_address_validate_act_window"
+        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
+        action["res_id"] = wiz.id
+        return action
 
     def _get_shopinvader_validate_address_wizard(self, **kw):
         ids = self.ids

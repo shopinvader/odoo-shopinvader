@@ -34,12 +34,10 @@ class ShopinvaderPartner(models.Model):
 
     def action_shopinvader_validate(self):
         wiz = self._get_shopinvader_validate_wizard()
-        action = self.env.ref(
-            "shopinvader_customer_validate.shopinvader_partner_validate_act_window"
-        )
-        action_data = action.read()[0]
-        action_data["res_id"] = wiz.id
-        return action_data
+        xmlid = "shopinvader_customer_validate.shopinvader_partner_validate_act_window"
+        action = self.env["ir.actions.act_window"]._for_xml_id(xmlid)
+        action["res_id"] = wiz.id
+        return action
 
     def _get_shopinvader_validate_wizard(self, **kw):
         vals = dict(shopinvader_partner_ids=self.ids, **kw)
