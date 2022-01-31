@@ -8,9 +8,15 @@ from odoo import models
 class ShopinvaderVariant(models.Model):
     _inherit = "shopinvader.variant"
 
-    def _get_price(self, qty=1.0, pricelist=None, fposition=None, company=None):
+    def _get_price(
+        self, qty=1.0, pricelist=None, fposition=None, company=None, date=None
+    ):
         res = super()._get_price(
-            qty=qty, pricelist=pricelist, fposition=fposition, company=company
+            qty=qty,
+            pricelist=pricelist,
+            fposition=fposition,
+            company=company,
+            date=date,
         )
         # Apply company
         product = self.record_id
