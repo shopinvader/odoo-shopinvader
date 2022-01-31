@@ -5,7 +5,7 @@
 {
     "name": "Shopvinvader Sale Coupon",
     "summary": "Manage Promotion and Coupon programs in Shopinvader",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.1.0",
     "category": "Sale",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp",
