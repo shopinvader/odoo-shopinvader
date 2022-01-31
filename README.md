@@ -69,7 +69,7 @@ addon | version | maintainers | summary
 [shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.1 |  | Shopinvader product new
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.0.0 |  | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.1.0 |  | Exposes product prices with and without taxes
-[shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.1 |  | This module is used to choose a stock field during theexport (by backend)
+[shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.2 |  | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.1 |  | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_forecast](shopinvader_product_stock_forecast/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Export Stock Forecast data along with product stocks.
 [shopinvader_product_stock_forecast_expiry](shopinvader_product_stock_forecast_expiry/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates product lot expiration into the forecast
