@@ -20,7 +20,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 |  | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.7.3 |  | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.8.0 |  | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 |  | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 |  | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.5 |  | Shopinvader API_KEY Authentication
@@ -68,7 +68,7 @@ addon | version | maintainers | summary
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 |  | Index storage media data into external search engine
 [shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.1 |  | Shopinvader product new
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.0.0 |  | Manage product display order on Shopinvader
-[shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.1.0 |  | Exposes product prices with and without taxes
+[shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.2.0 |  | Exposes product prices with and without taxes
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.2 |  | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.1 |  | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_forecast](shopinvader_product_stock_forecast/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Export Stock Forecast data along with product stocks.
