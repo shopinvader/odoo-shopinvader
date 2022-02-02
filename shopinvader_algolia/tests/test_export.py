@@ -7,6 +7,8 @@
 import json
 import os
 
+from odoo.tools import mute_logger
+
 from odoo.addons.connector_algolia.components.adapter import AlgoliaAdapter
 from odoo.addons.connector_search_engine.tests.test_all import TestBindingIndexBase
 from odoo.addons.shopinvader.tests.common import _install_lang_odoo
@@ -62,6 +64,11 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
                 return original(request)
 
             self.cassette.play_response = play_response
+
+    @mute_logger("vcr.cassette")
+    def run(self, *args, **kwargs):
+        # OVERRIDE to mute vcr.cassette logs
+        return super().run(*args, **kwargs)
 
     def test_10_export_one_product(self):
         product = self.env.ref("product.product_product_3_product_template")
