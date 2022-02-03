@@ -25,4 +25,8 @@ class TicketService(Component):
             picking.carrier_id = ticket.category_id.automatically_generate_return_for
             picking._put_in_pack(picking.move_line_ids)
             picking.print_return_label()
+            label = self.env["shipping.label"].search(
+                [("res_model", "=", "stock.picking"), ("res_id", "=", picking.id)]
+            )
+            label.copy(default={"res_model": "helpdesk.ticket", "res_id": ticket.id})
         return self._return_record(ticket)
