@@ -10,5 +10,5 @@ class InvaderController(main.RestController):
     _collection_name = "shopinvader.backend"
     _default_auth = "jwt"
     _default_save_session = False
-    _default_cors = True
+    _default_cors = "*"
     _component_context_provider = "shopinvader_auth_jwt_context_provider"
