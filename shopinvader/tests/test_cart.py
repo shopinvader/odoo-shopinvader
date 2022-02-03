@@ -406,6 +406,8 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         cart_bis = self.service._get()
         self.assertEqual(cart, cart_bis)
         cart.write({"state": "sale"})
+        cart_bis = self.service._get(create_if_not_found=False)
+        self.assertFalse(cart_bis)
         cart_bis = self.service._get()
         self.assertNotEqual(cart, cart_bis)
         self.assertEqual(cart_bis.typology, "cart")
