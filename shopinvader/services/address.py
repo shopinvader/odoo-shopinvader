@@ -102,6 +102,7 @@ class AddressService(Component):
             "zip": {"type": "string", "required": True, "empty": False},
             "city": {"type": "string", "required": True, "empty": False},
             "phone": {"type": "string", "nullable": True, "empty": False},
+            "website": {"type": "string", "required": False, "nullable": True},
             "email": {"type": "string", "required": False, "nullable": True},
             "state": {
                 "type": "dict",
@@ -200,6 +201,7 @@ class AddressService(Component):
             "zip",
             "city",
             "phone",
+            "website",
             "email",
             "function",
             "opt_in",
