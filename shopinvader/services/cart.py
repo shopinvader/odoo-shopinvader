@@ -427,26 +427,23 @@ class CartService(Component):
         }
 
     def _get(self, create_if_not_found=True):
-        """
+        """Get the session's cart
+
+        Here we take advantage of the cache. If the cart has been already loaded,
+        no SQL query will be issued.
 
         :return: sale.order recordset (cart)
         """
-        cart = self.env["sale.order"].browse()
-        if self.cart_id:
-            # here we take advantage of the cache. If the cart has been
-            # already loaded, no SQL query will be issued
-            # an alternative would be to build a domain with the expected
-            # criteria on the cart but in this case, each time the _get method
-            # would have been called, a new SQL query would have been done
-            cart = self.env["sale.order"].browse(self.cart_id).exists()
-        if (
-            cart.shopinvader_backend_id == self.shopinvader_backend
-            and cart.typology == "cart"
-            and cart.state == "draft"  # ensure that we only work on draft
-        ):
-            return cart
-        if create_if_not_found:
-            return self._create_empty_cart()
+        domain = [
+            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+            ("typology", "=", "cart"),
+            ("state", "=", "draft"),
+        ]
+        cart = (
+            self.env["sale.order"].browse(self.cart_id).exists().filtered_domain(domain)
+        )
+        if not cart and create_if_not_found:
+            cart = self._create_empty_cart()
         return cart
 
     def _create_empty_cart(self, **cart_params):
