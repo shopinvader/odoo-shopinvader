@@ -21,30 +21,30 @@ class IrHttpJwt(models.AbstractModel):
 
         token = cls._get_bearer_token()
 
-        registry = registry_get(request.db)
         exceptions = {}
-        with registry.cursor() as cr:
-            env = api.Environment(cr, SUPERUSER_ID, {})
-            validators = env["auth.jwt.validator"].search([])
 
-            if not len(validators):
-                raise JwtValidatorNotFound()
+        # We need to reuse the same cursor in case of partner creation in validator
+        env = api.Environment(request.cr, SUPERUSER_ID, {})
+        validators = env["auth.jwt.validator"].search([])
 
-            for validator in validators:
-                try:
-                    payload = validator._decode(token)
-                    uid = validator._get_and_check_uid(payload)
-                    partner_id = validator._get_and_check_partner_id(payload)
-                except Exception as e:
-                    exceptions[validator_name] = e
-                    continue
+        if not len(validators):
+            raise JwtValidatorNotFound()
 
-                request.uid = uid  # this resets request.env
-                request.jwt_payload = payload
-                request.jwt_partner_id = partner_id
-                break
-            else:
-                if len(exceptions) == 1:
-                    raise list(exceptions.values())[0]
+        for validator in validators:
+            try:
+                payload = validator._decode(token)
+                uid = validator._get_and_check_uid(payload)
+                partner_id = validator._get_and_check_partner_id(payload)
+            except Exception as e:
+                exceptions[validator_name] = e
+                continue
 
-                raise CompositeJwtError(exceptions)
+            request.uid = uid  # this resets request.env
+            request.jwt_payload = payload
+            request.jwt_partner_id = partner_id
+            break
+        else:
+            if len(exceptions) == 1:
+                raise list(exceptions.values())[0]
+
+            raise CompositeJwtError(exceptions)

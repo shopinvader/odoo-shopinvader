@@ -7,6 +7,11 @@ from odoo.addons.component.core import Component
 class CartService(Component):
     _inherit = "shopinvader.cart.service"
 
+    @property
+    def cart_id(self):
+        # TODO: Always get the latest cart
+        return self.shopinvader_session.get("cart_id", 0)
+
     def _validator_transfert(self):
         return {
             "token": {"type": "string", "required": True},
