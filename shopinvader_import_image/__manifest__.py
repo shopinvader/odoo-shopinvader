@@ -32,8 +32,8 @@
     "category": "Product",
     "depends": ["shopinvader_image"],
     "external_dependencies": {
-        "python": ["magic", "validators"],
-        "deb": ["libmagic1"],
+        "python": ["validators"],
+        "deb": ["python-magic", "libmagic1"],
     },
     "data": ["views/import_product_image_view.xml"],
     "license": "AGPL-3",

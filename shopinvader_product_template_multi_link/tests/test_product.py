@@ -12,7 +12,7 @@ class ProductCase(ProductCommonCase):
         template_1 = self.env.ref("product.product_product_7_product_template")
         template_2 = self.env.ref("product.product_product_9_product_template")
         res = template_1.shopinvader_bind_ids[0].cross_selling_ids
-        self.assertEqual(len(res), 1)
-        self.assertEqual(
-            res, template_2.shopinvader_bind_ids[0].shopinvader_variant_ids
+        self.assertEqual(len(res), 2)
+        self.assertIn(
+            template_2.shopinvader_bind_ids[0].shopinvader_variant_ids, res
         )
