@@ -40,9 +40,7 @@ class TestSalesService(CommonCase):
         service = self._get_service()
         res = service.search()
         states = sorted([x["state"] for x in res["data"]])
-        self.assertEqual(
-            states, ["shipping_partially", "shipping_unprocessed"]
-        )
+        self.assertEqual(states, ["shipping_partially", "shipping_unprocessed"])
 
     def test_state_done(self):
         self.shop_sales.action_confirm()
@@ -59,6 +57,4 @@ class TestSalesService(CommonCase):
         service = self._get_service()
         res = service.search()
         states = sorted([x["state"] for x in res["data"]])
-        self.assertEqual(
-            states, ["shipping_unprocessed", "shipping_unprocessed"]
-        )
+        self.assertEqual(states, ["shipping_unprocessed", "shipping_unprocessed"])
