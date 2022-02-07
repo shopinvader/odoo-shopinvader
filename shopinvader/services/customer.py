@@ -82,6 +82,9 @@ class CustomerService(Component):
                         "partner_id": self.partner.id,
                         "partner_shipping_id": self.partner.id,
                         "partner_invoice_id": self.partner.id,
+                        # We have to repeat the pricelist to avoid
+                        # unexpected update by onchange
+                        "pricelist_id": cart.pricelist_id.id,
                     }
                 )
             return cart_service._to_json(cart)["data"]

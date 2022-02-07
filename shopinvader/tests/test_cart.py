@@ -162,6 +162,35 @@ class AnonymousCartCase(CartCase, CartClearTest):
             cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id
         )
 
+    def test_anonymous_cart_then_sign_with_different_pricelist1(self):
+        """
+        Ensure the pricelist set on the cart is not updated by the one
+        set on the customer during sign-in.
+        The pricelist shouldn't be updated during sign-in!
+        :return:
+        """
+        cart = self.cart
+        partner = self.env.ref("shopinvader.partner_1")
+        new_pricelist = cart.pricelist_id.copy({"name": "New pricelist!"})
+        partner.write({"property_product_pricelist": new_pricelist.id})
+        save_pricelist = cart.pricelist_id
+        self._sign_with(partner)
+        self.assertEqual(cart.pricelist_id, save_pricelist)
+
+    def test_anonymous_cart_then_sign_with_different_pricelist2(self):
+        """
+        Ensure the pricelist set on the cart is not updated by the one
+        set on the backend (if updated manually or by another module)
+        The pricelist shouldn't be updated during sign-in!
+        :return:
+        """
+        cart = self.cart
+        partner = self.env.ref("shopinvader.partner_1")
+        new_pricelist = cart.pricelist_id.copy({"name": "New pricelist!"})
+        cart.write({"pricelist_id": new_pricelist.id})
+        self._sign_with(partner)
+        self.assertEqual(cart.pricelist_id, new_pricelist)
+
     def test_ask_email(self):
         """
         Test the ask_email when not logged.
