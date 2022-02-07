@@ -3,7 +3,7 @@
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import _, fields, models
 from odoo.exceptions import UserError
 
 
@@ -25,10 +25,8 @@ class SaleOrder(models.Model):
         },
     )
 
-    @api.depends("state", "typology")
-    def _compute_shopinvader_state(self):
-        # Overload to add typology in api.depends
-        return super()._compute_shopinvader_state()
+    def _compute_shopinvader_state_depends(self):
+        return super()._compute_shopinvader_state_depends() + ("typology",)
 
     def _get_shopinvader_state(self):
         self.ensure_one()
