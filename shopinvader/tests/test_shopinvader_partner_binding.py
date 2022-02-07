@@ -70,6 +70,39 @@ class TestShopinvaderPartnerBinding(CommonCase):
         self.assertTrue(shopinv_partner)
         return
 
+    def test_binding_inactive(self):
+        """
+        Test the binding by using the shopinvader.partner.binding wizard.
+        :return:
+        """
+        shopinv_partner = self._get_shopinvader_partner(
+            self.partner, self.backend
+        )
+        # This partner shouldn't be already bound
+        self.assertFalse(shopinv_partner)
+        context = self.env.context.copy()
+        context.update(
+            {
+                "active_id": self.partner.id,
+                "active_ids": self.partner.ids,
+                "active_model": self.partner._name,
+            }
+        )
+        wizard_obj = self.binding_wiz_obj.with_context(context)
+        fields_list = wizard_obj.fields_get().keys()
+        values = wizard_obj.default_get(fields_list)
+        values.update({"shopinvader_backend_id": self.backend.id})
+        wizard = wizard_obj.create(values)
+        wizard._onchange_shopinvader_backend_id()
+        wizard.binding_lines.write({"bind": True})
+        # Set partner inactive
+        self.partner.active = False
+        wizard.action_apply()
+        shopinv_partner = self._get_shopinvader_partner(
+            self.partner, self.backend
+        )
+        self.assertFalse(shopinv_partner)
+
     def test_binding_email_uppercase(self):
         """
         Test the binding on a partner with an email in upper case.
