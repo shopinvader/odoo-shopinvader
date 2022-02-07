@@ -32,5 +32,12 @@ class CartService(Component):
         if len(partner) != 1:
             raise AccessDenied(_("Invalid partner email in token"))
 
-        cart.partner_id = partner.record_id
+        # Change cart partner:
+        cart.write_with_onchange(
+            {
+                "partner_id": partner.id,
+                "partner_shipping_id": partner.id,
+                "partner_invoice_id": partner.id,
+            }
+        )
         return self._to_json(cart)
