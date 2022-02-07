@@ -16,6 +16,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.shopinvader_config = cls.env["shopinvader.config.settings"]
         cls.unique_email = datetime.now().isoformat() + "@test.com"
+        cls.user_liege = cls.env.ref("shopinvader.user_liege_shop")
 
     def test_unique_binding(self):
         self.env["shopinvader.partner"].create(
@@ -138,3 +139,31 @@ class TestShopinvaderPartner(SavepointComponentCase):
             [("email", "=", self.unique_email)]
         )
         self.assertEqual(len(res), 1)
+
+    def test_shopinvader_multi_company(self):
+        """
+        Test if modifications to a partner on a company A with a shopinvader.partner on a company B
+        work
+        """
+        self.shopinvader_config.create(
+            {"no_partner_duplicate": True}
+        ).execute()
+        self.assertFalse(
+            self.shopinvader_config.is_partner_duplication_allowed()
+        )
+        vals = {"email": "test+35@test.com", "name": "test  partner"}
+        # create a partner...
+        partner = self.env["res.partner"].create(vals)
+        # create a binding on company A
+        binding = self.env["shopinvader.partner"].create(
+            {
+                "email": "test+35@test.com",
+                "name": "test  partner",
+                "backend_id": self.backend.id,
+            }
+        )
+        # the binding must be linked to the partner
+        self.assertEqual(partner, binding.record_id)
+
+        # The user from company Liège is modifying partner
+        partner.sudo(self.user_liege).email = "test+36@test.com"

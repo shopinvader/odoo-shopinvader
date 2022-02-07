@@ -77,6 +77,7 @@
         "demo/product_category_demo.xml",
         "demo/product_attribute_value_demo.xml",
         "demo/product_product_demo.xml",
+        "demo/res_users.xml",
     ],
     "qweb": [],
 }

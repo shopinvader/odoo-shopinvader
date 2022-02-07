@@ -14,6 +14,7 @@ class ShopinvaderPartner(models.Model):
         "shopinvader.sale.profile",
         "Sale profile",
         compute="_compute_sale_profile_id",
+        compute_sudo=True,
         store=True,
         help="Sale profile computed, depending every fields who make the "
         "fiscal position (country, zip, vat, account position,...)",
