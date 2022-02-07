@@ -1,12 +1,7 @@
-from logging import exception
-from odoo import models
 from odoo import SUPERUSER_ID, api, models, registry as registry_get
 from odoo.http import request
-from odoo.addons.auth_jwt.exceptions import (
-    UnauthorizedInvalidToken,
-    JwtValidatorNotFound,
-)
-from odoo.exceptions import AccessDenied
+
+from odoo.addons.auth_jwt.exceptions import JwtValidatorNotFound
 
 
 class CompositeJwtError(Exception):

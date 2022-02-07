@@ -1,11 +1,6 @@
-from odoo.addons.component.core import Component
-
 import logging
 
-from odoo import _
-from odoo.addons.shopinvader_auth_jwt.components.service_context_provider import (
-    ShopinvaderAuthJwtServiceContextProvider as ShopinvaderAuthJwtServiceContextProviderParent,
-)
+from odoo.addons.component.core import Component
 
 _logger = logging.getLogger(__name__)
 

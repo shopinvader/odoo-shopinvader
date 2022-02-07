@@ -1,5 +1,5 @@
-from odoo.exceptions import AccessDenied
 from odoo import _
+from odoo.exceptions import AccessDenied
 
 from odoo.addons.component.core import Component
 
