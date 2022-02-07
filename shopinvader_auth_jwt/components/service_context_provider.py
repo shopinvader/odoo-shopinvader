@@ -44,20 +44,6 @@ class ShopinvaderAuthJwtServiceContextProvider(Component):
     def _get_backend(self):
         backend = super(ShopinvaderAuthJwtServiceContextProvider, self)._get_backend()
         if self._jwt_payload:
-            # no jwt_payload = public services...
             audience = self._jwt_payload.get("aud")
-            backend_model = self.env["shopinvader.backend"]
-            if backend:
-                # validate that this backend can be used for the aud
-                backend = backend if backend.jwt_aud == audience else backend_model
-                if not backend:
-                    _logger.warning(
-                        "Audience inconsistency for between provided backend and "
-                        "jwt toeken: Backend %s (%s != %s)",
-                        backend.name,
-                        backend.jwt_aud,
-                        audience,
-                    )
-                    return backend
-            return backend_model._get_from_jwt_aud(self.request.jwt_payload.get("aud"))
+            return backend._ensure_jwt_aud(audience)
         return backend
