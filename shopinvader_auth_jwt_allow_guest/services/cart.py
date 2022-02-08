@@ -7,11 +7,6 @@ from odoo.addons.component.core import Component
 class CartService(Component):
     _inherit = "shopinvader.cart.service"
 
-    @property
-    def cart_id(self):
-        # TODO: Always get the latest cart
-        return self.shopinvader_session.get("cart_id", 0)
-
     def _validator_transfert(self):
         return {
             "token": {"type": "string", "required": True},
@@ -48,3 +43,34 @@ class CartService(Component):
             }
         )
         return self._to_json(cart)
+
+    def search(self):
+        cart = self._get(create_if_not_found=False)
+        if not cart:
+            return {}
+        return self._to_json(cart)
+
+    def _get(self, create_if_not_found=True):
+        """Get current partner active cart
+        We get the cart from the session if it set for backward compatibility
+
+        :return: sale.order recordset (cart)
+        """
+        domain = [
+            ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
+            ("typology", "=", "cart"),
+            ("state", "=", "draft"),
+            ("partner_id", "=", self.partner.id),
+        ]
+
+        session_cart_id = self.shopinvader_session.get("cart_id", 0)
+        if session_cart_id:
+            domain.append(("id", "=", session_cart_id))
+
+        cart = self.env["sale.order"].search(domain, order="date_order desc", limit=1)
+
+        if cart:
+            return cart[0]
+
+        if create_if_not_found:
+            return self._create_empty_cart()

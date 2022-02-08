@@ -1,7 +1,11 @@
+from collections import namedtuple
 import logging
 
 from odoo import fields, models
 from odoo.http import request
+from odoo.addons.shopinvader.components.service_context_provider import (
+    ShopinvaderServiceContextProvider,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -24,12 +28,12 @@ class AuthJwtValidator(models.Model):
                 partner = self.env["res.partner"].create(
                     {"name": "Guest", "email": email}
                 )
-                # TODO: find a better way
-                website_unique_key = request.httprequest.environ.get(
-                    "HTTP_WEBSITE_UNIQUE_KEY"
-                )
-                backend = self.env["shopinvader.backend"]._get_from_website_unique_key(
-                    website_unique_key
+
+                # TODO: The dummy call to the context provider is not ideal
+                backend = ShopinvaderServiceContextProvider._get_backend(
+                    namedtuple("DummyWorkContext", ("request", "env"))(
+                        request=request, env=self.env
+                    )
                 )
 
                 self.env["shopinvader.partner"].create(
