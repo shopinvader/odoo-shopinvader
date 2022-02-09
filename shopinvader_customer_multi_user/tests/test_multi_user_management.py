@@ -10,14 +10,14 @@ from .common import TestUserManagementCommmon
 class TestUserManagement(TestUserManagementCommmon):
     def test_search_as_admin(self):
         service = self._get_service(self.company)
-        expected = self.user_binding2 + self.user_binding3 + self.user_binding
+        expected = self.user2_binding + self.user3_binding + self.user_binding
         self._test_search(service, expected)
 
     def test_search_as_simpleuser(self):
         for binding in (
             self.user_binding,
-            self.user_binding2,
-            self.user_binding3,
+            self.user2_binding,
+            self.user3_binding,
         ):
             service = self._get_service(binding.record_id)
             with self.assertRaisesRegex(exceptions.AccessError, "User not allowed"):
@@ -34,8 +34,8 @@ class TestUserManagement(TestUserManagementCommmon):
     def test_create_as_simpleuser(self):
         for binding in (
             self.user_binding,
-            self.user_binding2,
-            self.user_binding3,
+            self.user2_binding,
+            self.user3_binding,
         ):
             service = self._get_service(binding.record_id)
             params = {
@@ -59,8 +59,8 @@ class TestUserManagement(TestUserManagementCommmon):
     def test_update_as_simpleuser(self):
         for binding in (
             self.user_binding,
-            self.user_binding2,
-            self.user_binding3,
+            self.user2_binding,
+            self.user3_binding,
         ):
             service = self._get_service(binding.record_id)
             params = {
@@ -71,29 +71,29 @@ class TestUserManagement(TestUserManagementCommmon):
 
     def test_delete_as_admin(self):
         service = self._get_service(self.company)
-        child_partner2 = self.user_binding2.record_id
+        child_partner2 = self.user2_binding.record_id
         # Delete its user
-        service.dispatch("delete", self.user_binding2.id)
+        service.dispatch("delete", self.user2_binding.id)
         # The binding is gone
-        self.assertFalse(self.user_binding2.exists())
+        self.assertFalse(self.user2_binding.exists())
         # BUT since its partner had another user it won't be touched
         self.assertTrue(child_partner2.active)
         # Let's delete the other user
-        child_partner3 = self.user_binding3.record_id
-        service.dispatch("delete", self.user_binding3.id)
-        self.assertFalse(self.user_binding3.exists())
+        child_partner3 = self.user3_binding.record_id
+        service.dispatch("delete", self.user3_binding.id)
+        self.assertFalse(self.user3_binding.exists())
         # Now its partner is archived
         self.assertFalse(child_partner3.active)
 
     def test_delete_as_simpleuser(self):
         for binding in (
             self.user_binding,
-            self.user_binding2,
-            self.user_binding3,
+            self.user2_binding,
+            self.user3_binding,
         ):
             service = self._get_service(binding.record_id)
             with self.assertRaisesRegex(exceptions.AccessError, "User not allowed"):
-                service.dispatch("delete", self.user_binding2.id)
+                service.dispatch("delete", self.user2_binding.id)
 
 
 class TestUserManagementDelegateManage(TestUserManagementCommmon):
@@ -101,7 +101,7 @@ class TestUserManagementDelegateManage(TestUserManagementCommmon):
     def setUpClass(cls):
         super().setUpClass()
         cls.user_binding.can_manage_users = True
-        cls.user_binding2.can_manage_users = True
+        cls.user2_binding.can_manage_users = True
 
     # Test delegated permission: manage users
 
@@ -109,13 +109,13 @@ class TestUserManagementDelegateManage(TestUserManagementCommmon):
         # This user has no sub users, no result
         binding = self.user_binding
         service = self._get_service(binding.record_id)
-        expected = self.user_binding2.browse()
+        expected = self.user2_binding.browse()
         self._test_search(service, expected)
 
         # This user has a sub user, should find it
-        binding = self.user_binding2
+        binding = self.user2_binding
         service = self._get_service(binding.record_id)
-        expected = self.user_binding3
+        expected = self.user3_binding
         self._test_search(service, expected)
 
     def test_create_as_simpleuser_delegate_manage_users(self):
@@ -133,17 +133,17 @@ class TestUserManagementDelegateManage(TestUserManagementCommmon):
     def test_delete_as_simpleuser_delegate_manage_users(self):
         binding = self.user_binding
         service = self._get_service(binding.record_id)
-        child_partner2 = self.user_binding2.record_id
+        child_partner2 = self.user2_binding.record_id
         # Delete a user that does not belong to him
         with self.assertRaises(exceptions.MissingError):
-            service.dispatch("delete", self.user_binding2.id)
+            service.dispatch("delete", self.user2_binding.id)
 
         # Try to delete its sub user instead
-        binding = self.user_binding2
+        binding = self.user2_binding
         service = self._get_service(binding.record_id)
-        child_partner3 = self.user_binding3.record_id
-        service.dispatch("delete", self.user_binding3.id)
-        self.assertFalse(self.user_binding3.exists())
+        child_partner3 = self.user3_binding.record_id
+        service.dispatch("delete", self.user3_binding.id)
+        self.assertFalse(self.user3_binding.exists())
         # BUT since its partner had another user it won't be touched
         self.assertTrue(child_partner2.active)
         self.assertFalse(child_partner3.active)
