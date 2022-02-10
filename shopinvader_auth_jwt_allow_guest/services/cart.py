@@ -7,7 +7,7 @@ from odoo.addons.component.core import Component
 class CartService(Component):
     _inherit = "shopinvader.cart.service"
 
-    def _validator_transfert(self):
+    def _validator_transfer(self):
         return {
             "token": {"type": "string", "required": True},
         }
@@ -19,7 +19,7 @@ class CartService(Component):
             except Exception:
                 continue
 
-    def transfert(self, token=None):
+    def transfer(self, token=None):
         cart = self._get()
         auth_token = self._decode_token(token)
         if not auth_token or not auth_token.get("email"):
