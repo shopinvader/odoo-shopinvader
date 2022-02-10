@@ -293,7 +293,7 @@ class ShopinvaderVariant(models.Model):
         # Respect same order.
         order_by = [x.strip() for x in self.env["product.product"]._order.split(",")]
         backends = self.mapped("backend_id")
-        fields_to_read = ["tmpl_record_id", "backend_id"] + order_by
+        fields_to_read = ["tmpl_record_id", "backend_id", "lang_id"] + order_by
         tmpl_ids = self.mapped("tmpl_record_id").ids
         # Use sudo to bypass permissions (we don't care)
         _variants = self.sudo().search(
@@ -303,7 +303,7 @@ class ShopinvaderVariant(models.Model):
         # Use `load=False` to not load template name
         variants = _variants.read(fields_to_read, load=False)
         var_by_tmpl = groupby(
-            variants, lambda x: (x["tmpl_record_id"], x["backend_id"])
+            variants, lambda x: (x["tmpl_record_id"], x["backend_id"], x["lang_id"])
         )
 
         def pick_1st_variant(prods):
@@ -326,7 +326,9 @@ class ShopinvaderVariant(models.Model):
         }
         for record in self:
             record.main = (
-                main_by_tmpl.get((record.tmpl_record_id.id, record.backend_id.id))
+                main_by_tmpl.get(
+                    (record.tmpl_record_id.id, record.backend_id.id, record.lang_id.id)
+                )
                 == record.id
             )
 
