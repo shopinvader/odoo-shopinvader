@@ -70,7 +70,7 @@ class TestMembershipService(CommonCase):
                 current_data.get("membership_id").get("id"),
                 membership_line.membership_id.id,
             )
-            self.assertEquals(
+            self.assertEqual(
                 current_data.get("membership_id").get("name"),
                 membership_line.membership_id.name,
             )

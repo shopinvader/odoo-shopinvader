@@ -120,8 +120,8 @@ class TestCustomer(TestCustomerCommon):
             "update", self.partner.id, params=params
         )
         self.assertEqual(res["data"]["id"], self.partner.id)
-        self.assertEquals(self.partner.street, "New Street")
-        self.assertEquals(self.partner_binding.street, "New Street")
+        self.assertEqual(self.partner.street, "New Street")
+        self.assertEqual(self.partner_binding.street, "New Street")
 
     def test_update_customer_no_partner(self):
         params = {"street": "New Street"}
@@ -134,7 +134,7 @@ class TestCustomer(TestCustomerCommon):
             "update", self.partner.id, params=params
         )
         self.assertEqual(res["data"]["id"], self.partner.id)
-        self.assertEquals(self.partner_binding.external_id, "D5CdkqOEL")
+        self.assertEqual(self.partner_binding.external_id, "D5CdkqOEL")
 
     def test_update_customer_not_allowed(self):
         params = {"street": "New Street"}

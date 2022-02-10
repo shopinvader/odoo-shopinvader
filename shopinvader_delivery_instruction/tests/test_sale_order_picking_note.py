@@ -40,14 +40,14 @@ class TestSaleOrderDeliveryNote(CommonCase):
         for delivery_instruction in delivery_instructions:
             params = {"delivery_instruction": delivery_instruction}
             self.service.dispatch("update", params=params)
-            self.assertEquals(self.cart.picking_note, delivery_instruction)
+            self.assertEqual(self.cart.picking_note, delivery_instruction)
         result = self.service.dispatch("update")
         data = result.get("data", {})
-        self.assertEquals(data.get("delivery_instruction"), delivery_instruction)
+        self.assertEqual(data.get("delivery_instruction"), delivery_instruction)
         self.cart.action_confirm()
         pickings = self.cart.picking_ids
         self.assertTrue(pickings)
         for picking in pickings:
             # Should be equals to the last delivery_instruction set on the cart
-            self.assertEquals(picking.note, delivery_instruction)
+            self.assertEqual(picking.note, delivery_instruction)
         return
