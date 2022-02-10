@@ -56,10 +56,11 @@ class CartService(Component):
 
         :return: sale.order recordset (cart)
         """
+
+        # We get the last cart in date for the partner
         domain = [
             ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
             ("typology", "=", "cart"),
-            ("state", "=", "draft"),
             ("partner_id", "=", self.partner.id),
         ]
 
@@ -69,7 +70,8 @@ class CartService(Component):
 
         cart = self.env["sale.order"].search(domain, order="date_order desc", limit=1)
 
-        if cart:
+        # If the last cart is not ordered this is the cart we want, otherwise we create a new one
+        if cart and cart.state == "draft":
             return cart[0]
 
         if create_if_not_found:
