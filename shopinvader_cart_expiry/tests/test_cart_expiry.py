@@ -49,7 +49,7 @@ class TestCartExpiry(CartCase):
         with mock.patch(now_method) as mock_now:
             mock_now.return_value = today
             expiration_date = so_date + timedelta(days=1)
-            self.assertEquals(expiration_date, self.sale.cart_expiration_date)
+            self.assertEqual(expiration_date, self.sale.cart_expiration_date)
             cart = self.service.search()
             self.assertDictContainsSubset(
                 {"expiration_date": expiration_date}, cart.get("data")

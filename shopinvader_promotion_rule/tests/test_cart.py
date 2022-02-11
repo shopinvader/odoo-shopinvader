@@ -35,7 +35,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         promotion_rules_auto = cart["promotion_rules_auto"]
         promotion_rule_coupon = cart["promotion_rule_coupon"]
         self.assertDictEqual({}, promotion_rule_coupon)
-        self.assertEquals(1, len(promotion_rules_auto))
+        self.assertEqual(1, len(promotion_rules_auto))
         self.assertDictEqual(
             {
                 "rule_type": "auto",
@@ -56,7 +56,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         promotion_rule_coupon = cart["promotion_rule_coupon"]
         # we see that the auto rule are still applied on the SO event if it's
         # without effect on line since the coupon is the best promotion
-        self.assertEquals(1, len(promotion_rules_auto))
+        self.assertEqual(1, len(promotion_rules_auto))
         self.assertDictEqual(
             {
                 "rule_type": "coupon",
@@ -83,7 +83,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         promotion_rules_auto = cart["promotion_rules_auto"]
         promotion_rule_coupon = cart["promotion_rule_coupon"]
         self.assertDictEqual({}, promotion_rule_coupon)
-        self.assertEquals(1, len(promotion_rules_auto))
+        self.assertEqual(1, len(promotion_rules_auto))
         self.assertDictEqual(
             {
                 "rule_type": "auto",
@@ -103,7 +103,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         self.service.dispatch(
             "add_item", params={"product_id": self.product_1.id, "item_qty": 2}
         )
-        self.assertEquals(count_existing_lines + 1, len(self.cart.order_line))
+        self.assertEqual(count_existing_lines + 1, len(self.cart.order_line))
         # the promotion is applied on all lines
         for line in self.cart.order_line:
             self.check_discount_rule_set(line, self.promotion_rule_coupon)
