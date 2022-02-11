@@ -959,6 +959,21 @@ class ProductCase(ProductCommonCase):
             ),
         )
 
+    def test_main_product_multi_language(self):
+        # Install fr language
+        # Create a new product template - so, by default it has only one
+        # variant
+        # Bind it to shopinvader
+        # All shopinvader variants (one by language) should be main product
+        lang = self._install_lang("base.lang_fr")
+        self.backend.lang_ids |= lang
+        vals = {"name": "Product Template"}
+        template = self.env["product.template"].create(vals)
+        prod = template.product_variant_ids[0]
+        self._bind_products(prod)
+        for shopinvader_variant in prod.shopinvader_bind_ids:
+            self.assertTrue(shopinvader_variant.main)
+
     def test_create_shopinvader_category_from_product_category(self):
         categ = self.env["product.category"].search([])[0]
         lang = self.env["res.lang"]._lang_get(self.env.user.lang)
