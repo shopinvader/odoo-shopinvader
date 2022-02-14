@@ -8,8 +8,10 @@ from odoo.addons.component.core import Component
 class WishlistService(Component):
     _inherit = "shopinvader.wishlist.service"
 
-    def _get_add_to_cart_wizard(self, cart, record):
-        wizard = super()._get_add_to_cart_wizard(cart, record)
+    def _get_add_to_cart_wizard(self, cart, record, skip_existing_products):
+        wizard = super()._get_add_to_cart_wizard(
+            cart, record, skip_existing_products
+        )
         return wizard.with_context(
             allowed_order_partner_ids=self._allowed_order_partners().ids
         )
