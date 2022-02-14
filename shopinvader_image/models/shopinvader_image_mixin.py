@@ -51,6 +51,8 @@ class ShopinvaderImageMixin(models.AbstractModel):
 
     def _get_images_store_hash(self):
         self.ensure_one()
+        if not self[self._image_field]:
+            return False
         return str(hash(self._get_images_store_hash_tuple()))
 
     def _get_images_store_hash_timestamp(self):
