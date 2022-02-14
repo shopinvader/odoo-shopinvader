@@ -96,14 +96,14 @@ class ShopinvaderImageMixin(models.AbstractModel):
         return res
 
     def _prepare_data_resize(self, thumbnail, image_relation):
-        """
-        Prepare data to fill images serialized field
-        :param thumbnail: storage.thumbnail recordset
-        :param image_relation: product.image.relation recordset
+        """Prepare data to fill images serialized field
+
+        :param thumbnail: ``storage.thumbnail`` recordset
+        :param image_relation: ``image.relation.abstract`` recordset
         :return: dict
         """
         self.ensure_one()
-        tag = ""
-        if image_relation.tag_id:
-            tag = image_relation.tag_id.name
-        return {"src": thumbnail.url, "alt": self.name, "tag": tag}
+        res = {"src": thumbnail.url, "alt": self.name}
+        if "tag_id" in image_relation._fields:
+            res["tag"] = image_relation.tag_id.name or ""
+        return res
