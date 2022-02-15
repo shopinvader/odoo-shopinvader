@@ -62,14 +62,18 @@ class CommonCustomerPriceCase(ProductCommonCase):
         expected_price = s_variant._get_price(
             pricelist=self.base_pricelist, fposition=self.fiscal_pos1
         )
-        res = service.dispatch("products", params={"ids": s_variant.ids, "one": True})
+        res = service.dispatch(
+            "products", params={"ids": s_variant.record_id.ids, "one": True}
+        )
         self._test_response(res, s_variant, expected_price)
         # partner2
         expected_price = s_variant._get_price(
             pricelist=self.base_pricelist, fposition=self.fiscal_pos2
         )
         service = self._get_service(self.partner2)
-        res = service.dispatch("products", params={"ids": s_variant.ids, "one": True})
+        res = service.dispatch(
+            "products", params={"ids": s_variant.record_id.ids, "one": True}
+        )
         self._test_response(res, s_variant, expected_price)
 
     def test_get_price_custom_pricelist(self):
@@ -77,7 +81,9 @@ class CommonCustomerPriceCase(ProductCommonCase):
         self.partner1.property_product_pricelist = self.discount_pricelist
         # partner1
         service = self._get_service(self.partner1)
-        res = service.dispatch("products", params={"ids": s_variant.ids, "one": True})
+        res = service.dispatch(
+            "products", params={"ids": s_variant.record_id.ids, "one": True}
+        )
         expected_price = s_variant._get_price(
             pricelist=self.discount_pricelist, fposition=self.fiscal_pos1
         )
@@ -89,7 +95,8 @@ class CommonCustomerPriceCase(ProductCommonCase):
         s_variant2 = prod2.shopinvader_bind_ids[0]
         service = self._get_service(self.partner1)
         res = service.dispatch(
-            "products", params={"ids": [s_variant.id, s_variant2.id]}
+            "products",
+            params={"ids": [s_variant.record_id.id, s_variant2.record_id.id]},
         )
         self.assertEqual(len(res), 2)
         expected_price = s_variant._get_price(
