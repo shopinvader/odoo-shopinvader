@@ -50,7 +50,26 @@ class ShopinvaderImageMixin(models.AbstractModel):
         return self.backend_id[self._resize_scales_field]
 
     def _get_images_store_hash(self):
+        self.ensure_one()
+        if not self[self._image_field]:
+            return False
         return str(hash(self._get_images_store_hash_tuple()))
+
+    def _get_images_store_hash_timestamp(self):
+        """Get the timestamp of the last modification of the images
+
+        This also includes the last modification of their relation or tags records
+
+        :return: datetime
+        """
+        images_relation = self[self._image_field]
+        timestamps = [
+            *images_relation.mapped("write_date"),
+            *images_relation.mapped("image_id.write_date"),
+        ]
+        if "tag_id" in images_relation._fields:
+            timestamps += images_relation.mapped("tag_id.write_date")
+        return max(timestamps) if timestamps else False
 
     def _get_images_store_hash_tuple(self):
         images = self[self._image_field].image_id
@@ -66,9 +85,9 @@ class ShopinvaderImageMixin(models.AbstractModel):
         resize_scales = tuple(
             self._resize_scales().mapped(lambda r: (r.key, r.size_x, r.size_y))
         )
-        images_timestamp = tuple(images.mapped("write_date"))
+        timestamp = self._get_images_store_hash_timestamp()
         # TODO: any other bit to consider here?
-        return resize_scales + images_timestamp + public_urls
+        return resize_scales + public_urls + (timestamp,)
 
     def _get_image_url_key(self, image_relation):
         # You can inherit this method to change the name of the image of
@@ -96,14 +115,14 @@ class ShopinvaderImageMixin(models.AbstractModel):
         return res
 
     def _prepare_data_resize(self, thumbnail, image_relation):
-        """
-        Prepare data to fill images serialized field
-        :param thumbnail: storage.thumbnail recordset
-        :param image_relation: product.image.relation recordset
+        """Prepare data to fill images serialized field
+
+        :param thumbnail: ``storage.thumbnail`` recordset
+        :param image_relation: ``image.relation.abstract`` recordset
         :return: dict
         """
         self.ensure_one()
-        tag = ""
-        if image_relation.tag_id:
-            tag = image_relation.tag_id.name
-        return {"src": thumbnail.url, "alt": self.name, "tag": tag}
+        res = {"src": thumbnail.url, "alt": self.name}
+        if "tag_id" in image_relation._fields:
+            res["tag"] = image_relation.tag_id.name or ""
+        return res

@@ -4,7 +4,11 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from datetime import timedelta
+
 import mock
+
+from odoo import fields
 
 from .common import TestShopinvaderImageCase
 
@@ -29,12 +33,33 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
         variant = self.shopinvader_variant
         self.assertFalse(variant.images_store_hash)
         self.assertTrue(variant._images_must_recompute())
-        orig_hash = variant._get_images_store_hash()
-        variant.images_store_hash = orig_hash
+        variant.images_store_hash = variant._get_images_store_hash()
         self.assertFalse(variant._images_must_recompute())
         # change hash by changing scale
         self.backend.shopinvader_variant_resize_ids[0].key = "very-small"
         self.assertTrue(variant._images_must_recompute())
+        variant.images_store_hash = variant._get_images_store_hash()
+        # NOTE: write_date, used to compute the hash, uses sql NOW() to recompute
+        #       and it always corresponds to the time the transaction started.
+        #       To overcome this, we manually overwrite write_date
+        now = fields.Datetime.now()
+        variant.image_ids.write_date = now
+        variant.images_store_hash = variant._get_images_store_hash()
+        # Change hash when relation is updated
+        variant.image_ids[0].write_date = now + timedelta(seconds=1)
+        self.assertTrue(variant._images_must_recompute())
+        variant.images_store_hash = variant._get_images_store_hash()
+        # Change hash when image is updated
+        variant.image_ids[0].image_id.write_date = now + timedelta(seconds=2)
+        self.assertTrue(variant._images_must_recompute())
+        variant.images_store_hash = variant._get_images_store_hash()
+        # Change hash when tag is updated
+        tag = self.env.ref("shopinvader_image.image_tag_1")
+        variant.image_ids[0].tag_id = tag
+        variant.images_store_hash = variant._get_images_store_hash()
+        tag.write_date = now + timedelta(seconds=3)
+        self.assertTrue(variant._images_must_recompute())
+        variant.images_store_hash = variant._get_images_store_hash()
 
     def test_images_recompute(self):
         variant = self.shopinvader_variant
