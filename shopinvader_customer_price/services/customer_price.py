@@ -19,7 +19,7 @@ class CustomerPriceService(Component):
 
     def products(self, **params):
         domain = expression.normalize_domain(self._get_base_search_domain())
-        domain = expression.AND([domain, [("id", "in", params["ids"])]])
+        domain = expression.AND([domain, [("record_id", "in", params["ids"])]])
         records = self.env[self._expose_model].search(domain)
         return self._to_json(records, one=params.get("one"))
 
