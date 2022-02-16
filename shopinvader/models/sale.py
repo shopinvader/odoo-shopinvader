@@ -110,6 +110,15 @@ class SaleOrder(models.Model):
             self.reset_price_tax()
         return True
 
+    def _send_order_confirmation_mail(self):
+        non_shopinvader_orders = self.env["sale.order"].browse()
+        for order in self:
+            # Only send emails through shopinvader notifications
+            # When order are done from website
+            if not order.shopinvader_backend_id:
+                non_shopinvader_orders |= order
+        return super(SaleOrder, non_shopinvader_orders)._send_order_confirmation_mail()
+
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
