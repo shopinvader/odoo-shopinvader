@@ -506,11 +506,15 @@ class CartService(Component):
         )
 
     def _prepare_cart_item(self, params, cart):
-        return {
-            "product_id": params["product_id"],
-            "product_uom_qty": params["item_qty"],
-            "order_id": cart.id,
-        }
+        valid_fields = self.env["sale.order.line"]._fields
+        _params = {k: v for k, v in params.items() if k in valid_fields}
+        _params.update(
+            {
+                "product_uom_qty": params["item_qty"],
+                "order_id": cart.id,
+            }
+        )
+        return _params
 
     def _load_target_email(self, record_id):
         """
