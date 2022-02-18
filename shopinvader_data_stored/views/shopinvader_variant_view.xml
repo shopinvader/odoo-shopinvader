@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<record id="shopinvader_variant_form_view" model="ir.ui.view">
+    <field name="model">shopinvader.variant</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_variant_form_view" />
+    <field name="arch" type="xml">
+        <group name="variant" position="after">
+            <group name="jsonified_data" string="Jsonified Data">
+                <field name="ir_export_id" />
+                <field name="jsonified_display" widget="ace" readonly="1" />
+            </group>
+        </group>
+    </field>
+</record>
+
+</odoo>
