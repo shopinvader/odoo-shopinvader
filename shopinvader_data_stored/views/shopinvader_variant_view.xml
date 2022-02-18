@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<record id="shopinvader_variant_form_view" model="ir.ui.view">
+    <field name="model">shopinvader.variant</field>
+    <field name="inherit_id" ref="shopinvader.shopinvader_variant_form_view" />
+    <field name="arch" type="xml">
+        <page name="main" position="after">
+            <page name="json_data" string="Data">
+                <group name="jsonified_data" string="JSON-ified Data">
+                    <field name="ir_export_id" />
+                </group>
+                <field name="jsonified_display" widget="ace" readonly="1" />
+            </page>
+        </page>
+    </field>
+</record>
+
+<!-- TODO: remove from s_search_engine -->
+<!-- FIXME:  _compute_jsonified_data runs w/out jobs -->
+<record model="ir.actions.server" id="action_recompute_shopinvader_product_on_template">
+    <field name="name">Recompute shopinvader product</field>
+    <field name="model_id" ref="product.model_product_template" />
+    <field name="binding_model_id" ref="product.model_product_template" />
+    <field name="state">code</field>
+    <field name="code">
+        records.mapped("product_variant_ids.shopinvader_bind_ids")._compute_jsonified_data()
+    </field>
+</record>
+
+<record model="ir.actions.server" id="action_recompute_shopinvader_product_on_binding">
+    <field name="name">Recompute shopinvader product</field>
+    <field name="model_id" ref="shopinvader.model_shopinvader_variant" />
+    <field name="binding_model_id" ref="shopinvader.model_shopinvader_variant" />
+    <field name="state">code</field>
+    <field name="code">
+        records._compute_jsonified_data()
+    </field>
+</record>
+
+</odoo>
