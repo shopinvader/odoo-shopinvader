@@ -7,7 +7,7 @@
 {'name': 'Shopinvader Algolia Connector',
  'version': '8.0.0.0.1',
  'author': 'Akretion',
- 'website': 'www.akretion.com',
+ 'website': 'https://www.akretion.com',
  'license': 'AGPL-3',
  'category': 'Generic Modules',
  'post_init_hook': 'post_init_hook',

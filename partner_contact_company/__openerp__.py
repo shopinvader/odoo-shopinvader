@@ -8,7 +8,7 @@
     "summary": "Partner Company",
     "version": "8.0.1.0.0",
     "category": "Partner",
-    "website": "www.akretion.com",
+    "website": "https://www.akretion.com",
     "author": " Akretion",
     "license": "AGPL-3",
     "application": False,
