@@ -1,9 +1,11 @@
 # Copyright 2018 Akretion (http://www.akretion.com).
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
-# @author Sébastien BEAU <sebastien.beau@akretion.com>
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
+# @author Sébastien BEAU <sebastien.beau@akretion.com>
 # @author Simone Orsi <simahawk@gmail.com>
+# @author Iván Todorovich <ivan.todorovich@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
 from odoo import _, api, exceptions, fields, models
 
 
@@ -25,21 +27,23 @@ class ShopinvaderBackend(models.Model):
     @api.depends("use_sale_profile", "sale_profile_ids.default")
     def _compute_pricelist_id(self):
         for rec in self:
-            pricelist = rec._default_pricelist_id()
             if rec.use_sale_profile:
-                pricelist = rec._get_default_profile().pricelist_id
-            rec.pricelist_id = pricelist
+                rec.pricelist_id = rec._get_default_profile().pricelist_id
+            else:
+                rec.pricelist_id = rec._default_pricelist_id()
 
     def _compute_customer_default_role(self):
-        for rec in self:
-            if rec.use_sale_profile:
-                rec.customer_default_role = rec._get_default_profile().code
-            else:
-                rec.customer_default_role = "default"
+        # Override. Get default role from default profile
+        # If the backend doesn't use_sale_profile, fallback to super()
+        using_sale_profile = self.filtered("use_sale_profile")
+        for rec in using_sale_profile:
+            rec.customer_default_role = rec._get_default_profile().code
+        other_records = self - using_sale_profile
+        super(ShopinvaderBackend, other_records)._compute_customer_default_role()
 
     @api.constrains("use_sale_profile", "pricelist_id")
     def _check_use_sale_profile(self):
-        if not self.pricelist_id and self.use_sale_profile:
+        if any(rec.use_sale_profile and not rec.pricelist_id for rec in self):
             raise exceptions.ValidationError(
                 _("You must have a default profile that provides a default pricelist.")
             )
@@ -68,4 +72,5 @@ class ShopinvaderBackend(models.Model):
         return default_profile.pricelist_id
 
     def _get_default_profile(self):
-        return self.sale_profile_ids.filtered("default")
+        self.ensure_one()
+        return fields.first(self.sale_profile_ids.filtered("default"))
