@@ -24,9 +24,7 @@ msgid "Code"
 msgstr ""
 
 #. module: shopinvader_sale_profile
-#: code:addons/shopinvader_sale_profile/models/shopinvader_sale_profile.py:0
 #: model:ir.model.constraint,message:shopinvader_sale_profile.constraint_shopinvader_sale_profile_constraint_unique_code
-#, python-format
 msgid "Code must be unique per backend."
 msgstr ""
 
