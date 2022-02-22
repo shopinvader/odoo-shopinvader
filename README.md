@@ -81,7 +81,7 @@ addon | version | maintainers | summary
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 |  | Ease creation of variants selector on shopinvader sites
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.2.3.0 |  | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 |  | Expose the amount by tax to shopinvader
-[shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.1.0 |  | Manage Promotion and Coupon programs in Shopinvader
+[shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.2.0 |  | Manage Promotion and Coupon programs in Shopinvader
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.0.0 |  | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 |  | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.2.0 |  | ShopInvader - Sale profile
