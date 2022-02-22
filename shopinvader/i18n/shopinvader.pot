@@ -2295,8 +2295,22 @@ msgid "Mid Century Modern Eames Chair with Molded Arms and Wood Legs"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__min_sellable_qty
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__min_sellable_qty
+msgid "Min Sellable Qty"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__orderpoint_ids
 msgid "Minimum Stock Rules"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__min_sellable_qty
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__min_sellable_qty
+msgid ""
+"Minimum sellable quantity, according to the available packagings, if Only "
+"Sell by Packaging is set."
 msgstr ""
 
 #. module: shopinvader
