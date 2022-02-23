@@ -10,7 +10,6 @@
     "depends": [
         "product_assortment",
         "shopinvader",
-        "shopinvader_search_engine",
     ],
     "data": ["data/ir_cron.xml", "views/shopinvader_backend.xml"],
     "demo": ["demo/shopinvader_assortment_demo.xml"],
