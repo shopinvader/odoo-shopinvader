@@ -17,10 +17,7 @@
                 >
                     <field name="shopinvader_company_backend_id" invisible="1" />
                     <div name="company_shopinvader_published">
-                        <field
-                            name="company_shopinvader_published"
-                            context="{'bind_immediately': True}"
-                        />
+                        <field name="company_shopinvader_published" />
                         <label for="company_shopinvader_published" />
                         <field
                             name="shopinvader_company_backend_id"
