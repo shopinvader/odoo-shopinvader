@@ -35,9 +35,10 @@ class ProductProduct(models.Model):
 
     def _inverse_company_shopinvader_published(self):
         backend = self._ensure_shopinvader_company_backend()
+        run_immediately = self.env.context.get("bind_immediately")
         for rec in self:
             if rec.company_shopinvader_published:
-                backend.bind_selected_products(rec, run_immediately=True)
+                backend.bind_selected_products(rec, run_immediately=run_immediately)
             else:
                 rec.company_shopinvader_bind_ids.active = False
 
