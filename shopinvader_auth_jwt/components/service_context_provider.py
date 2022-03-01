@@ -20,25 +20,21 @@ class ShopinvaderAuthJwtServiceContextProvider(Component):
     def _jwt_payload(self):
         return getattr(self.request, "jwt_payload", None)
 
+    @property
+    def _jwt_partner(self):
+        partner_id = getattr(self.request, "jwt_partner_id", None)
+        if partner_id:
+            return self.env["res.partner"].browse(partner_id)
+
     def _get_shopinvader_partner(self):
-        if self._jwt_payload:
-            partner_email = self._jwt_payload.get("email")
+        if self._jwt_partner:
             backend = self._get_backend()
-            if partner_email:
-                shopinvader_partner = self._find_partner(backend, partner_email)
-                if len(shopinvader_partner) == 1:
-                    self._validate_partner(backend, shopinvader_partner)
-                    return shopinvader_partner
-                else:
-                    _logger.warning("Wrong email, jwt payload ignored")
-                    if len(shopinvader_partner) > 1:
-                        _logger.warning(
-                            "More than one shopinvader.partner found for:"
-                            " backend_id={} email={}".format(backend.id, partner_email)
-                        )
-                    # Could be because the email is not related to a partner or
-                    # because the partner is inactive
-                    raise MissingError(_("The given partner is not found!"))
+            shopinvader_partner = self._jwt_partner._get_invader_partner(backend)
+            if not shopinvader_partner:
+                raise MissingError(_("The given partner is not bound on the backend"))
+            self._validate_partner(backend, shopinvader_partner)
+            return shopinvader_partner
+
         return super()._get_shopinvader_partner()
 
     def _get_backend(self):
