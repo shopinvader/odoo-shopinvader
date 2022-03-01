@@ -210,11 +210,11 @@ class ShopinvaderBackend(models.Model):
     )
     website_unique_key = fields.Char(
         required=True,
-        help="This identifier should be provided by each REST request through "
+        help="This identifier may be provided by each REST request through "
         "a WEBSITE-UNIQUE-KEY http header to identify the target backend. "
-        "If not provided by the request, you must pu in place a way to"
-        "lookup the target request for a given request by overriding the"
-        "method _get_backend into the service context provider component. "
+        "If not provided by the request and if there is only one backend, "
+        "it will be used by default. Otherwise it is possible to override the "
+        "_get_backend method into the service context provider component. "
         "The shopinvader_auth_api_key and shopinvader_auth_jwt addons "
         "provides a fallback mechanism in such a case.",
         default=lambda self: self._default_website_unique_key(),
