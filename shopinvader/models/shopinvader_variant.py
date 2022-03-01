@@ -347,5 +347,8 @@ class ShopinvaderVariant(models.Model):
 
     def _get_shop_data(self):
         """Compute shop data base_jsonify parser."""
-        exporter = self.env.ref("shopinvader.ir_exp_shopinvader_variant").sudo()
+        exporter = self._jsonify_get_exporter()
         return self.jsonify(exporter.get_json_parser(), one=True)
+
+    def _jsonify_get_exporter(self):
+        return self.env.ref("shopinvader.ir_exp_shopinvader_variant").sudo()
