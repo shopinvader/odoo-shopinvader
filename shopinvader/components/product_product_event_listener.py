@@ -36,7 +36,7 @@ class ProductProductEventListener(Component):
         )
         # If at least 1 is True, force False
         if any(shopinv_variants.mapped("active")):
-            shopinv_variants.write({"active": False})
+            shopinv_variants.sudo().write({"active": False})
 
     def _launch_shopinvader_variant_creation(self, shopinvader_products):
         """
