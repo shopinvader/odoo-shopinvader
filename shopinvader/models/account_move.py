@@ -11,7 +11,7 @@ class AccountMove(models.Model):
         "shopinvader.backend", "Shopinvader Backend"
     )
 
-    def _post(self, soft=False):
+    def _post(self, soft=True):
         res = super(AccountMove, self)._post(soft=soft)
         for record in self:
             backend = record.shopinvader_backend_id
