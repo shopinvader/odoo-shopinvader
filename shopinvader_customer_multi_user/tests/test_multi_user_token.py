@@ -15,12 +15,9 @@ class TestMultiUserToken(TestMultiUserCommon):
     def _generate_random_companies(self, count=5):
         tokens = set()
         for x in range(count):
-            comp = self._create_partner(
-                self.env,
+            comp = self._create_partner_binding(
                 name="ACME %s" % x,
-                email="acme%s@test.com" % x,
                 is_company=True,
-                external_id="acme{}-{}".format(x, self._get_random_hash()),
             )
             if comp.invader_user_token:
                 tokens.add(comp.invader_user_token)

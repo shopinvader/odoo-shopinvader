@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="shopinvader_backend_form_view" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field
+            name="inherit_id"
+            ref="shopinvader_customer_multi_user.shopinvader_backend_form_view"
+        />
+        <field name="arch" type="xml">
+            <field name="multi_user_records_policy" position="after">
+                <field name="multi_user_company_group_records_policy" />
+            </field>
+        </field>
+    </record>
+
+</odoo>

@@ -101,12 +101,9 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(new_binding.main_partner_id, custom_partner)
 
         # on create
-        new_binding2 = self._create_partner(
-            self.env,
-            parent_id=self.company.id,
+        new_binding2 = self._create_partner_binding(
             name="New Binding 2",
-            email="new2@test.com",
+            parent_id=self.company.id,
             main_partner_id=custom_partner.id,
-            external_id="new-binding-2",
         )
         self.assertEqual(new_binding2.main_partner_id, custom_partner)

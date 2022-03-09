@@ -23,7 +23,7 @@ class TestPartnerAccessInfo(TestUserManagementCommmon):
         self.assertTrue(info["users"]["manage"])
 
     def test_access_info_simpleuser(self):
-        for binding in self.user_binding + self.user_binding2 + self.user_binding3:
+        for binding in self.user_binding + self.user2_binding + self.user3_binding:
             info = self._get_access_info(
                 partner_user=binding.record_id,
                 invader_partner_user=binding,
