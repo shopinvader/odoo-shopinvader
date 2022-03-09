@@ -44,8 +44,7 @@ class CustomerPriceService(Component):
 
     def _json_parser(self):
         return [
-            "id",
-            ("record_id:objectID", lambda rec, fname: rec[fname].id),
+            ("record_id:id", lambda rec, fname: rec[fname].id),
             ("price", self._get_price),
         ]
 
