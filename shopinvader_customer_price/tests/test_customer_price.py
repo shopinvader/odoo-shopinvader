@@ -26,8 +26,7 @@ class CommonCustomerPriceCase(ProductCommonCase):
 
     def _test_response(self, res, s_variant, expected_price):
         expected = {
-            "id": s_variant.id,
-            "objectID": s_variant.record_id.id,
+            "id": s_variant.record_id.id,
             "price": {"default": expected_price},
         }
         self.assertEqual(res, expected)
@@ -102,10 +101,10 @@ class CommonCustomerPriceCase(ProductCommonCase):
         expected_price = s_variant._get_price(
             pricelist=self.base_pricelist, fposition=self.fiscal_pos1
         )
-        res1 = [x for x in res if x["id"] == s_variant.id][0]
+        res1 = [x for x in res if x["id"] == s_variant.record_id.id][0]
         self._test_response(res1, s_variant, expected_price)
         expected_price = s_variant2._get_price(
             pricelist=self.base_pricelist, fposition=self.fiscal_pos1
         )
-        res2 = [x for x in res if x["id"] == s_variant2.id][0]
+        res2 = [x for x in res if x["id"] == s_variant2.record_id.id][0]
         self._test_response(res2, s_variant2, expected_price)
