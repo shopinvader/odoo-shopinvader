@@ -6,7 +6,7 @@ import contextlib
 from odoo.addons.shopinvader.tests.common import CommonCase
 from odoo.addons.website.tools import MockRequest
 
-from ..controllers.main import UtmController
+from ..component.utm_component import UtmComponent
 
 
 class UtmControllerCase(CommonCase):
@@ -28,7 +28,7 @@ class UtmControllerCase(CommonCase):
             yield mocked_request
 
     def test_utm_headers(self):
-        ctrl = UtmController()
+        ctrl = UtmComponent()
         partner = self.env.ref("shopinvader.partner_1")
         with self._get_mocked_request(partner):
             ctx = ctrl._get_component_context()
