@@ -84,6 +84,7 @@ class InvoiceService(Component):
             "type_label": {"type": "string"},
             "state_label": {"type": "string"},
             "origin": {"type": "string"},
+            "currency": {"type": "string"},
         }
         return invoice_schema
 
@@ -107,6 +108,7 @@ class InvoiceService(Component):
             "type",
             "amount_residual:amount_due",
             "invoice_origin:origin",
+            ("currency_id:currency", lambda rec, fname: rec[fname].name),
         ]
         return to_parse
 
