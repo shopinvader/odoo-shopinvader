@@ -18,5 +18,6 @@
     "data": [
         "views/shopinvader_variant_view.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
     "installable": True,
 }
