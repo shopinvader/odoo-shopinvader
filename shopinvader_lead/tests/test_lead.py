@@ -9,12 +9,11 @@ from odoo.addons.shopinvader.tests.test_notification import NotificationCaseMixi
 
 
 class LeadCase(CommonCase, NotificationCaseMixin):
-    def setUp(self):
-        super().setUp()
+    def _get_service(self, partner=None):
         with self.work_on_services(
-            partner=None, shopinvader_session=self.shopinvader_session
+            partner=partner, shopinvader_session=self.shopinvader_session
         ) as work:
-            self.service = work.component(usage="leads")
+            return work.component(usage="leads")
 
     def test_create_lead(self):
         data = {
@@ -38,7 +37,8 @@ class LeadCase(CommonCase, NotificationCaseMixin):
         )
 
         self._init_job_counter()
-        self.service.dispatch("create", params=data)
+        service = self._get_service()
+        service.dispatch("create", params=data)
         lead = self.env["crm.lead"].search([], order="id desc", limit=1)[0]
         for key in check_data:
             if isinstance(lead[key], models.Model):
@@ -48,3 +48,17 @@ class LeadCase(CommonCase, NotificationCaseMixin):
         self._check_nbr_job_created(1)
         self._perform_created_job()
         self._check_notification("lead_confirmation", lead)
+
+    def test_create_lead_with_logged_partner(self):
+        partner = self.env.ref("shopinvader.partner_1")
+        service = self._get_service(partner)
+        data = {
+            "name": "Besoin d'un nouveau site",
+            "description": "Help, on ne supporte plus magento",
+            "email": "bliblablo@example.org",
+        }
+        service.dispatch("create", params=data)
+        lead = self.env["crm.lead"].search([], order="id desc", limit=1)
+        self.assertEqual(lead.name, "Besoin d'un nouveau site")
+        self.assertEqual(lead.partner_id.email, "osiris@shopinvader.com")
+        self.assertEqual(lead.partner_id, partner)

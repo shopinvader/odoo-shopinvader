@@ -79,4 +79,8 @@ class LeadService(Component):
             if human_key in params:
                 params[key] = params.pop(human_key)
         params["shopinvader_backend_id"] = self.shopinvader_backend.id
+        if self.partner:
+            params["partner_id"] = self.partner.id
+            # Remove email_from key as this will update the email on the logged partner
+            params.pop("email_from", None)
         return params
