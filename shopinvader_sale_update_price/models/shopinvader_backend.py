@@ -1,6 +1,5 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
 from odoo import api, models
 from odoo.osv import expression
 
@@ -35,8 +34,14 @@ class ShopinvaderBackend(models.Model):
             )
         return True
 
+    def launch_sale_price_update(self):
+        domain = expression.normalize_domain(
+            [("shopinvader_backend_id", "in", self.ids)]
+        )
+        return self.cron_launch_sale_price_update(domain)
+
     @api.model
-    def launch_sale_price_update(self, domain=False):
+    def cron_launch_sale_price_update(self, domain=False):
         """
         Retrieve cart to update then apply the recalculation
         (could be used for a cron)
@@ -44,8 +49,6 @@ class ShopinvaderBackend(models.Model):
         :return: bool
         """
         domain = domain or []
-        if domain:
-            domain = expression.normalize_domain(domain)
         sale_domain = expression.normalize_domain(
             [("typology", "=", "cart"), ("state", "=", "draft")]
         )
