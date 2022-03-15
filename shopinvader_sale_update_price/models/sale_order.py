@@ -38,4 +38,6 @@ class SaleOrder(models.Model):
         self.write({"date_order": fields.Datetime.now()})
         # Even if the pricelist is not updated on the SO, we have to launch
         # the price recalculation in case of pricelist content is updated.
-        self.update_prices()
+        # TODO: Adapt to v13 sale-workflow/sale_order_price_recalculation could be used
+        # self.update_prices()
+
