@@ -30,7 +30,9 @@ class ShopinvaderBackend(models.Model):
         """
         for sale in sales:
             description = "Recompute prices for cart %s" % sale.display_name
-            self.with_delay(description=description)._job_sale_price_update(sale)
+            self.with_delay(description=description)._job_sale_price_update(
+                sale
+            )
         return True
 
     @api.model

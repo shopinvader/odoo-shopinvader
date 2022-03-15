@@ -10,7 +10,9 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
         super().setUpClass()
         cls.product_1 = cls.env.ref("product.product_product_24")
         cls.line = cls.env.ref("shopinvader.sale_order_line_4")
-        cls.precision = cls.env["decimal.precision"].precision_get("Product Price")
+        cls.precision = cls.env["decimal.precision"].precision_get(
+            "Product Price"
+        )
 
     def _create_pricelists(self, fixed_price, reduction):
         """
@@ -36,7 +38,9 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
                 )
             ],
         }
-        self.first_pricelist = self.env["product.pricelist"].create(pricelist_values)
+        self.first_pricelist = self.env["product.pricelist"].create(
+            pricelist_values
+        )
         pricelist_values = {
             "name": "Custom pricelist 2",
             "discount_policy": "with_discount",
@@ -53,7 +57,9 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
                 )
             ],
         }
-        self.second_pricelist = self.env["product.pricelist"].create(pricelist_values)
+        self.second_pricelist = self.env["product.pricelist"].create(
+            pricelist_values
+        )
         return True
 
     def test_update_pricelist(self):
@@ -78,7 +84,9 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
         self.backend.write({"pricelist_id": self.first_pricelist.id})
         self.sale._update_pricelist_and_update_line_prices()
         self.assertEqual(self.first_pricelist, self.sale.pricelist_id)
-        self.assertAlmostEqual(self.line.price_unit, fixed_price, places=self.precision)
+        self.assertAlmostEqual(
+            self.line.price_unit, fixed_price, places=self.precision
+        )
         self.backend.write({"pricelist_id": self.second_pricelist.id})
         self.sale._update_pricelist_and_update_line_prices()
         self.assertEqual(self.second_pricelist, self.sale.pricelist_id)
