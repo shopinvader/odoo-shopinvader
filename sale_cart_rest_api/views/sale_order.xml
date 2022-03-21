@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="sale_order_form_view">
+        <field name="name">sale.order.form (in shopinvader_cart)</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="related_project_id" position="after">
+                <field name="uuid"/>
+            </field>
+        </field>
+    </record>
+
+
+
+</odoo>
