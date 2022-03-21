@@ -71,7 +71,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
@@ -89,7 +89,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
@@ -106,7 +106,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
@@ -124,7 +124,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
@@ -143,7 +143,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
@@ -162,7 +162,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
@@ -180,7 +180,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
@@ -195,7 +195,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid2",
                         "product_id": self.product_1.id,
-                        "quantity": 3,
+                        "qty": 3,
                     }
                 ],
             )
@@ -211,7 +211,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid3",
                         "product_id": self.product_1.id,
-                        "quantity": -5,
+                        "qty": -5,
                     }
                 ],
             )
@@ -227,22 +227,22 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     },
                     {
                         "uuid": "uuid2",
                         "product_id": self.product_1.id,
-                        "quantity": 3,
+                        "qty": 3,
                     },
                     {
                         "uuid": "uuid3",
                         "product_id": self.product_1.id,
-                        "quantity": -1,
+                        "qty": -1,
                     },
                     {
                         "uuid": "uuid4",
                         "product_id": self.product_1.id,
-                        "quantity": -1,
+                        "qty": -1,
                     },
                 ],
             )
@@ -263,22 +263,22 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     },
                     {
                         "uuid": "uuid2",
                         "product_id": self.product_2.id,
-                        "quantity": 3,
+                        "qty": 3,
                     },
                     {
                         "uuid": "uuid3",
                         "product_id": self.product_1.id,
-                        "quantity": 3,
+                        "qty": 3,
                     },
                     {
                         "uuid": "uuid4",
                         "product_id": self.product_2.id,
-                        "quantity": -1,
+                        "qty": -1,
                     },
                 ],
             )
@@ -301,14 +301,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
         create_line_vals = self.env[
             "sale.order.line"
         ]._transactions_to_record_create(
-            so,
-            [
-                {
-                    "uuid": "uuid1",
-                    "product_id": self.product_1.id,
-                    "quantity": 1,
-                }
-            ],
+            so, [{"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}],
         )
         so.write({"order_line": [create_line_vals]})
         with self.cart_service(self.partner_1.id) as cart:
@@ -318,17 +311,17 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                     {
                         "uuid": "uuid2",
                         "product_id": self.product_2.id,
-                        "quantity": 3,
+                        "qty": 3,
                     },
                     {
                         "uuid": "uuid3",
                         "product_id": self.product_1.id,
-                        "quantity": 3,
+                        "qty": 3,
                     },
                     {
                         "uuid": "uuid4",
                         "product_id": self.product_2.id,
-                        "quantity": -1,
+                        "qty": -1,
                     },
                 ],
             )
@@ -354,7 +347,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                         {
                             "uuid": "uuid1",
                             "product_id": self.product_1.id,
-                            "quantity": 1,
+                            "qty": 1,
                         }
                     ],
                 ),

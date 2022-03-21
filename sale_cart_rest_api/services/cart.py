@@ -97,7 +97,7 @@ class CartService(Component):
                             "required": False,
                             "nullable": True,
                         },
-                        "quantity": {
+                        "qty": {
                             "coerce": float,
                             "required": True,
                             "type": "float",

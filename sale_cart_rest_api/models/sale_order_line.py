@@ -14,7 +14,7 @@ class SaleOrderLine(models.Model):
         """Apply transactions to current line and return a record write command
         to apply to the one2many field on SO."""
         self.ensure_one()
-        delta_qty = sum(t["quantity"] for t in transactions)
+        delta_qty = sum(t["qty"] for t in transactions)
         new_qty = self.product_uom_qty + delta_qty
         if (
             float_compare(
@@ -40,7 +40,7 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def _prepare_line_from_transactions(self, sale_order, transactions):
-        delta_qty = sum(t["quantity"] for t in transactions)
+        delta_qty = sum(t["qty"] for t in transactions)
         if (
             float_compare(
                 delta_qty, 0, precision_rounding=self.product_uom.rounding
