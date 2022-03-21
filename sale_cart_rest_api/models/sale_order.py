@@ -25,7 +25,7 @@ class SaleOrder(models.Model):
     def _apply_transactions(self, transactions):
         """Apply transactions from cart service.
 
-        Transactions is a list of dict with 'product_id','quantity' and
+        Transactions is a list of dict with 'product_id','qty' and
         uuid keys
         """
         if not transactions:
