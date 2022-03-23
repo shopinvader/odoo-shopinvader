@@ -38,6 +38,7 @@ addon | version | maintainers | summary
 [shopinvader_customer_price_wishlist](shopinvader_customer_price_wishlist/) | 14.0.1.0.0 |  | Expose customer's specific prices.
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.2.2 |  | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.1.0 |  | Carrier integration for Shopinvader
+[shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 14.0.1.0.0 |  | Shopinvader addons to let user define delivery instructions
 [shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easily manage Shopinvader bindings for your company backend.
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.3.0.0 |  | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 14.0.1.0.2 |  | Guest mode for Shopinvader
@@ -96,7 +97,6 @@ addon | version | maintainers | summary
 [partner_contact_company](partner_contact_company/) | 10.0.1.0.0 (unported) |  | Partner Company
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) |  | Product categories dedicated to online shop
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) |  | Make available the field company in the address form
-[shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 13.0.1.0.0 (unported) |  | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) |  | Shopinvader Demo App
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) |  | Synchronize the contact_name with customer name
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) |  | This addons is used to push the initial elasticsearch configuration to locomotive
