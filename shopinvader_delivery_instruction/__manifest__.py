@@ -7,9 +7,9 @@
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "e-commerce",
-    "version": "13.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
     "depends": [
         "shopinvader",
         # OCA/sale-workflow

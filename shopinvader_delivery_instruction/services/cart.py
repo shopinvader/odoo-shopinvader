@@ -11,7 +11,7 @@ class CartService(Component):
         Inherit to add the delivery_instruction validator
         :return: dict
         """
-        validator = super(CartService, self)._validator_update()
+        validator = super()._validator_update()
         validator.update({"delivery_instruction": {"type": "string"}})
         return validator
 
@@ -35,7 +35,7 @@ class CartService(Component):
         :param params: dict
         :return: dict
         """
-        params = super(CartService, self)._prepare_update(cart, params)
+        params = super()._prepare_update(cart, params)
         self._prepare_delivery_instruction(
             params.pop("delivery_instruction", False), params
         )

@@ -12,6 +12,6 @@ class AbstractSaleService(AbstractComponent):
         :param sale: sale.order recordset
         :return: dict
         """
-        values = super(AbstractSaleService, self)._convert_one_sale(sale)
+        values = super()._convert_one_sale(sale)
         values.update({"delivery_instruction": sale.picking_note})
         return values
