@@ -45,6 +45,17 @@ class TestSaleCartRestApiCase(SavepointCase, ComponentMixin):
         SavepointCase.setUp(self)
         ComponentMixin.setUp(self)
 
+        # hack to be able to run tests if shopinvader is installed
+        if "shopinvader.backend" in self.env:
+            from odoo.addons.shopinvader import shopinvader_response
+
+            shopinvader_response.set_testmode(True)
+            shopinvader_response.get().reset()
+
+            @self.addCleanup
+            def cleanupShopinvaderResponseTestMode():
+                shopinvader_response.set_testmode(False)
+
     @classmethod
     @contextmanager
     def cart_service(cls, authenticated_partner_id):
@@ -55,12 +66,16 @@ class TestSaleCartRestApiCase(SavepointCase, ComponentMixin):
             )
         )
         collection = _PseudoCollection("shopinvader.api.v2", env)
-        work = WorkContext(
+        ctx = dict(
             model_name="rest.service.registration",
             collection=collection,
             request=mock.Mock(),
             authenticated_partner_id=authenticated_partner_id,
         )
+        # hack to be able to run tests if shopinvader is installed
+        if "shopinvader.backend" in cls.env:
+            ctx["shopinvader_backend"] = cls.env.ref("shopinvader.backend_1")
+        work = WorkContext(**ctx)
         yield work.component(usage="cart")
 
     @classmethod
