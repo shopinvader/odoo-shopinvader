@@ -72,6 +72,13 @@ class AbstractItemCase(ItemCaseMixin):
         self.check_product_and_qty(cart["lines"]["items"][-1], self.product_1.id, 2)
         self.check_partner(cart)
 
+    def test_add_item_with_custom_sequence(self):
+        """If a commercial have changed the sequence we need to ensure that
+        the last add item is always added at the end"""
+        self.cart.order_line[-1].sequence = 20
+        cart = self.add_item(self.product_1.id, 2)
+        self.assertEqual(cart["lines"]["items"][-1]["product"]["id"], self.product_1.id)
+
     def test_update_item(self):
         line_id = self.cart.order_line[0].id
         product_id = self.cart.order_line[0].product_id.id
