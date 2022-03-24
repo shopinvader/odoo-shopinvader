@@ -50,7 +50,7 @@ class TestShopinvaderCart(CommonCase):
                     {
                         "uuid": "uuid1",
                         "product_id": self.product_1.id,
-                        "quantity": 1,
+                        "qty": 1,
                     }
                 ],
             )
