@@ -31,7 +31,10 @@ class ProductSet(CommonCase):
 
     def test_archived_product(self):
         # ensure product archived is visible
-        prod = self.env.ref("product.product_product_4d")
+        # FIXME: create your own products.
+        # Seems `sale` module installation causes
+        # some `product`'s demo data to disappear.
+        prod = self.env.ref("product.product_product_4c")
         line = self.prod_set.set_line_ids.create(
             {
                 "product_set_id": self.prod_set.id,
@@ -76,7 +79,7 @@ class ProductSet(CommonCase):
 
     def test_get_lines_by_products(self):
         # ensure we can create a line from the product and we get the variant
-        prod = self.env.ref("product.product_product_4d")
+        prod = self.env.ref("product.product_product_4c")
         line = self.prod_set.set_line_ids.create(
             {
                 "product_set_id": self.prod_set.id,

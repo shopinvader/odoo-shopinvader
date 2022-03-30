@@ -208,7 +208,7 @@ class WishlistCase(CommonWishlistCase):
             self.assertEqual(cart.mapped("order_line.product_id"), prods)
 
     def test_add_items(self):
-        prod1 = self.env.ref("product.product_product_4d")
+        prod1 = self.env.ref("product.product_product_4c")
         prod2 = self.env.ref("product.product_product_11")
         self.assertNotIn(prod1, self.prod_set.mapped("set_line_ids.product_id"))
         self.assertNotIn(prod2, self.prod_set.mapped("set_line_ids.product_id"))
@@ -253,7 +253,7 @@ class WishlistCase(CommonWishlistCase):
         line1 = self.prod_set.get_lines_by_products(product_ids=prod1.ids)
         line1.sequence = 10
         # Add another line and change order
-        prod2 = self.env.ref("product.product_product_4d")
+        prod2 = self.env.ref("product.product_product_4c")
         self.assertNotIn(prod2, self.prod_set.mapped("set_line_ids.product_id"))
         self._bind_products(prod2)
         params = {"lines": [{"product_id": prod2.id}]}
