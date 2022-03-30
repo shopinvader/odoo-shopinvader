@@ -6,6 +6,7 @@ import uuid
 import pytz
 
 from odoo import fields
+from odoo.tools.float_utils import float_round
 
 from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
@@ -424,12 +425,15 @@ class CartService(Component):
         return address.jsonify(self._json_address_parser)[0]
 
     def _convert_amount(self, sale):
+        precision = sale.currency_id.decimal_places
         return {
-            "tax": sale.amount_tax,
-            "untaxed": sale.amount_untaxed,
-            "total": sale.amount_total,
-            "discount_total": sale.discount_total,
-            "total_without_discount": sale.price_total_no_discount,
+            "tax": float_round(sale.amount_tax, precision),
+            "untaxed": float_round(sale.amount_untaxed, precision),
+            "total": float_round(sale.amount_total, precision),
+            "discount_total": float_round(sale.discount_total, precision),
+            "total_without_discount": float_round(
+                sale.price_total_no_discount, precision
+            ),
         }
 
     def _is_line(self, line):
