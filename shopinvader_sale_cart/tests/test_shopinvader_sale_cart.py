@@ -10,10 +10,10 @@ from odoo.addons.component.core import WorkContext
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
-class TestShopinvaderCart(CommonCase):
+class TestShopinvaderSaleCart(CommonCase):
     @classmethod
     def setUpClass(cls):
-        super(TestShopinvaderCart, cls).setUpClass()
+        super(TestShopinvaderSaleCart, cls).setUpClass()
         cls.product_1 = cls.env.ref("product.product_product_4b")
 
     @classmethod
