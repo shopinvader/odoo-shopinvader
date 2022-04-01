@@ -515,6 +515,7 @@ class CartService(Component):
             {
                 "product_uom_qty": params["item_qty"],
                 "order_id": cart.id,
+                "sequence": max(cart.order_line.mapped("sequence"), default=0) + 1,
             }
         )
         return _params
