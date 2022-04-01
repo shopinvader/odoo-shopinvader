@@ -762,6 +762,11 @@ msgid "Company group"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__company_group_member_ids
+msgid "Company group members"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__salesman_notify_create__company
 #: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__salesman_notify_update__company
 msgid "Company users only"
