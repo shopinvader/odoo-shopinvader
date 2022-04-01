@@ -74,6 +74,16 @@ class WishlistService(Component):
         # return new cart
         return cart_service._to_json(cart)
 
+    def add_items_to_cart(self, _id, **params):
+        record = self._get(_id)
+        cart_service = self.component(usage="cart")
+        cart = cart_service._get()
+        prod_ids = [x["product_id"] for x in params["lines"]]
+        lines = record.get_lines_by_products(product_ids=prod_ids)
+        self._add_items_to_cart(record, cart, lines)
+        # return new cart
+        return cart_service._to_json(cart)
+
     def add_items(self, _id, **params):
         record = self._get(_id)
         self._add_items(record, params)
@@ -192,6 +202,28 @@ class WishlistService(Component):
             }
         }
 
+    def _validator_add_items_to_cart(self):
+        schema = self._validator_add_to_cart()
+        schema.update(
+            {
+                "lines": {
+                    "type": "list",
+                    "required": True,
+                    "schema": {
+                        "type": "dict",
+                        "schema": {
+                            "product_id": {
+                                "coerce": to_int,
+                                "required": True,
+                                "type": "integer",
+                            },
+                        },
+                    },
+                },
+            }
+        )
+        return schema
+
     def _validator_add_item(self):
         return self._validator_line_schema()
 
@@ -294,6 +326,11 @@ class WishlistService(Component):
         wizard = self._get_add_to_cart_wizard(record, cart)
         return wizard.add_set()
 
+    def _add_items_to_cart(self, record, cart, lines):
+        wizard = self._get_add_to_cart_wizard(record, cart)
+        wizard.product_set_line_ids = lines
+        return wizard.add_set()
+
     def _prepare_params(self, params, mode="create"):
         if mode == "create":
             params["shopinvader_backend_id"] = self.shopinvader_backend.id
@@ -332,6 +369,7 @@ class WishlistService(Component):
         return [
             "id",
             "name",
+            ("partner_id:partner", ["id", "name"]),
             ("partner_id:access", self._json_parser_wishlist_access),
         ]
 
@@ -355,7 +393,30 @@ class WishlistService(Component):
         ]
 
     def _json_parser_product_data(self, rec, fname):
-        return rec.shopinvader_variant_id.get_shop_data()
+        if rec.shopinvader_variant_id:
+            data = rec.shopinvader_variant_id.get_shop_data()
+            data["available"] = rec.shopinvader_variant_id.active
+            return data
+        return rec.product_id.jsonify(
+            self._json_parser_binding_not_available_data(), one=True
+        )
+
+    def _json_parser_binding_not_available_data(self):
+        """Special parser for when the binding is not available.
+
+        A user might delete bindings for a specific product
+        or add a product w/out bindings to a wishlist
+        and then archive the product which will lead to no binding as well.
+        Or, product and wishlists have been imported from CSVs
+        and the product was archived in the process or right after
+        before creating bindings.
+
+        In all the cases, you end up w/ broken reference.
+
+        When this happens, allow the frontend to show a nice message
+        to ask users to replace the product.
+        """
+        return ["id", "name", ("active:available", lambda rec, fname: False)]
 
     def _json_parser_wishlist_access(self, rec, fname):
         return self.access_info.for_wishlist(rec)

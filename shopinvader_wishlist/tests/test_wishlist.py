@@ -187,8 +187,28 @@ class WishlistCase(CommonWishlistCase):
             self.wishlist_service.add_to_cart(self.prod_set.id)
             self.assertEqual(cart.order_line[0].product_id, prod)
 
+    def test_add_items_to_cart(self):
+        for line in self.wl_params["lines"]:
+            self.prod_set.set_line_ids.create(
+                dict(line, product_set_id=self.prod_set.id)
+            )
+        self.assertEqual(len(self.prod_set.set_line_ids), 3)
+        with self.work_on_services(partner=self.partner) as work:
+            cart_service = work.component(usage="cart")
+        cart = cart_service._get()
+        # no line yet
+        self.assertFalse(cart.order_line)
+
+        # add only to products to cart
+        prods = self.prod_set.set_line_ids[:2].mapped("product_id")
+        params = {"lines": [{"product_id": x.id} for x in prods]}
+        with mock.patch.object(type(cart_service), "_get") as mocked:
+            mocked.return_value = cart
+            self.wishlist_service.add_items_to_cart(self.prod_set.id, **params)
+            self.assertEqual(cart.mapped("order_line.product_id"), prods)
+
     def test_add_items(self):
-        prod1 = self.env.ref("product.product_product_4d")
+        prod1 = self.env.ref("product.product_product_4c")
         prod2 = self.env.ref("product.product_product_11")
         self.assertNotIn(prod1, self.prod_set.mapped("set_line_ids.product_id"))
         self.assertNotIn(prod2, self.prod_set.mapped("set_line_ids.product_id"))
@@ -233,7 +253,7 @@ class WishlistCase(CommonWishlistCase):
         line1 = self.prod_set.get_lines_by_products(product_ids=prod1.ids)
         line1.sequence = 10
         # Add another line and change order
-        prod2 = self.env.ref("product.product_product_4d")
+        prod2 = self.env.ref("product.product_product_4c")
         self.assertNotIn(prod2, self.prod_set.mapped("set_line_ids.product_id"))
         self._bind_products(prod2)
         params = {"lines": [{"product_id": prod2.id}]}
@@ -278,7 +298,29 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res_line["id"], self.prod_set.set_line_ids[0].id)
         self.assertEqual(res_line["quantity"], 1)
         self.assertEqual(res_line["sequence"], 10)
-        self.assertEqual(res_line["product"], variant.get_shop_data())
+        self.assertEqual(
+            res_line["product"], dict(variant.get_shop_data(), available=True)
+        )
+
+    def test_jsonify_variant_archived(self):
+        prod = self.env.ref("product.product_product_4b")
+        variant = prod.shopinvader_bind_ids[0]
+        variant.active = False
+        res = self.wishlist_service._to_json_one(self.prod_set)
+        res_line = res["lines"][0]
+        self.assertEqual(
+            res_line["product"], dict(variant.get_shop_data(), available=False)
+        )
+
+    def test_jsonify_missing_variant_binding(self):
+        prod = self.env.ref("product.product_product_4b")
+        prod.shopinvader_bind_ids.unlink()
+        res = self.wishlist_service._to_json_one(self.prod_set)
+        res_line = res["lines"][0]
+        self.assertEqual(
+            res_line["product"],
+            {"id": prod.id, "name": prod.name, "available": False},
+        )
 
     def test_jsonify_data_mode(self):
         res = self.wishlist_service._to_json_one(self.prod_set, data_mode="light")
@@ -288,6 +330,7 @@ class WishlistCase(CommonWishlistCase):
                 "id": self.prod_set.id,
                 "name": self.prod_set.name,
                 "access": {"read": True, "update": True, "delete": True},
+                "partner": {"id": self.partner.id, "name": self.partner.name},
             },
         )
         msg = "JSON data mode `fancy` not found."

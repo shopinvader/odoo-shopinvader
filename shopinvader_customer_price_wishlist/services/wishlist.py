@@ -24,7 +24,11 @@ class WishlistService(Component):
     # we could avoid this module completely.
     def _json_parser_product_data(self, rec, fname):
         res = super()._json_parser_product_data(rec, fname)
-        res["price"] = self._json_parser_product_price(
-            rec.shopinvader_variant_id, fname
-        )
+        if rec.shopinvader_variant_id:
+            # Wishlist endpoint is fault-tolerant here
+            # and allows to return a minimal set of data for products
+            # even when the variant is not available.
+            res["price"] = self._json_parser_product_price(
+                rec.shopinvader_variant_id, fname
+            )
         return res

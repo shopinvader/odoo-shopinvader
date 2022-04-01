@@ -65,3 +65,8 @@ class WishlistCase(CommonWishlistCase, ProductCommonCase):
             fposition=self.backend._get_fiscal_position(self.partner2),
         )
         self.assertEqual(res_line["product"]["price"]["default"], expected_price)
+
+    def test_jsonify_missing_binding(self):
+        self.prod_set.set_line_ids.mapped("product_id.shopinvader_bind_ids").unlink()
+        res_line = self._get_line_data()
+        self.assertFalse("price" in res_line["product"])
