@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="email_gift_card_confirmation" model="mail.template">
+            <field name="name">Gift card created notification</field>
+            <field name="email_from">${(object.user_id.email or '')|safe}</field>
+            <field name="subject">Gift card created notification ${object.name}</field>
+            <field name="model_id" ref="gift_card.model_gift_card" />
+            <field name="auto_delete" eval="False" />
+            <field name="email_to">${object.buyer_email}</field>
+            <field name="lang">${object.buyer_id.lang}</field>
+            <field name="body_html"><![CDATA[ Thanks for buying a gift card ]]></field>
+        </record>
+
+        <record id="email_gift_card_activation" model="mail.template">
+            <field name="name">Gift card activation notification</field>
+            <field name="email_from">${(object.user_id.email or '')|safe}</field>
+            <field name="subject">Cart notification ${object.name}</field>
+            <field name="model_id" ref="gift_card.model_gift_card" />
+            <field name="auto_delete" eval="False" />
+            <field name="email_to">${object.beneficiary_email}</field>
+            <field name="lang">${object.buyer_id.lang}</field>
+            <field name="body_html"><![CDATA[ You receive a gift card !]]></field>
+        </record>
+
+        <record
+            id="shopinvader_notification_gift_card_create"
+            model="shopinvader.notification"
+        >
+            <field name="backend_id" ref="shopinvader.backend_1" />
+            <field name="notification_type">gift_card_created</field>
+            <field name="model_id" ref="gift_card.model_gift_card" />
+            <field name="template_id" ref="email_gift_card_confirmation" />
+        </record>
+
+        <record
+            id="shopinvader_notification_gift_card_activation"
+            model="shopinvader.notification"
+        >
+            <field name="backend_id" ref="shopinvader.backend_1" />
+            <field name="notification_type">gift_card_activated</field>
+            <field name="model_id" ref="gift_card.model_gift_card" />
+            <field name="template_id" ref="email_gift_card_activation" />
+        </record>
+    </data>
+</odoo>

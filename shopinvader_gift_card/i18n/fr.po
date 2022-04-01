@@ -1,0 +1,170 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_gift_card
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-04-16 11:25+0000\n"
+"PO-Revision-Date: 2022-04-16 13:26+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 3.0.1\n"
+
+#. module: shopinvader_gift_card
+#: model:mail.template,body_html:shopinvader_gift_card.email_gift_card_confirmation
+msgid " Thanks for buying a gift card "
+msgstr " Merci d'avoir acheter une carte cadeau chez nous "
+
+#. module: shopinvader_gift_card
+#: model:mail.template,body_html:shopinvader_gift_card.email_gift_card_activation
+msgid " You receive a gift card !"
+msgstr " Vous avez reçu une carte cadeau!"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__beneficiary_email
+msgid "Beneficiary Email"
+msgstr "Email Bénéficiaire"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__beneficiary_name
+msgid "Beneficiary Name"
+msgstr "Nom Bénéficiaire"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__buyer_email
+msgid "Buyer Email"
+msgstr "Email Acheteur"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__buyer_name
+msgid "Buyer Name"
+msgstr "Nom Acheteur"
+
+#. module: shopinvader_gift_card
+#: model:mail.template,subject:shopinvader_gift_card.email_gift_card_activation
+msgid "Cart notification ${object.name}"
+msgstr ""
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__comment
+msgid "Comment"
+msgstr "Commentaire"
+
+#. module: shopinvader_gift_card
+#: model_terms:ir.ui.view,arch_db:shopinvader_gift_card.gift_card_inherit
+msgid "Contacts Information"
+msgstr ""
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_account_move__display_name
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__display_name
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card_line__display_name
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_shopinvader_notification__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields.selection,name:shopinvader_gift_card.selection__gift_card__state__draft
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__email_confirmation_send
+msgid "Email Confirmation Send"
+msgstr "Émail Activation Carte Cadeau au Bénéficiaire"
+
+#. module: shopinvader_gift_card
+#: code:addons/shopinvader_gift_card/models/shopinvader_notification.py:0
+#, python-format
+msgid "Email Gift card created to the Buyer"
+msgstr "Émail création Carte Cadeau à l'acheteur"
+
+#. module: shopinvader_gift_card
+#: code:addons/shopinvader_gift_card/models/shopinvader_notification.py:0
+#, python-format
+msgid "Email gift Card to the Beneficiary"
+msgstr "Émail Activation Carte Cadeau au Bénéficiaire"
+
+#. module: shopinvader_gift_card
+#: model:ir.model,name:shopinvader_gift_card.model_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_sale_order_line__gift_card_id
+msgid "Gift Card"
+msgstr ""
+
+#. module: shopinvader_gift_card
+#: model:ir.actions.server,name:shopinvader_gift_card.email_beneficiary_gift_card_cron_ir_actions_server
+#: model:ir.cron,cron_name:shopinvader_gift_card.email_beneficiary_gift_card_cron
+#: model:ir.cron,name:shopinvader_gift_card.email_beneficiary_gift_card_cron
+msgid "Gift Card: Send email to beneficiary"
+msgstr "Émail Activation Carte Cadeau au Bénéficiaire"
+
+#. module: shopinvader_gift_card
+#: model:mail.template,subject:shopinvader_gift_card.email_gift_card_confirmation
+msgid "Gift card created notification ${object.name}"
+msgstr "Émail création Carte Cadeau à l'acheteur"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_account_move__id
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__id
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card_line__id
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_sale_order_line__id
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_shopinvader_notification__id
+msgid "ID"
+msgstr "ID"
+
+#. module: shopinvader_gift_card
+#: model:ir.model,name:shopinvader_gift_card.model_account_move
+msgid "Journal Entry"
+msgstr "Pièce comptable"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_account_move____last_update
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card____last_update
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card_line____last_update
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_sale_order_line____last_update
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_shopinvader_notification____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card_line__sale_order_id
+msgid "Sale Order"
+msgstr ""
+
+#. module: shopinvader_gift_card
+#: model:ir.model,name:shopinvader_gift_card.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Lignes de bon de commande"
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__user_id
+msgid "Salesperson"
+msgstr ""
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__shopinvader_backend_id
+msgid "Shopinvader Backend"
+msgstr ""
+
+#. module: shopinvader_gift_card
+#: model:ir.model,name:shopinvader_gift_card.model_shopinvader_notification
+msgid "Shopinvader Notification"
+msgstr ""
+
+#. module: shopinvader_gift_card
+#: model:ir.model.fields,field_description:shopinvader_gift_card.field_gift_card__state
+msgid "State"
+msgstr "Etat"
+
+#. module: shopinvader_gift_card
+#: model:ir.model,name:shopinvader_gift_card.model_gift_card_line
+msgid "link between giftcard and payments"
+msgstr ""
