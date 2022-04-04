@@ -34,7 +34,7 @@ class CustomerService(Component):
     def create(self, **params):
         vals = self._prepare_params(params)
         binding = self.env["shopinvader.partner"].create(vals)
-        self._load_partner_work_context(binding)
+        self._load_partner_work_context(binding, True)
         self._post_create(self.work.partner)
         return self._prepare_create_response(binding)
 
