@@ -132,20 +132,42 @@ class CartService(Component):
                 "required": True,
                 "nullable": True,
             },
-            "amount": {"type": "dict", "schema": self._amount_ouput_schema},
-            "shipping": {
+            "amount": {"type": "dict", "schema": self._amount_output_schema},
+            "delivery": {
                 "type": "dict",
-                "schema": self._address_output_schema,
+                "schema": self._delivery_output_schema,
                 "required": False,
                 "nullable": True,
             },
             "invoicing": {
                 "type": "dict",
-                "schema": self._address_output_schema,
+                "schema": self._invoicing_output_schema,
                 "required": False,
                 "nullable": True,
             },
             "note": {"type": "string", "required": False, "nullable": True},
+        }
+
+    @property
+    def _delivery_output_schema(self):
+        return {
+            "address": {
+                "type": "dict",
+                "schema": self._address_output_schema,
+                "required": False,
+                "nullable": True,
+            }
+        }
+
+    @property
+    def _invoicing_output_schema(self):
+        return {
+            "address": {
+                "type": "dict",
+                "schema": self._address_output_schema,
+                "required": False,
+                "nullable": True,
+            }
         }
 
     @property
@@ -160,15 +182,14 @@ class CartService(Component):
             "name": {"type": "string", "required": True, "nullable": False},
             "amount": {
                 "type": "dict",
-                "schema": self._line_amount_output_schema,
+                "schema": self._amount_with_price_output_schema,
             },
             "qty": {"type": "float", "required": True, "nullable": False},
         }
 
     @property
-    def _line_amount_output_schema(self):
+    def _amount_output_schema(self):
         return {
-            "price": {"type": "float", "required": True, "nullable": False},
             "tax": {"type": "float", "required": True, "nullable": False},
             "untaxed": {"type": "float", "required": True, "nullable": False},
             "total": {"type": "float", "required": True, "nullable": False},
@@ -185,22 +206,14 @@ class CartService(Component):
         }
 
     @property
-    def _amount_ouput_schema(self):
-        return {
-            "tax": {"type": "float", "required": True, "nullable": False},
-            "untaxed": {"type": "float", "required": True, "nullable": False},
-            "total": {"type": "float", "required": True, "nullable": False},
-            "discount_total": {
-                "type": "float",
-                "required": True,
-                "nullable": False,
-            },
-            "total_without_discount": {
-                "type": "float",
-                "required": True,
-                "nullable": False,
-            },
+    def _amount_with_price_output_schema(self):
+        amount_schema = self._amount_output_schema
+        amount_schema["price"] = {
+            "type": "float",
+            "required": True,
+            "nullable": False,
         }
+        return amount_schema
 
     @property
     def _address_output_schema(self):
@@ -361,7 +374,7 @@ class CartService(Component):
             "date": self._odoo_str_dt_to_dt_utc(sale.date_order),
             "lines": self._convert_lines(sale),
             "amount": self._convert_amount(sale),
-            "shipping": self._convert_shipping(sale),
+            "delivery": self._convert_delivery(sale),
             "invoicing": self._convert_invoicing(sale),
             "note": sale.note or None,
         }
@@ -390,15 +403,21 @@ class CartService(Component):
                 lines.append(self._convert_one_line(line))
         return lines
 
-    def _convert_shipping(self, sale):
-        if sale.partner_shipping_id == self.anonymous_partner:
-            return {"address": {}}
-        return self._convert_address(sale.partner_shipping_id)
+    def _convert_delivery(self, sale):
+        delivery = {}
+        if sale.partner_shipping_id != self.anonymous_partner:
+            delivery["address"] = self._convert_address(
+                sale.partner_shipping_id
+            )
+        return delivery
 
     def _convert_invoicing(self, sale):
-        if sale.partner_invoice_id == self.anonymous_partner:
-            return {}
-        return self._convert_address(sale.partner_invoice_id)
+        invoicing = {}
+        if sale.partner_invoice_id != self.anonymous_partner:
+            invoicing["address"] = self._convert_address(
+                sale.partner_invoice_id
+            )
+        return invoicing
 
     @property
     def _json_address_parser(self):
