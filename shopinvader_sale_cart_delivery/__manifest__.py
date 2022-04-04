@@ -10,7 +10,11 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": ["shopinvader_sale_cart", "shopinvader_delivery_carrier"],
+    "depends": [
+        "sale_cart_delivery_rest_api",
+        "shopinvader_sale_cart",
+        "shopinvader_delivery_carrier",
+    ],
     "data": [],
     "demo": [],
 }

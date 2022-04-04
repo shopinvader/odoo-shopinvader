@@ -53,8 +53,7 @@ class TestShopinvaderSaleCartDelivery(CommonCase):
 
     def test_set_carrier(self):
         info = self.cart_service.dispatch(
-            "set_carrier", params={"carrier_id": self.poste_carrier.id}
+            "set_delivery_method", params={"method_id": self.poste_carrier.id}
         )
         self.assertTrue(info)
         self.assertIn("delivery", info)
-        self.assertEqual(self.poste_carrier.id, info["delivery"]["id"])
