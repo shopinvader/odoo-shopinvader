@@ -25,6 +25,7 @@ class AbstractSaleService(AbstractComponent):
             "name": sale.name,
             "date": sale.date_order,
             "client_order_ref": sale.client_order_ref,
+            "payment_term": sale.payment_term_id.display_name,
             "step": self._convert_step(sale),
             "lines": self._convert_lines(sale),
             "amount": self._convert_amount(sale),

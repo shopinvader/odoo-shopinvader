@@ -305,6 +305,22 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
             ],
         )
 
+    @mute_logger("odoo.models.unlink")
+    def test_cart_payment_term_get(self):
+        """
+        Unlink actual cart
+        Change partner payment terms
+        Create a new cart
+        Ensure that payment term is correct
+        """
+        self.cart.unlink()
+        self.service._get()
+        immediate = self.env.ref("account.account_payment_term_immediate")
+        self.partner.property_payment_term_id = immediate
+        cart_data = self.service.dispatch("search", params={})["data"]
+        payment_term = cart_data.get("payment_term")
+        self.assertEqual(payment_term, immediate.display_name)
+
     def test_set_shipping_address_no_default_invocing(self):
         cart = self.cart
         self.backend.cart_checkout_address_policy = "no_defaults"
