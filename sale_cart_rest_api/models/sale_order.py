@@ -2,7 +2,7 @@
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from collections import defaultdict
+from collections import OrderedDict
 
 from odoo import api, fields, models
 
@@ -64,9 +64,16 @@ class SaleOrder(models.Model):
 
     @api.model
     def _group_transactions_by_product_id(self, transactions):
-        transactions_by_product_id = defaultdict(list)
+        # take an ordered dict to ensure to create lines into the same
+        # order as the transactions list
+        transactions_by_product_id = OrderedDict()
         for trans in transactions:
-            transactions_by_product_id[trans["product_id"]].append(trans)
+            product_id = trans["product_id"]
+            transactions = transactions_by_product_id.get(product_id)
+            if not transactions:
+                transactions = []
+                transactions_by_product_id[product_id] = transactions
+            transactions.append(trans)
         return transactions_by_product_id
 
     def _get_cart_line(self, product_id):
