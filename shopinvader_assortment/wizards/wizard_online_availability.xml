@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="wizard_online_availability_view" model="ir.ui.view">
+        <field name="name">wizard.online_availability.view</field>
+        <field name="model">wizard.online_availability</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="action_type" />
+                    <field name="backend_ids" options="{'no_create': True}" />
+                    <field name='all_backend' />
+                </group>
+
+                <footer>
+                    <button
+                        string="Manage Online Availability"
+                        name="manage_availability"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="wizard_online_availability_action_menu" model="ir.actions.act_window">
+        <field name="name">Manage Online Availability</field>
+        <field name="res_model">wizard.online_availability</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="product.model_product_template" />
+        <field name="view_id" ref="wizard_online_availability_view" />
+    </record>
+</odoo>

@@ -12,7 +12,12 @@
         "shopinvader",
         "shopinvader_search_engine",
     ],
-    "data": ["data/ir_cron.xml", "views/shopinvader_backend.xml"],
+    "data": [
+        "security/ir.model.access.csv",
+        "data/ir_cron.xml",
+        "views/shopinvader_backend.xml",
+        "wizards/wizard_online_availability.xml",
+    ],
     "demo": ["demo/shopinvader_assortment_demo.xml"],
     "installable": True,
 }
