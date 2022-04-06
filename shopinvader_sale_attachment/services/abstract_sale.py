@@ -24,7 +24,7 @@ class AbstractSaleService(AbstractComponent):
         return res
 
     def _check_attachment_access(self, record):
-        if self.partner != record.partner_id:
+        if not self._get(record.id):
             raise MissingError(
                 _("There is no attachment for this record: {}".format(record.id))
             )
