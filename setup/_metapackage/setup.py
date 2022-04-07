@@ -71,6 +71,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_product_variant_selector',
         'odoo14-addon-shopinvader_quotation',
         'odoo14-addon-shopinvader_sale_amount_by_group',
+        'odoo14-addon-shopinvader_sale_automatic_workflow',
         'odoo14-addon-shopinvader_sale_coupon',
         'odoo14-addon-shopinvader_sale_packaging',
         'odoo14-addon-shopinvader_sale_packaging_wishlist',
