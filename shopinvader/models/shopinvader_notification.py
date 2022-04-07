@@ -43,11 +43,11 @@ class ShopinvaderNotification(models.Model):
             },
             "invoice_open": {
                 "name": _("Invoice Validated"),
-                "model": "account.invoice",
+                "model": "account.move",
             },
             "invoice_send_email": {
                 "name": _("Invoice send email"),
-                "model": "account.invoice",
+                "model": "account.move",
             },
             "new_customer_welcome": {
                 "name": _("New customer Welcome"),
