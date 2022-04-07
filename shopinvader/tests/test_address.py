@@ -46,97 +46,89 @@ class CommonAddressCase(CommonCase):
     def check_data(self, address, data):
         _check_partner_data(self, address, data)
 
+    def _create_address(self, params):
+        existing_ids = {
+            address["id"] for address in self.address_service.search()["data"]
+        }
+        res = self.address_service.dispatch("create", params=params)["data"]
+        res_ids = {x["id"] for x in res}
+        created_ids = res_ids - existing_ids
+        return self.env["res.partner"].browse(created_ids)
 
-class AddressTestCase(object):
     def _test_create_address(self, params, expected):
-        existing = [address["id"] for address in self.address_service.search()["data"]]
-        address_list = self.address_service.dispatch("create", params=params)["data"]
-        created_id = [
-            address["id"] for address in address_list if address["id"] not in existing
-        ][0]
-        address = self.env["res.partner"].browse(created_id)
+        address = self._create_address(params)
         self.check_data(address, expected)
-
-    def test_create_address(self):
-        # no email, verify defaults
-        params = dict(self.address_params, parent_id=self.partner.id)
-        # type defaults to `other`
-        expected = dict(params)
-        self._test_create_address(params, expected)
-        # pass email and type
-        params = dict(params, email="purple@test.oca", type="invoice")
-        expected = dict(params)
-        self._test_create_address(params, expected)
+        return address
 
     def _test_update_address(self, address_id, params, expected):
         self.address_service.dispatch("update", address_id, params=params)
         address = self.env["res.partner"].browse(address_id)
         self.check_data(address, expected)
+        return address
+
+    def _test_search_address(self, params, expected):
+        """Test search address with params and asserts results
+
+        :param params: search parameters
+        :param expected: res.partner recordset.
+        """
+        res = self.address_service.dispatch("search", params=params)["data"]
+        res_ids = {x["id"] for x in res}
+        records = self.env["res.partner"].browse(res_ids)
+        self.assertEqual(records, expected)
+        return records
+
+
+class AddressTestCase(object):
+    def test_create_address(self):
+        # no email, verify defaults
+        params = dict(self.address_params, parent_id=self.partner.id, type="other")
+        self._test_create_address(params, params)
+        # pass email and type
+        params = dict(params, email="purple@test.oca", type="invoice")
+        self._test_create_address(params, params)
 
     def test_add_address_invoice(self):
         # Create an invoice address with wrong type
         # Check raise
-        # Create an invoice address with invoice type
-        # Check data
-        self.address_params.update({"type": "wrong"})
-        address_ids = [
-            address["id"] for address in self.address_service.search()["data"]
-        ]
+        params = dict(self.address_params, type="wrong")
         with self.assertRaises(UserError):
-            self.address_service.dispatch("create", params=self.address_params)["data"]
-        self.address_params.update({"type": "invoice"})
-        address_list = self.address_service.dispatch(
-            "create", params=self.address_params
-        )["data"]
-        for address in address_list:
-            if address["id"] not in address_ids:
-                created_address = address
-        self.assertIsNotNone(created_address)
-        address = self.env["res.partner"].browse(created_address["id"])
-        self.assertEqual(address.parent_id, self.partner)
-        self.check_data(address, self.address_params)
+            self.address_service.dispatch("create", params=params)
+        # Create an invoice address with invoice type
+        params = dict(self.address_params, type="invoice")
+        self._test_create_address(params, params)
 
     def test_update_address(self):
-        params = dict(self.address_params, parent_id=self.partner.id)
-        expected = dict(params)
-        self._test_update_address(self.address.id, params, expected)
-        params = dict(params, email="foo@baz.test", type="contact")
-        # "contact" type get the address from the parent
+        # Case 1: Simply update fields (type is "other")
+        params = dict(self.address_params)
+        self._test_update_address(self.address.id, params, params)
+        # Case 2: "contact" type get the address from the parent
+        params = dict(self.address_params, email="foo@baz.test", type="contact")
         expected = dict(params, street=self.partner.street)
         self._test_update_address(self.address.id, params, expected)
 
     def test_read_address_profile(self):
-        res = self.address_service.dispatch(
-            "search", params={"scope": {"address_type": "profile"}}
-        )["data"]
-        self.assertEqual(len(res), 1)
-        self.assertEqual(res[0]["id"], self.partner.id)
+        params = {"scope": {"address_type": "profile"}}
+        expected = self.partner
+        self._test_search_address(params, expected)
 
     def test_read_address_address(self):
-        res = self.address_service.dispatch(
-            "search", params={"scope": {"address_type": "address"}}
-        )["data"]
-        self.assertEqual(len(res), 2)
-        ids = {x["id"] for x in res}
-        expected_ids = {self.address.id, self.address_2.id}
-        self.assertEqual(ids, expected_ids)
+        params = {"scope": {"address_type": "address"}}
+        expected = self.address + self.address_2
+        self._test_search_address(params, expected)
 
     def test_read_address_invoice(self):
         # Create an invoice address
+        params = dict(self.address_params, type="invoice")
+        address = self._create_address(params)
         # Search it
-        self.address_params.update({"type": "invoice"})
-        self.address_service.dispatch("create", params=self.address_params)["data"]
-        res = self.address_service.dispatch(
-            "search", params={"scope": {"type": "invoice"}}
-        )["data"]
-        self.assertEqual(len(res), 1)
+        params = {"scope": {"type": "invoice"}}
+        self._test_search_address(params, address)
 
     def test_read_address_all(self):
-        res = self.address_service.dispatch("search", params={})["data"]
-        self.assertEqual(len(res), 3)
-        ids = {x["id"] for x in res}
-        expected_ids = {self.partner.id, self.address.id, self.address_2.id}
-        self.assertEqual(ids, expected_ids)
+        params = {}
+        expected = self.partner + self.address + self.address_2
+        self._test_search_address(params, expected)
 
     def test_search_per_page(self):
         # Ensure the 'per_page' is working into search.

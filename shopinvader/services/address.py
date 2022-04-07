@@ -156,6 +156,8 @@ class AddressService(Component):
         for key in res:
             if "required" in res[key]:
                 del res[key]["required"]
+            if "default" in res[key]:
+                del res[key]["default"]
         return res
 
     def _validator_delete(self):
