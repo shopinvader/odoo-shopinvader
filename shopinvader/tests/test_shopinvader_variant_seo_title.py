@@ -23,8 +23,8 @@ class TestShopinvaderVariantTest(ProductCommonCase):
                 expected_result = variant.manual_seo_title
             else:
                 result = variant._build_seo_title()
-                expected_result = u"{} | {}".format(
-                    variant.name, backend.website_public_name or u""
+                expected_result = "{} | {}".format(
+                    variant.name, backend.website_public_name or ""
                 )
             self.assertEquals(result, expected_result)
 
@@ -75,5 +75,5 @@ class TestShopinvaderVariantTest(ProductCommonCase):
         """
         self.backend.write({"website_public_name": "Shopinvader éèiï&|ç{ù$µ"})
         for variant in self.shopinvader_variants:
-            variant.write({"name": variant.name + u" éèiï&|ç{ù$µ"})
+            variant.write({"name": variant.name + " éèiï&|ç{ù$µ"})
         self._check_expected_seo_name(self.backend, self.shopinvader_variants)

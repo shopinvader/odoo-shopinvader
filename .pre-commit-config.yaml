@@ -53,7 +53,7 @@ repos:
       - id: autoflake
         args: ["-i", "--ignore-init-module-imports"]
   - repo: https://github.com/psf/black
-    rev: "19.10b0"
+    rev: 22.3.0
     hooks:
       - id: black
         args: [--line-length=79]

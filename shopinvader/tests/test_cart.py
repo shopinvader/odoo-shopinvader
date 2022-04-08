@@ -285,9 +285,9 @@ class AnonymousCartCase(CartCase, CartClearTest):
 
 class CommonConnectedCartCase(CartCase):
     """
-       Common class for connected cart tests
-       DON'T override it with tests
-       """
+    Common class for connected cart tests
+    DON'T override it with tests
+    """
 
     def setUp(self, *args, **kwargs):
         super(CommonConnectedCartCase, self).setUp(*args, **kwargs)

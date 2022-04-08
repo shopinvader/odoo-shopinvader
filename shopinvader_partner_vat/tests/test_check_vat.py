@@ -32,7 +32,7 @@ class CheckVatCase(CommonCase):
                 {
                     "vat_number": vat_number,
                     "with_details": True,
-                    "name": u"SARL AKRETION FRANCE",
+                    "name": "SARL AKRETION FRANCE",
                     "valid": True,
                 },
             )

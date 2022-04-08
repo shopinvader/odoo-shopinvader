@@ -56,7 +56,7 @@ class TestShopinvaderPartnerGuest(CommonShopinvaderPartner):
         :return:
         """
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )
         partner = shop_partner.record_id
         shop_partner_guest = self._create_shopinvader_guest_for_partner(

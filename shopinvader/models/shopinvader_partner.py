@@ -87,8 +87,8 @@ class ShopinvaderPartner(models.Model):
 
     @api.model
     def _is_same_partner_value(self, partner, vals):
-        """ we check if one of the given value is different than values
-            of the given partner
+        """we check if one of the given value is different than values
+        of the given partner
         """
         skip_keys = self._is_same_partner_value_skip_keys(partner)
         keys_to_check = []

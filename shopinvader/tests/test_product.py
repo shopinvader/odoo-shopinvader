@@ -30,7 +30,7 @@ class ProductCase(ProductCommonCase):
     #            self.template.categ_id + self.template.categ_id.parent_id)
     #
     def test_variant_attributes(self):
-        attr_dict = {"legs": u"Steel", "color": u"Black"}
+        attr_dict = {"legs": "Steel", "color": "Black"}
         self.assertDictEqual(
             self.shopinvader_variant.variant_attributes, attr_dict
         )
@@ -264,9 +264,9 @@ class ProductCase(ProductCommonCase):
                 binding.shopinvader_parent_id.lang_id, binding.lang_id
             )
             if binding.lang_id.code == "fr_FR":
-                self.assertEqual(binding.url_key, u"tous/en-vente")
+                self.assertEqual(binding.url_key, "tous/en-vente")
             elif binding.lang_id.code == "en_US":
-                self.assertEqual(binding.url_key, u"all/saleable")
+                self.assertEqual(binding.url_key, "all/saleable")
 
     def test_product_category_with_one_lang(self):
         self.backend.bind_all_product()
@@ -288,9 +288,9 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
         for binding in product.shopinvader_bind_ids:
             if binding.lang_id.code == "fr_FR":
-                self.assertEqual(binding.url_key, u"bureau-personnalisable")
+                self.assertEqual(binding.url_key, "bureau-personnalisable")
             elif binding.lang_id.code == "en_US":
-                self.assertEqual(binding.url_key, u"customizable-desk")
+                self.assertEqual(binding.url_key, "customizable-desk")
 
     def test_create_product_binding1(self):
         """
