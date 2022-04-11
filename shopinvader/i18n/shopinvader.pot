@@ -1146,6 +1146,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__sequence
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sequence
 msgid "Determine the display order in the frontend shop"
 msgstr ""
 
@@ -1453,11 +1454,6 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__packaging_ids
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__packaging_ids
 msgid "Gives the different ways to package the same product."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__sequence
-msgid "Gives the sequence order when displaying a product list"
 msgstr ""
 
 #. module: shopinvader
