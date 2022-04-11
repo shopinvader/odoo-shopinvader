@@ -117,7 +117,14 @@ class AddressService(Component):
                         "required": True,
                         "nullable": False,
                         "type": "integer",
-                    }
+                        "excludes": ["code"],
+                    },
+                    "code": {
+                        "required": True,
+                        "nullable": False,
+                        "type": "string",
+                        "excludes": ["id"],
+                    },
                 },
             },
             "title": {
@@ -208,11 +215,21 @@ class AddressService(Component):
         return data
 
     def _prepare_params(self, params, mode="create"):
-        for key in ["country", "state"]:
-            if key in params:
-                val = params.pop(key)
-                if val.get("id"):
-                    params["%s_id" % key] = val["id"]
+        if "country" in params:
+            val = params.pop("country")
+            if "id" in val:
+                params["country_id"] = val["id"]
+            elif "code" in val:
+                country = self.env["res.country"].search(
+                    [("code", "=", val["code"])],
+                    limit=1,
+                )
+                params["country_id"] = country.id
+        if "state" in params:
+            val = params.pop("state")
+            if "id" in val:
+                params["state_id"] = val["id"]
+
         # TODO: every field like m2o should be handled in the same way.
         # `country` and `state` are exceptions as they should match `_id`
         # naming already on client side as it has been done for industry.

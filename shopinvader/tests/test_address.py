@@ -47,12 +47,12 @@ class CommonAddressCase(CommonCase):
         _check_partner_data(self, address, data)
 
     def _create_address(self, params):
-        existing_ids = {
-            address["id"] for address in self.address_service.search()["data"]
-        }
-        res = self.address_service.dispatch("create", params=params)["data"]
-        res_ids = {x["id"] for x in res}
-        created_ids = res_ids - existing_ids
+        existing_res = self.address_service.search(per_page=100)["data"]
+        existing_ids = {address["id"] for address in existing_res}
+        self.address_service.dispatch("create", params=params)["data"]
+        after_res = self.address_service.search(per_page=100)["data"]
+        after_ids = {address["id"] for address in after_res}
+        created_ids = after_ids - existing_ids
         return self.env["res.partner"].browse(created_ids)
 
     def _test_create_address(self, params, expected):
@@ -82,11 +82,18 @@ class CommonAddressCase(CommonCase):
 class AddressTestCase(object):
     def test_create_address(self):
         # no email, verify defaults
-        params = dict(self.address_params, parent_id=self.partner.id, type="other")
+        params = dict(self.address_params, type="other")
         self._test_create_address(params, params)
         # pass email and type
-        params = dict(params, email="purple@test.oca", type="invoice")
+        params = dict(self.address_params, email="purple@test.oca", type="invoice")
         self._test_create_address(params, params)
+        # pass country as code
+        params = dict(self.address_params, country={"code": "FR"}, type="other")
+        self._test_create_address(params, dict(self.address_params))
+        # can't pass both country id and country code
+        params = dict(params, country={"id": 1, "code": "FR"}, type="other")
+        with self.assertRaisesRegex(UserError, r"'id' must not be present with 'code'"):
+            self._test_create_address(params, dict(self.address_params))
 
     def test_add_address_invoice(self):
         # Create an invoice address with wrong type
