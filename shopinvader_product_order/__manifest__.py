@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Product Order",
     "summary": "Manage product display order on Shopinvader",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp",
