@@ -68,7 +68,7 @@ addon | version | maintainers | summary
 [shopinvader_product_manufactured_for](shopinvader_product_manufactured_for/) | 14.0.1.0.0 |  | Manage Product Made Specially For Some Customers
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 |  | Index storage media data into external search engine
 [shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.1 |  | Shopinvader product new
-[shopinvader_product_order](shopinvader_product_order/) | 14.0.1.0.0 |  | Manage product display order on Shopinvader
+[shopinvader_product_order](shopinvader_product_order/) | 14.0.1.1.0 |  | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.2.0 |  | Exposes product prices with and without taxes
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.2 |  | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.1 |  | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
