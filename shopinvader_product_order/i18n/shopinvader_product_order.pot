@@ -15,30 +15,40 @@ msgstr ""
 
 #. module: shopinvader_product_order
 #: model:ir.model.fields,help:shopinvader_product_order.field_shopinvader_product__sequence
+#: model:ir.model.fields,help:shopinvader_product_order.field_shopinvader_variant__sequence
 msgid "Determine the display order in the frontend shop"
 msgstr ""
 
 #. module: shopinvader_product_order
 #: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_product__display_name
+#: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_variant__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: shopinvader_product_order
 #: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_product__id
+#: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_variant__id
 msgid "ID"
 msgstr ""
 
 #. module: shopinvader_product_order
 #: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_product____last_update
+#: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_variant____last_update
 msgid "Last Modified on"
 msgstr ""
 
 #. module: shopinvader_product_order
 #: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_product__sequence
+#: model:ir.model.fields,field_description:shopinvader_product_order.field_shopinvader_variant__sequence
 msgid "Sequence"
 msgstr ""
 
 #. module: shopinvader_product_order
 #: model:ir.model,name:shopinvader_product_order.model_shopinvader_product
 msgid "Shopinvader Product"
+msgstr ""
+
+#. module: shopinvader_product_order
+#: model:ir.model,name:shopinvader_product_order.model_shopinvader_variant
+msgid "Shopinvader Variant"
 msgstr ""
