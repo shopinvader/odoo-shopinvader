@@ -48,7 +48,7 @@ class TestResPartner(SavepointComponentCase):
 
         # once you've changed the config to disable duplicate partner
         # it's no more possible to create a partner with shopinvader user
-        self.assertFalse(self.env["res.partner"]._is_partner_duplicate_prevented())
+        self.assertTrue(self.env["res.partner"]._is_partner_duplicate_prevented())
         # with the same email
         with self.assertRaises(ValidationError), self.cr.savepoint():
             self.env["res.partner"].create(
