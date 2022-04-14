@@ -14,6 +14,7 @@
     "depends": [
         "base_jsonify",
         "base_rest",
+        "partner_serializer",
         "sale_cart",
         "sale_discount_display_amount",
         "onchange_helper",
