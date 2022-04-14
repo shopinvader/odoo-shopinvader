@@ -153,7 +153,7 @@ class CartService(Component):
         return {
             "address": {
                 "type": "dict",
-                "schema": self._address_output_schema,
+                "schema": self.partner_serializer._json_address_schema,
                 "required": False,
                 "nullable": True,
             }
@@ -164,7 +164,7 @@ class CartService(Component):
         return {
             "address": {
                 "type": "dict",
-                "schema": self._address_output_schema,
+                "schema": self.partner_serializer._json_address_schema,
                 "required": False,
                 "nullable": True,
             }
@@ -215,88 +215,13 @@ class CartService(Component):
         }
         return amount_schema
 
-    @property
-    def _address_output_schema(self):
-        # SHOULD BE PUT INTO A DEDICATED ADDON
-        return {
-            "id": {"type": "integer", "required": True, "nullable": False},
-            "display_name": {
-                "type": "string",
-                "required": True,
-                "nullable": False,
-            },
-            "name": {"type": "string", "required": True, "nullable": False},
-            "ref": {"type": "string", "required": False, "nullable": True},
-            "street": {"type": "string", "required": False, "nullable": True},
-            "street2": {"type": "string", "required": False, "nullable": True},
-            "zip": {"type": "string", "required": False, "nullable": True},
-            "city": {"type": "string", "required": False, "nullable": True},
-            "phone": {"type": "string", "required": False, "nullable": True},
-            "mobile": {"type": "string", "required": False, "nullable": True},
-            "vat": {"type": "string", "required": False, "nullable": True},
-            "type": {
-                "type": "string",
-                "required": True,
-                "nullable": False,
-                "allowed": [
-                    s[0]
-                    for s in self.env["res.partner"]._fields["type"].selection
-                ],
-            },
-            "state": {
-                "type": "dict",
-                "schema": {
-                    "id": {
-                        "type": "integer",
-                        "required": True,
-                        "nullable": False,
-                    },
-                    "code": {
-                        "type": "string",
-                        "required": False,
-                        "nullable": True,
-                    },
-                    "name": {
-                        "type": "string",
-                        "required": True,
-                        "nullable": False,
-                    },
-                },
-                "required": False,
-                "nullable": True,
-            },
-            "country": {
-                "type": "dict",
-                "schema": {
-                    "id": {
-                        "type": "integer",
-                        "required": True,
-                        "nullable": False,
-                    },
-                    "code": {
-                        "type": "string",
-                        "required": True,
-                        "nullable": False,
-                    },
-                    "name": {
-                        "type": "string",
-                        "required": True,
-                        "nullable": False,
-                    },
-                },
-                "required": False,
-                "nullable": True,
-            },
-            "is_company": {
-                "type": "boolean",
-                "required": True,
-                "nullable": False,
-            },
-        }
-
     # ##############
     # implementation
     # ##############
+
+    @property
+    def partner_serializer(self):
+        return self.env["res.partner.serializer"]
 
     @property
     def anonymous_partner(self):
@@ -406,7 +331,7 @@ class CartService(Component):
     def _convert_delivery(self, sale):
         delivery = {}
         if sale.partner_shipping_id != self.anonymous_partner:
-            delivery["address"] = self._convert_address(
+            delivery["address"] = self.partner_serializer._to_json_address(
                 sale.partner_shipping_id
             )
         return delivery
@@ -414,34 +339,10 @@ class CartService(Component):
     def _convert_invoicing(self, sale):
         invoicing = {}
         if sale.partner_invoice_id != self.anonymous_partner:
-            invoicing["address"] = self._convert_address(
+            invoicing["address"] = self.partner_serializer._to_json_address(
                 sale.partner_invoice_id
             )
         return invoicing
-
-    @property
-    def _json_address_parser(self):
-        res = [
-            "id",
-            "display_name",
-            "name",
-            "ref",
-            "street",
-            "street2",
-            "zip",
-            "city",
-            "phone",
-            "mobile",
-            "vat",
-            "type",
-            ("state_id:state", ["id", "name", "code"]),
-            ("country_id:country", ["id", "name", "code"]),
-            "is_company",
-        ]
-        return res
-
-    def _convert_address(self, address):
-        return address.jsonify(self._json_address_parser)[0]
 
     def _convert_amount(self, sale):
         precision = sale.currency_id.decimal_places
