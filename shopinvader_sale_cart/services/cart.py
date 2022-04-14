@@ -12,28 +12,6 @@ class CartService(Component):
     _collection = "shopinvader.api.v2"
 
     @property
-    def _address_output_schema(self):
-        schema = super(CartService, self)._address_output_schema
-        schema["address_type"] = {
-            "type": "string",
-            "required": True,
-            "nullable": False,
-            "allowed": [
-                s
-                for s in self.env["res.partner"]
-                ._fields["address_type"]
-                .get_values(self.env)
-            ],
-        }
-        return schema
-
-    @property
-    def _json_address_parser(self):
-        parser = super(CartService, self)._json_address_parser
-        parser.append("address_type")
-        return parser
-
-    @property
     def anonymous_partner(self):
         return self.shopinvader_backend.anonymous_partner_id
 
