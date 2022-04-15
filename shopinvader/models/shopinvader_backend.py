@@ -221,6 +221,14 @@ class ShopinvaderBackend(models.Model):
     )
     currency_ids = fields.Many2many(comodel_name="res.currency", string="Currency")
 
+    frontend_data_source = fields.Selection(
+        # TODO @simahawk: this value it's here because the form in core module
+        # already adds a "search engine" page.
+        # I'm not sure it should stay here, it should probalby go to `s_search_engine`.
+        selection=[("search_engine", "Search engine")],
+        help="Technical field to control form fields appeareance",
+        default="search_engine",
+    )
     _sql_constraints = [
         (
             "unique_website_unique_key",
