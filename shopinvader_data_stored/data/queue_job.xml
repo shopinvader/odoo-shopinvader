@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record id="channel_jsonify_stored_root" model="queue.job.channel">
+        <field name="name">json_data</field>
+        <field name="parent_id" ref="shopinvader.channel_shopinvader" />
+        <field name="removal_interval">15</field>
+    </record>
+    <record id="channel_jsonify_stored_variant" model="queue.job.channel">
+        <field name="name">shopinvader_variant</field>
+        <field name="parent_id" ref="channel_jsonify_stored_root" />
+        <field name="removal_interval">15</field>
+    </record>
+    <record id="channel_jsonify_stored_category" model="queue.job.channel">
+        <field name="name">shopinvader_category</field>
+        <field name="parent_id" ref="channel_jsonify_stored_root" />
+        <field name="removal_interval">15</field>
+    </record>
+
+</odoo>

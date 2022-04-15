@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-<record id="shopinvader_variant_form_view" model="ir.ui.view">
-    <field name="model">shopinvader.variant</field>
-    <field name="inherit_id" ref="shopinvader.shopinvader_variant_form_view" />
+<record id="view_shopinvader_category_form" model="ir.ui.view">
+    <field name="model">shopinvader.category</field>
+    <field name="inherit_id" ref="shopinvader.view_shopinvader_category_form" />
     <field name="arch" type="xml">
-        <page name="main" position="after">
+        <page name="seo" position="after">
             <page name="json_data" string="Data">
                 <group name="jsonified_data" string="JSON-ified Data">
                     <field name="ir_export_id" />
@@ -17,21 +17,24 @@
 </record>
 
 <!-- TODO: remove from s_search_engine when rebased on this work -->
-<record model="ir.actions.server" id="action_recompute_shopinvader_product_on_template">
+<record
+        model="ir.actions.server"
+        id="action_recompute_shopinvader_category_on_category"
+    >
     <field name="name">Recompute JSON data</field>
     <field name="model_id" ref="product.model_product_template" />
     <field name="binding_model_id" ref="product.model_product_template" />
     <field name="state">code</field>
     <field name="code">
-bindings = records.mapped("product_variant_ids.shopinvader_bind_ids")
+bindings = records.mapped("shopinvader_bind_ids")
 env["jsonifier.stored.mixin"].jobify_json_data_compute_for(bindings.browse(), ids=bindings.ids)
     </field>
 </record>
 
-<record model="ir.actions.server" id="action_recompute_shopinvader_product_on_binding">
+<record model="ir.actions.server" id="action_recompute_shopinvader_category_on_binding">
     <field name="name">Recompute JSON data</field>
-    <field name="model_id" ref="shopinvader.model_shopinvader_variant" />
-    <field name="binding_model_id" ref="shopinvader.model_shopinvader_variant" />
+    <field name="model_id" ref="shopinvader.model_shopinvader_category" />
+    <field name="binding_model_id" ref="shopinvader.model_shopinvader_category" />
     <field name="state">code</field>
     <field name="code">
 env["jsonifier.stored.mixin"].jobify_json_data_compute_for(records.browse(), ids=records.ids)

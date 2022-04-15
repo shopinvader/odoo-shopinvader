@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="shopinvader_backend_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="arch" type="xml">
+            <page name="developer" position="before">
+                <page
+                    name="data"
+                    string="Binding data"
+                    attrs="{'invisible': [('frontend_data_source', '!=', 'odoo')]}"
+                >
+                    <group name="one">
+                        <group name="json_data" string="Data">
+                            <field
+                                name="category_exporter_id"
+                                attrs="{'required': [('frontend_data_source', '=', 'odoo')]}"
+                            />
+                            <field
+                                name="variant_exporter_id"
+                                attrs="{'required': [('frontend_data_source', '=', 'odoo')]}"
+                            />
+                        </group>
+                        <group name="channel_data" string="Job channels">
+                            <field
+                                name="variant_data_compute_channel_id"
+                                attrs="{'required': [('frontend_data_source', '=', 'odoo')]}"
+                            />
+                            <field
+                                name="category_data_compute_channel_id"
+                                attrs="{'required': [('frontend_data_source', '=', 'odoo')]}"
+                            />
+                        </group>
+                    </group>
+                    <group name="actions" col="10" colspan="4">
+                        <button
+                            name="force_recompute_all"
+                            string="Recompute all"
+                            type="object"
+                        />
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>
