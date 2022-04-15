@@ -4422,6 +4422,13 @@ msgid "Vendors"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__video_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__video_ids
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__video_ids
+msgid "Video"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__volume
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__volume
 msgid "Volume"
