@@ -69,6 +69,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_product_template_tags',
         'odoo14-addon-shopinvader_product_variant_multi_link',
         'odoo14-addon-shopinvader_product_variant_selector',
+        'odoo14-addon-shopinvader_product_video_link',
         'odoo14-addon-shopinvader_quotation',
         'odoo14-addon-shopinvader_sale_amount_by_group',
         'odoo14-addon-shopinvader_sale_automatic_workflow',
