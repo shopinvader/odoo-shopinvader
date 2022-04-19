@@ -72,7 +72,7 @@ class InvoiceService(Component):
             "number": {"type": "string"},
             "pay_ref": {"type": "string"},
             "date_invoice": {"type": "string"},
-            "date_due": {"type": "string"},
+            "date_due": {"type": "string", "nullable": True},
             "amount_total": {"type": "float"},
             "amount_total_signed": {"type": "float"},
             "amount_tax": {"type": "float"},
