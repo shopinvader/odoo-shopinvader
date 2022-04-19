@@ -31,7 +31,6 @@ class ShopinvaderBackend(models.Model):
         required=True,
         default=lambda s: s._default_company_id(),
     )
-    location = fields.Char()
     notification_ids = fields.One2many(
         "shopinvader.notification",
         "backend_id",
@@ -236,10 +235,6 @@ class ShopinvaderBackend(models.Model):
             _("This website unique key already exists in database"),
         )
     ]
-
-    @property
-    def _server_env_fields(self):
-        return {"location": {}}
 
     @api.model
     def _default_company_id(self):

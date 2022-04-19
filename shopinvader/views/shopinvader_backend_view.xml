@@ -241,7 +241,6 @@
             <tree>
                 <field name="name" />
                 <field name="tech_name" />
-                <field name="location" />
                 <field
                     name="company_id"
                     widget="selection"
