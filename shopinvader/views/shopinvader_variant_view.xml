@@ -92,23 +92,25 @@
                             <field name="name" class="oe_inline" readonly="1" />
                         </h1>
                     </div>
-                    <group>
-                        <group name="backend">
-                            <field name="backend_id" />
-                            <field name="lang_id" />
-                            <field name="shopinvader_product_id" />
-                            <field
-                                name="company_id"
-                                widget="selection"
-                                groups="base.group_multi_company"
-                            />
-                        </group>
-                        <group name="variant">
-                            <field name="default_code" />
-                            <field name="tmpl_record_id" />
-                            <field name="record_id" />
-                        </group>
-                    </group>
+                    <notebook>
+                        <page name="main" string="Main">
+                            <group name="backend">
+                                <field name="backend_id" />
+                                <field name="lang_id" />
+                                <field name="shopinvader_product_id" />
+                                <field
+                                    name="company_id"
+                                    widget="selection"
+                                    groups="base.group_multi_company"
+                                />
+                            </group>
+                            <group name="variant">
+                                <field name="default_code" />
+                                <field name="tmpl_record_id" />
+                                <field name="record_id" />
+                            </group>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
