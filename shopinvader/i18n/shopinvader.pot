@@ -2091,6 +2091,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__main
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_form_view
 msgid "Main"
 msgstr ""
 
