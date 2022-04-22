@@ -17,6 +17,10 @@
         <field name="zip">43110</field>
         <field name="country_id" ref="base.fr" />
         <field name="property_product_pricelist" ref="product.list0" />
+        <field
+                name="property_payment_term_id"
+                ref="account.account_payment_term_immediate"
+            />
     </record>
 
     <record id="shopinvader_partner_1" model="shopinvader.partner">

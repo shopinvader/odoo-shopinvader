@@ -152,6 +152,8 @@ class CustomerService(Component):
     def _to_customer_info(self, partner):
         address = self.component(usage="addresses")
         info = address._to_json(partner)[0]
+        # Add customer specific information
+        info["payment_term"] = partner.property_payment_term_id.display_name
         # access info on the current record partner record
         info["access"] = self.access_info.for_profile(partner.id)
         # global permission for current partner user
