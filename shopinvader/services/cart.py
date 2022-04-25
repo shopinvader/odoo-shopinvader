@@ -34,7 +34,7 @@ class CartService(Component):
         """Retrieve cart from session or existing cart for current customer."""
         if not self.cart_id:
             return {}
-        return self._to_json(self._get())
+        return self._to_json(self._get(create_if_not_found=False))
 
     def update(self, **params):
         cart = self._get()
