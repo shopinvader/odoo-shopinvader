@@ -30,7 +30,12 @@ class TestShopinvaderSaleCartDelivery(CommonCase):
                 ],
             )
             cls.so = cls.env["sale.order"].browse(info["id"])
-            cls.cart_service = cart
+            cls._cart_service = cart
+
+        with cls.carrier_service(
+            authenticated_partner_id=cls.partner.id
+        ) as service:
+            cls._carrier_service = service
 
     @classmethod
     @contextmanager
@@ -51,9 +56,33 @@ class TestShopinvaderSaleCartDelivery(CommonCase):
         )
         yield work.component(usage="cart")
 
+    @classmethod
+    @contextmanager
+    def carrier_service(cls, authenticated_partner_id):
+        env = cls.env(
+            context=dict(
+                cls.env.context,
+                authenticated_partner_id=authenticated_partner_id,
+            )
+        )
+        collection = _PseudoCollection("shopinvader.backend", env)
+        work = WorkContext(
+            model_name="rest.service.registration",
+            collection=collection,
+            request=mock.Mock(),
+            authenticated_partner_id=authenticated_partner_id,
+            shopinvader_backend=cls.backend,
+        )
+        yield work.component(usage="delivery_carriers")
+
     def test_set_carrier(self):
-        info = self.cart_service.dispatch(
+        info = self._cart_service.dispatch(
             "set_delivery_method", params={"method_id": self.poste_carrier.id}
         )
         self.assertTrue(info)
         self.assertIn("delivery", info)
+
+    def test_get_carrier(self):
+        self.so.uuid = "uuid1"
+        info = self._carrier_service.search(cart_uuid=self.so.uuid)
+        self.assertTrue(info)
