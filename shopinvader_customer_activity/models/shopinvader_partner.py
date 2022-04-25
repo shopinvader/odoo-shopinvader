@@ -2,7 +2,11 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from datetime import timedelta
+
 from odoo import fields, models
+
+LOG_ACTIVITY_THROTTLE = 60  # seconds
 
 
 class ShopinvaderPartner(models.Model):
@@ -21,6 +25,9 @@ class ShopinvaderPartner(models.Model):
 
     def _log_active_date(self):
         self.ensure_one()
-        self.last_active_date = fields.Datetime.now()
-        if not self.first_active_date:
-            self.first_active_date = self.last_active_date
+        now = fields.Datetime.now()
+        throttle = timedelta(seconds=LOG_ACTIVITY_THROTTLE)
+        if not self.last_active_date or self.last_active_date < (now - throttle):
+            self.last_active_date = now
+            if not self.first_active_date:
+                self.first_active_date = self.last_active_date

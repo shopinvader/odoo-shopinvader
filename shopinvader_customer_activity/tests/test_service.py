@@ -2,6 +2,8 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from datetime import timedelta
+
 from freezegun import freeze_time
 
 from odoo import fields
@@ -20,3 +22,14 @@ class TestCartService(CommonConnectedCartCase):
             self.service.dispatch("search")
             self.assertEqual(self.shopinvader_partner.first_active_date, now)
             self.assertEqual(self.shopinvader_partner.last_active_date, now)
+        # Throttled writes
+        after30s = now + timedelta(seconds=30)
+        with freeze_time(after30s):
+            self.service.dispatch("search")
+            self.assertEqual(self.shopinvader_partner.first_active_date, now)
+            self.assertEqual(self.shopinvader_partner.last_active_date, now)
+        after5m = now + timedelta(minutes=5)
+        with freeze_time(after5m):
+            self.service.dispatch("search")
+            self.assertEqual(self.shopinvader_partner.first_active_date, now)
+            self.assertEqual(self.shopinvader_partner.last_active_date, after5m)
