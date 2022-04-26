@@ -1426,8 +1426,8 @@ msgid "Free To Use Quantity "
 msgstr ""
 
 #. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
-msgid "Front-end"
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__frontend_data_source
+msgid "Frontend Data Source"
 msgstr ""
 
 #. module: shopinvader
@@ -2058,30 +2058,14 @@ msgid "Localization"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__location
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__location_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__location_id
 msgid "Location"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__location_env_default
-msgid "Location Env Default"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__location_env_is_editable
-msgid "Location Env Is Editable"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model,name:shopinvader.model_shopinvader_backend
 msgid "Locomotive CMS Backend"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__location
-msgid "Locomotive URL (see Developers section Locomotive site)"
 msgstr ""
 
 #. module: shopinvader
@@ -2091,6 +2075,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__main
+#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_variant_form_view
 msgid "Main"
 msgstr ""
@@ -3279,6 +3264,7 @@ msgid "Sauder Harvey Park Entertainment Credenza, chêne clair"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields.selection,name:shopinvader.selection__shopinvader_backend__frontend_data_source__search_engine
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Search engine"
 msgstr ""
@@ -3837,6 +3823,11 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__valid_product_template_attribute_line_ids
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__valid_product_template_attribute_line_ids
 msgid "Technical compute"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__frontend_data_source
+msgid "Technical field to control form fields appeareance"
 msgstr ""
 
 #. module: shopinvader
@@ -4618,11 +4609,6 @@ msgstr ""
 #: model:product.template.attribute.value,name:shopinvader.product_template_tv_cabinet_mid_century_attribute_color_brown
 #: model:product.template.attribute.value,name:shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_brown
 msgid "brown"
-msgstr ""
-
-#. module: shopinvader
-#: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
-msgid "e.g. https://ecommerce.shopinvader.com"
 msgstr ""
 
 #. module: shopinvader
