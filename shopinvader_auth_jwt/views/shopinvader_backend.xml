@@ -7,9 +7,9 @@
         <field name="model">shopinvader.backend</field>
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
-            <field name="location" position="after">
+            <group name="auth" position="inside">
                 <field name="jwt_aud" />
-            </field>
+            </group>
         </field>
     </record>
 </odoo>

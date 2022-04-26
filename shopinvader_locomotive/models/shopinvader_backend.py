@@ -38,7 +38,9 @@ class ShopinvaderBackend(models.Model):
     @property
     def _server_env_fields(self):
         env_fields = super()._server_env_fields
-        env_fields.update({"username": {}, "password": {}, "handle": {}})
+        env_fields.update(
+            {"location": {}, "username": {}, "password": {}, "handle": {}}
+        )
         return env_fields
 
     def synchronize_metadata(self):

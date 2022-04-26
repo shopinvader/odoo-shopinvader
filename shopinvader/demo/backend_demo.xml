@@ -3,7 +3,6 @@
 
     <record id="backend_1" model="shopinvader.backend">
         <field name="name">Demo Shopinvader Website</field>
-        <field name="location">http://locomotive:3000</field>
         <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]" />
         <field name="pricelist_id" ref="product.list0" />
         <field name="account_analytic_id" ref="account_analytic_0" />
@@ -16,7 +15,6 @@
 
     <record id="backend_2" model="shopinvader.backend">
         <field name="name">Demo Shopinvader Website 2</field>
-        <field name="location">http://locomotive:3000</field>
         <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]" />
         <field name="pricelist_id" ref="product.list0" />
         <field name="account_analytic_id" ref="account_analytic_0" />

@@ -72,17 +72,22 @@
                         <field name="name" class="oe_inline" />
                     </h1>
                     <notebook>
-                        <page name="config" string="Front-end">
-                            <group name="config" colspan="4" col="4">
-                                <field name="tech_name" />
-                                <field
-                                    name="location"
-                                    placeholder="e.g. https://ecommerce.shopinvader.com"
-                                />
-                                <field name="website_unique_key" />
+                        <page name="config" string="Main">
+                            <group name="config_main" colspan="4" col="4">
+                                <group name="config" colspan="2" col="2">
+                                    <field name="tech_name" />
+                                    <field name="website_unique_key" />
+                                    <field name="frontend_data_source" required="1" />
+                                </group>
+                                <group name="auth" colspan="2" col="2">
+                                </group>
                             </group>
                         </page>
-                        <page name="search_eng" string="Search engine">
+                        <page
+                            name="search_eng"
+                            string="Search engine"
+                            attrs="{'invisible': [('frontend_data_source', '!=', 'search_engine')]}"
+                        >
                             <group name="website_name">
                                 <field name="website_public_name" />
                             </group>
@@ -236,7 +241,6 @@
             <tree>
                 <field name="name" />
                 <field name="tech_name" />
-                <field name="location" />
                 <field
                     name="company_id"
                     widget="selection"

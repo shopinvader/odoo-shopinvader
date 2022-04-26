@@ -7,43 +7,54 @@
         <field name="model">shopinvader.backend</field>
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
-            <page name="developer" position="inside">
-                <group name="locomotive" string="LocomotiveCMS">
-                    <span
-                    >Synchronize metadata push data managed by odoo and used into locomotive.
-                        For ex: countries, currencies. If some required metadata
-                        (erp url and credentials, search indexes configuration, ...) are not set into locomotive,
-                        The process will also push default values for these fields. Nevertheless, these specific
-                        metadatas are not updated by the script if a value is already set into locomotive.
-                    </span>
-                    <button
-                        name="synchronize_metadata"
-                        type="object"
-                        string="Synchronize Metadata"
-                        class="oe_highlight"
-                        groups="shopinvader.group_shopinvader_manager"
-                    />
-                    <span>
-                        Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>
-                    <button
-                        name="reset_site_settings"
-                        type="object"
-                        string="Reset site settings"
-                        class="oe_highlight"
-                        groups="shopinvader.group_shopinvader_manager"
-                    />
-                </group>
+            <page name="config" position="after">
+                <page name="locomotive" string="LocomotiveCMS">
+                    <group name="locomotive_credentials" string="Credentials">
+                        <field
+                            name="location"
+                            placeholder="e.g. https://ecommerce.shopinvader.com"
+                        />
+                        <field
+                            name="username"
+                            required="1"
+                            string="Email"
+                            colspan="2"
+                        />
+                        <field
+                            name="password"
+                            required="1"
+                            password="True"
+                            colspan="2"
+                        />
+                        <field name="handle" required="1" colspan="2" />
+                    </group>
+                    <group name="locomotive_sync" string="Sync">
+                        <span
+                        >Synchronize metadata push data managed by odoo and used into locomotive.
+                            For ex: countries, currencies. If some required metadata
+                            (erp url and credentials, search indexes configuration, ...) are not set into locomotive,
+                            The process will also push default values for these fields. Nevertheless, these specific
+                            metadatas are not updated by the script if a value is already set into locomotive.
+                        </span>
+                        <button
+                            name="synchronize_metadata"
+                            type="object"
+                            string="Synchronize Metadata"
+                            class="oe_highlight"
+                            groups="shopinvader.group_shopinvader_manager"
+                        />
+                        <span>
+                            Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>
+                        <button
+                            name="reset_site_settings"
+                            type="object"
+                            string="Reset site settings"
+                            class="oe_highlight"
+                            groups="shopinvader.group_shopinvader_manager"
+                        />
+                    </group>
+                </page>
             </page>
-            <group name="config" position="after">
-                <group name="locomotive_credentials" string="Locomotive Credentials">
-                    <field name="username" required="1" string="Email" colspan="2" />
-                    <field name="password" required="1" password="True" colspan="2" />
-                    <field name="handle" required="1" colspan="2" />
-                </group>
-            </group>
-            <field name="location" position="attributes">
-                <attribute name="required" eval="True" />
-            </field>
             <field name="pricelist_id" position="after">
                 <field
                     name="currency_ids"
