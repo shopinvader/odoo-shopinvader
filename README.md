@@ -20,11 +20,11 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 |  | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.12.0 |  | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.13.0 |  | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 |  | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 |  | Shopinvader Assortment
-[shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.0.5 |  | Shopinvader API_KEY Authentication
-[shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.1.0 |  | Find shopinvader backend and partner from JWT token
+[shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.0 |  | Shopinvader API_KEY Authentication
+[shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.1 |  | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 |  | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 |  | Shopinvader Display category image for product
@@ -46,10 +46,10 @@ addon | version | maintainers | summary
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.1 |  | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.2.0 |  | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.0.0 |  | Shopinvader Lead Management
-[shopinvader_locomotive](shopinvader_locomotive/) | 14.0.2.0.0 |  | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive](shopinvader_locomotive/) | 14.0.2.1.0 |  | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 |  | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 14.0.1.0.2 |  | Shopinvader guest mode for locomotive
-[shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 14.0.1.0.1 |  | Give the possibility to send a email to reset thepassword from odoo
+[shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 14.0.1.1.0 |  | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 14.0.1.0.0 |  | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.1 |  | Synchronize wishlist details to Locomotive users record.
 [shopinvader_membership](shopinvader_membership/) | 14.0.1.0.1 |  | Shopinvader Membership module
