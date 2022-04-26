@@ -24,18 +24,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
 msgid ""
 "<span>\n"
-"                        Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>"
+"                            Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>"
 msgstr ""
 
 #. module: shopinvader_locomotive
 #: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
 msgid ""
 "<span>Synchronize metadata push data managed by odoo and used into locomotive.\n"
-"                        For ex: countries, currencies. If some required metadata\n"
-"                        (erp url and credentials, search indexes configuration, ...) are not set into locomotive,\n"
-"                        The process will also push default values for these fields. Nevertheless, these specific\n"
-"                        metadatas are not updated by the script if a value is already set into locomotive.\n"
-"                    </span>"
+"                            For ex: countries, currencies. If some required metadata\n"
+"                            (erp url and credentials, search indexes configuration, ...) are not set into locomotive,\n"
+"                            The process will also push default values for these fields. Nevertheless, these specific\n"
+"                            metadatas are not updated by the script if a value is already set into locomotive.\n"
+"                        </span>"
 msgstr ""
 
 #. module: shopinvader_locomotive
@@ -47,6 +47,11 @@ msgstr ""
 #. module: shopinvader_locomotive
 #: model:ir.model,name:shopinvader_locomotive.model_res_partner
 msgid "Contact"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "Credentials"
 msgstr ""
 
 #. module: shopinvader_locomotive
@@ -99,11 +104,6 @@ msgstr ""
 #. module: shopinvader_locomotive
 #: model:ir.model,name:shopinvader_locomotive.model_shopinvader_backend
 msgid "Locomotive CMS Backend"
-msgstr ""
-
-#. module: shopinvader_locomotive
-#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
-msgid "Locomotive Credentials"
 msgstr ""
 
 #. module: shopinvader_locomotive
@@ -172,6 +172,11 @@ msgstr ""
 
 #. module: shopinvader_locomotive
 #: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "Sync"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
 msgid "Synchronize Metadata"
 msgstr ""
 
@@ -188,4 +193,9 @@ msgstr ""
 #. module: shopinvader_locomotive
 #: model:ir.model.fields,field_description:shopinvader_locomotive.field_shopinvader_backend__visible_filter_ids
 msgid "Visible Filter"
+msgstr ""
+
+#. module: shopinvader_locomotive
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive.shopinvader_backend_view_form
+msgid "e.g. https://ecommerce.shopinvader.com"
 msgstr ""
