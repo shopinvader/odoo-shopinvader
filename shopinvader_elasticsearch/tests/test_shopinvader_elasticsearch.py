@@ -19,7 +19,9 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         ElasticsearchAdapter._build_component(cls._components_registry)
         cls.backend_specific = cls.env.ref("connector_elasticsearch.backend_1")
         cls.backend = cls.backend_specific.se_backend_id
-        cls.shopinvader_backend = cls.env.ref("shopinvader.backend_1")
+        cls.shopinvader_backend = cls.env.ref(
+            "shopinvader_elasticsearch.backend_elasticsearch_demo"
+        )
         cls.shopinvader_backend.bind_all_product()
         cls.shopinvader_backend.bind_all_category()
         cls.index_product = cls.env.ref("shopinvader_elasticsearch.index_1")

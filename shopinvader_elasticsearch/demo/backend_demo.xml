@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
-    <record id="shopinvader.backend_1" model="shopinvader.backend">
+    <record id="backend_elasticsearch_demo" model="shopinvader.backend">
+        <field name="name">Demo Shopinvader with Elasticsearch</field>
+        <field name="lang_ids" eval="[(6, 0, [ref('base.lang_en')])]" />
+        <field name="pricelist_id" ref="product.list0" />
+        <field name="account_analytic_id" ref="shopinvader.account_analytic_0" />
+        <field
+            name="allowed_country_ids"
+            eval="[(6, 0, [ref('base.fr'),ref('base.lu'),ref('base.be'),ref('base.it'),ref('base.es')])]"
+        />
+        <field name="currency_ids" eval="[(6, 0, [ref('base.USD'),ref('base.EUR')])]" />
         <field
             name="se_backend_id"
             ref="connector_elasticsearch.backend_1_se_backend"
