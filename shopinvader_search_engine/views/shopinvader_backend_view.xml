@@ -5,11 +5,15 @@
         <field name="model">shopinvader.backend</field>
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
-             <group name="website_name" position="before">
-                <field name="se_backend_id" />
-             </group>
-             <group name="website_name" position="after">
+            <group name="website_name" position="before">
+                <group>
+                    <field name="se_backend_id" attrs="{'invisible': [('hide_se_settings', '=', True)]}" />
+                    <field name="shared_se_backend_id" />
+                </group>
+            </group>
+            <group name="website_name" position="after">
                 <group name="index_ids" colspan="4" string="Indexes">
+                    <field name="hide_se_settings" invisible="1" />
                     <field
                         name="index_ids"
                         nolabel="1"
@@ -29,6 +33,7 @@
                     string="Search engine indexes"
                     col="10"
                     colspan="4"
+                    attrs="{'invisible': [('hide_se_settings', '=', True)]}"
                 >
                     <button
                         name="force_recompute_all_binding_index"
@@ -66,9 +71,20 @@
                         name="action_add_missing_indexes"
                         string="Add missing indexes"
                         type="object"
+                        attrs="{'invisible': [('hide_se_settings', '=', True)]}"
                     />
                 </group>
-             </group>
+            </group>
+            <xpath expr="//button[@name='%(shopinvader.shopinvader_variant_binding_wizard_act_window)d']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('hide_se_settings', '=', True)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='%(shopinvader.shopinvader_category_binding_wizard_act_window)d']" position="attributes">
+                <attribute
+                    name="attrs"
+                >{'invisible': [('hide_se_settings', '=', True)]}</attribute>
+            </xpath>
         </field>
     </record>
 
