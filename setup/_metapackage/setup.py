@@ -18,6 +18,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_cart_expiry',
         'odoo14-addon-shopinvader_category_image_for_product',
         'odoo14-addon-shopinvader_contact_address_default',
+        'odoo14-addon-shopinvader_customer_activity',
         'odoo14-addon-shopinvader_customer_invoicing_mode',
         'odoo14-addon-shopinvader_customer_multi_user',
         'odoo14-addon-shopinvader_customer_multi_user_company_group',
