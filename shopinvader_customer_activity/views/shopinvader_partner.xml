@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2022 Camptocamp SA (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <record id="shopinvader_partner_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_form" />
+        <field name="arch" type="xml">
+            <field name="sync_date" position="before">
+                <field name="first_active_date" groups="base.group_no_one" />
+                <field name="last_active_date" />
+            </field>
+        </field>
+    </record>
+
+    <record id="shopinvader_partner_view_tree" model="ir.ui.view">
+        <field name="model">shopinvader.partner</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree" />
+        <field name="arch" type="xml">
+            <field name="sync_date" position="before">
+                <field name="first_active_date" optional="hide" />
+                <field name="last_active_date" optional="hide" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
