@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Customer Activity",
     "summary": "Log the customer's shop activity",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Camptocamp SA",
     "maintainers": ["ivantodorovich"],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
