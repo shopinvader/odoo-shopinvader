@@ -254,6 +254,76 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                 so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
             )
 
+    def test_multi_transactions_same_product1(self):
+        # try to remove more product than qty added
+        so = self._create_empty_cart(self.partner_1.id)
+        with self.cart_service(self.partner_1.id) as cart:
+            cart.sync(
+                uuid=so.uuid,
+                transactions=[
+                    {
+                        "uuid": "uuid1",
+                        "product_id": self.product_1.id,
+                        "qty": 1,
+                    },
+                    {
+                        "uuid": "uuid2",
+                        "product_id": self.product_1.id,
+                        "qty": 3,
+                    },
+                    {
+                        "uuid": "uuid3",
+                        "product_id": self.product_1.id,
+                        "qty": -1,
+                    },
+                    {
+                        "uuid": "uuid4",
+                        "product_id": self.product_1.id,
+                        "qty": -5,
+                    },
+                ],
+            )
+            line = so.order_line
+            self.assertEqual(0, len(line))
+            self.assertEqual(
+                so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
+            )
+
+    def test_multi_transactions_update_same_product(self):
+        # try to remove more product than qty  on exisigng line
+        so = self._create_empty_cart(self.partner_1.id)
+        with self.cart_service(self.partner_1.id) as cart:
+            cart.sync(
+                uuid=so.uuid,
+                transactions=[
+                    {
+                        "uuid": "uuid1",
+                        "product_id": self.product_1.id,
+                        "qty": 1,
+                    },
+                ],
+            )
+            line = so.order_line
+            self.assertEqual(1, len(line))
+            cart.sync(
+                uuid=so.uuid,
+                transactions=[
+                    {
+                        "uuid": "uuid2",
+                        "product_id": self.product_1.id,
+                        "qty": 3,
+                    },
+                    {
+                        "uuid": "uuid3",
+                        "product_id": self.product_1.id,
+                        "qty": -100,
+                    },
+                ],
+            )
+            line = so.order_line
+            self.assertEqual(0, len(line))
+            self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3")
+
     def test_multi_transactions_multi_products_all_create(self):
         so = self._create_empty_cart(self.partner_1.id)
         with self.cart_service(self.partner_1.id) as cart:

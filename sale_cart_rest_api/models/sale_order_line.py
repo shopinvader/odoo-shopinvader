@@ -36,14 +36,17 @@ class SaleOrderLine(models.Model):
         )
         if vals:
             vals.update(self.play_onchanges(vals, vals.keys()))
-        return (0, None, vals)
+            return (0, None, vals)
+        return None
 
     @api.model
     def _prepare_line_from_transactions(self, sale_order, transactions):
         delta_qty = sum(t["qty"] for t in transactions)
+        product_id = transactions[0]["product_id"]
+        product_uom = self.env["product.product"].browse(product_id).uom_id
         if (
             float_compare(
-                delta_qty, 0, precision_rounding=self.product_uom.rounding
+                delta_qty, 0, precision_rounding=product_uom.rounding
             )
             <= 0
         ):
