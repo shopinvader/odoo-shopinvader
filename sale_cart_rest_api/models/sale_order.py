@@ -37,6 +37,10 @@ class SaleOrder(models.Model):
         )
         update_cmds = []
         with self.env.norecompute():
+            # prefetch all products
+            self.env["product.product"].browse(
+                transactions_by_product_id.keys()
+            )
             # here we avoid that each on change on a line trigger all the
             # recompute methods on the SO. These methods will be triggered
             # by the orm into the 'write' process
