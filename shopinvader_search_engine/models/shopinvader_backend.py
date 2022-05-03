@@ -19,15 +19,15 @@ class ShopinvaderBackend(models.Model):
         string="Search Engine Backend",
         help="Search Engine backend configuration to use",
     )
+    s_backend_id = fields.Many2one(
+        comodel_name="shopinvader.backend",
+        inverse="_inversese_backend_id",
+        string="Shared Shop Backend",
+    )
     index_ids = fields.One2many("se.index", related="se_backend_id.index_ids")
     hide_se_settings = fields.Boolean(
         compute="_compute_hide_se_settings",
-    )
-    shared_se_backend_id = fields.Many2one(
-        comodel_name="se.backend",
-        inverse="_inversese_backend_id",
-        string="Shared Search Engine Backend",
-        help="Search Engine backend to share with other backend",
+        store=True,
     )
 
     @api.model
@@ -35,15 +35,18 @@ class ShopinvaderBackend(models.Model):
         domain = self.env["se.index"]._model_id_domain()
         return self.env["ir.model"].search(domain)
 
-    @api.depends("shared_se_backend_id")
+    @api.depends("s_backend_id")
     def _compute_hide_se_settings(self):
         for rec in self:
-            rec.hide_se_settings = rec.shared_se_backend_id
+            rec.hide_se_settings = bool(rec.s_backend_id)
 
     def _inversese_backend_id(self):
         for rec in self:
-            if rec.shared_se_backend_id:
-                rec.se_backend_id = rec.shared_se_backend_id
+            if rec.s_backend_id:
+                rec.update({
+                    "se_backend_id": rec.s_backend_id.se_backend_id,
+                    "lang_ids": rec.s_backend_id.lang_ids,
+                })
 
     def force_recompute_all_binding_index(self):
         self.sudo_tech().mapped("se_backend_id.index_ids").force_recompute_all_binding()

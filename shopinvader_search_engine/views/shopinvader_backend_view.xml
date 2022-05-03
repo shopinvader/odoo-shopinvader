@@ -7,8 +7,8 @@
         <field name="arch" type="xml">
             <group name="website_name" position="before">
                 <group>
-                    <field name="se_backend_id" attrs="{'invisible': [('hide_se_settings', '=', True)]}" />
-                    <field name="shared_se_backend_id" />
+                    <field name="s_backend_id" domain="[('id', '!=', id)]" />
+                    <field name="se_backend_id" attrs="{'readonly': [('hide_se_settings', '=', True)]}"/>
                 </group>
             </group>
             <group name="website_name" position="after">
@@ -75,16 +75,27 @@
                     />
                 </group>
             </group>
-            <xpath expr="//button[@name='%(shopinvader.shopinvader_variant_binding_wizard_act_window)d']" position="attributes">
+            <xpath
+                expr="//button[@name='%(shopinvader.shopinvader_variant_binding_wizard_act_window)d']"
+                position="attributes"
+            >
                 <attribute
                     name="attrs"
                 >{'invisible': [('hide_se_settings', '=', True)]}</attribute>
             </xpath>
-            <xpath expr="//button[@name='%(shopinvader.shopinvader_category_binding_wizard_act_window)d']" position="attributes">
+            <xpath
+                expr="//button[@name='%(shopinvader.shopinvader_category_binding_wizard_act_window)d']"
+                position="attributes"
+            >
                 <attribute
                     name="attrs"
                 >{'invisible': [('hide_se_settings', '=', True)]}</attribute>
             </xpath>
+            <field name="lang_ids" position="attributes" >
+                <attribute
+                    name="attrs"
+                >{'readonly': [('hide_se_settings', '=', True)]}</attribute>
+            </field>
         </field>
     </record>
 
