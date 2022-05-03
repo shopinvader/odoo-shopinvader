@@ -55,24 +55,25 @@ class ResPartner(models.Model):
         get_param = self.env["ir.config_parameter"].sudo().get_param
         return str2bool(get_param("shopinvader.no_partner_duplicate"))
 
-    @api.constrains("email")
+    @api.constrains("email", "shopinvader_bind_ids")
     def _check_unique_email(self):
         if not self._is_partner_duplicate_prevented():
             return True
-        self.env["res.partner"].flush(["email"])
+        self.env["res.partner"].flush(["email", "shopinvader_bind_ids"])
         self.env.cr.execute(
             """
             SELECT
                 email
             FROM (
                 SELECT
-                    id,
-                    email,
-                    ROW_NUMBER() OVER (PARTITION BY email) AS Row
+                    rp.id,
+                    rp.email,
+                    ROW_NUMBER() OVER (PARTITION BY rp.email) AS Row
                 FROM
-                    res_partner
-                WHERE email is not null
-                    and active = True
+                    res_partner rp
+                WHERE rp.email is not null
+                    and rp.active = True
+                    and EXISTS (SELECT FROM shopinvader_partner sp WHERE sp.record_id = rp.id)
                 ) dups
             WHERE dups.Row > 1;
         """
