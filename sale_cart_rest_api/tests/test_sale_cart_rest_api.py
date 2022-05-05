@@ -153,7 +153,8 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
             self.assertEqual("uuid1", so.applied_transaction_uuids)
 
     def test_sync_authenticated_wrong_uuid_one_transactions_cart_exists(self):
-        # wrong uuid but at least one transaction and cart exists-> cart updated
+        # wrong uuid but at least one transaction and cart exists-> return
+        # the existing cart and ignore transactions
         so = self._create_empty_cart(self.partner_1.id)
         with self.cart_service(self.partner_1.id) as cart:
             info = cart.sync(
@@ -167,9 +168,9 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                 ],
             )
             self.assertTrue(info)
-            self.assertEqual(1, len(info["lines"]))
+            self.assertEqual(0, len(info["lines"]))
             self.assertEqual(so.id, info["id"])
-            self.assertEqual("uuid1", so.applied_transaction_uuids)
+            self.assertFalse(so.applied_transaction_uuids)
 
     def test_transactions(self):
         so = self._create_empty_cart(self.partner_1.id)

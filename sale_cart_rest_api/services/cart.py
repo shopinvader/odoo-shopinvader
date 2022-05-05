@@ -74,7 +74,11 @@ class CartService(Component):
         cart = self._find_open_cart(uuid)
         if not cart and transactions:
             cart = self._create_empty_cart()
-        cart._apply_transactions(transactions)
+        if not uuid or cart.uuid == uuid:
+            # only apply transaction to a cart if:
+            # * no uuid -> new cart
+            # * uuid = cart.uuid: Existing cart and transaction for this cart
+            cart._apply_transactions(transactions)
         return self._response_for_cart(cart)
 
     # #######
