@@ -70,7 +70,7 @@ class CartService(Component):
     )
     def sync(self, uuid=None, transactions=None):
         """If no cart is found and no transactions is provided into the
-        request the response is an empty document."""
+        request the response is an empty json object."""
         cart = self._find_open_cart(uuid)
         if not cart and transactions:
             cart = self._create_empty_cart()
