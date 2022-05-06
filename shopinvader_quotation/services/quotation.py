@@ -69,3 +69,8 @@ class QuotationService(Component):
 
     def _confirm(self, order):
         return order.action_confirm()
+
+    def _convert_one_sale(self, sale):
+        res = super()._convert_one_sale(sale)
+        res["validity_date"] = sale.validity_date
+        return res
