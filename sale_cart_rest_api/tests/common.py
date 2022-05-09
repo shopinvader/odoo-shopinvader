@@ -31,7 +31,6 @@ class TestSaleCartRestApiCase(SavepointCase, ComponentMixin):
             }
         )
         cls.partner_1 = cls.env["res.partner"].create({"name": "partner_1"})
-
         cls.partner_2 = cls.env["res.partner"].create({"name": "partner_2"})
         cls.public_partner = cls.env.ref("base.public_user").partner_id
 
