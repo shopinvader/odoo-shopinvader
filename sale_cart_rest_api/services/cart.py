@@ -267,8 +267,6 @@ class CartService(Component):
             "uuid": str(uuid.uuid4()),
             "typology": "cart",
             "partner_id": partner.id,
-            "partner_shipping_id": partner.id,
-            "partner_invoice_id": partner.id,
         }
         vals.update(self.env["sale.order"].play_onchanges(vals, vals.keys()))
         if not vals.get("pricelist_id"):

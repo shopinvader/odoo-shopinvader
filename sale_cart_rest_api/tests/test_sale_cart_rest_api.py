@@ -424,3 +424,33 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                 ),
             )
             self.assertTrue(info)
+
+    def test_cart_first_sync_addresses(self):
+        partner_1_delivery = self.env["res.partner"].create(
+            {
+                "name": "partner 1 delivery",
+                "type": "delivery",
+                "parent_id": self.partner_1.id,
+            }
+        )
+        partner_1_invoice = self.env["res.partner"].create(
+            {
+                "name": "partner 1 invoice",
+                "type": "invoice",
+                "parent_id": self.partner_1.id,
+            }
+        )
+        with self.cart_service(self.partner_1.id) as cart:
+            info = cart.sync(
+                uuid="0987654321234567890",
+                transactions=[
+                    {
+                        "uuid": "uuid2",
+                        "product_id": self.product_2.id,
+                        "qty": 3,
+                    }
+                ],
+            )
+            so = self.env["sale.order"].browse(info["id"])
+        self.assertEqual(partner_1_delivery, so.partner_shipping_id)
+        self.assertEqual(partner_1_invoice, so.partner_invoice_id)
