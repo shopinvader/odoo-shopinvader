@@ -52,7 +52,6 @@ repos:
     rev: "22.3.0"
     hooks:
       - id: black
-        additional_dependencies: ["click<8.1.0"]
         args: [--line-length=88]
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.1.2
@@ -132,7 +131,7 @@ repos:
           - --exit-zero
         verbose: true
         additional_dependencies: &pylint_deps
-          - pylint-odoo==5.0.5
+          - pylint-odoo==6.0.0
       - id: pylint
         name: pylint with mandatory checks
         args:
