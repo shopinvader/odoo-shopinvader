@@ -13,7 +13,10 @@ class InvoiceService(Component):
         :return: dict/json
         """
         invoice = self._get(_id)
-        result = {"data": self._to_json(invoice)[0]}
+        result = {
+            "data": self._to_json(invoice)[0],
+            "set_session": {"invoice_id": invoice.id},
+        }
         return result
 
     def search(self, **params):
@@ -43,7 +46,9 @@ class InvoiceService(Component):
         :return: dict
         """
         invoice_schema = self._get_return_invoice_schema()
-        schema = {"data": {"type": "dict", "schema": invoice_schema}}
+        schema = {
+            "set_session": {"type": "dict"},
+            "data": {"type": "dict", "schema": invoice_schema}}
         return schema
 
     def _validator_return_search(self):

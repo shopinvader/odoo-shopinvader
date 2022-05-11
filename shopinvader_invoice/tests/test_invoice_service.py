@@ -21,7 +21,9 @@ class TestInvoiceServiceAnonymous(CommonInvoiceCase):
         # Check first without invoice related to the anonymous user
         result = self.service_guest.dispatch("search")
         data = result.get("data", [])
+        invoice_id = result.get("set_session", {}).get("invoice_id")
         self.assertFalse(data)
+        self.assertFalse(invoice_id)
         # Then create a invoice related to the anonymous user
         invoice = self._create_invoice(
             partner=self.backend.anonymous_partner_id, validate=True
@@ -160,6 +162,11 @@ class TestInvoiceService(CommonInvoiceCase):
         self.assertEqual(invoice4.partner_id, self.service.partner)
         result = self.service.dispatch("get", invoice1.id)
         data = result.get("data", [])
+        invoice_id = result.get("set_session", {}).get("invoice_id")
+        self.assertEqual(
+            invoice_id,
+            invoice1.id,
+        )
         self._check_data_content([data], invoice1)
         return
 
