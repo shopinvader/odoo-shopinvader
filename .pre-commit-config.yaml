@@ -123,7 +123,7 @@ repos:
         name: flake8
         additional_dependencies: ["flake8-bugbear==20.1.4"]
   - repo: https://github.com/PyCQA/pylint
-    rev: pylint-2.5.3
+    rev: pylint-2.7.4
     hooks:
       - id: pylint
         name: pylint with optional checks
@@ -132,7 +132,7 @@ repos:
           - --exit-zero
         verbose: true
         additional_dependencies: &pylint_deps
-          - pylint-odoo==3.5.0
+          - pylint-odoo==5.0.5
       - id: pylint
         name: pylint with mandatory checks
         args:
