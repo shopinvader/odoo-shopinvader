@@ -52,6 +52,7 @@ repos:
     rev: "20.8b1"
     hooks:
       - id: black
+        additional_dependencies: ["click<8.1.0"]
         args: [--line-length=88]
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v2.1.2
