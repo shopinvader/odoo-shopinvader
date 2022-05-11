@@ -4,7 +4,7 @@
 {
     "name": "Shopinvader Customer Validation",
     "summary": """Provide configuration and machinery to validate customers.""",
-    "version": "14.0.1.2.2",
+    "version": "14.0.1.2.3",
     "license": "AGPL-3",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
@@ -23,4 +23,5 @@
         "data/shopinvader_notification.xml",
     ],
     "installable": True,
+    "pre_init_hook": "pre_init_hook",
 }
