@@ -31,7 +31,7 @@ class LocoCommonCase(CommonCase):
 @contextmanager
 def mock_site_api(base_url, site):
     with requests_mock.mock() as m:
-        m.post(base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
+        m.post(base_url + "/tokens.json", json={"token": "744cfcfb3cd3"})
         m.get(base_url + "/sites", json=[site])
         yield m.put(
             base_url + "/sites/%s" % site["_id"],

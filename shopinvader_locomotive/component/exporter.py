@@ -13,7 +13,7 @@ class LocomotiveExporter(Component):
     _usage = "record.exporter"
 
     def _update_data(self, map_record, fields=None, **kwargs):
-        """ Get the data to pass to :py:meth:`_update` """
+        """Get the data to pass to :py:meth:`_update`"""
         # As we push a json we always need to push all info
         return self._create_data(map_record, fields=None, **kwargs)
 
