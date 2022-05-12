@@ -15,6 +15,6 @@
         "shopinvader_sale_cart",
         "shopinvader_delivery_carrier",
     ],
-    "data": [],
+    "data": ["views/shopinvader_backend.xml"],
     "demo": [],
 }

@@ -86,3 +86,17 @@ class TestShopinvaderSaleCartDelivery(CommonCase):
         self.so.uuid = "uuid1"
         info = self._carrier_service.search(cart_uuid=self.so.uuid)
         self.assertTrue(info)
+
+    def test_charge_fee(self):
+        self.backend.charge_delivery_fee_on_order = True
+        self._cart_service.dispatch(
+            "set_delivery_method", params={"method_id": self.poste_carrier.id}
+        )
+        self.assertTrue(self.so.order_line.filtered("is_delivery"))
+
+    def test_not_charge_fee(self):
+        self.backend.charge_delivery_fee_on_order = False
+        self._cart_service.dispatch(
+            "set_delivery_method", params={"method_id": self.poste_carrier.id}
+        )
+        self.assertFalse(self.so.order_line.filtered("is_delivery"))

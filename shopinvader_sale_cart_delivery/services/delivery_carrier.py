@@ -38,7 +38,7 @@ class DeliveryCarrierService(Component):
                     delivery_force_zip_code=zip_code,
                 )
             return cart._get_available_carrier()
-        return super(DeliveryCarrierService, self)._search(params)
+        return super(DeliveryCarrierService, self)._search(**params)
 
     def _get_cart_from_uuid(self, uuid):
         # TO BE REFACTORED
