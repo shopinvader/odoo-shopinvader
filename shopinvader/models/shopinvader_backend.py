@@ -35,7 +35,6 @@ class ShopinvaderBackend(models.Model):
         "shopinvader.notification",
         "backend_id",
         "Notification",
-        default=lambda self: self.env["shopinvader.notification"].search([]),
     )
     nbr_product = fields.Integer(
         compute="_compute_nbr_content", string="Number of bound products"
