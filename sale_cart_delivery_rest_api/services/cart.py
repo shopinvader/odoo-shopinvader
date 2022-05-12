@@ -97,6 +97,13 @@ class CartService(Component):
     # implementation
     # ##############
 
+    def _must_charge_delivery_fee_on_order(self):
+        """Return true if the delivery fee must be set on the cart at
+        the same time as the method or false if delivery fee are applied on
+        delivery.
+        """
+        return True
+
     def _set_delivery_method(self, cart, params):
         method_id = params["method_id"]
         if not cart._is_delivery_method_available(method_id):
@@ -104,7 +111,8 @@ class CartService(Component):
                 _("This delivery method is not available for you order")
             )
         cart.write({"carrier_id": method_id})
-        cart.delivery_set()
+        if self._must_charge_delivery_fee_on_order():
+            cart.delivery_set()
 
     def _is_line(self, line):
         res = super(CartService, self)._is_line(line)
