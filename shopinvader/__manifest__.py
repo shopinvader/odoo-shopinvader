@@ -15,7 +15,7 @@
     "external_dependencies": {"python": ["cerberus", "unidecode"], "bin": []},
     "depends": [
         "base_rest",
-        "base_jsonify",
+        "jsonifier",
         "base_sparse_field_list_support",
         "base_url",
         "base_vat",
