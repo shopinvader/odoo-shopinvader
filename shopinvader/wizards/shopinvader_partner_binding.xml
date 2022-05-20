@@ -50,7 +50,7 @@
         <field name="view_id" ref="shopinvader_partner_binding_form_view" />
         <field
             name="groups_id"
-            eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"
+            eval="[(4, ref('shopinvader.group_shopinvader_partner_binding'))]"
         />
     </record>
 
