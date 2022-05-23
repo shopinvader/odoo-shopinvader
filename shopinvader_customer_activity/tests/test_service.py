@@ -32,4 +32,6 @@ class TestCartService(CommonConnectedCartCase):
         with freeze_time(after5m):
             self.service.dispatch("search")
             self.assertEqual(self.shopinvader_partner.first_active_date, now)
-            self.assertEqual(self.shopinvader_partner.last_active_date, after5m)
+            self.assertEqual(
+                self.shopinvader_partner.last_active_date, after5m
+            )

@@ -27,7 +27,9 @@ class ShopinvaderPartner(models.Model):
         self.ensure_one()
         now = fields.Datetime.now()
         throttle = timedelta(seconds=LOG_ACTIVITY_THROTTLE)
-        if not self.last_active_date or self.last_active_date < (now - throttle):
+        if not self.last_active_date or self.last_active_date < (
+            now - throttle
+        ):
             self.last_active_date = now
             if not self.first_active_date:
                 self.first_active_date = self.last_active_date

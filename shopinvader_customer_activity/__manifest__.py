@@ -5,15 +5,12 @@
 {
     "name": "Shopinvader Customer Activity",
     "summary": "Log the customer's shop activity",
-    "version": "14.0.1.0.1",
+    "version": "13.0.1.0.0",
     "author": "Camptocamp SA",
     "maintainers": ["ivantodorovich"],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "category": "Others",
     "depends": ["shopinvader"],
-    "data": [
-        "views/res_partner.xml",
-        "views/shopinvader_partner.xml",
-    ],
+    "data": ["views/res_partner.xml", "views/shopinvader_partner.xml"],
 }
