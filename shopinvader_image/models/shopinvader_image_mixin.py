@@ -81,7 +81,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
         # NOTE: this is not perfect in terms of perf because it will cause
         # calls to `get_or_create_thumbnail` when no image data has changed
         # but it's better than having broken URLs.
-        public_urls = tuple(images.mapped("url"))
+        public_urls = tuple([self._get_image_url(x) for x in images])
         resize_scales = tuple(
             self._resize_scales().mapped(lambda r: (r.key, r.size_x, r.size_y))
         )
@@ -122,7 +122,11 @@ class ShopinvaderImageMixin(models.AbstractModel):
         :return: dict
         """
         self.ensure_one()
-        res = {"src": thumbnail.url, "alt": self.name}
+        res = {"src": self._get_image_url(thumbnail), "alt": self.name}
         if "tag_id" in image_relation._fields:
             res["tag"] = image_relation.tag_id.name or ""
         return res
+
+    def _get_image_url(self, image):
+        fname = "url" if self.backend_id.image_data_include_cdn_url else "url_path"
+        return image[fname]

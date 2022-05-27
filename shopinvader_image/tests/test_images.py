@@ -17,15 +17,47 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
     # TODO: test permission explicitely if needed
 
     def test_basic_images_compute(self):
+        storage_backend = self.shopinvader_variant.image_ids.image_id.backend_id
+        storage_backend.write(
+            {
+                "served_by": "external",
+                "base_url": "https://foo.com",
+            }
+        )
         images = self.shopinvader_variant.images
         self.assertEqual(len(images), 2)
         for image in images:
             for scale in self.backend.shopinvader_variant_resize_ids:
                 img = image[scale.key]
                 self.assertEqual(img["alt"], self.shopinvader_variant.name)
-                self.assertIn(
-                    "customizable-desk-config_{0.size_x}_{0.size_y}".format(scale),
-                    img["src"],
+                self.assertTrue(
+                    img["src"].startswith(
+                        "https://foo.com/customizable-desk-config_{0.size_x}_{0.size_y}".format(
+                            scale
+                        )
+                    )
+                )
+                self.assertIn("tag", img)
+
+    def test_basic_images_compute_no_cdn_url(self):
+        storage_backend = self.shopinvader_variant.image_ids.image_id.backend_id
+        storage_backend.write(
+            {
+                "served_by": "external",
+                "base_url": "https://foo.com",
+            }
+        )
+        self.backend.image_data_include_cdn_url = False
+        images = self.shopinvader_variant.images
+        self.assertEqual(len(images), 2)
+        for image in images:
+            for scale in self.backend.shopinvader_variant_resize_ids:
+                img = image[scale.key]
+                self.assertEqual(img["alt"], self.shopinvader_variant.name)
+                self.assertTrue(
+                    img["src"].startswith(
+                        "/customizable-desk-config_{0.size_x}_{0.size_y}".format(scale)
+                    )
                 )
                 self.assertIn("tag", img)
 
