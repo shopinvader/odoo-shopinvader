@@ -96,7 +96,9 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
         my_partner = self._create_auto()
         self._check_url_key(my_partner, "partner-name")
         manual_url_key = "manual-url key"
-        my_partner.write({"url_builder": "manual", "manual_url_key": manual_url_key})
+        my_partner.write(
+            {"url_builder": "manual", "manual_url_key": manual_url_key}
+        )
         url_keys = set(my_partner.mapped("url_url_ids.url_key"))
         self.assertSetEqual(url_keys, {manual_url_key, self.auto_key})
         # if we reset the auto key, no new url.url should be created
