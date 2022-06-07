@@ -12,6 +12,19 @@ from odoo.addons.datamodel import fields
 from odoo.addons.datamodel.core import Datamodel
 
 
+class HelpdeskTicketSaleInput(Datamodel):
+    _name = "helpdesk.ticket.sale.input"
+
+    id = fields.Integer(required=True, allow_none=False)
+
+
+class HelpdeskTicketSaleOutput(Datamodel):
+    _name = "helpdesk.ticket.sale.output"
+
+    id = fields.Integer(required=True, allow_none=False)
+    name = fields.String(required=True, allow_none=False)
+
+
 class HelpdeskTicketSaleLineInput(Datamodel):
     _name = "helpdesk.ticket.sale.line.input"
 
@@ -27,10 +40,22 @@ class HelpdeskTicketSaleLineOutput(Datamodel):
     product_name = fields.String()
 
 
+class HelpdeskTicketInput(Datamodel):
+    _name = "helpdesk.ticket.input"
+    _inherit = "helpdesk.ticket.input"
+
+    sale = fields.NestedModel(
+        "helpdesk.ticket.sale.input", required=False, allow_none=False
+    )
+
+
 class HelpdeskTicketOutput(Datamodel):
     _name = "helpdesk.ticket.output"
     _inherit = "helpdesk.ticket.output"
 
+    sale = fields.NestedModel(
+        "helpdesk.ticket.sale.output", required=False, allow_none=False
+    )
     sale_lines = fields.NestedModel(
         "helpdesk.ticket.sale.line.output", required=False, allow_none=False, many=True
     )
@@ -47,15 +72,22 @@ class TicketService(Component):
         if mode == "create":
             params["shopinvader_backend_id"] = self.shopinvader_backend.id
             params["channel_id"] = self.shopinvader_backend.helpdesk_channel_id.id
-        return super()._prepare_params(params, mode=mode)
+        params = super()._prepare_params(params, mode=mode)
+        for key in ["sale"]:
+            if key in params:
+                val = params.pop(key)
+                if val.get("id"):
+                    params["%s_id" % key] = val["id"]
+        return params
 
     def _json_parser(self):
         res = super()._json_parser()
         res += [
+            ("sale_id:sale", ["id", "name"]),
             (
                 "sale_line_ids:sale_lines",
                 [("sale_line_id", lambda rec, fname: rec.id), "product_name", "qty"],
-            )
+            ),
         ]
         return res
 
