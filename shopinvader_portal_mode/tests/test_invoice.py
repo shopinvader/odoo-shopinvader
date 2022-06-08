@@ -51,7 +51,7 @@ class TestInvoiceService(PortalModeCommonCase):
         register_payments.create_payments()
 
     def test_invoice_domain_default(self):
-        service = self._get_service("invoice")
+        service = self._get_service("invoices")
         domain = service._get_base_search_domain()
         invoices = self.env["account.move"].search(domain)
         self.assertEqual(
@@ -60,7 +60,7 @@ class TestInvoiceService(PortalModeCommonCase):
 
     def test_invoice_domain_portal_mode(self):
         self.backend.sale_order_portal_mode = True
-        service = self._get_service("invoice")
+        service = self._get_service("invoices")
         domain = service._get_base_search_domain()
         invoices = self.env["account.move"].search(domain)
         self.assertEqual(sorted(invoices.ids), sorted(self.all_invoices.ids))
