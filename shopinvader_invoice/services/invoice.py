@@ -70,7 +70,7 @@ class InvoiceService(Component):
         invoice_schema = {
             "invoice_id": {"type": "integer"},
             "number": {"type": "string"},
-            "pay_ref": {"type": "string"},
+            "pay_ref": {"type": "string", "nullable": True},
             "date_invoice": {"type": "string"},
             "date_due": {"type": "string", "nullable": True},
             "amount_total": {"type": "float"},
@@ -83,7 +83,7 @@ class InvoiceService(Component):
             "state": {"type": "string"},
             "type_label": {"type": "string"},
             "state_label": {"type": "string"},
-            "origin": {"type": "string"},
+            "origin": {"type": "string", "nullable": True},
             "currency": {"type": "string"},
         }
         return invoice_schema
