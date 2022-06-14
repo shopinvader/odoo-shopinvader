@@ -117,20 +117,20 @@
                             <group name="sale_customer" string="Customer configuration">
                                 <field name="customer_default_role" />
                                 <field name="anonymous_partner_id" />
-                                <group name="notify" string="Notification">
-                                    <field name="salesman_notify_create" />
-                                    <field name="salesman_notify_update" />
-                                </group>
-                                <group name="related" string="Related records">
-                                    <field
-                                        name="partner_title_ids"
-                                        widget="many2many_tags"
-                                    />
-                                    <field
-                                        name="partner_industry_ids"
-                                        widget="many2many_tags"
-                                    />
-                                </group>
+                            </group>
+                            <group name="notify" string="Internal Notification">
+                                <field name="salesman_notify_create" />
+                                <field name="salesman_notify_update" />
+                            </group>
+                            <group name="related" string="Related records">
+                                <field
+                                    name="partner_title_ids"
+                                    widget="many2many_tags"
+                                />
+                                <field
+                                    name="partner_industry_ids"
+                                    widget="many2many_tags"
+                                />
                             </group>
                         </page>
                         <page name="products" string="Products">
