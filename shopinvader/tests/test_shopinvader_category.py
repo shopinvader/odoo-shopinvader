@@ -62,3 +62,11 @@ class TestShopinvaderCategory(TestShopinvaderCategoryBase):
         )
         self.binding_l2.active = False
         self.assertEqual(self.binding_l3.url_key, "category-level-3")
+
+    def test_redirect_category_url(self):
+        self.assertEqual(self.binding_l1.url_key, "category-level-1")
+        self.binding_l1.record_id.name = "category level 1 renamed"
+        self.assertEqual(self.binding_l1.url_key, "category-level-1-renamed")
+        self.assertEqual(
+            self.binding_l1.redirect_url_key, ["category-level-1"]
+        )

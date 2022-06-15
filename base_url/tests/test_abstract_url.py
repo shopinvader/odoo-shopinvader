@@ -51,7 +51,6 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
         )
 
     def _check_url_key(self, partner_addressable, key_name):
-        self.assertFalse(partner_addressable.is_urls_sync_required)
         self.assertEqual(partner_addressable.url_key, key_name)
         self.assertEqual(len(partner_addressable.url_url_ids), 1)
         url_url = partner_addressable.url_url_ids
@@ -100,20 +99,28 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
         my_partner.write(
             {"url_builder": "manual", "manual_url_key": manual_url_key}
         )
-        my_partner.refresh()
         url_keys = set(my_partner.mapped("url_url_ids.url_key"))
         self.assertSetEqual(url_keys, {manual_url_key, self.auto_key})
         # if we reset the auto key, no new url.url should be created
         my_partner.write({"url_builder": "auto"})
-        my_partner.refresh()
         self.assertEqual(2, len(my_partner.url_url_ids))
         url_keys = set(my_partner.mapped("url_url_ids.url_key"))
         self.assertSetEqual(url_keys, {manual_url_key, self.auto_key})
 
     def test_write_launching_automatic_url_key(self):
         my_partner = self._create_auto()
+        # call flush to force to apply the recompute
+        my_partner.flush()
         my_partner.name = "my new name"
-        my_partner.refresh()
+        self.assertEqual(2, len(my_partner.url_url_ids))
+        url_keys = set(my_partner.mapped("url_url_ids.url_key"))
+        self.assertSetEqual(url_keys, {"my-new-name", self.auto_key})
+
+    def test_write_on_related_record_launching_automatic_url_key(self):
+        my_partner = self._create_auto()
+        # call flush to force to apply the recompute
+        my_partner.flush()
+        my_partner.record_id.name = "my new name"
         self.assertEqual(2, len(my_partner.url_url_ids))
         url_keys = set(my_partner.mapped("url_url_ids.url_key"))
         self.assertSetEqual(url_keys, {"my-new-name", self.auto_key})
@@ -125,4 +132,6 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
             self.ResPartnerAddressable.__class__, "_redirect_existing_url"
         ) as mocked_redirect:
             my_partner.active = False
+            # call flush to force to apply the recompute
+            my_partner.flush()
             mocked_redirect.assert_called_once()

@@ -146,6 +146,10 @@ class CommonCase(SavepointCase, CommonMixin):
             )
         )
         CommonMixin._setup_backend(cls)
+        # TODO FIXME
+        # It seem that setUpComponent / setUpRegistry loose stuff from
+        # the cache so we do an explicit flush here to avoid losing data
+        cls.env["base"].flush()
         cls.setUpComponent()
         cls.setUpRegistry()
 
