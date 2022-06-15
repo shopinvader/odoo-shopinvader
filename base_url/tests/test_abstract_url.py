@@ -126,3 +126,13 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
         ) as mocked_redirect:
             my_partner.active = False
             mocked_redirect.assert_called_once()
+
+    def test_create_manual_url_with_slash(self):
+        value = self._get_default_partner_value()
+        manual_url_key = "my/slash/url/key"
+        value.update(
+            {"url_builder": "manual", "manual_url_key": manual_url_key}
+        )
+        my_partner = self.ResPartnerAddressable.create(value)
+        self.assertTrue(my_partner)
+        self._check_url_key(my_partner, manual_url_key)
