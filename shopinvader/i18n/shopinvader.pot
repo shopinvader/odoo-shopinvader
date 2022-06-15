@@ -1767,13 +1767,6 @@ msgid "Is Shopinvader Active"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__is_urls_sync_required
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__is_urls_sync_required
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__is_urls_sync_required
-msgid "Is Urls Sync Required"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__is_company
 msgid "Is a Company"
 msgstr ""
