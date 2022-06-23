@@ -39,7 +39,11 @@ class ProductProduct(models.Model):
         "(at least one) shopinvader backend",
     )
 
-    @api.depends("shopinvader_bind_ids", "shopinvader_bind_ids.backend_id")
+    @api.depends(
+        "shopinvader_bind_ids",
+        "shopinvader_bind_ids.backend_id",
+        "shopinvader_bind_ids.active",
+    )
     def _compute_is_shopinvader_binded(self):
         """
         Compute function to determine if the product is used in at least
@@ -47,7 +51,12 @@ class ProductProduct(models.Model):
         :return:
         """
         for rec in self:
-            binded = bool(rec.shopinvader_bind_ids.mapped("backend_id"))
+            backends = (
+                self.env["shopinvader.variant"]
+                .search([("record_id", "=", rec.id), ("active", "=", True)])
+                .mapped("backend_id")
+            )
+            binded = bool(backends)
             rec.is_shopinvader_binded = binded
 
     def _inverse_active(self):
