@@ -88,3 +88,21 @@ class TestCustomerService(CommonValidationToken):
                 data.update({"email": "new-customer@customer.example.com"})
                 self.service.dispatch("create", params=data)
             self.assertIn("Invalid/Expired token", em.exception.args[0])
+
+    def test_reuse_token_not_consumed(self):
+        """
+        Ensure a new token is not re-generated if the previous is not expired
+        :return:
+        """
+        shop_token = self.ShopEmailToken._generate_token(
+            self.backend, "arobase@email.be", "shopinvader.customer.service"
+        )
+        new_shop_token = self.ShopEmailToken._generate_token(
+            self.backend, "arobase@email.be", "shopinvader.customer.service"
+        )
+        self.assertEqual(shop_token, new_shop_token)
+        shop_token._consume()
+        new_shop_token_bis = self.ShopEmailToken._generate_token(
+            self.backend, "arobase@email.be", "shopinvader.customer.service"
+        )
+        self.assertNotEqual(shop_token, new_shop_token_bis)
