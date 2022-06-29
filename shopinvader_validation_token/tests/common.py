@@ -83,6 +83,18 @@ class CommonValidationToken(CommonCase):
         self.assertFalse(shopinvader_token.active)
         return True
 
+    def _ensure_token_not_consumed(self, token):
+        """
+
+        :param token: str
+        :return: bool
+        """
+        shopinvader_token = self.ShopEmailToken.search(
+            [("token", "=", token), ("active", "=", True)], limit=1
+        )
+        self.assertTrue(shopinvader_token.active)
+        return True
+
     @contextmanager
     def _patch_get_new_token(self, forced_token):
         def _get_new_token(self_line, backend, email):

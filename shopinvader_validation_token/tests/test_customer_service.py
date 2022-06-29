@@ -89,6 +89,27 @@ class TestCustomerService(CommonValidationToken):
                 self.service.dispatch("create", params=data)
             self.assertIn("Invalid/Expired token", em.exception.args[0])
 
+    def test_validate_token(self):
+        """
+        Ensure the validate_token doesn't consume it
+        :return:
+        """
+        self._enable_security_token()
+        token = str(uuid4())
+        data = {
+            "token": "abcdef",
+            "email": "new@customer.example.com",
+        }
+        with self._patch_get_new_token(forced_token=token):
+            self.service.dispatch("security_code_enabled", params=data.copy())
+            with self.assertRaises(exceptions.UserError) as em:
+                data = data.copy()
+                self.service.dispatch("validate_token", params=data)
+            self.assertIn("Invalid/Expired token", em.exception.args[0])
+            data.update({"token": token})
+            self.service.dispatch("validate_token", params=data.copy())
+            self._ensure_token_not_consumed(token)
+
     def test_reuse_token_not_consumed(self):
         """
         Ensure a new token is not re-generated if the previous is not expired

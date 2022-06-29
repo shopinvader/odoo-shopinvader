@@ -163,7 +163,7 @@ class ShopinvaderSecurityToken(models.Model):
         return shopinvader_token
 
     @api.model
-    def _check_token_is_valid(self, email, token, backend, service_name):
+    def _check_token_is_valid(self, email, token, backend, service_name, consume=True):
         """
         Check if the given token on the current shopinvader partner is valid
         :param email: str
@@ -186,7 +186,8 @@ class ShopinvaderSecurityToken(models.Model):
             ]
             shopinvader_token = self.search(domain, limit=1)
             if shopinvader_token:
-                shopinvader_token._consume()
+                if consume:
+                    shopinvader_token._consume()
                 valid = True
         else:
             valid = True
