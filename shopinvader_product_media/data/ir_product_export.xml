@@ -7,6 +7,12 @@
     <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
 </record>
 
+<record id="ir_exp_shopinvader_variant_media_description" model="ir.exports.line">
+    <field name="name">variant_media_ids/description</field>
+    <field name="target">variant_media_ids:media/description</field>
+    <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+</record>
+
 <record id="ir_exp_shopinvader_variant_media_url" model="ir.exports.line">
     <field name="name">variant_media_ids/url</field>
     <field name="target">variant_media_ids:media/url</field>
