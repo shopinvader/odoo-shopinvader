@@ -75,8 +75,8 @@ class ShopinvaderProduct(models.Model):
         :return: str
         """
         self.ensure_one()
-        return u"{} | {}".format(
-            self.name or u"", self.backend_id.website_public_name or u""
+        return "{} | {}".format(
+            self.name or "", self.backend_id.website_public_name or ""
         )
 
     def _get_categories(self):

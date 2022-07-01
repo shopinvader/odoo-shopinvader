@@ -41,9 +41,7 @@ class TestProductProduct(StockCommonCase, UtilsMixin):
         shopinvader_product = self.product.shopinvader_bind_ids
         self._refresh_json_data(shopinvader_product, backend=self.shopinvader_backend)
         shopinvader_product.sync_state = "to_update"
-        self.assertEqual(
-            shopinvader_product.data[key_stock], {u"global": {u"qty": 0.0}}
-        )
+        self.assertEqual(shopinvader_product.data[key_stock], {"global": {"qty": 0.0}})
 
         jobs = self.job_counter()
         self._add_stock_to_product(self.product, self.loc_1, 100)
@@ -55,14 +53,14 @@ class TestProductProduct(StockCommonCase, UtilsMixin):
             self.perform_jobs(jobs)
 
         self.assertEqual(
-            shopinvader_product.data[key_stock], {u"global": {u"qty": 100.0}}
+            shopinvader_product.data[key_stock], {"global": {"qty": 100.0}}
         )
         if sync_immediatly:
             self.assertEqual(len(calls), 1)
             call = calls[0]
             self.assertEqual(call["method"], "index")
             self.assertEqual(len(call["args"]), 1)
-            self.assertEqual(call["args"][0][key_stock], {u"global": {u"qty": 100.0}})
+            self.assertEqual(call["args"][0][key_stock], {"global": {"qty": 100.0}})
             self.assertEqual(shopinvader_product.sync_state, "done")
         else:
             self.assertEqual(len(calls), 0)

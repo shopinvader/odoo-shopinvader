@@ -162,4 +162,4 @@ class AddressTestCase(object):
 
 
 class AddressCase(CommonAddressCase, AddressTestCase):
-    """ Test address"""
+    """Test address"""
