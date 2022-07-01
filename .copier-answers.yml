@@ -8,3 +8,6 @@ prettify_xml: false
 python_line_length: 79
 rebel_module_groups: []
 repo_slug: odoo-shopinvader
+repo_website: https://github.com/shopinvader/odoo-shopinvader
+travis_apt_packages: []
+travis_apt_sources: []
