@@ -7,7 +7,6 @@
     "summary": "This module is used to choose a stock field during the"
     "export (by backend)",
     "version": "14.0.1.0.2",
-    "development_status": "Production/Stable",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,ACSONE SA/NV,Camptocamp",

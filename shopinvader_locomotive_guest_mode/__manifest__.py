@@ -7,7 +7,6 @@
         Shopinvader guest mode for locomotive""",
     "version": "14.0.1.0.2",
     "license": "AGPL-3",
-    "development_status": "Production/Stable",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader_guest_mode", "shopinvader_locomotive"],

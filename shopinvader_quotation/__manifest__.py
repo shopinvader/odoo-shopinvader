@@ -8,7 +8,6 @@
     "summary": "Shopinvader Quotation",
     "version": "14.0.2.3.0",
     "category": "e-commerce",
-    "development_status": "Production/Stable",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",

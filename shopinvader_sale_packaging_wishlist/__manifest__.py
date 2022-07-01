@@ -8,6 +8,7 @@
     "summary": """Add packaging information to wishlists""",
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
+    "development_status": "Alpha",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
