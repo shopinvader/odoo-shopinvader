@@ -22,4 +22,3 @@ repo_slug: odoo-shopinvader
 repo_website: https://github.com/shopinvader/odoo-shopinvader
 travis_apt_packages: []
 travis_apt_sources: []
-

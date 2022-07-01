@@ -49,8 +49,6 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-    env:
-      PIP_EXTRA_INDEX_URL: "https://wheelhouse.shopinvader.com/simple/"
     steps:
       - uses: actions/checkout@v2
         with:
@@ -61,7 +59,6 @@ jobs:
         run: manifestoo -d . check-licenses
       - name: Check development status
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
-        continue-on-error: true
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
