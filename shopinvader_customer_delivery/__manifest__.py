@@ -3,10 +3,10 @@
 {
     "name": "Shopinvader Invoice",
     "summary": """Shopinvader Invoice module""",
-    "author": "ACSONE SA/NV",
+    "author": "Akretion",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "shopinvader",
-    "version": "14.0.2.2.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "depends": ["account", "shopinvader"],
     "data": [],
