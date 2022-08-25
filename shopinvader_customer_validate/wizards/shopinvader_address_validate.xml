@@ -7,19 +7,42 @@
         <field name="model">shopinvader.address.validate</field>
         <field name="arch" type="xml">
             <form>
+                <field name="valid_backend_ids" invisible="1" />
+                <field name="display_warning" invisible="1" />
                 <div class="alert alert-info" role="alert">
-                  Validate Shopinvader addresses.
-                  Selected addresses not matching this status will be updated.
+                    <p>
+                        Validate Shopinvader addresses.
+                        Selected addresses not matching this status will be updated.
+                    </p>
+                    <p>
+                        You must select a backend to notify.
+                        You can validate only addresses belonging to partners having a customer on a shop.
+                    </p>
+                </div>
+                <div
+                    class="alert alert-warning"
+                    role="alert"
+                    attrs="{'invisible': [('display_warning', '=', False)]}"
+                >
+                  Selected partners have more than one backend matching.
+                  Since you might have a complex hierarchy of customers
+                  which might have bindings for different shops
+                  please make sure to verify if you are selecting the right shop backend.
                 </div>
                 <group name="actions">
-                    <separator string="Shopinvader backends not notify" />
-                    <field name="backend_ids" nolabel="1" colspan="4" />
-                    <field name="next_state" colspan="4" />
+                    <field
+                        name="backend_id"
+                        required="1"
+                        colspan="2"
+                        domain="[('id', 'in', valid_backend_ids)]"
+                    />
+                    <field name="next_state" colspan="2" />
                 </group>
                 <group name="selected">
                     <field name="partner_ids" colspan="4" nolabel="1">
                         <tree create="false" delete="false">
-                            <field name="parent_id" />
+                            <field name="backends_display" string="Valid backends" />
+                            <field name="parent_id" string="Parent" />
                             <field name="name" />
                             <field name="email" />
                             <field name="type" />
