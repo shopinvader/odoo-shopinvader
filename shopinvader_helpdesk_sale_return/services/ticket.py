@@ -3,7 +3,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.addons.base_rest import restapi
+from odoo.addons.base_rest_pydantic.restapi import PydanticModel
 from odoo.addons.component.core import Component
+from odoo.addons.shopinvader_helpdesk.pydantic_models.ticket import HelpdeskTicketInfo
 
 
 class TicketService(Component):
@@ -12,7 +14,7 @@ class TicketService(Component):
     @restapi.method(
         routes=[(["/<int:id>/request_return"], "POST")],
         input_param={},
-        output_param=restapi.Datamodel("helpdesk.ticket.output"),
+        output_param=PydanticModel(HelpdeskTicketInfo),
     )
     def request_return(self, _ticket_id):
         ticket = self._get(_ticket_id)
@@ -29,4 +31,4 @@ class TicketService(Component):
                 [("res_model", "=", "stock.picking"), ("res_id", "=", picking.id)]
             )
             label.copy(default={"res_model": "helpdesk.ticket", "res_id": ticket.id})
-        return self._return_record(ticket)
+        return HelpdeskTicketInfo.from_orm(ticket)

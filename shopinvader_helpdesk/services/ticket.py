@@ -2,63 +2,18 @@
 # @author Pierrick Brun <pierrick.brun@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-
 from odoo import _
 from odoo.exceptions import UserError
 
 from odoo.addons.base_rest import restapi
+from odoo.addons.base_rest_pydantic.restapi import PydanticModel, PydanticModelList
 from odoo.addons.component.core import Component
-from odoo.addons.datamodel import fields
-from odoo.addons.datamodel.core import Datamodel
 
-
-class HelpdeskTicketSaleInput(Datamodel):
-    _name = "helpdesk.ticket.sale.input"
-
-    id = fields.Integer(required=True, allow_none=False)
-
-
-class HelpdeskTicketSaleOutput(Datamodel):
-    _name = "helpdesk.ticket.sale.output"
-
-    id = fields.Integer(required=True, allow_none=False)
-    name = fields.String(required=True, allow_none=False)
-
-
-class HelpdeskTicketSaleLineInput(Datamodel):
-    _name = "helpdesk.ticket.sale.line.input"
-
-    sale_line_id = fields.Integer(required=True, allow_none=False)
-    qty = fields.Integer(required=False, allow_none=False)
-
-
-class HelpdeskTicketSaleLineOutput(Datamodel):
-    _name = "helpdesk.ticket.sale.line.output"
-
-    sale_line_id = fields.Integer(required=True, allow_none=False)
-    qty = fields.Float(required=True, allow_none=False)
-    product_name = fields.String()
-
-
-class HelpdeskTicketInput(Datamodel):
-    _name = "helpdesk.ticket.input"
-    _inherit = "helpdesk.ticket.input"
-
-    sale = fields.NestedModel(
-        "helpdesk.ticket.sale.input", required=False, allow_none=False
-    )
-
-
-class HelpdeskTicketOutput(Datamodel):
-    _name = "helpdesk.ticket.output"
-    _inherit = "helpdesk.ticket.output"
-
-    sale = fields.NestedModel(
-        "helpdesk.ticket.sale.output", required=False, allow_none=False
-    )
-    sale_lines = fields.NestedModel(
-        "helpdesk.ticket.sale.line.output", required=False, allow_none=False, many=True
-    )
+from ..pydantic_models.ticket import (
+    HelpdeskTicketInfo,
+    HelpdeskTicketRequest,
+    HelpdeskTicketSaleLineRequest,
+)
 
 
 class TicketService(Component):
@@ -68,33 +23,54 @@ class TicketService(Component):
     _inherit = ["helpdesk.ticket.service", "base.shopinvader.service"]
     _collection = "shopinvader.backend"
 
+    @restapi.method(
+        routes=[(["/<int:id>"], "GET")],
+        input_param={},
+        output_param=PydanticModel(HelpdeskTicketInfo),
+    )
+    def get(self, _id):
+        # TODO: Find a better way to extend the PydanticModel returned
+        record = self.env[self._expose_model].browse(super().get(_id).id)
+        return HelpdeskTicketInfo.from_orm(record)
+
+    @restapi.method(
+        routes=[(["/"], "GET")],
+        input_param={},
+        output_param=PydanticModelList(HelpdeskTicketInfo),
+    )
+    def search(self):
+        infos = [
+            HelpdeskTicketInfo.from_orm(self.env[self._expose_model].browse(item.id))
+            for item in super().search()
+        ]
+        return infos
+
+    @restapi.method(
+        routes=[(["/create"], "POST")],
+        input_param=PydanticModel(HelpdeskTicketRequest),
+        output_param=PydanticModel(HelpdeskTicketInfo),
+    )
+    # pylint: disable=W8106
+    def create(self, ticket: HelpdeskTicketRequest) -> HelpdeskTicketInfo:
+        record = self.env[self._expose_model].browse(super().create(ticket).id)
+        return HelpdeskTicketInfo.from_orm(record)
+
+    def _params_to_prepare_by_appending_id(self):
+        res = super()._params_to_prepare_by_appending_id()
+        res.append("sale")
+        return res
+
     def _prepare_params(self, params, mode="create"):
         if mode == "create":
             params["shopinvader_backend_id"] = self.shopinvader_backend.id
             params["channel_id"] = self.shopinvader_backend.helpdesk_channel_id.id
         params = super()._prepare_params(params, mode=mode)
-        for key in ["sale"]:
-            if key in params:
-                val = params.pop(key)
-                if val.get("id"):
-                    params["%s_id" % key] = val["id"]
         return params
-
-    def _json_parser(self):
-        res = super()._json_parser()
-        res += [
-            ("sale_id:sale", ["id", "name"]),
-            (
-                "sale_line_ids:sale_lines",
-                [("sale_line_id", lambda rec, fname: rec.id), "product_name", "qty"],
-            ),
-        ]
-        return res
 
     @restapi.method(
         routes=[(["/<int:id>/add_sale_line"], "POST")],
-        input_param=restapi.Datamodel("helpdesk.ticket.sale.line.input"),
-        output_param=restapi.Datamodel("helpdesk.ticket.output"),
+        input_param=PydanticModel(HelpdeskTicketSaleLineRequest),
+        output_param=PydanticModel(HelpdeskTicketInfo),
     )
     def add_sale_line(self, _ticket_id, line):
         ticket = self._get(_ticket_id)
@@ -106,12 +82,12 @@ class TicketService(Component):
             self.env["helpdesk.ticket.sale.line"].create(
                 {"ticket_id": ticket.id, "sale_line_id": sale_line.id, "qty": line.qty}
             )
-        return self._return_record(ticket)
+        return HelpdeskTicketInfo.from_orm(ticket)
 
     @restapi.method(
         routes=[(["/<int:id>/update_sale_line"], "POST")],
-        input_param=restapi.Datamodel("helpdesk.ticket.sale.line.input"),
-        output_param=restapi.Datamodel("helpdesk.ticket.output"),
+        input_param=PydanticModel(HelpdeskTicketSaleLineRequest),
+        output_param=PydanticModel(HelpdeskTicketInfo),
     )
     def update_sale_line(self, _ticket_id, line):
         ticket = self._get(_ticket_id)
@@ -122,19 +98,19 @@ class TicketService(Component):
                 _("The targeted sale line does not already exist on this ticket.")
             )
         existing_item.qty = line.qty
-        return self._return_record(ticket)
+        return HelpdeskTicketInfo.from_orm(ticket)
 
     @restapi.method(
         routes=[(["/<int:id>/delete_sale_line"], "POST")],
-        input_param=restapi.Datamodel("helpdesk.ticket.sale.line.input"),
-        output_param=restapi.Datamodel("helpdesk.ticket.output"),
+        input_param=PydanticModel(HelpdeskTicketSaleLineRequest),
+        output_param=PydanticModel(HelpdeskTicketInfo),
     )
     def delete_sale_line(self, _ticket_id, line):
         ticket = self._get(_ticket_id)
         sale_line = self.env["sale.order.line"].browse(line.sale_line_id)
         ticket_sale_line = self._find_helpdesk_ticket_sale_line(ticket, sale_line)
         ticket_sale_line.unlink()
-        return self._return_record(ticket)
+        return HelpdeskTicketInfo.from_orm(ticket)
 
     def _find_helpdesk_ticket_sale_line(self, ticket, sale_line):
         ticket_sale_line = ticket.mapped("sale_line_ids").filtered(

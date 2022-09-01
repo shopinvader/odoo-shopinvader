@@ -3,14 +3,18 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo.addons.component.tests.common import SavepointComponentCase
-from odoo.addons.datamodel.tests.common import SavepointDatamodelCase
+from odoo.addons.extendable.tests.common import ExtendableMixin
 from odoo.addons.shopinvader.tests.common import CommonCase
 
 
-class HelpdeskTicketSaleCase(
-    CommonCase, SavepointDatamodelCase, SavepointComponentCase
-):
+class HelpdeskTicketSaleCase(CommonCase, SavepointComponentCase, ExtendableMixin):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.setUpExtendable()
+
     def setUp(self, *args, **kwargs):
+        ExtendableMixin.setUp(self)
         super().setUp(*args, **kwargs)
         self.env.context["authenticated_partner_id"] = self.env.ref(
             "shopinvader.partner_1"
