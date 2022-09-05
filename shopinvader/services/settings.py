@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.base_rest import restapi
+from odoo.addons.base_rest.components.service import to_bool
 from odoo.addons.component.core import Component
 
 
@@ -81,16 +82,28 @@ class ExportSettingsService(Component):
             "languages": self._get_languages(),
         }
 
-    def _jsonify_fields_country(self):
+    def _jsonify_fields_country(self, include_states=False):
+        country_fields = [
+            "name",
+            "code",
+            "id",
+        ]
+        if include_states:
+            country_fields.append(
+                ("state_ids:states", self._jsonify_fields_state()),
+            )
+        return country_fields
+
+    def _jsonify_fields_state(self):
         return [
             "name",
             "code",
             "id",
         ]
 
-    def _get_countries(self):
+    def _get_countries(self, include_states=False):
         return self.shopinvader_backend.allowed_country_ids.jsonify(
-            self._jsonify_fields_country()
+            self._jsonify_fields_country(include_states=include_states)
         )
 
     def _get_countries_schema(self):
@@ -110,17 +123,53 @@ class ExportSettingsService(Component):
                 "required": True,
                 "nullable": False,
             },
+            "states": {
+                "type": "list",
+                "required": False,
+                "nullable": False,
+                "schema": {"type": "dict", "schema": self._get_states_schema()},
+            },
+        }
+
+    def _get_states_schema(self):
+        return {
+            "name": {
+                "type": "string",
+                "required": True,
+                "nullable": False,
+            },
+            "code": {
+                "type": "string",
+                "required": True,
+                "nullable": False,
+            },
+            "id": {
+                "type": "integer",
+                "required": True,
+                "nullable": False,
+            },
+        }
+
+    def _get_countries_params(self):
+        return {
+            "include_states": {
+                "coerce": to_bool,
+                "type": "boolean",
+                "required": False,
+                "nullable": False,
+            },
         }
 
     @restapi.method(
         [(["/countries"], "GET")],
+        input_param=restapi.CerberusValidator("_get_countries_params"),
         output_param=restapi.CerberusListValidator(
             "_get_countries_schema", unique_items=True
         ),
         auth="public_or_default",
     )
-    def countries(self):
-        return self._get_countries()
+    def countries(self, include_states=False):
+        return self._get_countries(include_states=include_states)
 
     def _jsonify_fields_title(self):
         return [
