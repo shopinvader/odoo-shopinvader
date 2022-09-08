@@ -9,7 +9,7 @@ from odoo.addons.component.core import Component
 class DeliveryMoveService(Component):
     """Service for getting information on stock.picking"""
 
-    _inherit = ["base.shopinvader.service", "abstract.shopinvader.download"]
+    _inherit = ["base.shopinvader.service"]
     _name = "shopinvader.delivery.move.service"
     _usage = "delivery_moves"
     _expose_model = "stock.move"
@@ -195,9 +195,7 @@ class DeliveryMoveService(Component):
             return expression.FALSE_DOMAIN
         sale_service = self.component(usage="sales")
         sale_domain = sale_service._get_base_search_domain()
-        print(sale_domain)
         sales = self.env[sale_service._expose_model].search(sale_domain)
-        print([("sale_id", "in", sales.ids)] + self._get_allowed_stock_move_domain())
         return [
             ("picking_id.sale_id", "in", sales.ids)
         ] + self._get_allowed_stock_move_domain()

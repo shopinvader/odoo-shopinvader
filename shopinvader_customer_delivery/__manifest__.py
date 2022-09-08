@@ -1,7 +1,7 @@
 # Copyright 2022 Akretion (<https://akretion.com/>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Shopinvader Invoice",
+    "name": "Shopinvader Delivery",
     "summary": """Shopinvader Invoice module""",
     "author": "Akretion",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
