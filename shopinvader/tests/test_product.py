@@ -17,6 +17,26 @@ class ProductCase(ProductCommonCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, test_queue_job_no_delay=True))
         cls.backend = cls.backend.with_context(test_queue_job_no_delay=True)
+        cls.variant_en = cls.env["product.product"].create(
+            {
+                "name": "EN variant",
+            }
+        )
+        cls.variant_fr = cls.env["product.product"].create(
+            {
+                "name": "FR variant",
+            }
+        )
+        bind_wizard = cls.env["shopinvader.variant.binding.wizard"].create(
+            {
+                "backend_id": cls.backend.id,
+                "product_ids": [cls.variant_en.id, cls.variant_fr.id],
+            }
+        )
+        bind_wizard.bind_products()
+        cls.variant_fr.shopinvader_bind_ids.lang_id = cls._install_lang(
+            cls.backend, "base.lang_fr"
+        )
 
     def test_create_shopinvader_variant(self):
         self.assertEqual(
@@ -896,18 +916,53 @@ class ProductCase(ProductCommonCase):
             fields.first(self.shopinvader_variants).write({"active": False})
 
     def test_get_invader_variant(self):
-        lang = self._install_lang("base.lang_fr")
-        self.backend.lang_ids |= lang
-        prod = self.env.ref("product.product_product_4b")
-        self._bind_products(prod)
-        variant_en = prod.shopinvader_bind_ids.filtered(
-            lambda x: x.lang_id.code == "en_US"
+        # Test that we successfully find a shopinvader variant
+        # if a product variant with the requested language has been bound to the backend.
+        shopinvader_variant_en = self.variant_en._get_invader_variant(
+            self.backend, "en_US"
         )
-        variant_fr = prod.shopinvader_bind_ids.filtered(
-            lambda x: x.lang_id.code == "fr_FR"
+        shopinvader_variant_fr = self.variant_fr._get_invader_variant(
+            self.backend, "fr_FR"
         )
-        self.assertEqual(prod._get_invader_variant(self.backend, "en_US"), variant_en)
-        self.assertEqual(prod._get_invader_variant(self.backend, "fr_FR"), variant_fr)
+        expected_shopinvader_variant_en = fields.first(
+            self.variant_en.shopinvader_bind_ids
+        )
+        expected_shopinvader_variant_fr = fields.first(
+            self.variant_fr.shopinvader_bind_ids
+        )
+        self.assertEqual(shopinvader_variant_en, expected_shopinvader_variant_en)
+        self.assertEqual(shopinvader_variant_fr, expected_shopinvader_variant_fr)
+
+    def test_get_invader_variant_different_backend_lang(self):
+        # Test that we don't find a shopinvader variant
+        # if no product variants with the requested language have been bound to the backend.
+        shopinvader_variant_en = self.variant_en._get_invader_variant(
+            self.backend, "fr_FR"
+        )
+        shopinvader_variant_fr = self.variant_fr._get_invader_variant(
+            self.backend, "en_US"
+        )
+        self.assertEqual(shopinvader_variant_en.id, False)
+        self.assertEqual(shopinvader_variant_fr.id, False)
+
+    def test_get_invader_variant_different_backend_lang_with_safe_default(self):
+        # Test that we successfully find a shopinvader variant
+        # if no product variants with the requested language have been bound to the backend
+        # but we activate the safe_default flag in the call to _get_invader_variant.
+        shopinvader_variant_en = self.variant_en._get_invader_variant(
+            self.backend, "fr_FR", True
+        )
+        shopinvader_variant_fr = self.variant_fr._get_invader_variant(
+            self.backend, "en_US", True
+        )
+        expected_shopinvader_variant_en = fields.first(
+            self.variant_en.shopinvader_bind_ids
+        )
+        expected_shopinvader_variant_fr = fields.first(
+            self.variant_fr.shopinvader_bind_ids
+        )
+        self.assertEqual(shopinvader_variant_en, expected_shopinvader_variant_en)
+        self.assertEqual(shopinvader_variant_fr, expected_shopinvader_variant_fr)
 
     def test_create_product_template_with_bindings(self):
         """
