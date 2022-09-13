@@ -361,6 +361,12 @@ msgid "Attribute"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__attribute_set_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__attribute_set_id
+msgid "Attribute Set"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__attribute_value_ids
 msgid "Attribute Value"
 msgstr ""
@@ -942,6 +948,11 @@ msgstr ""
 #. module: shopinvader
 #: model_terms:ir.ui.view,arch_db:shopinvader.res_partner_view_form
 msgid "Deactivate address for Shopinvader"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__attribute_set_id
+msgid "Default Attribute Set"
 msgstr ""
 
 #. module: shopinvader
@@ -2600,6 +2611,12 @@ msgid "Processing"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__x_processor
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__x_processor
+msgid "Processor"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model,name:shopinvader.model_product_product
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__product_variant_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_id
@@ -3686,6 +3703,12 @@ msgid "Technical"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__x_technical_description
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__x_technical_description
+msgid "Technical Description"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__valid_product_template_attribute_line_ids
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__valid_product_template_attribute_line_ids
 msgid "Technical compute"
@@ -4501,6 +4524,12 @@ msgstr ""
 #. module: shopinvader
 #: model:res.country.group,name:shopinvader.country_group_1
 msgid "World"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__x_linux_compatible
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__x_linux_compatible
+msgid "X Linux Compatible"
 msgstr ""
 
 #. module: shopinvader
