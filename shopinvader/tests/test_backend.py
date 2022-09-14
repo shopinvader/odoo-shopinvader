@@ -191,3 +191,20 @@ class BackendCase(CommonCase):
         self.backend.write({"lang_ids": [(5, None, None)]})
         self.assertEqual(self.env["shopinvader.variant"].search_count([]), 0)
         self.assertEqual(self.env["shopinvader.category"].search_count([]), 0)
+
+    def test_variant_exporter(self):
+        exporter = self.env["ir.exports"].create(
+            {
+                "name": "Specific variant export 1",
+                "resource": "shopinvader.variant",
+                "export_fields": [
+                    (0, False, {"name": "id"}),
+                    (0, False, {"name": "name"}),
+                ],
+            }
+        )
+        self.backend.write({"variant_exporter_id": exporter.id})
+        variant = self.env["shopinvader.variant"].search([], limit=1)
+        data = variant.get_shop_data()
+        expected_data = variant.jsonify(exporter.get_json_parser(), one=True)
+        self.assertEqual(expected_data, data)
