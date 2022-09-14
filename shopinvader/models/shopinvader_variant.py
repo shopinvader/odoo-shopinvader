@@ -343,6 +343,9 @@ class ShopinvaderVariant(models.Model):
 
     def get_shop_data(self):
         """Return product data for the shop."""
+        if self.backend_id.variant_exporter_id:
+            exporter = self.backend_id.variant_exporter_id
+            return self.jsonify(exporter.get_json_parser(), one=True)
         return self._get_shop_data()
 
     def _get_shop_data(self):

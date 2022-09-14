@@ -227,6 +227,15 @@ class ShopinvaderBackend(models.Model):
         help="Technical field to control form fields appeareance",
         default="search_engine",
     )
+    variant_exporter_id = fields.Many2one(
+        comodel_name="ir.exports",
+        string="Variant exporter for website",
+        help="Specific variants exporter for website call (after add to cart etc).\n"
+        "By default the json generated for Search engine is used."
+        "But this one might contains a lot of data who is not necessary for the front side.\n"
+        "That cost a lot in Database-read/network/json-cast time.",
+        domain=[("resource", "=", "shopinvader.variant")],
+    )
     _sql_constraints = [
         (
             "unique_website_unique_key",
