@@ -8,7 +8,7 @@ from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
 
 class CommonConnectedMultiCartCase(CommonConnectedCartCase):
-    """ Common class for connected multi cart tests """
+    """Common class for connected multi cart tests"""
 
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)
