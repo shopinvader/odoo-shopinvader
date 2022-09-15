@@ -6,7 +6,7 @@
 ShopInvader
 =================
 
-Web alternative solution based on locomotivecms
+Web alternative solution based on locomotivecms TEST
 
 Documentation
 ===============
