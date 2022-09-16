@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!-- pylint:disable=file-not-used -->
 <odoo>
     <record id="storage_image_1" model="storage.image">
         <field name="name">71c62lnhnxl_sx522_.jpg</field>

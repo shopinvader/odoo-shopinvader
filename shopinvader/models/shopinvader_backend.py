@@ -448,11 +448,11 @@ class ShopinvaderBackend(models.Model):
             grouped_by_template = defaultdict(self.env["product.product"].browse)
             for rec in products:
                 grouped_by_template[rec.product_tmpl_id] |= rec
-            method = backend.with_delay().bind_single_product
-            if run_immediately:
-                method = backend.bind_single_product
             for tmpl, variants in grouped_by_template.items():
-                method(langs, tmpl, variants)
+                if run_immediately:
+                    backend.bind_single_product(langs, tmpl, variants)
+                else:
+                    backend.with_delay().bind_single_product(langs, tmpl, variants)
 
     def bind_single_product(self, langs, product_tmpl, variants):
         """Bind given product variants for given template and languages.

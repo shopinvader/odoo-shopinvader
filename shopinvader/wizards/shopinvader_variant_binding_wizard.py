@@ -69,18 +69,14 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
         bound_products = self.env["product.product"].search(
             [("shopinvader_bind_ids.backend_id", "=", backend.id)]
         )
-        # use in memory record to avoid the creation of useless records into
-        # the database
         # by default the wizard check if a product is already bound so we
         # can use it by giving the list of product already bound in one of
         # the specified lang and the process will create the missing one.
-
-        # TODO 'new({})' doesn't work into V13 -> should use model lassmethod
         wiz = self.create(
             {
-                "lang_ids": self.env["res.lang"].browse(lang_ids),
+                "lang_ids": [(6, False, lang_ids)],
                 "backend_id": backend.id,
-                "product_ids": bound_products,
+                "product_ids": [(6, False, bound_products.ids)],
             }
         )
         wiz.bind_products()

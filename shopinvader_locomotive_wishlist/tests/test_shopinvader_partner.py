@@ -75,7 +75,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
         self._check_nbr_job_created(3)
 
         with requests_mock.mock() as m:
-            m.post(self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
+            m.post(self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"})
             m.put(
                 self.base_url
                 + "/content_types/customers/entries/"
@@ -181,7 +181,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
 
     def _test_export(self, partner_binding, expected_wl, expected_prods):
         with requests_mock.mock() as m:
-            m.post(self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"})
+            m.post(self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"})
             m.put(
                 self.base_url
                 + "/content_types/customers/entries/"
