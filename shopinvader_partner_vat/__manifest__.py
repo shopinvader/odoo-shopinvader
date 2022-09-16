@@ -4,7 +4,7 @@
 {
     "name": "Shopinvader VAT",
     "summary": "Shopinvader Check VAT with invader environnement",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.0.2",
     "category": "e-commerce",
     "development_status": "Production/Stable",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
