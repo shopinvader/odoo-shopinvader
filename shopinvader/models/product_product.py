@@ -59,13 +59,24 @@ class ProductProduct(models.Model):
             self.shopinvader_bind_ids.filtered(lambda x: x.backend_id == backend)
         )
 
-    def _get_invader_variant(self, backend, lang):
+    def _get_invader_variant(self, backend, lang, only_active=True):
         """Retrieve invader variant by backend and language.
 
         :param backend: backend recordset
         :param lang: lang code
         """
-        return self.shopinvader_bind_ids.filtered(
+        # We perform a first check to include inactive bindings
+        # if either the "only_active" argument is False or
+        # the "active_test" flag from the context is not found.
+        bindings = self.shopinvader_bind_ids
+        active_test = None
+        if "active_test" in self.env.context:
+            active_test = self.env.context.get("active_test")
+        if not only_active and active_test is None:
+            bindings = bindings.with_context(active_test=False)
+
+        # We find the relevant bindings.
+        return bindings.filtered(
             lambda x: x.backend_id == backend and x.lang_id.code == lang
         )
 
