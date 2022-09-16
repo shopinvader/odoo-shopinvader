@@ -132,12 +132,6 @@ msgid "Group By"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,help:shopinvader_product_brand.field_shopinvader_brand__image_medium_url
-#: model:ir.model.fields,help:shopinvader_product_brand.field_shopinvader_brand__image_small_url
-msgid "HTTP accessible path to the file"
-msgstr ""
-
-#. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__id
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend__id
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__id
