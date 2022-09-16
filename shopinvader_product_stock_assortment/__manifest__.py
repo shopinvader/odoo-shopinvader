@@ -5,7 +5,7 @@
     "summary": "This module is used to let the Shopinvader product "
     "assortment use the stock context in Shopinvader "
     "product stock.",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.0.2",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "ACSONE SA/NV",
