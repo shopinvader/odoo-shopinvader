@@ -1479,16 +1479,6 @@ msgid "HS Code"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__image_medium_url
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__image_small_url
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__image_medium_url
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__image_small_url
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__variant_image_medium_url
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__variant_image_small_url
-msgid "HTTP accessible path to the file"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_res_partner__has_shopinvader_user
 #: model:ir.model.fields,field_description:shopinvader.field_res_users__has_shopinvader_user
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__has_shopinvader_user
