@@ -5,7 +5,7 @@
     "name": "Shopinvader Locomotive Guest Mode",
     "summary": """
         Shopinvader guest mode for locomotive""",
-    "version": "14.0.1.0.2",
+    "version": "14.0.1.0.3",
     "license": "AGPL-3",
     "development_status": "Production/Stable",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
