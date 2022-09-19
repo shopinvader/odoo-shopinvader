@@ -20,7 +20,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 |  | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.14.1 |  | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.15.0 |  | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 |  | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 |  | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.1 |  | Shopinvader API_KEY Authentication
@@ -89,7 +89,7 @@ addon | version | maintainers | summary
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.1.0 |  | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 |  | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.3.0 |  | ShopInvader - Sale profile
-[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.3.3 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.4.0 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.1.0 |  | Handle shop wishlist
 
 
