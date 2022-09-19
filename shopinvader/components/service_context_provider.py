@@ -43,9 +43,14 @@ class ShopinvaderServiceContextProvider(Component):
         website_unique_key = self.request.httprequest.environ.get(
             "HTTP_WEBSITE_UNIQUE_KEY"
         )
-        return self.env["shopinvader.backend"]._get_from_website_unique_key(
-            website_unique_key
-        )
+        if website_unique_key:
+            return self.env["shopinvader.backend"]._get_from_website_unique_key(
+                website_unique_key
+            )
+        backend = self.env["shopinvader.backend"].search([], limit=2)
+        if len(backend) == 1:
+            return backend
+        return self.env["shopinvader.backend"].browse()
 
     def _get_component_context(self):
         res = super(ShopinvaderServiceContextProvider, self)._get_component_context()
