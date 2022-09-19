@@ -6,8 +6,10 @@
         <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
              <group name="website_name" position="before">
-                <field name="se_backend_id" />
-             </group>
+                <group name="search_engine">
+                    <field name="se_backend_id" />
+                </group>
+            </group>
              <group name="website_name" position="after">
                 <group name="index_ids" colspan="4" string="Indexes">
                     <field
