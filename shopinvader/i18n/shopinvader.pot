@@ -4004,12 +4004,12 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__website_unique_key
 msgid ""
-"This identifier should be provided by each REST request through a WEBSITE-"
+"This identifier may be provided by each REST request through a WEBSITE-"
 "UNIQUE-KEY http header to identify the target backend. If not provided by "
-"the request, you must pu in place a way tolookup the target request for a "
-"given request by overriding themethod _get_backend into the service context "
-"provider component. The shopinvader_auth_api_key and shopinvader_auth_jwt "
-"addons provides a fallback mechanism in such a case."
+"the request and if there is only one backend, it will be used by default. "
+"Otherwise it is possible to override the _get_backend method into the "
+"service context provider component. The shopinvader_auth_api_key and "
+"shopinvader_auth_jwt addons provides a fallback mechanism in such a case."
 msgstr ""
 
 #. module: shopinvader
