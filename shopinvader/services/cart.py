@@ -309,15 +309,7 @@ class CartService(Component):
 
     def _create_cart_line(self, cart, params):
         vals = self._prepare_cart_item(params, cart)
-        # the next statement is done with suspending the security for
-        #  performance reasons. It is safe only if both 3 following
-        # fields are filled on the sale order:
-        # - company_id
-        # - fiscal_position_id
-        # - pricelist_id
-        new_values = (
-            self.env["sale.order.line"].sudo().play_onchanges(vals, vals.keys())
-        )
+        new_values = self.env["sale.order.line"].play_onchanges(vals, vals.keys())
         vals.update(new_values)
         # As the frontend could be in several languages but we have only
         # one anonymous parnter with his language set, we need to ensure
