@@ -18,6 +18,9 @@ ES_CONFIG_US = {
 class TestSettingsService(CommonCase):
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)
+        self.backend = self.env.ref(
+            "shopinvader_elasticsearch.backend_elasticsearch_demo"
+        )
         with self.work_on_services(
             partner=self.env.ref("shopinvader.partner_1")
         ) as work:
