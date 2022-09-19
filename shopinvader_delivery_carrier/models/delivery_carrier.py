@@ -55,25 +55,19 @@ class DeliveryCarrier(models.Model):
         """
         return self.env.context.get("delivery_force_zip_code", "")
 
-    def available_carriers(self, contact):
-        """
-        Inherit the function to force some values on the given contact
-        (only in cache).
-        :param contact: res.partner recordset
-        :return: False or self
-        """
+    def _match_address(self, partner):
         country = self._get_country_from_context()
         zip_code = self._get_zip_from_context()
         if country or zip_code:
-            with self._simulate_delivery_cost(contact):
+            with self._simulate_delivery_cost(partner):
                 # Edit country and zip
                 # Even if some info are not provided, we have to fill them
                 # Ex: if the zip code is not provided, we have to do the
                 # simulation with an empty zip code on the partner. Because his
                 # current zip could be related to another country and simulate
                 # a wrong price.
-                contact.update({"country_id": country.id, "zip": zip_code})
-                result = super(DeliveryCarrier, self).available_carriers(contact)
+                partner.update({"country_id": country.id, "zip": zip_code})
+                result = super()._match_address(partner)
         else:
-            result = super(DeliveryCarrier, self).available_carriers(contact)
+            result = super()._match_address(partner)
         return result

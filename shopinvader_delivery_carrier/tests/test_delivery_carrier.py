@@ -127,7 +127,7 @@ class TestDeliveryCarrier(CommonCarrierCase):
             "size": 1,
             "data": [
                 {
-                    "price": 0.0,
+                    "price": 20.0,
                     "description": self.poste_carrier.description,
                     "id": self.poste_carrier.id,
                     "name": self.poste_carrier.name,
