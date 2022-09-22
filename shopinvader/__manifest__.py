@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "14.0.5.17.0",
+    "version": "14.0.5.18.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
