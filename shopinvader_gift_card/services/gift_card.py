@@ -57,14 +57,14 @@ class GiftCardInput(Datamodel):
     _name = "gift.card.input"
     _inherit = ["name.and.id"]
 
-    beneficiary_name = fields.String()
-    beneficiary_email = fields.String()
+    beneficiary_name = fields.String(allow_none=True)
+    beneficiary_email = fields.String(allow_none=True)
 
     buyer = fields.NestedModel("name.and.id", allow_none=True)
-    buyer_name = fields.String()
-    buyer_email = fields.String()
+    buyer_name = fields.String(allow_none=True)
+    buyer_email = fields.String(allow_none=True)
 
-    comment = fields.String()
+    comment = fields.String(allow_none=True)
 
     initial_amount = fields.Float()
 
@@ -107,16 +107,16 @@ class GiftCardOutput(Datamodel):
     end_date = fields.Date()
     duration = fields.Float()
 
-    beneficiary_name = fields.String()
-    beneficiary_email = fields.String()
+    beneficiary_name = fields.String(allow_none=True)
+    beneficiary_email = fields.String(allow_none=True)
 
     buyer = fields.NestedModel("name.and.id", allow_none=True)
-    buyer_name = fields.String()
-    buyer_email = fields.String()
+    buyer_name = fields.String(allow_none=True)
+    buyer_email = fields.String(allow_none=True)
 
-    comment = fields.String()
+    comment = fields.String(allow_none=True)
 
-    gift_card_line_id = fields.NestedModel("gift.card.line.output", many=True)
+    gift_card_line_id = fields.NestedModel("gift.card.line.output", many=True, allow_none=True)
 
 
 class ServiceGiftCardShopinvader(Component):
