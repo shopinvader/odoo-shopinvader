@@ -20,6 +20,7 @@
         "sale_shipping_info_helper",
         "delivery_carrier_info",
     ],
+    # odoo_test_helper is needed for the tests
     "data": ["views/backend_view.xml", "data/cart_step.xml"],
     "demo": [
         "demo/backend_demo.xml",
