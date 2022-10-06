@@ -3,8 +3,9 @@
 
 from odoo.osv import expression
 
-from odoo.addons.component.core import Component
 from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.component.core import Component
+
 
 class DeliveryMoveService(Component):
     """Service for getting information on stock.picking"""
