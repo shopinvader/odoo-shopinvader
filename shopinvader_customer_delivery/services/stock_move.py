@@ -4,7 +4,7 @@
 from odoo.osv import expression
 
 from odoo.addons.component.core import Component
-
+from odoo.addons.base_rest.components.service import to_int
 
 class DeliveryMoveService(Component):
     """Service for getting information on stock.picking"""
@@ -18,10 +18,42 @@ class DeliveryMoveService(Component):
     def search(self, **params):
         """
         Get every delivery products related to logged user
+        for the given customer_id
         :param params: dict/json
         :return: dict
         """
+        results = self._search(params)
+        return results
+
+    def _search(self, params):
+        """
+        Build the search result in json/dict.
+        The front side can fill a "customer_id" parameter to do a search on
+        the partner_id or commercial_partner_id fields.
+        :param params: dict/json
+        :return: dict/json
+        """
+        domain = self._load_search_params(params)
+        params.update({"domain": domain})
         return self._paginate_search(**params)
+
+    def _load_search_params(self, params):
+        """
+        Based on params, build a domain to search on the
+        :param params: dict/json
+        :return: list of tuple (Odoo domain)
+        """
+        domain = []
+        customer_id = params.get("customer_id")
+        if customer_id:
+            domain = [
+               ("picking_id.sale_id.partner_id", "=", customer_id),
+            ]
+            domain = expression.normalize_domain(domain)
+            domain = expression.OR([domain, [("picking_id.sale_id.commercial_partner_id", "=", customer_id),]])
+
+        domain = expression.AND([domain, [("picking_id.sale_id.user_id", "in", self.partner.user_ids.ids)]])
+        return domain
 
     def _validator_search(self):
         """
@@ -31,11 +63,11 @@ class DeliveryMoveService(Component):
         validator = self._default_validator_search()
         validator.pop("domain", {})
         validator.pop("scope", {})
+        validator.update({"customer_id": {"coerce": to_int, "type": "integer", "required": True}})
         return validator
 
     def _get_stock_move_schema(self):
         """
-
         :return: dict
         """
         schema = {
@@ -178,24 +210,12 @@ class DeliveryMoveService(Component):
         )
         return values
 
-    def _to_json(self, stok_move):
-        res = []
-        for move in stok_move:
-            res.append(self._to_json_stock_move(move))
-        return res
-
-    def _get_base_search_domain(self):
-        """Get every stock.move OUT related to current user.
-
-        If the current user is the anonymous one, it'll return an invalid
-        domain (to have 0 picking as result)
-        :return:
+    def _to_json(self, stok_moves, **kw):
         """
-        if not self._is_logged_in():
-            return expression.FALSE_DOMAIN
-        sale_service = self.component(usage="sales")
-        sale_domain = sale_service._get_base_search_domain()
-        sales = self.env[sale_service._expose_model].search(sale_domain)
-        return [
-            ("picking_id.sale_id", "in", sales.ids)
-        ] + self._get_allowed_stock_move_domain()
+        Jsonify the gift.list (multi) recordset
+        :param stok_moves: gift.list recordset
+        :return: list of dict
+        """
+        results = [self._to_json_stock_move(stok_move) for stok_move in
+                   stok_moves]
+        return results
