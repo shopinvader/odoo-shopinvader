@@ -12,5 +12,5 @@
     "license": "AGPL-3",
     "installable": True,
     "depends": ["shopinvader_locomotive"],
-    "data": ["secyrity/groups.xml", "views/shopinvader_partner_view.xml"],
+    "data": ["security/groups.xml", "views/shopinvader_partner_view.xml"],
 }
