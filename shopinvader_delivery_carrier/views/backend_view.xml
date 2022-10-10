@@ -8,7 +8,7 @@
             <page name="delivery" position="inside">
                 <group name="carrier" string="Carrier">
                     <field name="delivery_order_states" />
-                    <field name="carrier_ids" nolabel="1" />
+                    <field name="carrier_ids" />
                 </group>
             </page>
         </field>
