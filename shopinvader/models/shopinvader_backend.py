@@ -35,6 +35,7 @@ class ShopinvaderBackend(models.Model):
         "shopinvader.notification",
         "backend_id",
         "Notification",
+        help="Send mail for predefined events",
     )
     nbr_product = fields.Integer(
         compute="_compute_nbr_content", string="Number of bound products"
