@@ -8,7 +8,7 @@ from odoo.addons.component.core import Component
 
 
 class DeliveryMoveService(Component):
-    """Service for getting information on stock.picking"""
+    """Service for getting information on stock.move"""
 
     _inherit = ["base.shopinvader.service"]
     _name = "shopinvader.delivery.move.service"
@@ -46,14 +46,18 @@ class DeliveryMoveService(Component):
         """
         domain = []
         customer_id = params.get("customer_id")
-        if customer_id:
-            domain = [
-               ("picking_id.sale_id.partner_id", "=", customer_id),
-            ]
-            domain = expression.normalize_domain(domain)
-            domain = expression.OR([domain, [("picking_id.sale_id.commercial_partner_id", "=", customer_id),]])
-
-        domain = expression.AND([domain, [("picking_id.sale_id.user_id", "in", self.partner.user_ids.ids)]])
+        is_seller = True
+        if not customer_id:
+            customer_id = self.partner.id
+            is_seller = False
+        domain = self._get_allowed_stock_move_domain()
+        domain = expression.normalize_domain(domain)
+        domain_cutomer =  [
+            ("picking_id.sale_id.partner_id", "=", customer_id)]
+        domain_cutomer = expression.OR([domain_cutomer, [("picking_id.sale_id.commercial_partner_id", "=", customer_id),]])
+        domain = expression.AND([domain, domain_cutomer])
+        if is_seller:
+            domain = expression.AND([domain, [("picking_id.sale_id.user_id", "in", self.partner.user_ids.ids)]])
         return domain
 
     def _validator_search(self):
@@ -64,7 +68,7 @@ class DeliveryMoveService(Component):
         validator = self._default_validator_search()
         validator.pop("domain", {})
         validator.pop("scope", {})
-        validator.update({"customer_id": {"coerce": to_int, "type": "integer", "required": True}})
+        validator.update({"customer_id": {"coerce": to_int, "type": "integer", "required": False}})
         return validator
 
     def _get_stock_move_schema(self):
