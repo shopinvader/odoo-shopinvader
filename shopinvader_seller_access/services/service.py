@@ -47,3 +47,27 @@ class BaseShopinvaderService(AbstractComponent):
             # Also catch RuntimeError which is raise in tests when request is
             # not bound
             return False
+
+    def _default_domain_for_partner_records(
+        self, partner_field="partner_id", operator="=", with_backend=True, **kw
+    ):
+        """Domain to filter records bound to current partner and backend."""
+        if (
+            self._expose_model == "sale.order"
+            and partner_field == "partner_id"
+            and self.has_seller_access
+        ):
+            # In sale.order, we need to filter on partner_id and user_id
+            domain = [
+                "|",
+                (partner_field, operator, self.partner.id),
+                ("user_id", operator, self.partner.user_ids.id),
+            ]
+            if with_backend:
+                domain.append(
+                    ("shopinvader_backend_id", "=", self.shopinvader_backend.id)
+                )
+            return domain
+        return super()._default_domain_for_partner_records(
+            partner_field, operator, with_backend, **kw
+        )

@@ -1,5 +1,6 @@
 from odoo import fields
 from odoo.exceptions import AccessDenied, MissingError
+
 from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
 from .common import SellerGroupBackendMixin
