@@ -58,6 +58,28 @@ class CartService(Component):
             domain.insert(partner_filter_index, "|")
         return domain
 
+    def _get_email_seller_recipient(self, record, notif_type):
+        """Get the seller recipient for the notification"""
+        partner = self.env["res.partner"].browse()
+        if (
+            record
+            and hasattr(record, "user_id")
+            and record.user_id
+            and record.user_id.partner_id
+        ):
+            partner = record.user_id.partner_id
+        return partner
+
+    def _allow_email_notification(self, partner, record, notif_type):
+        has_access = super()._allow_email_notification(partner, record, notif_type)
+        if not has_access and self.has_seller_access:
+            recipient_seller_partner = self._get_email_seller_recipient(
+                record, notif_type
+            )
+            has_access = recipient_seller_partner == partner
+
+        return has_access
+
     def _validator_return_available_carts(self):
         return {
             "id": {

@@ -1,5 +1,5 @@
+from odoo import fields
 from odoo.exceptions import AccessDenied, MissingError
-
 from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
 from .common import SellerGroupBackendMixin
@@ -146,3 +146,51 @@ class TestCart(SellerGroupBackendMixin, CommonConnectedCartCase):
         # even if the cart has us as seller
         cart = self.service_as_seller.dispatch("search")["data"]
         self.assertNotEquals(cart["id"], cart_id)
+
+    def test_cart_ask_email_as_seller_for_not_owned_cart(self):
+        self._create_notification_config()
+        now = fields.Date.today()
+        with self.seller_group():
+            self.service_as_seller.dispatch("ask_email", self.cart.id)
+
+        notif = "cart_send_email"
+        description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
+        domain = [("name", "=", description), ("date_created", ">=", now)]
+        # It should not create any queue job because the partner is not the seller of the cart
+        self.assertEqual(self.env["queue.job"].search_count(domain), 0)
+
+    def test_cart_ask_email_as_seller_for_owned_cart(self):
+        self._create_notification_config()
+        with self.seller_group():
+            cart = self.service_as_seller.dispatch(
+                "create_for", params={"customer_id": self.partner.id}
+            )["data"]
+            cart_id = cart["id"]
+
+        now = fields.Date.today()
+        with self.seller_group():
+            self.service_as_seller.dispatch("ask_email", cart_id)
+
+        notif = "cart_send_email"
+        description = "Notify {} for {},{}".format(notif, self.cart._name, cart_id)
+        domain = [("name", "=", description), ("date_created", ">=", now)]
+        # It creates the queue job because the partner is the seller of the cart
+        self.assertEqual(self.env["queue.job"].search_count(domain), 1)
+
+    def test_cart_ask_email_as_non_seller_for_owned_cart(self):
+        self._create_notification_config()
+        with self.seller_group():
+            cart = self.service_as_seller.dispatch(
+                "create_for", params={"customer_id": self.partner.id}
+            )["data"]
+            cart_id = cart["id"]
+
+        now = fields.Date.today()
+        with self.seller_group("buyer"):
+            self.service_as_seller.dispatch("ask_email", cart_id)
+
+        notif = "cart_send_email"
+        description = "Notify {} for {},{}".format(notif, self.cart._name, cart_id)
+        domain = [("name", "=", description), ("date_created", ">=", now)]
+        # It should not create any queue job because the user is not a seller
+        self.assertEqual(self.env["queue.job"].search_count(domain), 0)
