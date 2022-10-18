@@ -3314,6 +3314,11 @@ msgid "Self"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_backend__notification_ids
+msgid "Send mail for predefined events"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter__sequence
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__sequence_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__sequence
