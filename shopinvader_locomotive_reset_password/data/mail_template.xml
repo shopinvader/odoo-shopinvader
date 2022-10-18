@@ -5,7 +5,7 @@
 
     <record id="email_template_shopinvader_reset_password" model="mail.template">
             <field name="name">Shopinvader - Reset Password</field>
-            <field name="email_from">${(ctx['user_id'].email or '')|safe}</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
             <field
             name="subject"
         >Reset Password Instructions (${object.backend_id.name})</field>
@@ -18,7 +18,7 @@
             name="body_html"
         ><![CDATA[
                 <p>Hello ${object.name},</p>
-                <p>Your password has just been reset.</p>
+                <p>Please reset your password here: ${object.backend_id.location}/account/reset-password?auth_reset_token=${ctx['token']}</p>
             ]]></field>
     </record>
 
