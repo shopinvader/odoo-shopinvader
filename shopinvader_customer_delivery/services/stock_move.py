@@ -114,7 +114,7 @@ class DeliveryMoveService(Component):
         domain = [
             ("picking_id.picking_type_id.code", "=", "outgoing"),
         ]
-        if states:
+        domain.append(("state", "in", states))
         return domain
 
     def _validator_return_search(self):
