@@ -162,17 +162,17 @@ class DeliveryMoveService(Component):
         ]
         return to_parse
 
-    def _add_product_info(self, stok_move):
+    def _add_product_info(self, stock_move):
         """
         Add info about the related product (using product_id field).
         :param picking: stock.move
         :return: dict
         """
         sale_order = stok_move.product_id
-        if not sale_order:
+        if not product:
             return {}
-        parser = self._get_parser_sale_order()
-        values = sale_order.jsonify(parser, one=True)
+        parser = self._get_parser_product()
+        values = product.jsonify(parser, one=True)
         return values
 
     def _get_parser_sale_order(self):
