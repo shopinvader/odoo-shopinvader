@@ -115,7 +115,6 @@ class DeliveryMoveService(Component):
             ("picking_id.picking_type_id.code", "=", "outgoing"),
         ]
         if states:
-            domain.append(("state", "in", states))
         return domain
 
     def _validator_return_search(self):
@@ -168,7 +167,7 @@ class DeliveryMoveService(Component):
         :param picking: stock.move
         :return: dict
         """
-        sale_order = stok_move.product_id
+        sale_order = stock_move.product_id
         if not product:
             return {}
         parser = self._get_parser_product()

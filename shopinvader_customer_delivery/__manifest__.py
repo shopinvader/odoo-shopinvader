@@ -8,7 +8,7 @@
     "category": "shopinvader",
     "version": "14.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["account", "shopinvader"],
+    "depends": ["stock", "shopinvader"],
     "data": [],
     "demo": [],
     "installable": True,
