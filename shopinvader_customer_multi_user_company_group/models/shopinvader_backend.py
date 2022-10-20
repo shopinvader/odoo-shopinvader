@@ -25,3 +25,20 @@ class ShopinvaderBackend(models.Model):
         default="hierarchy",
         required=True,
     )
+    multi_user_company_group_address_policy = fields.Selection(
+        selection=[
+            ("hierarchy", "View addresses down the company group hierarchy"),
+            ("shared", "Share addresses across companies in the group"),
+        ],
+        help=(
+            "This affects the behavior of every endpoint which lists partner related "
+            "records, directy or indirectly.\n\n"
+            "* `View addresses down the company group hierarchy`: Users that are part "
+            "of the company group will see addresses from the companies that belong to "
+            "it, but those companies users will only see their own company addresses.\n"
+            "* `Share addresses across companies in the group`: Addresses will be "
+            "shared among companies belonging to the same company group.\n"
+        ),
+        default="hierarchy",
+        required=True,
+    )

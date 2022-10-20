@@ -15,6 +15,7 @@
         <field name="arch" type="xml">
             <field name="multi_user_records_policy" position="after">
                 <field name="multi_user_company_group_records_policy" />
+                <field name="multi_user_company_group_address_policy" />
             </field>
         </field>
     </record>

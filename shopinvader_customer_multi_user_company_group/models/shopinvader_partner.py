@@ -80,8 +80,8 @@ class ShopinvaderPartner(models.Model):
             )
         # Regular company group users can see public shared addresses down the hierarchy.
         # This is also the case with the "shared" policy for non company group users.
-        group_records_policy = self.backend_id.multi_user_company_group_records_policy
-        if self.is_company_group_user or group_records_policy == "shared":
+        group_address_policy = self.backend_id.multi_user_company_group_address_policy
+        if self.is_company_group_user or group_address_policy == "shared":
             return expression.OR(
                 [
                     res,
