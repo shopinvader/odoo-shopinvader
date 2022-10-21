@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Reset Password",
     "summary": "Give the possibility to send a email to reset the" "password from odoo",
-    "version": "14.0.1.1.0",
+    "version": "14.0.1.2.0",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
