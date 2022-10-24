@@ -85,8 +85,8 @@ class DeliveryMoveService(Component):
                 "type": "dict",
                 "nullable": True,
                 "schema": {
-                    "product_id": {"type": "string"},
-                    "template_id": {"type": "string"},
+                    "product_id": {"type": "integer"},
+                    "template_name": {"type": "string"},
                     "name": {"type": "string"},
                     "default_code": {"type": "string"},
                 },
@@ -155,7 +155,7 @@ class DeliveryMoveService(Component):
         """
         to_parse = [
             "id:product_id",
-            "product_tmpl_id:template_id",
+            "product_tmpl_id:template_name",
             "name",
             "default_code",
         ]
@@ -167,7 +167,7 @@ class DeliveryMoveService(Component):
         :param picking: stock.move
         :return: dict
         """
-        sale_order = stock_move.product_id
+        product = stock_move.product_id
         if not product:
             return {}
         parser = self._get_parser_product()
