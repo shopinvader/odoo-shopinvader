@@ -29,6 +29,16 @@ msgid "All but draft"
 msgstr ""
 
 #. module: shopinvader_delivery_carrier
+#: model:ir.model.fields,help:shopinvader_delivery_carrier.field_shopinvader_backend__delivery_order_states
+msgid ""
+"Allows to filter out pickings based on state\n"
+"            All: publish all pickings\n"
+"            All but draft: filter out only draft and cancels pickings\n"
+"            Ready and done: publish only assigned and done pickings\n"
+"        "
+msgstr ""
+
+#. module: shopinvader_delivery_carrier
 #: model_terms:ir.ui.view,arch_db:shopinvader_delivery_carrier.shopinvader_backend_view_form
 msgid "Carrier"
 msgstr ""
