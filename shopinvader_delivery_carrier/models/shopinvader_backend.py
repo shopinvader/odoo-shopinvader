@@ -17,6 +17,11 @@ class ShopinvaderBackend(models.Model):
             ("assigned|done", "Ready and done"),
         ],
         default="assigned|done",
+        help="""Allows to filter out pickings based on state
+            All: publish all pickings
+            All but draft: filter out only draft and cancels pickings
+            Ready and done: publish only assigned and done pickings
+        """,
     )
 
     def _get_visible_delivery_order_states(self):
