@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="rating_rating_view_form" model="ir.ui.view">
+        <field name="inherit_id" ref="rating.rating_rating_view_form" />
+        <field name="model">rating.rating</field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_internal']" position="after">
+                <field name="upvotes" readonly="True" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
