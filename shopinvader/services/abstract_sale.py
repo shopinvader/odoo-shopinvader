@@ -24,6 +24,7 @@ class AbstractSaleService(AbstractComponent):
             "state_label": state_label,
             "name": sale.name,
             "date": sale.date_order,
+            "date_delivery": sale.commitment_date,
             "client_order_ref": sale.client_order_ref,
             "step": self._convert_step(sale),
             "lines": self._convert_lines(sale),
