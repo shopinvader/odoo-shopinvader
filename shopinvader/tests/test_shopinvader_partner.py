@@ -3,8 +3,7 @@
 
 from datetime import datetime
 
-from psycopg2 import IntegrityError
-
+from odoo.exceptions import ValidationError
 from odoo.tools import mute_logger
 
 from odoo.addons.component.tests.common import SavepointComponentCase
@@ -27,7 +26,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
                 "backend_id": self.backend.id,
             }
         )
-        with self.assertRaises(IntegrityError):
+        with self.assertRaises(ValidationError):
             self.env["shopinvader.partner"].create(
                 {
                     "email": self.unique_email,
