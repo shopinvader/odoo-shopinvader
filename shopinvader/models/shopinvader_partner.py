@@ -6,6 +6,7 @@
 
 
 from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
 STATE_ACTIVE = "active"
 STATE_INACTIVE = "inactive"
@@ -57,12 +58,25 @@ class ShopinvaderPartner(models.Model):
             "unique(backend_id, record_id, partner_email)",
             "A partner can only have one binding by backend.",
         ),
-        (
-            "email_uniq",
-            "unique(backend_id, partner_email)",
-            "An email must be uniq per backend.",
-        ),
     ]
+
+    @api.constrains("backend_id", "partner_email", "state")
+    def _check_unique_active_partner(self):
+        for partner in self:
+            domain = [
+                ("backend_id", "=", partner.backend_id.id),
+                ("partner_email", "=", partner.partner_email),
+                ("state", "=", STATE_ACTIVE),
+                ("id", "!=", partner.id),
+            ]
+            active_partners = self.env["shopinvader.partner"].search(domain)
+            if active_partners:
+                raise ValidationError(
+                    _(
+                        "There cannot be two active partners having the same "
+                        "email within the same backend."
+                    )
+                )
 
     def _compute_role_depends(self):
         return ("backend_id", "backend_id.customer_default_role")
