@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_partner_view_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="shopinvader.res_partner_view_form" />
+        <field name="groups_id" eval="[(4, ref('group_shopinvader_impersonate'))]" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//field[@name='shopinvader_bind_ids']/tree/button[@name='action_edit_in_form']"
+                position="after"
+            >
+                <button
+                    name="impersonate"
+                    string="Impersonate"
+                    icon="fa-sign-in"
+                    type="object"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
