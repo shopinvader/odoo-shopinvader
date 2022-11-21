@@ -29,7 +29,10 @@ class PartnerEventListener(Component):
             [("bind_new_customers", "=", True)]
         ):
             # Don't bind if record is already bound
-            if record.shopinvader_bind_ids.filtered(lambda b: b.backend_id == backend):
+            # sudo() because we could have in cache more than binding related to current company
+            if record.sudo().shopinvader_bind_ids.filtered(
+                lambda b: b.backend_id == backend
+            ):
                 continue
             wizard = (
                 self.env["shopinvader.partner.binding"]
