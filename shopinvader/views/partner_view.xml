@@ -22,6 +22,9 @@
                             />
                         </tree>
                     </field>
+                    <group name="shopinvader_options">
+                        <!-- empty group for other modules to add subgroups into -->
+                    </group>
                 </page>
             </notebook>
         </field>
