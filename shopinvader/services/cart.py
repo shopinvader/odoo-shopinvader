@@ -456,16 +456,18 @@ class CartService(Component):
                 "shopinvader_backend_id": self.shopinvader_backend.id,
             }
         )
+        # Play onchanges
         vals.update(self.env["sale.order"].play_onchanges(vals, vals.keys()))
-        if self.shopinvader_backend.account_analytic_id.id:
-            vals[
-                "analytic_account_id"
-            ] = self.shopinvader_backend.account_analytic_id.id
-        pricelist = self._get_pricelist(partner)
-        if pricelist:
-            vals["pricelist_id"] = pricelist.id
-        if self.shopinvader_backend.sequence_id:
-            vals["name"] = self.shopinvader_backend.sequence_id._next()
+        # Set optional default values from backend configuration
+        backend = self.shopinvader_backend
+        if "analytic_account_id" not in cart_params and backend.account_analytic_id:
+            vals["analytic_account_id"] = backend.account_analytic_id.id
+        if "pricelist_id" not in cart_params:
+            pricelist = self._get_pricelist(partner)
+            if pricelist:
+                vals["pricelist_id"] = pricelist.id
+        if "name" not in cart_params and backend.sequence_id:
+            vals["name"] = backend.sequence_id._next()
         return vals
 
     def _get_pricelist(self, partner):
