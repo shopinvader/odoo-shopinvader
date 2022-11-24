@@ -2101,6 +2101,11 @@ msgid "Main small image URL"
 msgstr ""
 
 #. module: shopinvader
+#: model:res.groups,name:shopinvader.group_shopinvader_manager
+msgid "Manager"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_seo_title_mixin__manual_seo_title
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__manual_seo_title
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__manual_seo_title
@@ -3482,11 +3487,6 @@ msgid "Shopinvader Display Name"
 msgstr ""
 
 #. module: shopinvader
-#: model:res.groups,name:shopinvader.group_shopinvader_manager
-msgid "Shopinvader Manager"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__shopinvader_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__shopinvader_name
 msgid "Shopinvader Name"
@@ -3588,6 +3588,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model,name:shopinvader.model_shopinvader_partner_binding
+#: model:res.groups,name:shopinvader.group_shopinvader_partner_binding
 msgid "Shopinvader partner binding"
 msgstr ""
 
