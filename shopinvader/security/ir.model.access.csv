@@ -7,7 +7,7 @@ access_shopinvader_product_edit,shopinvader_product edit,model_shopinvader_produ
 access_shopinvader_product_read,shopinvader_product read,model_shopinvader_product,base.group_user,1,0,0,0
 access_shopinvader_variant_edit,shopinvader_variant edit,model_shopinvader_variant,shopinvader.group_shopinvader_manager,1,1,1,1
 access_shopinvader_variant_read,shopinvader_variant read,model_shopinvader_variant,base.group_user,1,0,0,0
-access_shopinvader_partner_edit,shopinvader_partner edit,model_shopinvader_partner,shopinvader.group_shopinvader_manager,1,1,1,1
+access_shopinvader_partner_edit,shopinvader_partner edit,model_shopinvader_partner,shopinvader.group_shopinvader_partner_binding,1,1,1,1
 access_shopinvader_partner_read,shopinvader_partner read,model_shopinvader_partner,base.group_user,1,0,0,0
 access_product_filter_employee,product.filter employee,model_product_filter,base.group_user,1,0,0,0
 access_product_filter_sale_manager,product.filter salemanager,model_product_filter,sales_team.group_sale_manager,1,1,1,1
