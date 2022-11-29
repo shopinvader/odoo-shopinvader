@@ -33,6 +33,9 @@ class ShopinvaderPartner(models.Model):
             {
                 "nbr_reset": (self.nbr_reset or 0) + 1,
                 "last_reset_send_datetime": fields.datetime.now(),
+                # we need to set to false the last_pwd_reset_datetime
+                # so at the first user login it will be filled
+                "last_pwd_reset_datetime": False,
             }
         )
         token = uuid.uuid4().hex
@@ -43,7 +46,7 @@ class ShopinvaderPartner(models.Model):
                 self.external_id,
                 {
                     "_auth_reset_token": token,
-                    "_auth_reset_sent_at": date_validity,
+                    "_auth_reset_sent_at": date_validity.isoformat(),
                 },
             )
             return "Reset Password Sent"
