@@ -9,7 +9,7 @@ class TestCustomer(TestCustomerCommon):
     @classmethod
     def setUpClass(cls):
         super(TestCustomer, cls).setUpClass()
-        cls.ten_percent_program = cls.env["coupon.program"].create(
+        cls.ten_percent_program = cls.env["sale.coupon.program"].create(
             {
                 "name": "10%",
                 "promo_code_usage": "code_needed",
@@ -20,7 +20,7 @@ class TestCustomer(TestCustomerCommon):
                 "active": True,
             }
         )
-        cls.ten_dollar_program = cls.env["coupon.program"].create(
+        cls.ten_dollar_program = cls.env["sale.coupon.program"].create(
             {
                 "name": "10$",
                 "promo_code_usage": "code_needed",
@@ -52,7 +52,7 @@ class TestCustomer(TestCustomerCommon):
             }
         ).generate_coupon()
         coupon = self.ten_percent_program.coupon_ids
-        self.env["coupon.generate.wizard"].with_context(
+        self.env["sale.coupon.generate"].with_context(
             active_id=self.ten_dollar_program.id
         ).create(
             {
@@ -60,7 +60,7 @@ class TestCustomer(TestCustomerCommon):
                 "partners_domain": "[('id', 'in', [%s])]" % (self.partner_2.id),
             }
         ).generate_coupon()
-        self.env["coupon.generate.wizard"].with_context(
+        self.env["sale.coupon.generate"].with_context(
             active_id=self.ten_percent_program.id
         ).create(
             {
@@ -84,7 +84,7 @@ class TestCustomer(TestCustomerCommon):
         self.assertNotIn("valid_coupons_ids", data)
 
     def test_get_customer_coupons_expiration(self):
-        self.env["coupon.generate.wizard"].with_context(
+        self.env["sale.coupon.generate"].with_context(
             active_id=self.ten_percent_program.id
         ).create(
             {
@@ -94,7 +94,7 @@ class TestCustomer(TestCustomerCommon):
         ).generate_coupon()
 
         percentage_coupon = self.ten_percent_program.coupon_ids
-        self.env["coupon.generate.wizard"].with_context(
+        self.env["sale.coupon.generate"].with_context(
             active_id=self.ten_dollar_program.id
         ).create(
             {

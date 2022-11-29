@@ -31,7 +31,7 @@ class CustomerService(Component):
 
     def _add_coupon_info(self, partner, info):
         coupons = (
-            self.env["coupon.coupon"]
+            self.env["sale.coupon"]
             .search(
                 [
                     ("partner_id", "=", partner.id),

@@ -46,7 +46,7 @@ class CartService(Component):
         code = params["code"]
 
         # Get the associated program
-        program = self.env["coupon.program"].search(
+        program = self.env["sale.coupon.program"].search(
             [
                 "|",
                 ("promo_code", "=", code),
