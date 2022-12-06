@@ -35,7 +35,12 @@ JSONIFY_GIFT_CARD = [
     "buyer_email",
     "comment",
     (
-        "gift_card_line_id:gift_card_line_id",
+        "gift_card_lines:gift_card_line_ids",
+        JSONIFY_GIFT_CARD_LINE,
+    ),
+    (
+        # TEMP: remove when fixed in front
+        "gift_card_line_id:gift_card_line_ids",
         JSONIFY_GIFT_CARD_LINE,
     ),
 ]
@@ -116,6 +121,8 @@ class GiftCardOutput(Datamodel):
 
     comment = fields.String(allow_none=True)
 
+    gift_card_lines = fields.NestedModel("gift.card.line.output", many=True, allow_none=True)
+    # TEMP: remove when fixed in front
     gift_card_line_id = fields.NestedModel("gift.card.line.output", many=True, allow_none=True)
 
 
