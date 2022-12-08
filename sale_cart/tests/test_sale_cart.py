@@ -12,7 +12,7 @@ class TestSaleCart(SavepointCase):
         cls.product = cls.env["product.product"].create(
             {
                 "name": "product",
-                "uom_id": cls.env.ref("product.product_uom_unit").id,
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
         cls.partner = cls.env["res.partner"].create({"name": "partner"})

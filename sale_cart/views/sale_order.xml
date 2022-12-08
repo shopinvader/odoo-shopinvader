@@ -38,15 +38,12 @@
         </field>
     </record>
 
-    <record model="ir.ui.menu" id="sale_order_menu">
-        <field name="name">Cart</field>
-        <field name="parent_id" ref="sales_team.menu_sales" />
-        <field name="action" ref="sale_order_act_window" />
-        <field name="sequence" eval="4" />
-        <field
-            name="groups_id"
-            eval="[(4, ref('sales_team.group_sale_salesman')),(4, ref('sales_team.group_sale_manager'))]"
-        />
-    </record>
+    <menuitem
+        action="sale_order_act_window"
+        id="sale_order_menu"
+        parent="sale.sale_menu_root"
+        sequence="4"
+        groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"
+    />
 
 </odoo>

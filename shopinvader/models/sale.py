@@ -13,7 +13,6 @@ _logger = logging.getLogger(__name__)
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    typology = fields.Selection([("sale", "Sale"), ("cart", "Cart")], default="sale")
     shopinvader_backend_id = fields.Many2one("shopinvader.backend", "Backend")
     current_step_id = fields.Many2one(
         "shopinvader.cart.step", "Current Cart Step", readonly=True
