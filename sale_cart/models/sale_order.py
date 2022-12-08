@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -9,9 +8,7 @@ class SaleOrder(models.Model):
 
     _inherit = "sale.order"
 
-    typology = fields.Selection(
-        [("sale", "Sale"), ("cart", "Cart")], default="sale"
-    )
+    typology = fields.Selection([("sale", "Sale"), ("cart", "Cart")], default="sale")
 
     @api.multi
     def action_confirm_cart(self):

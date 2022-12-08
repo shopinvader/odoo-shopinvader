@@ -1,6 +1,7 @@
 # generated from manifests external_dependencies
 cerberus
 locomotivecms
+openupgradelib
 python-magic
 python-slugify
 python-stdnum
