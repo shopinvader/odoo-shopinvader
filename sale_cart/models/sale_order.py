@@ -1,7 +1,7 @@
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class SaleOrder(models.Model):
@@ -10,7 +10,6 @@ class SaleOrder(models.Model):
 
     typology = fields.Selection([("sale", "Sale"), ("cart", "Cart")], default="sale")
 
-    @api.multi
     def action_confirm_cart(self):
         for record in self:
             if record.typology == "sale":
@@ -19,7 +18,6 @@ class SaleOrder(models.Model):
             record.write({"typology": "sale"})
         return True
 
-    @api.multi
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         for record in self:
