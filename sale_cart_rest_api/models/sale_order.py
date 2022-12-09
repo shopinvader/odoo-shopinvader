@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -38,9 +37,7 @@ class SaleOrder(models.Model):
         update_cmds = []
         with self.env.norecompute():
             # prefetch all products
-            self.env["product.product"].browse(
-                transactions_by_product_id.keys()
-            )
+            self.env["product.product"].browse(transactions_by_product_id.keys())
             # here we avoid that each on change on a line trigger all the
             # recompute methods on the SO. These methods will be triggered
             # by the orm into the 'write' process
@@ -49,18 +46,14 @@ class SaleOrder(models.Model):
                 if line:
                     cmd = line._transactions_to_record_write(trxs)
                 else:
-                    cmd = self.env[
-                        "sale.order.line"
-                    ]._transactions_to_record_create(self, trxs)
+                    cmd = self.env["sale.order.line"]._transactions_to_record_create(
+                        self, trxs
+                    )
                 if cmd:
                     update_cmds.append(cmd)
-        all_transaction_uuids = transaction_uuids = [
-            t["uuid"] for t in transactions
-        ]
+        all_transaction_uuids = transaction_uuids = [t["uuid"] for t in transactions]
         if self.applied_transaction_uuids:
-            all_transaction_uuids = [
-                self.applied_transaction_uuids
-            ] + transaction_uuids
+            all_transaction_uuids = [self.applied_transaction_uuids] + transaction_uuids
         vals = {"applied_transaction_uuids": ",".join(all_transaction_uuids)}
         if update_cmds:
             vals["order_line"] = update_cmds

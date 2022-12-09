@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -25,15 +24,15 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
             cart.get(uuid="1234")
 
     def test_get_authenticated_no_cart_no_uuid(self):
-        with self.cart_service(
-            self.partner_1.id
-        ) as cart, self.assertEmptyResponse(cart):
+        with self.cart_service(self.partner_1.id) as cart, self.assertEmptyResponse(
+            cart
+        ):
             cart.get()
 
     def test_get_authenticated_no_cart_uuid(self):
-        with self.cart_service(
-            self.partner_1.id
-        ) as cart, self.assertEmptyResponse(cart):
+        with self.cart_service(self.partner_1.id) as cart, self.assertEmptyResponse(
+            cart
+        ):
             cart.get(uuid="1234")
 
     def test_get_authenticated_cart_uuid(self):
@@ -251,9 +250,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
             self.assertEqual(1, len(line))
             self.assertEqual(self.product_1, line.product_id)
             self.assertEqual(2, line.product_uom_qty)
-            self.assertEqual(
-                so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
-            )
+            self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4")
 
     def test_multi_transactions_same_product1(self):
         # try to remove more product than qty added
@@ -286,9 +283,7 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
             )
             line = so.order_line
             self.assertEqual(0, len(line))
-            self.assertEqual(
-                so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
-            )
+            self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4")
 
     def test_multi_transactions_update_same_product(self):
         # try to remove more product than qty  on exisigng line
@@ -363,16 +358,13 @@ class TestSaleCartRestApi(TestSaleCartRestApiCase):
                 lambda l, product=self.product_2: l.product_id == product
             )
             self.assertEqual(2, line_product_2_id.product_uom_qty)
-            self.assertEqual(
-                so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
-            )
+            self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4")
 
     def test_multi_transactions_multi_products_mix_create_update(self):
         so = self._create_empty_cart(self.partner_1.id)
-        create_line_vals = self.env[
-            "sale.order.line"
-        ]._transactions_to_record_create(
-            so, [{"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}],
+        create_line_vals = self.env["sale.order.line"]._transactions_to_record_create(
+            so,
+            [{"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}],
         )
         so.write({"order_line": [create_line_vals]})
         with self.cart_service(self.partner_1.id) as cart:
