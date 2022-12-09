@@ -5,7 +5,7 @@
     "name": "Sale Cart Delivery Rest Api",
     "summary": """
         Manage deliveries on sale.cart""",
-    "version": "10.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",

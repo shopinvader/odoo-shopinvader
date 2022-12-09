@@ -107,7 +107,9 @@ class CartService(Component):
             raise UserError(_("This delivery method is not available for you order"))
         cart.write({"carrier_id": method_id})
         if self._must_charge_delivery_fee_on_order():
-            cart.delivery_set()
+            cart.set_delivery_line(
+                cart.carrier_id, cart.carrier_id.rate_shipment(cart)["price"]
+            )
 
     def _is_line(self, line):
         res = super(CartService, self)._is_line(line)
@@ -144,8 +146,8 @@ class CartService(Component):
                 "method": {
                     "id": sale.carrier_id.id,
                     "name": sale.carrier_id.name,
-                    "description": sale.carrier_id.description or None,
-                    "code": sale.carrier_id.code or None,
+                    "description": sale.carrier_id.product_id.description or None,
+                    "code": sale.carrier_id.product_id.code or None,
                 },
                 "fees": self._convert_delivery_amount(sale),
             }
