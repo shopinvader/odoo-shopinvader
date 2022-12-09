@@ -18,7 +18,7 @@ class TestResPartnerSerializer(SavepointCase):
                 "city": u"Liège",
                 "phone": "+32 2 8883148",
                 "mobile": "+32 2 8883149",
-                "vat": "BE123456",
+                "vat": "BE0477472701",
                 "is_company": True,
                 "country_id": cls.env.ref("base.be").id,
             }
@@ -39,7 +39,7 @@ class TestResPartnerSerializer(SavepointCase):
             "city": u"Liège",
             "phone": "+32 2 8883148",
             "mobile": "+32 2 8883149",
-            "vat": "BE123456",
+            "vat": "BE0477472701",
             "state": None,
             "type": "contact",
             "is_company": True,
