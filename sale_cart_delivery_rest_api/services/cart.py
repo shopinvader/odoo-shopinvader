@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -17,16 +16,14 @@ class CartService(Component):
 
     @restapi.method(
         [(["/set_delivery_method"], "POST")],
-        input_param=restapi.CerberusValidator(
-            "_set_delivery_method_input_schema"
-        ),
+        input_param=restapi.CerberusValidator("_set_delivery_method_input_schema"),
         output_param=restapi.CerberusValidator("_cart_schema"),
     )
     def set_delivery_method(self, **params):
         """
-           This service will set the given delivery method to the current
-           cart
-       """
+        This service will set the given delivery method to the current
+        cart
+        """
         cart = self._find_open_cart(uuid=params.get("uuid"))
         if not cart:
             raise NotFound("No cart found")
@@ -107,9 +104,7 @@ class CartService(Component):
     def _set_delivery_method(self, cart, params):
         method_id = params["method_id"]
         if not cart._is_delivery_method_available(method_id):
-            raise UserError(
-                _("This delivery method is not available for you order")
-            )
+            raise UserError(_("This delivery method is not available for you order"))
         cart.write({"carrier_id": method_id})
         if self._must_charge_delivery_fee_on_order():
             cart.delivery_set()
@@ -120,9 +115,7 @@ class CartService(Component):
 
     def _convert_cart_to_json(self, sale):
         json = super(CartService, self)._convert_cart_to_json(sale)
-        json[
-            "amount_without_delivery"
-        ] = self._convert_amount_without_delivery(sale)
+        json["amount_without_delivery"] = self._convert_amount_without_delivery(sale)
         return json
 
     def _convert_amount_without_delivery(self, sale):

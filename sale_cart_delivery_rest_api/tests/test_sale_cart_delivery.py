@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -10,9 +9,7 @@ class TestSaleCartDelivery(TestSaleCartRestApiCase):
     def setUpClass(cls):
         super(TestSaleCartDelivery, cls).setUpClass()
         cls.poste_carrier = cls.env.ref("delivery.delivery_carrier")
-        with cls.cart_service(
-            authenticated_partner_id=cls.partner_1.id
-        ) as cart:
+        with cls.cart_service(authenticated_partner_id=cls.partner_1.id) as cart:
             info = cart.sync(
                 uuid=None,
                 transactions=[
@@ -32,8 +29,6 @@ class TestSaleCartDelivery(TestSaleCartRestApiCase):
         )
         self.assertTrue(info)
         self.assertIn("method", info["delivery"])
-        self.assertEqual(
-            self.poste_carrier.id, info["delivery"]["method"]["id"]
-        )
+        self.assertEqual(self.poste_carrier.id, info["delivery"]["method"]["id"])
         self.assertIn("fees", info["delivery"])
         self.assertIn("amount_without_delivery", info)
