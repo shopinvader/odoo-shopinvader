@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -16,12 +15,7 @@ class SaleOrderLine(models.Model):
         self.ensure_one()
         delta_qty = sum(t["qty"] for t in transactions)
         new_qty = self.product_uom_qty + delta_qty
-        if (
-            float_compare(
-                new_qty, 0, precision_rounding=self.product_uom.rounding
-            )
-            <= 0
-        ):
+        if float_compare(new_qty, 0, precision_rounding=self.product_uom.rounding) <= 0:
             return (2, self.id, None)
         vals = {"product_uom_qty": new_qty}
         vals.update(self.play_onchanges(vals, vals.keys()))
@@ -44,12 +38,7 @@ class SaleOrderLine(models.Model):
         delta_qty = sum(t["qty"] for t in transactions)
         product_id = transactions[0]["product_id"]
         product_uom = self.env["product.product"].browse(product_id).uom_id
-        if (
-            float_compare(
-                delta_qty, 0, precision_rounding=product_uom.rounding
-            )
-            <= 0
-        ):
+        if float_compare(delta_qty, 0, precision_rounding=product_uom.rounding) <= 0:
             return None
         partner = sale_order.partner_id
         vals = {

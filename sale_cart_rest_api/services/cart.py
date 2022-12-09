@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import uuid
@@ -85,9 +84,7 @@ class CartService(Component):
     # schemas
     # #######
     def _get_input_schema(self):
-        return {
-            "uuid": {"type": "string", "required": False, "nullable": True}
-        }
+        return {"uuid": {"type": "string", "required": False, "nullable": True}}
 
     def _sync_input_schema(self):
         return {
@@ -274,7 +271,7 @@ class CartService(Component):
         return vals
 
     def _get_default_pricelist_id(self):
-        """ Return the pricelist to use if no one found on the partner
+        """Return the pricelist to use if no one found on the partner
 
         By default we return the one defined on the anonymous user partner.
         Since the anonymous partner is inactive, we must disable the active test
@@ -371,9 +368,7 @@ class CartService(Component):
         if field not in record._fields:
             return ""
         # convert_to_export(...) give the label of the selection (translated).
-        return record._fields.get(field).convert_to_export(
-            record[field], record
-        )
+        return record._fields.get(field).convert_to_export(record[field], record)
 
     def _odoo_str_dt_to_dt_utc(self, value_str):
         if not value_str:
