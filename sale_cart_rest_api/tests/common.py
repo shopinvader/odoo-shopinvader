@@ -20,13 +20,13 @@ class TestSaleCartRestApiCase(SavepointCase, ComponentMixin):
         cls.product_1 = cls.env["product.product"].create(
             {
                 "name": "product_1",
-                "uom_id": cls.env.ref("product.product_uom_unit").id,
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
         cls.product_2 = cls.env["product.product"].create(
             {
                 "name": "product_2",
-                "uom_id": cls.env.ref("product.product_uom_unit").id,
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
         cls.partner_1 = cls.env["res.partner"].create({"name": "partner_1"})

@@ -6,7 +6,7 @@
     "summary": """
         Cart REST API designed to work with the shopinvader-js-cart library
         see (https://github.com/shopinvader/shopinvader-js-cart)""",
-    "version": "10.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
