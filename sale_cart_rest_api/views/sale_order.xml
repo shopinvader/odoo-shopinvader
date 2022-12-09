@@ -8,9 +8,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <field name="related_project_id" position="after">
+            <group name="sales_person" position="inside">
                 <field name="uuid" />
-            </field>
+            </group>
         </field>
     </record>
 
