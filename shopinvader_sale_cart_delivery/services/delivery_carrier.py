@@ -36,7 +36,7 @@ class DeliveryCarrierService(Component):
                     delivery_force_country_id=country.id,
                     delivery_force_zip_code=zip_code,
                 )
-            return cart._get_available_carrier()
+            return cart.shopinvader_available_carrier_ids
         return super(DeliveryCarrierService, self)._search(**params)
 
     def _get_cart_from_uuid(self, uuid):

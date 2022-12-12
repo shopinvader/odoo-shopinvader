@@ -13,5 +13,5 @@ class SaleOrder(models.Model):
         Check if the mehtod is supported for the given SO
         """
         if self.env["delivery.carrier"].browse(method_id).exists():
-            return method_id in self._get_available_carrier().ids
+            return method_id in self.shopinvader_available_carrier_ids.ids
         return False
