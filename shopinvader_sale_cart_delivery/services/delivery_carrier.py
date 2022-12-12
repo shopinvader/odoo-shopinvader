@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
@@ -43,7 +42,8 @@ class DeliveryCarrierService(Component):
     def _get_cart_from_uuid(self, uuid):
         # TO BE REFACTORED
         v2_cart_service = self.work.components_registry.lookup(
-            "shopinvader.api.v2", usage="cart",
+            "shopinvader.api.v2",
+            usage="cart",
         )[0](self.work)
         # the collection and the service is not properly initialized
         # but just want to get the cart

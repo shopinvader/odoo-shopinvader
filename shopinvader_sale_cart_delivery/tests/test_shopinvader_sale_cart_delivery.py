@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from contextlib import contextmanager
@@ -32,9 +31,7 @@ class TestShopinvaderSaleCartDelivery(CommonCase):
             cls.so = cls.env["sale.order"].browse(info["id"])
             cls._cart_service = cart
 
-        with cls.carrier_service(
-            authenticated_partner_id=cls.partner.id
-        ) as service:
+        with cls.carrier_service(authenticated_partner_id=cls.partner.id) as service:
             cls._carrier_service = service
 
     @classmethod
