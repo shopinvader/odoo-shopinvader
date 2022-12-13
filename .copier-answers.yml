@@ -10,7 +10,7 @@ github_ci_extra_env:
 github_enable_codecov: true
 github_enable_makepot: true
 github_enable_stale_action: false
-github_enforce_dev_status_compatibility: true
+github_enforce_dev_status_compatibility: false
 include_wkhtmltopdf: false
 odoo_version: 14.0
 org_name: Shopinvader

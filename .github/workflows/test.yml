@@ -61,6 +61,7 @@ jobs:
         run: manifestoo -d . check-licenses
       - name: Check development status
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
+        continue-on-error: true
       - name: Initialize test db
         run: oca_init_test_database
       - name: Run tests
