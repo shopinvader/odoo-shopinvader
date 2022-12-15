@@ -141,18 +141,18 @@ class CartService(Component):
 
     def _convert_delivery(self, sale):
         info = super(CartService, self)._convert_delivery(sale)
-        info.update(
-            {
-                "method": {
-                    "id": sale.carrier_id.id,
-                    "name": sale.carrier_id.name,
-                    "description": sale.carrier_id.product_id.description or None,
-                    "code": sale.carrier_id.product_id.code or None,
-                },
-                "fees": self._convert_delivery_amount(sale),
-            }
-        )
+        if sale.carrier_id:
+            info["method"] = self._convert_delivery_method(sale.carrier_id)
+        info["fees"] = self._convert_delivery_amount(sale)
         return info
+
+    def _convert_delivery_method(self, carrier):
+        return {
+            "id": carrier.id,
+            "name": carrier.name,
+            "description": carrier.product_id.description or None,
+            "code": carrier.product_id.code or None,
+        }
 
     def _convert_delivery_amount(self, sale):
         precision = sale.currency_id.decimal_places
