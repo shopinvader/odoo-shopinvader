@@ -30,7 +30,7 @@ class DeliveryCarrierService(Component):
         """
         cart = None
         if params.get("target") == "current_cart":
-            cart = self.component(usage="cart")._get()
+            cart = self.component(usage="cart")._get(create_if_not_found=False)
         delivery_carriers = self._search(cart=cart, **params)
         vals = {
             "size": len(delivery_carriers),
