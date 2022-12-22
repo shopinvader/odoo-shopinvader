@@ -1,10 +1,25 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.1.2
-_src_path: git+https://github.com/shopinvader/shopinvader-addons-repo-template
-black_version: 20.8b1
+_commit: v1.13.1
+_src_path: git+https://github.com/oca/oca-addons-repo-template
+ci: GitHub
+dependency_installation_mode: PIP
 generate_requirements_txt: true
-odoo_version: '14.0'
-prettify_xml: true
-python_line_length: 88
+github_check_license: true
+github_ci_extra_env:
+    PIP_EXTRA_INDEX_URL: https://wheelhouse.shopinvader.com/simple/
+github_enable_codecov: true
+github_enable_makepot: true
+github_enable_stale_action: false
+github_enforce_dev_status_compatibility: false
+include_wkhtmltopdf: false
+odoo_version: 14.0
+org_name: Shopinvader
+org_slug: shopinvader
 rebel_module_groups: []
+repo_description: Odoo REST APIs for e-commerce.
+repo_name: Shopinvader
 repo_slug: odoo-shopinvader
+repo_website: https://github.com/shopinvader/odoo-shopinvader
+travis_apt_packages: []
+travis_apt_sources: []
+
