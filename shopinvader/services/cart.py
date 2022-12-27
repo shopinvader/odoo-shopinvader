@@ -303,7 +303,7 @@ class CartService(Component):
             self._upgrade_cart_item_quantity(cart, item, params, action="sum")
         else:
             with self.env.norecompute():
-                self._create_cart_line(cart, params)
+                item = self._create_cart_line(cart, params)
             cart.recompute()
         return item
 
