@@ -18,6 +18,7 @@ class CustomerService(Component):
             "city",
             ("state_id", ["id", "name"]),
             ("country_id", ["id", "name"]),
+            ("parent_id", ["id", "name"]),
         ]
 
     def _validator_return_available_customers(self):
@@ -74,6 +75,22 @@ class CustomerService(Component):
                 "nullable": True,
             },
             "country_id": {
+                "type": "dict",
+                "schema": {
+                    "id": {
+                        "type": "integer",
+                        "required": True,
+                        "nullable": False,
+                    },
+                    "name": {
+                        "type": "string",
+                        "required": True,
+                        "nullable": False,
+                    },
+                },
+                "nullable": True,
+            },
+            "parent_id": {
                 "type": "dict",
                 "schema": {
                     "id": {
