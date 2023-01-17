@@ -1,6 +1,7 @@
 # Copyright 2022 Akretion (<https://akretion.com/>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
+from odoo import _
+from odoo.exceptions import AccessDenied
 from odoo.osv import expression
 
 from odoo.addons.base_rest.components.service import to_int
@@ -46,19 +47,42 @@ class DeliveryMoveService(Component):
         """
         domain = []
         customer_id = params.get("customer_id")
-        is_seller = True
-        if not customer_id:
-            customer_id = self.partner.id
-            is_seller = False
+        if customer_id and not self.has_seller_access:
+            raise AccessDenied(
+                _("customer_id filter is only available for seller group")
+            )
+
         domain = self._get_allowed_stock_move_domain()
         domain = expression.normalize_domain(domain)
-        domain_cutomer =  [
-            ("picking_id.sale_id.partner_id", "=", customer_id)]
-        domain_cutomer = expression.OR([domain_cutomer, [("picking_id.sale_id.commercial_partner_id", "=", customer_id),]])
-        domain = expression.AND([domain, domain_cutomer])
-        if is_seller:
-            domain = expression.AND([domain, [("picking_id.sale_id.user_id", "in", self.partner.user_ids.ids)]])
-        return domain
+        # We always return the partner's pickings
+        owner_domain = [
+            "|",
+            ("picking_id.sale_id.partner_id", "=", self.partner.id),
+            ("picking_id.sale_id.commercial_partner_id", "=", self.partner.id),
+        ]
+
+        if self.has_seller_access:
+            # If we are seller
+            if customer_id:
+                # If we have a customer_id
+                # We only return the pickings of the customer we are the seller of
+                owner_domain = [
+                    ("picking_id.sale_id.user_id", "=", self.partner.user_ids.id),
+                    "|",
+                    ("picking_id.sale_id.partner_id", "=", customer_id),
+                    ("picking_id.sale_id.commercial_partner_id", "=", customer_id),
+                ]
+            else:
+                # Otherwise
+                # We also return the pickings of the customers
+                # that are linked to the seller
+                owner_domain = [
+                    "|",
+                    *owner_domain,
+                    ("picking_id.sale_id.user_id", "=", self.partner.user_ids.id),
+                ]
+
+        return [*domain, *owner_domain]
 
     def _validator_search(self):
         """
@@ -68,7 +92,9 @@ class DeliveryMoveService(Component):
         validator = self._default_validator_search()
         validator.pop("domain", {})
         validator.pop("scope", {})
-        validator.update({"customer_id": {"coerce": to_int, "type": "integer", "required": False}})
+        validator.update(
+            {"customer_id": {"coerce": to_int, "type": "integer", "required": False}}
+        )
         return validator
 
     def _get_stock_move_schema(self):
@@ -214,12 +240,11 @@ class DeliveryMoveService(Component):
         )
         return values
 
-    def _to_json(self, stok_moves, **kw):
+    def _to_json(self, stock_moves, **kw):
         """
-        Jsonify the gift.list (multi) recordset
-        :param stok_moves: gift.list recordset
+        Jsonify the stock.move (multi) recordset
+        :param stock_moves: stock.move recordset
         :return: list of dict
         """
-        results = [self._to_json_stock_move(stok_move) for stok_move in
-                   stok_moves]
+        results = [self._to_json_stock_move(stock_move) for stock_move in stock_moves]
         return results
