@@ -24,7 +24,7 @@ class ShopinvaderVariant(models.Model):
         # current update are avoided when generating thumbnail image
         if bindings:
             idx = 0
-            while (
+            while idx < len(bindings) and (
                 processing[-1].shopinvader_product_id
                 == bindings[idx].shopinvader_product_id
             ):
