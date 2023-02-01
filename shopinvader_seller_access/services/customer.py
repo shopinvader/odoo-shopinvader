@@ -1,5 +1,8 @@
 import ast
 
+from odoo import _
+from odoo.exceptions import MissingError, UserError
+
 from odoo.addons.base_rest import restapi
 from odoo.addons.component.core import Component
 
@@ -108,6 +111,11 @@ class CustomerService(Component):
             },
         }
 
+    def _available_customers(self):
+        return self.env["res.partner"].search(
+            ast.literal_eval(self.shopinvader_backend.seller_access_customer_domain)
+        )
+
     @restapi.method(
         [(["/available_customers"], "GET")],
         output_param=restapi.CerberusListValidator(
@@ -116,10 +124,26 @@ class CustomerService(Component):
     )
     def available_customers(self):
         self.check_seller_access()
-        return (
-            self.env["res.partner"]
-            .search(
-                ast.literal_eval(self.shopinvader_backend.seller_access_customer_domain)
-            )
-            .jsonify(self._jsonify_available_customers())
-        )
+        return self._available_customers().jsonify(self._jsonify_available_customers())
+
+    def update(self, _id, **params):
+        try:
+            return super().update(_id, **params)
+        except MissingError as e:
+            if not self.has_seller_access:
+                raise e
+
+            partner = self._available_customers().filtered(lambda x: x.id == _id)
+            if partner:
+                if params.keys() != {"email"}:
+                    raise UserError(
+                        _("You can only update the customer email as seller")
+                    )
+
+                partner.write(params)
+
+                self._post_update(self.work.partner)
+
+                return self.get()
+
+            raise e

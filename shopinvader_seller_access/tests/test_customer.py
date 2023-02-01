@@ -1,4 +1,6 @@
-from odoo.exceptions import AccessDenied
+import ast
+
+from odoo.exceptions import AccessDenied, MissingError, UserError
 
 from odoo.addons.shopinvader.tests.test_customer import TestCustomerCommon
 
@@ -9,8 +11,27 @@ class TestCustomer(SellerGroupBackendMixin, TestCustomerCommon):
     def test_get_available_customers(self):
         with self.seller_group():
             customers = self.service_with_partner.dispatch("available_customers")
-        self.assertEquals(len(customers), 42)
-        self.assertEquals(tuple(customers[0].keys()), ("id", "name", "email"))
+        self.assertEquals(
+            len(customers),
+            self.env["res.partner"].search_count(
+                ast.literal_eval(self.backend.seller_access_customer_domain)
+            ),
+        )
+        self.assertEquals(
+            tuple(customers[0].keys()),
+            (
+                "id",
+                "name",
+                "email",
+                "street",
+                "street2",
+                "zip",
+                "city",
+                "state_id",
+                "country_id",
+                "parent_id",
+            ),
+        )
 
     def test_get_available_customers_no_seller_access(self):
         self.backend.seller_access = False
@@ -37,3 +58,82 @@ class TestCustomer(SellerGroupBackendMixin, TestCustomerCommon):
             {customer["name"] for customer in customers},
             {"Floyd Steward", "Lorraine Douglas"},
         )
+
+    def test_update_available_customers_email(self):
+        self.backend.seller_access_customer_domain = (
+            '[("id", "=", %s)]' % self.partner_2.id
+        )
+        with self.seller_group():
+            self.service_with_partner.dispatch(
+                "update",
+                self.partner_2.id,
+                params={
+                    "email": "new_email@shopinvader.com",
+                },
+            )
+            self.assertEquals(self.partner_2.email, "new_email@shopinvader.com")
+
+    def test_update_available_customers_email_unbound(self):
+        unbound = self.env["res.partner"].create(
+            {
+                "name": "Unbound Partner",
+                "email": "unbound@shopinvader.com",
+            }
+        )
+
+        self.backend.seller_access_customer_domain = '[("id", ">=", %s)]' % unbound.id
+        with self.seller_group():
+            self.service_with_partner.dispatch(
+                "update",
+                unbound.id,
+                params={
+                    "email": "new_unbound_email@shopinvader.com",
+                },
+            )
+            self.assertEquals(unbound.email, "new_unbound_email@shopinvader.com")
+
+    def test_update_available_customers_email_wrong_partner(self):
+        self.backend.seller_access_customer_domain = (
+            '[("id", "!=", %s)]' % self.partner_2.id
+        )
+        with self.seller_group():
+            with self.assertRaises(MissingError):
+                self.service_with_partner.dispatch(
+                    "update",
+                    self.partner_2.id,
+                    params={
+                        "email": "new_email@shopinvader.com",
+                    },
+                )
+        self.assertNotEquals(self.partner_2.email, "new_email@shopinvader.com")
+
+    def test_update_available_customers_not_email(self):
+        self.backend.seller_access_customer_domain = (
+            '[("id", "=", %s)]' % self.partner_2.id
+        )
+        with self.seller_group():
+            with self.assertRaises(UserError):
+                self.service_with_partner.dispatch(
+                    "update",
+                    self.partner_2.id,
+                    params={"email": "new_email@shopinvader.com", "name": "new_name"},
+                )
+
+        self.assertNotEquals(self.partner_2.email, "new_email@shopinvader.com")
+        self.assertNotEquals(self.partner_2.name, "new_name")
+
+    def test_update_available_customers_email_wrong_group(self):
+        self.backend.seller_access_customer_domain = (
+            '[("id", "==", %s)]' % self.partner_2.id
+        )
+        with self.seller_group("buyer"):
+            with self.assertRaises(MissingError):
+                self.service_with_partner.dispatch(
+                    "update",
+                    self.partner_2.id,
+                    params={
+                        "email": "new_email@shopinvader.com",
+                    },
+                )
+
+        self.assertNotEquals(self.partner_2.email, "new_email@shopinvader.com")
