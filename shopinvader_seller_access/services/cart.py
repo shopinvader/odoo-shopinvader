@@ -24,7 +24,9 @@ class CartService(Component):
             raise MissingError(_("Partner {} is not a user".format(self.partner.email)))
         old_partner = self.work.partner
         self.work.partner = partner
-        rv = self._to_json(self._create_empty_cart(user_id=seller.id))
+        rv = self._to_json(
+            self._create_empty_cart(user_id=seller.id, created_by_seller=True)
+        )
         self.work.partner = old_partner
         return rv
 
@@ -153,7 +155,15 @@ class CartService(Component):
     )
     def available_carts(self):
         self.check_seller_access()
+        domain = self._get_cart_domain(True)
+
+        # Only return carts created by the seller for carts where seller is the salesperson
+        # I.e. Filter customer created carts
+        user_domain_index = domain.index(("user_id", "=", self.partner.user_ids.id))
+        domain.insert(user_domain_index, "&")
+        domain.insert(user_domain_index + 1, ("created_by_seller", "=", True))
+
         return [
             self._convert_one_available_cart(sale)
-            for sale in self.env["sale.order"].search(self._get_cart_domain(True))
+            for sale in self.env["sale.order"].search(domain)
         ]

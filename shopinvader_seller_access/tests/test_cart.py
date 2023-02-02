@@ -195,3 +195,67 @@ class TestCart(SellerGroupBackendMixin, CommonConnectedCartCase):
         domain = [("name", "=", description), ("date_created", ">=", now)]
         # It should not create any queue job because the user is not a seller
         self.assertEqual(self.env["queue.job"].search_count(domain), 0)
+
+    def test_cart_available_carts(self):
+        # Force new cart creation from customer:
+        self.service.shopinvader_session["cart_id"] = 999999
+        cart_from_customer = self.service.dispatch("search")["data"]
+
+        with self.seller_group():
+            cart_from_seller = self.service_as_seller.dispatch(
+                "create_for", params={"customer_id": self.partner.id}
+            )["data"]
+
+        self.assertEquals(
+            self.env["sale.order"].browse(cart_from_seller["id"]).user_id,
+            self.partner_2.user_ids,
+        )
+
+        self.assertNotEquals(cart_from_seller["id"], cart_from_customer["id"])
+
+        with self.seller_group():
+            carts = self.service_as_seller.dispatch("available_carts")
+        available_cart_ids = [cart["id"] for cart in carts]
+
+        self.assertIn(cart_from_seller["id"], available_cart_ids)
+        self.assertNotIn(cart_from_customer["id"], available_cart_ids)
+
+        # Set seller as partner salesperson
+        self.partner.user_id = self.partner_2.user_ids
+
+        # Force new cart creation from customer:
+        self.service.shopinvader_session["cart_id"] = 999999
+        cart_from_customer_with_seller_as_salesperson = self.service.dispatch("search")[
+            "data"
+        ]
+        self.assertEquals(
+            self.env["sale.order"]
+            .browse(cart_from_customer_with_seller_as_salesperson["id"])
+            .user_id,
+            self.partner_2.user_ids,
+        )
+
+        with self.seller_group():
+            cart_from_seller_2 = self.service_as_seller.dispatch(
+                "create_for", params={"customer_id": self.partner.id}
+            )["data"]
+
+        self.assertNotEquals(
+            cart_from_customer_with_seller_as_salesperson["id"],
+            cart_from_customer["id"],
+        )
+        self.assertNotEquals(
+            cart_from_customer_with_seller_as_salesperson["id"],
+            cart_from_seller_2["id"],
+        )
+
+        with self.seller_group():
+            carts = self.service_as_seller.dispatch("available_carts")
+        available_cart_ids = [cart["id"] for cart in carts]
+
+        self.assertIn(cart_from_seller["id"], available_cart_ids)
+        self.assertIn(cart_from_seller_2["id"], available_cart_ids)
+        self.assertNotIn(cart_from_customer["id"], available_cart_ids)
+        self.assertNotIn(
+            cart_from_customer_with_seller_as_salesperson["id"], available_cart_ids
+        )

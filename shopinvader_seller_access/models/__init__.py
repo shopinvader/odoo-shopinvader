@@ -1,1 +1,1 @@
-from . import shopinvader_backend
+from . import sale, shopinvader_backend
