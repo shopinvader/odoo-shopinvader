@@ -3,7 +3,7 @@
     "name": "Shopinvader Seller Access",
     "summary": "This module allows to place orders as seller on the behalf "
     "of another customer.",
-    "version": "14.0.1.0.0",
+    "version": "14.0.2.0.0",
     "category": "Sales",
     "license": "AGPL-3",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
