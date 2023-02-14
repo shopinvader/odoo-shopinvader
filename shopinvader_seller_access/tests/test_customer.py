@@ -137,3 +137,34 @@ class TestCustomer(SellerGroupBackendMixin, TestCustomerCommon):
                 )
 
         self.assertNotEquals(self.partner_2.email, "new_email@shopinvader.com")
+
+    def test_get_available_customers_seller_access_customer_domain(self):
+        self.backend.seller_access_customer_domain = '[("name", "ilike", "lo")]'
+        with self.seller_group():
+            customers = self.service_with_partner.dispatch("available_customers")
+        self.assertEquals(len(customers), 2)
+        self.assertEquals(
+            {customer["name"] for customer in customers},
+            {"Floyd Steward", "Lorraine Douglas"},
+        )
+
+        self.backend.seller_access_customer_domain = "[]"
+        self.partner.seller_available_customer_domain = '[("name", "ilike", "ou")]'
+        with self.seller_group():
+            customers = self.service_with_partner.dispatch("available_customers")
+        self.assertEquals(len(customers), 4)
+        self.assertEquals(
+            {customer["name"] for customer in customers},
+            {"Douglas Fletcher", "Anonymous", "Lorraine Douglas", "The Jackson Group"},
+        )
+
+        self.backend.seller_access_customer_domain = '[("name", "ilike", "lo")]'
+        self.partner.seller_available_customer_domain = '[("name", "ilike", "ou")]'
+        with self.seller_group():
+            customers = self.service_with_partner.dispatch("available_customers")
+        self.assertEquals(len(customers), 1)
+
+        self.assertEquals(
+            {customer["name"] for customer in customers},
+            {"Lorraine Douglas"},
+        )

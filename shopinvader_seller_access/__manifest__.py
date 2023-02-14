@@ -10,6 +10,7 @@
     "author": "Akretion, Odoo Community Association (OCA)",
     "depends": ["shopinvader_auth_jwt"],
     "data": [
+        "views/partner_view.xml",
         "views/shopinvader_backend_view.xml",
     ],
 }

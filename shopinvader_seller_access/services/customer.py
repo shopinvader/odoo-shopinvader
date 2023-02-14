@@ -113,7 +113,14 @@ class CustomerService(Component):
 
     def _available_customers(self):
         return self.env["res.partner"].search(
-            ast.literal_eval(self.shopinvader_backend.seller_access_customer_domain)
+            [
+                *ast.literal_eval(
+                    self.partner.seller_available_customer_domain or "[]"
+                ),
+                *ast.literal_eval(
+                    self.shopinvader_backend.seller_access_customer_domain or "[]"
+                ),
+            ]
         )
 
     @restapi.method(
