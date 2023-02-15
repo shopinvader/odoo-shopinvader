@@ -42,7 +42,7 @@ class AddressService(Component):
         params["parent_id"] = self.partner.id
         partner = self.env["res.partner"].create(self._prepare_params(params))
         self._post_create(partner)
-        return self.search()
+        return {"data": self.get(partner.id)}
 
     def update(self, _id, **params):
         address = self._get(_id)

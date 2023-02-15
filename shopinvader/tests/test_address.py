@@ -49,7 +49,7 @@ class CommonAddressCase(CommonCase):
     def _create_address(self, params):
         existing_res = self.address_service.search(per_page=100)["data"]
         existing_ids = {address["id"] for address in existing_res}
-        self.address_service.dispatch("create", params=params)["data"]
+        self.address_service.dispatch("create", params=params)
         after_res = self.address_service.search(per_page=100)["data"]
         after_ids = {address["id"] for address in after_res}
         created_ids = after_ids - existing_ids
