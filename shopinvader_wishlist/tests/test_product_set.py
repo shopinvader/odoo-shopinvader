@@ -42,10 +42,13 @@ class ProductSet(CommonCase):
                 "quantity": 1,
             }
         )
+        self.assertFalse(self.prod_set.shopinvader_has_line_to_check)
         # Only binding and inactive
         variant = prod.shopinvader_bind_ids[0]
         variant.active = False
-        line.invalidate_cache(["shopinvader_variant_id"])
+        self.prod_set.invalidate_cache(["shopinvader_has_line_to_check"])
+        line.invalidate_cache()
+        self.assertTrue(self.prod_set.shopinvader_has_line_to_check)
         self.assertEqual(line.shopinvader_variant_id, variant)
         # Add a new active binding -> get this instead
         variant2 = self.env["shopinvader.variant"].create(
@@ -57,11 +60,15 @@ class ProductSet(CommonCase):
             }
         )
         self.assertEqual(len(prod.shopinvader_bind_ids), 2)
-        line.invalidate_cache(["shopinvader_variant_id"])
+        self.prod_set.invalidate_cache(["shopinvader_has_line_to_check"])
+        line.invalidate_cache()
+        self.assertFalse(self.prod_set.shopinvader_has_line_to_check)
         self.assertEqual(line.shopinvader_variant_id, variant2)
         # If all variants are inactive, simply get the 1st one
         variant2.active = False
-        line.invalidate_cache(["shopinvader_variant_id"])
+        self.prod_set.invalidate_cache(["shopinvader_has_line_to_check"])
+        line.invalidate_cache()
+        self.assertTrue(self.prod_set.shopinvader_has_line_to_check)
         self.assertEqual(line.shopinvader_variant_id, variant)
 
     @mute_logger("odoo.models.unlink")
