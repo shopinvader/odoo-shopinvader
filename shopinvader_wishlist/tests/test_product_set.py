@@ -42,8 +42,25 @@ class ProductSet(CommonCase):
                 "quantity": 1,
             }
         )
+        # Only binding and inactive
         variant = prod.shopinvader_bind_ids[0]
         variant.active = False
+        line.invalidate_cache(["shopinvader_variant_id"])
+        self.assertEqual(line.shopinvader_variant_id, variant)
+        # Add a new active binding -> get this instead
+        variant2 = self.env["shopinvader.variant"].create(
+            {
+                "shopinvader_product_id": variant.shopinvader_product_id.id,
+                "record_id": prod.id,
+                "active": True,
+                "backend_id": self.backend.id,
+            }
+        )
+        self.assertEqual(len(prod.shopinvader_bind_ids), 2)
+        line.invalidate_cache(["shopinvader_variant_id"])
+        self.assertEqual(line.shopinvader_variant_id, variant2)
+        # If all variants are inactive, simply get the 1st one
+        variant2.active = False
         line.invalidate_cache(["shopinvader_variant_id"])
         self.assertEqual(line.shopinvader_variant_id, variant)
 
