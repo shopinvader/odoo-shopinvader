@@ -238,7 +238,7 @@ class BaseShopinvaderService(AbstractComponent):
     def dispatch(self, method_name, *args, params=None):
         res = super().dispatch(method_name, *args, params=params)
         store_cache = self.shopinvader_response.store_cache
-        if store_cache:
+        if store_cache and isinstance(res, dict):
             values = res.get("store_cache", {})
             values.update(store_cache)
             res["store_cache"] = values
