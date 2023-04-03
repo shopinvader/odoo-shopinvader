@@ -1,7 +1,8 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.1.2
-_src_path: git+https://github.com/shopinvader/shopinvader-addons-repo-template
-black_version: 19.10b0
+_commit: v1.14.2
+_src_path: https://github.com/OCA/oca-addons-repo-template.git
+ci: GitHub
+dependency_installation_mode: PIP
 generate_requirements_txt: true
 odoo_version: '13.0'
 prettify_xml: false
@@ -11,3 +12,4 @@ repo_slug: odoo-shopinvader
 repo_website: https://github.com/shopinvader/odoo-shopinvader
 travis_apt_packages: []
 travis_apt_sources: []
+
