@@ -3627,6 +3627,12 @@ msgid "Short Name"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__show_on_hand_qty_status_button
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__show_on_hand_qty_status_button
+msgid "Show On Hand Qty Status Button"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__signup_expiration
 msgid "Signup Expiration"
 msgstr ""
