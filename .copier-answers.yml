@@ -7,6 +7,7 @@ generate_requirements_txt: true
 github_check_license: true
 github_ci_extra_env:
     PIP_EXTRA_INDEX_URL: https://wheelhouse.shopinvader.com/simple/
+    REST_API_METHOD_FIX_DECORATOR_DEPRECATE_LOG_DISABLE: 1
 github_enable_codecov: true
 github_enable_makepot: true
 github_enable_stale_action: false
