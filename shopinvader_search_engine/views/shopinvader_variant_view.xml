@@ -43,10 +43,15 @@
             <field name="index_id" />
             <field name="sync_state" />
             <separator />
-           <filter
+            <filter
                     string="To Update"
                     name="to_update"
                     domain="[('sync_state','=','to_update')]"
+                />
+            <filter
+                    string="To Check"
+                    name="to_be_checked"
+                    domain="[('sync_state','=','to_be_checked')]"
                 />
             <filter
                     string="Scheduled"
