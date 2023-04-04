@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader image",
     "summary": "Add the export of Image for Shopinvader",
-    "version": "14.0.1.2.1",
+    "version": "14.0.1.3.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
