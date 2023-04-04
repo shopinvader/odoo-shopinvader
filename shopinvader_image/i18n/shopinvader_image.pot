@@ -14,6 +14,27 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_image
+#: model:ir.model.fields,help:shopinvader_image.field_shopinvader_backend__image_data_include_cdn_url
+msgid ""
+"\n"
+"Enable this flag to control\n"
+"whether the CDN URL must be included or not\n"
+"in the URL stored in images' JSON data.\n"
+"\n"
+"OFF: the URL will NOT include the CDN URL (eg: only the relative path);\n"
+"ON: the URL will include the CDN URL;\n"
+"\n"
+"Excluding the URL can be useful to:\n"
+"\n"
+"1. reduce payload size w/o duplicating data\n"
+"2. allow using the same storage w/ different CDN\n"
+"\n"
+"If you use this option,\n"
+"take care of adding the CDN URL on your frontend\n"
+"to all images' relative path.\n"
+msgstr ""
+
+#. module: shopinvader_image
 #: model:ir.model.fields,field_description:shopinvader_image.field_shopinvader_backend__shopinvader_category_resize_ids
 msgid "Category Image Size"
 msgstr ""
@@ -49,6 +70,11 @@ msgstr ""
 #. module: shopinvader_image
 #: model:ir.ui.menu,name:shopinvader_image.shopinvader_image_resize_menu
 msgid "Image Resize"
+msgstr ""
+
+#. module: shopinvader_image
+#: model:ir.model.fields,field_description:shopinvader_image.field_shopinvader_backend__image_data_include_cdn_url
+msgid "Image URLs w/ CDN"
 msgstr ""
 
 #. module: shopinvader_image
