@@ -255,6 +255,11 @@ msgstr ""
 
 #. module: shopinvader_search_engine
 #: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
+msgid "To Check"
+msgstr ""
+
+#. module: shopinvader_search_engine
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
 #: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
 msgid "To Update"
 msgstr ""
