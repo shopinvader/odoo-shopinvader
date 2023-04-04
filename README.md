@@ -46,7 +46,7 @@ addon | version | maintainers | summary
 [shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easily manage Shopinvader bindings for your company backend.
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.3.0.1 |  | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 14.0.1.0.2 |  | Guest mode for Shopinvader
-[shopinvader_image](shopinvader_image/) | 14.0.1.2.1 |  | Add the export of Image for Shopinvader
+[shopinvader_image](shopinvader_image/) | 14.0.1.3.0 |  | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.1 |  | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.2.0 |  | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.1.0 |  | Shopinvader Lead Management
