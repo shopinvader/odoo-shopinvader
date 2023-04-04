@@ -92,7 +92,7 @@ addon | version | maintainers | summary
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.1.0 |  | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 |  | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.3.0 |  | ShopInvader - Sale profile
-[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.4.0 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.4.1 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.1.0 |  | Handle shop wishlist
 
 
