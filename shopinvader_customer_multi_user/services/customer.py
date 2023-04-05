@@ -44,6 +44,7 @@ class CustomerService(Component):
         info = super()._to_customer_info(partner)
         if not self.shopinvader_backend.customer_multi_user:
             return info
+        info["is_company"] = partner.is_company
         if partner.is_company:
             info["company_token"] = partner.invader_user_token
         invader_partner = self.invader_partner_user

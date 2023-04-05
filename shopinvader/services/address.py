@@ -72,7 +72,8 @@ class AddressService(Component):
         return self._to_json(self._get(_id))
 
     def _store_cache_needed(self, partner):
-        # TODO remove this kind of checks
+        # TODO remove this kind of checks in v15.
+        # The frontend can now use `customer/update` to update the main partner.
         return partner.address_type == "profile"
 
     # Validator
@@ -155,6 +156,9 @@ class AddressService(Component):
             "opt_in": {"coerce": to_bool, "type": "boolean"},
             "opt_out": {"coerce": to_bool, "type": "boolean"},
             "lang": {"type": "string", "required": False},
+            "vat": {"type": "string", "required": False, "nullable": True},
+            "company_name": {"type": "string", "required": False, "nullable": True},
+            "function": {"type": "string", "required": False, "nullable": True},
         }
         return res
 
