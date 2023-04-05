@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
+import json
 import logging
 
 from odoo import _
@@ -15,6 +16,12 @@ from odoo.addons.component.core import AbstractComponent
 from .. import shopinvader_response, utils
 
 _logger = logging.getLogger(__name__)
+
+
+def to_dict(val):
+    if isinstance(val, dict):
+        return val
+    return json.loads(val)
 
 
 class BaseShopinvaderService(AbstractComponent):
@@ -109,7 +116,7 @@ class BaseShopinvaderService(AbstractComponent):
                 "type": "integer",
             },
             "domain": {"type": "list", "nullable": True},
-            "scope": {"type": "dict", "nullable": True},
+            "scope": {"type": "dict", "coerce": to_dict, "nullable": True},
             "order": {"type": "string", "nullable": True},
         }
 
