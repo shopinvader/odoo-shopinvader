@@ -69,3 +69,20 @@ class SearchCase(CommonSearchCase):
         msg = "Invalid scope"
         with self.assertRaisesRegex(UserError, msg):
             self.address_service.dispatch("search", params={"scope": scope})
+
+    def test_search_many2one(self):
+        scope = {"country_id": self.env.ref("base.us").id}
+        res = self.address_service.dispatch("search", params={"scope": scope})["data"]
+        self.assertEqual(len(res), 1)
+        self.assertEqual(res[0]["id"], self.address_2.id)
+
+    def test_search_many2one_from_url(self):
+        # See https://github.com/OCA/rest-framework/blob/bbc8a1f26d59eef75507da1a0ce4ca31a261c70d/base_rest/http.py#L148-L152 # noqa
+        import pyquerystring  # base_rest dependency
+
+        params = pyquerystring.parse(
+            "scope[country_id]=%d" % self.env.ref("base.us").id
+        )
+        res = self.address_service.dispatch("search", params=params)["data"]
+        self.assertEqual(len(res), 1)
+        self.assertEqual(res[0]["id"], self.address_2.id)
