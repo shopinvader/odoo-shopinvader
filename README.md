@@ -22,7 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.1 |  | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.23.0 |  | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.24.0 |  | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 |  | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 |  | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.1 |  | Shopinvader API_KEY Authentication
@@ -33,13 +33,13 @@ addon | version | maintainers | summary
 [shopinvader_contact_address_default](shopinvader_contact_address_default/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates `partner_contact_address_default` with Shopinvader
 [shopinvader_customer_activity](shopinvader_customer_activity/) | 14.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Log the customer's shop activity
 [shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 |  | Glue module to expose the invoicing_mode field to shopinvader
-[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.4.0 |  | Enable registration of multiple users per each company customer.
+[shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.5.0 |  | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_company_group](shopinvader_customer_multi_user_company_group/) | 14.0.1.0.0 |  | Share shopinvader records within the Company Group
 [shopinvader_customer_multi_user_validate](shopinvader_customer_multi_user_validate/) | 14.0.1.1.0 |  | Glue module for `shopinvader_customer_validate` and `shopinvader_customer_multi_user`.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 14.0.1.1.0 |  | Integrate customer multi user and wishlist.
 [shopinvader_customer_price](shopinvader_customer_price/) | 14.0.1.0.2 |  | Expose customer's specific prices.
 [shopinvader_customer_price_wishlist](shopinvader_customer_price_wishlist/) | 14.0.1.1.0 |  | Expose customer's specific prices.
-[shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.2.3 |  | Provide configuration and machinery to validate customers.
+[shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.3.0 |  | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.3.0 |  | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 14.0.1.0.2 |  | Shopinvader addons to let user define delivery instructions
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 14.0.1.0.0 |  | Shopinvader delivery state
