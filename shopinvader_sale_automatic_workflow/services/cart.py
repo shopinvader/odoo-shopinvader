@@ -10,6 +10,7 @@ class CartService(Component):
 
     def _prepare_cart(self, **cart_params):
         res = super()._prepare_cart(**cart_params)
-        if self.shopinvader_backend.workflow_process_id:
-            res["workflow_process_id"] = self.shopinvader_backend.workflow_process_id.id
+        backend = self.shopinvader_backend
+        if "workflow_process_id" not in cart_params and backend.workflow_process_id:
+            res["workflow_process_id"] = backend.workflow_process_id.id
         return res
