@@ -11,60 +11,58 @@
             >
                 <field name="state" />
             </xpath>
-            <field name="shopinvader_bind_ids" position="after">
+            <group name="shopinvader_options" position="inside">
                 <group name="validation" string="Validation">
-                    <group>
-                        <field name="address_type" readonly="1" />
-                        <field name="has_shopinvader_user" invisible="1" />
-                        <field name="has_shopinvader_user_active" invisible="1" />
-                        <field
-                            name="has_shopinvader_user_to_validate"
-                            attrs="{'invisible':[('has_shopinvader_user_to_validate','=',False)]}"
-                        />
-                        <field
-                            name="is_shopinvader_active"
-                            readonly="1"
-                            attrs="{'invisible':[('has_shopinvader_user','=',True)]}"
-                        />
-                        <field name="display_validate_address" invisible="1" />
+                    <field name="address_type" readonly="1" />
+                    <field name="has_shopinvader_user" invisible="1" />
+                    <field name="has_shopinvader_user_active" invisible="1" />
+                    <field
+                        name="has_shopinvader_user_to_validate"
+                        attrs="{'invisible':[('has_shopinvader_user_to_validate','=',False)]}"
+                    />
+                    <field
+                        name="is_shopinvader_active"
+                        readonly="1"
+                        attrs="{'invisible':[('has_shopinvader_user','=',True)]}"
+                    />
+                    <field name="display_validate_address" invisible="1" />
+                    <button
+                        class="btn btn-sm btn-warning"
+                        name="action_shopinvader_validate_customer"
+                        type="object"
+                        title="Validate user for Shopinvader"
+                        attrs="{'invisible':['|', ('has_shopinvader_user_active', '=', True), ('has_shopinvader_user', '=', False) ]}"
+                        icon="fa-user-o"
+                    >
+                        Shop: validate user
+                    </button>
+                    <div
+                        attrs="{'invisible':[('display_validate_address', '=', False)]}"
+                    >
+                        <button
+                            class="btn btn-sm btn-success"
+                            name="action_shopinvader_validate_address"
+                            type="object"
+                            title="Validate address for Shopinvader"
+                            attrs="{'invisible':[('is_shopinvader_active', '=', True)]}"
+                            icon="fa-address-card-o"
+                        >
+                        Shop: validate address
+                        </button>
                         <button
                             class="btn btn-sm btn-warning"
-                            name="action_shopinvader_validate_customer"
+                            name="action_shopinvader_validate_address"
                             type="object"
-                            title="Validate user for Shopinvader"
-                            attrs="{'invisible':['|', ('has_shopinvader_user_active', '=', True), ('has_shopinvader_user', '=', False) ]}"
-                            icon="fa-user-o"
+                            context="{'default_next_state': 'inactive'}"
+                            title="Deactivate address for Shopinvader"
+                            attrs="{'invisible':[('is_shopinvader_active', '=', False)]}"
+                            icon="fa-address-card-o"
                         >
-                          Shop: validate user
+                        Shop: deactivate address
                         </button>
-                        <div
-                            attrs="{'invisible':[('display_validate_address', '=', False)]}"
-                        >
-                          <button
-                                class="btn btn-sm btn-success"
-                                name="action_shopinvader_validate_address"
-                                type="object"
-                                title="Validate address for Shopinvader"
-                                attrs="{'invisible':[('is_shopinvader_active', '=', True)]}"
-                                icon="fa-address-card-o"
-                            >
-                            Shop: validate address
-                          </button>
-                          <button
-                                class="btn btn-sm btn-warning"
-                                name="action_shopinvader_validate_address"
-                                type="object"
-                                context="{'default_next_state': 'inactive'}"
-                                title="Deactivate address for Shopinvader"
-                                attrs="{'invisible':[('is_shopinvader_active', '=', False)]}"
-                                icon="fa-address-card-o"
-                            >
-                            Shop: deactivate address
-                          </button>
-                        </div>
-                    </group>
+                    </div>
                 </group>
-            </field>
+            </group>
             <xpath expr="//field[@name='child_ids']" position="before">
                 <field name="has_shopinvader_user_to_validate" invisible="1" />
                 <field name="has_shopinvader_address_to_validate" invisible="1" />
@@ -191,5 +189,4 @@
         action="action_sale_shopinvader_addresses_to_validate"
         sequence="90"
     />
-
 </odoo>
