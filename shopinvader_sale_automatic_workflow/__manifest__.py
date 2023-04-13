@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Sale Automatic Workflow",
     "summary": "Use sale automatic workflows for Shopinvader orders",
-    "version": "14.0.1.0.1",
+    "version": "14.0.1.1.0",
     "author": "Camptocamp SA",
     "maintainers": ["ivantodorovich"],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
