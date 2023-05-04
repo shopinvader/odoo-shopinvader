@@ -231,8 +231,29 @@ class WishlistService(Component):
     def _validator_add_item(self):
         return self._validator_line_schema()
 
+    def _validator_update_item(self):
+        return {
+            "product_id": {
+                "coerce": to_int,
+                "required": True,
+                "type": "integer",
+            },
+            "quantity": {"coerce": float, "type": "float", "default": 1.0},
+            "sequence": {"coerce": int, "type": "integer", "required": False},
+            "line_id": {"coerce": int, "type": "integer", "required": False},
+        }
+
     def _validator_update_items(self):
-        return self._validator_add_items()
+        return {
+            "lines": {
+                "type": "list",
+                "required": True,
+                "schema": {
+                    "type": "dict",
+                    "schema": self._validator_update_item(),
+                },
+            }
+        }
 
     @data_mode
     def _validator_move_items(self):
