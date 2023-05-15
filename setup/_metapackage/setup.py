@@ -52,6 +52,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_pending_cart_reminder',
         'odoo14-addon-shopinvader_portal_mode',
         'odoo14-addon-shopinvader_pos',
+        'odoo14-addon-shopinvader_price_per_qty',
         'odoo14-addon-shopinvader_product_attribute_set',
         'odoo14-addon-shopinvader_product_brand',
         'odoo14-addon-shopinvader_product_brand_image',
