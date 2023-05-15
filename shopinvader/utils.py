@@ -3,6 +3,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from contextlib import contextmanager
 
+from odoo.tools import float_repr
+
 from odoo.addons.base_rest.controllers.main import _PseudoCollection
 from odoo.addons.component.core import WorkContext
 
@@ -79,3 +81,12 @@ def work_on_service_with_partner(env, invader_partner, **kw):
     params.update(kw)
     with work_on_service(env, **params) as work:
         yield work
+
+
+def float_round(value, dp):
+    # be carefull odoo rounding implementation do not return the shortest
+    # representation of a float this mean if the price_unit is 211.70
+    # you will have 211.70000000000002
+    # See issue: https://github.com/shopinvader/odoo-shopinvader/issues/1041
+    # Odony exemple: https://gist.github.com/odony/5269a695545902e7e23e761e20a9ec8c
+    return float(float_repr(value, dp))
