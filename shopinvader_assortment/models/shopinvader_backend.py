@@ -10,8 +10,8 @@ class ShopinvaderBackend(models.Model):
     _inherit = "shopinvader.backend"
 
     product_manual_binding = fields.Boolean(default=True)
-    product_assortment_id = fields.Many2one(
-        string="Product Assortment",
+    product_assortment_ids = fields.Many2many(
+        string="Product Assortments",
         comodel_name="ir.filters",
         help="Bind only products matching with the assortment domain",
         domain=[("is_assortment", "=", True)],
@@ -24,15 +24,18 @@ class ShopinvaderBackend(models.Model):
         shopinvader_variant_obj = self.env["shopinvader.variant"]
         binding_wizard_obj = self.env["shopinvader.variant.binding.wizard"]
         unbinding_wizard_obj = self.env["shopinvader.variant.unbinding.wizard"]
-        assortment_domain = self.product_assortment_id._get_eval_domain()
-        assortment_products = product_obj.search(assortment_domain)
-        variants_bound = shopinvader_variant_obj.search(
+        global_assortment_products = product_obj
+        global_variant_bound = shopinvader_variant_obj.search(
             [("backend_id", "=", self.id)]
         )
-        products_bound = variants_bound.mapped("record_id")
-        products_to_bind = assortment_products - products_bound
-        products_to_unbind = products_bound - assortment_products
-        variants_to_unbind = variants_bound.filtered(
+        global_products_bound = global_variant_bound.mapped("record_id")
+        for assortment in self.product_assortment_ids:
+            assortment_domain = assortment._get_eval_domain()
+            assortment_products = product_obj.search(assortment_domain)
+            global_assortment_products |= assortment_products
+        products_to_bind = global_assortment_products - global_products_bound
+        products_to_unbind = global_products_bound - global_assortment_products
+        variants_to_unbind = global_variant_bound.filtered(
             lambda x: x.record_id.id in products_to_unbind.ids
         )
 
@@ -65,7 +68,7 @@ class ShopinvaderBackend(models.Model):
 
     def force_recompute_all_binding_index(self):
         records = self.filtered(
-            lambda r: not r.product_manual_binding and r.product_assortment_id
+            lambda r: not r.product_manual_binding and r.product_assortment_ids
         )
         for record in records:
             record._autobind_product_from_assortment()

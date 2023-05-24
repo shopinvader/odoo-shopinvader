@@ -18,7 +18,7 @@
             <page name="products" position="inside">
                 <group name="product_assortment" string="Assortment">
                     <field name="product_manual_binding"/>
-                    <field name="product_assortment_id"
+                    <field name="product_assortment_ids" widget="many2many_tags"
                            attrs="{'invisible': [('product_manual_binding', '=', True)],
                                    'required': [('product_manual_binding', '!=', True)]}"
                            context="{'form_view_ref': 'product_assortment.product_assortment_view_form',
