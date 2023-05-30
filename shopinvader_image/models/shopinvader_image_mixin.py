@@ -30,9 +30,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
 
     def _compute_images(self):
         # Force computation if needed
-        self.filtered(
-            lambda x: x._images_must_recompute()
-        )._compute_images_stored()
+        self.filtered(lambda x: x._images_must_recompute())._compute_images_stored()
         for record in self:
             record.images = record.images_stored
 
@@ -58,9 +56,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
         resize_scales = tuple(
             self._resize_scales().mapped(lambda r: (r.key, r.size_x, r.size_y))
         )
-        images_timestamp = self[self._image_field].mapped(
-            "image_id.write_date"
-        )
+        images_timestamp = self[self._image_field].mapped("image_id.write_date")
         # fmt: off
         # FIXME: may vary by _get_image_url_key -> is this needed for real?
         url_key = (self.display_name, )

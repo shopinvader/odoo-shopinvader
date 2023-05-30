@@ -15,9 +15,7 @@ class StockMove(models.Model):
         # Maybe we can be more restrictive
         # depending of the move location and destination
         # For now we take all moves and bound products
-        return self.mapped("product_id").filtered(
-            lambda p: p.is_shopinvader_binded
-        )
+        return self.mapped("product_id").filtered(lambda p: p.is_shopinvader_binded)
 
     def _jobify_product_stock_update(self):
         """
@@ -27,9 +25,7 @@ class StockMove(models.Model):
         """
         products = self._get_product_to_update()
         if products:
-            description = _(
-                "Update shopinvader variants (stock update trigger)"
-            )
+            description = _("Update shopinvader variants (stock update trigger)")
             products.with_delay(
                 description=description, identity_key=identity_exact
             ).synchronize_all_binding_stock_level()

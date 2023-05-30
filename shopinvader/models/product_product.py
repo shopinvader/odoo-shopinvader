@@ -51,15 +51,13 @@ class ProductProduct(models.Model):
             rec.is_shopinvader_binded = binded
 
     def _inverse_active(self):
-        self.filtered(lambda p: not p.active).mapped(
-            "shopinvader_bind_ids"
-        ).write({"active": False})
+        self.filtered(lambda p: not p.active).mapped("shopinvader_bind_ids").write(
+            {"active": False}
+        )
 
     def _compute_shopinvader_backend_ids(self):
         for rec in self:
-            rec.shopinvader_backend_ids = rec.mapped(
-                "shopinvader_bind_ids.backend_id"
-            )
+            rec.shopinvader_backend_ids = rec.mapped("shopinvader_bind_ids.backend_id")
 
     def _add_to_cart_allowed(self, backend, partner=None):
         """Check if you can add current product to a cart.
@@ -67,9 +65,7 @@ class ProductProduct(models.Model):
         By default: make sure there's a binding for given backend.
         """
         return bool(
-            self.shopinvader_bind_ids.filtered(
-                lambda x: x.backend_id == backend
-            )
+            self.shopinvader_bind_ids.filtered(lambda x: x.backend_id == backend)
         )
 
     def _get_invader_variant(self, backend, lang):

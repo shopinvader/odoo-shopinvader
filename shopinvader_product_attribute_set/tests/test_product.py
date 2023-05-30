@@ -8,9 +8,7 @@ from odoo.addons.shopinvader.tests.common import ProductCommonCase
 class ProductCase(ProductCommonCase):
     def setUp(self):
         super(ProductCase, self).setUp()
-        self.attr_set = self.env.ref(
-            "product_attribute_set.computer_attribute_set"
-        )
+        self.attr_set = self.env.ref("product_attribute_set.computer_attribute_set")
         self.processor = self.env.ref(
             "product_attribute_set.computer_processor_attribute_option_1"
         )
@@ -86,16 +84,12 @@ class ProductCase(ProductCommonCase):
         )
 
     def test_product_attributes_empty_select(self):
-        self.product.write(
-            {"attribute_set_id": self.attr_set.id, "x_processor": False}
-        )
+        self.product.write({"attribute_set_id": self.attr_set.id, "x_processor": False})
 
         self.assertEqual(self.shopinvader_variant.attributes["processor"], "")
 
         processor_field = {}
-        for field in self.shopinvader_variant.structured_attributes[0][
-            "fields"
-        ]:
+        for field in self.shopinvader_variant.structured_attributes[0]["fields"]:
             if field["key"] == "processor":
                 processor_field = field
         self.assertEqual(
@@ -129,9 +123,7 @@ class ProductCase(ProductCommonCase):
         self.env["attribute.attribute"].create(
             {
                 "nature": "native",
-                "field_id": self.env.ref(
-                    "product.field_product_template__categ_id"
-                ).id,
+                "field_id": self.env.ref("product.field_product_template__categ_id").id,
                 "attribute_set_ids": [(6, 0, [self.attr_set.id])],
                 "attribute_group_id": self.template_group.id,
             }
@@ -146,9 +138,7 @@ class ProductCase(ProductCommonCase):
         self.env["attribute.attribute"].create(
             {
                 "nature": "native",
-                "field_id": self.env.ref(
-                    "product.field_product_template__rental"
-                ).id,
+                "field_id": self.env.ref("product.field_product_template__rental").id,
                 "attribute_set_ids": [(6, 0, [self.attr_set.id])],
                 "attribute_group_id": self.template_group.id,
             }
@@ -158,9 +148,7 @@ class ProductCase(ProductCommonCase):
             self.shopinvader_variant.attributes["rental"], self.product.rental
         )
         rental_field = {}
-        for field in self.shopinvader_variant.structured_attributes[1][
-            "fields"
-        ]:
+        for field in self.shopinvader_variant.structured_attributes[1]["fields"]:
             if field["key"] == "rental":
                 rental_field = field
         self.assertEqual(
@@ -177,34 +165,29 @@ class ProductCase(ProductCommonCase):
         self.env["attribute.attribute"].create(
             {
                 "nature": "native",
-                "field_id": self.env.ref(
-                    "product.field_product_template__type"
-                ).id,
+                "field_id": self.env.ref("product.field_product_template__type").id,
                 "attribute_set_ids": [(6, 0, [self.attr_set.id])],
                 "attribute_group_id": self.template_group.id,
             }
         )
         self.product.write({"attribute_set_id": self.attr_set.id})
         self.assertEqual(
-            self.shopinvader_variant.attributes["type"], self.product.type,
+            self.shopinvader_variant.attributes["type"],
+            self.product.type,
         )
 
     def test_native_attribute_float(self):
         self.env["attribute.attribute"].create(
             {
                 "nature": "native",
-                "field_id": self.env.ref(
-                    "product.field_product_template__weight"
-                ).id,
+                "field_id": self.env.ref("product.field_product_template__weight").id,
                 "attribute_set_ids": [(6, 0, [self.attr_set.id])],
                 "attribute_group_id": self.template_group.id,
             }
         )
         self.product.write({"attribute_set_id": self.attr_set.id})
         weight_field = {}
-        for field in self.shopinvader_variant.structured_attributes[1][
-            "fields"
-        ]:
+        for field in self.shopinvader_variant.structured_attributes[1]["fields"]:
             if field["key"] == "weight":
                 weight_field = field
         self.assertEqual(
@@ -217,5 +200,6 @@ class ProductCase(ProductCommonCase):
             },
         )
         self.assertEqual(
-            self.shopinvader_variant.attributes["weight"], self.product.weight,
+            self.shopinvader_variant.attributes["weight"],
+            self.product.weight,
         )

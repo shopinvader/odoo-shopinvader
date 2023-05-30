@@ -90,6 +90,4 @@ class LocomotiveBackendAdapter(Component):
 
     def write(self, handle, vals):
         site = self._get_site(handle)
-        return self.resource.write(
-            site["_id"], {"metafields": json.dumps(vals)}
-        )
+        return self.resource.write(site["_id"], {"metafields": json.dumps(vals)})

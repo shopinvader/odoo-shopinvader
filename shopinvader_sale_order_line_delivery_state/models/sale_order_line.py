@@ -24,11 +24,7 @@ class SaleOrderLine(models.Model):
     def _compute_shopinvader_delivery_state_depends(self):
         return ("delivery_state",)
 
-    @api.depends(
-        lambda self: self._compute_shopinvader_delivery_state_depends()
-    )
+    @api.depends(lambda self: self._compute_shopinvader_delivery_state_depends())
     def _compute_shopinvader_delivery_state(self):
         for record in self:
-            record.shopinvader_delivery_state = (
-                record._get_shopinvader_delivery_state()
-            )
+            record.shopinvader_delivery_state = record._get_shopinvader_delivery_state()

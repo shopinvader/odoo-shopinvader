@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <record id="product_filter_view_form" model="ir.ui.view">
@@ -6,15 +6,24 @@
         <field name="arch" type="xml">
             <form string="Filter">
                 <group>
-                    <field name="name"/>
-                    <field name="based_on"/>
-                    <field name="field_id" attrs="{'invisible': [('based_on', '!=', 'field')],
-                                                   'required': [('based_on', '=', 'field')]}"/>
-                    <field name="variant_attribute_id" attrs="{'invisible': [('based_on', '!=', 'variant_attribute')],
-                                                   'required': [('based_on', '=', 'variant_attribute')]}"/>
-                    <field name="path"  attrs="{'invisible': [('based_on', '!=', 'field')]}" />
-                    <separator string="Help"/>
-                    <field name="help" colspan="4" nolabel="1"/>
+                    <field name="name" />
+                    <field name="based_on" />
+                    <field
+                        name="field_id"
+                        attrs="{'invisible': [('based_on', '!=', 'field')],
+                                                   'required': [('based_on', '=', 'field')]}"
+                    />
+                    <field
+                        name="variant_attribute_id"
+                        attrs="{'invisible': [('based_on', '!=', 'variant_attribute')],
+                                                   'required': [('based_on', '=', 'variant_attribute')]}"
+                    />
+                    <field
+                        name="path"
+                        attrs="{'invisible': [('based_on', '!=', 'field')]}"
+                    />
+                    <separator string="Help" />
+                    <field name="help" colspan="4" nolabel="1" />
                 </group>
             </form>
         </field>
@@ -24,8 +33,8 @@
         <field name="model">product.filter</field>
         <field name="arch" type="xml">
             <tree string="Filter">
-                <field name="sequence" widget="handle"/>
-                <field name="name"/>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
             </tree>
         </field>
     </record>
@@ -37,9 +46,10 @@
     </record>
 
     <menuitem
-            id="menu_product_filter_action"
-            action="product_filter_action"
-            parent="sale.prod_config_main"
-            sequence="15"/>
+        id="menu_product_filter_action"
+        action="product_filter_action"
+        parent="sale.prod_config_main"
+        sequence="15"
+    />
 
 </odoo>

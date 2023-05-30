@@ -68,7 +68,9 @@
         <field name="view_id" ref="view_shop_order_tree" />
         <field name="search_view_id" ref="sale.sale_order_view_search_inherit_sale" />
         <field name="context">{"default_typology": "sale"}</field>
-        <field name="domain">[("typology", "=", "sale"),("shopinvader_backend_id", "!=", False)]</field>
+        <field
+            name="domain"
+        >[("typology", "=", "sale"),("shopinvader_backend_id", "!=", False)]</field>
     </record>
 
     <menuitem

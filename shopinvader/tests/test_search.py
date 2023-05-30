@@ -47,29 +47,19 @@ class SearchCase(CommonSearchCase):
         self.address.name = "TEST ADDR 1"
         self.address_2.name = "TEST ADDR 2 WHATEVER"
         scope = {"name.like": "TEST%"}
-        res = self.address_service.dispatch("search", params={"scope": scope})[
-            "data"
-        ]
+        res = self.address_service.dispatch("search", params={"scope": scope})["data"]
         found = [(x["id"], x["name"]) for x in res]
-        expected = [
-            (x["id"], x["name"]) for x in self.address + self.address_2
-        ]
+        expected = [(x["id"], x["name"]) for x in self.address + self.address_2]
         self.assertEqual(found, expected)
 
         scope = {"name.ilike": "test%"}
-        res = self.address_service.dispatch("search", params={"scope": scope})[
-            "data"
-        ]
+        res = self.address_service.dispatch("search", params={"scope": scope})["data"]
         found = [(x["id"], x["name"]) for x in res]
-        expected = [
-            (x["id"], x["name"]) for x in self.address + self.address_2
-        ]
+        expected = [(x["id"], x["name"]) for x in self.address + self.address_2]
         self.assertEqual(found, expected)
 
         scope = {"name.ilike": "%whatever"}
-        res = self.address_service.dispatch("search", params={"scope": scope})[
-            "data"
-        ]
+        res = self.address_service.dispatch("search", params={"scope": scope})["data"]
         found = [(x["id"], x["name"]) for x in res]
         expected = [(x["id"], x["name"]) for x in self.address_2]
         self.assertEqual(found, expected)

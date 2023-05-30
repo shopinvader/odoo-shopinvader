@@ -74,7 +74,9 @@ class ProductImageImportWizard(models.Model):
     filename = fields.Char()
     file_csv = fields.Binary(string="CSV file", required=True)
     csv_delimiter = fields.Char(
-        string="CSV file delimiter", default=",", required=True,
+        string="CSV file delimiter",
+        default=",",
+        required=True,
     )
     csv_column_default_code = fields.Char(
         string="Product Reference column",
@@ -168,9 +170,7 @@ class ProductImageImportWizard(models.Model):
         if self.file_csv:
             return base64.b64decode(self.file_csv)
         elif self.external_csv_path:
-            return self.source_storage_backend_id._get_bin_data(
-                self.external_csv_path
-            )
+            return self.source_storage_backend_id._get_bin_data(self.external_csv_path)
 
     def _get_lines(self):
         lines = []
@@ -185,9 +185,7 @@ class ProductImageImportWizard(models.Model):
             csv.field_size_limit(sys.maxsize)
             for row in reader:
                 try:
-                    line = {
-                        key: row[column] for key, column in mapping.items()
-                    }
+                    line = {key: row[column] for key, column in mapping.items()}
                 except KeyError as e:
                     _logger.error(e)
                     raise exceptions.UserError(_("CSV Schema Incompatible"))
@@ -214,9 +212,7 @@ class ProductImageImportWizard(models.Model):
 
     def do_import(self, lines=None, last_chunk=False):
         lines = lines or self._get_lines()
-        report = self._do_import(
-            lines, self.product_model, options=self._get_options()
-        )
+        report = self._do_import(lines, self.product_model, options=self._get_options())
         # Refresh report
         extendable_keys = [
             "created",
@@ -280,9 +276,7 @@ class ProductImageImportWizard(models.Model):
         if missing_tags:
             if options.get("create_missing_tags"):
                 for tag_name in missing_tags:
-                    tag_by_name[tag_name] = tag_obj.create(
-                        {"name": tag_name}
-                    ).id
+                    tag_by_name[tag_name] = tag_obj.create({"name": tag_name}).id
             else:
                 report["missing_tags"] = sorted(missing_tags)
 
@@ -293,9 +287,7 @@ class ProductImageImportWizard(models.Model):
             if not file_vals:
                 report["file_not_found"].add(prod["default_code"])
                 continue
-            file_vals.update(
-                {"name": file_vals["name"], "alt_name": file_vals["name"]}
-            )
+            file_vals.update({"name": file_vals["name"], "alt_name": file_vals["name"]})
             # storage_file = file_obj.create(file_vals)
             tag_id = tag_by_name.get(line["tag_name"])
 
@@ -356,17 +348,11 @@ class ProductImageImportWizard(models.Model):
 
     @api.model
     def _cron_cleanup_obsolete(self, days=7):
-        from_date = fields.Datetime.now().replace(
-            hour=23, minute=59, second=59
-        )
+        from_date = fields.Datetime.now().replace(hour=23, minute=59, second=59)
         limit_date = date_utils.subtract(from_date, days)
-        records = self.search(
-            [("state", "=", "done"), ("done_on", "<=", limit_date)]
-        )
+        records = self.search([("state", "=", "done"), ("done_on", "<=", limit_date)])
         records.unlink()
-        _logger.info(
-            "Cleanup obsolete images import. %d records found.", len(records)
-        )
+        _logger.info("Cleanup obsolete images import. %d records found.", len(records))
 
     def _report_label_for(self, key):
         labels = {

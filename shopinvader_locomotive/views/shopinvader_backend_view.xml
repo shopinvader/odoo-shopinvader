@@ -1,16 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 Akretion
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
 
     <record id="shopinvader_backend_view_form" model="ir.ui.view">
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id"
-               ref="shopinvader.shopinvader_backend_view_form"/>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
         <field name="arch" type="xml">
             <page name="developer" position="inside">
                 <group name="locomotive" string="LocomotiveCMS">
-                    <span>Synchronize metadata push data managed by odoo and used into locomotive.
+                    <span
+                    >Synchronize metadata push data managed by odoo and used into locomotive.
                         For ex: countries, currencies. If some required metadata
                         (erp url and credentials, search indexes configuration, ...) are not set into locomotive,
                         The process will also push default values for these fields. Nevertheless, these specific
@@ -21,7 +21,8 @@
                         type="object"
                         string="Synchronize Metadata"
                         class="oe_highlight"
-                        groups="shopinvader.group_shopinvader_manager"/>
+                        groups="shopinvader.group_shopinvader_manager"
+                    />
                     <span>
                         Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>
                     <button
@@ -29,25 +30,27 @@
                         type="object"
                         string="Reset site settings"
                         class="oe_highlight"
-                        groups="shopinvader.group_shopinvader_manager"/>
+                        groups="shopinvader.group_shopinvader_manager"
+                    />
                 </group>
             </page>
             <group name="config" position="after">
                 <group name="locomotive_credentials" string="Locomotive Credentials">
-                    <field name="username" required="1" string="Email" colspan="2"/>
-                    <field name="password" required="1" password="True" colspan="2"/>
-                    <field name="handle" required="1" colspan="2"/>
+                    <field name="username" required="1" string="Email" colspan="2" />
+                    <field name="password" required="1" password="True" colspan="2" />
+                    <field name="handle" required="1" colspan="2" />
                 </group>
             </group>
             <field name="location" position="attributes">
-                <attribute name="required" eval="True"/>
+                <attribute name="required" eval="True" />
             </field>
             <field name="pricelist_id" position="after">
                 <field
                     name="currency_ids"
                     widget="many2many_tags"
                     colspan="2"
-                    required="1" />
+                    required="1"
+                />
             </field>
         </field>
     </record>

@@ -14,9 +14,9 @@ class SaleService(Component):
         portal_mode = self.shopinvader_backend.sale_order_portal_mode
         if not portal_mode:
             return super()._get_base_search_domain()
-        domain = self._default_domain_for_partner_records(
-            with_backend=False
-        ) + [("state", "in", self._portal_mode_sale_states())]
+        domain = self._default_domain_for_partner_records(with_backend=False) + [
+            ("state", "in", self._portal_mode_sale_states())
+        ]
         backend_domain = [
             "|",
             ("shopinvader_backend_id", "=", self.shopinvader_backend.id),

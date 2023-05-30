@@ -21,6 +21,5 @@ class ShopinvaderVariant(models.Model):
     def _skip_stock_qty_update(self):
         config = self.backend_id.stock_level_config
         return config == "only_state" or (
-            config == "state_and_low_qty"
-            and self.stock_state != "in_limited_stock"
+            config == "state_and_low_qty" and self.stock_state != "in_limited_stock"
         )

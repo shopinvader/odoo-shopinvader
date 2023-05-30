@@ -18,16 +18,12 @@ class TestResPartner(SavepointComponentCase):
         cls.backend2 = cls.env.ref("shopinvader.backend_2")
 
     def test_unique_email_partner(self):
-        self.assertFalse(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
-        )
+        self.assertFalse(self.env["res.partner"]._is_partner_duplicate_prevented())
         partner_1 = self.env["res.partner"].create(
             {
                 "email": self.unique_email,
                 "name": "test partner",
-                "shopinvader_bind_ids": [
-                    (0, False, {"backend_id": self.backend1.id})
-                ],
+                "shopinvader_bind_ids": [(0, False, {"backend_id": self.backend1.id})],
             }
         )
         # by default we can create partner with shopinvader user with same email
@@ -36,9 +32,7 @@ class TestResPartner(SavepointComponentCase):
             {
                 "email": self.unique_email,
                 "name": "test partner 2",
-                "shopinvader_bind_ids": [
-                    (0, False, {"backend_id": self.backend2.id})
-                ],
+                "shopinvader_bind_ids": [(0, False, {"backend_id": self.backend2.id})],
             }
         )
 
@@ -51,9 +45,7 @@ class TestResPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
-        )
+        self.assertTrue(self.env["res.partner"]._is_partner_duplicate_prevented())
 
         # once you've changed the config to disable duplicate partner
         # it's no more possible to create a partner with shopinvader user
@@ -81,8 +73,6 @@ class TestResPartner(SavepointComponentCase):
             {
                 "email": self.unique_email,
                 "name": "test partner 3",
-                "shopinvader_bind_ids": [
-                    (0, False, {"backend_id": self.backend2.id})
-                ],
+                "shopinvader_bind_ids": [(0, False, {"backend_id": self.backend2.id})],
             }
         )

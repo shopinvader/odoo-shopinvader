@@ -109,9 +109,7 @@ class AbstractDownload(AbstractComponent):
         ]
         return self.env["ir.actions.report"].search(domain)
 
-    def _get_binary_content_filename(
-        self, target, report, extension, params=None
-    ):
+    def _get_binary_content_filename(self, target, report, extension, params=None):
         """
         Build the filename
         :param target: recordset

@@ -1,15 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <record id="sale_order_view_form" model="ir.ui.view">
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="priority" eval="20"/>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="priority" eval="20" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="typology" invisible="True"/>
-                <field name="current_step_id" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
-                <field name="done_step_ids" widget="many2many_tags" attrs="{'invisible': [('typology', '!=', 'cart')]}"/>
+                <field name="typology" invisible="True" />
+                <field
+                    name="current_step_id"
+                    attrs="{'invisible': [('typology', '!=', 'cart')]}"
+                />
+                <field
+                    name="done_step_ids"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('typology', '!=', 'cart')]}"
+                />
             </field>
         </field>
     </record>
@@ -48,11 +55,7 @@
                 <field name="typology" optional="hide" />
             </field>
             <field name="invoice_status" position="after">
-                <field
-                    name="shopinvader_state"
-                    optional="hide"
-                    widget="badge"
-                />
+                <field name="shopinvader_state" optional="hide" widget="badge" />
             </field>
         </field>
     </record>
@@ -66,11 +69,7 @@
                 <field name="typology" optional="hide" />
             </field>
             <field name="state" position="after">
-                <field
-                    name="shopinvader_state"
-                    optional="hide"
-                    widget="badge"
-                />
+                <field name="shopinvader_state" optional="hide" widget="badge" />
             </field>
         </field>
     </record>

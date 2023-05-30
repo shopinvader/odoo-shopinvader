@@ -50,9 +50,7 @@ class ShopinvaderVariant(models.Model):
         compute="_compute_redirect_url_key", string="Redirect Url Keys"
     )
     active = fields.Boolean(default=True)
-    price = fields.Serialized(
-        compute="_compute_price", string="Shopinvader Price"
-    )
+    price = fields.Serialized(compute="_compute_price", string="Shopinvader Price")
     short_name = fields.Char(compute="_compute_names")
     full_name = fields.Char(compute="_compute_names")
 
@@ -70,8 +68,7 @@ class ShopinvaderVariant(models.Model):
     def _compute_attribute_value_ids(self):
         for record in self:
             record.attribute_value_ids = record.mapped(
-                "product_template_attribute_value_ids."
-                "product_attribute_value_id"
+                "product_template_attribute_value_ids." "product_attribute_value_id"
             )
 
     @contextmanager
@@ -102,9 +99,7 @@ class ShopinvaderVariant(models.Model):
                 continue
             # If every variants of the product are disabled
             # (The product is enable; checked by previous IF).
-            if all(
-                [not v.active for v in shopinv_product.shopinvader_variant_ids]
-            ):
+            if all([not v.active for v in shopinv_product.shopinvader_variant_ids]):
                 to_inactivate_ids.add(shopinv_product.id)
         if to_activate_ids:
             self.env["shopinvader.product"].browse(to_activate_ids).write(
@@ -224,9 +219,7 @@ class ShopinvaderVariant(models.Model):
                 "Product Price"
             )
             if (
-                float_compare(
-                    new_list_price, value, precision_digits=product_precision
-                )
+                float_compare(new_list_price, value, precision_digits=product_precision)
                 == 0
             ):
                 # Both prices are equals. Product is wihout discount, avoid
@@ -234,20 +227,14 @@ class ShopinvaderVariant(models.Model):
                 return res
             discount = (new_list_price - value) / new_list_price * 100
             # apply the right precision on discount
-            dicount_precision = self.env["decimal.precision"].precision_get(
-                "Discount"
-            )
+            dicount_precision = self.env["decimal.precision"].precision_get("Discount")
             discount = float_round(discount, dicount_precision)
-            res.update(
-                {"original_value": new_list_price, "discount": discount}
-            )
+            res.update({"original_value": new_list_price, "discount": discount})
         return res
 
     def _compute_main_product(self):
         # Respect same order.
-        order_by = [
-            x.strip() for x in self.env["product.product"]._order.split(",")
-        ]
+        order_by = [x.strip() for x in self.env["product.product"]._order.split(",")]
         fields_to_read = ["shopinvader_product_id"] + order_by
         product_ids = self.mapped("shopinvader_product_id").ids
         # Use sudo to bypass permissions (we don't care)
@@ -257,18 +244,14 @@ class ShopinvaderVariant(models.Model):
         )
         # Use `load=False` to not load template name
         variants = _variants.read(fields_to_read, load=False)
-        var_by_product = groupby(
-            variants, lambda x: x["shopinvader_product_id"]
-        )
+        var_by_product = groupby(variants, lambda x: x["shopinvader_product_id"])
 
         def pick_1st_variant(variants):
             # NOTE: if the order is changed by adding `asc/desc` this can be broken
             # but it's very unlikely that the default order for product.product
             # will be changed.
             try:
-                ordered = sorted(
-                    variants, key=lambda var: [var[x] for x in order_by]
-                )
+                ordered = sorted(variants, key=lambda var: [var[x] for x in order_by])
             except TypeError as orig_exception:
                 # TypeError: '<' not supported between instances of 'bool' and 'str'
                 # It means we don't have all values to determine this value.
@@ -292,8 +275,7 @@ class ShopinvaderVariant(models.Model):
         }
         for record in self:
             record.main = (
-                main_by_product.get(record.shopinvader_product_id.id)
-                == record.id
+                main_by_product.get(record.shopinvader_product_id.id) == record.id
             )
 
     def get_shop_data(self):

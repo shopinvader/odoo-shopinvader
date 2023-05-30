@@ -41,10 +41,7 @@ class ShopinvaderPartnerExportMapper(Component):
             # Locomotive does not support nested structured data plain.
             # You must encode inner data explicitly.
             "wishlists": json.dumps(
-                {
-                    x["id"]: x
-                    for x in wishlists.jsonify(self._wishlist_parser())
-                }
+                {x["id"]: x for x in wishlists.jsonify(self._wishlist_parser())}
             ),
             "product_wishlists": json.dumps(products),
         }

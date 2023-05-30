@@ -1,25 +1,33 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <record id="product_template_chair_vortex" model="product.template">
         <field name="name">Vortex Side Chair</field>
-        <field name="categ_id" ref="product_category_27"></field>
+        <field name="categ_id" ref="product_category_27" />
         <field name="list_price">50.99</field>
         <field name="standard_price">50.99</field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="type">consu</field>
     </record>
 
     <!-- the product template attribute lines have to be defined before creating the variants -->
-    <record id="product_template_chair_vortex_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_chair_vortex"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_white'), ref('product_attribute_value_color_blue')])]"/>
+    <record
+        id="product_template_chair_vortex_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_chair_vortex" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_white'), ref('product_attribute_value_color_blue')])]"
+        />
     </record>
 
      <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_chair_vortex_attribute_color_white',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
@@ -27,11 +35,14 @@
                 'xml_id': 'shopinvader.product_template_chair_vortex_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex_product_template_attribute_line_color').product_template_value_ids[1],
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_chair_vortex_white',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_vortex_attribute_color_white')),
                 'noupdate': False,
@@ -39,7 +50,8 @@
                 'xml_id': 'shopinvader.product_product_chair_vortex_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_vortex')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_vortex_attribute_color_blue')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_chair_vortex_white" model="product.product">
@@ -51,9 +63,9 @@
     </record>
 
     <record id="product_template_armchair_mid_century" model="product.template">
-        <field name="categ_id" ref="product_category_27"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_27" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="name">Fauteuil Style Mid-Century avec assise tapissée</field>
         <field name="list_price">333.0</field>
         <field name="standard_price">333.0</field>
@@ -61,14 +73,22 @@
     </record>
 
     <!-- the product template attribute lines have to be defined before creating the variants -->
-    <record id="product_template_armchair_mid_century_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_armchair_mid_century"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_blue'), ref('product_attribute_value_color_grey'), ref('product_attribute_value_color_yellow'), ref('product_attribute_value_color_red')])]"/>
+    <record
+        id="product_template_armchair_mid_century_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_armchair_mid_century" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_blue'), ref('product_attribute_value_color_grey'), ref('product_attribute_value_color_yellow'), ref('product_attribute_value_color_red')])]"
+        />
     </record>
 
      <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_armchair_mid_century_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
@@ -84,11 +104,14 @@
                 'xml_id': 'shopinvader.product_template_armchair_mid_century_attribute_color_red',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century_product_template_attribute_line_color').product_template_value_ids[3],
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_armchair_mid_century_blue',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_armchair_mid_century_attribute_color_blue')),
                 'noupdate': False,
@@ -104,7 +127,8 @@
                 'xml_id': 'shopinvader.product_product_armchair_mid_century_red',
                 'record': obj().env.ref('shopinvader.product_template_armchair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_armchair_mid_century_attribute_color_red')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_armchair_mid_century_blue" model="product.product">
@@ -124,37 +148,49 @@
     </record>
 
     <record id="product_product_table_walmut" model="product.product">
-        <field name="name">Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture
+        <field
+            name="name"
+        >Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture
         </field>
-        <field name="categ_id" ref="product_category_28"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_28" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">79.99</field>
         <field name="standard_price">79.99</field>
-        <field name="default_code"></field>
+        <field name="default_code" />
         <field name="type">consu</field>
     </record>
 
 
     <record id="product_template_chair_mid_century" model="product.template">
-        <field name="name">Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
-        <field name="categ_id" ref="product_category_27"></field>
+        <field
+            name="name"
+        >Mid Century Modern Eames Chair with Molded Arms and Wood Legs</field>
+        <field name="categ_id" ref="product_category_27" />
         <field name="list_price">54.0</field>
         <field name="standard_price">54.0</field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="type">consu</field>
     </record>
 
           <!-- the product template attribute lines have to be defined before creating the variants -->
-    <record id="product_template_chair_mid_century_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_chair_mid_century"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_blue'), ref('product_attribute_value_color_white'), ref('product.product_attribute_value_4'), ref('product_attribute_value_color_red')])]"/>
+    <record
+        id="product_template_chair_mid_century_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_chair_mid_century" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_blue'), ref('product_attribute_value_color_white'), ref('product.product_attribute_value_4'), ref('product_attribute_value_color_red')])]"
+        />
     </record>
 
      <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_chair_mid_century_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
@@ -170,11 +206,14 @@
                 'xml_id': 'shopinvader.product_template_chair_mid_century_attribute_color_red',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century_product_template_attribute_line_color').product_template_value_ids[3],
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_chair_mid_century_blue',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_mid_century_attribute_color_blue')),
                 'noupdate': False,
@@ -190,7 +229,8 @@
                 'xml_id': 'shopinvader.product_product_chair_mid_century_red',
                 'record': obj().env.ref('shopinvader.product_template_chair_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_chair_mid_century_attribute_color_red')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
 
@@ -213,71 +253,101 @@
 
     <record id="product_template_tv_cabinet_concept_design" model="product.template">
         <field name="name">Convenience Concepts Designs2Go Oslo - meuble TV</field>
-        <field name="categ_id" ref="product_category_29"></field>
+        <field name="categ_id" ref="product_category_29" />
         <field name="standard_price">156.4</field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">156.4</field>
         <field name="default_code">B011RACHQ6</field>
         <field name="type">consu</field>
     </record>
 
-    <record id="product_template_tv_cabinet_concept_design_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_tv_cabinet_concept_design"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_white')])]"/>
+    <record
+        id="product_template_tv_cabinet_concept_design_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="product_template_tv_cabinet_concept_design"
+        />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_white')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_concept_design_attribute_color_white',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_concept_design_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_concept_design_white',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_concept_design')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_concept_design_attribute_color_white')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
-    <record id="product_product_tv_cabinet_concept_design_white" model="product.product">
+    <record
+        id="product_product_tv_cabinet_concept_design_white"
+        model="product.product"
+    >
         <field name="default_code">B011RACHQ6</field>
     </record>
 
     <record id="product_template_coffee_table_caftman" model="product.template">
         <field name="name">Sauder 420011 Coffee Table, Furniture, Craftsman Oak</field>
-        <field name="categ_id" ref="product_category_29"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_29" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
         <field name="list_price">143.99</field>
         <field name="standard_price">143.99</field>
         <field name="type">consu</field>
     </record>
 
-    <record id="product_template_coffee_table_caftman_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_coffee_table_caftman"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_brown')])]"/>
+    <record
+        id="product_template_coffee_table_caftman_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_coffee_table_caftman" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_brown')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_coffee_table_caftman_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_coffee_table_caftman_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_coffee_table_caftman_brown',
                 'record': obj().env.ref('shopinvader.product_template_coffee_table_caftman')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_coffee_table_caftman_attribute_color_brown')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_coffee_table_caftman_brown" model="product.product">
@@ -286,9 +356,9 @@
 
     <record id="product_product_tv_cbinet_ameriwood" model="product.product">
         <field name="name">Ameriwood Home 1783213COM - Meuble TV</field>
-        <field name="categ_id" ref="product_category_29"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_29" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">311.39</field>
         <field name="standard_price">311.39</field>
         <field name="default_code">B077VY7G5S-G</field>
@@ -296,35 +366,49 @@
     </record>
 
     <record id="product_template_tv_stand_wood_and_glass" model="product.template">
-        <field name="name">ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70&quot;</field>
-        <field name="categ_id" ref="product_category_29"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field
+            name="name"
+        >ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70&quot;</field>
+        <field name="categ_id" ref="product_category_29" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">849.95</field>
         <field name="standard_price">849.95</field>
         <field name="type">consu</field>
     </record>
 
-    <record id="product_template_tv_stand_wood_and_glass_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_tv_stand_wood_and_glass"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_white')])]"/>
+    <record
+        id="product_template_tv_stand_wood_and_glass_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_tv_stand_wood_and_glass" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_white')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_tv_stand_wood_and_glass_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_tv_stand_wood_and_glass_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_tv_stand_wood_and_glass_white',
                 'record': obj().env.ref('shopinvader.product_template_tv_stand_wood_and_glass')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_stand_wood_and_glass_attribute_color_blue')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_tv_stand_wood_and_glass_white" model="product.product">
@@ -332,46 +416,60 @@
     </record>
 
     <record id="product_product_park_entertainment" model="product.product">
-        <field name="name">Sauder Harvey Park Entertainment Credenza, chêne clair</field>
-        <field name="categ_id" ref="product_category_29"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field
+            name="name"
+        >Sauder Harvey Park Entertainment Credenza, chêne clair</field>
+        <field name="categ_id" ref="product_category_29" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">1.0</field>
         <field name="standard_price">0</field>
-        <field name="default_code"></field>
+        <field name="default_code" />
         <field name="type">consu</field>
     </record>
 
     <record id="product_template_tv_cabinet_cmcharper" model="product.template">
         <field name="name">Meuble TV 40 cmHARPER</field>
-        <field name="categ_id" ref="product_category_29"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_29" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">600.0</field>
         <field name="standard_price">600.0</field>
         <field name="type">consu</field>
     </record>
 
-    <record id="product_template_tv_cabinet_cmcharper_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_tv_cabinet_cmcharper"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_brown')])]"/>
+    <record
+        id="product_template_tv_cabinet_cmcharper_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_tv_cabinet_cmcharper" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_brown')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_cmcharper_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_cmcharper_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_cmcharper_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_cmcharper')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_cmcharper_attribute_color_brown')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_tv_cabinet_cmcharper_brown" model="product.product">
@@ -380,21 +478,29 @@
 
     <record id="product_template_tv_cabinet_shaker_wood" model="product.template">
         <field name="name">Meuble TV Warm Shaker bois massif 183cm</field>
-        <field name="categ_id" ref="product_category_22"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_22" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">789.99</field>
         <field name="standard_price">789.99</field>
         <field name="type">consu</field>
     </record>
-    <record id="product_template_tv_cabinet_shaker_wood_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_tv_cabinet_shaker_wood"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_brown'), ref('product_attribute_value_color_grey')])]"/>
+    <record
+        id="product_template_tv_cabinet_shaker_wood_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_tv_cabinet_shaker_wood" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_brown'), ref('product_attribute_value_color_grey')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
@@ -402,11 +508,14 @@
                 'xml_id': 'shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_grey',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_product_template_attribute_line_color').product_template_value_ids[1],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_shaker_wood_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_brown')),
                 'noupdate': False,
@@ -414,7 +523,8 @@
                 'xml_id': 'shopinvader.product_product_tv_cabinet_shaker_wood_grey',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_shaker_wood_attribute_color_grey')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_tv_cabinet_shaker_wood_brown" model="product.product">
@@ -427,34 +537,46 @@
 
     <record id="product_template_tv_cabinet_mid_century" model="product.template">
         <field name="name">Table style Mid-Century Modern Chêne</field>
-        <field name="categ_id" ref="product_category_23"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_23" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">149.99</field>
         <field name="standard_price">149.99</field>
         <field name="type">consu</field>
     </record>
 
-     <record id="product_template_tv_cabinet_mid_century_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_tv_cabinet_mid_century"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_brown')])]"/>
+     <record
+        id="product_template_tv_cabinet_mid_century_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_tv_cabinet_mid_century" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_brown')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_tv_cabinet_mid_century_attribute_color_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_tv_cabinet_mid_century_brown',
                 'record': obj().env.ref('shopinvader.product_template_tv_cabinet_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_tv_cabinet_mid_century_attribute_color_brown')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_tv_cabinet_mid_century_brown" model="product.product">
@@ -463,34 +585,46 @@
 
     <record id="product_template_round_table_mid_century" model="product.template">
         <field name="name">Table ronde style mid-century plateau laqué</field>
-        <field name="categ_id" ref="product_category_23"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_23" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">99.72</field>
         <field name="standard_price">99.72</field>
         <field name="type">consu</field>
     </record>
 
-    <record id="product_template_round_table_mid_century_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_round_table_mid_century"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_white')])]"/>
+    <record
+        id="product_template_round_table_mid_century_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_round_table_mid_century" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_white')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_round_table_mid_century_attribute_color_blue',
                 'record': obj().env.ref('shopinvader.product_template_round_table_mid_century_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_round_table_mid_century_white',
                 'record': obj().env.ref('shopinvader.product_template_round_table_mid_century')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_round_table_mid_century_attribute_color_blue')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_round_table_mid_century_white" model="product.product">
@@ -499,22 +633,30 @@
 
     <record id="product_template_thelma" model="product.template">
         <field name="name">Thelma</field>
-        <field name="categ_id" ref="product_category_27"></field>
-        <field name="uom_id" ref="uom.product_uom_unit"></field>
-        <field name="uom_po_id" ref="uom.product_uom_unit"></field>
+        <field name="categ_id" ref="product_category_27" />
+        <field name="uom_id" ref="uom.product_uom_unit" />
+        <field name="uom_po_id" ref="uom.product_uom_unit" />
         <field name="list_price">149.0</field>
         <field name="standard_price">149.0</field>
         <field name="type">consu</field>
     </record>
 
-    <record id="product_template_thelma_product_template_attribute_line_color" model="product.template.attribute.line">
-        <field name="product_tmpl_id" ref="product_template_thelma"/>
-        <field name="attribute_id" ref="product.product_attribute_2"/>
-        <field name="value_ids" eval="[(6, 0, [ref('product_attribute_value_color_red'), ref('product_attribute_value_color_grey'), ref('product.product_attribute_value_4')])]"/>
+    <record
+        id="product_template_thelma_product_template_attribute_line_color"
+        model="product.template.attribute.line"
+    >
+        <field name="product_tmpl_id" ref="product_template_thelma" />
+        <field name="attribute_id" ref="product.product_attribute_2" />
+        <field
+            name="value_ids"
+            eval="[(6, 0, [ref('product_attribute_value_color_red'), ref('product_attribute_value_color_grey'), ref('product.product_attribute_value_4')])]"
+        />
     </record>
 
     <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_template_thelma_attribute_color_red',
                 'record': obj().env.ref('shopinvader.product_template_thelma_product_template_attribute_line_color').product_template_value_ids[0],
                 'noupdate': False,
@@ -526,11 +668,14 @@
                 'xml_id': 'shopinvader.product_template_thelma_attribute_color_black',
                 'record': obj().env.ref('shopinvader.product_template_thelma_product_template_attribute_line_color').product_template_value_ids[2],
                 'noupdate': False,
-            }]"/>
+            }]"
+        />
         </function>
 
         <function model="ir.model.data" name="_update_xmlids">
-            <value model="base" eval="[{
+            <value
+            model="base"
+            eval="[{
                 'xml_id': 'shopinvader.product_product_thelma_red',
                 'record': obj().env.ref('shopinvader.product_template_thelma')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_thelma_attribute_color_red')),
                 'noupdate': False,
@@ -542,7 +687,8 @@
                 'xml_id': 'shopinvader.product_product_thelma_black',
                 'record': obj().env.ref('shopinvader.product_template_thelma')._get_variant_for_combination(obj().env.ref('shopinvader.product_template_thelma_attribute_color_black')),
                 'noupdate': False,
-            },]"/>
+            },]"
+        />
         </function>
 
     <record id="product_product_thelma_red" model="product.product">

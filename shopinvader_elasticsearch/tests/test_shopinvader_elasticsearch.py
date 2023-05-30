@@ -75,9 +75,7 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
         index_data = json.loads(lines[0].decode("utf-8"))
         product_data = json.loads(lines[1].decode("utf-8"))
         self.assertIn("index", index_data)
-        self.assertEqual(
-            index_data["index"]["_index"], self.index_product.name.lower()
-        )
+        self.assertEqual(index_data["index"]["_index"], self.index_product.name.lower())
         self.assertEqual(index_data["index"]["_id"], si_variant.record_id.id)
         self.assertEqual(product_data, si_variant.data)
 

@@ -6,8 +6,7 @@ from odoo import _, api, exceptions, fields, models
 
 
 class ShopinvaderSaleProfile(models.Model):
-    """Represent a customer sale profile with a specific pricelist  per backend.
-    """
+    """Represent a customer sale profile with a specific pricelist  per backend."""
 
     _name = "shopinvader.sale.profile"
     _description = "Shopinvader Customer profile"
@@ -61,9 +60,7 @@ class ShopinvaderSaleProfile(models.Model):
         groups_data = self.env["shopinvader.sale.profile"].read_group(
             domain, fields=[group_by], groupby=group_by, lazy=False
         )
-        count_data = {
-            item[group_by][0]: item.get("__count", 0) for item in groups_data
-        }
+        count_data = {item[group_by][0]: item.get("__count", 0) for item in groups_data}
         for record in self:
             if record.default:
                 nb_default = count_data.get(record.backend_id.id, 0)

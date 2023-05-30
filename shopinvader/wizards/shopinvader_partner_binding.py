@@ -30,9 +30,7 @@ class ShopinvaderPartnerBinding(models.TransientModel):
         :param fields_list: list of str
         :return: dict
         """
-        result = super(ShopinvaderPartnerBinding, self).default_get(
-            fields_list
-        )
+        result = super(ShopinvaderPartnerBinding, self).default_get(fields_list)
         # Auto fill the backend if we have only 1 backend found
         backend = self.shopinvader_backend_id.search([], limit=2)
         if len(backend) == 1:

@@ -1,35 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
     <record id="product_attribute_value_color_blue" model="product.attribute.value">
         <field name="name">blue</field>
-        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="attribute_id" ref="product.product_attribute_2" />
     </record>
 
     <record id="product_attribute_value_color_brown" model="product.attribute.value">
         <field name="name">brown</field>
-        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="attribute_id" ref="product.product_attribute_2" />
     </record>
 
     <record id="product_attribute_value_color_grey" model="product.attribute.value">
         <field name="name">Grey</field>
-        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="attribute_id" ref="product.product_attribute_2" />
     </record>
 
     <record id="product_attribute_value_color_yellow" model="product.attribute.value">
         <field name="name">yellow</field>
-        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="attribute_id" ref="product.product_attribute_2" />
     </record>
 
     <record id="product_attribute_value_color_red" model="product.attribute.value">
         <field name="name">red</field>
-        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="attribute_id" ref="product.product_attribute_2" />
     </record>
 
     <record id="product_attribute_value_color_white" model="product.attribute.value">
         <field name="name">white</field>
-        <field name="attribute_id" ref="product.product_attribute_2"></field>
+        <field name="attribute_id" ref="product.product_attribute_2" />
     </record>
 
 </odoo>

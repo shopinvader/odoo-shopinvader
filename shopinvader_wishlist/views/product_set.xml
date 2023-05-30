@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
   <record id="view_product_set_variant_form" model="ir.ui.view">
     <field name="name">product.set.form shopinvader_wishlist</field>
     <field name="model">product.set</field>
-    <field name="inherit_id" ref="sale_product_set.view_product_set_form"/>
+    <field name="inherit_id" ref="sale_product_set.view_product_set_form" />
     <field name="arch" type="xml">
       <field name="name" position="before">
-        <field name="shopinvader_backend_id"/>
+        <field name="shopinvader_backend_id" />
       </field>
     </field>
   </record>

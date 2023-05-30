@@ -47,9 +47,7 @@ class TestUtils(CommonCase):
         self.assertEqual(ctx, expected)
 
     def test_load_partner_work_ctx(self):
-        with utils.work_on_service(
-            self.env, shopinvader_backend=self.backend
-        ) as work:
+        with utils.work_on_service(self.env, shopinvader_backend=self.backend) as work:
             service = work.component(usage="customer")
             service._load_partner_work_context(self.invader_partner)
         expected = {
@@ -62,9 +60,7 @@ class TestUtils(CommonCase):
             self.assertEqual(getattr(service, k), v)
 
     def test_reset_partner_work_ctx(self):
-        with utils.work_on_service(
-            self.env, shopinvader_backend=self.backend
-        ) as work:
+        with utils.work_on_service(self.env, shopinvader_backend=self.backend) as work:
             service = work.component(usage="customer")
             service._load_partner_work_context(self.invader_partner)
         service.work.whatever_shall_be_kept = "something"
@@ -79,9 +75,7 @@ class TestUtils(CommonCase):
             self.assertEqual(getattr(service, k), v)
 
     def test_work_on_service_with_partner(self):
-        with utils.work_on_service_with_partner(
-            self.env, self.invader_partner
-        ) as work:
+        with utils.work_on_service_with_partner(self.env, self.invader_partner) as work:
             service = work.component(usage="customer")
             service._load_partner_work_context(self.invader_partner)
         expected = {

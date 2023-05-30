@@ -18,6 +18,4 @@ class ProductPackaging(models.Model):
     @api.depends("packaging_type_id.shopinvader_display")
     def _compute_shopinvader_display(self):
         for record in self:
-            record.shopinvader_display = (
-                record.packaging_type_id.shopinvader_display
-            )
+            record.shopinvader_display = record.packaging_type_id.shopinvader_display

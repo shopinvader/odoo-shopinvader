@@ -6,8 +6,7 @@ from odoo.addons.component.core import Component
 
 
 class InvoiceService(Component):
-    """Shopinvader service to expose invoices.
-    """
+    """Shopinvader service to expose invoices."""
 
     _inherit = [
         "shopinvader.abstract.mail.service",

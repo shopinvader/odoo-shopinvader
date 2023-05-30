@@ -16,21 +16,16 @@ class ShopinvaderBackend(models.Model):
         help="Locomotive URL (see Developers section Locomotive site)"
     )
     username = fields.Char(
-        help="Locomotive user email (see Developers section in "
-        "Locomotive site)"
+        help="Locomotive user email (see Developers section in " "Locomotive site)"
     )
     password = fields.Text(
-        help="Locomotive user API key (see Developers section in "
-        "Locomotive site)",
+        help="Locomotive user API key (see Developers section in " "Locomotive site)",
         string="Locomotive's Api key",
     )
     handle = fields.Char(
-        help="Locomotive site handle (see Developers section in "
-        "Locomotive site)"
+        help="Locomotive site handle (see Developers section in " "Locomotive site)"
     )
-    currency_ids = fields.Many2many(
-        comodel_name="res.currency", string="Currency"
-    )
+    currency_ids = fields.Many2many(comodel_name="res.currency", string="Currency")
     visible_filter_ids = fields.Many2many(
         comodel_name="product.filter", compute="_compute_visible_filter_ids"
     )
@@ -39,9 +34,7 @@ class ShopinvaderBackend(models.Model):
     @api.depends("filter_ids.visible")
     def _compute_visible_filter_ids(self):
         for rec in self:
-            rec.visible_filter_ids = rec.filter_ids.filtered(
-                lambda x: x.visible
-            )
+            rec.visible_filter_ids = rec.filter_ids.filtered(lambda x: x.visible)
 
     @property
     def _server_env_fields(self):

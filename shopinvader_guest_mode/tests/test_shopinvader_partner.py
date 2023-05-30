@@ -96,9 +96,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.assertFalse(self.shopinvader_partner.active)
 
     def test_guest_constrains(self):
-        self.shopinvader_partner.search([(1, "=", 1)]).write(
-            {"is_guest": False}
-        )
+        self.shopinvader_partner.search([(1, "=", 1)]).write({"is_guest": False})
         self.backend.is_guest_mode_allowed = False
         with self.assertRaises(ValidationError), self.env.cr.savepoint():
             self.env["shopinvader.partner"].create(

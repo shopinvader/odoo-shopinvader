@@ -15,8 +15,7 @@ from .. import shopinvader_response
 
 
 class AddressService(Component):
-    """Shopinvader service to create and edit customers' addresses.
-    """
+    """Shopinvader service to create and edit customers' addresses."""
 
     _inherit = [
         "base.shopinvader.service",
@@ -242,7 +241,7 @@ class AddressService(Component):
             params["title"] = params.get("title")["id"]
 
         if mode == "create":
-            params[
-                "is_shopinvader_active"
-            ] = self.partner_validator.enabled_by_params(params, "address")
+            params["is_shopinvader_active"] = self.partner_validator.enabled_by_params(
+                params, "address"
+            )
         return params

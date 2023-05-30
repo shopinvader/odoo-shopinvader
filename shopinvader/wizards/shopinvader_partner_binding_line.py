@@ -24,9 +24,7 @@ class ShopinvaderPartnerBindingLine(models.TransientModel):
         ondelete="cascade",
         readonly=True,
     )
-    email = fields.Char(
-        related="partner_id.email", required=True, readonly=True
-    )
+    email = fields.Char(related="partner_id.email", required=True, readonly=True)
     bind = fields.Boolean(
         help="Tick to bind the partner to the backend. Untick to unbind it."
     )
@@ -44,9 +42,7 @@ class ShopinvaderPartnerBindingLine(models.TransientModel):
             )
             raise exceptions.UserError(message)
         for record in self.filtered(lambda r: r.bind):
-            backend = (
-                record.shopinvader_partner_binding_id.shopinvader_backend_id
-            )
+            backend = record.shopinvader_partner_binding_id.shopinvader_backend_id
             # Ensure the binding doesn't exist yet
             partner_binding = record.partner_id.shopinvader_bind_ids.filtered(
                 lambda x, b=backend: x.backend_id == b

@@ -13,9 +13,7 @@ class TestInvoiceService(PortalModeCommonCase):
         super().setUpClass()
         for sale in cls.shop_sales + cls.non_shop_sales:
             cls._invoice_sale(sale)
-        payment_method = cls.env.ref(
-            "account.account_payment_method_manual_in"
-        )
+        payment_method = cls.env.ref("account.account_payment_method_manual_in")
         journal = cls.env["account.journal"].create(
             {"name": "Bank", "type": "bank", "code": "BNK627"}
         )
@@ -54,9 +52,7 @@ class TestInvoiceService(PortalModeCommonCase):
         service = self._get_service("invoice")
         domain = service._get_base_search_domain()
         invoices = self.env["account.move"].search(domain)
-        self.assertEqual(
-            sorted(invoices.ids), sorted(self.shop_sales.invoice_ids.ids)
-        )
+        self.assertEqual(sorted(invoices.ids), sorted(self.shop_sales.invoice_ids.ids))
 
     def test_invoice_domain_portal_mode(self):
         self.backend.sale_order_portal_mode = True

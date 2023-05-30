@@ -11,7 +11,9 @@ class ShopinvaderBackend(models.Model):
     _inherit = "shopinvader.backend"
 
     pricelist_id = fields.Many2one(
-        compute="_compute_pricelist_id", store=True, readonly=False,
+        compute="_compute_pricelist_id",
+        store=True,
+        readonly=False,
     )
     use_sale_profile = fields.Boolean(
         default=False, help="Determine if this backend use sale profiles"
@@ -39,9 +41,7 @@ class ShopinvaderBackend(models.Model):
     def _check_use_sale_profile(self):
         if not self.pricelist_id and self.use_sale_profile:
             raise exceptions.ValidationError(
-                _(
-                    "You must have a default profile that provides a default pricelist."
-                )
+                _("You must have a default profile that provides a default pricelist.")
             )
 
     def _get_partner_pricelist(self, partner):

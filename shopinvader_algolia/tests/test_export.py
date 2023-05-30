@@ -50,12 +50,8 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         cls.shopinvader_backend.bind_all_category()
         cls.index_product = cls.env.ref("shopinvader_algolia.index_1")
         cls.index_categ = cls.env.ref("shopinvader_algolia.index_2")
-        cls.index_config = cls.env["se.index.config"].create(
-            {"name": "Custom"}
-        )
-        cls.index_config.body = {
-            "attributesForFaceting": ["whatever.you.search"]
-        }
+        cls.index_config = cls.env["se.index.config"].create({"name": "Custom"})
+        cls.index_config.body = {"attributesForFaceting": ["whatever.you.search"]}
         cls.index_product.config_id = cls.index_config
 
     def _get_vcr_kwargs(self, **kwargs):

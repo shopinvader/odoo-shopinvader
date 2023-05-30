@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record model="ir.ui.view" id="shopinvader_variant_search_view">
@@ -10,17 +9,37 @@
         <field name="arch" type="xml">
             <search string="Products">
                 <field name="name" string="Product" />
-                <field name="backend_id" string="Shopinvader Backend"/>
-                <field name="lang_id" string="Lang"/>
-                <field name="default_code" string="Code"/>
-                <field name="record_id" string="Name"/>
+                <field name="backend_id" string="Shopinvader Backend" />
+                <field name="lang_id" string="Lang" />
+                <field name="default_code" string="Code" />
+                <field name="record_id" string="Name" />
                 <field name="tmpl_record_id" string="Template" />
-                <separator/>
+                <separator />
                 <group expand="0" string="Group By">
-                    <filter string="Backend" name="group_by_backend_id" domain="[]" context="{'group_by':'backend_id'}"/>
-                    <filter string="Lang" name="group_by_lang_id" domain="[]" context="{'group_by':'lang_id'}"/>
-                    <filter string="Record" name="group_by_record_id" domain="[]" context="{'group_by':'record_id'}"/>
-                    <filter string="Template" name="group_by_tmpl_record_id" domain="[]" context="{'group_by':'tmpl_record_id'}"/>
+                    <filter
+                        string="Backend"
+                        name="group_by_backend_id"
+                        domain="[]"
+                        context="{'group_by':'backend_id'}"
+                    />
+                    <filter
+                        string="Lang"
+                        name="group_by_lang_id"
+                        domain="[]"
+                        context="{'group_by':'lang_id'}"
+                    />
+                    <filter
+                        string="Record"
+                        name="group_by_record_id"
+                        domain="[]"
+                        context="{'group_by':'record_id'}"
+                    />
+                    <filter
+                        string="Template"
+                        name="group_by_tmpl_record_id"
+                        domain="[]"
+                        context="{'group_by':'tmpl_record_id'}"
+                    />
                 </group>
             </search>
         </field>

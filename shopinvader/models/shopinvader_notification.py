@@ -10,20 +10,14 @@ class ShopinvaderNotification(models.Model):
     _name = "shopinvader.notification"
     _description = "Shopinvader Notification"
 
-    backend_id = fields.Many2one(
-        "shopinvader.backend", "Backend", required=False
-    )
+    backend_id = fields.Many2one("shopinvader.backend", "Backend", required=False)
     notification_type = fields.Selection(
         selection="_selection_notification_type",
         string="Notification Type",
         required=True,
     )
-    model_id = fields.Many2one(
-        "ir.model", "Model", required=True, ondelete="cascade"
-    )
-    template_id = fields.Many2one(
-        "mail.template", "Mail Template", required=True
-    )
+    model_id = fields.Many2one("ir.model", "Model", required=True, ondelete="cascade")
+    template_id = fields.Many2one("mail.template", "Mail Template", required=True)
 
     def _selection_notification_type(self):
         notifications = self._get_all_notification()
@@ -96,12 +90,8 @@ class ShopinvaderNotification(models.Model):
         if self.notification_type:
             model = notifications[self.notification_type].get("model")
             if model:
-                self.model_id = self.env["ir.model"].search(
-                    [("model", "=", model)]
-                )
-                return {
-                    "domain": {"model_id": [("id", "=", self.model_id.id)]}
-                }
+                self.model_id = self.env["ir.model"].search([("model", "=", model)])
+                return {"domain": {"model_id": [("id", "=", self.model_id.id)]}}
             else:
                 return {"domain": {"model_id": []}}
 

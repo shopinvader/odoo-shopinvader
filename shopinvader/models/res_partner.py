@@ -33,9 +33,7 @@ class ResPartner(models.Model):
         store=True,
     )
     # In europe we use more the opt_in
-    opt_in = fields.Boolean(
-        compute="_compute_opt_in", inverse="_inverse_opt_in"
-    )
+    opt_in = fields.Boolean(compute="_compute_opt_in", inverse="_inverse_opt_in")
     is_shopinvader_active = fields.Boolean(
         string="Shop enabled",
         help="This address is enabled to be used for Shopinvader.",
@@ -104,14 +102,10 @@ class ResPartner(models.Model):
         for record in self:
             record.has_shopinvader_user = bool(record.shopinvader_bind_ids)
             record.has_shopinvader_user_active = any(
-                record.shopinvader_bind_ids.filtered(
-                    lambda x: x.state == STATE_ACTIVE
-                )
+                record.shopinvader_bind_ids.filtered(lambda x: x.state == STATE_ACTIVE)
             )
             record.has_shopinvader_user_to_validate = any(
-                record.shopinvader_bind_ids.filtered(
-                    lambda x: x.state == STATE_PENDING
-                )
+                record.shopinvader_bind_ids.filtered(lambda x: x.state == STATE_PENDING)
             )
 
     @api.depends(
@@ -137,15 +131,11 @@ class ResPartner(models.Model):
             if x["parent_id"]
         }
         for record in self:
-            record.has_shopinvader_address_to_validate = bool(
-                by_parent.get(record.id)
-            )
+            record.has_shopinvader_address_to_validate = bool(by_parent.get(record.id))
 
     def _compute_display_flags(self):
         for record in self:
-            record.display_validate_address = (
-                record._display_validate_address()
-            )
+            record.display_validate_address = record._display_validate_address()
 
     def _display_validate_address(self):
         if self.has_shopinvader_user:
@@ -196,15 +186,10 @@ class ResPartner(models.Model):
         """
         )
         duplicate_emails = {r[0] for r in self.env.cr.fetchall()}
-        invalid_emails = [
-            e for e in self.mapped("email") if e in duplicate_emails
-        ]
+        invalid_emails = [e for e in self.mapped("email") if e in duplicate_emails]
         if invalid_emails:
             raise ValidationError(
-                _(
-                    "Email must be unique: The following "
-                    "mails are not unique: %s"
-                )
+                _("Email must be unique: The following " "mails are not unique: %s")
                 % ", ".join(invalid_emails)
             )
 
@@ -230,18 +215,14 @@ class ResPartner(models.Model):
         return True
 
     def addr_type_display(self):
-        return self._fields["address_type"].convert_to_export(
-            self.address_type, self
-        )
+        return self._fields["address_type"].convert_to_export(self.address_type, self)
 
     def action_shopinvader_validate_customer(self):
         return self.shopinvader_bind_ids.action_shopinvader_validate()
 
     def action_shopinvader_validate_address(self):
         wiz = self._get_shopinvader_validate_address_wizard()
-        action = self.env.ref(
-            "shopinvader.shopinvader_address_validate_act_window"
-        )
+        action = self.env.ref("shopinvader.shopinvader_address_validate_act_window")
         action_data = action.read()[0]
         action_data["res_id"] = wiz.id
         return action_data

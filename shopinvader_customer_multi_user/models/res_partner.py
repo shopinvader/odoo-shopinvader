@@ -10,8 +10,7 @@ from odoo import api, fields, models
 
 def _generate_token(length=10):
     return "".join(
-        random.choice(string.ascii_letters + string.digits)
-        for __ in range(length)
+        random.choice(string.ascii_letters + string.digits) for __ in range(length)
     )
 
 

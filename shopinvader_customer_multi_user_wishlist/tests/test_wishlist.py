@@ -44,9 +44,7 @@ class WishlistCase(CommonWishlistCase):
         self.backend.multi_user_records_policy = "main_partner_id"
         prod = self.env.ref("product.product_product_4b")
 
-        with self.work_on_services(
-            partner=self.user_binding.record_id
-        ) as work:
+        with self.work_on_services(partner=self.user_binding.record_id) as work:
             cart_service = work.component(usage="cart")
         cart = cart_service._get()
         # no line yet
@@ -76,9 +74,7 @@ class WishlistCase(CommonWishlistCase):
             self.company_binding, force=True
         )
         res = self.wishlist_service._to_json_one(self.prod_set)
-        self.assertEqual(
-            res["access"], {"read": True, "update": True, "delete": True}
-        )
+        self.assertEqual(res["access"], {"read": True, "update": True, "delete": True})
 
     def test_access_not_owner(self):
         self.wishlist_service._load_partner_work_context(self.user_binding)

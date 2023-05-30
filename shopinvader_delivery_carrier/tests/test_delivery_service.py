@@ -35,9 +35,7 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         super(TestDeliveryService, self).setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="delivery")
-        with self.work_on_services(
-            partner=self.backend.anonymous_partner_id
-        ) as work:
+        with self.work_on_services(partner=self.backend.anonymous_partner_id) as work:
             self.service_guest = work.component(usage="delivery")
 
     def _check_data_content(self, data, pickings):
@@ -59,9 +57,7 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
                 picking.carrier_tracking_ref or None,
             )
             if picking.carrier_id:
-                self.assertEqual(
-                    carrier_dict.get("name"), picking.carrier_id.name
-                )
+                self.assertEqual(carrier_dict.get("name"), picking.carrier_id.name)
             else:
                 self.assertFalse(carrier_dict)
             if picking.sale_id:
@@ -142,9 +138,7 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         data = result.get("data", [])
         self.assertFalse(data)
         # Then create a picking related to the anonymous user
-        picking = self._create_picking(
-            partner=self.backend.anonymous_partner_id
-        )
+        picking = self._create_picking(partner=self.backend.anonymous_partner_id)
         self.assertEqual(picking.partner_id, self.backend.anonymous_partner_id)
         result = self.service_guest.dispatch("search")
         data = result.get("data", [])
@@ -218,18 +212,10 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         But to the second, he should have one.
         :return:
         """
-        picking1 = self._create_picking(
-            partner=self.service.partner, sale=True
-        )
-        picking2 = self._create_picking(
-            partner=self.service.partner, sale=True
-        )
-        picking3 = self._create_picking(
-            partner=self.service.partner, sale=True
-        )
-        picking4 = self._create_picking(
-            partner=self.service.partner, sale=True
-        )
+        picking1 = self._create_picking(partner=self.service.partner, sale=True)
+        picking2 = self._create_picking(partner=self.service.partner, sale=True)
+        picking3 = self._create_picking(partner=self.service.partner, sale=True)
+        picking4 = self._create_picking(partner=self.service.partner, sale=True)
         pickings = picking1 | picking2 | picking3 | picking4
         result = self.service.dispatch("search")
         data = result.get("data", [])
@@ -242,12 +228,8 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
 
     def test_get_multi_picking_no_state_match(self):
         self.backend.delivery_order_states = "assigned|done"
-        picking1 = self._create_picking(
-            partner=self.service.partner, sale=True
-        )
-        picking2 = self._create_picking(
-            partner=self.service.partner, sale=True
-        )
+        picking1 = self._create_picking(partner=self.service.partner, sale=True)
+        picking2 = self._create_picking(partner=self.service.partner, sale=True)
         pickings = picking1 | picking2
         result = self.service.dispatch("search")
         data = result.get("data", [])
@@ -285,8 +267,6 @@ class TestDeliveryService(CommonCase, CommonTestDownload):
         :param target: recordset
         :return:
         """
-        picking = self._create_picking(
-            partner=self.service.partner, sale=False
-        )
+        picking = self._create_picking(partner=self.service.partner, sale=False)
         self.assertEqual(picking.state, "draft")
         self._test_download_not_allowed(self.service, picking)

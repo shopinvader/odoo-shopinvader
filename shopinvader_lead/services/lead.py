@@ -8,8 +8,7 @@ from odoo.addons.component.core import Component
 
 
 class LeadService(Component):
-    """Shopinvader service to expose crm.lead features.
-    """
+    """Shopinvader service to expose crm.lead features."""
 
     _inherit = "base.shopinvader.service"
     _name = "shopinvader.lead.service"

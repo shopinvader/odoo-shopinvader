@@ -31,9 +31,7 @@ class ShopinvaderVariantBindingWizard(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        res = super(ShopinvaderVariantBindingWizard, self).default_get(
-            fields_list
-        )
+        res = super(ShopinvaderVariantBindingWizard, self).default_get(fields_list)
         backend_id = self.env.context.get("active_id", False)
         if backend_id:
             backend = self.env["shopinvader.backend"].browse(backend_id)

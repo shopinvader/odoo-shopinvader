@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!-- Copyright 2017 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
-
 <odoo>
 
     <record model="ir.ui.view" id="shopinvader_product_tree_view">
@@ -24,60 +23,68 @@
         <field name="arch" type="xml">
             <form>
                 <group name="backend">
-                    <field name="backend_id" widget="selection"/>
-                    <field name="lang_id" widget="selection"/>
-                    <field name="active"/>
+                    <field name="backend_id" widget="selection" />
+                    <field name="lang_id" widget="selection" />
+                    <field name="active" />
                 </group>
                 <notebook>
                     <page name="description_and_seo" string="Description and Seo">
-                        <field name="use_shopinvader_product_name" invisible="1"/>
-                        <group name="name"
-                                attrs="{'invisible': [('use_shopinvader_product_name', '!=', True)]}">
-                            <field name="shopinvader_name"/>
+                        <field name="use_shopinvader_product_name" invisible="1" />
+                        <group
+                            name="name"
+                            attrs="{'invisible': [('use_shopinvader_product_name', '!=', True)]}"
+                        >
+                            <field name="shopinvader_name" />
                         </group>
                         <group name="seo">
-                            <field name="seo_title"/>
-                            <field name="meta_keywords"/>
-                            <field name="meta_description"/>
+                            <field name="seo_title" />
+                            <field name="meta_keywords" />
+                            <field name="meta_description" />
                         </group>
                         <group name="description">
-                            <separator string="Short Description" colspan="4"/>
-                            <field name="short_description" colspan="4" nolabel="1"/>
-                            <separator string="Description" colspan="4"/>
-                            <field name="description" colspan="4" nolabel="1"/>
+                            <separator string="Short Description" colspan="4" />
+                            <field name="short_description" colspan="4" nolabel="1" />
+                            <separator string="Description" colspan="4" />
+                            <field name="description" colspan="4" nolabel="1" />
                         </group>
                     </page>
                     <page name="url" string="Url">
                         <group name="url">
-                            <field name="url_builder"/>
+                            <field name="url_builder" />
                             <field
-                                    name="manual_url_key"
-                                    attrs="{
+                                name="manual_url_key"
+                                attrs="{
                                             'invisible': [('url_builder', '!=', 'manual')],
-                                            'required': [('url_builder', '=', 'manual')]}"/>
+                                            'required': [('url_builder', '=', 'manual')]}"
+                            />
                             <field
-                                    name="url_key"
-                                    attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
+                                name="url_key"
+                                attrs="{'invisible': [('url_builder', '=', 'manual')]}"
+                            />
                         </group>
                         <group name="redirect_url">
-                            <field
-                                    name="redirect_url_url_ids"
-                                    nolabel="1"
-                                    colspan="4">
+                            <field name="redirect_url_url_ids" nolabel="1" colspan="4">
                                 <tree>
-                                    <field name="url_key" string="Redirect Url"/>
+                                    <field name="url_key" string="Redirect Url" />
                                 </tree>
                             </field>
                         </group>
                     </page>
                     <page name="variant" string="Variant">
                         <group name="variant">
-                            <field name="shopinvader_variant_ids" nolabel="1" readonly="1">
+                            <field
+                                name="shopinvader_variant_ids"
+                                nolabel="1"
+                                readonly="1"
+                            >
                                 <tree>
-                                    <field name="id"/>
-                                    <field name="default_code"/>
-                                    <field name="record_id"/>
-                                    <field name="shopinvader_backend_ids" widget="many2many_tags"/>
+                                    <field name="id" />
+                                    <field name="default_code" />
+                                    <field name="record_id" />
+                                    <field
+                                        name="shopinvader_backend_ids"
+                                        widget="many2many_tags"
+                                    />
                                 </tree>
                             </field>
                         </group>

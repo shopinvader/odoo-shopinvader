@@ -52,9 +52,7 @@ class ShopinvaderVariant(models.Model):
                 if not variant:
                     # If there is no matching variant, we choose a variant
                     #  with more variation but match previous values selected
-                    variant = self._get_matching_variant(
-                        selected_values + value
-                    )
+                    variant = self._get_matching_variant(selected_values + value)
             res["values"].append(self._prepare_selector_value(variant, value))
 
         return res
@@ -62,15 +60,13 @@ class ShopinvaderVariant(models.Model):
     def _compute_variant_selector(self):
         for record in self:
             data = []
-            attributes = record.mapped(
-                "attribute_value_ids.attribute_id"
-            ).sorted("sequence")
+            attributes = record.mapped("attribute_value_ids.attribute_id").sorted(
+                "sequence"
+            )
             selected_values = self.env["product.attribute.value"].browse()
             for attribute in attributes:
                 data.append(
-                    record._get_selector_for_attribute(
-                        attribute, selected_values
-                    )
+                    record._get_selector_for_attribute(attribute, selected_values)
                 )
                 selected_values |= record.attribute_value_ids.filtered(
                     lambda v: v.attribute_id == attribute
