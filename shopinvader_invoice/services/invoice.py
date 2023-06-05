@@ -75,6 +75,7 @@ class InvoiceService(Component):
                 "required": False,
                 "nullable": True,
             },
+            "ref": {"type": "string", "nullable": True},
             "date_invoice": {"type": "string"},
             "date_due": {
                 "type": "string",
@@ -102,7 +103,22 @@ class InvoiceService(Component):
             "type_label": {"type": "string"},
             "state_label": {"type": "string"},
             "payment_state_label": {"type": "string"},
+            "lines": {
+                "type": "list",
+                "schema": {
+                    "type": "dict",
+                    "schema": {
+                        "name": {"type": "string"},
+                        "price": {"type": "number"},
+                        "untaxed": {"type": "number"},
+                        "qty": {"type": "number"},
+                        "total": {"type": "number"},
+                        "sku": {"type": "string"},
+                    },
+                },
+            },
         }
+
         return invoice_schema
 
     def _get_shopinvader_state(self, record, field):
@@ -120,6 +136,7 @@ class InvoiceService(Component):
             "id:invoice_id",
             "name:number",
             "payment_reference",
+            "ref",
             "invoice_date:date_invoice",
             "invoice_date_due:date_due",
             "amount_total",
@@ -131,8 +148,21 @@ class InvoiceService(Component):
             "payment_state",
             "move_type:type",
             "amount_residual:amount_due",
+            ("invoice_line_ids:lines", self._get_parser_invoice_lines()),
         ]
         return to_parse
+
+    def _get_parser_invoice_lines(self):
+        return [
+            "name",
+            "price_unit:price",
+            "price_subtotal:untaxed",
+            "price_total:total",
+            "quantity:qty",
+            # we want sku to directly the same level
+            # as name or quantity
+            ("product_id:sku", lambda rec, fname: rec[fname].default_code),
+        ]
 
     def _to_json_invoice(self, invoice):
         invoice.ensure_one()
