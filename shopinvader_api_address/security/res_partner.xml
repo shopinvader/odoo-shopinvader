@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <!-- allow authenticated partner to also access to addresses linked to it  -->
+    <record id="shopinvader_address_res_partner_rule" model="ir.rule">
+        <field name="name">Shopinvader Address Endpoint rule: res partner</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="groups"
+            eval="[(4, ref('shopinvader_api_address.shopinvader_address_user_group'))]"
+        />
+        <field name="domain_force">[('parent_id','=',authenticated_partner_id)]</field>
+
+    </record>
+
+    <record id="shopinvader_address_res_partner_access" model="ir.model.access">
+        <field name="name">Shopinvader Address: user read/write/create partners</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="group_id" ref="shopinvader_address_user_group" />
+        <field name="perm_read" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+</odoo>
