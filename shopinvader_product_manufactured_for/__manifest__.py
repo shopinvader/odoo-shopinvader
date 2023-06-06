@@ -10,7 +10,7 @@
     "author": "Camptocamp",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "depends": ["shopinvader", "product_sale_manufactured_for"],
     "data": ["data/ir_export_product.xml"],
     "auto_install": True,

@@ -22,6 +22,6 @@
         "data/email_template.xml",
         "data/shopinvader_notification.xml",
     ],
-    "installable": True,
+    "installable": False,
     "pre_init_hook": "pre_init_hook",
 }

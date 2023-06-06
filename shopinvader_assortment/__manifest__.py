@@ -14,5 +14,5 @@
     ],
     "data": ["data/ir_cron.xml", "views/shopinvader_backend.xml"],
     "demo": ["demo/shopinvader_assortment_demo.xml"],
-    "installable": True,
+    "installable": False,
 }

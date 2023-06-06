@@ -15,4 +15,5 @@
         "shopinvader_image",
     ],
     "data": ["data/ir_export.xml"],
+    "installable": False,
 }

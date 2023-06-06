@@ -15,6 +15,6 @@
         "shopinvader_wishlist",
         "sale_product_set_packaging_qty",
     ],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
 }

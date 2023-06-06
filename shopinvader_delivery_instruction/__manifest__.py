@@ -9,7 +9,7 @@
     "category": "e-commerce",
     "version": "14.0.1.0.2",
     "license": "AGPL-3",
-    "installable": True,
+    "installable": False,
     "depends": [
         "shopinvader",
         # OCA/sale-workflow

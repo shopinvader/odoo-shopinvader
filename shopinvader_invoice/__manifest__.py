@@ -11,5 +11,5 @@
     "depends": ["account", "shopinvader"],
     "data": [],
     "demo": [],
-    "installable": True,
+    "installable": False,
 }

@@ -13,4 +13,5 @@
     "category": "Shopinvader",
     "depends": ["shopinvader_product_stock"],
     "data": ["views/shopinvader_backend.xml"],
+    "installable": False,
 }

@@ -15,4 +15,5 @@
         "data/ir_export_product_brand.xml",
         "data/ir_export_product.xml",
     ],
+    "installable": False,
 }

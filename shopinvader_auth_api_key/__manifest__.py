@@ -12,4 +12,5 @@
     "depends": ["shopinvader", "base_rest_auth_api_key"],
     "data": ["views/shopinvader_backend_view.xml"],
     "demo": ["demo/auth_api_key_demo.xml", "demo/shopinvader_backend_demo.xml"],
+    "installable": False,
 }

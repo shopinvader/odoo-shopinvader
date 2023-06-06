@@ -14,5 +14,5 @@
         "views/shopinvader_backend.xml",
         "data/queue_job_function_data.xml",
     ],
-    "installable": True,
+    "installable": False,
 }

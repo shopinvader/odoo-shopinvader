@@ -10,7 +10,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "ACSONE SA/NV",
     "license": "AGPL-3",
-    "installable": True,
+    "installable": False,
     "depends": ["shopinvader_product_stock", "shopinvader_assortment"],
     "auto_install": True,
 }

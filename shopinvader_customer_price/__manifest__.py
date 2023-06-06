@@ -10,4 +10,5 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader"],
     "data": ["views/shopinvader_backend_views.xml"],
+    "installable": False,
 }

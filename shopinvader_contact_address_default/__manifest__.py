@@ -12,4 +12,5 @@
     "license": "AGPL-3",
     "category": "Others",
     "depends": ["shopinvader", "partner_contact_address_default"],
+    "installable": False,
 }

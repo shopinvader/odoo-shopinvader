@@ -13,5 +13,5 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["component", "shopinvader_locomotive", "shopinvader_algolia"],
     "data": ["views/se_backend_algolia.xml"],
-    "installable": True,
+    "installable": False,
 }

@@ -13,4 +13,5 @@
     "category": "Shopinvader",
     "depends": ["shopinvader_product_stock_forecast", "product_expiry"],
     "data": ["views/shopinvader_backend.xml"],
+    "installable": False,
 }

@@ -11,6 +11,6 @@
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader_customer_validate", "shopinvader_customer_multi_user"],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
 }

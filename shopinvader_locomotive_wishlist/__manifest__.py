@@ -11,7 +11,7 @@
     "author": "Camptocamp",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "auto_install": True,
     "depends": ["shopinvader_locomotive", "shopinvader_wishlist"],
 }

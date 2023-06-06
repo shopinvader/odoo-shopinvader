@@ -14,4 +14,5 @@
     "depends": ["shopinvader", "sale_automatic_workflow"],
     "data": ["views/shopinvader_backend.xml"],
     "auto_install": True,
+    "installable": False,
 }

@@ -12,7 +12,7 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "application": False,
-    "installable": True,
+    "installable": False,
     "depends": ["shopinvader", "product_attribute_set"],
     "data": ["data/ir_export_product.xml", "views/product_filter_view.xml"],
     "demo": ["demo/product_filter.xml"],

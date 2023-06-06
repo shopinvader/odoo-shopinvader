@@ -9,4 +9,5 @@
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader", "point_of_sale"],
+    "installable": False,
 }

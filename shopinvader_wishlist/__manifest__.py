@@ -12,5 +12,5 @@
     "depends": ["shopinvader", "sale_wishlist"],
     "demo": ["demo/product_set.xml"],
     "data": ["views/product_set.xml", "wizard/product_set_add.xml"],
-    "installable": True,
+    "installable": False,
 }

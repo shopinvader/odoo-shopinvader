@@ -16,4 +16,5 @@
         "views/res_partner.xml",
         "views/shopinvader_partner.xml",
     ],
+    "installable": False,
 }

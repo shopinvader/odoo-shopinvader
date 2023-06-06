@@ -12,5 +12,5 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["shopinvader_customer_multi_user", "shopinvader_wishlist"],
     "auto_install": True,
-    "installable": True,
+    "installable": False,
 }

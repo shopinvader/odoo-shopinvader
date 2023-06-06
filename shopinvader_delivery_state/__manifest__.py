@@ -13,4 +13,5 @@
     "depends": ["shopinvader", "sale_delivery_state"],
     "auto_install": True,
     "post_init_hook": "post_init_hook",
+    "installable": False,
 }

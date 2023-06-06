@@ -12,4 +12,5 @@
     "license": "AGPL-3",
     "depends": ["shopinvader", "product_template_tags"],
     "data": ["data/ir_export_product.xml"],
+    "installable": False,
 }

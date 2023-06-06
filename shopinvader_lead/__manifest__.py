@@ -8,5 +8,5 @@
     "license": "AGPL-3",
     "depends": ["shopinvader", "crm"],
     "demo": ["demo/email_demo.xml", "demo/notification_demo.xml"],
-    "installable": True,
+    "installable": False,
 }

@@ -11,6 +11,6 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "depends": ["shopinvader", "product_multi_category"],
-    "installable": True,
+    "installable": False,
     "auto_install": True,
 }

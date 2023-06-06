@@ -11,4 +11,5 @@
     "author": "Camptocamp",
     "license": "AGPL-3",
     "depends": ["shopinvader", "account_invoice_base_invoicing_mode"],
+    "installable": False,
 }

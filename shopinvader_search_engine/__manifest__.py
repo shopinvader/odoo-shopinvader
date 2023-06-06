@@ -22,6 +22,6 @@
         "views/shopinvader_category_view.xml",
         "data/queue_job_function_data.xml",
     ],
-    "installable": True,
+    "installable": False,
     "application": True,
 }

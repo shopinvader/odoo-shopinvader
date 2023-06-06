@@ -15,4 +15,5 @@
         "data/ir_export_product.xml",
         "views/shopinvader_product.xml",
     ],
+    "installable": False,
 }

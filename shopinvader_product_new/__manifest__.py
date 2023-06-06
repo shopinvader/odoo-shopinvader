@@ -10,7 +10,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
-    "installable": True,
+    "installable": False,
     "depends": ["shopinvader"],
     "data": [
         "views/product_template.xml",

@@ -14,5 +14,5 @@
     "license": "AGPL-3",
     "depends": ["shopinvader_locomotive", "shopinvader_sale_profile"],
     "auto_install": True,
-    "installable": True,
+    "installable": False,
 }
