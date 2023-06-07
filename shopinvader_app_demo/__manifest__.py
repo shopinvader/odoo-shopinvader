@@ -13,6 +13,10 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["fastapi"],
     "external_dependencies": {"python": ["fastapi"]},
-    "data": [],
+    "demo": [
+        "demo/res_users.xml",
+        "demo/res_groups.xml",
+        "demo/fastapi_endpoint.xml",
+    ],
     "demo": [],
 }
