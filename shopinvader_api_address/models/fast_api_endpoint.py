@@ -18,7 +18,8 @@ class FastapiEndpoint(models.Model):
     def _get_fastapi_routers(self):
         if self.app == "address":
             return [address_api_router]
-        return super().get_fastapi_routers()
+        return super()._get_fastapi_routers()
+
 
 
 # create a router
