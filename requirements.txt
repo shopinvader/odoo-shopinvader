@@ -9,4 +9,5 @@ unidecode
 validators
 openupgradelib
 extendable_pydantic
+fastapi
 pydantic
