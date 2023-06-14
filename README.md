@@ -89,6 +89,7 @@ addon | version | maintainers | summary
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 14.0.1.0.0 |  | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 |  | Ease creation of variants selector on shopinvader sites
 [shopinvader_product_video_link](shopinvader_product_video_link/) | 14.0.1.0.2 |  | Add video on your Shopinvader website
+[shopinvader_promotion_rule](shopinvader_promotion_rule/) | 14.0.1.0.0 |  | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.2.3.1 |  | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 |  | Expose the amount by tax to shopinvader
 [shopinvader_sale_automatic_workflow](shopinvader_sale_automatic_workflow/) | 14.0.1.1.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Use sale automatic workflows for Shopinvader orders
@@ -114,7 +115,6 @@ addon | version | maintainers | summary
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) |  | Shopinvader Demo App
 [shopinvader_locomotive_contact_company](shopinvader_locomotive_contact_company/) | 10.0.1.0.0 (unported) |  | Synchronize the contact_name with customer name
 [shopinvader_locomotive_elasticsearch](shopinvader_locomotive_elasticsearch/) | 12.0.1.1.0 (unported) |  | This addons is used to push the initial elasticsearch configuration to locomotive
-[shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) |  | Module to manage Promotion Rule with shopinvader
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) |  | This module adds information fields for customers and vendors.
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) |  | Shopinvader addons to extend sale report with backend
 
