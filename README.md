@@ -51,7 +51,7 @@ addon | version | maintainers | summary
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.1 |  | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.2.0 |  | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.1.0 |  | Shopinvader Lead Management
-[shopinvader_locomotive](shopinvader_locomotive/) | 14.0.2.1.1 |  | Manage communications between Shopinvader and Locomotive CMS
+[shopinvader_locomotive](shopinvader_locomotive/) | 14.0.2.1.2 |  | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 |  | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 14.0.1.0.3 |  | Shopinvader guest mode for locomotive
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 14.0.1.3.0 |  | Give the possibility to send a email to reset thepassword from odoo
