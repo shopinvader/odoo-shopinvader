@@ -89,7 +89,7 @@ addon | version | maintainers | summary
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 14.0.1.0.0 |  | Integrate product_variant_multi_link with Shopinvader
 [shopinvader_product_variant_selector](shopinvader_product_variant_selector/) | 14.0.1.0.0 |  | Ease creation of variants selector on shopinvader sites
 [shopinvader_product_video_link](shopinvader_product_video_link/) | 14.0.1.0.2 |  | Add video on your Shopinvader website
-[shopinvader_promotion_rule](shopinvader_promotion_rule/) | 14.0.1.0.0 |  | Module to manage Promotion Rule with shopinvader
+[shopinvader_promotion_rule](shopinvader_promotion_rule/) | 14.0.1.0.1 |  | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.2.3.1 |  | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 |  | Expose the amount by tax to shopinvader
 [shopinvader_sale_automatic_workflow](shopinvader_sale_automatic_workflow/) | 14.0.1.1.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Use sale automatic workflows for Shopinvader orders
