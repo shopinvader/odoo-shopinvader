@@ -82,7 +82,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
         self.assertTrue(self.env["res.partner"]._is_partner_duplicate_prevented())
-        vals = {"email": self.unique_email, "name": "test partner"}
+        vals = {"email": self.unique_email, "name": "test partner", "customer_rank": 1}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
         # create a binding
