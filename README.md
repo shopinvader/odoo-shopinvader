@@ -22,7 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.2 |  | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.24.5 |  | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.24.6 |  | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 |  | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 |  | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.1 |  | Shopinvader API_KEY Authentication
@@ -32,7 +32,7 @@ addon | version | maintainers | summary
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 |  | Shopinvader Display category image for product
 [shopinvader_contact_address_default](shopinvader_contact_address_default/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates `partner_contact_address_default` with Shopinvader
 [shopinvader_customer_activity](shopinvader_customer_activity/) | 14.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Log the customer's shop activity
-[shopinvader_customer_autobind](shopinvader_customer_autobind/) | 14.0.1.0.0 |  | Allows to autobind new customers (Odoo) to Shopinvader backends
+[shopinvader_customer_autobind](shopinvader_customer_autobind/) | 14.0.1.0.1 |  | Allows to autobind new customers (Odoo) to Shopinvader backends
 [shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 |  | Glue module to expose the invoicing_mode field to shopinvader
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.5.0 |  | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_company_group](shopinvader_customer_multi_user_company_group/) | 14.0.1.0.0 |  | Share shopinvader records within the Company Group
