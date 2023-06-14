@@ -57,6 +57,7 @@ addon | version | maintainers | summary
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 14.0.1.3.0 |  | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 14.0.1.0.1 |  | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.2 |  | Synchronize wishlist details to Locomotive users record.
+[shopinvader_mass_mailing_company_newsletter](shopinvader_mass_mailing_company_newsletter/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Shopinvader Mass Mailing Company Newsletter
 [shopinvader_membership](shopinvader_membership/) | 14.0.1.0.1 |  | Shopinvader Membership module
 [shopinvader_multi_cart](shopinvader_multi_cart/) | 14.0.1.1.1 |  | Manage multiple carts in Shopinvader
 [shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 |  | Shopinvader Many Categories
