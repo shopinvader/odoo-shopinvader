@@ -2,21 +2,20 @@
 # Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
+from odoo.exceptions import UserError
+
 from odoo.addons.sale_promotion_rule.tests.test_promotion import (
     AbstractCommonPromotionCase,
 )
 from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
-from odoo.exceptions import UserError
 
 
 class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
     def add_coupon_code(self, coupon_code):
-        return self.service.dispatch(
-            "update", params={"coupon_code": coupon_code}
-        )
+        return self.service.dispatch("update", params={"coupon_code": coupon_code})
 
     def setUp(self, *args, **kwargs):
-        super(TestCart, self).setUp(*args, **kwargs)
+        super().setUp(*args, **kwargs)
         self.set_up("shopinvader.sale_order_2")
         self.product_1 = self.env.ref("product.product_product_4b")
 
@@ -41,7 +40,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
                 "rule_type": "auto",
                 "discount_type": "percentage",
                 "code": None,
-                "name": u"Best Promo Automatic",
+                "name": "Best Promo Automatic",
                 "discount_amount": 10.0,
             },
             promotion_rules_auto[0],
@@ -62,7 +61,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
                 "rule_type": "coupon",
                 "discount_type": "percentage",
                 "code": "ELDONGHUT",
-                "name": u"Best Promo",
+                "name": "Best Promo",
                 "discount_amount": 20.0,
             },
             promotion_rule_coupon,
@@ -89,7 +88,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
                 "rule_type": "auto",
                 "discount_type": "percentage",
                 "code": None,
-                "name": u"Best Promo Automatic",
+                "name": "Best Promo Automatic",
                 "discount_amount": 10.0,
             },
             promotion_rules_auto[0],
@@ -100,6 +99,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         count_existing_lines = len(self.cart.order_line)
         # each time we add an item the promotion is recomputed and the coupon
         # code is preserved
+        self.cart.current_step_id = self.env.ref("shopinvader.cart_index").id
         self.service.dispatch(
             "add_item", params={"product_id": self.product_1.id, "item_qty": 2}
         )
@@ -140,10 +140,8 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         )
         # Update the fiscal position to have reset_price
         # set to True (cfr shopinvader module)
-        self.cart.write_with_onchange(
-            {"fiscal_position_id": fiscal_position.id}
-        )
-        self.assertAlmostEquals(
+        self.cart.write_with_onchange({"fiscal_position_id": fiscal_position.id})
+        self.assertAlmostEqual(
             self.cart.amount_total,
             save_price_with_promo,
             places=self.price_precision_digits,
