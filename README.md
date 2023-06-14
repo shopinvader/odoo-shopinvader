@@ -28,7 +28,7 @@ addon | version | maintainers | summary
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.1 |  | Shopinvader API_KEY Authentication
 [shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.2 |  | Add possibility to replace the image URL by the proxy url set on the SE backend
-[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 |  | Shopinvader module to manage an expiry delay on cart
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.1 |  | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 |  | Shopinvader Display category image for product
 [shopinvader_contact_address_default](shopinvader_contact_address_default/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates `partner_contact_address_default` with Shopinvader
 [shopinvader_customer_activity](shopinvader_customer_activity/) | 14.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Log the customer's shop activity
