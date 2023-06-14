@@ -84,6 +84,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_sale_profile',
         'odoo14-addon-shopinvader_sale_update_price',
         'odoo14-addon-shopinvader_search_engine',
+        'odoo14-addon-shopinvader_validation_token',
         'odoo14-addon-shopinvader_wishlist',
     ],
     classifiers=[
