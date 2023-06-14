@@ -41,7 +41,7 @@ addon | version | maintainers | summary
 [shopinvader_customer_price_wishlist](shopinvader_customer_price_wishlist/) | 14.0.1.1.0 |  | Expose customer's specific prices.
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.3.0 |  | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.3.0 |  | Carrier integration for Shopinvader
-[shopinvader_delivery_carrier_category_keep_carrier](shopinvader_delivery_carrier_category_keep_carrier/) | 14.0.1.0.0 |  | Allows to keep carrier even on delivery address change
+[shopinvader_delivery_carrier_category_keep_carrier](shopinvader_delivery_carrier_category_keep_carrier/) | 14.0.1.0.1 |  | Allows to keep carrier even on delivery address change
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 14.0.1.0.2 |  | Shopinvader addons to let user define delivery instructions
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 14.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easily manage Shopinvader bindings for your company backend.
