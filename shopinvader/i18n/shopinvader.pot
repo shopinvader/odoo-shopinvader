@@ -747,6 +747,31 @@ msgid "Company Name Entity"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__main_mailing_list_id
+msgid "Company Newsletter"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__main_mailing_list_subscription_id
+msgid "Company Newsletter Subscription"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__main_mailing_list_subscription_date
+msgid "Company Newsletter Subscription Date"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__main_mailing_list_subscription_state
+msgid "Company Newsletter Subscription State"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__main_mailing_list_unsubscription_date
+msgid "Company Newsletter Unsubscription Date"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__company_type
 msgid "Company Type"
 msgstr ""
@@ -2150,6 +2175,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__manufactured_for_partner_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__manufactured_for_partner_ids
 msgid "Manufactured for"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__mailing_contact_id
+msgid "Mass Mailing Contact"
 msgstr ""
 
 #. module: shopinvader
@@ -3858,6 +3888,17 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__main_mailing_list_id
+msgid "Technical field: The company's Newsletter mailing list."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__main_mailing_list_subscription_id
+msgid ""
+"Technical field: The company's newsletter subscription for this partner."
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__stock_move_ids
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__stock_quant_ids
 msgid "Technical: used to compute quantities."
@@ -3907,6 +3948,11 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__user_id
 msgid "The internal user in charge of this contact."
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__mailing_contact_id
+msgid "The mailing list contact that matches this partner's email."
 msgstr ""
 
 #. module: shopinvader
