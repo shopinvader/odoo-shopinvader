@@ -1,0 +1,182 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_validation_token
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_validation_token
+#: model:mail.template,body_html:shopinvader_validation_token.mail_template_security_token
+msgid ""
+" Your token: ${object.token} valid until "
+"${format_datetime(object.expiration_datetime, tz='UTC', "
+"dt_format='yyyy/MM/dd HH:mm:ss')} "
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__active
+msgid "Active"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model_terms:ir.ui.view,arch_db:shopinvader_validation_token.shopinvader_security_token_search_view
+msgid "Backend"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,help:shopinvader_validation_token.field_shopinvader_security_token__active
+msgid "Become inactive when the token is used."
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_backend__display_name
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_notification__display_name
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__email
+#: model_terms:ir.ui.view,arch_db:shopinvader_validation_token.shopinvader_security_token_search_view
+msgid "Email"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model_terms:ir.ui.view,arch_db:shopinvader_validation_token.shopinvader_security_token_search_view
+msgid "Group By"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_backend__id
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_notification__id
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: code:addons/shopinvader_validation_token/services/customer_service.py:0
+#, python-format
+msgid "Invalid/Expired token"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__lang
+msgid "Language"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_backend____last_update
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_notification____last_update
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model,name:shopinvader_validation_token.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: code:addons/shopinvader_validation_token/models/shopinvader_backend.py:0
+#, python-format
+msgid ""
+"Minimum token validity is 1 minute:\n"
+"- %s"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__notification_type
+msgid "Notification Type"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:mail.template,subject:shopinvader_validation_token.mail_template_security_token
+msgid "Security token"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: code:addons/shopinvader_validation_token/models/shopinvader_notification.py:0
+#, python-format
+msgid "Security token Customer"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.ui.menu,name:shopinvader_validation_token.shopinvader_security_token_menu
+msgid "Security tokens"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__shopinvader_backend_id
+#: model_terms:ir.ui.view,arch_db:shopinvader_validation_token.shopinvader_security_token_search_view
+msgid "Shopinvader Backend"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model,name:shopinvader_validation_token.model_shopinvader_notification
+msgid "Shopinvader Notification"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model,name:shopinvader_validation_token.model_shopinvader_security_token
+msgid "Shopinvader security token"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.actions.server,name:shopinvader_validation_token.ir_cron_clean_expired_token_ir_actions_server
+#: model:ir.cron,cron_name:shopinvader_validation_token.ir_cron_clean_expired_token
+#: model:ir.cron,name:shopinvader_validation_token.ir_cron_clean_expired_token
+msgid "Shopinvader: clean expired/consumed token"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.constraint,message:shopinvader_validation_token.constraint_shopinvader_security_token_uniq_token
+msgid "This token already exists!"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__token
+msgid "Token"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_backend__token_validity
+msgid "Token validity (minutes)"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.model.fields,field_description:shopinvader_validation_token.field_shopinvader_security_token__expiration_datetime
+msgid "Token's expiration"
+msgstr ""
+
+#. module: shopinvader_validation_token
+#: model:ir.actions.act_window,name:shopinvader_validation_token.shopinvader_security_token_action
+msgid "shopinvader.security.token.action"
+msgstr ""
