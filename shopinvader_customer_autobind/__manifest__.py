@@ -5,7 +5,7 @@
     "name": "Shopinvader Customer Autobind",
     "summary": """
         Allows to autobind new customers (Odoo) to Shopinvader backends""",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
