@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2021 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_security_token_form_view">
+        <field
+            name="name"
+        >shopinvader.security.token.form (in shopinvader_validation_token)</field>
+        <field name="model">shopinvader.security.token</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="email" />
+                            <field name="shopinvader_backend_id" />
+                            <field name="token" />
+                            <field name="expiration_datetime" />
+                        </group>
+                        <group>
+                            <field name="active" />
+                            <field name="lang" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="shopinvader_security_token_tree_view">
+        <field
+            name="name"
+        >shopinvader.security.token.tree (in shopinvader_validation_token)</field>
+        <field name="model">shopinvader.security.token</field>
+        <field name="arch" type="xml">
+            <tree create="0" edit="0">
+                <field name="email" />
+                <field name="shopinvader_backend_id" />
+                <field name="token" />
+                <field name="expiration_datetime" />
+                <field name="active" />
+                <field name="lang" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="shopinvader_security_token_search_view">
+        <field
+            name="name"
+        >Shopinvader_security_token.search (in shopinvader_validation_token)</field>
+        <field name="model">shopinvader.security.token</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="email" string="Email" />
+                <field name="shopinvader_backend_id" string="Shopinvader Backend" />
+                <separator />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Backend"
+                        name="group_by_backend_id"
+                        domain="[]"
+                        context="{'group_by':'shopinvader_backend_id'}"
+                    />
+                    <filter
+                        string="Email"
+                        name="group_by_email"
+                        domain="[]"
+                        context="{'group_by':'email'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shopinvader_security_token_action">
+        <field name="name">shopinvader.security.token.action</field>
+        <field name="res_model">shopinvader.security.token</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.ui.menu" id="shopinvader_security_token_menu">
+        <field name="name">Security tokens</field>
+        <field name="parent_id" ref="shopinvader.menu_shopinvader_config" />
+        <field name="action" ref="shopinvader_security_token_action" />
+        <field name="sequence" eval="100" />
+    </record>
+</odoo>
