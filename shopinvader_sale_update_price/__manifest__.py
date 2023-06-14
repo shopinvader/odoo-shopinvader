@@ -5,7 +5,7 @@
     "name": "Shopinvader Sale Update Price",
     "summary": """
         Triggers the sale order price computation in case of pricelist change""",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
