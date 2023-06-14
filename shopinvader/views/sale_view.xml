@@ -86,4 +86,12 @@
         </field>
     </record>
 
+    <record id="sale.action_quotations" model="ir.actions.act_window">
+        <field name="domain">[('typology', '=', 'sale')]</field>
+    </record>
+
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+        <field name="domain">[('typology', '=', 'sale')]</field>
+    </record>
+
 </odoo>
