@@ -1,0 +1,1 @@
+from . import test_mass_mailing_company_newsletter
