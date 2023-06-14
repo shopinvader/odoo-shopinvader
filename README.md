@@ -103,6 +103,7 @@ addon | version | maintainers | summary
 [shopinvader_sale_update_price](shopinvader_sale_update_price/) | 14.0.1.0.2 |  | Triggers the sale order price computation in case of pricelist change
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.4.1 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_validation_token](shopinvader_validation_token/) | 14.0.1.0.1 |  | Implements a security layer on the registration and/or customer mode. To ensure a customer doesn't use the email of somebody else, it generates a token/code send using notification and the customer has to fill it on the front-side.
+[shopinvader_validation_token_guest](shopinvader_validation_token_guest/) | 14.0.1.0.0 |  | Apply the security token notification on guest mode too
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.1.0 |  | Handle shop wishlist
 
 
