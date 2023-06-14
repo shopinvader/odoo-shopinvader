@@ -44,6 +44,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_locomotive_reset_password',
         'odoo14-addon-shopinvader_locomotive_sale_profile',
         'odoo14-addon-shopinvader_locomotive_wishlist',
+        'odoo14-addon-shopinvader_mass_mailing_company_newsletter',
         'odoo14-addon-shopinvader_membership',
         'odoo14-addon-shopinvader_multi_cart',
         'odoo14-addon-shopinvader_multi_category',
