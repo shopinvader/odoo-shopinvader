@@ -22,13 +22,13 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_url](base_url/) | 14.0.1.0.2 |  | keep history of url for products & categories
-[shopinvader](shopinvader/) | 14.0.5.24.4 |  | Shopinvader
+[shopinvader](shopinvader/) | 14.0.5.24.5 |  | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 |  | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 |  | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.1 |  | Shopinvader API_KEY Authentication
 [shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.2 |  | Add possibility to replace the image URL by the proxy url set on the SE backend
-[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.1 |  | Shopinvader module to manage an expiry delay on cart
+[shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.2 |  | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 |  | Shopinvader Display category image for product
 [shopinvader_contact_address_default](shopinvader_contact_address_default/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates `partner_contact_address_default` with Shopinvader
 [shopinvader_customer_activity](shopinvader_customer_activity/) | 14.0.1.0.1 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Log the customer's shop activity
@@ -64,7 +64,7 @@ addon | version | maintainers | summary
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.1 |  | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 |  | Shopinvader Customer firstname/lastname
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 14.0.1.0.2 |  | Shopinvader Check VAT with invader environnement
-[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 14.0.1.0.0 |  | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
+[shopinvader_pending_cart_reminder](shopinvader_pending_cart_reminder/) | 14.0.1.0.1 |  | Shopinvader module to relaunch the customer when the cart/sale is not confirmed yet. Configure the delay and the email template on the backend.
 [shopinvader_portal_mode](shopinvader_portal_mode/) | 14.0.1.1.0 |  | Shopinvader portal mode
 [shopinvader_pos](shopinvader_pos/) | 14.0.2.2.0 |  | Shopinvader for PoS
 [shopinvader_price_per_qty](shopinvader_price_per_qty/) | 14.0.1.0.1 |  | Shopinvader price per quantity
