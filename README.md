@@ -98,7 +98,7 @@ addon | version | maintainers | summary
 [shopinvader_sale_order_report_without_price](shopinvader_sale_order_report_without_price/) | 14.0.1.0.1 |  | Allow you to download quotations and order reports without prices.
 [shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.1.0 |  | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 |  | Add packaging information to wishlists
-[shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.3.0 |  | ShopInvader - Sale profile
+[shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.3.1 |  | ShopInvader - Sale profile
 [shopinvader_sale_profile_update_price](shopinvader_sale_profile_update_price/) | 14.0.1.0.1 |  | Triggers the sale order price computation without remove sale profile's pricelist
 [shopinvader_sale_update_price](shopinvader_sale_update_price/) | 14.0.1.0.2 |  | Triggers the sale order price computation in case of pricelist change
 [shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.4.1 |  | Shopinvader Catalog Search Engine Connector
