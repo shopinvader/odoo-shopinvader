@@ -242,7 +242,7 @@ class CartService(Component):
             real_line_ids = [line.id for line in cart.order_line if line.id]
             cart._cache["order_line"] = tuple(real_line_ids)
             vals.update(new_values)
-            item.write(vals)
+            item.order_id.write({"order_line": [(1, item.id, vals)]})
         cart.recompute()
 
     def _do_clear_cart_cancel(self, cart):
@@ -318,7 +318,10 @@ class CartService(Component):
         ctx_lang = self.env.context.get("lang", partner.lang)
         if partner.lang != ctx_lang:
             vals["name"] = self._get_sale_order_line_name(vals)
-        return self.env["sale.order.line"].create(vals)
+        existing_lines = cart.order_line
+        # A write on the cart itself to trigger changes
+        cart.write({"order_line": [(0, False, vals)]})
+        return cart.order_line - existing_lines
 
     def _get_sale_order_line_name(self, vals):
         product = self.env["product.product"].browse(vals["product_id"])
@@ -354,7 +357,7 @@ class CartService(Component):
     def _delete_item(self, cart, params):
         item = self._get_cart_item(cart, params, raise_if_not_found=False)
         if item:
-            item.unlink()
+            item.order_id.write({"order_line": [(2, item.id, False)]})
 
     def _prepare_add_item_params_from_line(self, sale_order_line):
         return {"product_id": sale_order_line.product_id.id, "item_qty": 1}

@@ -16,6 +16,7 @@ class TestSaleOrder(CommonCase):
         super().setUp()
         self.sale_obj = self.env["sale.order"]
         self.sale = self.env.ref("shopinvader.sale_order_2")
+        self.sale.write({"last_external_update_date": fields.Datetime.now()})
         self.template = self.env.ref(
             "shopinvader_pending_cart_reminder."
             "mail_template_shopinvader_sale_reminder"

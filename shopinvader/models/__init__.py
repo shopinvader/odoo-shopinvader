@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 from . import seo_title_mixin
+from . import track_external_mixin
 from . import product_filter
 from . import product_product
 from . import product_template

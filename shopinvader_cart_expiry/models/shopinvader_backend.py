@@ -41,12 +41,11 @@ class ShopinvaderBackend(models.Model):
         expiry_date = fields.Datetime.from_string(fields.Datetime.now())
         delta_arg = {self.cart_expiry_delay_unit: self.cart_expiry_delay}
         expiry_date -= timedelta(**delta_arg)
-        expiry_date = fields.Datetime.to_string(expiry_date)
         domain = [
             ("shopinvader_backend_id", "=", self.id),
             ("typology", "=", "cart"),
             ("state", "=", "draft"),
-            ("write_date", "<=", expiry_date),
+            ("last_external_update_date", "<=", expiry_date),
         ]
         return domain
 

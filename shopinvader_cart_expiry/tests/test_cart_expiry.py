@@ -18,8 +18,9 @@ class TestCartExpiry(CartCase):
         super().setUp()
         self.sale_obj = self.env["sale.order"]
         self.partner = self.env.ref("shopinvader.partner_1")
-        self.sale = self.env.ref("shopinvader.sale_order_2")
-        self.cart = self.env.ref("shopinvader.sale_order_2")
+        self.sale = self.cart = self.env.ref("shopinvader.sale_order_1")
+        self.cart.write({"last_external_update_date": fields.Datetime.now()})
+        self.so_date = self.cart.last_external_update_date
         self.shopinvader_session = {"cart_id": self.cart.id}
         with self.work_on_services(
             partner=None, shopinvader_session=self.shopinvader_session
@@ -51,12 +52,13 @@ class TestCartExpiry(CartCase):
             expiration_date = so_date + timedelta(days=1)
             self.assertEqual(expiration_date, self.sale.cart_expiration_date)
             cart = self.service.search()
-            self.assertDictContainsSubset(
-                {"expiration_date": expiration_date}, cart.get("data")
+            self.assertEqual(
+                self.sale.cart_expiration_date,
+                cart.get("data", {}).get("expiration_date"),
             )
 
     def test_cart_expiry_cancel(self):
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"})
         now_method = "odoo.fields.Datetime.now"
@@ -71,7 +73,7 @@ class TestCartExpiry(CartCase):
             self.assertEqual(self.sale.state, "cancel")
 
     def test_cart_expiry_delete(self):
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "delete"})
         now_method = "odoo.fields.Datetime.now"
@@ -112,9 +114,8 @@ class TestCartExpiry(CartCase):
                 self.shopinvader_session.get("cart_id")
             )
             cart = self.service.search()
-            self.assertDictContainsSubset(
-                {"expiration_date": sale.cart_expiration_date},
-                cart.get("data"),
+            self.assertEqual(
+                sale.cart_expiration_date, cart.get("data", {}).get("expiration_date")
             )
 
     def test_cart_expiry_not_draft(self):
@@ -122,7 +123,7 @@ class TestCartExpiry(CartCase):
         Ensure the cart is not deleted/canceled when the state is not draft.
         :return:
         """
-        so_date = fields.Datetime.from_string(self.sale.write_date)
+        so_date = fields.Datetime.from_string(self.so_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.sale.write({"state": "sent"})
         self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"})
@@ -133,13 +134,21 @@ class TestCartExpiry(CartCase):
             # The state still "sent"
             self.assertEqual(self.sale.state, "sent")
 
-        today = fields.Datetime.to_string(so_date + timedelta(days=2))
+        today = fields.Datetime.to_string(so_date + timedelta(days=3))
         with mock.patch(now_method) as mock_now:
             mock_now.return_value = today
             self.backend.manage_cart_expiry()
             self.assertTrue(self.sale.exists())
             self.assertEqual(self.sale.state, "sent")
             # Then re-update the cart to draft state
-            self.sale.write({"state": "draft"})
+        self.sale.write(
+            {
+                "state": "draft",
+                "last_external_update_date": so_date - timedelta(days=1),
+            }
+        )
+        self.sale.flush(["state", "last_external_update_date"])
+        with mock.patch(now_method) as mock_now:
+            mock_now.return_value = today
             self.backend.manage_cart_expiry()
             self.assertEqual(self.sale.state, "cancel")
