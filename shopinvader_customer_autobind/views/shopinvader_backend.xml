@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_backend_form_view">
+        <field
+            name="name"
+        >shopinvader.backend.form (in shopinvader_customer_autobind)</field>
+        <field name="model">shopinvader.backend</field>
+        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field name="arch" type="xml">
+            <field name="account_analytic_id" position="after">
+                <field name="bind_new_customers" />
+                <field
+                    name="new_customer_autobind_mail_template_id"
+                    attrs="{'invisible': [('bind_new_customers', '=', False)]}"
+                />
+            </field>
+        </field>
+    </record>
+
+</odoo>

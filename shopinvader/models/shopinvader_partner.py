@@ -79,6 +79,10 @@ class ShopinvaderPartner(models.Model):
 
     @api.model
     def _prepare_create_params(self, vals):
+        # The new partner should be marked as customer
+        # Exactly when a partner is created from Sale menu
+        # The partner is marked as customer via the action's context
+        vals.update({"customer_rank": 1})
         # As we want to have a SQL contraint on customer email
         # we have to set it manually to avoid to raise the constraint
         # at the creation of the element
