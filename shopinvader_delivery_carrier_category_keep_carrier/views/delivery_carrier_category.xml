@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2020 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="delivery_carrier_category_form_view">
+        <field
+            name="name"
+        >delivery.carrier.category.form (in delivery_carrier_category)</field>
+        <field name="model">delivery.carrier.category</field>
+        <field
+            name="inherit_id"
+            ref="delivery_carrier_category.delivery_carrier_category_form_view"
+        />
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="keep_carrier_on_shipping_change" />
+            </field>
+        </field>
+    </record>
+</odoo>
