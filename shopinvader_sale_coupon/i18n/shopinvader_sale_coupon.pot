@@ -29,6 +29,12 @@ msgid "Last Modified on"
 msgstr ""
 
 #. module: shopinvader_sale_coupon
+#: code:addons/shopinvader_sale_coupon/services/cart.py:0
+#, python-format
+msgid "No coupon found for %s"
+msgstr ""
+
+#. module: shopinvader_sale_coupon
 #: model:ir.model.fields,field_description:shopinvader_sale_coupon.field_sale_order__reward_amount_tax_incl
 msgid "Reward Amount Tax Incl"
 msgstr ""
