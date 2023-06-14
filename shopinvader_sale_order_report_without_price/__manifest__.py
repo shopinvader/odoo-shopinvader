@@ -2,7 +2,7 @@
 {
     "name": "Shopinvader Sale Order Report Without Price",
     "summary": "Allow you to download quotations and order reports without prices.",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion, Odoo Community Association (OCA)",
