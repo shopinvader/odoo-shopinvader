@@ -1,0 +1,75 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_customer_autobind
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_customer_autobind
+#: model:mail.template,body_html:shopinvader_customer_autobind.mail_template_autobind_new_customers
+msgid " Your shop account has been created!"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:mail.template,subject:shopinvader_customer_autobind.mail_template_autobind_new_customers
+msgid "${object.subject}"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model.fields,field_description:shopinvader_customer_autobind.field_shopinvader_backend__bind_new_customers
+msgid "Bind New Customers"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model.fields,help:shopinvader_customer_autobind.field_shopinvader_backend__bind_new_customers
+msgid ""
+"Check this if you want to automatically bind new customers to this backend."
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model.fields,field_description:shopinvader_customer_autobind.field_shopinvader_backend__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model.fields,help:shopinvader_customer_autobind.field_shopinvader_backend__new_customer_autobind_mail_template_id
+msgid ""
+"Fill in this field with Mail Template that will be used to send a welcome "
+"mail to customersautomatically bound to Shopinvader backends."
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model.fields,field_description:shopinvader_customer_autobind.field_shopinvader_backend__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model.fields,field_description:shopinvader_customer_autobind.field_shopinvader_backend____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model,name:shopinvader_customer_autobind.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: model:ir.model.fields,field_description:shopinvader_customer_autobind.field_shopinvader_backend__new_customer_autobind_mail_template_id
+msgid "New Customer Auto Binding Email"
+msgstr ""
+
+#. module: shopinvader_customer_autobind
+#: code:addons/shopinvader_customer_autobind/components/res_partner_listener.py:0
+#, python-format
+msgid ""
+"The partner email is not defined! The account on websites is not created "
+"yet. Please fill in the email in order to do it."
+msgstr ""
