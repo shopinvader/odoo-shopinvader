@@ -32,6 +32,15 @@ class ShopinvaderCustomerService(Component):
                 values.update({"notification_sent": True})
         return values
 
+    def validate_token(self, **params):
+        """
+        This service ensure the token is valid but doesn't consume it.
+        """
+        params = params or {}
+        params.update({"consume": False})
+        self._ensure_token_valid(params)
+        return {}
+
     def _ensure_token_valid(self, params):
         """
         Get the token form given params (and remove it).
@@ -44,6 +53,7 @@ class ShopinvaderCustomerService(Component):
         """
         email = params.get("email")
         token = params.pop("token", "")
+        consume = params.pop("consume", True)
         EmailToken = self.env["shopinvader.security.token"]
         if EmailToken._should_trigger_security_token(
             backend=self.shopinvader_backend,
@@ -51,7 +61,7 @@ class ShopinvaderCustomerService(Component):
             service_name=self._name,
         ):
             if not EmailToken._check_token_is_valid(
-                email, token, self.shopinvader_backend, self._name
+                email, token, self.shopinvader_backend, self._name, consume=consume
             ):
                 raise exceptions.UserError(_("Invalid/Expired token"))
         return True
@@ -79,4 +89,15 @@ class ShopinvaderCustomerService(Component):
     def _validator_create(self):
         schema = super()._validator_create()
         schema.update({"token": {"type": "string", "required": False}})
+        return schema
+
+    def _validator_validate_token(self):
+        schema = {
+            "email": {"type": "string", "required": True},
+            "token": {"type": "string", "required": True},
+        }
+        return schema
+
+    def _validator_return_validate_token(self):
+        schema = {}
         return schema

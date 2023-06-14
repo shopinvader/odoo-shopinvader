@@ -126,29 +126,44 @@ class ShopinvaderSecurityToken(models.Model):
     def _generate_token(self, backend, email, service_name):
         """
         Generate the shopinvader.security.token
+        Before generate a new token, check if the email is already linked to a not consumed
+        token.
+        If yes, increase the expiration_datetime and return it.
+        If not, create the token and return it.
         :return: shopinvader.security.token
         """
-        token = self._get_new_token(backend, email)
         now = fields.Datetime.from_string(fields.Datetime.now())
+        notif_type = self._service_notification_map().get(service_name)
+        domain = [
+            ("shopinvader_backend_id", "=", backend.id),
+            ("email", "=", email),
+            ("active", "=", True),
+            ("expiration_datetime", ">", now),
+            ("notification_type", "=", notif_type),
+        ]
         expiration = now + relativedelta(minutes=backend.token_validity)
         expiration_datetime = fields.Datetime.to_string(expiration)
-        notif_type = self._service_notification_map().get(service_name)
-        lang = self.env.context.get("lang") or "en_US"
-        if lang not in backend.lang_ids.mapped("code"):
-            lang = fields.first(backend.lang_ids).code
-        values = {
-            "shopinvader_backend_id": backend.id,
-            "email": email,
-            "token": token,
-            "expiration_datetime": expiration_datetime,
-            "notification_type": notif_type,
-            "lang": lang,
-        }
-        shopinvader_token = self.create(values)
+        shopinvader_token = self.search(domain, limit=1)
+        if not shopinvader_token:
+            token = self._get_new_token(backend, email)
+            lang = self.env.context.get("lang") or "en_US"
+            if lang not in backend.lang_ids.mapped("code"):
+                lang = fields.first(backend.lang_ids).code
+            values = {
+                "shopinvader_backend_id": backend.id,
+                "email": email,
+                "token": token,
+                "expiration_datetime": expiration_datetime,
+                "notification_type": notif_type,
+                "lang": lang,
+            }
+            shopinvader_token = self.create(values)
+        else:
+            shopinvader_token.write({"expiration_datetime": expiration_datetime})
         return shopinvader_token
 
     @api.model
-    def _check_token_is_valid(self, email, token, backend, service_name):
+    def _check_token_is_valid(self, email, token, backend, service_name, consume=True):
         """
         Check if the given token on the current shopinvader partner is valid
         :param email: str
@@ -171,7 +186,8 @@ class ShopinvaderSecurityToken(models.Model):
             ]
             shopinvader_token = self.search(domain, limit=1)
             if shopinvader_token:
-                shopinvader_token._consume()
+                if consume:
+                    shopinvader_token._consume()
                 valid = True
         else:
             valid = True
