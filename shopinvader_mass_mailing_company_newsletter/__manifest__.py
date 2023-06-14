@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Mass Mailing Company Newsletter",
     "summary": "Shopinvader Mass Mailing Company Newsletter",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "author": "Camptocamp SA",
     "maintainers": ["ivantodorovich"],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
