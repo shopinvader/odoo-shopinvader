@@ -1205,6 +1205,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__display_name
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard__display_name
+#: model:ir.model.fields,field_description:shopinvader.field_track_external_mixin__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -1546,6 +1547,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard__id
+#: model:ir.model.fields,field_description:shopinvader.field_track_external_mixin__id
 msgid "ID"
 msgstr ""
 
@@ -1959,6 +1961,12 @@ msgid "Languages"
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_sale_order__last_external_update_date
+#: model:ir.model.fields,field_description:shopinvader.field_track_external_mixin__last_external_update_date
+msgid "Last External Update Date"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_account_move____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_product_category____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_product_filter____last_update
@@ -1983,6 +1991,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard____last_update
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard____last_update
+#: model:ir.model.fields,field_description:shopinvader.field_track_external_mixin____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -4207,6 +4216,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__service_type
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__service_type
 msgid "Track Service"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model,name:shopinvader.model_track_external_mixin
+msgid "Track external update"
 msgstr ""
 
 #. module: shopinvader
