@@ -269,7 +269,14 @@ class AnonymousCartCase(CartCase, CartClearTest):
         # reset cart_id parameter
         self.service.shopinvader_session.update({"cart_id": False})
         search_result = self.service.search()
-        self.assertDictEqual(search_result, {})
+        self.assertEqual(search_result, {})
+        self.service.shopinvader_session.update({"cart_id": self.cart.id})
+        # if cart is no longer a cart, it shouldn't create one neither
+        # and it should clear the session's cart id
+        self.cart.typology = "sale"
+        search_result = self.service.search()
+        self.assertEqual(search_result["store_cache"]["cart"], {})
+        self.assertEqual(search_result["set_session"]["cart_id"], 0)
 
 
 class CommonConnectedCartCase(CartCase):
