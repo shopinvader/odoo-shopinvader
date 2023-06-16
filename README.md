@@ -40,7 +40,7 @@ addon | version | maintainers | summary
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 14.0.1.1.0 |  | Integrate customer multi user and wishlist.
 [shopinvader_customer_price](shopinvader_customer_price/) | 14.0.1.0.2 |  | Expose customer's specific prices.
 [shopinvader_customer_price_wishlist](shopinvader_customer_price_wishlist/) | 14.0.1.1.0 |  | Expose customer's specific prices.
-[shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.3.1 |  | Provide configuration and machinery to validate customers.
+[shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.4.0 |  | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.3.1 |  | Carrier integration for Shopinvader
 [shopinvader_delivery_carrier_category_keep_carrier](shopinvader_delivery_carrier_category_keep_carrier/) | 14.0.1.0.1 |  | Allows to keep carrier even on delivery address change
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 14.0.1.0.2 |  | Shopinvader addons to let user define delivery instructions
