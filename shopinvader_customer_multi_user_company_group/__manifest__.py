@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Customer Multi User Company Group",
     "summary": "Share shopinvader records within the Company Group",
-    "version": "14.0.2.0.0",
+    "version": "14.0.3.0.0",
     "license": "AGPL-3",
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
