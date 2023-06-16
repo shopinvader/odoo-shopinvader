@@ -35,7 +35,7 @@ addon | version | maintainers | summary
 [shopinvader_customer_autobind](shopinvader_customer_autobind/) | 14.0.1.0.1 |  | Allows to autobind new customers (Odoo) to Shopinvader backends
 [shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 |  | Glue module to expose the invoicing_mode field to shopinvader
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.5.0 |  | Enable registration of multiple users per each company customer.
-[shopinvader_customer_multi_user_company_group](shopinvader_customer_multi_user_company_group/) | 14.0.1.0.0 |  | Share shopinvader records within the Company Group
+[shopinvader_customer_multi_user_company_group](shopinvader_customer_multi_user_company_group/) | 14.0.2.0.0 |  | Share shopinvader records within the Company Group
 [shopinvader_customer_multi_user_validate](shopinvader_customer_multi_user_validate/) | 14.0.1.1.0 |  | Glue module for `shopinvader_customer_validate` and `shopinvader_customer_multi_user`.
 [shopinvader_customer_multi_user_wishlist](shopinvader_customer_multi_user_wishlist/) | 14.0.1.1.0 |  | Integrate customer multi user and wishlist.
 [shopinvader_customer_price](shopinvader_customer_price/) | 14.0.1.0.2 |  | Expose customer's specific prices.
