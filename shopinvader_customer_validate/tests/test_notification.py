@@ -62,7 +62,7 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
         )
         params = dict(self.address_params, name="John Doe")
         self.address_service.dispatch("create", params=params)
-        address = self.env["res.partner"].search([("name", "=", "John Doe")])
+        address = self.env["res.partner"].search([("name", "=", "John Doe")], limit=1)
         self.assertEqual(address.parent_id, self.partner)
         # notification goes to the owner of the address
         partner = self.partner
@@ -74,7 +74,8 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
         self._check_notification("address_created_not_validated", partner)
 
         # now enable it
-        address._get_shopinvader_validate_address_wizard().action_apply()
+        wiz = address._get_shopinvader_validate_address_wizard()
+        wiz.action_apply()
         job = self._find_notification_job(
             name="Notify address_validated for res.partner,%d" % partner.id
         )

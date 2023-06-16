@@ -37,6 +37,12 @@ class ResPartner(models.Model):
         compute="_compute_display_flags",
         compute_sudo=True,
     )
+    backends_display = fields.Char(
+        help="Tech field to be used in views "
+        "to display on which backends an address can be used",
+        compute="_compute_backends_display",
+        compute_sudo=True,
+    )
 
     @api.depends("shopinvader_bind_ids.state")
     def _compute_has_shopinvader_user(self):
@@ -84,6 +90,19 @@ class ResPartner(models.Model):
             return False
         has_parent = self._get_has_shopinvader_parent()
         return has_parent and self.address_type == "address"
+
+    def _compute_backends_display(self):
+        for rec in self:
+            rec.backends_display = ", ".join(rec._get_valid_backends().mapped("name"))
+
+    def _get_valid_backends(self):
+        """Get valid backends from partner's hierarchy."""
+        partners = self
+        backends = partners.shopinvader_bind_ids.backend_id
+        while partners.parent_id:
+            backends |= partners.parent_id.shopinvader_bind_ids.backend_id
+            partners = partners.parent_id
+        return backends
 
     def _get_has_shopinvader_parent(self):
         has_shopinvader_user = self.parent_has_shopinvader_user
