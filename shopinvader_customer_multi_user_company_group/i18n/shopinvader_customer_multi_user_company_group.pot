@@ -52,8 +52,18 @@ msgid "Locomotive CMS Backend"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user_company_group
+#: model:ir.model.fields,field_description:shopinvader_customer_multi_user_company_group.field_shopinvader_backend__multi_user_company_group_address_policy
+msgid "Multi User Company Group Address Policy"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user_company_group
 #: model:ir.model.fields,field_description:shopinvader_customer_multi_user_company_group.field_shopinvader_backend__multi_user_company_group_records_policy
 msgid "Multi User Company Group Records Policy"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user_company_group
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user_company_group.selection__shopinvader_backend__multi_user_company_group_address_policy__shared
+msgid "Share addresses across companies in the group"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user_company_group
@@ -67,12 +77,26 @@ msgid "Shopinvader Partner"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user_company_group
+#: model:ir.model.fields,help:shopinvader_customer_multi_user_company_group.field_shopinvader_backend__multi_user_company_group_address_policy
+msgid ""
+"This affects the behavior of every endpoint which lists partner related records, directy or indirectly.\n"
+"\n"
+"* `View addresses down the company group hierarchy`: Users that are part of the company group will see addresses from the companies that belong to it, but those companies users will only see their own company addresses.\n"
+"* `Share addresses across companies in the group`: Addresses will be shared among companies belonging to the same company group.\n"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user_company_group
 #: model:ir.model.fields,help:shopinvader_customer_multi_user_company_group.field_shopinvader_backend__multi_user_company_group_records_policy
 msgid ""
 "This affects the behavior of every endpoint which lists partner related records, directy or indirectly.\n"
 "\n"
 "* `View records down the company group hierarchy`: Users that are part of the company group will see records from the companies that belong to it, but those companies users will only see their own company records.\n"
 "* `Share records across companies in the group`: Records will be shared among companies belonging to the same company group.\n"
+msgstr ""
+
+#. module: shopinvader_customer_multi_user_company_group
+#: model:ir.model.fields.selection,name:shopinvader_customer_multi_user_company_group.selection__shopinvader_backend__multi_user_company_group_address_policy__hierarchy
+msgid "View addresses down the company group hierarchy"
 msgstr ""
 
 #. module: shopinvader_customer_multi_user_company_group
