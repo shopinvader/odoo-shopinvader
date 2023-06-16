@@ -1,4 +1,4 @@
-# Copyright 2018 ACSONE SA/NV
+# Copyright 2022 Camptocamp (http://www.camptocamp.com).
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
