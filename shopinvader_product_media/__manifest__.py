@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Product Media",
     "summary": "Index storage media data into external search engine",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.1.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
