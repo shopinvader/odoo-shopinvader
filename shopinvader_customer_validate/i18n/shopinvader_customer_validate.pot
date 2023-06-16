@@ -99,6 +99,13 @@ msgid "Apply"
 msgstr ""
 
 #. module: shopinvader_customer_validate
+#: model:ir.model.fields,field_description:shopinvader_customer_validate.field_res_partner__backends_display
+#: model:ir.model.fields,field_description:shopinvader_customer_validate.field_res_users__backends_display
+#: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_partner__backends_display
+msgid "Backends Display"
+msgstr ""
+
+#. module: shopinvader_customer_validate
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_address_validate_form_view
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_partner_validate_form_view
 msgid "Cancel"
@@ -156,6 +163,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader_customer_validate.field_res_users__display_validate_address
 #: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_partner__display_validate_address
 msgid "Display Validate Address"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_address_validate__display_warning
+msgid "Display Warning"
 msgstr ""
 
 #. module: shopinvader_customer_validate
@@ -265,6 +277,26 @@ msgid "Notification ${object.name} - Address validated"
 msgstr ""
 
 #. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_address_validate_form_view
+msgid "Parent"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_address_validate_form_view
+msgid ""
+"Selected partners have more than one backend matching.\n"
+"                  Since you might have a complex hierarchy of customers\n"
+"                  which might have bindings for different shops\n"
+"                  please make sure to verify if you are selecting the right shop backend."
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: code:addons/shopinvader_customer_validate/wizards/shopinvader_address_validate.py:0
+#, python-format
+msgid "Selected partners must have at least a binding"
+msgstr ""
+
+#. module: shopinvader_customer_validate
 #: model:ir.model.fields,field_description:shopinvader_customer_validate.field_res_partner__is_shopinvader_active
 #: model:ir.model.fields,field_description:shopinvader_customer_validate.field_res_users__is_shopinvader_active
 msgid "Shop enabled"
@@ -303,8 +335,8 @@ msgid "Shop: validate users"
 msgstr ""
 
 #. module: shopinvader_customer_validate
-#: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_address_validate__backend_ids
-msgid "ShopInvader Backends"
+#: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_address_validate__backend_id
+msgid "ShopInvader Backend"
 msgstr ""
 
 #. module: shopinvader_customer_validate
@@ -336,11 +368,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:shopinvader_customer_validate.action_sale_shopinvader_addresses_to_validate
 #: model:ir.ui.menu,name:shopinvader_customer_validate.menu_sale_shopinvader_addresses_to_validate
 msgid "Shopinvader addresses to validate"
-msgstr ""
-
-#. module: shopinvader_customer_validate
-#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_address_validate_form_view
-msgid "Shopinvader backends not notify"
 msgstr ""
 
 #. module: shopinvader_customer_validate
@@ -388,6 +415,15 @@ msgstr ""
 #. module: shopinvader_customer_validate
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_partner_view_search
 msgid "State: Pending"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model:ir.model.fields,help:shopinvader_customer_validate.field_res_partner__backends_display
+#: model:ir.model.fields,help:shopinvader_customer_validate.field_res_users__backends_display
+#: model:ir.model.fields,help:shopinvader_customer_validate.field_shopinvader_partner__backends_display
+msgid ""
+"Tech field to be used in views to display on which backends an address can "
+"be used"
 msgstr ""
 
 #. module: shopinvader_customer_validate
@@ -448,6 +484,16 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader_customer_validate
+#: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_address_validate__valid_backend_ids
+msgid "Valid Backend"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_address_validate_form_view
+msgid "Valid backends"
+msgstr ""
+
+#. module: shopinvader_customer_validate
 #: model:ir.model.fields,field_description:shopinvader_customer_validate.field_shopinvader_backend__validate_customers
 msgid "Validate Customers"
 msgstr ""
@@ -461,7 +507,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_address_validate_form_view
 msgid ""
 "Validate Shopinvader addresses.\n"
-"                  Selected addresses not matching this status will be updated."
+"                        Selected addresses not matching this status will be updated."
 msgstr ""
 
 #. module: shopinvader_customer_validate
@@ -510,6 +556,25 @@ msgstr ""
 #. module: shopinvader_customer_validate
 #: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.new_customer_not_validated
 msgid "Welcome, your account will be validated and activated soon"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: code:addons/shopinvader_customer_validate/wizards/shopinvader_address_validate.py:0
+#, python-format
+msgid "You must select a backend"
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: model_terms:ir.ui.view,arch_db:shopinvader_customer_validate.shopinvader_address_validate_form_view
+msgid ""
+"You must select a backend to notify.\n"
+"                        You can validate only addresses belonging to partners having a customer on a shop."
+msgstr ""
+
+#. module: shopinvader_customer_validate
+#: code:addons/shopinvader_customer_validate/wizards/shopinvader_address_validate.py:0
+#, python-format
+msgid "You must select a valid backend. Valid: %s"
 msgstr ""
 
 #. module: shopinvader_customer_validate
