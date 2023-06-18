@@ -5,6 +5,8 @@ from fastapi import APIRouter
 
 from odoo import api, fields, models
 
+from ..routers.address_service import router
+
 
 class FastapiEndpoint(models.Model):
 
@@ -17,10 +19,9 @@ class FastapiEndpoint(models.Model):
     @api.model
     def _get_fastapi_routers(self):
         if self.app == "address":
-            return [address_api_router]
+            return [router]
         return super()._get_fastapi_routers()
 
 
 
-# create a router
-address_api_router = APIRouter()
+

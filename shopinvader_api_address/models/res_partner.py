@@ -73,3 +73,11 @@ class ResPartner(models.Model):
         vals= self._create_vals_shopinvader_addres(data)
         #TODO add mapping
         return self.env["res.partner"].sudo().create(vals)
+    
+    def _update_shopinvader_address(self,data):
+        vals= self._create_vals_shopinvader_addres(data)
+        #TODO add mapping
+        #TODO search record
+        #use vals to update record
+        #return updated record
+        return self.env["res.partner"].sudo().create(vals)
