@@ -7,12 +7,13 @@ from odoo.addons.fastapi.schemas import PagedCollection, Paging
 from odoo.addons.shopinvader_schema_address.schema.address import Address
 from ..schema.schema import AddressSearch,AddressInput
 
-from ..models.fast_api_endpoint import address_api_router
 
 from typing import Optional
 
+# create a router
+router = APIRouter()
 
-@address_api_router.get("/partners", response_model=PagedCollection[Address])
+@router.get("/partners", response_model=PagedCollection[Address])
 def get_address(
     paging: Paging = Depends(paging),
     env: Environment = Depends(authenticated_partner_env),
@@ -27,7 +28,7 @@ def get_address(
         items=[Address.from_orm(rec) for rec in partners],
     )
 
-@address_api_router.get("/address/{uuid}",response_model=PagedCollection[Address])
+@router.get("/address/{uuid}",response_model=PagedCollection[Address])
 def addres_get(
     uuid: int,
     env: Environment = Depends(authenticated_partner_env),
@@ -39,7 +40,7 @@ def addres_get(
         items=[Address.from_orm(rec) for rec in address],
     )
 
-@address_api_router.get("/address/search",response_model=PagedCollection[Address])
+@router.get("/address/search",response_model=PagedCollection[Address])
 def address_search(
     query: AddressSearch = Depends(),
     paging: Paging = Depends(paging),
@@ -51,15 +52,38 @@ def address_search(
         items=[Address.from_orm(rec) for rec in address],
     )
 
-@address_api_router.post(
+@router.post(
     "/address/create", response_model=PagedCollection[Address], status_code=201
 )
 def address_create(
     data: AddressInput,
-    env: Environment = Depends(odoo_env),
+    env: Environment = Depends(odoo_env), #TODO use authenticated partner
 ) -> PagedCollection[Address]:
     address = env["res.partner"]._create_shopinvader_address(data)
     return PagedCollection[Address](
         total=len(address),
         items=[Address.from_orm(rec) for rec in address],
     )
+
+@router.post(
+    "/address/update", response_model=PagedCollection[Address], status_code=201
+)
+def address_update(
+    data: AddressInput,
+    env: Environment = Depends(odoo_env), #TODO use authenticated partner
+) -> PagedCollection[Address]:
+    #TODO: add identification of address ?
+    # or search it 
+    address = env["res.partner"]._update_shopinvader_address(data)
+    return PagedCollection[Address](
+        total=len(address),
+        items=[Address.from_orm(rec) for rec in address],
+    )
+
+# TODO:
+# CREATE - DONE
+    # WRITE test
+# UPDATE
+    # write test
+# DELETE
+    # write test
