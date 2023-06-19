@@ -33,7 +33,7 @@ class ProductTemplate(models.Model):
 
     def _inverse_active(self):
         inactive = self.filtered(lambda p: not p.active)
-        inactive.mapped("shopinvader_bind_ids").write({"active": False})
+        inactive.mapped("shopinvader_bind_ids").sudo().write({"active": False})
 
     def _compute_shopinvader_backend_ids(self):
         for rec in self:
