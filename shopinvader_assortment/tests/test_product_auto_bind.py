@@ -18,7 +18,17 @@ class TestProductAutoBind(SavepointCase):
         cls.backend = cls.env.ref("shopinvader.backend_1")
         cls.variant_obj = cls.env["shopinvader.variant"]
         cls.product_obj = cls.env["product.product"]
-        cls.backend.product_assortment_id.domain = "[('sale_ok', '=', True)]"
+        cls.filter_obj = cls.env["ir.filters"]
+        cls.assortment = cls.filter_obj.create(
+            {
+                "name": "Test Assortment",
+                "model_id": "product.product",
+                "is_assortment": True,
+                "domain": [("sale_ok", "=", True)],
+            }
+        )
+        cls.backend.product_assortment_ids = cls.assortment.ids
+        cls.backend.product_manual_binding = False
 
     def test_shopinvader_auto_product_auto_bind(self):
         # Test bind all products from assortment domain
@@ -26,7 +36,7 @@ class TestProductAutoBind(SavepointCase):
             [("backend_id", "=", self.backend.id)]
         )
         self.assertFalse(variants)
-        domain = self.backend.product_assortment_id._get_eval_domain()
+        domain = self.assortment._get_eval_domain()
         products_to_bind = self.product_obj.search(domain)
 
         self.backend.autobind_product_from_assortment()
@@ -42,7 +52,7 @@ class TestProductAutoBind(SavepointCase):
 
         # Exclude one product, related binding should be inactivated
         excluded_product = self.env.ref("product.product_product_7")
-        self.backend.product_assortment_id.write(
+        self.assortment.write(
             {"blacklist_product_ids": [(4, excluded_product.id)]}
         )
 
@@ -64,9 +74,7 @@ class TestProductAutoBind(SavepointCase):
         self.assertEqual(len(variants), len(products_to_bind) - 1)
 
         # remove product from blacklist, related binding should reactivated
-        self.backend.product_assortment_id.write(
-            {"blacklist_product_ids": [(5, False, False)]}
-        )
+        self.assortment.write({"blacklist_product_ids": [(5, False, False)]})
 
         self.backend.autobind_product_from_assortment()
 
@@ -84,7 +92,7 @@ class TestProductAutoBind(SavepointCase):
             [("backend_id", "=", self.backend.id)]
         )
         self.assertFalse(variants)
-        domain = self.backend.product_assortment_id._get_eval_domain()
+        domain = self.assortment._get_eval_domain()
         products_to_bind = self.product_obj.search(domain)
 
         self.backend.force_recompute_all_binding_index()
@@ -100,7 +108,7 @@ class TestProductAutoBind(SavepointCase):
 
         # Exclude one product, related binding should be inactivated
         excluded_product = self.env.ref("product.product_product_7")
-        self.backend.product_assortment_id.write(
+        self.assortment.write(
             {"blacklist_product_ids": [(4, excluded_product.id)]}
         )
 
@@ -122,9 +130,7 @@ class TestProductAutoBind(SavepointCase):
         self.assertEqual(len(variants), len(products_to_bind) - 1)
 
         # remove product from blacklist, related binding should reactivated
-        self.backend.product_assortment_id.write(
-            {"blacklist_product_ids": [(5, False, False)]}
-        )
+        self.assortment.write({"blacklist_product_ids": [(5, False, False)]})
 
         self.backend.force_recompute_all_binding_index()
 
