@@ -6,6 +6,13 @@
         <field name="arch" type="xml">
             <form string="Shopinvader Partner">
                 <sheet>
+                    <field name="active" invisible="1" />
+                    <widget
+                        name="web_ribbon"
+                        text="Archived"
+                        bg_color="bg-danger"
+                        attrs="{'invisible': [('active', '=', True)]}"
+                    />
                     <div class="oe_title">
                         <h1>
                             <field name="name" class="oe_inline" readonly="1" />
