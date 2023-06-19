@@ -130,7 +130,7 @@ class ShopinvaderProduct(models.Model):
                 ]
             ):
                 vals = self_ctx._prepare_shopinvader_variant(variant)
-                shopinv_variants |= shopinv_variant_obj.create(vals)
+                shopinv_variants |= shopinv_variant_obj.sudo().create(vals)
         return shopinv_variants
 
     @api.model
