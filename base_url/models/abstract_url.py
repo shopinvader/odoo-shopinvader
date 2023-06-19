@@ -55,13 +55,16 @@ class AbstractUrl(models.AbstractModel):
     def on_url_key_change(self):
         self.ensure_one()
         if self.manual_url_key:
-            url = slugify(self.manual_url_key)
-            if url != self.manual_url_key:
-                self.manual_url_key = url
+            chunks = self.manual_url_key.split("/")
+            url = []
+            for chunk in chunks:
+                url.append(slugify(chunk))
+            if url != chunks:
+                self.manual_url_key = "/".join(url)
                 return {
                     "warning": {
                         "title": "Adapt text rules",
-                        "message": "it will be adapted to %s" % url,
+                        "message": "it will be adapted to %s" % "/".join(url),
                     }
                 }
 
