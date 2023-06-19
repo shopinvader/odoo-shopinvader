@@ -27,7 +27,9 @@ def auth_jwt_authenticated_or_anonymous_partner(
 ) -> Partner:
     if auth_jwt_partner:
         return auth_jwt_partner
-    anonymous_partner = env["res.partner"]._get_anonymous_partner(request.cookies)
+    anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
+        request.cookies
+    )
     if anonymous_partner:
         return env["res.partner"].browse(anonymous_partner.id)
     _logger.info("JWT authentication failed and no anonymous partner cookie found.")
@@ -45,7 +47,11 @@ def auth_jwt_authenticated_or_anonymous_partner_autocreate(
 ) -> Partner:
     if auth_jwt_partner:
         return auth_jwt_partner
-    anonymous_partner = env["res.partner"]._get_anonymous_partner(request.cookies)
+    anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
+        request.cookies
+    )
     if not anonymous_partner:
-        anonymous_partner = env["res.partner"]._create_anonymous_partner(response)
+        anonymous_partner = env["res.partner"]._create_anonymous_partner__cookie(
+            response
+        )
     return env["res.partner"].browse(anonymous_partner.id)

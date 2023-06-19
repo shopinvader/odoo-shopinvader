@@ -51,9 +51,9 @@ class TestBase(tests.common.TransactionCase):
                 "email": "auth_jwt_or_anonymous@shopinvader.com",
             }
         )
-        cls.test_anonymous_partner = cls.env["res.partner"]._create_anonymous_partner(
-            response=mock.MagicMock()
-        )
+        cls.test_anonymous_partner = cls.env[
+            "res.partner"
+        ]._create_anonymous_partner__cookie(response=mock.MagicMock())
         cls.jwt_validator = cls.env["auth.jwt.validator"].create(
             {
                 "name": "test_shopinvader_fastapi_auth_jwt",
