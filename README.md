@@ -17,6 +17,13 @@ Odoo REST APIs for e-commerce.
 
 [//]: # (addons)
 
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[sale_cart](sale_cart/) | 16.0.1.0.0 |  | Uee Sale Orders as cart.
+
+
 Unported addons
 ---------------
 addon | version | maintainers | summary
