@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_customer_activity
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_customer_activity
+#: model:ir.model.fields,help:shopinvader_customer_activity.field_shopinvader_partner__first_active_date
+msgid "Date of the first user activity"
+msgstr ""
+
+#. module: shopinvader_customer_activity
+#: model:ir.model.fields,help:shopinvader_customer_activity.field_shopinvader_partner__last_active_date
+msgid "Date of the last user activity"
+msgstr ""
+
+#. module: shopinvader_customer_activity
+#: model:ir.model.fields,field_description:shopinvader_customer_activity.field_shopinvader_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_customer_activity
+#: model:ir.model.fields,field_description:shopinvader_customer_activity.field_shopinvader_partner__first_active_date
+msgid "First Activity on"
+msgstr ""
+
+#. module: shopinvader_customer_activity
+#: model:ir.model.fields,field_description:shopinvader_customer_activity.field_shopinvader_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_customer_activity
+#: model:ir.model.fields,field_description:shopinvader_customer_activity.field_shopinvader_partner__last_active_date
+msgid "Last Activity on"
+msgstr ""
+
+#. module: shopinvader_customer_activity
+#: model:ir.model.fields,field_description:shopinvader_customer_activity.field_shopinvader_partner____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_customer_activity
+#: model:ir.model,name:shopinvader_customer_activity.model_shopinvader_partner
+msgid "Shopinvader Partner"
+msgstr ""
