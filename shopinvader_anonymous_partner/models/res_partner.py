@@ -52,6 +52,7 @@ class ResPartner(models.Model):
                 {
                     "name": _("Anonymous (%s)") % (token[:8],),
                     "anonymous_token": token,
+                    "active": False,
                 }
             )
         )
@@ -73,5 +74,6 @@ class ResPartner(models.Model):
         return (
             self.env["res.partner"]
             .sudo()
+            .with_context(active_test=False)
             .search([("anonymous_token", "=", token)], limit=1)
         )
