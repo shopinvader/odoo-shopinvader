@@ -1,6 +1,6 @@
 The following model methods are added to ``res.partner``:
 
-``_create_anonymous_partner(response)``
+``_create_anonymous_partner__cookie(response)``
 
   Create a new anonymous partner and set the ``shopinvader-anonymous-partner`` cookie.
   Return the newly created partner record.
@@ -9,7 +9,7 @@ The following model methods are added to ``res.partner``:
   It is known to work with ``odoo.http.request.future_response`` and FastAPI
   ``Response`` objects.
 
-``_get_anonymous_partner(cookies)``
+``_get_anonymous_partner__cookie(cookies)``
 
   Return the partner record corresponding to the ``shopinvader-anonymous-partner``
   cookie in the current request, if any. Returns an empty record set if the cookie is

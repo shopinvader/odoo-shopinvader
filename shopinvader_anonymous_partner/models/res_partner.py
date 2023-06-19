@@ -43,9 +43,9 @@ class ResPartner(models.Model):
     ]
 
     @api.model
-    def _create_anonymous_partner(self, response: Response):
+    def _create_anonymous_partner__token(self):
         token = secrets.token_hex(32)
-        partner = (
+        return (
             self.env["res.partner"]
             .sudo()
             .create(
@@ -56,9 +56,13 @@ class ResPartner(models.Model):
                 }
             )
         )
+
+    @api.model
+    def _create_anonymous_partner__cookie(self, response: Response):
+        partner = self._create_anonymous_partner__token()
         response.set_cookie(
             key=COOKIE_NAME,
-            value=token,
+            value=partner.anonymous_token,
             max_age=COOKIE_MAX_AGE,
             samesite="strict",
             secure=True,
@@ -67,13 +71,17 @@ class ResPartner(models.Model):
         return partner
 
     @api.model
-    def _get_anonymous_partner(self, cookies: Cookies):
-        token = cookies.get(COOKIE_NAME)
-        if not token:
-            return self.env["res.partner"].sudo().browse()
+    def _get_anonymous_partner__token(self, token: str):
         return (
             self.env["res.partner"]
             .sudo()
             .with_context(active_test=False)
             .search([("anonymous_token", "=", token)], limit=1)
         )
+
+    @api.model
+    def _get_anonymous_partner__cookie(self, cookies: Cookies):
+        token = cookies.get(COOKIE_NAME)
+        if not token:
+            return self.env["res.partner"].sudo().browse()
+        return self._get_anonymous_partner__token(token)

@@ -15,14 +15,14 @@ from odoo.addons.shopinvader_anonymous_partner.models.res_partner import COOKIE_
 class TestController(Controller):
     @route("/test/anonymous_partner_create", type="http", auth="none")
     def anonymous_partner_create(self):
-        partner = request.env["res.partner"]._create_anonymous_partner(
+        partner = request.env["res.partner"]._create_anonymous_partner__cookie(
             request.future_response
         )
         return str(partner.id)
 
     @route("/test/anonymous_partner_get", type="http", auth="none")
     def anonymous_partner_get(self):
-        partner = request.env["res.partner"]._get_anonymous_partner(
+        partner = request.env["res.partner"]._get_anonymous_partner__cookie(
             request.httprequest.cookies
         )
         if partner:
@@ -32,13 +32,17 @@ class TestController(Controller):
 
 class TestShopinvaderAnonymousPartner(TransactionCase):
     def test_create(self):
-        partner = self.env["res.partner"]._create_anonymous_partner(mock.MagicMock())
+        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
+            mock.MagicMock()
+        )
         self.assertEqual(len(partner), 1)
         self.assertTrue(partner.anonymous_token)
 
     @mute_logger("odoo.sql_db")
     def test_create_duplicate_token(self):
-        partner = self.env["res.partner"]._create_anonymous_partner(mock.MagicMock())
+        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
+            mock.MagicMock()
+        )
         with self.assertRaises(psycopg2.errors.ExclusionViolation):
             self.env["res.partner"].create(
                 {
@@ -48,12 +52,14 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
             )
 
     def test_get(self):
-        partner = self.env["res.partner"]._create_anonymous_partner(mock.MagicMock())
-        partner2 = self.env["res.partner"]._get_anonymous_partner(
+        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
+            mock.MagicMock()
+        )
+        partner2 = self.env["res.partner"]._get_anonymous_partner__cookie(
             cookies={COOKIE_NAME: partner.anonymous_token}
         )
         self.assertEqual(partner, partner2)
-        partner2 = self.env["res.partner"]._get_anonymous_partner(
+        partner2 = self.env["res.partner"]._get_anonymous_partner__cookie(
             cookies={COOKIE_NAME: None}
         )
         self.assertEqual(len(partner2), 0)
