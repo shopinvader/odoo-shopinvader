@@ -4,6 +4,7 @@
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
+
 class AddressSearch(BaseModel, metaclass=ExtendableModelMeta):
     """
     TODO: improve
@@ -11,6 +12,7 @@ class AddressSearch(BaseModel, metaclass=ExtendableModelMeta):
         state is state's name or code
         country is country's name or code
     """
+
     name: str | None
     street: str | None
     street2: str | None
@@ -21,12 +23,14 @@ class AddressSearch(BaseModel, metaclass=ExtendableModelMeta):
     state: str | None
     country: str | None
 
+
 class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     """
     TODO: improve
-        used to create new addres (res.partner)
-        state and country can be id or name or code
+        used to create new address (res.partner)
+        state and country can be name or code
     """
+
     name: str
     street: str
     street2: str | None

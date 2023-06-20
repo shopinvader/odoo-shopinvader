@@ -1,0 +1,106 @@
+# Copyright 2023 ACSONE SA/NV
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+import json
+from functools import partial
+
+from extendable import context
+from fastapi import FastAPI, status
+from fastapi.testclient import TestClient
+from requests import Response
+
+from odoo.tests.common import TransactionCase, tagged
+
+from odoo.addons.extendable.registry import _extendable_registries_database
+from odoo.addons.fastapi import dependencies
+from odoo.addons.fastapi.context import odoo_env_ctx
+
+from ..routers.address_service import address_router
+
+
+@tagged("post_install", "-at_install")
+class TestShopinvaderAddressApi(TransactionCase):
+    @classmethod
+    def setUpClass(cls) -> None:
+        super().setUpClass()
+        extendable_registry = _extendable_registries_database.get(cls.env.cr.dbname)
+        cls.token = context.extendable_registry.set(extendable_registry)
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+        cls.test_partner = cls.env["res.partner"].create(
+            {"name": "FastAPI Shopinvader Address Demo"}
+        )
+
+        test_user = cls.env["res.users"].create(
+            {
+                "name": "Test User",
+                "login": "test_user",
+            }
+        )
+        test_user.groups_id = [
+            (4, cls.env.ref("shopinvader_api_address.shopinvader_addres_user_group").id)
+        ]
+
+        cls.app = FastAPI()
+        cls.app.include_router(address_router)
+        cls.client = TestClient(cls.app)
+        cls._ctx_token = odoo_env_ctx.set(cls.env(user=test_user.id))
+        cls.app.dependency_overrides[dependencies.authenticated_partner_impl] = partial(
+            lambda a: a, cls.test_partner
+        )
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        odoo_env_ctx.reset(cls._ctx_token)
+        context.extendable_registry.reset(cls.token)
+        super().tearDownClass()
+
+    def test_create_address(self):
+        """
+        Test to create a new partner
+        """
+        data = {
+            "name": "test Addr",
+            "street": "test Street",
+            "zip": "1410",
+            "city": "Waterloo",
+            "country": "BEL",
+        }
+
+        response: Response = self.client.post(
+            "/address/create", content=json.dumps(data)
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_201_CREATED,
+            msg=f"error message: {response.text}",
+        )
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(1, len(response_json["items"]))
+        self.assertEqual(1, response_json["total"])
+
+        partner_id = self.env["res.partner"].search([("name", "=", "test Addr")])
+
+        authenticated_partner_id = self.test_partner
+        country_belgium_id = self.env["res.country"].search(
+            [
+                ("code", "=", "BEL"),
+            ],
+            limit=1,
+        )
+
+        self.assertEqual(1, len(partner_id))
+        self.assertRecordValues(
+            partner_id,
+            [
+                {
+                    "name": "test Addr",
+                    "street": "test Street",
+                    "zip": "1410",
+                    "city": "Waterloo",
+                    "country_id": country_belgium_id.id,
+                    "shopinvader_main_partner_id": authenticated_partner_id.id,
+                }
+            ],
+        )
+        self.assertEqual(partner_id, authenticated_partner_id.shopinvader_partner_ids)
