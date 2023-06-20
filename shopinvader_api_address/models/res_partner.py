@@ -1,12 +1,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from fastapi import status
-from fastapi.exceptions import HTTPException
-
 from odoo import _, api, models
+from odoo.exceptions import MissingError, UserError
 
-from ..schema.schema import AddressInput, AddressSearch
+from ..schema import AddressInput, AddressSearch
 
 
 class ResPartner(models.Model):
@@ -56,9 +54,7 @@ class ResPartner(models.Model):
     def _get_shopinvader_address(self, rec_id: int) -> "ResPartner":
         address = self.env["res.partner"].search([("id", "=", rec_id)], limit=1)
         if not address:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail=_("No address found")
-            )
+            raise MissingError(_("No address found"))
         return address
 
     @api.model
@@ -85,21 +81,17 @@ class ResPartner(models.Model):
         # search on state/country is performed
         # on name or code of state/country
         if query.state is not None:
-            domain.join(
-                [
-                    "|",
-                    ("state_id.name", "ilike", query.state),
-                    ("state_id.code", "ilike", query.state),
-                ]
-            )
+            domain += [
+                "|",
+                ("state_id.name", "ilike", query.state),
+                ("state_id.code", "ilike", query.state),
+            ]
         if query.country is not None:
-            domain.join(
-                [
-                    "|",
-                    ("country.name", "ilike", query.country),
-                    ("country.code", "ilike", query.country),
-                ]
-            )
+            domain += [
+                "|",
+                ("country.name", "ilike", query.country),
+                ("country.code", "ilike", query.country),
+            ]
 
         return domain
 
@@ -114,15 +106,10 @@ class ResPartner(models.Model):
     def _delete_shopinvader_address(self, rec_id: int):
         address = self.env["res.partner"].search([("id", "=", rec_id)], limit=1)
         if not address:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND, detail=_("No address found")
-            )
+            raise MissingError(_("No address found"))
 
         # Try to delete authenticated_partner
         if address.id == int(self.env.context.get("authenticated_partner_id")):
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=_("Can not delete the partner account"),
-            )
+            raise UserError(_("Can not delete the partner account"))
 
         address.unlink()

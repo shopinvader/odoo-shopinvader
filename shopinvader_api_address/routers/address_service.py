@@ -4,9 +4,9 @@ from odoo.api import Environment
 
 from odoo.addons.fastapi.dependencies import authenticated_partner_env, paging
 from odoo.addons.fastapi.schemas import PagedCollection, Paging
-from odoo.addons.shopinvader_schema_address.schema.address import Address
+from odoo.addons.shopinvader_schema_address.schema import Address
 
-from ..schema.schema import AddressInput, AddressSearch
+from ..schema import AddressInput, AddressSearch
 
 # create a router
 address_router = APIRouter()
@@ -71,3 +71,15 @@ def address_delete(
     Delete address using record id to identify address
     """
     env["res.partner"]._delete_shopinvader_address(rec_id)
+
+    # Billing address
+
+    # Shipping address
+
+    """
+    TODO:
+     no delete only archive
+     billing addres is on authenticated partner and unique
+     prevent modifing billing address if account move created
+     shipping address: create/unlink
+    """

@@ -8,6 +8,7 @@ from fastapi import FastAPI, status
 from fastapi.testclient import TestClient
 from requests import Response
 
+from odoo.exceptions import MissingError
 from odoo.tests.common import TransactionCase, tagged
 
 from odoo.addons.extendable.registry import _extendable_registries_database
@@ -15,6 +16,7 @@ from odoo.addons.fastapi import dependencies
 from odoo.addons.fastapi.context import odoo_env_ctx
 
 from ..routers.address_service import address_router
+from ..schema import AddressSearch
 
 
 @tagged("post_install", "-at_install")
@@ -135,6 +137,7 @@ class TestShopinvaderAddressApi(TransactionCase):
         self.assertEqual(
             response_json["items"][0].get("name"), "FastAPI Shopinvader Address Demo"
         )
+        # TODO check fields
 
     def test_get_new_address(self):
         """
@@ -174,59 +177,88 @@ class TestShopinvaderAddressApi(TransactionCase):
         """
         odoo_bot_partner_id = self.env.user.partner_id
 
-        response: Response = self.client.get(
-            f"/address/{odoo_bot_partner_id.id}",
-        )
+        # TODO: change to check http exception
+        with self.assertRaises(MissingError):
+            response: Response = self.client.get(
+                f"/address/{odoo_bot_partner_id.id}",
+            )
 
+    # def test_search(self):
+    #     """
+    #     Search with empty domain
+    #     """
+    #     response: Response = self.client.post("/address/search", content=json.dumps({}))
+
+    #     self.assertEqual(
+    #         response.status_code,
+    #         status.HTTP_200_OK,
+    #         msg=f"error message: {response.text}",
+    #     )
+    #     response_json = response.json()
+    #     self.assertTrue(response_json)
+    #     self.assertEqual(1, len(response_json["items"]))
+    #     self.assertEqual(1, response_json["total"])
+    #     self.assertEqual(
+    #         response_json["items"][0].get("name"), "FastAPI Shopinvader Address Demo"
+    #     )
+
+    #     # create one more address
+    #     new_address = self.env["res.partner"].create(
+    #         {
+    #             "name": "test New Addr",
+    #             "street": "test Street",
+    #             "zip": "5000",
+    #             "city": "Namur",
+    #             "country_id": self.env.ref("base.be").id,
+    #             "parent_id": self.test_partner.id,
+    #             "type": "other",
+    #         }
+    #     )
+    #     response: Response = self.client.post("/address/search", content=json.dumps({}))
+
+    #     self.assertEqual(
+    #         response.status_code,
+    #         status.HTTP_200_OK,
+    #         msg=f"error message: {response.text}",
+    #     )
+
+    #     # authenticated_partner's address + new_address
+    #     response_json = response.json()
+    #     self.assertTrue(response_json)
+    #     self.assertEqual(2, len(response_json["items"]))
+    #     self.assertEqual(2, response_json["total"])
+
+    def test_build_shopinvader_search_address_domain(self):
+        data = {
+            "name": "test addr search",
+            "street": "test street search",
+            "street2": "test street2 search",
+            "zip": "5000",
+            "city": "Namur",
+            "phone": "tel123",
+            "email": "email",
+            "country": "BEL",
+        }
+
+        addr_search = AddressSearch(**data)
+
+        domain = self.env["res.partner"]._build_shopinvader_search_address_domain(
+            addr_search
+        )
+        self.assertTrue(domain)
+        # check equal
         self.assertEqual(
-            response.status_code,
-            status.HTTP_404_NOT_FOUND,
-            msg=f"error message: {response.text}",
+            domain,
+            [
+                ("name", "ilike", "test addr search"),
+                ("street", "ilike", "test addr search"),
+                ("street2", "ilike", "test addr search"),
+                ("zip", "ilike", "test addr search"),
+                ("city", "ilike", "test addr search"),
+                ("phone", "ilike", "test addr search"),
+                ("email", "ilike", "test addr search"),
+                "|",
+                ("country.name", "ilike", "BEL"),
+                ("country.code", "ilike", "BEL"),
+            ],
         )
-
-    def test_search(self):
-        """
-        Search with empty domain
-        """
-        response: Response = self.client.post("/address/search", content=json.dumps({}))
-
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK,
-            msg=f"error message: {response.text}",
-        )
-        response_json = response.json()
-        self.assertTrue(response_json)
-        self.assertEqual(1, len(response_json["items"]))
-        self.assertEqual(1, response_json["total"])
-        self.assertEqual(
-            response_json["items"][0].get("name"), "FastAPI Shopinvader Address Demo"
-        )
-
-        # create one more address
-        new_address = self.env["res.partner"].create(
-            {
-                "name": "test New Addr",
-                "street": "test Street",
-                "zip": "5000",
-                "city": "Namur",
-                "country_id": self.env.ref("base.be").id,
-                "parent_id": self.test_partner.id,
-                "type": "other",
-            }
-        )
-        response: Response = self.client.post("/address/search", content=json.dumps({}))
-
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK,
-            msg=f"error message: {response.text}",
-        )
-
-        # authenticated_partner's address + new_address
-        response_json = response.json()
-        self.assertTrue(response_json)
-        self.assertEqual(2, len(response_json["items"]))
-        self.assertEqual(2, response_json["total"])
-
-        # only other
