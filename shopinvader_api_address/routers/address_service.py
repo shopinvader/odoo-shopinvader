@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends
 
 from odoo.api import Environment
 
-from odoo.addons.fastapi.dependencies import authenticated_partner_env, paging
+from odoo.addons.fastapi.dependencies import authenticated_partner_env, paging, authenticated_partner
 from odoo.addons.fastapi.schemas import PagedCollection, Paging
-from odoo.addons.shopinvader_schema_address.schema import Address
+from odoo.addons.shopinvader_schema_address.schema import Address, BillingAddress, ShippingAddress
 
 from ..schema import AddressInput, AddressSearch
 
@@ -73,6 +73,21 @@ def address_delete(
     env["res.partner"]._delete_shopinvader_address(rec_id)
 
     # Billing address
+    
+
+@address_router.get("/address/billing", response_model=BillingAddress)
+def address_get_billing(
+    env: Environment = Depends(authenticated_partner_env),
+    partner = Depends(authenticated_partner),
+) -> PagedCollection[BillingAddress]:
+    """
+    Get billing address
+    billing address corresponds to authenticated partner
+    """
+    address = env["res.partner"]._get_shopinvader_billing_address(partner)
+    return BillingAddress.from_orm(address)
+
+
 
     # Shipping address
 

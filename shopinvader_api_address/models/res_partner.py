@@ -40,7 +40,7 @@ class ResPartner(models.Model):
             "email": data.email or "",
             "state_id": state_id.id,
             "country_id": country_id.id,
-            "parent_id": self.env.context.get("authenticated_partner_id"),
+            "parent_id": self.env.context.get("authenticated_partner_id"), #take authenticated partner from fastapi 
             "type": data.type,
         }
         return vals
@@ -113,3 +113,7 @@ class ResPartner(models.Model):
             raise UserError(_("Can not delete the partner account"))
 
         address.unlink()
+
+    @api.model
+    def _get_shopinvader_billing_address(self, authenticated_partner_id: "ResPartner") -> "ResPartner":
+        return authenticated_partner_id

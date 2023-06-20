@@ -262,3 +262,33 @@ class TestShopinvaderAddressApi(TransactionCase):
                 ("country.code", "ilike", "BEL"),
             ],
         )
+
+    def test_get_billing_address(self):
+        """
+        Test to get address of authenticated_partner
+        """
+
+        response: Response = self.client.get(
+            "/address/billing",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(1, len(response_json["items"]))
+        self.assertEqual(1, response_json["total"])
+
+        address = response_json["items"][0]
+
+        self.assertEqual(
+            address.get("name"), "FastAPI Shopinvader Address Demo"
+        )
+        self.assertEqual(address.get("street"), "rue test")
+        self.assertEqual(address.get("zip"), "1410")
+        self.assertEqual(address.get("city"), "Waterloo")
+        self.assertEqual(address.get("country_id"), self.env.ref("base.be").id)
