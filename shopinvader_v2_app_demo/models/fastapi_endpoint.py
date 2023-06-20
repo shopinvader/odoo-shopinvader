@@ -7,13 +7,12 @@ from fastapi import APIRouter
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+
 from odoo.addons.fastapi.depends import (
-    authenticated_partner,
     authenticated_partner_from_basic_auth_user,
     authenticated_partner_impl,
-    fastapi_endpoint,
-    odoo_env,
 )
+
 
 class FastapiEndpoint(models.Model):
 
@@ -26,7 +25,7 @@ class FastapiEndpoint(models.Model):
 
     shopinvader_demo_auth_method = fields.Selection(
         selection=[("http_basic", "HTTP Basic")],
-        string="Authenciation method",
+        string="Authentication method",
     )
 
     @api.model
@@ -40,7 +39,7 @@ class FastapiEndpoint(models.Model):
         return []
 
     @api.constrains("app", "shopinvader_demo_auth_method")
-    def _valdiate_demo_auth_method(self):
+    def _validate_demo_auth_method(self):
         for rec in self:
             if rec.app == "shopinvader_demo" and not rec.shopinvader_demo_auth_method:
                 raise ValidationError(
@@ -49,13 +48,13 @@ class FastapiEndpoint(models.Model):
                         app=rec.app,
                     )
                 )
-    
+
     @api.model
     def _fastapi_app_fields(self) -> List[str]:
         fields = super()._fastapi_app_fields()
         fields.append("shopinvader_demo_auth_method")
         return fields
-    
+
     def _get_app(self):
         app = super()._get_app()
         if self.app == "shopinvader_demo_auth_method":

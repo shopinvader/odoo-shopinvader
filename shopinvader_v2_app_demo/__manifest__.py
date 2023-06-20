@@ -18,5 +18,4 @@
         "demo/res_groups.xml",
         "demo/fastapi_endpoint.xml",
     ],
-    "demo": [],
 }
