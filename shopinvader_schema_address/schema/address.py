@@ -38,6 +38,7 @@ class Address(BaseModel, metaclass=ExtendableModelMeta):
     email: str | None = None
     state: State | None = pydantic.Field(alias="state_id")
     country: Country = pydantic.Field(alias="country_id")
+    type: str
 
     class Config:
         orm_mode = True
