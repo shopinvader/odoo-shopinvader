@@ -17,7 +17,7 @@ Sale Cart Rest Api
     :target: https://github.com/shopinvader/shopinvader/tree/10/sale_cart_rest_api
     :alt: shopinvader/shopinvader
 
-|badge1| |badge2| |badge3| 
+|badge1| |badge2| |badge3|
 
 This addon add a Cart REST API on top of sale.order model to ease the creation of
 sale orders from Web frontend. The API is designed to work with the shopinvader-js-cart library

@@ -4,16 +4,21 @@
 from odoo import api, models
 from odoo.tools import float_compare
 
+from ..schemas import CartTransaction
+
 
 class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
 
-    def _transactions_to_record_write(self, transactions):
+    def _transactions_to_record_write(self, transactions: list[CartTransaction]):
         """Apply transactions to current line and return a record write command
-        to apply to the one2many field on SO."""
+        to apply to the one2many field on SO.
+
+        :param transactions: a list of CartTransaction Pydantic records
+        """
         self.ensure_one()
-        delta_qty = sum(t["qty"] for t in transactions)
+        delta_qty = sum(t.qty for t in transactions)
         new_qty = self.product_uom_qty + delta_qty
         if float_compare(new_qty, 0, precision_rounding=self.product_uom.rounding) <= 0:
             return (2, self.id, None)
@@ -24,7 +29,10 @@ class SaleOrderLine(models.Model):
     @api.model
     def _transactions_to_record_create(self, sale_order, transactions):
         """Create a record create command to apply to the one2many field on SO
-        from transactions."""
+        from transactions.
+
+        :param transactions: a list of CartTransaction Pydantic records
+        """
         vals = self._prepare_line_from_transactions(
             sale_order=sale_order, transactions=transactions
         )
@@ -35,16 +43,24 @@ class SaleOrderLine(models.Model):
 
     @api.model
     def _prepare_line_from_transactions(self, sale_order, transactions):
-        delta_qty = sum(t["qty"] for t in transactions)
-        product_id = transactions[0]["product_id"]
+        """
+        :param transactions: a list of CartTransaction Pydantic records
+        """
+        delta_qty = sum(t.qty for t in transactions)
+        product_id = (transactions[0]).product_id
         product_uom = self.env["product.product"].browse(product_id).uom_id
         if float_compare(delta_qty, 0, precision_rounding=product_uom.rounding) <= 0:
             return None
         partner = sale_order.partner_id
         vals = {
-            "product_id": transactions[0]["product_id"],
-            "product_uom_qty": delta_qty,
+            # Order in this dict is important and must be kept.
+            # When creating the transaction we call play_onchanges().
+            # These onchanges will be played following the order defined here.
+            # All computes depending on order_id must be triggered first,
+            # to set the currency on the SOL for e.g.
             "order_id": sale_order.id,
+            "product_id": product_id,
+            "product_uom_qty": delta_qty,
         }
         ctx_lang = self.env.context.get("lang", partner.lang)
         if partner.lang != ctx_lang:

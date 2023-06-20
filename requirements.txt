@@ -7,3 +7,7 @@ python-stdnum
 slugify
 unidecode
 validators
+extendable-pydantic
+fastapi
+openupgradelib
+pydantic
