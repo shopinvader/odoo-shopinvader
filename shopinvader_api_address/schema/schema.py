@@ -22,6 +22,7 @@ class AddressSearch(BaseModel, metaclass=ExtendableModelMeta):
     email: str | None
     state: str | None
     country: str | None
+    type: str | None
 
 
 class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
@@ -40,3 +41,4 @@ class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     email: str | None
     state: str | None
     country: str | None
+    type: str

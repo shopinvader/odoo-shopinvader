@@ -16,7 +16,7 @@
     ],
     "data": [
         "security/res_groups.xml",
-        # "security/res_partner.xml", TODO: remove
+        "security/res_partner.xml",
     ],
     "demo": [],
     "external_dependencies": {"python": ["fastapi", "extendable_pydantic", "pydantic"]},

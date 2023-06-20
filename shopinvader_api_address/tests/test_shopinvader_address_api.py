@@ -26,7 +26,13 @@ class TestShopinvaderAddressApi(TransactionCase):
         cls.token = context.extendable_registry.set(extendable_registry)
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.test_partner = cls.env["res.partner"].create(
-            {"name": "FastAPI Shopinvader Address Demo"}
+            {
+                "name": "FastAPI Shopinvader Address Demo",
+                "street": "rue test",
+                "zip": "1410",
+                "city": "Waterloo",
+                "country_id": cls.env.ref("base.be").id,
+            }
         )
 
         test_user = cls.env["res.users"].create(
@@ -60,9 +66,10 @@ class TestShopinvaderAddressApi(TransactionCase):
         data = {
             "name": "test Addr",
             "street": "test Street",
-            "zip": "1410",
-            "city": "Waterloo",
+            "zip": "5000",
+            "city": "Namur",
             "country": "BEL",
+            "type": "other",
         }
 
         response: Response = self.client.post(
@@ -96,11 +103,130 @@ class TestShopinvaderAddressApi(TransactionCase):
                 {
                     "name": "test Addr",
                     "street": "test Street",
-                    "zip": "1410",
-                    "city": "Waterloo",
+                    "zip": "5000",
+                    "city": "Namur",
                     "country_id": country_belgium_id.id,
-                    "shopinvader_main_partner_id": authenticated_partner_id.id,
+                    "parent_id": authenticated_partner_id.id,
+                    "type": "other",
                 }
             ],
         )
-        self.assertEqual(partner_id, authenticated_partner_id.shopinvader_partner_ids)
+        self.assertEqual(partner_id, authenticated_partner_id.child_ids)
+
+    def test_get_main_address(self):
+        """
+        Test to get address of authenticated_partner
+        """
+
+        response: Response = self.client.get(
+            f"/address/{self.test_partner.id}",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(1, len(response_json["items"]))
+        self.assertEqual(1, response_json["total"])
+        self.assertEqual(
+            response_json["items"][0].get("name"), "FastAPI Shopinvader Address Demo"
+        )
+
+    def test_get_new_address(self):
+        """
+        Test to get address linked to authenticated_partner
+        """
+        new_address = self.env["res.partner"].create(
+            {
+                "name": "test New Addr",
+                "street": "test Street",
+                "zip": "5000",
+                "city": "Namur",
+                "country_id": self.env.ref("base.be").id,
+                "parent_id": self.test_partner.id,
+                "type": "other",
+            }
+        )
+
+        response: Response = self.client.get(
+            f"/address/{new_address.id}",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(1, len(response_json["items"]))
+        self.assertEqual(1, response_json["total"])
+        self.assertEqual(response_json["items"][0].get("name"), "test New Addr")
+
+    def test_get_address_no_rights(self):
+        """
+        Try to get address with no rights
+        """
+        odoo_bot_partner_id = self.env.user.partner_id
+
+        response: Response = self.client.get(
+            f"/address/{odoo_bot_partner_id.id}",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_404_NOT_FOUND,
+            msg=f"error message: {response.text}",
+        )
+
+    def test_search(self):
+        """
+        Search with empty domain
+        """
+        response: Response = self.client.post("/address/search", content=json.dumps({}))
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(1, len(response_json["items"]))
+        self.assertEqual(1, response_json["total"])
+        self.assertEqual(
+            response_json["items"][0].get("name"), "FastAPI Shopinvader Address Demo"
+        )
+
+        # create one more address
+        new_address = self.env["res.partner"].create(
+            {
+                "name": "test New Addr",
+                "street": "test Street",
+                "zip": "5000",
+                "city": "Namur",
+                "country_id": self.env.ref("base.be").id,
+                "parent_id": self.test_partner.id,
+                "type": "other",
+            }
+        )
+        response: Response = self.client.post("/address/search", content=json.dumps({}))
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        # authenticated_partner's address + new_address
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(2, len(response_json["items"]))
+        self.assertEqual(2, response_json["total"])
+
+        # only other

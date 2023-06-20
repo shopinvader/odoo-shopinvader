@@ -29,29 +29,30 @@ def address_create(
     )
 
 
-############
-# TO REWRITE:
-
-
 @address_router.get("/address/{rec_id}", response_model=PagedCollection[Address])
 def address_get(
     rec_id: int,
     env: Environment = Depends(authenticated_partner_env),
 ) -> PagedCollection[Address]:
-    address = env["res.partner"].search([("id", "=", rec_id)], limit=1)
-    count = len(address)
+    """
+    Get a specific address using id
+    """
+    address = env["res.partner"]._get_shopinvader_address(rec_id)
     return PagedCollection[Address](
-        total=count,
+        total=len(address),
         items=[Address.from_orm(rec) for rec in address],
     )
 
 
-@address_router.get("/address/search", response_model=PagedCollection[Address])
+@address_router.post("/address/search", response_model=PagedCollection[Address])
 def address_search(
     query: AddressSearch = Depends(),
     paging: Paging = Depends(paging),
     env: Environment = Depends(authenticated_partner_env),
 ) -> PagedCollection[Address]:
+    """
+    Perform a search on addresses
+    """
     address = env["res.partner"]._search_shopinvader_address(
         query, limit=paging.limit, offset=paging.offset
     )
@@ -61,11 +62,12 @@ def address_search(
     )
 
 
-@address_router.delete("/address/{rec_id}", status_code=200)
+@address_router.delete("/address/{rec_id}")
 def address_delete(
     rec_id: int,
     env: Environment = Depends(authenticated_partner_env),
 ) -> None:
-    address = env["res.partner"].search([("id", "=", rec_id)], limit=1)
-    if address:
-        address.unlink()
+    """
+    Delete address using record id to identify address
+    """
+    env["res.partner"]._delete_shopinvader_address(rec_id)
