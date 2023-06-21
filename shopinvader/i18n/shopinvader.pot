@@ -2917,6 +2917,11 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__seasonal_config_id
+msgid "Product seasonal configuration"
+msgstr ""
+
+#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__tmpl_record_id
 msgid "Product template"
 msgstr ""
