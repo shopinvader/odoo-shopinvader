@@ -13,8 +13,8 @@ address_router = APIRouter()
 
 #### Billing address ####
     
-@address_router.get("/address/billing", response_model=BillingAddress)
-def address_get_billing(
+@address_router.get("/addresses/billing", response_model=BillingAddress)
+def get_billing_address(
     env: Environment = Depends(authenticated_partner_env),
     partner = Depends(authenticated_partner),
 ) -> BillingAddress:
@@ -25,8 +25,8 @@ def address_get_billing(
     address_id = env["res.partner"]._get_shopinvader_billing_address(partner)
     return BillingAddress.from_orm(address_id)
 
-@address_router.post("/address/billing", response_model=BillingAddress,status_code=201)
-def address_update_billing(
+@address_router.post("/addresses/billing", response_model=BillingAddress,status_code=201)
+def update_billing_address(
     data: AddressUpdate,
     env: Environment = Depends(authenticated_partner_env),
     partner = Depends(authenticated_partner),
@@ -40,49 +40,49 @@ def address_update_billing(
 
 #### Shipping address ####
 
-@address_router.get("/address/shipping", response_model=PagedCollection[ShippingAddress])
-@address_router.get("/address/shipping/{rec_id}", response_model=PagedCollection[ShippingAddress])
-def address_get_shipping(
+@address_router.get("/addresses/shipping", response_model=PagedCollection[ShippingAddress])
+@address_router.get("/addresses/shipping/{id}", response_model=PagedCollection[ShippingAddress])
+def get_shipping_address(
     env: Environment = Depends(authenticated_partner_env),
-    rec_id: int | None = None,
+    id: int | None = None,
     data: AddressSearch = Depends(AddressSearch),
 ) -> PagedCollection[ShippingAddress]:
     """
     Get shipping addresses
-    Can be used to get every shipping address: /address/shipping
-    Can be used to get one specific address: /address/shipping/rec_id
+    Can be used to get every shipping address: /addresses/shipping
+    Can be used to get one specific address: /addresses/shipping/rec_id
     If an AddressSearch is given, it will act as a search with given filter
     """
-    address_ids = env["res.partner"]._get_shopinvader_shipping_address(rec_id,data)
+    address_ids = env["res.partner"]._get_shopinvader_shipping_address(id,data)
     return  PagedCollection[ShippingAddress](
         total=len(address_ids),
         items=[ShippingAddress.from_orm(rec) for rec in address_ids],
     )
 
-@address_router.post("/address/shipping", response_model=ShippingAddress,status_code=201)
-@address_router.post("/address/shipping/{rec_id}", response_model=ShippingAddress)
-def address_create_update_shipping(
+@address_router.post("/addresses/shipping", response_model=ShippingAddress,status_code=201)
+@address_router.post("/addresses/shipping/{id}", response_model=ShippingAddress)
+def create_update_shipping_address(
     data: AddressInput,
     env: Environment = Depends(authenticated_partner_env),
     partner = Depends(authenticated_partner),
-    rec_id:int|None = None,
+    id:int|None = None,
 ) -> ShippingAddress:
     """
     Create/Update shipping address
     """
-    if rec_id is None:
+    if id is None:
         address_id = env["res.partner"]._create_shipping_address(partner,data)
     else:
-        address_id = env["res.partner"]._update_shipping_address(data,rec_id)
+        address_id = env["res.partner"]._update_shipping_address(data,id)
     return ShippingAddress.from_orm(address_id)
 
-@address_router.delete("/address/shipping/{rec_id}")
-def address_delete_shipping(
-    rec_id: int,
+@address_router.delete("/addresses/shipping/{id}")
+def delete_shipping_address(
+    id: int,
     env: Environment = Depends(authenticated_partner_env),
 )-> None:
     """
         Delete shipping address
         Address will be archive
     """
-    env["res.partner"]._delete_shipping_address(rec_id)
+    env["res.partner"]._delete_shipping_address(id)
