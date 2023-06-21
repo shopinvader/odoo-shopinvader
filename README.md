@@ -55,7 +55,7 @@ addon | version | maintainers | summary
 [shopinvader_locomotive](shopinvader_locomotive/) | 14.0.2.1.2 |  | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 |  | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 14.0.1.0.3 |  | Shopinvader guest mode for locomotive
-[shopinvader_locomotive_impersonate](shopinvader_locomotive_impersonate/) | 14.0.1.0.0 |  | Allow to log with any shopinvader partner directly from odoo
+[shopinvader_locomotive_impersonate](shopinvader_locomotive_impersonate/) | 14.0.1.0.1 |  | Allow to log with any shopinvader partner directly from odoo
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 14.0.1.3.0 |  | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 14.0.1.0.1 |  | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.2 |  | Synchronize wishlist details to Locomotive users record.
