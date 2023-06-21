@@ -42,6 +42,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_locomotive',
         'odoo14-addon-shopinvader_locomotive_algolia',
         'odoo14-addon-shopinvader_locomotive_guest_mode',
+        'odoo14-addon-shopinvader_locomotive_impersonate',
         'odoo14-addon-shopinvader_locomotive_reset_password',
         'odoo14-addon-shopinvader_locomotive_sale_profile',
         'odoo14-addon-shopinvader_locomotive_wishlist',
