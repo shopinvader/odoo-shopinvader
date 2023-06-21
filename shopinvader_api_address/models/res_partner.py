@@ -4,15 +4,20 @@
 from odoo import _, api, models
 from odoo.exceptions import MissingError, UserError
 
-from ..schema import AddressInput, AddressSearch
+from ..schema import AddressInput, AddressSearch,AddressUpdate
 
 
 class ResPartner(models.Model):
 
     _inherit = "res.partner"
 
+    def _billing_address_already_used(self):
+        self.ensure_one()
+        move_id = self.env["account.move"].search([("commercial_partner_id","=",self.id)],limit=1)
+        return len(move_id)>0
+
     @api.model
-    def _create_vals_shopinvader_address(self, data: AddressInput) -> dict:
+    def _create_vals_shopinvader_address(self, data: AddressInput,authenticated_partner_id:"ResPartner",type:str) -> dict:
         state_id = self.env["res.country.state"].search(
             [
                 "|",
@@ -40,22 +45,34 @@ class ResPartner(models.Model):
             "email": data.email or "",
             "state_id": state_id.id,
             "country_id": country_id.id,
-            "parent_id": self.env.context.get("authenticated_partner_id"), #take authenticated partner from fastapi 
-            "type": data.type,
+            "parent_id": authenticated_partner_id.id,
+            "type": type,
         }
         return vals
-
+    
     @api.model
-    def _create_shopinvader_address(self, data: AddressInput) -> "ResPartner":
-        vals = self._create_vals_shopinvader_address(data)
-        return self.env["res.partner"].create(vals)
+    def _update_vals_shopinvader_address(self, data: AddressUpdate) -> dict:
+        vals={}
+        if data.name is not None:
+            vals["name"] = data.name
+        if data.street is not None:
+            vals["street"] = data.street
+        if data.street2 is not None:
+            vals["street2"] = data.street2
+        if data.zip is not None:
+            vals["zip"] = data.zip
+        if data.city is not None:
+            vals["city"] = data.city
+        if data.phone is not None:
+            vals["phone"] = data.phone
+        if data.email is not None:
+            vals["email"] = data.email
 
-    @api.model
-    def _get_shopinvader_address(self, rec_id: int) -> "ResPartner":
-        address = self.env["res.partner"].search([("id", "=", rec_id)], limit=1)
-        if not address:
-            raise MissingError(_("No address found"))
-        return address
+        # search on state/country is performed
+        # on name or code of state/country
+        #TODO country/state
+
+        return vals
 
     @api.model
     def _build_shopinvader_search_address_domain(self, query: AddressSearch) -> list:
@@ -114,10 +131,28 @@ class ResPartner(models.Model):
 
         address.unlink()
 
+    #### Billing ####
+    # Billing address is unique and corresponds to authenticated_partner
+    
+
     @api.model
     def _get_shopinvader_billing_address(self, authenticated_partner_id: "ResPartner") -> "ResPartner":
         return authenticated_partner_id
     
+    @api.model
+    def _update_shopinvader_billing_address(self, authenticated_partner_id: "ResPartner",data: AddressUpdate) -> "ResPartner":
+        vals = self._update_vals_shopinvader_address(data)
+
+        #if billing address is already used, it is not possible to modify it
+        if authenticated_partner_id._billing_address_already_used():
+            raise UserError(_("Can not update billing address because it is already used on billings"))
+        
+        authenticated_partner_id.write(vals)
+
+        return authenticated_partner_id
+    
+
+    #### Shipping ####
 
     @api.model
     def _get_shopinvader_shipping_address(self,rec_id:int=None) -> "ResPartner":
@@ -127,3 +162,8 @@ class ResPartner(models.Model):
             domain.append(("id", "=", rec_id))
 
         return self.env["res.partner"].search(domain)
+
+    @api.model
+    def _create_shipping_address(self,authenticated_partner_id: "ResPartner",data: AddressInput) -> "ResPartner":
+        vals = self._create_vals_shopinvader_address(data,authenticated_partner_id,"delivery")
+        return self.env["res.partner"].create(vals)

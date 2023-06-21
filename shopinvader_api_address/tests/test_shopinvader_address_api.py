@@ -44,7 +44,7 @@ class TestShopinvaderAddressApi(TransactionCase):
             }
         )
         test_user.groups_id = [
-            (4, cls.env.ref("shopinvader_api_address.shopinvader_addres_user_group").id)
+            (4, cls.env.ref("shopinvader_api_address.shopinvader_address_user_group").id)
         ]
 
         cls.app = FastAPI()
@@ -373,3 +373,61 @@ class TestShopinvaderAddressApi(TransactionCase):
         self.assertEqual(address.get("city"), new_address.city)
         self.assertEqual(address.get("country").get("id"), new_address.country_id.id)
         self.assertEqual(address.get("id"), new_address.id)
+
+    def test_create_update_billing_address(self):
+        """
+        Test to create/update billing address
+        """
+        data = {
+            "street": "test Street",
+        }
+
+        self.assertNotEqual(data.get("street"), self.test_partner.street)
+
+        response: Response = self.client.post(
+            "/address/billing", content=json.dumps(data)
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_201_CREATED,
+            msg=f"error message: {response.text}",
+        )
+        response_json = response.json()
+        self.assertTrue(response_json)
+
+        address = response_json
+
+        self.assertEqual(address.get("street"), "test Street")
+        self.assertEqual(address.get("street"), self.test_partner.street)
+
+    def test_create_shipping_address(self):
+        """
+        Test to create shipping address
+        """
+        data = {
+            "name": "test Addr",
+            "street": "test Street",
+            "zip": "5000",
+            "city": "Namur",
+            "country": "BEL",
+        }
+
+        response: Response = self.client.post(
+            "/address/shipping", content=json.dumps(data)
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_201_CREATED,
+            msg=f"error message: {response.text}",
+        )
+        response_json = response.json()
+        self.assertTrue(response_json)
+
+        address = response_json
+
+        self.assertEqual(address.get("street"), "test Street")
+        self.assertNotEqual(address.get("street"), self.test_partner.street)
+
+        self.assertEqual(address.get("type"), "delivery")
