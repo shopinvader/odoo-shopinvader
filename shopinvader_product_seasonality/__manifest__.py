@@ -6,7 +6,7 @@
     "Summary": """
         Handle product seasonality within shopinvader.
     """,
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "license": "AGPL-3",
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
