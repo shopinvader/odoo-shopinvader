@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Locomotive Impersonate",
     "summary": "Allow to log with any shopinvader partner directly from odoo",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "development_status": "Alpha",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
