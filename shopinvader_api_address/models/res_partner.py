@@ -18,35 +18,19 @@ class ResPartner(models.Model):
 
     @api.model
     def _create_vals_shopinvader_address(self, data: AddressInput,authenticated_partner_id:"ResPartner",type:str) -> dict:
-        state_id = self.env["res.country.state"].search(
-            [
-                "|",
-                ("name", "=", data.state),
-                ("code", "=", data.state),
-            ],
-            limit=1,
-        )
-
-        country_id = self.env["res.country"].search(
-            [
-                "|",
-                ("name", "=", data.country),
-                ("code", "=", data.country),
-            ]
-        )
 
         vals = {
-            "name": data.name,
-            "street": data.street,
+            "name": data.name or "",
+            "street": data.street or "",
             "street2": data.street2 or "",
-            "zip": data.zip,
-            "city": data.city,
+            "zip": data.zip or "",
+            "city": data.city or "",
             "phone": data.phone or "",
             "email": data.email or "",
-            "state_id": state_id.id,
-            "country_id": country_id.id,
+            "state_id": data.state or None,
+            "country_id": data.country or None,
             "parent_id": authenticated_partner_id.id,
-            "type": type,
+            "type": type or "",
         }
         return vals
     
@@ -68,10 +52,10 @@ class ResPartner(models.Model):
         if data.email is not None:
             vals["email"] = data.email
 
-        # search on state/country is performed
-        # on name or code of state/country
-        #TODO country/state
-
+        if data.country is not None:
+            vals["country_id"] = data.country
+        if data.state is not None:
+            vals["state_id"] = data.state
         return vals
 
     @api.model
@@ -95,20 +79,10 @@ class ResPartner(models.Model):
         if query.type is not None:
             domain.append(("type", "=", query.type))
 
-        # search on state/country is performed
-        # on name or code of state/country
         if query.state is not None:
-            domain += [
-                "|",
-                ("state_id.name", "ilike", query.state),
-                ("state_id.code", "ilike", query.state),
-            ]
+            domain.append(("state_id", "=", query.state)) 
         if query.country is not None:
-            domain += [
-                "|",
-                ("country.name", "ilike", query.country),
-                ("country.code", "ilike", query.country),
-            ]
+            domain.append(("country_id", "=", query.country))
 
         return domain
 
