@@ -112,25 +112,6 @@ class ResPartner(models.Model):
 
         return domain
 
-    @api.model
-    def _search_shopinvader_address(
-        self, query: AddressSearch, limit, offset
-    ) -> "ResPartner":
-        domain = self._build_shopinvader_search_address_domain(query)
-        return self.env["res.partner"].search(domain, limit=limit, offset=offset)
-
-    @api.model
-    def _delete_shopinvader_address(self, rec_id: int):
-        address = self.env["res.partner"].search([("id", "=", rec_id)], limit=1)
-        if not address:
-            raise MissingError(_("No address found"))
-
-        # Try to delete authenticated_partner
-        if address.id == int(self.env.context.get("authenticated_partner_id")):
-            raise UserError(_("Can not delete the partner account"))
-
-        address.unlink()
-
     #### Billing ####
     # Billing address is unique and corresponds to authenticated_partner
     
