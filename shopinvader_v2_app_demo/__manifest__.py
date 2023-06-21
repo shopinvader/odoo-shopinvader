@@ -14,7 +14,7 @@
     "depends": [
         "fastapi",
         "shopinvader_api_address",
-        "shopinvader_api_sale",
+        "shopinvader_api_cart",
         "shopinvader_anonymous_partner",
         "shopinvader_fastapi_auth_jwt",
     ],

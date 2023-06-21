@@ -14,7 +14,7 @@ from odoo.addons.fastapi_auth_jwt.dependencies import (
     auth_jwt_default_validator_name,
 )
 from odoo.addons.shopinvader_api_address.routers.address_service import address_router
-from odoo.addons.shopinvader_api_sale.routers import cart_router
+from odoo.addons.shopinvader_api_cart.routers import cart_router
 from odoo.addons.shopinvader_fastapi_auth_jwt.dependencies import (
     auth_jwt_authenticated_or_anonymous_partner_autocreate,
 )
