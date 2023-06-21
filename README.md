@@ -56,6 +56,7 @@ addon | version | maintainers | summary
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 |  | This addons is used to push the initial algolia configuration to locomotive
 [shopinvader_locomotive_guest_mode](shopinvader_locomotive_guest_mode/) | 14.0.1.0.3 |  | Shopinvader guest mode for locomotive
 [shopinvader_locomotive_impersonate](shopinvader_locomotive_impersonate/) | 14.0.1.0.1 |  | Allow to log with any shopinvader partner directly from odoo
+[shopinvader_locomotive_product_seasonality](shopinvader_locomotive_product_seasonality/) | 14.0.1.0.0 |  | Synchronize product seasonality info to Locomotive
 [shopinvader_locomotive_reset_password](shopinvader_locomotive_reset_password/) | 14.0.1.3.0 |  | Give the possibility to send a email to reset thepassword from odoo
 [shopinvader_locomotive_sale_profile](shopinvader_locomotive_sale_profile/) | 14.0.1.0.1 |  | Synchronize the sale profile info to customer record on Locomotive
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.2 |  | Synchronize wishlist details to Locomotive users record.
@@ -79,6 +80,8 @@ addon | version | maintainers | summary
 [shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.1 |  | Shopinvader product new
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.1.0 |  | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.2.0 |  | Exposes product prices with and without taxes
+[shopinvader_product_seasonality](shopinvader_product_seasonality/) | 14.0.1.0.0 |  | Shopinvader Product Seasonality
+[shopinvader_product_seasonality_search_engine](shopinvader_product_seasonality_search_engine/) | 14.0.1.0.0 |  | Shopinvader Product Seasonality Search Engine
 [shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.3 |  | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.2 |  | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_forecast](shopinvader_product_stock_forecast/) | 14.0.1.0.0 | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Export Stock Forecast data along with product stocks.
