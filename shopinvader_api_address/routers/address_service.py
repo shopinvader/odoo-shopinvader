@@ -6,7 +6,7 @@ from odoo.addons.fastapi.dependencies import authenticated_partner_env, paging, 
 from odoo.addons.fastapi.schemas import PagedCollection, Paging
 from odoo.addons.shopinvader_schema_address.schema import Address, BillingAddress, ShippingAddress
 
-from ..schema import AddressInput, AddressSearch
+from ..schema import AddressInput, AddressSearch, AddressUpdate
 
 # create a router
 address_router = APIRouter()
@@ -86,6 +86,19 @@ def address_get_billing(
     address_id = env["res.partner"]._get_shopinvader_billing_address(partner)
     return BillingAddress.from_orm(address_id)
 
+@address_router.post("/address/billing", response_model=BillingAddress,status_code=201)
+def address_update_billing(
+    data: AddressUpdate,
+    env: Environment = Depends(authenticated_partner_env),
+    partner = Depends(authenticated_partner),
+) -> BillingAddress:
+    """
+    Update billing address
+    billing address corresponds to authenticated partner
+    """
+    address_id = env["res.partner"]._update_shopinvader_billing_address(partner,data)
+    return BillingAddress.from_orm(address_id)
+
 #### Shipping address ####
 
 @address_router.get("/address/shipping", response_model=PagedCollection[ShippingAddress])
@@ -103,10 +116,15 @@ def address_get_shipping(
         items=[ShippingAddress.from_orm(rec) for rec in address_ids],
     )
 
+@address_router.post("/address/shipping", response_model=ShippingAddress,status_code=201)
+def address_create_shipping(
+    data: AddressUpdate,
+    env: Environment = Depends(authenticated_partner_env),
+    partner = Depends(authenticated_partner),
+) -> ShippingAddress:
     """
-    TODO:
-     no delete only archive
-     billing addres is on authenticated partner and unique
-     prevent modifing billing address if account move created
-     shipping address: create/unlink
+    Update billing address
+    billing address corresponds to authenticated partner
     """
+    address_id = env["res.partner"]._create_shipping_address(partner,data)
+    return ShippingAddress.from_orm(address_id)

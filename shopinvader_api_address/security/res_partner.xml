@@ -9,7 +9,7 @@
         <field name="domain_force">[('parent_id','=',authenticated_partner_id)]</field>
         <field
             name="groups"
-            eval="[(4, ref('shopinvader_api_address.shopinvader_addres_user_group'))]"
+            eval="[(4, ref('shopinvader_api_address.shopinvader_address_user_group'))]"
         />
     </record>
 

@@ -42,3 +42,20 @@ class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     state: str | None
     country: str | None
     type: str
+
+class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
+    """
+    TODO: improve
+        used to update address (res.partner)
+        state and country can be name or code
+    """
+
+    name: str | None
+    street: str | None
+    street2: str | None
+    zip: str | None
+    city: str | None
+    phone: str | None
+    email: str | None
+    state: str | None
+    country: str | None
