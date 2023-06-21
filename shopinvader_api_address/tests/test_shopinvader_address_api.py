@@ -207,6 +207,34 @@ class TestShopinvaderAddressApi(TransactionCase):
         self.assertEqual(address.get("country").get("id"), new_address.country_id.id)
         self.assertEqual(address.get("id"), new_address.id)
 
+        #search
+
+        response: Response = self.client.get(
+            f"/address/shipping", params={"zip":"5000"}
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(1, response_json["total"])
+
+        address = response_json["items"][0]
+
+        self.assertEqual(
+            address.get("name"), new_address.name
+        )
+        self.assertEqual(address.get("street"), new_address.street)
+        self.assertEqual(address.get("zip"), new_address.zip)
+        self.assertEqual(address.get("city"), new_address.city)
+        self.assertEqual(address.get("country").get("id"), new_address.country_id.id)
+        self.assertEqual(address.get("id"), new_address.id)
+
+
     def test_create_update_billing_address(self):
         """
         Test to create/update billing address

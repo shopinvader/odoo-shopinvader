@@ -155,8 +155,12 @@ class ResPartner(models.Model):
     #### Shipping ####
 
     @api.model
-    def _get_shopinvader_shipping_address(self,rec_id:int=None) -> "ResPartner":
-        domain = self._build_shopinvader_search_address_domain(AddressSearch(type="delivery"))
+    def _get_shopinvader_shipping_address(self,rec_id:int=None,data: AddressSearch=None) -> "ResPartner":
+        if data is not None:
+            data.type="delivery"
+            domain = self._build_shopinvader_search_address_domain(data)
+        else:
+            domain = self._build_shopinvader_search_address_domain(AddressSearch(type="delivery"))
         
         if rec_id is not None:
             domain.append(("id", "=", rec_id))
@@ -179,7 +183,7 @@ class ResPartner(models.Model):
             
 
     @api.model
-    def _delete_shipping_address(self,rec_id:int):
+    def _delete_shipping_address(self,rec_id:int)-> None:
         address = self._get_shopinvader_shipping_address(rec_id)
         if address:
             #archive address
