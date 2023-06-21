@@ -11,8 +11,17 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": ["fastapi"],
+    "depends": [
+        "fastapi",
+        "shopinvader_api_address",
+        "shopinvader_api_sale",
+        "shopinvader_anonymous_partner",
+        "shopinvader_fastapi_auth_jwt",
+    ],
     "external_dependencies": {"python": ["fastapi"]},
+    "data": [
+        "views/fastapi_endpoint.xml",
+    ],
     "demo": [
         "demo/res_users.xml",
         "demo/res_groups.xml",

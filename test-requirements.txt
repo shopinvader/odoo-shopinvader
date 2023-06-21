@@ -7,4 +7,5 @@ vcrpy
 vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
+odoo-addon-shopinvader-api-sale @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1369/head#subdirectory=setup/shopinvader_api_sale
 httpx  # For FastAPI tests
