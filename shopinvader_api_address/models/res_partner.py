@@ -4,7 +4,7 @@
 from odoo import _, api, models
 from odoo.exceptions import MissingError, UserError
 
-from ..schema import AddressInput, AddressSearch,AddressUpdate
+from ..schemas import AddressInput, AddressSearch,AddressUpdate
 
 
 class ResPartner(models.Model):
@@ -167,3 +167,20 @@ class ResPartner(models.Model):
     def _create_shipping_address(self,authenticated_partner_id: "ResPartner",data: AddressInput) -> "ResPartner":
         vals = self._create_vals_shopinvader_address(data,authenticated_partner_id,"delivery")
         return self.env["res.partner"].create(vals)
+
+    def _update_shipping_address(self,data: AddressUpdate,rec_id:int) -> "ResPartner":
+        address = self._get_shopinvader_shipping_address(rec_id)
+        if not address:
+            raise MissingError(_("No address found"))
+        #update_address
+        vals = self._update_vals_shopinvader_address(data)
+        address.write(vals)
+        return address
+            
+
+    @api.model
+    def _delete_shipping_address(self,rec_id:int):
+        address = self._get_shopinvader_shipping_address(rec_id)
+        if address:
+            #archive address
+            address.active = False

@@ -13,7 +13,6 @@
         "pydantic",
         "extendable",
         "extendable_fastapi",
-        "fastapi",  # to remove?
     ],
     "external_dependencies": {"python": ["extendable_pydantic", "pydantic"]},
     "data": [],

@@ -4,73 +4,12 @@ from odoo.api import Environment
 
 from odoo.addons.fastapi.dependencies import authenticated_partner_env, paging, authenticated_partner
 from odoo.addons.fastapi.schemas import PagedCollection, Paging
-from odoo.addons.shopinvader_schema_address.schema import Address, BillingAddress, ShippingAddress
+from odoo.addons.shopinvader_schema_address.schemas import Address, BillingAddress, ShippingAddress
 
-from ..schema import AddressInput, AddressSearch, AddressUpdate
+from ..schemas import AddressInput, AddressSearch, AddressUpdate
 
 # create a router
 address_router = APIRouter()
-
-
-# @address_router.post(
-#     "/address/create", response_model=PagedCollection[Address], status_code=201
-# )
-# def address_create(
-#     data: AddressInput,
-#     env: Environment = Depends(authenticated_partner_env),
-# ) -> PagedCollection[Address]:
-#     """
-#     Create new address and link it to authenticated partner
-#     """
-#     address = env["res.partner"]._create_shopinvader_address(data)
-#     return PagedCollection[Address](
-#         total=len(address),
-#         items=[Address.from_orm(rec) for rec in address],
-#     )
-
-
-# @address_router.get("/address/{rec_id}", response_model=PagedCollection[Address])
-# def address_get(
-#     rec_id: int,
-#     env: Environment = Depends(authenticated_partner_env),
-# ) -> PagedCollection[Address]:
-#     """
-#     Get a specific address using id
-#     """
-#     address = env["res.partner"]._get_shopinvader_address(rec_id)
-#     return PagedCollection[Address](
-#         total=len(address),
-#         items=[Address.from_orm(rec) for rec in address],
-#     )
-
-
-# @address_router.post("/address/search", response_model=PagedCollection[Address])
-# def address_search(
-#     query: AddressSearch = Depends(),
-#     paging: Paging = Depends(paging),
-#     env: Environment = Depends(authenticated_partner_env),
-# ) -> PagedCollection[Address]:
-#     """
-#     Perform a search on addresses
-#     """
-#     address = env["res.partner"]._search_shopinvader_address(
-#         query, limit=paging.limit, offset=paging.offset
-#     )
-#     return PagedCollection[Address](
-#         total=len(address),
-#         items=[Address.from_orm(rec) for rec in address],
-#     )
-
-
-# @address_router.delete("/address/{rec_id}")
-# def address_delete(
-#     rec_id: int,
-#     env: Environment = Depends(authenticated_partner_env),
-# ) -> None:
-#     """
-#     Delete address using record id to identify address
-#     """
-#     env["res.partner"]._delete_shopinvader_address(rec_id)
 
 #### Billing address ####
     
@@ -117,14 +56,29 @@ def address_get_shipping(
     )
 
 @address_router.post("/address/shipping", response_model=ShippingAddress,status_code=201)
-def address_create_shipping(
-    data: AddressUpdate,
+@address_router.post("/address/shipping/{rec_id}", response_model=ShippingAddress)
+def address_create_update_shipping(
+    data: AddressInput,
     env: Environment = Depends(authenticated_partner_env),
     partner = Depends(authenticated_partner),
+    rec_id:int|None = None,
 ) -> ShippingAddress:
     """
-    Update billing address
-    billing address corresponds to authenticated partner
+    Create/Update shipping address
     """
-    address_id = env["res.partner"]._create_shipping_address(partner,data)
+    if rec_id is None:
+        address_id = env["res.partner"]._create_shipping_address(partner,data)
+    else:
+        address_id = env["res.partner"]._update_shipping_address(data,rec_id)
     return ShippingAddress.from_orm(address_id)
+
+@address_router.delete("/address/shipping/{rec_id}")
+def address_delete_shipping(
+    rec_id: int,
+    env: Environment = Depends(authenticated_partner_env),
+)-> None:
+    """
+        Delete shipping address
+        Address will be archive
+    """
+    env["res.partner"]._delete_shipping_address(rec_id)

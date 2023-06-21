@@ -41,7 +41,6 @@ class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     email: str | None
     state: str | None
     country: str | None
-    type: str
 
 class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     """
