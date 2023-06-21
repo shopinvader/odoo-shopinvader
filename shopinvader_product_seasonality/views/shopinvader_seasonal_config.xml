@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_seasonal_config_search_view">
+        <field name="name">shopinvader.seasonal.config.line.search</field>
+        <field name="model">shopinvader.seasonal.config.line</field>
+        <field name="arch" type="xml">
+            <search string="Lines">
+                <field name="product_template_id" />
+                <field name="backend_id" string="Shopinvader Backend" />
+                <field name="record_id" />
+                <field name="seasonal_config_id" />
+                <separator />
+                <group expand="0" string="Group By">
+                    <filter
+                        string="Backend"
+                        name="group_by_backend_id"
+                        domain="[]"
+                        context="{'group_by':'backend_id'}"
+                    />
+                    <filter
+                        string="Seasonal config"
+                        name="group_by_seasonal_config_id"
+                        domain="[]"
+                        context="{'group_by':'seasonal_config_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="shopinvader_seasonal_config_tree_view">
+        <field name="name">shopinvader.seasonal.config.line.tree</field>
+        <field name="model">shopinvader.seasonal.config.line</field>
+        <field name="arch" type="xml">
+            <tree string="Lines" create="0">
+                <field name="backend_id" />
+                <field name="record_id" />
+                <field name="product_template_id" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="shopinvader_seasonal_config_form_view" model="ir.ui.view">
+        <field name="name">shopinvader.seasonal.config.line.form</field>
+        <field name="model">shopinvader.seasonal.config.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group name="config_line">
+                        <field name="record_id" />
+                        <field name="product_template_id" />
+                        <field name="seasonal_config_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shopinvader_seasonal_config_act_window">
+        <field name="name">Shopinvader Seasonal Config Line</field>
+        <field name="res_model">shopinvader.seasonal.config.line</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field
+            name="groups_id"
+            eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"
+        />
+    </record>
+
+    <record model="ir.ui.menu" id="shopinvader_seasonal_config_menu">
+        <field name="name">Seasonal config lines</field>
+        <field name="parent_id" ref="shopinvader.menu_shopinvader_products" />
+        <field name="action" ref="shopinvader_seasonal_config_act_window" />
+        <field name="sequence" eval="50" />
+    </record>
+
+</odoo>

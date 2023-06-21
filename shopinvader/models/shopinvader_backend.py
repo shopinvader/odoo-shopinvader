@@ -327,38 +327,53 @@ class ShopinvaderBackend(models.Model):
             for rec in self:
                 rec[fname] = counts.get(rec.id, 0)
 
-    def _bind_all_content(self, model, bind_model, domain):
+    def _bind_all_content(self, model, bind_model, domain, langs="all"):
+        assert langs in ("all", "none")
+        _langs = self.lang_ids if langs == "all" else self.lang_ids.browse()
+
         bind_model_obj = self.env[bind_model].with_context(active_test=False)
         model_obj = self.env[model]
         records = model_obj.search(domain)
-        binds = bind_model_obj.search(
-            [
-                ("backend_id", "in", self.ids),
-                ("record_id", "in", records.ids),
-                ("lang_id", "in", self.mapped("lang_ids").ids),
-            ]
-        )
+        binding_domain = [
+            ("backend_id", "in", self.ids),
+            ("record_id", "in", records.ids),
+        ]
+        if _langs:
+            binding_domain.append(("lang_id", "in", _langs.ids))
+        bindings = bind_model_obj.search(binding_domain)
         for backend in self:
-            for lang in backend.lang_ids:
+            # Loop on langs or on empty lang if lang-agnostic
+            for lang in _langs or [_langs]:
                 for record in records:
-                    bind = fields.first(
-                        binds.filtered(
-                            lambda b: b.backend_id == backend
-                            and b.record_id == record
-                            and b.lang_id == lang
-                        )
+                    backend._get_or_create_existing_binding_for_record(
+                        record, bindings, lang=lang
                     )
-                    if not bind:
-                        bind_model_obj.with_context(map_children=True).create(
-                            {
-                                "backend_id": backend.id,
-                                "record_id": record.id,
-                                "lang_id": lang.id,
-                            }
-                        )
-                    elif not bind.active:
-                        bind.write({"active": True})
         return True
+
+    def _get_or_create_existing_binding_for_record(self, record, bindings, lang=False):
+        domain = [
+            ("backend_id", "=", self.id),
+            ("record_id", "=", record.id),
+        ]
+        if lang:
+            domain.append(("lang_id", "=", lang.id))
+        binding = fields.first(bindings.filtered_domain(domain))
+        if not binding:
+            values = {
+                "backend_id": self.id,
+                "record_id": record.id,
+            }
+            if lang:
+                values["lang_id"] = lang.id
+            values_handler = getattr(
+                bindings, "_binding_create_values_get", lambda vals: vals
+            )
+            binding = bindings.with_context(map_children=True).create(
+                values_handler(values)
+            )
+        elif not binding.active:
+            binding.write({"active": True})
+        return binding
 
     def bind_all_product(self, domain=None):
         domain = domain or [("sale_ok", "=", True)]
