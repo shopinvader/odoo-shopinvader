@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_locomotive_impersonate
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_locomotive_impersonate
+#: model:ir.model.fields,field_description:shopinvader_locomotive_impersonate.field_shopinvader_partner__datetime_expire_impersonate_token
+msgid "Datetime Expire Impersonate Token"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model:ir.model.fields,field_description:shopinvader_locomotive_impersonate.field_shopinvader_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model:ir.model.fields,field_description:shopinvader_locomotive_impersonate.field_shopinvader_partner__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive_impersonate.res_partner_view_form
+#: model_terms:ir.ui.view,arch_db:shopinvader_locomotive_impersonate.shopinvader_partner_view_form
+msgid "Impersonate"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model:res.groups,name:shopinvader_locomotive_impersonate.group_shopinvader_impersonate
+msgid "Impersonate Shopinvader Customer"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model:ir.model.fields,field_description:shopinvader_locomotive_impersonate.field_shopinvader_partner__impersonate_token
+msgid "Impersonate Token"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: code:addons/shopinvader_locomotive_impersonate/services/customer.py:0
+#, python-format
+msgid "Invalid impersonate token"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model:ir.model.fields,field_description:shopinvader_locomotive_impersonate.field_shopinvader_partner____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model:ir.module.category,name:shopinvader_locomotive_impersonate.module_category_shopinvader
+msgid "Shopinvader"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: model:ir.model,name:shopinvader_locomotive_impersonate.model_shopinvader_partner
+msgid "Shopinvader Partner"
+msgstr ""
+
+#. module: shopinvader_locomotive_impersonate
+#: code:addons/shopinvader_locomotive_impersonate/models/shopinvader_partner.py:0
+#, python-format
+msgid "You are not allowed to impersonate customer"
+msgstr ""
