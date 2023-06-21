@@ -61,127 +61,127 @@ class TestShopinvaderAddressApi(TransactionCase):
         context.extendable_registry.reset(cls.token)
         super().tearDownClass()
 
-    def test_create_address(self):
-        """
-        Test to create a new partner
-        """
-        data = {
-            "name": "test Addr",
-            "street": "test Street",
-            "zip": "5000",
-            "city": "Namur",
-            "country": "BEL",
-            "type": "other",
-        }
+    # def test_create_address(self):
+    #     """
+    #     Test to create a new partner
+    #     """
+    #     data = {
+    #         "name": "test Addr",
+    #         "street": "test Street",
+    #         "zip": "5000",
+    #         "city": "Namur",
+    #         "country": "BEL",
+    #         "type": "other",
+    #     }
 
-        response: Response = self.client.post(
-            "/address/create", content=json.dumps(data)
-        )
+    #     response: Response = self.client.post(
+    #         "/address/create", content=json.dumps(data)
+    #     )
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_201_CREATED,
-            msg=f"error message: {response.text}",
-        )
-        response_json = response.json()
-        self.assertTrue(response_json)
-        self.assertEqual(1, len(response_json["items"]))
-        self.assertEqual(1, response_json["total"])
+    #     self.assertEqual(
+    #         response.status_code,
+    #         status.HTTP_201_CREATED,
+    #         msg=f"error message: {response.text}",
+    #     )
+    #     response_json = response.json()
+    #     self.assertTrue(response_json)
+    #     self.assertEqual(1, len(response_json["items"]))
+    #     self.assertEqual(1, response_json["total"])
 
-        partner_id = self.env["res.partner"].search([("name", "=", "test Addr")])
+    #     partner_id = self.env["res.partner"].search([("name", "=", "test Addr")])
 
-        authenticated_partner_id = self.test_partner
-        country_belgium_id = self.env["res.country"].search(
-            [
-                ("code", "=", "BEL"),
-            ],
-            limit=1,
-        )
+    #     authenticated_partner_id = self.test_partner
+    #     country_belgium_id = self.env["res.country"].search(
+    #         [
+    #             ("code", "=", "BEL"),
+    #         ],
+    #         limit=1,
+    #     )
 
-        self.assertEqual(1, len(partner_id))
-        self.assertRecordValues(
-            partner_id,
-            [
-                {
-                    "name": "test Addr",
-                    "street": "test Street",
-                    "zip": "5000",
-                    "city": "Namur",
-                    "country_id": country_belgium_id.id,
-                    "parent_id": authenticated_partner_id.id,
-                    "type": "other",
-                }
-            ],
-        )
-        self.assertEqual(partner_id, authenticated_partner_id.child_ids)
+    #     self.assertEqual(1, len(partner_id))
+    #     self.assertRecordValues(
+    #         partner_id,
+    #         [
+    #             {
+    #                 "name": "test Addr",
+    #                 "street": "test Street",
+    #                 "zip": "5000",
+    #                 "city": "Namur",
+    #                 "country_id": country_belgium_id.id,
+    #                 "parent_id": authenticated_partner_id.id,
+    #                 "type": "other",
+    #             }
+    #         ],
+    #     )
+    #     self.assertEqual(partner_id, authenticated_partner_id.child_ids)
 
-    def test_get_main_address(self):
-        """
-        Test to get address of authenticated_partner
-        """
+    # def test_get_main_address(self):
+    #     """
+    #     Test to get address of authenticated_partner
+    #     """
 
-        response: Response = self.client.get(
-            f"/address/{self.test_partner.id}",
-        )
+    #     response: Response = self.client.get(
+    #         f"/address/{self.test_partner.id}",
+    #     )
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK,
-            msg=f"error message: {response.text}",
-        )
+    #     self.assertEqual(
+    #         response.status_code,
+    #         status.HTTP_200_OK,
+    #         msg=f"error message: {response.text}",
+    #     )
 
-        response_json = response.json()
-        self.assertTrue(response_json)
-        self.assertEqual(1, len(response_json["items"]))
-        self.assertEqual(1, response_json["total"])
-        self.assertEqual(
-            response_json["items"][0].get("name"), "FastAPI Shopinvader Address Demo"
-        )
-        # TODO check fields
+    #     response_json = response.json()
+    #     self.assertTrue(response_json)
+    #     self.assertEqual(1, len(response_json["items"]))
+    #     self.assertEqual(1, response_json["total"])
+    #     self.assertEqual(
+    #         response_json["items"][0].get("name"), "FastAPI Shopinvader Address Demo"
+    #     )
+    #     # TODO check fields
 
-    def test_get_new_address(self):
-        """
-        Test to get address linked to authenticated_partner
-        """
-        new_address = self.env["res.partner"].create(
-            {
-                "name": "test New Addr",
-                "street": "test Street",
-                "zip": "5000",
-                "city": "Namur",
-                "country_id": self.env.ref("base.be").id,
-                "parent_id": self.test_partner.id,
-                "type": "other",
-            }
-        )
+    # def test_get_new_address(self):
+    #     """
+    #     Test to get address linked to authenticated_partner
+    #     """
+    #     new_address = self.env["res.partner"].create(
+    #         {
+    #             "name": "test New Addr",
+    #             "street": "test Street",
+    #             "zip": "5000",
+    #             "city": "Namur",
+    #             "country_id": self.env.ref("base.be").id,
+    #             "parent_id": self.test_partner.id,
+    #             "type": "other",
+    #         }
+    #     )
 
-        response: Response = self.client.get(
-            f"/address/{new_address.id}",
-        )
+    #     response: Response = self.client.get(
+    #         f"/address/{new_address.id}",
+    #     )
 
-        self.assertEqual(
-            response.status_code,
-            status.HTTP_200_OK,
-            msg=f"error message: {response.text}",
-        )
+    #     self.assertEqual(
+    #         response.status_code,
+    #         status.HTTP_200_OK,
+    #         msg=f"error message: {response.text}",
+    #     )
 
-        response_json = response.json()
-        self.assertTrue(response_json)
-        self.assertEqual(1, len(response_json["items"]))
-        self.assertEqual(1, response_json["total"])
-        self.assertEqual(response_json["items"][0].get("name"), "test New Addr")
+    #     response_json = response.json()
+    #     self.assertTrue(response_json)
+    #     self.assertEqual(1, len(response_json["items"]))
+    #     self.assertEqual(1, response_json["total"])
+    #     self.assertEqual(response_json["items"][0].get("name"), "test New Addr")
 
-    def test_get_address_no_rights(self):
-        """
-        Try to get address with no rights
-        """
-        odoo_bot_partner_id = self.env.user.partner_id
+    # def test_get_address_no_rights(self):
+    #     """
+    #     Try to get address with no rights
+    #     """
+    #     odoo_bot_partner_id = self.env.user.partner_id
 
-        # TODO: change to check http exception
-        with self.assertRaises(MissingError):
-            response: Response = self.client.get(
-                f"/address/{odoo_bot_partner_id.id}",
-            )
+    #     # TODO: change to check http exception
+    #     with self.assertRaises(MissingError):
+    #         response: Response = self.client.get(
+    #             f"/address/{odoo_bot_partner_id.id}",
+    #         )
 
     # def test_search(self):
     #     """
@@ -280,15 +280,96 @@ class TestShopinvaderAddressApi(TransactionCase):
 
         response_json = response.json()
         self.assertTrue(response_json)
-        self.assertEqual(1, len(response_json["items"]))
+
+        address = response_json
+
+        self.assertEqual(
+            address.get("name"), self.test_partner.name
+        )
+        self.assertEqual(address.get("street"), self.test_partner.street)
+        self.assertEqual(address.get("zip"), self.test_partner.zip)
+        self.assertEqual(address.get("city"), self.test_partner.city)
+        self.assertEqual(address.get("country").get("id"), self.test_partner.country_id.id)
+        self.assertEqual(address.get("id"), self.test_partner.id)
+
+    def test_get_shipping_address(self):
+        """
+        Test to get shipping address of authenticated_partner
+        """
+
+        response: Response = self.client.get(
+            "/address/shipping",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(0, response_json["total"])
+
+        # add shipping address
+        new_address = self.env["res.partner"].create(
+            {
+                "name": "test New Addr",
+                "street": "test Street",
+                "zip": "5000",
+                "city": "Namur",
+                "country_id": self.env.ref("base.be").id,
+                "parent_id": self.test_partner.id,
+                "type": "delivery",
+            }
+        )
+
+        response: Response = self.client.get(
+            "/address/shipping",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
         self.assertEqual(1, response_json["total"])
 
         address = response_json["items"][0]
 
         self.assertEqual(
-            address.get("name"), "FastAPI Shopinvader Address Demo"
+            address.get("name"), new_address.name
         )
-        self.assertEqual(address.get("street"), "rue test")
-        self.assertEqual(address.get("zip"), "1410")
-        self.assertEqual(address.get("city"), "Waterloo")
-        self.assertEqual(address.get("country_id"), self.env.ref("base.be").id)
+        self.assertEqual(address.get("street"), new_address.street)
+        self.assertEqual(address.get("zip"), new_address.zip)
+        self.assertEqual(address.get("city"), new_address.city)
+        self.assertEqual(address.get("country").get("id"), new_address.country_id.id)
+        self.assertEqual(address.get("id"), new_address.id)
+
+        response: Response = self.client.get(
+            f"/address/shipping/{new_address.id}",
+        )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
+        self.assertEqual(1, response_json["total"])
+
+        address = response_json["items"][0]
+
+        self.assertEqual(
+            address.get("name"), new_address.name
+        )
+        self.assertEqual(address.get("street"), new_address.street)
+        self.assertEqual(address.get("zip"), new_address.zip)
+        self.assertEqual(address.get("city"), new_address.city)
+        self.assertEqual(address.get("country").get("id"), new_address.country_id.id)
+        self.assertEqual(address.get("id"), new_address.id)

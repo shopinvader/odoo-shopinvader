@@ -117,3 +117,13 @@ class ResPartner(models.Model):
     @api.model
     def _get_shopinvader_billing_address(self, authenticated_partner_id: "ResPartner") -> "ResPartner":
         return authenticated_partner_id
+    
+
+    @api.model
+    def _get_shopinvader_shipping_address(self,rec_id:int=None) -> "ResPartner":
+        domain = self._build_shopinvader_search_address_domain(AddressSearch(type="delivery"))
+        
+        if rec_id is not None:
+            domain.append(("id", "=", rec_id))
+
+        return self.env["res.partner"].search(domain)

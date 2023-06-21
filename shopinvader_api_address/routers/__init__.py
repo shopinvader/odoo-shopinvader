@@ -1,1 +1,1 @@
-from . import address_service
+from .address_service import address_router
