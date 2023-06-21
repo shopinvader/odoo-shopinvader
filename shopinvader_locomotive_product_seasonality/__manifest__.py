@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Locomotive Product Seasonality",
     "summary": "Synchronize product seasonality info to Locomotive",
-    "version": "14.0.1.0.0",
+    "version": "14.0.1.0.1",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp",
