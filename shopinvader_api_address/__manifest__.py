@@ -17,6 +17,7 @@
     "data": [
         "security/res_groups.xml",
         "security/res_partner.xml",
+        "security/account_move.xml",
     ],
     "demo": [],
     "external_dependencies": {"python": ["fastapi", "extendable_pydantic", "pydantic"]},
