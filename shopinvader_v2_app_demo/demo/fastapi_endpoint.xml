@@ -9,7 +9,6 @@
 ]]></field>
         <field name="app">shopinvader_demo</field>
         <field name="root_path">/shopinvader_demo</field>
-        <field name="shopinvader_demo_auth_method">http_basic</field>
         <field name="user_id" ref="shopinvader_app_demo_user" />
     </record>
 </odoo>

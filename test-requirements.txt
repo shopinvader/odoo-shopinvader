@@ -7,3 +7,12 @@ vcrpy
 vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
+fastapi @ git+https://github.com/tiangolo/fastapi@refs/pull/5452/head
+odoo-addon-shopinvader-schema-address @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1361/head#subdirectory=setup/shopinvader_schema_address
+odoo-addon-shopinvader-api-address @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1361/head#subdirectory=setup/shopinvader_api_address
+odoo-addon-shopinvader-api-sale @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1369/head#subdirectory=setup/shopinvader_api_sale
+odoo-addon-shopinvader-anonymous-partner @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1366/head#subdirectory=setup/shopinvader_anonymous_partner
+odoo-addon-shopinvader-fastapi-auth-jwt @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1366/head#subdirectory=setup/shopinvader_fastapi_auth_jwt
+odoo-addon-auth_jwt @ git+https://github.com/oca/server-auth@refs/pull/520/head#subdirectory=setup/auth_jwt
+odoo-addon-fastapi_auth_jwt @ git+https://github.com/oca/rest-framework@refs/pull/347/head#subdirectory=setup/fastapi_auth_jwt
+httpx  # For FastAPI tests

@@ -5,6 +5,14 @@
     <record id="shopinvader_app_demo_group" model="res.groups">
         <field name="name">Shopinvader App Demo Group</field>
         <field name="users" eval="[(4, ref('shopinvader_app_demo_user'))]" />
-        <field name="implied_ids" eval="[(4, ref('group_fastapi_endpoint_runner'))]" />
+        <field
+            name="implied_ids"
+            eval="[
+        (4, ref('fastapi.group_fastapi_endpoint_runner')),
+        (4, ref('shopinvader_api_address.shopinvader_address_user_group')),
+        (4, ref('shopinvader_api_cart.sale_cart_user_group')),
+        ]"
+        />
+
     </record>
 </odoo>

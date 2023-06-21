@@ -1,16 +1,22 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from typing import List
+from functools import partial
+from typing import Any, List
 
-from fastapi import APIRouter
+from fastapi import APIRouter, FastAPI
 
-from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo import api, fields, models
 
-from odoo.addons.fastapi.depends import (
-    authenticated_partner_from_basic_auth_user,
-    authenticated_partner_impl,
+from odoo.addons.fastapi.dependencies import authenticated_partner_impl
+from odoo.addons.fastapi_auth_jwt.dependencies import (
+    auth_jwt_authenticated_partner,
+    auth_jwt_default_validator_name,
+)
+from odoo.addons.shopinvader_api_address.routers.address_service import address_router
+from odoo.addons.shopinvader_api_sale.routers import cart_router
+from odoo.addons.shopinvader_fastapi_auth_jwt.dependencies import (
+    auth_jwt_authenticated_or_anonymous_partner_autocreate,
 )
 
 
@@ -22,11 +28,7 @@ class FastapiEndpoint(models.Model):
         selection_add=[("shopinvader_demo", "Shopinvader Demo Endpoint")],
         ondelete={"shopinvader_demo": "cascade"},
     )
-
-    shopinvader_demo_auth_method = fields.Selection(
-        selection=[("http_basic", "HTTP Basic")],
-        string="Authentication method",
-    )
+    auth_jwt_validator_id = fields.Many2one("auth.jwt.validator")
 
     @api.model
     def _get_fastapi_routers(self):
@@ -36,35 +38,55 @@ class FastapiEndpoint(models.Model):
 
     @api.model
     def _get_shopinvader_demo_fastapi_routers(self) -> List[APIRouter]:
-        return []
+        if "address" not in address_router.tags:
+            address_router.tags.append("address")
+        return [address_router]
 
-    @api.constrains("app", "shopinvader_demo_auth_method")
-    def _validate_demo_auth_method(self):
-        for rec in self:
-            if rec.app == "shopinvader_demo" and not rec.shopinvader_demo_auth_method:
-                raise ValidationError(
-                    _(
-                        "The authentication method is required for app %(app)s",
-                        app=rec.app,
-                    )
-                )
+    def _get_shopinvader_demo_tags(self, params) -> list:
+        tags_metadata = params.get("openapi_tags", []) or []
+        tags_metadata.append(
+            {
+                "name": "address",
+                "description": "Set of services to manage addresses",
+            }
+        )
+        base_url = self.env["ir.config_parameter"].sudo().get_param("web.base.url")
+        tags_metadata.append(
+            {
+                "name": "cart",
+                "description": "Set of services to manage carts",
+                "externalDocs": {
+                    "description": "Cart services are available under "
+                    "a specific authentication mechanism",
+                    "url": f"{base_url}{self.root_path}/cart/docs",
+                },
+            }
+        )
+        return tags_metadata
 
-    @api.model
-    def _fastapi_app_fields(self) -> List[str]:
-        fields = super()._fastapi_app_fields()
-        fields.append("shopinvader_demo_auth_method")
-        return fields
+    def _prepare_fastapi_app_params(self) -> dict[str, Any]:
+        params = super()._prepare_fastapi_app_params()
+        if self.app == "shopinvader_demo":
+            params["openapi_tags"] = self._get_shopinvader_demo_tags(params)
+        return params
 
     def _get_app(self):
         app = super()._get_app()
-        if self.app == "shopinvader_demo_auth_method":
-            # Here we add the overrides to the authenticated_partner_impl method
-            # according to the authentication method configured on the demo app
-            if self.demo_auth_method == "http_basic":
-                authenticated_partner_impl_override = (
-                    authenticated_partner_from_basic_auth_user
-                )
+        if self.app == "shopinvader_demo":
             app.dependency_overrides[
                 authenticated_partner_impl
-            ] = authenticated_partner_impl_override
+            ] = auth_jwt_authenticated_partner
+            app.dependency_overrides[auth_jwt_default_validator_name] = partial(
+                lambda a: a, self.auth_jwt_validator_id.name or None
+            )
+            cart_app = FastAPI()
+            cart_app.include_router(cart_router)
+            cart_app.dependency_overrides[
+                authenticated_partner_impl
+            ] = auth_jwt_authenticated_or_anonymous_partner_autocreate
+            cart_app.dependency_overrides[auth_jwt_default_validator_name] = partial(
+                lambda a: a, self.auth_jwt_validator_id.name or None
+            )
+            app.mount(self.root_path + "/carts", cart_app)
+
         return app
