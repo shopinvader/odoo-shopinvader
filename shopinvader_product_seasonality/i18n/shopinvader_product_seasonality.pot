@@ -1,0 +1,220 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_product_seasonality
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_seasonal_config_line__active
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__active
+msgid "Active"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__backend_id
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_seasonality.shopinvader_seasonal_config_search_view
+msgid "Backend"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_seasonality.shopinvader_backend_form_view
+msgid "Bind Seasonal config lines"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__company_id
+msgid "Company"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__date_end
+msgid "Date End"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__date_start
+msgid "Date Start"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_seasonal_config_line__display_name
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_backend__display_name
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__external_id
+msgid "External ID"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__friday
+msgid "Friday"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_seasonality.shopinvader_seasonal_config_search_view
+msgid "Group By"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_seasonal_config_line__id
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_backend__id
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_seasonal_config_line____last_update
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_backend____last_update
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__sync_date
+msgid "Last synchronization date"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_seasonality.shopinvader_seasonal_config_search_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_seasonality.shopinvader_seasonal_config_tree_view
+msgid "Lines"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,help:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__weekdays
+msgid "List of weekdays numbers (zero-based)"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model,name:shopinvader_product_seasonality.model_shopinvader_backend
+msgid "Locomotive CMS Backend"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__monday
+msgid "Monday"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__product_id
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__product_ids
+msgid "Product"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__product_template_id
+msgid "Product Template"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__seasonal_config_id
+msgid "Product seasonal configuration"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model,name:shopinvader_product_seasonality.model_seasonal_config_line
+msgid "Product seasonal configuration Line"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__record_id
+msgid "Record"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__redirect_url_key
+msgid "Redirect Url Keys"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__saturday
+msgid "Saturday"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_seasonality.shopinvader_seasonal_config_search_view
+msgid "Seasonal config"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.ui.menu,name:shopinvader_product_seasonality.shopinvader_seasonal_config_menu
+msgid "Seasonal config lines"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_seasonality.shopinvader_seasonal_config_search_view
+msgid "Shopinvader Backend"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_seasonal_config_line__shopinvader_bind_ids
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__shopinvader_bind_ids
+msgid "Shopinvader Binding"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model,name:shopinvader_product_seasonality.model_shopinvader_seasonal_config_line
+msgid "Shopinvader Seasonal Config Binding"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.actions.act_window,name:shopinvader_product_seasonality.shopinvader_seasonal_config_act_window
+msgid "Shopinvader Seasonal Config Line"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__sunday
+msgid "Sunday"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__thursday
+msgid "Thursday"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__tuesday
+msgid "Tuesday"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__wednesday
+msgid "Wednesday"
+msgstr ""
+
+#. module: shopinvader_product_seasonality
+#: model:ir.model.fields,field_description:shopinvader_product_seasonality.field_shopinvader_seasonal_config_line__weekdays
+msgid "Weekdays"
+msgstr ""
