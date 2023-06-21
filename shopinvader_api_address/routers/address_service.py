@@ -45,11 +45,15 @@ def address_update_billing(
 def address_get_shipping(
     env: Environment = Depends(authenticated_partner_env),
     rec_id: int | None = None,
+    data: AddressSearch = Depends(AddressSearch),
 ) -> PagedCollection[ShippingAddress]:
     """
     Get shipping addresses
+    Can be used to get every shipping address: /address/shipping
+    Can be used to get one specific address: /address/shipping/rec_id
+    If an AddressSearch is given, it will act as a search with given filter
     """
-    address_ids = env["res.partner"]._get_shopinvader_shipping_address(rec_id)
+    address_ids = env["res.partner"]._get_shopinvader_shipping_address(rec_id,data)
     return  PagedCollection[ShippingAddress](
         total=len(address_ids),
         items=[ShippingAddress.from_orm(rec) for rec in address_ids],
