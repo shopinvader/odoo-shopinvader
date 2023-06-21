@@ -103,7 +103,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         """
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.get(
-                "/address/billing",
+                "/addresses/billing",
             )
 
         self.assertEqual(
@@ -133,7 +133,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.get(
-                "/address/shipping",
+                "/addresses/shipping",
             )
 
         self.assertEqual(
@@ -161,7 +161,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.get(
-                "/address/shipping",
+                "/addresses/shipping",
             )
 
         self.assertEqual(
@@ -187,7 +187,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.get(
-                f"/address/shipping/{new_address.id}",
+                f"/addresses/shipping/{new_address.id}",
             )
 
         self.assertEqual(
@@ -214,7 +214,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         #search
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.get(
-                f"/address/shipping", params={"zip":"5000"}
+                f"/addresses/shipping", params={"zip":"5000"}
             )
 
         self.assertEqual(
@@ -249,7 +249,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                "/address/billing", content=json.dumps(data)
+                "/addresses/billing", content=json.dumps(data)
             )
 
         self.assertEqual(
@@ -279,7 +279,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                "/address/shipping", content=json.dumps(data)
+                "/addresses/shipping", content=json.dumps(data)
             )
 
         self.assertEqual(
@@ -316,7 +316,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.delete(
-                f"/address/shipping/{new_address.id}",
+                f"/addresses/shipping/{new_address.id}",
             )
 
         self.assertEqual(
@@ -352,7 +352,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                f"/address/shipping/{new_address.id}", content = json.dumps(data)
+                f"/addresses/shipping/{new_address.id}", content = json.dumps(data)
             )
 
         self.assertEqual(
