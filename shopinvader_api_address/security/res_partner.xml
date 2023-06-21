@@ -6,11 +6,12 @@
     <record id="shopinvader_address_res_partner_rule" model="ir.rule">
         <field name="name">Shopinvader Address Endpoint rule: res partner</field>
         <field name="model_id" ref="base.model_res_partner" />
-        <field name="domain_force">[('parent_id','=',authenticated_partner_id)]</field>
         <field
             name="groups"
             eval="[(4, ref('shopinvader_api_address.shopinvader_address_user_group'))]"
         />
+        <field name="domain_force">[('parent_id','=',authenticated_partner_id)]</field>
+        
     </record>
 
 </odoo>

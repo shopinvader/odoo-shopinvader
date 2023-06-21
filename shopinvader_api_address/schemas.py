@@ -20,8 +20,8 @@ class AddressSearch(BaseModel, metaclass=ExtendableModelMeta):
     city: str | None
     phone: str | None
     email: str | None
-    state: str | None
-    country: str | None
+    state: int | None
+    country: int | None
     type: str | None
 
 
@@ -32,15 +32,15 @@ class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
         state and country can be name or code
     """
 
-    name: str
-    street: str
+    name: str | None
+    street: str | None
     street2: str | None
-    zip: str
-    city: str
+    zip: str | None
+    city: str | None
     phone: str | None
     email: str | None
-    state: str | None
-    country: str | None
+    state: int | None
+    country: int | None
 
 class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     """
@@ -56,5 +56,5 @@ class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     city: str | None
     phone: str | None
     email: str | None
-    state: str | None
-    country: str | None
+    state: int | None
+    country: int | None

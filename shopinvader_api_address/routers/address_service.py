@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends
 
 from odoo.api import Environment
 
-from odoo.addons.fastapi.dependencies import authenticated_partner_env, paging, authenticated_partner
-from odoo.addons.fastapi.schemas import PagedCollection, Paging
-from odoo.addons.shopinvader_schema_address.schemas import Address, BillingAddress, ShippingAddress
+from odoo.addons.fastapi.dependencies import authenticated_partner_env, authenticated_partner
+from odoo.addons.fastapi.schemas import PagedCollection
+from odoo.addons.shopinvader_schema_address.schemas import BillingAddress, ShippingAddress
 
 from ..schemas import AddressInput, AddressSearch, AddressUpdate
 
