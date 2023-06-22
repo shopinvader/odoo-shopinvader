@@ -14,7 +14,7 @@ class ResPartner(models.Model):
         move_id = (
             self.env["account.move"]
             .sudo()
-            .search([("commercial_partner_id", "=", self.id)], limit=1)
+            .search([("commercial_partner_id", "=", self.id),("state","=","posted")], limit=1)
         )
         return len(move_id) > 0
 
@@ -71,7 +71,6 @@ class ResPartner(models.Model):
         )
         return self.env["res.partner"].create(vals)
 
-    @api.model
     def _update_shopinvader_shipping_addresses(
         self, vals: dict, rec_id: int
     ) -> "ResPartner":
@@ -83,7 +82,6 @@ class ResPartner(models.Model):
         addresses.write(vals)
         return addresses
 
-    @api.model
     def _delete_shopinvader_shipping_addresses(self, rec_id: int) -> None:
         addresses = self._get_shopinvader_shipping_addresses(rec_id)
         if addresses:
