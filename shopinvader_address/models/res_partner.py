@@ -1,7 +1,7 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, models
+from odoo import _, models
 from odoo.exceptions import MissingError, UserError
 
 
@@ -17,22 +17,21 @@ class ResPartner(models.Model):
         move_id = (
             self.env["account.move"]
             .sudo()
-            .search([("commercial_partner_id", "=", self.id),("state","=","posted")], limit=1)
+            .search(
+                [("commercial_partner_id", "=", self.id), ("state", "=", "posted")],
+                limit=1,
+            )
         )
         return len(move_id) > 0
 
-    #### Billing ####
+    # --- Billing ---
     # Billing addresses is unique and corresponds to authenticated_partner
 
-    def _get_shopinvader_billing_addresses(
-        self
-    ) -> "ResPartner":
+    def _get_shopinvader_billing_addresses(self) -> "ResPartner":
         self.ensure_one()
         return self
 
-    def _update_shopinvader_billing_addresses(
-        self, vals: dict
-    ) -> "ResPartner":
+    def _update_shopinvader_billing_addresses(self, vals: dict) -> "ResPartner":
         self.ensure_one()
         # if billing addresses is already used, it is not possible to modify it
         if self._shopinvader_billing_addresses_already_used():
@@ -46,13 +45,11 @@ class ResPartner(models.Model):
 
         return self
 
-    #### Shipping ####
+    # ---Shipping ---
 
-    def _get_shopinvader_shipping_addresses(
-        self, rec_id: int = None
-    ) -> "ResPartner":
+    def _get_shopinvader_shipping_addresses(self, rec_id: int = None) -> "ResPartner":
         self.ensure_one()
-        domain = [("type", "=", "delivery"),("parent_id","=",self.id)]
+        domain = [("type", "=", "delivery"), ("parent_id", "=", self.id)]
 
         if rec_id is not None:
             domain.append(("id", "=", rec_id))
@@ -61,10 +58,7 @@ class ResPartner(models.Model):
 
         return addresses
 
-
-    def _create_shopinvader_shipping_addresses(
-        self, vals: dict
-    ) -> "ResPartner":
+    def _create_shopinvader_shipping_addresses(self, vals: dict) -> "ResPartner":
         self.ensure_one()
         vals.update(
             {

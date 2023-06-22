@@ -12,7 +12,6 @@ from odoo.addons.extendable.registry import _extendable_registries_database
 from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 
 from ..routers import address_router
-from ..routers.address_service import address_router
 
 
 @tagged("post_install", "-at_install")
