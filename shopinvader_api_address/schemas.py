@@ -4,27 +4,6 @@
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
-
-class AddressSearch(BaseModel, metaclass=ExtendableModelMeta):
-    """
-    TODO: improve
-        used to search address on model res partner
-        state is state's name or code
-        country is country's name or code
-    """
-
-    name: str | None
-    street: str | None
-    street2: str | None
-    zip: str | None
-    city: str | None
-    phone: str | None
-    email: str | None
-    state: int | None
-    country: int | None
-    type: str | None
-
-
 class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     """
     TODO: improve

@@ -3,6 +3,7 @@
 
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
+from typing import Literal
 
 from odoo.addons.pydantic import utils
 
@@ -17,7 +18,6 @@ class Address(BaseModel, metaclass=ExtendableModelMeta):
     email: str | None
     state: int | None
     country: int | None
-    type: str | None
 
     class Config:
         orm_mode = True
@@ -37,7 +37,6 @@ class Address(BaseModel, metaclass=ExtendableModelMeta):
         res.email = odoo_rec.email or None
         res.state = odoo_rec.state_id.id or None
         res.country = odoo_rec.country_id.id or None
-        res.type = odoo_rec.type or None
 
         return res
 
