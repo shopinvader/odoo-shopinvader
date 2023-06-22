@@ -10,7 +10,7 @@
             eval="[
         (4, ref('fastapi.group_fastapi_endpoint_runner')),
         (4, ref('shopinvader_api_address.shopinvader_address_user_group')),
-        (4, ref('shopinvader_api_cart.sale_cart_user_group')),
+        (4, ref('shopinvader_api_cart.shopinvader_cart_user_group')),
         ]"
         />
 
