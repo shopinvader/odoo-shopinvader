@@ -15,24 +15,13 @@ from odoo.addons.shopinvader_schema_address.schemas import (
 
 from ..schemas import AddressInput, AddressUpdate
 
-tags_metadata = [
-    {
-        "name": "billing",
-        "description": "Operations on billing addresses",
-    },
-    {
-        "name": "shipping",
-        "description": "Operations on shipping addresses",
-    },
-]
-
 # create a router
-address_router = APIRouter(tags=tags_metadata)
+address_router = APIRouter(tags=["addresses"])
 
 #### Billing addresses ####
 
 
-@address_router.get("/addresses/billing", response_model=BillingAddress, tags=["billing"])
+@address_router.get("/addresses/billing", response_model=BillingAddress)
 def get_billing_address(
     env: Environment = Depends(authenticated_partner_env),
     partner=Depends(authenticated_partner),
@@ -46,7 +35,7 @@ def get_billing_address(
 
 
 @address_router.post(
-    "/addresses/billing", response_model=BillingAddress, status_code=201, tags=["billing"]
+    "/addresses/billing", response_model=BillingAddress, status_code=201
 )
 def update_billing_address(
     data: AddressUpdate,
@@ -66,10 +55,10 @@ def update_billing_address(
 
 
 @address_router.get(
-    "/addresses/shipping", response_model=PagedCollection[ShippingAddress], tags=["shipping"]
+    "/addresses/shipping", response_model=PagedCollection[ShippingAddress]
 )
 @address_router.get(
-    "/addresses/shipping/{id}", response_model=PagedCollection[ShippingAddress], tags=["shipping"]
+    "/addresses/shipping/{id}", response_model=PagedCollection[ShippingAddress]
 )
 def get_shipping_address(
     env: Environment = Depends(authenticated_partner_env),
@@ -89,7 +78,7 @@ def get_shipping_address(
 
 
 @address_router.post(
-    "/addresses/shipping", response_model=ShippingAddress, status_code=201, tags=["shipping"]
+    "/addresses/shipping", response_model=ShippingAddress, status_code=201
 )
 @address_router.post("/addresses/shipping/{id}", response_model=ShippingAddress)
 def create_update_shipping_address(
@@ -111,7 +100,7 @@ def create_update_shipping_address(
     return ShippingAddress.from_res_partner(address_id)
 
 
-@address_router.delete("/addresses/shipping/{id}", tags=["shipping"])
+@address_router.delete("/addresses/shipping/{id}")
 def delete_shipping_address(
     id: int,
     env: Environment = Depends(authenticated_partner_env),
