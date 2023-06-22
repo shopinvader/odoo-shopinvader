@@ -16,20 +16,6 @@ class ResPartner(models.Model):
         move_id = self.env["account.move"].sudo().search([("commercial_partner_id","=",self.id)],limit=1)
         return len(move_id)>0
 
-    @api.model
-    def _create_vals_shopinvader_address(self, data: AddressInput,authenticated_partner_id:"ResPartner",type:str) -> dict:
-        vals = self.env["shopinvader_api_address.mapper"]._addressInput_to_res_partner(data)
-        vals.update({
-            "parent_id": authenticated_partner_id.id,
-            "type": type or "",
-        })
-        return vals
-    
-    @api.model
-    def _update_vals_shopinvader_address(self, data: AddressUpdate) -> dict:
-        vals = self.env["shopinvader_api_address.mapper"]._addressupdate_to_res_partner(data)
-        return vals
-
     #### Billing ####
     # Billing address is unique and corresponds to authenticated_partner
     
@@ -39,8 +25,7 @@ class ResPartner(models.Model):
         return authenticated_partner_id
     
     @api.model
-    def _update_shopinvader_billing_address(self, authenticated_partner_id: "ResPartner",data: AddressUpdate) -> "ResPartner":
-        vals = self._update_vals_shopinvader_address(data)
+    def _update_shopinvader_billing_address(self, authenticated_partner_id: "ResPartner",vals: dict) -> "ResPartner":
 
         #if billing address is already used, it is not possible to modify it
         if authenticated_partner_id._billing_address_already_used():
@@ -69,22 +54,26 @@ class ResPartner(models.Model):
         return addresses
 
     @api.model
-    def _create_shipping_address(self,authenticated_partner_id: "ResPartner",data: AddressInput) -> "ResPartner":
-        vals = self._create_vals_shopinvader_address(data,authenticated_partner_id,"delivery")
+    def _create_shopinvader_shipping_address(self,authenticated_partner_id: "ResPartner",vals: dict) -> "ResPartner":
+        vals.update({
+            "parent_id": authenticated_partner_id.id,
+            "type": "delivery",
+        })
         return self.env["res.partner"].create(vals)
 
-    def _update_shipping_address(self,data: AddressUpdate,rec_id:int) -> "ResPartner":
+    @api.model
+    def _update_shopinvader_shipping_address(self,vals: dict,rec_id:int) -> "ResPartner":
+        #TODO include main address -> check if already used
         address = self._get_shopinvader_shipping_address(rec_id)
         if not address:
             raise MissingError(_("No address found"))
         #update_address
-        vals = self._update_vals_shopinvader_address(data)
         address.write(vals)
         return address
             
 
     @api.model
-    def _delete_shipping_address(self,rec_id:int)-> None:
+    def _delete_shopinvader_shipping_address(self,rec_id:int)-> None:
         address = self._get_shopinvader_shipping_address(rec_id)
         #TODO check it is not main address
         if address:
