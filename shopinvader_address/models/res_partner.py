@@ -37,7 +37,7 @@ class ResPartner(models.Model):
         if self._shopinvader_billing_addresses_already_used():
             raise UserError(
                 _(
-                    "Can not update billing addresses because it is already used on billings"
+                    "Can not update billing addresses(%d) because it is already used on billings" % self.id
                 )
             )
 
@@ -47,12 +47,12 @@ class ResPartner(models.Model):
 
     # ---Shipping ---
 
-    def _get_shopinvader_shipping_addresses(self, rec_id: int = None) -> "ResPartner":
+    def _get_shopinvader_shipping_addresses(self, address_id: int = None) -> "ResPartner":
         self.ensure_one()
         domain = [("type", "=", "delivery"), ("parent_id", "=", self.id)]
 
-        if rec_id is not None:
-            domain.append(("id", "=", rec_id))
+        if address_id is not None:
+            domain.append(("id", "=", address_id))
 
         addresses = self.env["res.partner"].search(domain)
 
@@ -69,21 +69,21 @@ class ResPartner(models.Model):
         return self.env["res.partner"].create(vals)
 
     def _update_shopinvader_shipping_addresses(
-        self, vals: dict, rec_id: int
+        self, vals: dict, address_id: int
     ) -> "ResPartner":
         self.ensure_one()
-        addresses = self._get_shopinvader_shipping_addresses(rec_id)
+        addresses = self._get_shopinvader_shipping_addresses(address_id)
         if not addresses:
-            raise MissingError(_("No address found"))
+            raise MissingError(_("No address found, id: %d" % address_id))
         # update_address
         addresses.write(vals)
         return addresses
 
-    def _delete_shopinvader_shipping_addresses(self, rec_id: int) -> None:
+    def _delete_shopinvader_shipping_addresses(self, address_id: int) -> None:
         """
         Delete of shopinvader shipping addresses will result to an archive
         """
-        addresses = self._get_shopinvader_shipping_addresses(rec_id)
+        addresses = self._get_shopinvader_shipping_addresses(address_id)
         if addresses:
             # archive address
             addresses.active = False

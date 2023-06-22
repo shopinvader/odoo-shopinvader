@@ -16,8 +16,8 @@ class Address(BaseModel, metaclass=ExtendableModelMeta):
     city: str | None
     phone: str | None
     email: str | None
-    state: int | None
-    country: int | None
+    state_id: int | None
+    country_id: int | None
 
     class Config:
         orm_mode = True
@@ -35,8 +35,8 @@ class Address(BaseModel, metaclass=ExtendableModelMeta):
         res.city = odoo_rec.city or None
         res.phone = odoo_rec.phone or None
         res.email = odoo_rec.email or None
-        res.state = odoo_rec.state_id.id or None
-        res.country = odoo_rec.country_id.id or None
+        res.state_id = odoo_rec.state_id.id or None
+        res.country_id = odoo_rec.country_id.id or None
 
         return res
 
