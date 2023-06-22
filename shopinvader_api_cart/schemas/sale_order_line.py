@@ -21,7 +21,7 @@ class SaleOrderLine(BaseModel, metaclass=ExtendableModelMeta):
         getter_dict = utils.GenericOdooGetter
 
     @classmethod
-    def from_orm(cls, odoo_rec):
+    def from_sale_order_line(cls, odoo_rec):
         res = cls.construct()
         res.id = odoo_rec.id
         res.product_id = odoo_rec.product_id

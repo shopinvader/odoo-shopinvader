@@ -24,7 +24,7 @@ def get(
     Return an empty dict if no cart was found
     """
     cart = env["sale.order"]._find_open_cart(uuid)
-    return CartResponse.from_orm(cart) if cart else {}
+    return CartResponse.from_cart(cart) if cart else {}
 
 
 @cart_router.post("/sync", response_model=CartResponse | dict, status_code=201)
@@ -35,4 +35,4 @@ def sync(
     uuid: str | None = None,
 ) -> CartResponse:
     cart = env["sale.order"]._sync_cart(uuid, data.transactions)
-    return CartResponse.from_orm(cart) if cart else {}
+    return CartResponse.from_cart(cart) if cart else {}

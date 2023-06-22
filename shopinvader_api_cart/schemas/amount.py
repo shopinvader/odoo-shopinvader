@@ -19,7 +19,9 @@ class SaleAmount(BaseModel, metaclass=ExtendableModelMeta):
     total_without_discount: float
 
     @classmethod
-    def from_orm(cls, odoo_rec):
+    def from_orm(
+        cls, odoo_rec
+    ):  # TODO find another name. But can be applied on SO or SOL
         """
         Build the class manually because the field aliases
         depend on the model name.
@@ -59,7 +61,7 @@ class SaleLineAmount(SaleAmount):
     price: float
 
     @classmethod
-    def from_orm(cls, odoo_rec):
+    def from_orm(cls, odoo_rec):  # TODO: give the same name than above
         res = super().from_orm(odoo_rec)
         res.price = odoo_rec.price_unit
 

@@ -48,14 +48,16 @@ class CartResponse(BaseModel, metaclass=ExtendableModelMeta):
         getter_dict = utils.GenericOdooGetter
 
     @classmethod
-    def from_orm(cls, odoo_rec):
+    def from_cart(cls, odoo_rec):
         res = cls.construct()
         res.uuid = odoo_rec.uuid or None
         res.id = odoo_rec.id
         res.state = odoo_rec.state
         res.name = odoo_rec.name
         res.date_order = odoo_rec.date_order
-        res.lines = [SaleOrderLine.from_orm(line) for line in odoo_rec.order_line]
+        res.lines = [
+            SaleOrderLine.from_sale_order_line(line) for line in odoo_rec.order_line
+        ]
         res.amount = SaleAmount.from_orm(odoo_rec)
         res.delivery = (
             ShippingAddress.from_res_partner(odoo_rec.partner_shipping_id)
