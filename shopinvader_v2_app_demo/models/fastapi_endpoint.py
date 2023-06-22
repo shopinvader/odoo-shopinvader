@@ -46,7 +46,7 @@ class FastapiEndpoint(models.Model):
         tags_metadata = params.get("openapi_tags", []) or []
         tags_metadata.append(
             {
-                "name": "address",
+                "name": "addresses",
                 "description": "Set of services to manage addresses",
             }
         )
