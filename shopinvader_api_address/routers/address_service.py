@@ -36,7 +36,8 @@ def update_billing_address(
     Update billing address of authenticated user
     billing address corresponds to authenticated partner
     """
-    address_id = env["res.partner"]._update_shopinvader_billing_address(partner,data)
+    vals = env["shopinvader_api_address.mapper"]._addressupdate_to_res_partner(data)
+    address_id = env["res.partner"]._update_shopinvader_billing_address(partner,vals)
     return BillingAddress.from_orm(address_id)
 
 #### Shipping address ####
@@ -70,10 +71,11 @@ def create_update_shipping_address(
     """
     Create/Update shipping address of authenticated user
     """
+    vals = env["shopinvader_api_address.mapper"]._addressInput_to_res_partner(data)
     if id is None:
-        address_id = env["res.partner"]._create_shipping_address(partner,data)
+        address_id = env["res.partner"]._create_shopinvader_shipping_address(partner,vals)
     else:
-        address_id = env["res.partner"]._update_shipping_address(data,id)
+        address_id = env["res.partner"]._update_shopinvader_shipping_address(vals,id)
     return ShippingAddress.from_orm(address_id)
 
 @address_router.delete("/addresses/shipping/{id}")
@@ -85,7 +87,7 @@ def delete_shipping_address(
         Delete shipping address of authenticated user
         Address will be archive
     """
-    env["res.partner"]._delete_shipping_address(id)
+    env["res.partner"]._delete_shopinvader_shipping_address(id)
 
 
 # Mapper
