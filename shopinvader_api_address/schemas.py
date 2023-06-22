@@ -4,6 +4,7 @@
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
+
 class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     """
     TODO: improve
@@ -20,6 +21,7 @@ class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     email: str | None
     state: int | None
     country: int | None
+
 
 class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     """

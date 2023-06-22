@@ -11,7 +11,7 @@
             eval="[(4, ref('shopinvader_api_address.shopinvader_address_user_group'))]"
         />
         <field name="domain_force">[('partner_id','=',authenticated_partner_id)]</field>
-        
+
     </record>
 
     <record id="shopinvader_address_snailmail_letter_access" model="ir.model.access">
