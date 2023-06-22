@@ -19,6 +19,7 @@
         "extendable",
         "fastapi",
         "extendable_fastapi",
+        "shopinvader_sale_cart",
         "shopinvader_schema_address",
     ],
     "data": [
@@ -29,7 +30,6 @@
         "security/acl_uom_uom.xml",
         "security/rule+acl_sale_order.xml",
         "security/rule+acl_sale_order_line.xml",
-        "views/sale_order.xml",
     ],
     "demo": [],
     "external_dependencies": {
