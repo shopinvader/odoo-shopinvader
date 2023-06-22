@@ -7,7 +7,7 @@ from extendable import context
 from fastapi import status
 from requests import Response
 
-from odoo.exceptions import MissingError
+from odoo.exceptions import AccessError, MissingError
 from odoo.tests.common import tagged
 
 from odoo.addons.extendable.registry import _extendable_registries_database
@@ -28,27 +28,34 @@ class TestSaleCart(FastAPITransactionCase):
         cls.token = context.extendable_registry.set(extendable_registry)
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
+        partner = cls.env["res.partner"].create({"name": "FastAPI Cart Demo"})
+
         cls.user_no_rights = cls.env["res.users"].create(
             {
                 "name": "Test User Without Rights",
                 "login": "user_no_rights",
+                "groups_id": [(6, 0, [])],
             }
         )
         user_with_rights = cls.env["res.users"].create(
             {
                 "name": "Test User With Rights",
                 "login": "user_with_rights",
+                "groups_id": [
+                    (
+                        6,
+                        0,
+                        [
+                            cls.env.ref(
+                                "shopinvader_api_cart.shopinvader_cart_user_group"
+                            ).id,
+                        ],
+                    )
+                ],
             }
         )
-        user_with_rights.groups_id = [
-            (4, cls.env.ref("shopinvader_api_cart.sale_cart_user_group").id)
-        ]
         cls.default_fastapi_running_user = user_with_rights
-        cls.default_fastapi_authenticated_partner = (
-            cls.env["res.partner"]
-            .with_user(user_with_rights)
-            .create({"name": "FastAPI Cart Demo"})
-        )
+        cls.default_fastapi_authenticated_partner = partner.with_user(user_with_rights)
         cls.default_fastapi_router = cart_router
 
         cls.partner_in_user_no_rights = cls.env(user=cls.user_no_rights)[
@@ -73,7 +80,6 @@ class TestSaleCart(FastAPITransactionCase):
         context.extendable_registry.reset(cls.token)
         super().tearDownClass()
 
-    # @contextmanager
     def _create_unauthenticated_user_client(self):
         return self._create_test_client(
             user=self.user_no_rights, partner=self.partner_in_user_no_rights
@@ -85,17 +91,23 @@ class TestSaleCart(FastAPITransactionCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertDictEqual(response.json(), {})
 
-    # TODO: fix. Up to now the user has Admin rights, he shouldn't
     def test_get_authenticated_no_cart_no_uuid_no_rights(self) -> None:
-        with self._create_unauthenticated_user_client() as test_client:
-            response: Response = test_client.get("/")
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
+            AccessError
+        ):
+            test_client.get("/")
 
     def test_get_authenticated_no_cart_uuid(self) -> None:
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.get("/1234")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertDictEqual(response.json(), {})
+
+    def test_get_authenticated_no_cart_uuid_no_rights(self) -> None:
+        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
+            AccessError
+        ):
+            test_client.get("/1234")
 
     def test_get_authenticated_cart_uuid(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -105,6 +117,15 @@ class TestSaleCart(FastAPITransactionCase):
             response: Response = test_client.get(f"/{so.uuid}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["id"], so.id)
+
+    def test_get_authenticated_cart_uuid_no_rights(self) -> None:
+        so = self.env["sale.order"]._create_empty_cart(
+            self.default_fastapi_authenticated_partner.id
+        )
+        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
+            AccessError
+        ):
+            test_client.get(f"/{so.uuid}")
 
     def test_get_authenticated_cart_wrong_uuid(self) -> None:
         """
@@ -150,6 +171,17 @@ class TestSaleCart(FastAPITransactionCase):
         self.assertEqual(1, len(response_json["lines"]))
         so = self.env["sale.order"].browse(response_json["id"])
         self.assertEqual("uuid1", so.applied_transaction_uuids)
+
+    def test_sync_authenticated_no_rights(self) -> None:
+        data = {
+            "transactions": [
+                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}
+            ]
+        }
+        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
+            AccessError
+        ):
+            test_client.post("/sync", content=json.dumps(data))
 
     def test_sync_authenticated_no_uuid_one_transactions_cart_exists(self) -> None:
         """

@@ -14,6 +14,10 @@ class SaleOrder(models.Model):
     uuid = fields.Char(string="EShop Unique identifier", readonly=True)
     applied_transaction_uuids = fields.Char(readonly=True)
 
+    @api.model
+    def _play_onchanges_cart(self, vals):
+        return self.sudo().play_onchanges(vals, vals.keys())
+
     def _sync_cart(self, cart_uuid, transactions):
         cart = self.env["sale.order"]._find_open_cart(cart_uuid)
         if not cart and transactions:
@@ -146,7 +150,7 @@ class SaleOrder(models.Model):
             "typology": "cart",
             "partner_id": partner_id,
         }
-        vals.update(self.play_onchanges(vals, vals.keys()))
+        vals.update(self._play_onchanges_cart(vals))
         if not vals.get("pricelist_id"):
             vals["pricelist_id"] = self._get_default_pricelist_id()
         return vals

@@ -11,6 +11,10 @@ class SaleOrderLine(models.Model):
 
     _inherit = "sale.order.line"
 
+    @api.model
+    def _play_onchanges_cart(self, vals):
+        return self.sudo().play_onchanges(vals, vals.keys())
+
     def _transactions_to_record_write(self, transactions: list[CartTransaction]):
         """Apply transactions to current line and return a record write command
         to apply to the one2many field on SO.
@@ -23,7 +27,7 @@ class SaleOrderLine(models.Model):
         if float_compare(new_qty, 0, precision_rounding=self.product_uom.rounding) <= 0:
             return (2, self.id, None)
         vals = {"product_uom_qty": new_qty}
-        vals.update(self.play_onchanges(vals, vals.keys()))
+        vals.update(self._play_onchanges_cart(vals))
         return (1, self.id, vals)
 
     @api.model
@@ -37,7 +41,7 @@ class SaleOrderLine(models.Model):
             sale_order=sale_order, transactions=transactions
         )
         if vals:
-            vals.update(self.play_onchanges(vals, vals.keys()))
+            vals.update(self._play_onchanges_cart(vals))
             return (0, None, vals)
         return None
 

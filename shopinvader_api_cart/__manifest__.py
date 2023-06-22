@@ -2,8 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    # TODO: rename the module
-    "name": "Shopinvader API Sale",
+    "name": "Shopinvader API Cart",
     "summary": """
         Cart FastAPI designed to work with the shopinvader-js-cart library
         see (https://github.com/shopinvader/shopinvader-js-cart)""",
@@ -22,7 +21,16 @@
         "extendable_fastapi",
         "shopinvader_schema_address",
     ],
-    "data": ["security/groups.xml", "security/sale_order.xml", "views/sale_order.xml"],
+    "data": [
+        "security/groups.xml",
+        "security/acl_ir_sequence.xml",
+        "security/acl_product_product.xml",
+        "security/acl_product_template.xml",
+        "security/acl_uom_uom.xml",
+        "security/rule+acl_sale_order.xml",
+        "security/rule+acl_sale_order_line.xml",
+        "views/sale_order.xml",
+    ],
     "demo": [],
     "external_dependencies": {
         "python": [
