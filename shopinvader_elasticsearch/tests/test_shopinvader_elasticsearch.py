@@ -54,6 +54,11 @@ class TestElasticsearchBackend(VCRMixin, TestBindingIndexBase):
 
             self.cassette.play_response = play_response
 
+    @mute_logger("vcr.cassette")
+    def run(self, *args, **kwargs):
+        # OVERRIDE to mute vcr.cassette logs
+        return super().run(*args, **kwargs)
+
     def test_10_export_one_product(self):
         product = self.env.ref("product.product_product_3_product_template")
         si_variant = product.shopinvader_bind_ids[0].shopinvader_variant_ids[0]

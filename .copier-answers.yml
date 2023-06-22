@@ -16,7 +16,8 @@ include_wkhtmltopdf: false
 odoo_version: 14.0
 org_name: Shopinvader
 org_slug: shopinvader
-rebel_module_groups: []
+rebel_module_groups:
+- shopinvader_l10n_fr
 repo_description: Odoo REST APIs for e-commerce.
 repo_name: Shopinvader
 repo_slug: odoo-shopinvader

@@ -19,9 +19,18 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
+            include: "shopinvader_l10n_fr"
             makepot: "true"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
+            include: "shopinvader_l10n_fr"
+            name: test with OCB
+          - container: ghcr.io/oca/oca-ci/py3.6-odoo14.0:latest
+            exclude: "shopinvader_l10n_fr"
+            makepot: "true"
+            name: test with Odoo
+          - container: ghcr.io/oca/oca-ci/py3.6-ocb14.0:latest
+            exclude: "shopinvader_l10n_fr"
             name: test with OCB
     services:
       postgres:
@@ -33,6 +42,8 @@ jobs:
         ports:
           - 5432:5432
     env:
+      INCLUDE: "${{ matrix.include }}"
+      EXCLUDE: "${{ matrix.exclude }}"
       PIP_EXTRA_INDEX_URL: "https://wheelhouse.shopinvader.com/simple/"
       REST_API_METHOD_FIX_DECORATOR_DEPRECATE_LOG_DISABLE: 1
     steps:
