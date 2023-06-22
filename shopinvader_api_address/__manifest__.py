@@ -10,9 +10,10 @@
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
-        "fastapi",
-        "shopinvader_schema_address",
         "extendable_fastapi",
+        "fastapi",
+        "shopinvader_address",
+        "shopinvader_schema_address",
     ],
     "data": [
         "security/res_groups.xml",

@@ -3,9 +3,9 @@
 
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
-from typing import Literal
 
 from odoo.addons.pydantic import utils
+
 
 class Address(BaseModel, metaclass=ExtendableModelMeta):
     id: int
@@ -24,7 +24,7 @@ class Address(BaseModel, metaclass=ExtendableModelMeta):
         getter_dict = utils.GenericOdooGetter
 
     @classmethod
-    def from_orm(cls, odoo_rec):
+    def from_res_partner(cls, odoo_rec):
         res = cls.construct()
 
         res.id = odoo_rec.id

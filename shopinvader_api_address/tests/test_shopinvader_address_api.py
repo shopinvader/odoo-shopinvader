@@ -7,12 +7,12 @@ from fastapi import status
 from requests import Response
 
 from odoo.tests.common import tagged
-from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 
 from odoo.addons.extendable.registry import _extendable_registries_database
+from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 
-from ..routers.address_service import address_router
 from ..routers import address_router
+from ..routers.address_service import address_router
 
 
 @tagged("post_install", "-at_install")
@@ -30,29 +30,34 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
                 "login": "test_user",
             }
         )
-        
 
-        
-
-        cls.test_partner = cls.env["res.partner"].with_user(test_user).create(
-            {
-                "name": "FastAPI Shopinvader Address Demo",
-                "street": "rue test",
-                "zip": "1410",
-                "city": "Waterloo",
-                "country_id": cls.env.ref("base.be").id,
-            }
+        cls.test_partner = (
+            cls.env["res.partner"]
+            .with_user(test_user)
+            .create(
+                {
+                    "name": "FastAPI Shopinvader Address Demo",
+                    "street": "rue test",
+                    "zip": "1410",
+                    "city": "Waterloo",
+                    "country_id": cls.env.ref("base.be").id,
+                }
+            )
         )
         test_user.groups_id = [
-            (6,0, [cls.env.ref("shopinvader_api_address.shopinvader_address_user_group").id])
+            (
+                6,
+                0,
+                [
+                    cls.env.ref(
+                        "shopinvader_api_address.shopinvader_address_user_group"
+                    ).id
+                ],
+            )
         ]
-        
-        cls.default_fastapi_authenticated_partner = (
-           cls.test_partner
-        )
+
+        cls.default_fastapi_authenticated_partner = cls.test_partner
         cls.default_fastapi_router = address_router
-
-
 
     @classmethod
     def tearDownClass(cls) -> None:
@@ -79,9 +84,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         address = response_json
 
-        self.assertEqual(
-            address.get("name"), self.test_partner.name
-        )
+        self.assertEqual(address.get("name"), self.test_partner.name)
         self.assertEqual(address.get("street"), self.test_partner.street)
         self.assertEqual(address.get("zip"), self.test_partner.zip)
         self.assertEqual(address.get("city"), self.test_partner.city)
@@ -138,9 +141,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         address = response_json["items"][0]
 
-        self.assertEqual(
-            address.get("name"), new_address.name
-        )
+        self.assertEqual(address.get("name"), new_address.name)
         self.assertEqual(address.get("street"), new_address.street)
         self.assertEqual(address.get("zip"), new_address.zip)
         self.assertEqual(address.get("city"), new_address.city)
@@ -164,15 +165,12 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         address = response_json["items"][0]
 
-        self.assertEqual(
-            address.get("name"), new_address.name
-        )
+        self.assertEqual(address.get("name"), new_address.name)
         self.assertEqual(address.get("street"), new_address.street)
         self.assertEqual(address.get("zip"), new_address.zip)
         self.assertEqual(address.get("city"), new_address.city)
         self.assertEqual(address.get("country"), new_address.country_id.id)
         self.assertEqual(address.get("id"), new_address.id)
-
 
     def test_create_update_billing_address(self):
         """
@@ -230,7 +228,6 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("street"), "test Street")
         self.assertNotEqual(address.get("street"), self.test_partner.street)
 
-    
     def test_delete_shipping_address(self):
         """
         Test to delete shipping address
@@ -276,7 +273,6 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
             }
         )
 
-        
         data = {
             "name": "test Addr2",
             "street": "test Street2",
@@ -286,7 +282,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                f"/addresses/shipping/{new_address.id}", content = json.dumps(data)
+                f"/addresses/shipping/{new_address.id}", content=json.dumps(data)
             )
 
         self.assertEqual(
@@ -294,5 +290,5 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
             status.HTTP_200_OK,
             msg=f"error message: {response.text}",
         )
-        self.assertEqual(new_address.name,data.get("name"))
-        self.assertEqual(new_address.street,data.get("street"))
+        self.assertEqual(new_address.name, data.get("name"))
+        self.assertEqual(new_address.street, data.get("street"))
