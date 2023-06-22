@@ -16,7 +16,7 @@ from odoo.addons.shopinvader_schema_address.schemas import (
     ShippingAddress,
 )
 
-from ..schemas import AddressInput, AddressUpdate
+from ..schemas import AddressCreate, AddressUpdate
 
 # create a router
 address_router = APIRouter(tags=["addresses"])
@@ -26,14 +26,14 @@ address_router = APIRouter(tags=["addresses"])
 
 @address_router.get("/addresses/billing", response_model=BillingAddress)
 def get_billing_address(
-    partner=Annotated[ResPartner, Depends(authenticated_partner)],
+    partner:Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> BillingAddress:
     """
     Get billing address of authenticated user
     billing address corresponds to authenticated partner
     """
-    address_id = partner._get_shopinvader_billing_addresses()
-    return BillingAddress.from_res_partner(address_id)
+    address = partner._get_shopinvader_billing_address()
+    return BillingAddress.from_res_partner(address)
 
 
 @address_router.post(
@@ -41,16 +41,15 @@ def get_billing_address(
 )
 def update_billing_address(
     data: AddressUpdate,
-    env=Annotated[Environment, Depends(authenticated_partner_env)],
-    partner=Annotated[ResPartner, Depends(authenticated_partner)],
+    partner:Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> BillingAddress:
     """
     Update billing address of authenticated user
     billing address corresponds to authenticated partner
     """
-    vals = env["shopinvader_api_address.mapper"]._addressupdate_to_res_partner(data)
-    address_id = partner._update_shopinvader_billing_addresses(vals)
-    return BillingAddress.from_res_partner(address_id)
+    vals = data.to_res_partner_vals()
+    address = partner._update_shopinvader_billing_address(vals)
+    return BillingAddress.from_res_partner(address)
 
 
 # --- Shipping address ---
@@ -63,7 +62,7 @@ def update_billing_address(
     "/addresses/shipping/{_id}", response_model=PagedCollection[ShippingAddress]
 )
 def get_shipping_address(
-    partner=Annotated[ResPartner, Depends(authenticated_partner)],
+    partner:Annotated[ResPartner, Depends(authenticated_partner)],
     _id: int | None = None,
 ) -> PagedCollection[ShippingAddress]:
     """
@@ -71,10 +70,10 @@ def get_shipping_address(
     Can be used to get every shipping address: /addresses/shipping
     Can be used to get one specific address: /addresses/shipping/_id
     """
-    address_ids = partner._get_shopinvader_shipping_addresses(_id)
+    addresses = partner._get_shopinvader_shipping_addresses(_id)
     return PagedCollection[ShippingAddress](
-        total=len(address_ids),
-        items=[ShippingAddress.from_res_partner(rec) for rec in address_ids],
+        total=len(addresses),
+        items=[ShippingAddress.from_res_partner(rec) for rec in addresses],
     )
 
 
@@ -83,75 +82,28 @@ def get_shipping_address(
 )
 @address_router.post("/addresses/shipping/{_id}", response_model=ShippingAddress)
 def create_update_shipping_address(
-    data: AddressInput,
-    env: Annotated[Environment, Depends(authenticated_partner_env)],
-    partner=Annotated[ResPartner, Depends(authenticated_partner)],
+    data: AddressCreate,
+    partner:Annotated[ResPartner, Depends(authenticated_partner)],
     _id: int | None = None,
 ) -> ShippingAddress:
     """
     Create/Update shipping address of authenticated user
     """
-    vals = env["shopinvader_api_address.mapper"]._addressInput_to_res_partner(data)
+    vals = data.to_res_partner_vals()
     if _id is None:
-        address_id = partner._create_shopinvader_shipping_addresses(vals)
+        address = partner._create_shopinvader_shipping_address(vals)
     else:
-        address_id = partner._update_shopinvader_shipping_addresses(vals, _id)
-    return ShippingAddress.from_res_partner(address_id)
+        address = partner._update_shopinvader_shipping_address(vals, _id)
+    return ShippingAddress.from_res_partner(address)
 
 
 @address_router.delete("/addresses/shipping/{_id}")
 def delete_shipping_address(
     _id: int,
-    partner=Annotated[ResPartner, Depends(authenticated_partner)],
+    partner:Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> None:
     """
     Delete shipping address of authenticated user
     Address will be archive
     """
-    partner._delete_shopinvader_shipping_addresses(_id)
-
-
-# Mapper
-class ShopinvaderApiAddressMapper(models.AbstractModel):
-    _name = "shopinvader_api_address.mapper"
-    _description = "Shopinvader Api Address Mapper"
-
-    @api.model
-    def _addressInput_to_res_partner(self, data: AddressInput) -> dict:
-
-        vals = {
-            "name": data.name or "",
-            "street": data.street or "",
-            "street2": data.street2 or "",
-            "zip": data.zip or "",
-            "city": data.city or "",
-            "phone": data.phone or "",
-            "email": data.email or "",
-            "state_id": data.state or None,
-            "country_id": data.country or None,
-        }
-        return vals
-
-    @api.model
-    def _addressupdate_to_res_partner(self, data: AddressUpdate) -> dict:
-        vals = {}
-        if data.name is not None:
-            vals["name"] = data.name
-        if data.street is not None:
-            vals["street"] = data.street
-        if data.street2 is not None:
-            vals["street2"] = data.street2
-        if data.zip is not None:
-            vals["zip"] = data.zip
-        if data.city is not None:
-            vals["city"] = data.city
-        if data.phone is not None:
-            vals["phone"] = data.phone
-        if data.email is not None:
-            vals["email"] = data.email
-
-        if data.country is not None:
-            vals["country_id"] = data.country
-        if data.state is not None:
-            vals["state_id"] = data.state
-        return vals
+    partner._delete_shopinvader_shipping_address(_id)

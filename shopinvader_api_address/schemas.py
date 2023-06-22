@@ -5,7 +5,7 @@ from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
 
-class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
+class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
     """
     TODO: improve
         used to create new address (res.partner)
@@ -19,9 +19,23 @@ class AddressInput(BaseModel, metaclass=ExtendableModelMeta):
     city: str | None
     phone: str | None
     email: str | None
-    state: int | None
-    country: int | None
+    state_id: int | None
+    country_id: int | None
 
+    def to_res_partner_vals(self) -> dict:
+        vals = {
+            "name": self.name,
+            "street": self.street,
+            "street2": self.street2,
+            "zip": self.zip,
+            "city": self.city,
+            "phone": self.phone,
+            "email": self.email,
+            "state_id": self.state_id,
+            "country_id": self.country_id,
+        }
+
+        return vals
 
 class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     """
@@ -37,5 +51,20 @@ class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     city: str | None
     phone: str | None
     email: str | None
-    state: int | None
-    country: int | None
+    state_id: int | None
+    country_id: int | None
+
+    def to_res_partner_vals(self) -> dict:
+        vals = {
+            "name": self.name,
+            "street": self.street,
+            "street2": self.street2,
+            "zip": self.zip,
+            "city": self.city,
+            "phone": self.phone,
+            "email": self.email,
+            "state_id": self.state_id,
+            "country_id": self.country_id,
+        }
+
+        return vals

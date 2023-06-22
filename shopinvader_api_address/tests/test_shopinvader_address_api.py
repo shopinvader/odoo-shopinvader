@@ -87,7 +87,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("street"), self.test_partner.street)
         self.assertEqual(address.get("zip"), self.test_partner.zip)
         self.assertEqual(address.get("city"), self.test_partner.city)
-        self.assertEqual(address.get("country"), self.test_partner.country_id.id)
+        self.assertEqual(address.get("country_id"), self.test_partner.country_id.id)
         self.assertEqual(address.get("id"), self.test_partner.id)
 
     def test_get_shipping_address(self):
@@ -144,7 +144,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("street"), new_address.street)
         self.assertEqual(address.get("zip"), new_address.zip)
         self.assertEqual(address.get("city"), new_address.city)
-        self.assertEqual(address.get("country"), new_address.country_id.id)
+        self.assertEqual(address.get("country_id"), new_address.country_id.id)
         self.assertEqual(address.get("id"), new_address.id)
 
         with self._create_test_client(router=address_router) as test_client:
@@ -168,7 +168,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("street"), new_address.street)
         self.assertEqual(address.get("zip"), new_address.zip)
         self.assertEqual(address.get("city"), new_address.city)
-        self.assertEqual(address.get("country"), new_address.country_id.id)
+        self.assertEqual(address.get("country_id"), new_address.country_id.id)
         self.assertEqual(address.get("id"), new_address.id)
 
     def test_create_update_billing_address(self):
@@ -176,6 +176,10 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         Test to create/update billing address
         """
         data = {
+            "name": "FastAPI Shopinvader Address Demo",
+            "zip": "1410",
+            "city": "Waterloo",
+            "country_id": self.env.ref("base.be").id,
             "street": "test Street",
         }
 
@@ -206,7 +210,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
             "street": "test Street",
             "zip": "5000",
             "city": "Namur",
-            "country": self.env.ref("base.be").id,
+            "country_id": self.env.ref("base.be").id,
         }
 
         with self._create_test_client(router=address_router) as test_client:
@@ -277,6 +281,9 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
             "street": "test Street2",
             "zip": "5000",
             "city": "Namur",
+            "country_id": self.env.ref("base.be").id,
+            "parent_id": self.test_partner.id,
+            "type": "delivery",
         }
 
         with self._create_test_client(router=address_router) as test_client:
