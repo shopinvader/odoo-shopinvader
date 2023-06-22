@@ -10,6 +10,9 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
     def _shopinvader_billing_addresses_already_used(self):
+        """
+        Check if Address is used on posted account move
+        """
         self.ensure_one()
         move_id = (
             self.env["account.move"]
@@ -83,6 +86,9 @@ class ResPartner(models.Model):
         return addresses
 
     def _delete_shopinvader_shipping_addresses(self, rec_id: int) -> None:
+        """
+        Delete of shopinvader shipping addresses will result to an archive
+        """
         addresses = self._get_shopinvader_shipping_addresses(rec_id)
         if addresses:
             # archive address
