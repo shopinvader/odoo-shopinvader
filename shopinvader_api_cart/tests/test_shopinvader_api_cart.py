@@ -16,8 +16,6 @@ from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 from ..routers.cart import cart_router
 from ..schemas import CartTransaction
 
-# TODO: a second test class with a user that has no rights
-
 
 @tagged("post_install", "-at_install")
 class TestSaleCart(FastAPITransactionCase):

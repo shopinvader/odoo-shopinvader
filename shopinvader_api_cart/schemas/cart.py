@@ -16,8 +16,6 @@ from odoo.addons.shopinvader_schema_address.schemas import (
 from .amount import SaleAmount
 from .sale_order_line import SaleOrderLine
 
-# TODO depends on https://github.com/shopinvader/odoo-shopinvader/pull/1361
-
 
 class CartTransaction(BaseModel, metaclass=ExtendableModelMeta):
     uuid: str | None
