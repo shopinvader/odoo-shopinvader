@@ -7,3 +7,5 @@ fastapi
 openupgradelib
 pydantic>=2.0.0
 unidecode
+python-slugify
+
