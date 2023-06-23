@@ -10,12 +10,12 @@ from odoo import api, fields, models
 
 from odoo.addons.fastapi.dependencies import authenticated_partner_impl
 from odoo.addons.fastapi_auth_jwt.dependencies import (
-    auth_jwt_authenticated_partner,
     auth_jwt_default_validator_name,
 )
 from odoo.addons.shopinvader_api_address.routers.address_service import address_router
 from odoo.addons.shopinvader_api_cart.routers import cart_router
 from odoo.addons.shopinvader_fastapi_auth_jwt.dependencies import (
+    auth_jwt_authenticated_or_anonymous_partner,
     auth_jwt_authenticated_or_anonymous_partner_autocreate,
 )
 
@@ -75,7 +75,7 @@ class FastapiEndpoint(models.Model):
         if self.app == "shopinvader_demo":
             app.dependency_overrides[
                 authenticated_partner_impl
-            ] = auth_jwt_authenticated_partner
+            ] = auth_jwt_authenticated_or_anonymous_partner
             app.dependency_overrides[auth_jwt_default_validator_name] = partial(
                 lambda a: a, self.auth_jwt_validator_id.name or None
             )
