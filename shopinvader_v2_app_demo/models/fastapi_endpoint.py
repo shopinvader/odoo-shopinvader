@@ -58,7 +58,7 @@ class FastapiEndpoint(models.Model):
                 "externalDocs": {
                     "description": "Cart services are available under "
                     "a specific authentication mechanism",
-                    "url": f"{base_url}{self.root_path}/cart/docs",
+                    "url": f"{base_url}{self.root_path}/carts/docs",
                 },
             }
         )
