@@ -1,11 +1,29 @@
-[ This file must be present and contains the usage instructions
-  for end-users. As all other rst files included in the README,
-  it MUST NOT contain reStructuredText sections
-  only body text (paragraphs, lists, tables, etc). Should you need
-  a more elaborate structure to explain the addon, please create a
-  Sphinx documentation (which may include this file as a "quick start"
-  section). ]
+BillingAddress
+  In the context of shopinvader, the ``BillingAddress`` corresponds to the authenticated partner itself.
+  Therefore, the ``Billing Address`` is unique for each partner.
 
-To use this module, you need to:
+  It can be updated using:
 
-#. Go to ...
+  .. code-block:: python
+
+    def _update_shopinvader_billing_address(self, vals: dict) -> "ResPartner"
+
+  *Remark: it cannot be modified if it has already been used on a confirmed sale order.*
+
+ShippingAddress
+  In the context of shopinvader, a ``ShippingAddress`` corresponds to any delivery address linked to the authenticated partner.
+  A partner can have between 0 and n ``ShippingAddress``.
+
+  It can be created using:
+
+  .. code-block:: python
+
+    def _create_shopinvader_shipping_address(self, vals: dict) -> "ResPartner":
+
+  It can be updated using:
+
+  .. code-block:: python
+
+    def _update_shopinvader_shipping_address(self, vals: dict, address_id: int) -> "ResPartner":
+
+  *Remark: it cannot be modified if it has already been used on a confirmed sale order.*

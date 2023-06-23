@@ -1,4 +1,2 @@
-[ This file must be max 2-3 paragraphs, and is required. ]
-
-This module extends the functionality of ... to support ...
-and to allow you to ...
+This addons adds helper methos on the res.partner model that ease the management
+and the creation of addresses within odoo code.
