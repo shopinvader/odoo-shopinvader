@@ -192,6 +192,38 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         self.assertEqual(address.get("street"), "test Street")
         self.assertEqual(address.get("street"), self.test_partner.street)
+    
+
+    def test_create_update_billing_address_vat(self):
+        """
+        Test to update billing address vat
+        """
+        data = {
+            "name": "FastAPI Shopinvader Address Demo",
+            "zip": "1410",
+            "city": "Waterloo",
+            "country_id": self.env.ref("base.be").id,
+            "street": "rue test",
+            "vat": "test_vat",
+        }
+
+        with self._create_test_client(router=address_router) as test_client:
+            response: Response = test_client.post(
+                "/addresses/billing", content=json.dumps(data)
+            )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_201_CREATED,
+            msg=f"error message: {response.text}",
+        )
+        response_json = response.json()
+        self.assertTrue(response_json)
+
+        address = response_json
+
+        self.assertEqual(address.get("vat"), "test_vat")
+        self.assertEqual(address.get("vat"), self.test_partner.vat)
 
     def test_create_shipping_address(self):
         """
