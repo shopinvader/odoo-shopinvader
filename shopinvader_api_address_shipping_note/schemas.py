@@ -8,7 +8,7 @@ from odoo.addons.shopinvader_api_address.schemas import (
 from odoo.addons.shopinvader_schema_address.schemas import ShippingAddress
 
 
-class ShippingAddress(ShippingAddress, extends=ShippingAddress):
+class ShippingAddressNote(ShippingAddress, extends=ShippingAddress):
     """
     Shipping Address
     """
@@ -23,7 +23,7 @@ class ShippingAddress(ShippingAddress, extends=ShippingAddress):
         return res
 
 
-class ShippingAddressCreate(ShippingAddressCreate, extends=ShippingAddressCreate):
+class ShippingAddressNoteCreate(ShippingAddressCreate, extends=ShippingAddressCreate):
     """
     Creation of Shipping Address
     """
@@ -38,7 +38,7 @@ class ShippingAddressCreate(ShippingAddressCreate, extends=ShippingAddressCreate
         return vals
 
 
-class ShippingAddressUpdate(ShippingAddressUpdate, extends=ShippingAddressUpdate):
+class ShippingAddressNoteUpdate(ShippingAddressUpdate, extends=ShippingAddressUpdate):
     """
     Update of Shipping Address
     """
