@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+    <record model="auth.jwt.validator" id="shopinvader_demo_jwt_validator">
+        <field name="name">shopinvader_demo</field>
+        <field name="signature_type">public_key</field>
+        <field
+            name="public_key_jwk_uri"
+        >https://keycloak.demo16.shopinvader.com/auth/realms/master/protocol/openid-connect/certs</field>
+        <field name="audience">shopinvader_jwt</field>
+        <field
+            name="issuer"
+        >https://keycloak.demo16.shopinvader.com/auth/realms/master</field>
+        <field name="partner_id_strategy">email</field>
+        <field name="cookie_enabled" eval="True" />
+    </record>
+</odoo>

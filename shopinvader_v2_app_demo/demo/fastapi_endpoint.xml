@@ -10,5 +10,6 @@
         <field name="app">shopinvader_demo</field>
         <field name="root_path">/shopinvader_demo</field>
         <field name="user_id" ref="shopinvader_app_demo_user" />
+        <field name="auth_jwt_validator_id" ref="shopinvader_demo_jwt_validator" />
     </record>
 </odoo>

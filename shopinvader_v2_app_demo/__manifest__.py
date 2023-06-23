@@ -25,6 +25,7 @@
     "demo": [
         "demo/res_users.xml",
         "demo/res_groups.xml",
+        "demo/auth_jwt_validator.xml",
         "demo/fastapi_endpoint.xml",
     ],
 }
