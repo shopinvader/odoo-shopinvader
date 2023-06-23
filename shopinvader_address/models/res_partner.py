@@ -52,8 +52,23 @@ class ResPartner(models.Model):
         self.ensure_one()
         return self
 
-    def _update_shopinvader_billing_address(self, vals: dict) -> "ResPartner":
+    def _create_shopinvader_billing_address(self, vals: dict) -> "ResPartner":
+        raise UserError(_("Creation of billing addresses is not supported"))
+
+    def _update_shopinvader_billing_address(
+        self, vals: dict, address_id: int
+    ) -> "ResPartner":
         self.ensure_one()
+
+        if address_id != self.id:
+            raise UserError(
+                _(
+                    "Can not update billing addresses(%(address_id)d)"
+                    "because it doesn't correspond to authenticated partner's billing address",
+                    address_id=self.id,
+                )
+            )
+
         # if billing addresses is already used, it is not possible to modify it
         if self._shopinvader_billing_address_already_used():
             raise UserError(

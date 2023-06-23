@@ -389,9 +389,10 @@ and the creation of addresses within odoo code.</p>
 <dt>BillingAddress</dt>
 <dd><p class="first">In the context of shopinvader, the <tt class="docutils literal">BillingAddress</tt> corresponds to the authenticated partner itself.
 Therefore, the <tt class="docutils literal">Billing Address</tt> is unique for each partner.</p>
+<p>Creation of <tt class="docutils literal">Billing Address</tt> is not supported since it corresponds to the authenticated partner.</p>
 <p>It can be updated using:</p>
 <pre class="code python literal-block">
-<span class="k">def</span> <span class="nf">_update_shopinvader_billing_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vals</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ResPartner&quot;</span>
+<span class="k">def</span> <span class="nf">_update_shopinvader_billing_address</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vals</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">address_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="s2">&quot;ResPartner&quot;</span>
 </pre>
 <p class="last"><em>Remark: it cannot be modified if it has already been used on a confirmed sale order.</em></p>
 </dd>
