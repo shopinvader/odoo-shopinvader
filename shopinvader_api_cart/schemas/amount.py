@@ -4,8 +4,6 @@
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
-from odoo import _
-from odoo.exceptions import UserError
 from odoo.tools.float_utils import float_round
 
 from odoo.addons.pydantic import utils
@@ -19,36 +17,30 @@ class SaleAmount(BaseModel, metaclass=ExtendableModelMeta):
     total_without_discount: float
 
     @classmethod
-    def from_orm(
-        cls, odoo_rec
-    ):  # TODO find another name. But can be applied on SO or SOL
-        """
-        Build the class manually because the field aliases
-        depend on the model name.
-        """
+    def from_sale_order(cls, sale_order):
         res = cls.construct()
-        model = odoo_rec._name
-        if model == "sale.order":
-            sale = odoo_rec
-        elif model == "sale.order.line":
-            sale = odoo_rec.order_id
-        else:
-            raise UserError(
-                _(f"Model {model} not supported in SaleAmount Pydantic model")
-            )
-        precision = sale.currency_id.decimal_places
-        res.discount_total = float_round(odoo_rec.discount_total, precision)
+        precision = sale_order.currency_id.decimal_places
+        res.discount_total = float_round(sale_order.discount_total, precision)
         res.total_without_discount = float_round(
-            odoo_rec.price_total_no_discount, precision
+            sale_order.price_total_no_discount, precision
         )
-        if model == "sale.order":
-            res.tax = float_round(odoo_rec.amount_tax, precision)
-            res.untaxed = float_round(odoo_rec.amount_untaxed, precision)
-            res.total = float_round(odoo_rec.amount_total, precision)
-        else:
-            res.tax = float_round(odoo_rec.price_tax, precision)
-            res.untaxed = float_round(odoo_rec.price_subtotal, precision)
-            res.total = float_round(odoo_rec.price_total, precision)
+        res.tax = float_round(sale_order.amount_tax, precision)
+        res.untaxed = float_round(sale_order.amount_untaxed, precision)
+        res.total = float_round(sale_order.amount_total, precision)
+
+        return res
+
+    @classmethod
+    def from_sale_order_line(cls, order_line):
+        res = cls.construct()
+        precision = order_line.order_id.currency_id.decimal_places
+        res.discount_total = float_round(order_line.discount_total, precision)
+        res.total_without_discount = float_round(
+            order_line.price_total_no_discount, precision
+        )
+        res.tax = float_round(order_line.price_tax, precision)
+        res.untaxed = float_round(order_line.price_subtotal, precision)
+        res.total = float_round(order_line.price_total, precision)
 
         return res
 
@@ -61,8 +53,13 @@ class SaleLineAmount(SaleAmount):
     price: float
 
     @classmethod
-    def from_orm(cls, odoo_rec):  # TODO: give the same name than above
-        res = super().from_orm(odoo_rec)
-        res.price = odoo_rec.price_unit
+    def from_sale_order(cls, sale_order):
+        res = super().from_sale_order(sale_order)
+        res.price = sale_order.price_unit
+        return res
 
+    @classmethod
+    def from_sale_order_line(cls, order_line):
+        res = super().from_sale_order_line(order_line)
+        res.price = order_line.price_unit
         return res

@@ -58,7 +58,7 @@ class CartResponse(BaseModel, metaclass=ExtendableModelMeta):
         res.lines = [
             SaleOrderLine.from_sale_order_line(line) for line in odoo_rec.order_line
         ]
-        res.amount = SaleAmount.from_orm(odoo_rec)
+        res.amount = SaleAmount.from_sale_order(odoo_rec)
         res.delivery = (
             ShippingAddress.from_res_partner(odoo_rec.partner_shipping_id)
             if odoo_rec.partner_shipping_id

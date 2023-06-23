@@ -26,7 +26,7 @@ class SaleOrderLine(BaseModel, metaclass=ExtendableModelMeta):
         res.id = odoo_rec.id
         res.product_id = odoo_rec.product_id
         res.name = odoo_rec.name
-        res.amount = SaleLineAmount.from_orm(odoo_rec)
+        res.amount = SaleLineAmount.from_sale_order_line(odoo_rec)
         res.qty = odoo_rec.product_uom_qty
 
         return res
