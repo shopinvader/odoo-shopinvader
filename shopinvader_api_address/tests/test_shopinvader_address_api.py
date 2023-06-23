@@ -23,37 +23,33 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         cls.token = context.extendable_registry.set(extendable_registry)
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
-        test_user = cls.env["res.users"].create(
+        cls.env["res.users"].create(
             {
                 "name": "Test User",
                 "login": "test_user",
+                "groups_id": [
+                    (
+                        6,
+                        0,
+                        [
+                            cls.env.ref(
+                                "shopinvader_api_address.shopinvader_address_user_group"
+                            ).id
+                        ],
+                    )
+                ],
             }
         )
 
-        cls.test_partner = (
-            cls.env["res.partner"]
-            .with_user(test_user)
-            .create(
-                {
-                    "name": "FastAPI Shopinvader Address Demo",
-                    "street": "rue test",
-                    "zip": "1410",
-                    "city": "Waterloo",
-                    "country_id": cls.env.ref("base.be").id,
-                }
-            )
+        cls.test_partner = cls.env["res.partner"].create(
+            {
+                "name": "FastAPI Shopinvader Address Demo",
+                "street": "rue test",
+                "zip": "1410",
+                "city": "Waterloo",
+                "country_id": cls.env.ref("base.be").id,
+            }
         )
-        test_user.groups_id = [
-            (
-                6,
-                0,
-                [
-                    cls.env.ref(
-                        "shopinvader_api_address.shopinvader_address_user_group"
-                    ).id
-                ],
-            )
-        ]
 
         cls.default_fastapi_authenticated_partner = cls.test_partner
         cls.default_fastapi_router = address_router
@@ -107,8 +103,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         )
 
         response_json = response.json()
-        self.assertTrue(response_json)
-        self.assertEqual(0, response_json["total"])
+        self.assertEqual(0, len(response_json))
 
         # add shipping address
         new_address = self.env["res.partner"].create(
@@ -136,9 +131,8 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         response_json = response.json()
         self.assertTrue(response_json)
-        self.assertEqual(1, response_json["total"])
 
-        address = response_json["items"][0]
+        address = response_json[0]
 
         self.assertEqual(address.get("name"), new_address.name)
         self.assertEqual(address.get("street"), new_address.street)
@@ -159,10 +153,8 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         )
 
         response_json = response.json()
-        self.assertTrue(response_json)
-        self.assertEqual(1, response_json["total"])
 
-        address = response_json["items"][0]
+        address = response_json[0]
 
         self.assertEqual(address.get("name"), new_address.name)
         self.assertEqual(address.get("street"), new_address.street)

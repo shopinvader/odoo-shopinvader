@@ -11,14 +11,17 @@ class ResPartner(models.Model):
 
     def _shopinvader_billing_addresses_already_used(self):
         """
-        Check if Address is used on posted account move
+        Check if Address is used on confirmed sale order
         """
         self.ensure_one()
         move_id = (
-            self.env["account.move"]
+            self.env["sale.order"]
             .sudo()
             .search(
-                [("commercial_partner_id", "=", self.id), ("state", "=", "posted")],
+                [
+                    ("partner_invoice_id", "=", self.id),
+                    ("state", "in", ("done", "sale")),
+                ],
                 limit=1,
             )
         )
@@ -37,7 +40,9 @@ class ResPartner(models.Model):
         if self._shopinvader_billing_addresses_already_used():
             raise UserError(
                 _(
-                    "Can not update billing addresses(%d) because it is already used on billings" % self.id
+                    "Can not update billing addresses(%(address_id)d)"
+                    "because it is already used on billings",
+                    address_id=self.id,
                 )
             )
 
@@ -47,7 +52,9 @@ class ResPartner(models.Model):
 
     # ---Shipping ---
 
-    def _get_shopinvader_shipping_addresses(self, address_id: int = None) -> "ResPartner":
+    def _get_shopinvader_shipping_addresses(
+        self, address_id: int = None
+    ) -> "ResPartner":
         self.ensure_one()
         domain = [("type", "=", "delivery"), ("parent_id", "=", self.id)]
 
@@ -69,16 +76,23 @@ class ResPartner(models.Model):
     def _update_shopinvader_shipping_address(
         self, vals: dict, address_id: int
     ) -> "ResPartner":
-        
-        if any(key in vals for key in ('parent_id','type')):
-            raise UserError(_("parent_id and type cannot be modified on shopinvader shipping address"))
+
+        if any(key in vals for key in ("parent_id", "type")):
+            raise UserError(
+                _(
+                    "parent_id and type cannot be modified on"
+                    " shopinvader shipping address, id: %(address_id)d",
+                    address_id=address_id,
+                )
+            )
 
         self.ensure_one()
         addresses = self._get_shopinvader_shipping_addresses(address_id)
         if not addresses:
-            raise MissingError(_("No address found, id: %d" % address_id))
-        
-        
+            raise MissingError(
+                _("No address found, id: %(address_id)d", address_id=address_id)
+            )
+
         # update_address
         addresses.write(vals)
         return addresses
@@ -91,3 +105,7 @@ class ResPartner(models.Model):
         if addresses:
             # archive address
             addresses.active = False
+        else:
+            raise MissingError(
+                _("No address found, id: %(address_id)d", address_id=address_id)
+            )
