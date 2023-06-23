@@ -9,7 +9,7 @@ from odoo.addons.shopinvader_schema_address.schemas import (
     ShippingAddress,
 )
 
-from ..schemas import BillingAddressUpdate,ShippingAddressCreate,ShippingAddressUpdate
+from ..schemas import BillingAddressUpdate, ShippingAddressCreate, ShippingAddressUpdate
 
 # create a router
 address_router = APIRouter(tags=["addresses"])
@@ -82,7 +82,7 @@ def create_shipping_address(
     """
     vals = data.to_res_partner_vals()
     address = partner._create_shopinvader_shipping_address(vals)
-    
+
     return ShippingAddress.from_res_partner(address)
 
 
@@ -103,6 +103,7 @@ def update_shipping_address(
     # (e.g. snailmail/models/res_partner.py)
     address = partner.sudo()._update_shopinvader_shipping_address(vals, address_id)
     return ShippingAddress.from_res_partner(address)
+
 
 @address_router.delete("/addresses/shipping/{address_id}")
 def delete_shipping_address(
