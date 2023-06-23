@@ -73,27 +73,36 @@ def get_shipping_address(
 @address_router.post(
     "/addresses/shipping", response_model=ShippingAddress, status_code=201
 )
-@address_router.post("/addresses/shipping/{address_id}", response_model=ShippingAddress)
-def create_update_shipping_address(
-    data: ShippingAddressCreate | ShippingAddressUpdate,
+def create_shipping_address(
+    data: ShippingAddressCreate,
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    address_id: int | None = None,
 ) -> ShippingAddress:
     """
-    Create/Update shipping address of authenticated user
+    Create shipping address of authenticated user
     """
     vals = data.to_res_partner_vals()
-    if address_id is None:
-        address = partner._create_shopinvader_shipping_address(vals)
-    else:
-        # sudo() is needed because some addons override the write
-        # function of res.partner to do some checks before writing.
-        # These checks need more rights than what we are giving to
-        # the enspoint's user
-        # (e.g. snailmail/models/res_partner.py)
-        address = partner.sudo()._update_shopinvader_shipping_address(vals, address_id)
+    address = partner._create_shopinvader_shipping_address(vals)
+    
     return ShippingAddress.from_res_partner(address)
 
+
+@address_router.post("/addresses/shipping/{address_id}", response_model=ShippingAddress)
+def update_shipping_address(
+    data: ShippingAddressUpdate,
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    address_id: int,
+) -> ShippingAddress:
+    """
+    Update shipping address of authenticated user
+    """
+    vals = data.to_res_partner_vals()
+    # sudo() is needed because some addons override the write
+    # function of res.partner to do some checks before writing.
+    # These checks need more rights than what we are giving to
+    # the enspoint's user
+    # (e.g. snailmail/models/res_partner.py)
+    address = partner.sudo()._update_shopinvader_shipping_address(vals, address_id)
+    return ShippingAddress.from_res_partner(address)
 
 @address_router.delete("/addresses/shipping/{address_id}")
 def delete_shipping_address(
