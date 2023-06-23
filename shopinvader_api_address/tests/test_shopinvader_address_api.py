@@ -163,9 +163,9 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("country_id"), new_address.country_id.id)
         self.assertEqual(address.get("id"), new_address.id)
 
-    def test_create_update_billing_address(self):
+    def test_update_billing_address(self):
         """
-        Test to create/update billing address
+        Test to update billing address
         """
         data = {
             "name": "FastAPI Shopinvader Address Demo",
@@ -177,12 +177,12 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                "/addresses/billing", content=json.dumps(data)
+                f"/addresses/billing/{self.test_partner.id}", content=json.dumps(data)
             )
 
         self.assertEqual(
             response.status_code,
-            status.HTTP_201_CREATED,
+            status.HTTP_200_OK,
             msg=f"error message: {response.text}",
         )
         response_json = response.json()
@@ -193,7 +193,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("street"), "test Street")
         self.assertEqual(address.get("street"), self.test_partner.street)
 
-    def test_create_update_billing_address_vat(self):
+    def test_update_billing_address_vat(self):
         """
         Test to update billing address vat
         """
@@ -208,12 +208,12 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                "/addresses/billing", content=json.dumps(data)
+                f"/addresses/billing/{self.test_partner.id}", content=json.dumps(data)
             )
 
         self.assertEqual(
             response.status_code,
-            status.HTTP_201_CREATED,
+            status.HTTP_200_OK,
             msg=f"error message: {response.text}",
         )
         response_json = response.json()
