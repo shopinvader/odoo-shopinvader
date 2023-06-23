@@ -19,7 +19,7 @@ from odoo.addons.sale.models.sale_order_line import SaleOrderLine
 
 from ..schemas import CartResponse, CartSyncInput, CartTransaction
 
-cart_router = APIRouter()
+cart_router = APIRouter(tags=["carts"])
 
 
 @cart_router.get("/", response_model=CartResponse | dict)
