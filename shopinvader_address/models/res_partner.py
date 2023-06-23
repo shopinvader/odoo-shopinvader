@@ -54,9 +54,7 @@ class ResPartner(models.Model):
         if address_id is not None:
             domain.append(("id", "=", address_id))
 
-        addresses = self.env["res.partner"].search(domain)
-
-        return addresses
+        return self.env["res.partner"].search(domain)
 
     def _create_shopinvader_shipping_addresses(self, vals: dict) -> "ResPartner":
         self.ensure_one()
@@ -71,10 +69,16 @@ class ResPartner(models.Model):
     def _update_shopinvader_shipping_addresses(
         self, vals: dict, address_id: int
     ) -> "ResPartner":
+        
+        if any(key in vals for key in ('parent_id','type')):
+            raise UserError(_("parent_id and type cannot be modified on shopinvader shipping address"))
+
         self.ensure_one()
         addresses = self._get_shopinvader_shipping_addresses(address_id)
         if not addresses:
             raise MissingError(_("No address found, id: %d" % address_id))
+        
+        
         # update_address
         addresses.write(vals)
         return addresses
