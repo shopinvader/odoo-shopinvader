@@ -27,11 +27,11 @@ class ResPartner(models.Model):
     # --- Billing ---
     # Billing addresses is unique and corresponds to authenticated_partner
 
-    def _get_shopinvader_billing_addresses(self) -> "ResPartner":
+    def _get_shopinvader_billing_address(self) -> "ResPartner":
         self.ensure_one()
         return self
 
-    def _update_shopinvader_billing_addresses(self, vals: dict) -> "ResPartner":
+    def _update_shopinvader_billing_address(self, vals: dict) -> "ResPartner":
         self.ensure_one()
         # if billing addresses is already used, it is not possible to modify it
         if self._shopinvader_billing_addresses_already_used():
@@ -56,7 +56,7 @@ class ResPartner(models.Model):
 
         return self.env["res.partner"].search(domain)
 
-    def _create_shopinvader_shipping_addresses(self, vals: dict) -> "ResPartner":
+    def _create_shopinvader_shipping_address(self, vals: dict) -> "ResPartner":
         self.ensure_one()
         vals.update(
             {
@@ -66,7 +66,7 @@ class ResPartner(models.Model):
         )
         return self.env["res.partner"].create(vals)
 
-    def _update_shopinvader_shipping_addresses(
+    def _update_shopinvader_shipping_address(
         self, vals: dict, address_id: int
     ) -> "ResPartner":
         
@@ -83,7 +83,7 @@ class ResPartner(models.Model):
         addresses.write(vals)
         return addresses
 
-    def _delete_shopinvader_shipping_addresses(self, address_id: int) -> None:
+    def _delete_shopinvader_shipping_address(self, address_id: int) -> None:
         """
         Delete of shopinvader shipping addresses will result to an archive
         """
