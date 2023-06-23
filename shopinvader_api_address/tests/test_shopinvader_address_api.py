@@ -192,7 +192,6 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         self.assertEqual(address.get("street"), "test Street")
         self.assertEqual(address.get("street"), self.test_partner.street)
-    
 
     def test_create_update_billing_address_vat(self):
         """
