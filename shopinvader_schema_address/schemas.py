@@ -45,6 +45,14 @@ class BillingAddress(Address):
     """
     Billing Address
     """
+    vat: str | None
+
+    @classmethod
+    def from_res_partner(cls, odoo_rec):
+        res = super().from_res_partner(odoo_rec)
+        res.vat = odoo_rec.vat
+
+        return res
 
 
 class ShippingAddress(Address):

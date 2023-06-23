@@ -69,3 +69,46 @@ class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
         }
 
         return vals
+
+# --- Billing Address ---
+class BillingAddressCreate(AddressUpdate):
+    """
+        Creation of Billing Address
+
+        Remark: it is actually not used since 
+        the billing address is the authenticated
+        partner's address
+    """
+    vat: str | None
+
+    def to_res_partner_vals(self) -> dict:
+        vals= super().to_res_partner_vals()
+
+        vals["vat"] = self.vat
+
+        return vals
+
+class BillingAddressUpdate(AddressUpdate):
+    """
+        Update of Billing Address
+    """
+    vat: str | None
+
+    def to_res_partner_vals(self) -> dict:
+        vals= super().to_res_partner_vals()
+
+        vals["vat"] = self.vat
+
+        return vals
+
+# --- Shipping Address ---
+
+class ShippingAddressCreate(AddressUpdate):
+    """
+        Creation of Shipping Address
+    """
+
+class ShippingAddressUpdate(AddressUpdate):
+    """
+        Update of Shipping Address
+    """

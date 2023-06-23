@@ -9,7 +9,7 @@ from odoo.addons.shopinvader_schema_address.schemas import (
     ShippingAddress,
 )
 
-from ..schemas import AddressCreate, AddressUpdate
+from ..schemas import BillingAddressUpdate,ShippingAddressCreate,ShippingAddressUpdate
 
 # create a router
 address_router = APIRouter(tags=["addresses"])
@@ -33,7 +33,7 @@ def get_billing_address(
     "/addresses/billing", response_model=BillingAddress, status_code=201
 )
 def update_billing_address(
-    data: AddressUpdate,
+    data: BillingAddressUpdate,
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> BillingAddress:
     """
@@ -75,7 +75,7 @@ def get_shipping_address(
 )
 @address_router.post("/addresses/shipping/{address_id}", response_model=ShippingAddress)
 def create_update_shipping_address(
-    data: AddressCreate,
+    data: ShippingAddressCreate | ShippingAddressUpdate,
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int | None = None,
 ) -> ShippingAddress:
