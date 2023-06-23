@@ -1,4 +1,3 @@
-[ This file must be max 2-3 paragraphs, and is required. ]
-
-This module extends the functionality of ... to support ...
-and to allow you to ...
+This addon adds pydantic schemas that represents Addresses.
+It introduces BillingAddress and ShippingAddress as sub classes of Address.
+It has been designed and thought to be used in shopinvader services.
