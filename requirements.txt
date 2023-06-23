@@ -3,3 +3,4 @@ extendable_pydantic>=1.0.0
 fastapi
 openupgradelib
 pydantic>=2.0.0
+python-slugify
