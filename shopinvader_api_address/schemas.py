@@ -37,6 +37,7 @@ class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
 
         return vals
 
+
 class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     """
     TODO: improve

@@ -1,16 +1,9 @@
-from typing import Annotated
+from typing import Annotated, List
 
 from fastapi import APIRouter, Depends
 
-from odoo import api, models
-from odoo.api import Environment
-
 from odoo.addons.base.models.res_partner import Partner as ResPartner
-from odoo.addons.fastapi.dependencies import (
-    authenticated_partner,
-    authenticated_partner_env,
-)
-from odoo.addons.fastapi.schemas import PagedCollection
+from odoo.addons.fastapi.dependencies import authenticated_partner
 from odoo.addons.shopinvader_schema_address.schemas import (
     BillingAddress,
     ShippingAddress,
@@ -26,7 +19,7 @@ address_router = APIRouter(tags=["addresses"])
 
 @address_router.get("/addresses/billing", response_model=BillingAddress)
 def get_billing_address(
-    partner:Annotated[ResPartner, Depends(authenticated_partner)],
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> BillingAddress:
     """
     Get billing address of authenticated user
@@ -41,69 +34,80 @@ def get_billing_address(
 )
 def update_billing_address(
     data: AddressUpdate,
-    partner:Annotated[ResPartner, Depends(authenticated_partner)],
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> BillingAddress:
     """
     Update billing address of authenticated user
     billing address corresponds to authenticated partner
     """
     vals = data.to_res_partner_vals()
-    address = partner._update_shopinvader_billing_address(vals)
+    # sudo() is needed because some addons override the write
+    # function of res.partner to do some checks before writing.
+    # These checks need more rights than what we are giving to
+    # the enspoint's user
+    # (e.g. snailmail/models/res_partner.py)
+    address = partner.sudo()._update_shopinvader_billing_address(vals)
     return BillingAddress.from_res_partner(address)
 
 
 # --- Shipping address ---
 
 
+@address_router.get("/addresses/shipping", response_model=List[ShippingAddress])
 @address_router.get(
-    "/addresses/shipping", response_model=PagedCollection[ShippingAddress]
-)
-@address_router.get(
-    "/addresses/shipping/{_id}", response_model=PagedCollection[ShippingAddress]
+    "/addresses/shipping/{address_id}", response_model=List[ShippingAddress]
 )
 def get_shipping_address(
-    partner:Annotated[ResPartner, Depends(authenticated_partner)],
-    _id: int | None = None,
-) -> PagedCollection[ShippingAddress]:
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    address_id: int | None = None,
+) -> List[ShippingAddress]:
     """
     Get shipping addresses of authenticated user
     Can be used to get every shipping address: /addresses/shipping
-    Can be used to get one specific address: /addresses/shipping/_id
+    Can be used to get one specific address: /addresses/shipping/address_id
     """
-    addresses = partner._get_shopinvader_shipping_addresses(_id)
-    return PagedCollection[ShippingAddress](
-        total=len(addresses),
-        items=[ShippingAddress.from_res_partner(rec) for rec in addresses],
-    )
+    addresses = partner._get_shopinvader_shipping_addresses(address_id)
+    return [ShippingAddress.from_res_partner(rec) for rec in addresses]
 
 
 @address_router.post(
     "/addresses/shipping", response_model=ShippingAddress, status_code=201
 )
-@address_router.post("/addresses/shipping/{_id}", response_model=ShippingAddress)
+@address_router.post("/addresses/shipping/{address_id}", response_model=ShippingAddress)
 def create_update_shipping_address(
     data: AddressCreate,
-    partner:Annotated[ResPartner, Depends(authenticated_partner)],
-    _id: int | None = None,
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    address_id: int | None = None,
 ) -> ShippingAddress:
     """
     Create/Update shipping address of authenticated user
     """
     vals = data.to_res_partner_vals()
-    if _id is None:
+    if address_id is None:
         address = partner._create_shopinvader_shipping_address(vals)
     else:
-        address = partner._update_shopinvader_shipping_address(vals, _id)
+        # sudo() is needed because some addons override the write
+        # function of res.partner to do some checks before writing.
+        # These checks need more rights than what we are giving to
+        # the enspoint's user
+        # (e.g. snailmail/models/res_partner.py)
+        address = partner.sudo()._update_shopinvader_shipping_address(vals, address_id)
     return ShippingAddress.from_res_partner(address)
 
 
-@address_router.delete("/addresses/shipping/{_id}")
+@address_router.delete("/addresses/shipping/{address_id}")
 def delete_shipping_address(
-    _id: int,
-    partner:Annotated[ResPartner, Depends(authenticated_partner)],
+    address_id: int,
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> None:
     """
     Delete shipping address of authenticated user
     Address will be archive
     """
-    partner._delete_shopinvader_shipping_address(_id)
+
+    # sudo() is needed because some addons override the write
+    # function of res.partner to do some checks before writing.
+    # These checks need more rights than what we are giving to
+    # the enspoint's user
+    # (e.g. snailmail/models/res_partner.py)
+    partner.sudo()._delete_shopinvader_shipping_address(address_id)
