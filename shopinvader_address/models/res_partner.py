@@ -48,7 +48,7 @@ class ResPartner(models.Model):
     # --- Billing ---
     # Billing addresses is unique and corresponds to authenticated_partner
 
-    def _get_shopinvader_billing_address(self) -> "ResPartner":
+    def _get_shopinvader_billing_addresses(self) -> "ResPartner":
         self.ensure_one()
         return self
 

@@ -22,16 +22,16 @@ address_router = APIRouter(tags=["addresses"])
 # --- Billing addresses ---
 
 
-@address_router.get("/addresses/billing", response_model=BillingAddress)
-def get_billing_address(
+@address_router.get("/addresses/billing", response_model=List[BillingAddress])
+def get_billing_addresses(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-) -> BillingAddress:
+) -> List[BillingAddress]:
     """
     Get billing address of authenticated user
     billing address corresponds to authenticated partner
     """
-    address = partner._get_shopinvader_billing_address()
-    return BillingAddress.from_res_partner(address)
+    address = partner._get_shopinvader_billing_addresses()
+    return [BillingAddress.from_res_partner(rec) for rec in address]
 
 
 @address_router.post(
@@ -77,7 +77,7 @@ def update_billing_address(
 @address_router.get(
     "/addresses/shipping/{address_id}", response_model=List[ShippingAddress]
 )
-def get_shipping_address(
+def get_shipping_addresses(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int | None = None,
 ) -> List[ShippingAddress]:
