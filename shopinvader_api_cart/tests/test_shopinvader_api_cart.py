@@ -3,15 +3,13 @@
 
 import json
 
-from extendable import context
 from fastapi import status
 from requests import Response
 
 from odoo.exceptions import AccessError, MissingError
 from odoo.tests.common import tagged
 
-from odoo.addons.extendable.registry import _extendable_registries_database
-from odoo.addons.fastapi.tests.common import FastAPITransactionCase
+from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
 from ..routers.cart import cart_router
 from ..schemas import CartTransaction
@@ -22,9 +20,6 @@ class TestSaleCart(FastAPITransactionCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        extendable_registry = _extendable_registries_database.get(cls.env.cr.dbname)
-        cls.token = context.extendable_registry.set(extendable_registry)
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
         partner = cls.env["res.partner"].create({"name": "FastAPI Cart Demo"})
 
@@ -72,11 +67,6 @@ class TestSaleCart(FastAPITransactionCase):
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
-
-    @classmethod
-    def tearDownClass(cls) -> None:
-        context.extendable_registry.reset(cls.token)
-        super().tearDownClass()
 
     def _create_unauthenticated_user_client(self):
         return self._create_test_client(
