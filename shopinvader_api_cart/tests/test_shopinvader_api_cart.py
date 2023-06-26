@@ -168,7 +168,7 @@ class TestSaleCart(FastAPITransactionCase):
         self.assertTrue(response_json)
         self.assertEqual(1, len(response_json["lines"]))
         so = self.env["sale.order"].browse(response_json["id"])
-        self.assertEqual("uuid1", so.applied_transaction_uuids)
+        self.assertEqual("uuid1", so.applied_cart_api_transaction_uuids)
 
     def test_sync_authenticated_no_rights(self) -> None:
         data = {
@@ -201,7 +201,7 @@ class TestSaleCart(FastAPITransactionCase):
         self.assertTrue(response_json)
         self.assertEqual(1, len(response_json["lines"]))
         self.assertEqual(so.id, response_json["id"])
-        self.assertEqual("uuid1", so.applied_transaction_uuids)
+        self.assertEqual("uuid1", so.applied_cart_api_transaction_uuids)
 
     def test_sync_authenticated_wrong_uuid_one_transactions_cart_exists(self) -> None:
         """
@@ -225,7 +225,7 @@ class TestSaleCart(FastAPITransactionCase):
         self.assertTrue(response_json)
         self.assertEqual(0, len(response_json["lines"]))
         self.assertEqual(so.id, response_json["id"])
-        self.assertFalse(so.applied_transaction_uuids)
+        self.assertFalse(so.applied_cart_api_transaction_uuids)
 
     def test_transaction_product_not_existing(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -308,7 +308,9 @@ class TestSaleCart(FastAPITransactionCase):
         self.assertEqual(1, len(line))
         self.assertEqual(self.product_1, line.product_id)
         self.assertEqual(2, line.product_uom_qty)
-        self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4")
+        self.assertEqual(
+            so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
+        )
 
     def test_multi_transactions_same_product1(self) -> None:
         # try to remove more product than qty added
@@ -327,7 +329,9 @@ class TestSaleCart(FastAPITransactionCase):
             test_client.post(f"/sync/{so.uuid}", content=json.dumps(data))
         line = so.order_line
         self.assertEqual(0, len(line))
-        self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4")
+        self.assertEqual(
+            so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
+        )
 
     def test_multi_transactions_update_same_product(self) -> None:
         # try to remove more product than qty on existing line
@@ -353,7 +357,7 @@ class TestSaleCart(FastAPITransactionCase):
             test_client.post(f"/sync/{so.uuid}", content=json.dumps(data))
         line = so.order_line
         self.assertEqual(0, len(line))
-        self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3")
+        self.assertEqual(so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3")
 
     def test_multi_transactions_multi_products_all_create(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -379,7 +383,9 @@ class TestSaleCart(FastAPITransactionCase):
             lambda l, product=self.product_2: l.product_id == product
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
-        self.assertEqual(so.applied_transaction_uuids, "uuid1,uuid2,uuid3,uuid4")
+        self.assertEqual(
+            so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
+        )
 
     def test_multi_transactions_multi_products_mix_create_update(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -423,4 +429,4 @@ class TestSaleCart(FastAPITransactionCase):
             lambda l, product=self.product_2: l.product_id == product
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
-        self.assertEqual(so.applied_transaction_uuids, "uuid2,uuid3,uuid4")
+        self.assertEqual(so.applied_cart_api_transaction_uuids, "uuid2,uuid3,uuid4")

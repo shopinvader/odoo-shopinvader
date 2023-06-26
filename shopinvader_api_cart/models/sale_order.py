@@ -8,6 +8,4 @@ class SaleOrder(models.Model):
 
     _inherit = "sale.order"
 
-    applied_transaction_uuids = fields.Char(
-        readonly=True
-    )  # TODO: this field is only required for API's. Where to put it?
+    applied_cart_api_transaction_uuids = fields.Char(readonly=True)

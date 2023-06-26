@@ -183,9 +183,11 @@ class ShopinvaderApiCartManager(models.AbstractModel):
         all_transaction_uuids = transaction_uuids = [
             t.uuid for t in transactions if t.uuid
         ]
-        if cart.applied_transaction_uuids:
-            all_transaction_uuids = [cart.applied_transaction_uuids] + transaction_uuids
-        vals = {"applied_transaction_uuids": ",".join(all_transaction_uuids)}
+        if cart.applied_cart_api_transaction_uuids:
+            all_transaction_uuids = [
+                cart.applied_cart_api_transaction_uuids
+            ] + transaction_uuids
+        vals = {"applied_cart_api_transaction_uuids": ",".join(all_transaction_uuids)}
         if update_cmds:
             vals["order_line"] = update_cmds
         cart.write(vals)
