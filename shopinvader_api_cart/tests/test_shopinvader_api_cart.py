@@ -392,7 +392,7 @@ class TestSaleCart(FastAPITransactionCase):
             self.default_fastapi_authenticated_partner.id
         )
         create_line_vals = self.env[
-            "shopinvader_api_cart.manager"
+            "shopinvader_api_cart.service.helper"
         ]._apply_transactions_creating_new_cart_line(
             so, [CartTransaction(uuid="uuid1", product_id=self.product_1.id, qty=1)]
         )

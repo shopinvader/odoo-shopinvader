@@ -45,15 +45,15 @@ def sync(
     uuid: str | None = None,
 ) -> CartResponse:
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
-    cart = env["shopinvader_api_cart.manager"]._sync_cart(
+    cart = env["shopinvader_api_cart.service.helper"]._sync_cart(
         partner, cart, uuid, data.transactions
     )
     return CartResponse.from_cart(cart) if cart else {}
 
 
-class ShopinvaderApiCartManager(models.AbstractModel):
-    _name = "shopinvader_api_cart.manager"
-    _description = "ShopInvader API Cart Manager"
+class ShopinvaderApiCartServiceHelper(models.AbstractModel):
+    _name = "shopinvader_api_cart.service.helper"
+    _description = "ShopInvader API Cart Service Helper"
 
     @api.model
     def _check_transactions(self, transactions: list[CartTransaction]):
