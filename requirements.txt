@@ -1,2 +1,5 @@
 # generated from manifests external_dependencies
+extendable_pydantic
+fastapi
 openupgradelib
+pydantic
