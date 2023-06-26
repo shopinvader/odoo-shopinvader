@@ -2,14 +2,12 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 import json
 
-from extendable import context
 from fastapi import status
 from requests import Response
 
 from odoo.tests.common import tagged
 
-from odoo.addons.extendable.registry import _extendable_registries_database
-from odoo.addons.fastapi.tests.common import FastAPITransactionCase
+from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 from odoo.addons.shopinvader_api_address.routers import address_router
 
 
@@ -18,9 +16,6 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        extendable_registry = _extendable_registries_database.get(cls.env.cr.dbname)
-        cls.token = context.extendable_registry.set(extendable_registry)
-        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
 
         cls.env["res.users"].create(
             {
@@ -52,11 +47,6 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
 
         cls.default_fastapi_authenticated_partner = cls.test_partner
         cls.default_fastapi_router = address_router
-
-    @classmethod
-    def tearDownClass(cls) -> None:
-        context.extendable_registry.reset(cls.token)
-        super().tearDownClass()
 
     def test_get_shipping_address(self):
         """
