@@ -53,12 +53,6 @@ class SaleLineAmount(SaleAmount):
     price: float
 
     @classmethod
-    def from_sale_order(cls, sale_order):
-        res = super().from_sale_order(sale_order)
-        res.price = sale_order.price_unit
-        return res
-
-    @classmethod
     def from_sale_order_line(cls, order_line):
         res = super().from_sale_order_line(order_line)
         res.price = order_line.price_unit
