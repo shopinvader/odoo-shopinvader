@@ -109,6 +109,6 @@ class FastapiEndpoint(models.Model):
             cart_app.dependency_overrides[
                 auth_jwt_http_header_authorization
             ] = oauth2_scheme
-            app.mount(self.root_path + "/carts", cart_app)
+            app.mount("/carts", cart_app)
 
         return app
