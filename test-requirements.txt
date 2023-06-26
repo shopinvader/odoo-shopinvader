@@ -10,3 +10,5 @@ odoo-test-helper
 #fastapi tests
 httpx
 odoo-addon-fastapi @ git+https://github.com/oca/rest-framework@refs/pull/348/head#subdirectory=setup/fastapi
+odoo-addon-extendable-fastapi @ git+https://github.com/oca/rest-framework@refs/pull/348/head#subdirectory=setup/extendable_fastapi
+odoo-addon-extendable@ git+https://github.com/oca/rest-framework@refs/pull/348/head#subdirectory=setup/extendable

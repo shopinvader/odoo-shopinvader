@@ -67,7 +67,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         response_json = response.json()
         self.assertTrue(response_json)
 
-        address = response_json
+        address = response_json[0]
 
         self.assertEqual(address.get("name"), self.test_partner.name)
         self.assertEqual(address.get("street"), self.test_partner.street)
