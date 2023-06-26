@@ -34,19 +34,6 @@ class ResPartner(models.Model):
                 )
             )
 
-    def _check_shopinvader_billing_address_partner(self) -> None:
-        """
-        Check if billing address is equal commercial_partner_id
-        """
-        if self != self.commercial_partner_id:
-            raise UserError(
-                _(
-                    "Partner(%(partner_id)d) is not its own commercial partner."
-                    "Therfore, it can not be used as shopinvader billing address.",
-                    partner_id=self.id,
-                )
-            )
-
     def _ensure_shopinvader_shipping_address_not_used(self) -> None:
         """
         Check if Shipping Address is used on confirmed sale order
@@ -75,14 +62,22 @@ class ResPartner(models.Model):
     # --- Billing ---
     # Billing addresses is unique and corresponds to authenticated_partner
 
-    def _get_shopinvader_billing_addresses(
-        self, address_id: int = None
-    ) -> "ResPartner":
+    def _get_shopinvader_billing_addresses(self) -> "ResPartner":
         self.ensure_one()
-        self._check_shopinvader_billing_address_partner()
-        if address_id:
-            self.filtered(lambda rec: rec.id == address_id)
         return self
+
+    def _get_shopinvader_billing_address(self, address_id: int) -> "ResPartner":
+        self.ensure_one()
+        addresses = self._get_shopinvader_billing_addresses()
+        address = addresses.filtered(lambda rec: rec.id == address_id)
+        if not address:
+            raise MissingError(
+                _(
+                    "Billing address not found, id: %(address_id)d",
+                    address_id=address_id,
+                )
+            )
+        return address
 
     def _create_shopinvader_billing_address(self, vals: dict) -> "ResPartner":
         raise UserError(_("Creation of billing addresses is not supported"))
@@ -91,7 +86,7 @@ class ResPartner(models.Model):
         self, vals: dict, address_id: int
     ) -> "ResPartner":
         self.ensure_one()
-        address = self._get_shopinvader_billing_addresses(address_id)
+        address = self._get_shopinvader_billing_address(address_id)
         if not address:
             raise MissingError(
                 _(
@@ -110,25 +105,30 @@ class ResPartner(models.Model):
 
     # ---Shipping ---
 
-    def _get_shopinvader_shipping_addresses(
-        self, address_id: int = None
-    ) -> "ResPartner":
+    def _get_shopinvader_shipping_addresses(self) -> "ResPartner":
         self.ensure_one()
         domain = [("type", "=", "delivery"), ("parent_id", "=", self.id)]
 
-        if address_id is not None:
-            domain.append(("id", "=", address_id))
-
         return self.env["res.partner"].search(domain)
+
+    def _get_shopinvader_shipping_address(self, address_id: int) -> "ResPartner":
+        self.ensure_one()
+
+        addresses = self._get_shopinvader_shipping_addresses()
+        address = addresses.filtered(lambda rec: rec.id == address_id)
+        if not address:
+            raise MissingError(
+                _(
+                    "Billing address not found, id: %(address_id)d",
+                    address_id=address_id,
+                )
+            )
+
+        return address
 
     def _create_shopinvader_shipping_address(self, vals: dict) -> "ResPartner":
         self.ensure_one()
-        vals.update(
-            {
-                "parent_id": self.id,
-                "type": "delivery",
-            }
-        )
+        vals = dict(vals, parent_id=self.id, type="delivery")
         return self.env["res.partner"].create(vals)
 
     def _update_shopinvader_shipping_address(
@@ -145,7 +145,7 @@ class ResPartner(models.Model):
             )
 
         self.ensure_one()
-        address = self._get_shopinvader_shipping_addresses(address_id)
+        address = self._get_shopinvader_shipping_address(address_id)
         if not address:
             raise MissingError(
                 _(
@@ -165,7 +165,7 @@ class ResPartner(models.Model):
         """
         Delete of shopinvader shipping addresses will result to an archive
         """
-        address = self._get_shopinvader_shipping_addresses(address_id)
+        address = self._get_shopinvader_shipping_address(address_id)
         if address:
             address._ensure_shopinvader_shipping_address_not_used()
 

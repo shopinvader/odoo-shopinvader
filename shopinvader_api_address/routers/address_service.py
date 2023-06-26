@@ -23,19 +23,28 @@ address_router = APIRouter(tags=["addresses"])
 
 
 @address_router.get("/addresses/billing", response_model=List[BillingAddress])
-@address_router.get("/addresses/billing/{address_id}", response_model=BillingAddress)
 def get_billing_addresses(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    address_id: int | None = None,
-) -> List[BillingAddress] | BillingAddress:
+) -> List[BillingAddress]:
     """
     Get billing address of authenticated user
     billing address corresponds to authenticated partner
     """
-    address = partner._get_shopinvader_billing_addresses(address_id)
-    if address_id:
-        return BillingAddress.from_res_partner(address)
+    address = partner._get_shopinvader_billing_addresses()
     return [BillingAddress.from_res_partner(rec) for rec in address]
+
+
+@address_router.get("/addresses/billing/{address_id}", response_model=BillingAddress)
+def get_billing_address(
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    address_id: int,
+) -> BillingAddress:
+    """
+    Get billing address of authenticated user with specific address_id
+    billing address corresponds to authenticated partner
+    """
+    address = partner._get_shopinvader_billing_address(address_id)
+    return BillingAddress.from_res_partner(address)
 
 
 @address_router.post(
@@ -78,20 +87,28 @@ def update_billing_address(
 
 
 @address_router.get("/addresses/shipping", response_model=List[ShippingAddress])
-@address_router.get("/addresses/shipping/{address_id}", response_model=ShippingAddress)
 def get_shipping_addresses(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    address_id: int | None = None,
-) -> List[ShippingAddress] | ShippingAddress:
+) -> List[ShippingAddress]:
     """
     Get shipping addresses of authenticated user
     Can be used to get every shipping address: /addresses/shipping
+    """
+    addresses = partner._get_shopinvader_shipping_addresses()
+    return [ShippingAddress.from_res_partner(rec) for rec in addresses]
+
+
+@address_router.get("/addresses/shipping/{address_id}", response_model=ShippingAddress)
+def get_shipping_address(
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    address_id: int,
+) -> ShippingAddress:
+    """
+    Get shipping addresses of authenticated user
     Can be used to get one specific address: /addresses/shipping/address_id
     """
-    addresses = partner._get_shopinvader_shipping_addresses(address_id)
-    if address_id:
-        return ShippingAddress.from_res_partner(addresses)
-    return [ShippingAddress.from_res_partner(rec) for rec in addresses]
+    addresses = partner._get_shopinvader_shipping_address(address_id)
+    return ShippingAddress.from_res_partner(addresses)
 
 
 @address_router.post(
