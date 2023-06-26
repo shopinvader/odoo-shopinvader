@@ -7,9 +7,8 @@ from pydantic import BaseModel
 
 class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
     """
-    TODO: improve
-        used to create new address (res.partner)
-        state and country can be name or code
+    used to create new address (res.partner)
+    state and country can be name or code
     """
 
     name: str | None
@@ -40,9 +39,8 @@ class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
 
 class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     """
-    TODO: improve
-        used to update address (res.partner)
-        state and country can be name or code
+    used to update address (res.partner)
+    state and country can be name or code
     """
 
     name: str | None

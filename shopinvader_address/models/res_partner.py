@@ -9,7 +9,7 @@ class ResPartner(models.Model):
 
     _inherit = "res.partner"
 
-    def _shopinvader_billing_address_already_used(self):
+    def _ensure_shopinvader_billing_address_not_used(self) -> None:
         """
         Check if Billing Address is used on confirmed sale order
         """
@@ -25,9 +25,16 @@ class ResPartner(models.Model):
                 limit=1,
             )
         )
-        return len(move_id) > 0
+        if len(move_id) > 0:
+            raise UserError(
+                _(
+                    "Can not update billing addresses(%(address_id)d)"
+                    "because it is already used on confirmed sale order",
+                    address_id=self.id,
+                )
+            )
 
-    def _shopinvader_shipping_address_already_used(self):
+    def _ensure_shopinvader_shipping_address_not_used(self) -> None:
         """
         Check if Shipping Address is used on confirmed sale order
         """
@@ -43,7 +50,14 @@ class ResPartner(models.Model):
                 limit=1,
             )
         )
-        return len(move_id) > 0
+        if len(move_id) > 0:
+            raise UserError(
+                _(
+                    "Can not delete Shipping address(%(address_id)d)"
+                    "because it is already used on confirmed sale order",
+                    address_id=self.id,
+                )
+            )
 
     # --- Billing ---
     # Billing addresses is unique and corresponds to authenticated_partner
@@ -70,14 +84,8 @@ class ResPartner(models.Model):
             )
 
         # if billing addresses is already used, it is not possible to modify it
-        if self._shopinvader_billing_address_already_used():
-            raise UserError(
-                _(
-                    "Can not update billing addresses(%(address_id)d)"
-                    "because it is already used on confirmed sale order",
-                    address_id=self.id,
-                )
-            )
+        # an error will be raised
+        self._ensure_shopinvader_billing_address_not_used()
 
         self.write(vals)
 
@@ -123,18 +131,14 @@ class ResPartner(models.Model):
         address = self._get_shopinvader_shipping_addresses(address_id)
         if not address:
             raise MissingError(
-                _("No address found, id: %(address_id)d", address_id=address_id)
+                _(
+                    "Shipping address not found, id: %(address_id)d",
+                    address_id=address_id,
+                )
             )
 
         # if shipping addresses is already used, it is not possible to modify it
-        if address._shopinvader_shipping_address_already_used():
-            raise UserError(
-                _(
-                    "Can not update Shipping address(%(address_id)d)"
-                    "because it is already used on confirmed sale order",
-                    address_id=self.id,
-                )
-            )
+        address._ensure_shopinvader_shipping_address_not_used()
 
         # update_address
         address.write(vals)
@@ -146,14 +150,8 @@ class ResPartner(models.Model):
         """
         address = self._get_shopinvader_shipping_addresses(address_id)
         if address:
-            if address._shopinvader_shipping_address_already_used():
-                raise UserError(
-                    _(
-                        "Can not delete Shipping address(%(address_id)d)"
-                        "because it is already used on confirmed sale order",
-                        address_id=self.id,
-                    )
-                )
+            address._ensure_shopinvader_shipping_address_not_used()
+
             # archive address
             address.active = False
         else:

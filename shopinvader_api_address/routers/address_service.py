@@ -132,7 +132,7 @@ def delete_shipping_address(
 ) -> None:
     """
     Delete shipping address of authenticated user
-    Address will be archive
+    Address will be archived.
     """
 
     # sudo() is needed because some addons override the write
