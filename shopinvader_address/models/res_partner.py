@@ -87,21 +87,14 @@ class ResPartner(models.Model):
     ) -> "ResPartner":
         self.ensure_one()
         address = self._get_shopinvader_billing_address(address_id)
-        if not address:
-            raise MissingError(
-                _(
-                    "Billing address not found, id: %(address_id)d",
-                    address_id=address_id,
-                )
-            )
 
         # if billing addresses is already used, it is not possible to modify it
         # an error will be raised
-        self._ensure_shopinvader_billing_address_not_used()
+        address._ensure_shopinvader_billing_address_not_used()
 
-        self.write(vals)
+        address.write(vals)
 
-        return self
+        return address
 
     # ---Shipping ---
 
@@ -119,7 +112,7 @@ class ResPartner(models.Model):
         if not address:
             raise MissingError(
                 _(
-                    "Billing address not found, id: %(address_id)d",
+                    "Shipping address not found, id: %(address_id)d",
                     address_id=address_id,
                 )
             )
@@ -146,13 +139,6 @@ class ResPartner(models.Model):
 
         self.ensure_one()
         address = self._get_shopinvader_shipping_address(address_id)
-        if not address:
-            raise MissingError(
-                _(
-                    "Shipping address not found, id: %(address_id)d",
-                    address_id=address_id,
-                )
-            )
 
         # if shipping addresses is already used, it is not possible to modify it
         address._ensure_shopinvader_shipping_address_not_used()
