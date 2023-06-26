@@ -14,7 +14,7 @@ class ResPartner(models.Model):
         Check if Billing Address is used on confirmed sale order
         """
         self.ensure_one()
-        move_id = (
+        sale_order = (
             self.env["sale.order"]
             .sudo()
             .search(
@@ -25,7 +25,7 @@ class ResPartner(models.Model):
                 limit=1,
             )
         )
-        if len(move_id) > 0:
+        if len(sale_order) > 0:
             raise UserError(
                 _(
                     "Can not update billing addresses(%(address_id)d)"
@@ -34,12 +34,25 @@ class ResPartner(models.Model):
                 )
             )
 
+    def _check_shopinvader_billing_address_partner(self) -> None:
+        """
+        Check if billing address is equal commercial_partner_id
+        """
+        if self != self.commercial_partner_id:
+            raise UserError(
+                _(
+                    "Partner(%(partner_id)d) is not its own commercial partner."
+                    "Therfore, it can not be used as shopinvader billing address.",
+                    partner_id=self.id,
+                )
+            )
+
     def _ensure_shopinvader_shipping_address_not_used(self) -> None:
         """
         Check if Shipping Address is used on confirmed sale order
         """
         self.ensure_one()
-        move_id = (
+        sale_order = (
             self.env["sale.order"]
             .sudo()
             .search(
@@ -50,7 +63,7 @@ class ResPartner(models.Model):
                 limit=1,
             )
         )
-        if len(move_id) > 0:
+        if len(sale_order) > 0:
             raise UserError(
                 _(
                     "Can not delete Shipping address(%(address_id)d)"
@@ -62,8 +75,13 @@ class ResPartner(models.Model):
     # --- Billing ---
     # Billing addresses is unique and corresponds to authenticated_partner
 
-    def _get_shopinvader_billing_addresses(self) -> "ResPartner":
+    def _get_shopinvader_billing_addresses(
+        self, address_id: int = None
+    ) -> "ResPartner":
         self.ensure_one()
+        self._check_shopinvader_billing_address_partner()
+        if address_id:
+            self.filtered(lambda rec: rec.id == address_id)
         return self
 
     def _create_shopinvader_billing_address(self, vals: dict) -> "ResPartner":
@@ -73,13 +91,12 @@ class ResPartner(models.Model):
         self, vals: dict, address_id: int
     ) -> "ResPartner":
         self.ensure_one()
-
-        if address_id != self.id:
-            raise UserError(
+        address = self._get_shopinvader_billing_addresses(address_id)
+        if not address:
+            raise MissingError(
                 _(
-                    "Can not update billing addresses(%(address_id)d)"
-                    "because it doesn't correspond to authenticated partner's billing address",
-                    address_id=self.id,
+                    "Billing address not found, id: %(address_id)d",
+                    address_id=address_id,
                 )
             )
 

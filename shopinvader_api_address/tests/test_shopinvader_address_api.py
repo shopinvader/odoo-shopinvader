@@ -76,6 +76,29 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("country_id"), self.test_partner.country_id.id)
         self.assertEqual(address.get("id"), self.test_partner.id)
 
+        with self._create_test_client(router=address_router) as test_client:
+            response: Response = test_client.get(
+                f"/addresses/billing/{self.test_partner.id}",
+            )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+
+        response_json = response.json()
+        self.assertTrue(response_json)
+
+        address = response_json
+
+        self.assertEqual(address.get("name"), self.test_partner.name)
+        self.assertEqual(address.get("street"), self.test_partner.street)
+        self.assertEqual(address.get("zip"), self.test_partner.zip)
+        self.assertEqual(address.get("city"), self.test_partner.city)
+        self.assertEqual(address.get("country_id"), self.test_partner.country_id.id)
+        self.assertEqual(address.get("id"), self.test_partner.id)
+
     def test_get_shipping_address(self):
         """
         Test to get shipping address of authenticated_partner
@@ -144,7 +167,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         response_json = response.json()
 
-        address = response_json[0]
+        address = response_json
 
         self.assertEqual(address.get("name"), new_address.name)
         self.assertEqual(address.get("street"), new_address.street)
