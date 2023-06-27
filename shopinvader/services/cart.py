@@ -460,8 +460,11 @@ class CartService(Component):
         vals = self._prepare_cart()
         return self.env["sale.order"].create(vals)
 
+    def _prepare_cart_partner(self):
+        return self.partner or self.shopinvader_backend.anonymous_partner_id
+
     def _prepare_cart(self):
-        partner = self.partner or self.shopinvader_backend.anonymous_partner_id
+        partner = self._prepare_cart_partner()
         vals = {
             "typology": "cart",
             "partner_id": partner.id,
