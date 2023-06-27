@@ -86,19 +86,20 @@ class CustomerService(Component):
             params["state"] = STATE_ACTIVE if enabled else STATE_PENDING
         return params
 
+    def _prepare_partner_vals(self, partner):
+        return {
+            "partner_id": partner.id,
+            "partner_shipping_id": partner.id,
+            "partner_invoice_id": partner.id,
+        }
+
     def _get_and_assign_cart(self):
         cart_service = self.component(usage="cart")
         cart = cart_service._get(create_if_not_found=False)
         if cart:
             if self.partner and cart.partner_id != self.partner:
                 # we need to affect the cart to the partner
-                cart.write_with_onchange(
-                    {
-                        "partner_id": self.partner.id,
-                        "partner_shipping_id": self.partner.id,
-                        "partner_invoice_id": self.partner.id,
-                    }
-                )
+                cart.write_with_onchange(self._prepare_partner_vals(self.partner))
             return cart_service._to_json(cart)["data"]
         else:
             return {}
