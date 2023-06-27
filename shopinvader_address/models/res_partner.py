@@ -60,7 +60,7 @@ class ResPartner(models.Model):
             )
 
     # --- Billing ---
-    # Billing addresses is unique and corresponds to authenticated_partner
+    # Billing address is unique and corresponds to authenticated_partner
 
     def _get_shopinvader_billing_addresses(self) -> "ResPartner":
         self.ensure_one()
@@ -88,7 +88,7 @@ class ResPartner(models.Model):
         self.ensure_one()
         address = self._get_shopinvader_billing_address(address_id)
 
-        # if billing addresses is already used, it is not possible to modify it
+        # if billing address is already used, it is not possible to modify it
         # an error will be raised
         address._ensure_shopinvader_billing_address_not_used()
 
@@ -140,7 +140,7 @@ class ResPartner(models.Model):
         self.ensure_one()
         address = self._get_shopinvader_shipping_address(address_id)
 
-        # if shipping addresses is already used, it is not possible to modify it
+        # if shipping address is already used, it is not possible to modify it
         address._ensure_shopinvader_shipping_address_not_used()
 
         # update_address
