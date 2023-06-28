@@ -5,12 +5,12 @@
     "name": "Shopinvader Anonymous Partner",
     "summary": """
         Manage anonymous partners with a cookie.""",
-    "version": "16.0.1.0.0",
+    "version": "14.0.1.0.0",
     "license": "LGPL-3",
     "author": "ACSONE SA/NV",
     "maintainers": [],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": [],
+    "depends": ["base_future_response"],
     "data": [],
     "demo": [],
 }
