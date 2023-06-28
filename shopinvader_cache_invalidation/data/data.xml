@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="backend_1" model="se.backend.elasticsearch">
+        <field name="name">Demo Elasticsearch Backend</field>
+        <field name="tech_name">demo_elasticsearch_backend</field>
+        <field name="es_server_host">http://elastic:9200</field>
+    </record>
+</odoo>
