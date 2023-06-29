@@ -1,16 +1,12 @@
 # generated from manifests external_dependencies
-<<<<<<< HEAD
 cerberus
+extendable_pydantic
+fastapi
 locomotivecms
+pydantic
 python-magic
 python-slugify
 python-stdnum
 slugify
 unidecode
 validators
-=======
->>>>>>> pre-commit
-extendable_pydantic
-fastapi
-openupgradelib
-pydantic
