@@ -39,7 +39,7 @@ class ResPartner(models.Model):
     _sql_constraints = [
         (
             "anonymous_token_unique",
-            "EXCLUDE (anonymous_token WITH =) WHERE (anonymous_token IS NOT NULL)",
+            "UNIQUE(anonymous_token)",
             "This token is already used!",
         )
     ]
