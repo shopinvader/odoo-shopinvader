@@ -9,6 +9,8 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo-addon-sale_cart>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_anonymous_partner>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_fastapi_auth_jwt>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
