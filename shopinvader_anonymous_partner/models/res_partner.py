@@ -32,7 +32,9 @@ class ResPartner(models.Model):
 
     _inherit = "res.partner"
 
-    anonymous_token = fields.Char()
+    anonymous_token = fields.Char(
+        help="Token used to uniquely and securely identify anonymous partners."
+    )
 
     _sql_constraints = [
         (
