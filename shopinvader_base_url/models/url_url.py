@@ -37,7 +37,7 @@ class UrlUrl(models.Model):
     _sql_constraints = [
         (
             "unique_key_per_referential_per_lang",
-            "unique(url_key, referential, lang_id)",
+            "unique(key, referential, lang_id)",
             "Already exists in database",
         )
     ]

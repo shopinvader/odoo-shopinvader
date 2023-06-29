@@ -26,8 +26,8 @@ class TestAbstractUrl(TransactionCase, FakeModelLoader):
         )
         cls.product.with_context(lang="fr_FR").name = "Mon Produit"
 
-    def _expect_url_for_lang(self, url_key, lang):
-        self.assertEqual(self.product._get_main_url_key("global", lang), url_key)
+    def _expect_url_for_lang(self, lang, url_key):
+        self.assertEqual(self.product._get_main_url("global", lang).key, url_key)
 
     @classmethod
     def tearDownClass(cls):
@@ -39,7 +39,7 @@ class TestAbstractUrl(TransactionCase, FakeModelLoader):
         self._expect_url_for_lang("en_US", "my-product")
         url = self.product.url_ids.filtered(lambda s: s.lang_id == self.lang_en)
         self.assertEqual(len(url), 1)
-        self.assertTrue(url.auto)
+        self.assertFalse(url.manual)
         self.assertFalse(url.redirect)
 
     def test_update_url_2_lang(self):
@@ -51,7 +51,7 @@ class TestAbstractUrl(TransactionCase, FakeModelLoader):
 
         url = self.product.url_ids.filtered(lambda s: s.lang_id == self.lang_fr)
         self.assertEqual(len(url), 1)
-        self.assertTrue(url.auto)
+        self.assertFalse(url.manual)
         self.assertFalse(url.redirect)
 
     def test_update_no_translatable_field(self):
@@ -90,6 +90,7 @@ class TestAbstractUrl(TransactionCase, FakeModelLoader):
             {
                 "manual": True,
                 "key": "my-custom-key",
+                "lang_id": self.lang_en.id,
                 "res_id": self.product.id,
                 "res_model": "fake.product",
                 "referential": "global",
