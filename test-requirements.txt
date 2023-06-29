@@ -7,6 +7,4 @@ vcrpy
 vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
-odoo-addon-auth_jwt @ git+https://github.com/oca/server-auth@refs/pull/520/head#subdirectory=setup/auth_jwt
-odoo-addon-fastapi_auth_jwt @ git+https://github.com/oca/rest-framework@refs/pull/347/head#subdirectory=setup/fastapi_auth_jwt
 httpx  # For FastAPI tests
