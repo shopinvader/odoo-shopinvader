@@ -22,6 +22,8 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_cart](sale_cart/) | 16.0.1.0.0 |  | Uee Sale Orders as cart.
+[shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.0.0 |  | Manage anonymous partners with a cookie.
+[shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.0 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 
 
 Unported addons
