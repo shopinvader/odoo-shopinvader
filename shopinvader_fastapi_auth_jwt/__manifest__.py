@@ -5,7 +5,7 @@
     "name": "Shopinvader Auth JWT authentication for FastAPI endpoints",
     "summary": """
         Provide JWT and Anonymous Partner authentication to FastAPI routes.""",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "LGPL-3",
     "author": "ACSONE SA/NV",
     "maintainers": [],
