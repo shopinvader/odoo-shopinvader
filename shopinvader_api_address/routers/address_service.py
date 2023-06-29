@@ -1,4 +1,10 @@
-from typing import Annotated, List
+import sys
+from typing import List
+
+if sys.version_info >= (3, 9):
+    from typing import Annotated
+else:
+    from typing_extensions import Annotated
 
 from fastapi import APIRouter, Depends
 

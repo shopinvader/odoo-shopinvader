@@ -1,6 +1,8 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from typing import Optional
+
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
@@ -9,15 +11,15 @@ from odoo.addons.pydantic import utils
 
 class Address(BaseModel, metaclass=ExtendableModelMeta):
     id: int
-    name: str | None
-    street: str | None
-    street2: str | None
-    zip: str | None
-    city: str | None
-    phone: str | None
-    email: str | None
-    state_id: int | None
-    country_id: int | None
+    name: Optional[str]
+    street: Optional[str]
+    street2: Optional[str]
+    zip: Optional[str]
+    city: Optional[str]
+    phone: Optional[str]
+    email: Optional[str]
+    state_id: Optional[int]
+    country_id: Optional[int]
 
     class Config:
         orm_mode = True
@@ -44,7 +46,7 @@ class BillingAddress(Address):
     Billing Address
     """
 
-    vat: str | None
+    vat: Optional[str]
 
     @classmethod
     def from_res_partner(cls, odoo_rec):

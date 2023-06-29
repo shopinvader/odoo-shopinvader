@@ -1,6 +1,8 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from typing import Optional
+
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
@@ -11,15 +13,15 @@ class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
     state and country can be name or code
     """
 
-    name: str | None
-    street: str | None
-    street2: str | None
-    zip: str | None
-    city: str | None
-    phone: str | None
-    email: str | None
-    state_id: int | None
-    country_id: int | None
+    name: Optional[str]
+    street: Optional[str]
+    street2: Optional[str]
+    zip: Optional[str]
+    city: Optional[str]
+    phone: Optional[str]
+    email: Optional[str]
+    state_id: Optional[int]
+    country_id: Optional[int]
 
     def to_res_partner_vals(self) -> dict:
         vals = {
@@ -43,15 +45,15 @@ class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     state and country can be name or code
     """
 
-    name: str | None
-    street: str | None
-    street2: str | None
-    zip: str | None
-    city: str | None
-    phone: str | None
-    email: str | None
-    state_id: int | None
-    country_id: int | None
+    name: Optional[str]
+    street: Optional[str]
+    street2: Optional[str]
+    zip: Optional[str]
+    city: Optional[str]
+    phone: Optional[str]
+    email: Optional[str]
+    state_id: Optional[int]
+    country_id: Optional[int]
 
     def to_res_partner_vals(self) -> dict:
         vals = {
@@ -79,7 +81,7 @@ class BillingAddressCreate(AddressUpdate):
     partner's address
     """
 
-    vat: str | None
+    vat: Optional[str]
 
     def to_res_partner_vals(self) -> dict:
         vals = super().to_res_partner_vals()
@@ -94,7 +96,7 @@ class BillingAddressUpdate(AddressUpdate):
     Update of Billing Address
     """
 
-    vat: str | None
+    vat: Optional[str]
 
     def to_res_partner_vals(self) -> dict:
         vals = super().to_res_partner_vals()
