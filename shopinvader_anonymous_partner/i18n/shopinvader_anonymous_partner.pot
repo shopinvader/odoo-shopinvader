@@ -1,0 +1,43 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_anonymous_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_anonymous_partner
+#. odoo-python
+#: code:addons/shopinvader_anonymous_partner/models/res_partner.py:0
+#, python-format
+msgid "Anonymous (%s)"
+msgstr ""
+
+#. module: shopinvader_anonymous_partner
+#: model:ir.model.fields,field_description:shopinvader_anonymous_partner.field_res_partner__anonymous_token
+#: model:ir.model.fields,field_description:shopinvader_anonymous_partner.field_res_users__anonymous_token
+msgid "Anonymous Token"
+msgstr ""
+
+#. module: shopinvader_anonymous_partner
+#: model:ir.model,name:shopinvader_anonymous_partner.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: shopinvader_anonymous_partner
+#: model:ir.model.constraint,message:shopinvader_anonymous_partner.constraint_res_partner_anonymous_token_unique
+msgid "This token is already used!"
+msgstr ""
+
+#. module: shopinvader_anonymous_partner
+#: model:ir.model.fields,help:shopinvader_anonymous_partner.field_res_partner__anonymous_token
+#: model:ir.model.fields,help:shopinvader_anonymous_partner.field_res_users__anonymous_token
+msgid "Token used to uniquely and securely identify anonymous partners."
+msgstr ""
