@@ -17,4 +17,4 @@ class FakeProduct(models.Model):
         self._generic_compute_automatic_url_key()
 
     def _get_url_keywords(self):
-        return super()._get_url_keywords() + ["code"]
+        return super()._get_url_keywords() + [self.code or ""]

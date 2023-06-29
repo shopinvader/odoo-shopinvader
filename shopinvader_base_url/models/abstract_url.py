@@ -62,13 +62,14 @@ class AbstractUrl(models.AbstractModel):
         )
 
     @api.model
-    def _prepare_url(self, url_key, referential):
+    def _prepare_url(self, referential, lang, url_key):
         return {
-            "url_key": url_key,
+            "key": url_key,
             "redirect": False,
             "res_model": self._name,
             "res_id": self.id,
             "referential": referential,
+            "lang_id": self.env["res.lang"]._lang_get_id(lang),
         }
 
     def _reuse_url(self, existing_url):
@@ -86,17 +87,19 @@ class AbstractUrl(models.AbstractModel):
             # TODO maybe we should have a computed field that flag the
             # current url if the key used for building the url have changed
             # so we can skip this check if nothing have changed
-            url_key = record._get_url_key()
-            current_url = record._get_main_url()
-            if current_url.key != url_key:
-                current_url.redirect = True
-                record._add_url(referential, url_key, lang)
+            current_url = record._get_main_url(referential, lang)
+            if not current_url.manual:
+                url_key = record._generate_url_key()
+                if current_url.key != url_key:
+                    current_url.redirect = True
+                    record._add_url(referential, lang, url_key)
 
-    def _add_url(self, referential, url_key, lang):
+    def _add_url(self, referential, lang, url_key):
         self.ensure_one()
         existing_url = self.env["url.url"].search(
             [
-                ("referential", "=", referential)("lang_id.code", "=", lang),
+                ("referential", "=", referential),
+                ("lang_id.code", "=", lang),
                 ("key", "=", url_key),
             ]
         )
@@ -119,7 +122,7 @@ class AbstractUrl(models.AbstractModel):
                 )
 
         else:
-            vals = self._prepare_url(url_key, referential)
+            vals = self._prepare_url(referential, lang, url_key)
             self.env["url.url"].create(vals)
 
     def _redirect_existing_url(self, action):
