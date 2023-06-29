@@ -43,7 +43,7 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
         partner = self.env["res.partner"]._create_anonymous_partner__cookie(
             mock.MagicMock()
         )
-        with self.assertRaises(psycopg2.errors.ExclusionViolation):
+        with self.assertRaises(psycopg2.errors.UniqueViolation):
             self.env["res.partner"].create(
                 {
                     "name": "test",
