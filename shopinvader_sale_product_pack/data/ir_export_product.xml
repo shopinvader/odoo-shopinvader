@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="ir_exp_shopinvader_variant_pack_ok" model="ir.exports.line">
+        <field name="name">pack_ok</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_pack_line_ids" model="ir.exports.line">
+        <field name="name">used_in_pack_line_ids/parent_product_id</field>
+        <field name="target">used_in_pack_line_ids:used_in_pack/parent_product_id:objectID</field>
+        <field name="instance_method_name">_jsonify_m2o_to_id</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant"/>
+    </record>
+</odoo>
