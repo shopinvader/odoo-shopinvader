@@ -141,9 +141,7 @@ class CommonCase(SavepointCase, CommonMixin):
     def setUpClass(cls):
         super(CommonCase, cls).setUpClass()
         cls.env = cls.env(
-            context=dict(
-                cls.env.context, tracking_disable=cls.tracking_disable
-            )
+            context=dict(cls.env.context, tracking_disable=cls.tracking_disable)
         )
         CommonMixin._setup_backend(cls)
         # TODO FIXME
@@ -170,18 +168,14 @@ class CommonCase(SavepointCase, CommonMixin):
         :param field: str
         :return: str
         """
-        return record._fields.get(field).convert_to_export(
-            record[field], record
-        )
+        return record._fields.get(field).convert_to_export(record[field], record)
 
 
 class ProductCommonCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.template = cls.env.ref(
-            "product.product_product_4_product_template"
-        )
+        cls.template = cls.env.ref("product.product_product_4_product_template")
         cls.variant = cls.env.ref("product.product_product_4b")
         cls.template.taxes_id = cls.env.ref("shopinvader.tax_1")
         cls.shopinvader_variants = cls.env["shopinvader.variant"].search(
@@ -246,8 +240,7 @@ class CommonTestDownload(object):
         :return:
         """
         with mock.patch(
-            "odoo.addons.shopinvader.services."
-            "abstract_download.content_disposition"
+            "odoo.addons.shopinvader.services." "abstract_download.content_disposition"
         ) as mocked_cd, mock.patch(
             "odoo.addons.shopinvader.services.abstract_download.request"
         ) as mocked_request:
@@ -258,9 +251,7 @@ class CommonTestDownload(object):
             self.assertEqual(1, make_response.call_count)
             content, headers = make_response.call_args[0]
             self.assertTrue(content)
-            self.assertIn(
-                ("Content-Disposition", "attachment; filename=test"), headers
-            )
+            self.assertIn(("Content-Disposition", "attachment; filename=test"), headers)
 
     def _test_download_not_owner(self, service, target):
         """

@@ -17,8 +17,7 @@ _logger = logging.getLogger(__name__)
 
 
 class CartService(Component):
-    """Shopinvader service to provide e-commerce cart features.
-    """
+    """Shopinvader service to provide e-commerce cart features."""
 
     _inherit = "shopinvader.abstract.sale.service"
     _name = "shopinvader.cart.service"
@@ -32,8 +31,7 @@ class CartService(Component):
     # The following method are 'public' and can be called from the controller.
 
     def search(self):
-        """Retrieve cart from session or existing cart for current customer.
-        """
+        """Retrieve cart from session or existing cart for current customer."""
         if not self.cart_id:
             return {}
         return self._to_json(self._get())
@@ -134,9 +132,7 @@ class CartService(Component):
             self._get_validator_cart_by_id_domain(value)
         )
         if len(cart) != 1:
-            error(
-                field, _("The cart does not exists or does not belong to you!")
-            )
+            error(field, _("The cart does not exists or does not belong to you!"))
 
     def _validator_copy(self):
         return {
@@ -218,9 +214,7 @@ class CartService(Component):
         }
 
     def _validator_delete_item(self):
-        return {
-            "item_id": {"coerce": to_int, "required": True, "type": "integer"}
-        }
+        return {"item_id": {"coerce": to_int, "required": True, "type": "integer"}}
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
@@ -234,12 +228,8 @@ class CartService(Component):
             qty = item.product_uom_qty + params["item_qty"]
         return {"product_uom_qty": qty}
 
-    def _upgrade_cart_item_quantity(
-        self, cart, item, params, action="replace"
-    ):
-        vals = self._upgrade_cart_item_quantity_vals(
-            item, params, action=action
-        )
+    def _upgrade_cart_item_quantity(self, cart, item, params, action="replace"):
+        vals = self._upgrade_cart_item_quantity_vals(item, params, action=action)
         with self.env.norecompute():
             new_values = item.play_onchanges(vals, vals.keys())
             # clear cache after play onchange
@@ -301,9 +291,7 @@ class CartService(Component):
             raise UserError(_("Product %s is not allowed") % product.name)
         existing_item = self._check_existing_cart_item(cart, params)
         if existing_item:
-            self._upgrade_cart_item_quantity(
-                cart, existing_item, params, action="sum"
-            )
+            self._upgrade_cart_item_quantity(cart, existing_item, params, action="sum")
         else:
             with self.env.norecompute():
                 vals = self._prepare_cart_item(params, cart)
@@ -314,9 +302,7 @@ class CartService(Component):
                 # - fiscal_position_id
                 # - pricelist_id
                 new_values = (
-                    self.env["sale.order.line"]
-                    .sudo()
-                    .play_onchanges(vals, vals.keys())
+                    self.env["sale.order.line"].sudo().play_onchanges(vals, vals.keys())
                 )
                 vals.update(new_values)
                 # As the frontend could be in several languages but we have only
@@ -388,9 +374,7 @@ class CartService(Component):
 
     def _prepare_step(self, step, params):
         if "next" in step:
-            params["current_step_id"] = self._get_step_from_code(
-                step["next"]
-            ).id
+            params["current_step_id"] = self._get_step_from_code(step["next"]).id
         if "current" in step:
             params["done_step_ids"] = [
                 (4, self._get_step_from_code(step["current"]).id, 0)

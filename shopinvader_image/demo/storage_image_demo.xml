@@ -1,297 +1,321 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="storage_image_1" model="storage.image">
         <field name="name">71c62lnhnxl_sx522_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_2"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_2" />
     </record>
 
     <record id="storage_image_5" model="storage.image">
         <field name="name">71ezvti-0l_sx522_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_32"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_32" />
     </record>
 
     <record id="storage_image_6" model="storage.image">
         <field name="name">71qy77hpsgl_sx522_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_35"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_35" />
     </record>
 
     <record id="storage_image_7" model="storage.image">
         <field name="name">71guazzso7l_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_50"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_50" />
     </record>
 
     <record id="storage_image_8" model="storage.image">
         <field name="name">71gulsoprfl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_53"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_53" />
     </record>
 
     <record id="storage_image_9" model="storage.image">
         <field name="name">g_631993_a.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_56"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_56" />
     </record>
 
     <record id="storage_image_10" model="storage.image">
         <field name="name">g_631993_c.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_59"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_59" />
     </record>
 
     <record id="storage_image_11" model="storage.image">
         <field name="name">g_631993_g.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_62"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_62" />
     </record>
 
     <record id="storage_image_12" model="storage.image">
         <field name="name">g_631993_e.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_65"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_65" />
     </record>
 
     <record id="storage_image_13" model="storage.image">
         <field name="name">81ggpnkpool_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_104"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_104" />
     </record>
 
     <record id="storage_image_14" model="storage.image">
         <field name="name">81ufdwjleal_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_107"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_107" />
     </record>
 
     <record id="storage_image_15" model="storage.image">
         <field name="name">81wca6qkcul_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_110"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_110" />
     </record>
 
     <record id="storage_image_16" model="storage.image">
         <field name="name">91sxta7ujhl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_113"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_113" />
     </record>
 
     <record id="storage_image_17" model="storage.image">
         <field name="name">81gbmzexsrl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_116"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_116" />
     </record>
 
     <record id="storage_image_18" model="storage.image">
         <field name="name">81hd-h2mghl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_119"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_119" />
     </record>
 
     <record id="storage_image_19" model="storage.image">
         <field name="name">81zBNebzzNL._SL1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_122"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_122" />
     </record>
 
     <record id="storage_image_20" model="storage.image">
         <field name="name">81ra3tx1yfl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_125"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_125" />
     </record>
 
     <record id="storage_image_21" model="storage.image">
         <field name="name">81rt1sqjedl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_128"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_128" />
     </record>
 
     <record id="storage_image_22" model="storage.image">
         <field name="name">81c0m6olhjl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_131"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_131" />
     </record>
 
     <record id="storage_image_23" model="storage.image">
         <field name="name">table-mid-century-natural-wood.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_152"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_152" />
     </record>
 
     <record id="storage_image_24" model="storage.image">
         <field name="name">mid-century-modern-wood-dining-table-natural-side.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_155"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_155" />
     </record>
 
     <record id="storage_image_25" model="storage.image">
-        <field name="name">sauder-420011-coffee-table-furniture-craftsman-oak.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_158"/>
+        <field
+            name="name"
+        >sauder-420011-coffee-table-furniture-craftsman-oak.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_158" />
     </record>
 
     <record id="storage_image_26" model="storage.image">
-        <field name="name">sauder-420011-coffee-table-furniture-craftsman-oak-close.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_161"/>
+        <field
+            name="name"
+        >sauder-420011-coffee-table-furniture-craftsman-oak-close.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_161" />
     </record>
 
     <record id="storage_image_27" model="storage.image">
-        <field name="name">sauder-harvey-park-entertainment-credenza-chene-clair.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_164"/>
+        <field
+            name="name"
+        >sauder-harvey-park-entertainment-credenza-chene-clair.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_164" />
     </record>
 
     <record id="storage_image_28" model="storage.image">
-        <field name="name">sauder-harvey-park-entertainment-credenza-chene-clair-scene.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_167"/>
+        <field
+            name="name"
+        >sauder-harvey-park-entertainment-credenza-chene-clair-scene.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_167" />
     </record>
 
     <record id="storage_image_29" model="storage.image">
-        <field name="name">sauder-harvey-park-entertainment-credenza-chene-clair-scene-front.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_170"/>
+        <field
+            name="name"
+        >sauder-harvey-park-entertainment-credenza-chene-clair-scene-front.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_170" />
     </record>
 
     <record id="storage_image_30" model="storage.image">
-        <field name="name">kitchen-dining-table-white-round-coffee-table-modern-leisure-wooden-tea-table-office-conference-pedestal-desk.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_215"/>
+        <field
+            name="name"
+        >kitchen-dining-table-white-round-coffee-table-modern-leisure-wooden-tea-table-office-conference-pedestal-desk.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_215" />
     </record>
 
     <record id="storage_image_31" model="storage.image">
         <field name="name">meuble-tv-warm-shaker-bois-massif-183cm.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_218"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_218" />
     </record>
 
     <record id="storage_image_32" model="storage.image">
         <field name="name">meuble-tv-warm-shaker-bois-massif-183cm-scene.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_221"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_221" />
     </record>
 
     <record id="storage_image_33" model="storage.image">
         <field name="name">meuble-tv-warm-shaker-bois-massif-183cm-gris.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_224"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_224" />
     </record>
 
     <record id="storage_image_34" model="storage.image">
-        <field name="name">meuble-tv-warm-shaker-bois-massif-183cm-scene-gris.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_227"/>
+        <field
+            name="name"
+        >meuble-tv-warm-shaker-bois-massif-183cm-scene-gris.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_227" />
     </record>
 
     <record id="storage_image_35" model="storage.image">
         <field name="name">table-side-wood-oak.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_260"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_260" />
     </record>
 
     <record id="storage_image_37" model="storage.image">
         <field name="name">61kcwirwmjl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_289"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_289" />
     </record>
 
     <record id="storage_image_38" model="storage.image">
         <field name="name">61vffbcilbl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_292"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_292" />
     </record>
 
     <record id="storage_image_39" model="storage.image">
         <field name="name">61vvazh7fbl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_295"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_295" />
     </record>
 
     <record id="storage_image_40" model="storage.image">
         <field name="name">61ncsqkegrl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_298"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_298" />
     </record>
 
     <record id="storage_image_41" model="storage.image">
         <field name="name">71xi8za0npl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_301"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_301" />
     </record>
 
     <record id="storage_image_42" model="storage.image">
         <field name="name">71r0tdtl1sl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_304"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_304" />
     </record>
 
     <record id="storage_image_43" model="storage.image">
         <field name="name">71tq2sgsacl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_307"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_307" />
     </record>
 
     <record id="storage_image_44" model="storage.image">
         <field name="name">71fudutmpl_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_310"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_310" />
     </record>
 
     <record id="storage_image_45" model="storage.image">
         <field name="name">71uans-wol_sl1500_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_313"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_313" />
     </record>
 
     <record id="storage_image_55" model="storage.image">
         <field name="name">51gnjksrxml_sl1024_.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_497"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_497" />
     </record>
 
     <record id="storage_image_56" model="storage.image">
         <field name="name">thelma-couple-chair.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_508"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_508" />
     </record>
 
     <record id="storage_image_57" model="storage.image">
-        <field name="name">5c7f91a29eb6294768ad59bbce80ed04fcaff33d_chathm001gry_uk_thelma_dining_chairs_oak_grey02.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_515"/>
+        <field
+            name="name"
+        >5c7f91a29eb6294768ad59bbce80ed04fcaff33d_chathm001gry_uk_thelma_dining_chairs_oak_grey02.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_515" />
     </record>
 
     <record id="storage_image_58" model="storage.image">
-        <field name="name">9affc871da0e733ee523fd6f78fa8d597b4dd25c_chathm001gry_uk_thelma_dining_chairs_oak_grey03.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_518"/>
+        <field
+            name="name"
+        >9affc871da0e733ee523fd6f78fa8d597b4dd25c_chathm001gry_uk_thelma_dining_chairs_oak_grey03.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_518" />
     </record>
 
     <record id="storage_image_59" model="storage.image">
         <field name="name">img_20170505_151457.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_521"/>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_521" />
     </record>
 
     <record id="storage_image_60" model="storage.image">
-        <field name="name">2be1238822f7edbc3b3c5f64c6e12f36ec84c861_chathm001gry_uk_thelma_dining_chairs_oak_grey07.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_524"/>
+        <field
+            name="name"
+        >2be1238822f7edbc3b3c5f64c6e12f36ec84c861_chathm001gry_uk_thelma_dining_chairs_oak_grey07.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_524" />
     </record>
 
     <record id="storage_image_61" model="storage.image">
-        <field name="name">73e214f2ec8bbe6b0687bcc7e53a55b2f70a2a38_chathm006bla_uk_2xthelma_dining_chairs_black_walnut_lb01.jpg</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_551"/>
+        <field
+            name="name"
+        >73e214f2ec8bbe6b0687bcc7e53a55b2f70a2a38_chathm006bla_uk_2xthelma_dining_chairs_black_walnut_lb01.jpg</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_551" />
     </record>
 
     <record id="storage_image_62" model="storage.image">
-        <field name="name">c47c477bc85febd3f99aa3f9c651c02cfa071958_chathm005red_uk_2xthelma_dining_chairs_red_walnut_lb01jpg.png</field>
-        <field name="backend_id" ref="storage_backend.default_storage_backend"/>
-        <field name="file_id" ref="storage_file_554"/>
+        <field
+            name="name"
+        >c47c477bc85febd3f99aa3f9c651c02cfa071958_chathm005red_uk_2xthelma_dining_chairs_red_walnut_lb01jpg.png</field>
+        <field name="backend_id" ref="storage_backend.default_storage_backend" />
+        <field name="file_id" ref="storage_file_554" />
     </record>
 
 </odoo>

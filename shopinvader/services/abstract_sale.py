@@ -92,30 +92,18 @@ class AbstractSaleService(AbstractComponent):
         }
 
     def _convert_shipping(self, sale):
-        if (
-            sale.partner_shipping_id
-            == self.shopinvader_backend.anonymous_partner_id
-        ):
+        if sale.partner_shipping_id == self.shopinvader_backend.anonymous_partner_id:
             return {"address": {}}
         else:
             address_service = self.component(usage="addresses")
-            return {
-                "address": address_service._to_json(sale.partner_shipping_id)[
-                    0
-                ]
-            }
+            return {"address": address_service._to_json(sale.partner_shipping_id)[0]}
 
     def _convert_invoicing(self, sale):
-        if (
-            sale.partner_invoice_id
-            == self.shopinvader_backend.anonymous_partner_id
-        ):
+        if sale.partner_invoice_id == self.shopinvader_backend.anonymous_partner_id:
             return {"address": {}}
         else:
             address_service = self.component(usage="addresses")
-            return {
-                "address": address_service._to_json(sale.partner_invoice_id)[0]
-            }
+            return {"address": address_service._to_json(sale.partner_invoice_id)[0]}
 
     def _convert_amount(self, sale):
         return {

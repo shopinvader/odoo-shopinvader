@@ -30,9 +30,7 @@ class ShopinvaderProduct(models.Model):
         string="Shopinvader Name",
         help="Name for shopinvader, if not set the product name will be used.",
     )
-    shopinvader_display_name = fields.Char(
-        compute="_compute_name", readonly=True
-    )
+    shopinvader_display_name = fields.Char(compute="_compute_name", readonly=True)
     shopinvader_categ_ids = fields.Many2many(
         comodel_name="shopinvader.category",
         compute="_compute_shopinvader_category",
@@ -61,25 +59,23 @@ class ShopinvaderProduct(models.Model):
         :return: str
         """
         self.ensure_one()
-        return u"{} | {}".format(
-            self.name or u"", self.backend_id.website_public_name or u""
+        return "{} | {}".format(
+            self.name or "", self.backend_id.website_public_name or ""
         )
 
     def _inverse_active(self):
-        self.filtered(lambda p: not p.active).mapped(
-            "shopinvader_variant_ids"
-        ).write({"active": False})
-        self.filtered(lambda p: p.active).mapped(
-            "shopinvader_variant_ids"
-        ).write({"active": True})
+        self.filtered(lambda p: not p.active).mapped("shopinvader_variant_ids").write(
+            {"active": False}
+        )
+        self.filtered(lambda p: p.active).mapped("shopinvader_variant_ids").write(
+            {"active": True}
+        )
 
     def _get_categories(self):
         self.ensure_one()
         return self.categ_id
 
-    @api.depends(
-        "categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id"
-    )
+    @api.depends("categ_id", "record_id", "backend_id", "lang_id", "categ_id.parent_id")
     def _compute_shopinvader_category(self):
         categ_model = self.env["shopinvader.category"]
 
@@ -102,9 +98,7 @@ class ShopinvaderProduct(models.Model):
             ]
             categories = categ_model.search(domain)
             prod_ids = grouped_prods[(backend_id, lang_id)]
-            self.browse(prod_ids).update(
-                {"shopinvader_categ_ids": categories.ids}
-            )
+            self.browse(prod_ids).update({"shopinvader_categ_ids": categories.ids})
 
     def _prepare_shopinvader_variant(self, variant):
         values = {"record_id": variant.id, "shopinvader_product_id": self.id}

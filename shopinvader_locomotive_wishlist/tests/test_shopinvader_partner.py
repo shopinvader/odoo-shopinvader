@@ -55,9 +55,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
         cls.prod1 = cls.env["product.product"].create({"name": "P1"})
         cls.prod2 = cls.env["product.product"].create({"name": "P2"})
         cls.prod3 = cls.env["product.product"].create({"name": "P3"})
-        cls._bind_products(
-            cls, cls.prod1 + cls.prod2 + cls.prod3, backend=cls.backend
-        )
+        cls._bind_products(cls, cls.prod1 + cls.prod2 + cls.prod3, backend=cls.backend)
 
     def test_create_wishlist(self):
         partner_binding = self.partner2
@@ -77,9 +75,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
         self._check_nbr_job_created(3)
 
         with requests_mock.mock() as m:
-            m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
-            )
+            m.post(self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"})
             m.put(
                 self.base_url
                 + "/content_types/customers/entries/"
@@ -97,9 +93,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
                 str(self.prod2.id): [prod_set3.id],
             }
             self.assertEqual(json.loads(data["wishlists"]), expected_wl)
-            self.assertEqual(
-                json.loads(data["product_wishlists"]), expected_prods
-            )
+            self.assertEqual(json.loads(data["product_wishlists"]), expected_prods)
 
     def test_update_wishlist(self):
         self._init_job_counter()
@@ -187,9 +181,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
 
     def _test_export(self, partner_binding, expected_wl, expected_prods):
         with requests_mock.mock() as m:
-            m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
-            )
+            m.post(self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"})
             m.put(
                 self.base_url
                 + "/content_types/customers/entries/"
@@ -201,9 +193,7 @@ class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
             data = m.request_history[1].json()["content_entry"]
 
             self.assertEqual(json.loads(data["wishlists"]), expected_wl)
-            self.assertEqual(
-                json.loads(data["product_wishlists"]), expected_prods
-            )
+            self.assertEqual(json.loads(data["product_wishlists"]), expected_prods)
 
     def test_create_line_directly(self):
         self._init_job_counter()

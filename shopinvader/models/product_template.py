@@ -37,9 +37,7 @@ class ProductTemplate(models.Model):
 
     def _compute_shopinvader_backend_ids(self):
         for rec in self:
-            rec.shopinvader_backend_ids = rec.mapped(
-                "shopinvader_bind_ids.backend_id"
-            )
+            rec.shopinvader_backend_ids = rec.mapped("shopinvader_bind_ids.backend_id")
 
     def unlink(self):
         for record in self:

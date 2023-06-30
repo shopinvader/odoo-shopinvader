@@ -19,25 +19,21 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
             )
         )
         cls.backend = cls.env.ref("shopinvader.backend_1")
-        cls.template = cls.env.ref(
-            "product.product_product_4_product_template"
-        )
+        cls.template = cls.env.ref("product.product_product_4_product_template")
         cls.variant = cls.env.ref("product.product_product_4b")
         cls.bind_wizard_model = cls.env["shopinvader.variant.binding.wizard"]
-        cls.unbind_wizard_model = cls.env[
-            "shopinvader.variant.unbinding.wizard"
-        ]
+        cls.unbind_wizard_model = cls.env["shopinvader.variant.unbinding.wizard"]
         cls.product_bind_model = cls.env["shopinvader.variant"]
 
     def test_product_binding(self):
         """
-            Select a product and
-            - bind it to a shopinvader backend
-              check that only the selected variant is binded (and the template)
-              but not the other variants
-            - bind the others variants
-            - unbind it
-            - bind it again
+        Select a product and
+        - bind it to a shopinvader backend
+          check that only the selected variant is binded (and the template)
+          but not the other variants
+        - bind the others variants
+        - unbind it
+        - bind it again
         """
         self.assertFalse(self.template.shopinvader_bind_ids)
         self.assertFalse(
@@ -73,11 +69,7 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
         # only one variant must be binded
         self.assertEqual(
             1,
-            len(
-                self.template.mapped(
-                    "product_variant_ids.shopinvader_bind_ids"
-                )
-            ),
+            len(self.template.mapped("product_variant_ids.shopinvader_bind_ids")),
         )
 
         # ------------------------
@@ -119,9 +111,7 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
         self.assertEqual(len(bind_record), 0)
 
         # The binding record should still exist but inactive
-        bind_record = self.product_bind_model.with_context(
-            active_test=False
-        ).search(
+        bind_record = self.product_bind_model.with_context(active_test=False).search(
             [
                 ("record_id", "=", self.variant.id),
                 ("backend_id", "=", self.backend.id),
@@ -153,8 +143,8 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
 
     def test_product_inactivation(self):
         """
-            Select a product and bind it to a Lengow Catalogue
-            Inactivation of the product must unbind the product
+        Select a product and bind it to a Lengow Catalogue
+        Inactivation of the product must unbind the product
         """
         # --------------------------------
         # Bind the product to the Backend

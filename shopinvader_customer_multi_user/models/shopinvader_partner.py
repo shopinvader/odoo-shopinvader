@@ -39,9 +39,7 @@ class ShopinvaderPartner(models.Model):
         ondelete="restrict",
     )
     is_main_account = fields.Boolean(compute="_compute_is_main_account")
-    can_manage_users = fields.Boolean(
-        help="Authorize this user to manage the account."
-    )
+    can_manage_users = fields.Boolean(help="Authorize this user to manage the account.")
     is_admin_account = fields.Boolean(compute="_compute_permission_flags")
     is_users_manager = fields.Boolean(compute="_compute_permission_flags")
 
@@ -84,9 +82,7 @@ class ShopinvaderPartner(models.Model):
         If we have a binding on both records (child partner and parent partner)
         this is an invader user.
         """
-        return bool(
-            self.invader_parent_id and not self.invader_parent_id == self
-        )
+        return bool(self.invader_parent_id and not self.invader_parent_id == self)
 
     def _get_main_partner(self):
         """Retrieve the main partner of the account."""
@@ -94,15 +90,11 @@ class ShopinvaderPartner(models.Model):
         main_partner_domain = safe_eval(
             self.backend_id.multi_user_main_partner_domain or "[]"
         )
-        if main_partner_domain and partner.filtered_domain(
-            main_partner_domain
-        ):
+        if main_partner_domain and partner.filtered_domain(main_partner_domain):
             return partner
         while partner.parent_id:
             partner = partner.parent_id
-            if main_partner_domain and partner.filtered_domain(
-                main_partner_domain
-            ):
+            if main_partner_domain and partner.filtered_domain(main_partner_domain):
                 return partner
         return partner.filtered_domain(main_partner_domain)
 
@@ -157,16 +149,12 @@ class ShopinvaderPartner(models.Model):
         if related_partner and not self.record_id == related_partner:
             # See records from its related_partner (normally the parent)
             # but not other belonging to other users (like w/ child_of)
-            partner_domains.append(
-                [(partner_field, operator, related_partner.id)]
-            )
+            partner_domains.append([(partner_field, operator, related_partner.id)])
             if main_account and main_account != related_partner:
                 # See records from parent main account
                 # NOTE: if main_account is the company,
                 # they see records from the company as well.
-                partner_domains.append(
-                    [(partner_field, operator, main_account.id)]
-                )
+                partner_domains.append([(partner_field, operator, main_account.id)])
         return expression.OR(partner_domains)
 
     def _make_address_domain(self):
@@ -206,9 +194,7 @@ class ShopinvaderPartner(models.Model):
             if related_partner:
                 # See records from its related_partner (normally the parent)
                 # but not other belonging to other users (like w/ child_of)
-                partner_domains.append(
-                    _make_parent_domain_leaf(related_partner)
-                )
+                partner_domains.append(_make_parent_domain_leaf(related_partner))
                 specific_ids.append(related_partner.id)
 
             if main_account and main_account != related_partner:

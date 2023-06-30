@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
 <record id="view_shopinvader_category_form" model="ir.ui.view">
@@ -6,33 +6,39 @@
     <field name="arch" type="xml">
         <form>
             <group name="top">
-                <field name="backend_id"/>
-                <field name="lang_id"/>
-                <field name="active"/>
+                <field name="backend_id" />
+                <field name="lang_id" />
+                <field name="active" />
             </group>
             <notebook>
                 <page name="description" string="Description">
                     <group name="description">
-                        <field name="subtitle"/>
-                        <separator string="Short Description" colspan="2"/>
-                        <field name="short_description" nolabel="1" colspan="2"/>
-                        <separator string="Description" colspan="2"/>
-                        <field name="description" nolabel="1" colspan="2"/>
+                        <field name="subtitle" />
+                        <separator string="Short Description" colspan="2" />
+                        <field name="short_description" nolabel="1" colspan="2" />
+                        <separator string="Description" colspan="2" />
+                        <field name="description" nolabel="1" colspan="2" />
                     </group>
                 </page>
                 <page name="seo" string="SEO">
                     <group name="meta_and_url">
-                        <field name="seo_title"/>
-                        <field name="meta_keywords"/>
-                        <field name="meta_description"/>
-                        <field name="url_builder"/>
-                        <field name="manual_url_key" attrs="{'invisible': [('url_builder', '!=', 'manual')], 'required': [('url_builder', '=', 'manual')]}"/>
-                        <field name="url_key" attrs="{'invisible': [('url_builder', '=', 'manual')]}"/>
+                        <field name="seo_title" />
+                        <field name="meta_keywords" />
+                        <field name="meta_description" />
+                        <field name="url_builder" />
+                        <field
+                                name="manual_url_key"
+                                attrs="{'invisible': [('url_builder', '!=', 'manual')], 'required': [('url_builder', '=', 'manual')]}"
+                            />
+                        <field
+                                name="url_key"
+                                attrs="{'invisible': [('url_builder', '=', 'manual')]}"
+                            />
                     </group>
                     <group name="redirect_url" string="Redirect Url">
                         <field name="redirect_url_url_ids" nolabel="1" colspan="2">
                             <tree>
-                                <field name="url_key"/>
+                                <field name="url_key" />
                             </tree>
                         </field>
                     </group>
@@ -46,9 +52,9 @@
     <field name="model">shopinvader.category</field>
     <field name="arch" type="xml">
         <tree string="Shopinvader Category" create="0" edit="0" delete="0">
-            <field name="sequence" widget="handle"/>
-            <field name="display_name"/>
-            <field name="backend_id"/>
+            <field name="sequence" widget="handle" />
+            <field name="display_name" />
+            <field name="backend_id" />
         </tree>
     </field>
 </record>
@@ -57,10 +63,15 @@
     <field name="model">shopinvader.category</field>
     <field name="arch" type="xml">
         <search string="Shopinvader Product">
-            <field name="name"/>
-            <field name="backend_id"/>
+            <field name="name" />
+            <field name="backend_id" />
             <group string="Group By">
-                <filter name="group_by_backend_id" string="Backend" domain="[]" context="{'group_by':'backend_id'}"/>
+                <filter
+                        name="group_by_backend_id"
+                        string="Backend"
+                        domain="[]"
+                        context="{'group_by':'backend_id'}"
+                    />
             </group>
         </search>
     </field>
@@ -70,7 +81,7 @@
     <field name="name">Shopinvader Category</field>
     <field name="res_model">shopinvader.category</field>
     <field name="view_mode">tree,form</field>
-    <field name="search_view_id" ref="view_shopinvader_category_search"/>
+    <field name="search_view_id" ref="view_shopinvader_category_search" />
 </record>
 
 <menuitem

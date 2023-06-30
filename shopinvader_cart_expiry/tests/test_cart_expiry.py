@@ -44,9 +44,7 @@ class TestCartExpiry(CartCase):
     def test_cart_expiration_date(self):
         so_date = fields.Datetime.from_string(self.sale.write_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
-        self.backend.write(
-            {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
-        )
+        self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"})
         now_method = "odoo.fields.Datetime.now"
         with mock.patch(now_method) as mock_now:
             mock_now.return_value = today
@@ -60,9 +58,7 @@ class TestCartExpiry(CartCase):
     def test_cart_expiry_cancel(self):
         so_date = fields.Datetime.from_string(self.sale.write_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
-        self.backend.write(
-            {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
-        )
+        self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"})
         now_method = "odoo.fields.Datetime.now"
         with mock.patch(now_method) as mock_now:
             mock_now.return_value = today
@@ -77,9 +73,7 @@ class TestCartExpiry(CartCase):
     def test_cart_expiry_delete(self):
         so_date = fields.Datetime.from_string(self.sale.write_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
-        self.backend.write(
-            {"cart_expiry_delay": 1, "cart_expiry_policy": "delete"}
-        )
+        self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "delete"})
         now_method = "odoo.fields.Datetime.now"
         with mock.patch(now_method) as mock_now:
             mock_now.return_value = today
@@ -94,9 +88,7 @@ class TestCartExpiry(CartCase):
 
     def test_new_cart_expiration_date(self):
         today = fields.Datetime.now()
-        self.backend.write(
-            {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
-        )
+        self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"})
         # Void Session
         self.shopinvader_session = {}
         with self.work_on_services(
@@ -115,9 +107,7 @@ class TestCartExpiry(CartCase):
                     "item_qty": 2.0,
                 },
             )
-            self.shopinvader_session["cart_id"] = response["set_session"][
-                "cart_id"
-            ]
+            self.shopinvader_session["cart_id"] = response["set_session"]["cart_id"]
             sale = self.env["sale.order"].browse(
                 self.shopinvader_session.get("cart_id")
             )
@@ -135,9 +125,7 @@ class TestCartExpiry(CartCase):
         so_date = fields.Datetime.from_string(self.sale.write_date)
         today = fields.Datetime.to_string(so_date + timedelta(hours=5))
         self.sale.write({"state": "sent"})
-        self.backend.write(
-            {"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"}
-        )
+        self.backend.write({"cart_expiry_delay": 1, "cart_expiry_policy": "cancel"})
         now_method = "odoo.fields.Datetime.now"
         with mock.patch(now_method) as mock_now:
             mock_now.return_value = today

@@ -11,8 +11,7 @@ from .common import TestMultiUserCommon
 
 
 class TestMultiUserServiceCtx(TestMultiUserCommon):
-    """Test interaction with service component context.
-    """
+    """Test interaction with service component context."""
 
     # TODO: would be nice to have this in core module (or base_rest)
     # to allow full testing of the service stack w/out using HttpTestCase

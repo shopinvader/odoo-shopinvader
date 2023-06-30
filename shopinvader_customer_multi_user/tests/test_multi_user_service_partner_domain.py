@@ -6,17 +6,14 @@ from .common import TestMultiUserCommon
 
 
 class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
-    """Test partner domains for services
-    """
+    """Test partner domains for services"""
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         # Enable multi-user
         cls.backend.customer_multi_user = True
-        cls.all_bindings = (
-            cls.user_binding + cls.user_binding2 + cls.user_binding3
-        )
+        cls.all_bindings = cls.user_binding + cls.user_binding2 + cls.user_binding3
         # Create sale orders per each partner
         cls.sale_company = cls.env.ref("shopinvader.sale_order_2").copy(
             {"partner_id": cls.company.id}
@@ -102,12 +99,8 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
                 {found}
             """.format(
                 partner=partner,
-                expected=" + ".join(
-                    ["%s (%d)" % (x.name, x.id) for x in expected]
-                ),
-                found=" + ".join(
-                    ["%s (%d)" % (x["name"], x["id"]) for x in found]
-                ),
+                expected=" + ".join(["%s (%d)" % (x.name, x.id) for x in expected]),
+                found=" + ".join(["%s (%d)" % (x["name"], x["id"]) for x in found]),
             ),
         )
 
@@ -115,7 +108,8 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         service = self._get_service(partner, "sales")
         res = service.search()
         self.assertEqual(
-            sorted([x["id"] for x in res["data"]]), sorted(expected.ids),
+            sorted([x["id"] for x in res["data"]]),
+            sorted(expected.ids),
         )
 
     def _test_invoice(self, partner, expected):
@@ -128,9 +122,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         partner = self.company
         self._test_address(
             partner,
-            partner
-            + self.all_addresses
-            + self.all_bindings.mapped("record_id"),
+            partner + self.all_addresses + self.all_bindings.mapped("record_id"),
         )
         self._test_sale(partner, self.all_orders)
         self._test_invoice(partner, self.all_invoices)
@@ -140,9 +132,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         partner = self.company
         self._test_address(
             partner,
-            partner
-            + self.all_addresses
-            + self.all_bindings.mapped("record_id"),
+            partner + self.all_addresses + self.all_bindings.mapped("record_id"),
         )
         self._test_sale(partner, self.all_orders)
         self._test_invoice(partner, self.all_invoices)
@@ -152,9 +142,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         partner = self.company
         self._test_address(
             partner,
-            partner
-            + self.all_addresses
-            + self.all_bindings.mapped("record_id"),
+            partner + self.all_addresses + self.all_bindings.mapped("record_id"),
         )
         self._test_sale(partner, self.all_orders)
         self._test_invoice(partner, self.all_invoices)
@@ -164,8 +152,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
     ):
         self._test_address(
             partner,
-            partner
-            + partner.child_ids.filtered(lambda x: not x.shopinvader_bind_ids),
+            partner + partner.child_ids.filtered(lambda x: not x.shopinvader_bind_ids),
         )
         self._test_sale(
             partner,
@@ -179,8 +166,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         )
 
     def test_user_direct_child_of_company__record_id(self):
-        """Direct child sees only its own records.
-        """
+        """Direct child sees only its own records."""
         partner = self.user_binding.record_id
         self._test_user_direct_child_of_company__record_id(partner)
         partner = self.user_binding2.record_id
@@ -201,8 +187,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         self._test_invoice(partner, expected_invoices)
 
     def test_user_direct_child_of_company__parent_id(self):
-        """Direct child sees only its own records and the ones from direct parent.
-        """
+        """Direct child sees only its own records and the ones from direct parent."""
         self.backend.multi_user_records_policy = "parent_id"
         partner = self.user_binding.record_id
         expected_addresses = (
@@ -242,8 +227,7 @@ class TestMultiUserServicePartnerDomain(TestMultiUserCommon):
         )
 
     def test_user_direct_child_of_company__main_partner_id(self):
-        """Direct child sees only its own records and the ones from main partner.
-        """
+        """Direct child sees only its own records and the ones from main partner."""
         self.backend.multi_user_records_policy = "main_partner_id"
 
         partner = self.user_binding.record_id

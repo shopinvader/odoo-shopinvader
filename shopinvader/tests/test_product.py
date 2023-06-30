@@ -15,9 +15,7 @@ class ProductCase(ProductCommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(
-            context=dict(cls.env.context, test_queue_job_no_delay=True)
-        )
+        cls.env = cls.env(context=dict(cls.env.context, test_queue_job_no_delay=True))
         cls.backend = cls.backend.with_context(test_queue_job_no_delay=True)
 
     def test_create_shopinvader_variant(self):
@@ -39,10 +37,8 @@ class ProductCase(ProductCommonCase):
     #            self.template.categ_id + self.template.categ_id.parent_id)
     #
     def test_variant_attributes(self):
-        attr_dict = {"legs": u"Steel", "color": u"Black"}
-        self.assertDictEqual(
-            self.shopinvader_variant.variant_attributes, attr_dict
-        )
+        attr_dict = {"legs": "Steel", "color": "Black"}
+        self.assertDictEqual(self.shopinvader_variant.variant_attributes, attr_dict)
 
     def test_product_price(self):
         self.assertEqual(
@@ -73,10 +69,7 @@ class ProductCase(ProductCommonCase):
             new_url = shopinv_variant.url_url_ids.filtered(
                 lambda u: u not in existing_urls
             )
-            if (
-                shopinv_variant_names.get(shopinv_variant)
-                != shopinv_variant.name
-            ):
+            if shopinv_variant_names.get(shopinv_variant) != shopinv_variant.name:
                 self.assertEquals(len(new_url), 1)
             else:
                 self.assertEquals(len(new_url), 0)
@@ -129,9 +122,7 @@ class ProductCase(ProductCommonCase):
         )
         # use a fiscal position defining a mapping from tax included to tax
         # excluded
-        tax_exclude_fiscal_position = self.env.ref(
-            "shopinvader.fiscal_position_1"
-        )
+        tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
         price = self.shopinvader_variant._get_price(
             self.base_pricelist, tax_exclude_fiscal_position
         )
@@ -196,9 +187,7 @@ class ProductCase(ProductCommonCase):
         # excluded
         # Tax mapping should not impact the computation of the discount and
         # the original value
-        tax_exclude_fiscal_position = self.env.ref(
-            "shopinvader.fiscal_position_1"
-        )
+        tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
         price = self.shopinvader_variant._get_price(
             self.base_pricelist, tax_exclude_fiscal_position
         )
@@ -242,13 +231,11 @@ class ProductCase(ProductCommonCase):
         shopinvader_categ = categ.shopinvader_bind_ids[0]
         self.assertEqual(len(shopinvader_categ.shopinvader_child_ids), 3)
         for binding in categ.shopinvader_bind_ids:
-            self.assertEqual(
-                binding.shopinvader_parent_id.lang_id, binding.lang_id
-            )
+            self.assertEqual(binding.shopinvader_parent_id.lang_id, binding.lang_id)
             if binding.lang_id.code == "fr_FR":
-                self.assertEqual(binding.url_key, u"tous/en-vente")
+                self.assertEqual(binding.url_key, "tous/en-vente")
             elif binding.lang_id.code == "en_US":
-                self.assertEqual(binding.url_key, u"all/saleable")
+                self.assertEqual(binding.url_key, "all/saleable")
 
     def test_product_category_with_one_lang(self):
         self.backend.bind_all_category()
@@ -270,9 +257,9 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(len(shopinvader_product.shopinvader_categ_ids), 3)
         for binding in product.shopinvader_bind_ids:
             if binding.lang_id.code == "fr_FR":
-                self.assertEqual(binding.url_key, u"bureau-personnalisable")
+                self.assertEqual(binding.url_key, "bureau-personnalisable")
             elif binding.lang_id.code == "en_US":
-                self.assertEqual(binding.url_key, u"customizable-desk-config")
+                self.assertEqual(binding.url_key, "customizable-desk-config")
 
     def test_create_product_binding1(self):
         """
@@ -289,9 +276,7 @@ class ProductCase(ProductCommonCase):
         shopinvader.variant should be created)
         :return: bool
         """
-        product_tmpl_obj = self.env["product.template"].with_context(
-            active_test=False
-        )
+        product_tmpl_obj = self.env["product.template"].with_context(active_test=False)
         product_values = {"name": "Shopinvader t-shirt"}
         product_tmpl = product_tmpl_obj.create(product_values)
         self.assertFalse(product_tmpl.shopinvader_bind_ids)
@@ -316,9 +301,7 @@ class ProductCase(ProductCommonCase):
         :return: bool
         """
         backend = self.backend
-        product_tmpl_obj = self.env["product.template"].with_context(
-            active_test=False
-        )
+        product_tmpl_obj = self.env["product.template"].with_context(active_test=False)
         lang = self.env["res.lang"]._lang_get(self.env.user.lang)
         product_values = {
             "name": "Shopinvader t-shirt",
@@ -358,9 +341,7 @@ class ProductCase(ProductCommonCase):
         :return: bool
         """
         backend = self.backend
-        product_tmpl_obj = self.env["product.template"].with_context(
-            active_test=False
-        )
+        product_tmpl_obj = self.env["product.template"].with_context(active_test=False)
         lang = self.env["res.lang"]._lang_get(self.env.user.lang)
         product_values = {
             "name": "Shopinvader t-shirt",
@@ -405,9 +386,7 @@ class ProductCase(ProductCommonCase):
         white_attr = self.env.ref("product.product_attribute_value_3")
         black_attr = self.env.ref("product.product_attribute_value_4")
         attr = white_attr | black_attr
-        product_tmpl_obj = self.env["product.template"].with_context(
-            active_test=False
-        )
+        product_tmpl_obj = self.env["product.template"].with_context(active_test=False)
         lang = self.env["res.lang"]._lang_get(self.env.user.lang)
         product_values = {
             "name": "Shopinvader t-shirt",
@@ -460,9 +439,7 @@ class ProductCase(ProductCommonCase):
                     (4, self.env.ref("sales_team.group_sale_manager").id),
                     (
                         4,
-                        self.env.ref(
-                            "shopinvader.group_shopinvader_manager"
-                        ).id,
+                        self.env.ref("shopinvader.group_shopinvader_manager").id,
                     ),
                 ]
             }
@@ -488,9 +465,7 @@ class ProductCase(ProductCommonCase):
         # If sale_stock module have been installed
         # We need to drop the constraint as at that moment the module
         # is not loaded (shopinvader do not depend on it)
-        sale_stock = self.env["ir.module.module"].search(
-            [("name", "=", "sale_stock")]
-        )
+        sale_stock = self.env["ir.module.module"].search([("name", "=", "sale_stock")])
         if sale_stock.state == "installed":
             self.cr.execute(
                 """ALTER TABLE res_company
@@ -520,9 +495,7 @@ class ProductCase(ProductCommonCase):
         product.shopinvader_name = "Test shopinvader name"
         self.assertEqual(product.shopinvader_display_name, product.name)
         self.backend.use_shopinvader_product_name = True
-        self.assertEqual(
-            product.shopinvader_display_name, product.shopinvader_name
-        )
+        self.assertEqual(product.shopinvader_display_name, product.shopinvader_name)
 
     def _check_category_level(self, shopinv_categs):
         """
@@ -564,16 +537,12 @@ class ProductCase(ProductCommonCase):
         categs = categ_grand_parent | categ_parent | categ_child
         product.write({"categ_id": categ_child.id})
         # New categories shouldn't be binded yet
-        self.assertFalse(
-            shopinv_categ_obj.search([("record_id", "in", categs.ids)])
-        )
+        self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 0})
         self.backend.bind_all_product()
         self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
         # New categories shouldn't be binded due to binded level set to 0
-        self.assertFalse(
-            shopinv_categ_obj.search([("record_id", "in", categs.ids)])
-        )
+        self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 2})
         self.backend.bind_all_product()
         categ_level2 = categ_child
@@ -624,16 +593,12 @@ class ProductCase(ProductCommonCase):
         product.write({"categ_id": categ_child.id})
         wizard = wizard_obj.create(wizard_values)
         # New categories shouldn't be binded yet
-        self.assertFalse(
-            shopinv_categ_obj.search([("record_id", "in", categs.ids)])
-        )
+        self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 0})
         wizard.bind_products()
         self.assertEquals(existing_binded_categs, shopinv_categ_obj.search([]))
         # New categories shouldn't be binded due to binded level set to 0
-        self.assertFalse(
-            shopinv_categ_obj.search([("record_id", "in", categs.ids)])
-        )
+        self.assertFalse(shopinv_categ_obj.search([("record_id", "in", categs.ids)]))
         self.backend.write({"category_binding_level": 2})
         wizard.bind_products()
         shopinv_products = self.env["shopinvader.variant"].search(
@@ -832,9 +797,7 @@ class ProductCase(ProductCommonCase):
         we have to also disable the product.
         :return:
         """
-        shopinv_product = self.shopinvader_variants.mapped(
-            "shopinvader_product_id"
-        )
+        shopinv_product = self.shopinvader_variants.mapped("shopinvader_product_id")
         self.assertEquals(len(shopinv_product), 1)
         self.assertGreaterEqual(len(self.shopinvader_variants), 1)
         # Init: every variants and shopinv product are active True
@@ -863,12 +826,8 @@ class ProductCase(ProductCommonCase):
         variant_fr = prod.shopinvader_bind_ids.filtered(
             lambda x: x.lang_id.code == "fr_FR"
         )
-        self.assertEqual(
-            prod._get_invader_variant(self.backend, "en_US"), variant_en
-        )
-        self.assertEqual(
-            prod._get_invader_variant(self.backend, "fr_FR"), variant_fr
-        )
+        self.assertEqual(prod._get_invader_variant(self.backend, "en_US"), variant_en)
+        self.assertEqual(prod._get_invader_variant(self.backend, "fr_FR"), variant_fr)
 
     # TODO: split this and other computed field tests to its own class
     def test_main_product(self):
@@ -876,15 +835,13 @@ class ProductCase(ProductCommonCase):
         tmpl = invader_variants[0].product_tmpl_id
         main_variant = tmpl.product_variant_ids[0]
         self.assertTrue(
-            invader_variants.filtered(
-                lambda x: x.record_id == main_variant
-            ).main
+            invader_variants.filtered(lambda x: x.record_id == main_variant).main
         )
         self.assertNotIn(
             True,
-            invader_variants.filtered(
-                lambda x: x.record_id != main_variant
-            ).mapped("main"),
+            invader_variants.filtered(lambda x: x.record_id != main_variant).mapped(
+                "main"
+            ),
         )
         # change order
         tmpl.product_variant_ids[0].default_code = "ZZZZZZZ"
@@ -893,23 +850,19 @@ class ProductCase(ProductCommonCase):
         main_variant1 = tmpl.product_variant_ids[0]
         self.assertNotEqual(main_variant, main_variant1)
         self.assertTrue(
-            invader_variants.filtered(
-                lambda x: x.record_id == main_variant1
-            ).main
+            invader_variants.filtered(lambda x: x.record_id == main_variant1).main
         )
         self.assertNotIn(
             True,
-            invader_variants.filtered(
-                lambda x: x.record_id != main_variant1
-            ).mapped("main"),
+            invader_variants.filtered(lambda x: x.record_id != main_variant1).mapped(
+                "main"
+            ),
         )
 
     def test_main_product_with_two_lang(self):
         lang = self._install_lang("base.lang_fr")
         template = self.env.ref("product.product_product_4_product_template")
-        template.with_context(
-            lang="fr_FR"
-        ).name = "Bureau Personnalisable (CONFIG)"
+        template.with_context(lang="fr_FR").name = "Bureau Personnalisable (CONFIG)"
         template.flush()
         self.backend.lang_ids |= lang
         self._bind_products(template.product_variant_ids)

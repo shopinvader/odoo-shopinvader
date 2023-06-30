@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     container: ${{ matrix.container }}
     strategy:
       fail-fast: false
@@ -28,8 +28,6 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
-    env:
-      PIP_EXTRA_INDEX_URL: "https://wheelhouse.shopinvader.com/simple/"
     steps:
       - uses: actions/checkout@v2
         with:

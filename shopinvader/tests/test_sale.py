@@ -78,9 +78,7 @@ class SaleCase(CommonCase, CommonTestDownload):
             "template_id": template.id,
         }
         self.service.shopinvader_backend.notification_ids.unlink()
-        self.service.shopinvader_backend.write(
-            {"notification_ids": [(0, 0, values)]}
-        )
+        self.service.shopinvader_backend.write({"notification_ids": [(0, 0, values)]})
 
     @mute_logger("odoo.models.unlink")
     def test_ask_email_invoice(self):
@@ -96,9 +94,7 @@ class SaleCase(CommonCase, CommonTestDownload):
         for line in self.sale.order_line:
             line.write({"qty_delivered": line.product_uom_qty})
         invoice = self.sale._create_invoices()
-        description = "Notify {} for {},{}".format(
-            notif, invoice._name, invoice.id
-        )
+        description = "Notify {} for {},{}".format(notif, invoice._name, invoice.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
         self.service.dispatch("ask_email_invoice", self.sale.id)
         self.assertEquals(self.env["queue.job"].search_count(domain), 1)
@@ -213,9 +209,7 @@ class SaleCase(CommonCase, CommonTestDownload):
         self.assertEqual(res["data"][0]["id"], order2.id)
         self.assertEqual(res["data"][1]["id"], order1.id)
         # change ordering
-        res = self.service.dispatch(
-            "search", params={"order": "date_order asc"}
-        )
+        res = self.service.dispatch("search", params={"order": "date_order asc"})
         self.assertEqual(len(res["data"]), 2)
         self.assertEqual(res["data"][0]["id"], order1.id)
         self.assertEqual(res["data"][1]["id"], order2.id)

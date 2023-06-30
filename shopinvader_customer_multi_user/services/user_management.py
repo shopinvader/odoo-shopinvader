@@ -137,10 +137,7 @@ class UsersService(Component):
         return res
 
     def _get_base_search_domain(self):
-        if (
-            not self._is_logged_in()
-            or not self.invader_partner_user.is_users_manager
-        ):
+        if not self._is_logged_in() or not self.invader_partner_user.is_users_manager:
             return expression.FALSE_DOMAIN
         # Simple users w/ delegated permissions
         # can see only records they own.

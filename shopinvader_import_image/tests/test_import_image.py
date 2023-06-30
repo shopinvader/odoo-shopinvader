@@ -14,9 +14,7 @@ class TestShopinvaderImportImageCase(TestShopinvaderImageCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.storage_backend = cls.env.ref(
-            "storage_backend.default_storage_backend"
-        )
+        cls.storage_backend = cls.env.ref("storage_backend.default_storage_backend")
         cls.base_path = os.path.dirname(os.path.abspath(__file__))
         cls.file_csv_content = cls._get_file_content(
             "image_import_test.csv", base_path=cls.base_path

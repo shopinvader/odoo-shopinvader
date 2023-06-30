@@ -9,8 +9,7 @@ from odoo.addons.component.core import Component
 
 
 class CustomerPriceService(Component):
-    """Shopinvader service to expose customer specific product prices.
-    """
+    """Shopinvader service to expose customer specific product prices."""
 
     _name = "shopinvader.customer.price.service"
     _inherit = "base.shopinvader.service"

@@ -86,9 +86,7 @@ class ProductSet(CommonCase):
         )
         variant = prod.shopinvader_bind_ids[0]
         self.assertEqual(
-            self.prod_set.get_lines_by_products(
-                invader_variant_ids=variant.ids
-            ),
+            self.prod_set.get_lines_by_products(invader_variant_ids=variant.ids),
             line,
         )
         self.assertEqual(
@@ -112,8 +110,6 @@ class ProductSet(CommonCase):
             self.prod_set.get_line_by_product(invader_variant_id=variant.id),
             line,
         )
-        self.assertEqual(
-            self.prod_set.get_line_by_product(product_id=prod.id), line
-        )
+        self.assertEqual(self.prod_set.get_line_by_product(product_id=prod.id), line)
         with self.assertRaises(exceptions.ValidationError):
             self.prod_set.get_line_by_product()

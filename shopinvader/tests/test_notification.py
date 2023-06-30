@@ -156,8 +156,7 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
         # notification goes to the owner of the address
         partner = self.partner
         job = self._find_job(
-            name="Notify address_created_not_validated for res.partner,%d"
-            % partner.id
+            name="Notify address_created_not_validated for res.partner,%d" % partner.id
         )
         self.assertTrue(job)
         self._perform_job(job)

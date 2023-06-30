@@ -13,9 +13,7 @@ class CustomerService(Component):
         company_token = vals.pop("company_token", None)
         if company_token and self.shopinvader_backend.customer_multi_user:
             # retrieve the company
-            company = self.env["res.partner"].find_by_invader_user_token(
-                company_token
-            )
+            company = self.env["res.partner"].find_by_invader_user_token(company_token)
             if company:
                 # set parent and specific type
                 vals.pop("is_company", None)

@@ -11,8 +11,7 @@ from ..models.shopinvader_partner import STATE_ACTIVE, STATE_PENDING
 
 
 class CustomerService(Component):
-    """Shopinvader service to create and edit customers.
-    """
+    """Shopinvader service to create and edit customers."""
 
     _inherit = [
         "base.shopinvader.service",
@@ -80,9 +79,7 @@ class CustomerService(Component):
         if mode == "create":
             if params.get("is_company"):
                 params["is_company"] = True
-            enabled = self.partner_validator.enabled_by_params(
-                params, "profile"
-            )
+            enabled = self.partner_validator.enabled_by_params(params, "profile")
             params["state"] = STATE_ACTIVE if enabled else STATE_PENDING
         return params
 

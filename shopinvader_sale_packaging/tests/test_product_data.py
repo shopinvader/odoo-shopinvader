@@ -60,7 +60,12 @@ class TestProductPackagingData(CommonCase):
             make_pkg_values(
                 self.pkg_pallet,
                 can_be_sold=self.pkg_pallet.can_be_sold,
-                contained=[make_pkg_values(self.pkg_big_box, qty=10,)],
+                contained=[
+                    make_pkg_values(
+                        self.pkg_big_box,
+                        qty=10,
+                    )
+                ],
             ),
             make_pkg_values(
                 self.pkg_big_box,

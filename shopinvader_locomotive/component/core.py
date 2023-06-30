@@ -6,7 +6,7 @@ from odoo.addons.component.core import AbstractComponent
 
 
 class BaseLocomotiveConnectorComponent(AbstractComponent):
-    """ Base Locomotive Connector Component
+    """Base Locomotive Connector Component
     All components of this connector should inherit from it.
     """
 

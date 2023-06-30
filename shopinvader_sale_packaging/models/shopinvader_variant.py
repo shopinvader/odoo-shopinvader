@@ -39,8 +39,7 @@ class ShopinvaderVariant(models.Model):
         contained_mapping = rec.packaging_contained_mapping or {}
         packaging = rec._ordered_packaging()
         can_be_sold_info = {
-            x["id"]: x["can_be_sold"]
-            for x in self.packaging_ids.read(["can_be_sold"])
+            x["id"]: x["can_be_sold"] for x in self.packaging_ids.read(["can_be_sold"])
         }
         for pkg in packaging:
             pkg_info = self._prepare_qty_by_packaging_values(pkg, pkg.qty)

@@ -6,14 +6,11 @@ from .common import TestMultiUserCommon
 
 
 class TestMultiUserPartner(TestMultiUserCommon):
-    """Test partner methods and fields.
-    """
+    """Test partner methods and fields."""
 
     def test_get_shop_partner_default(self):
         self.backend.customer_multi_user = False
-        self.assertEqual(
-            self.company.get_shop_partner(self.backend), self.company
-        )
+        self.assertEqual(self.company.get_shop_partner(self.backend), self.company)
         self.assertEqual(
             self.user_binding.record_id.get_shop_partner(self.backend),
             self.user_binding.record_id,
@@ -32,9 +29,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
             self.company_binding.invader_parent_id,
             self.company_binding.browse(),
         )
-        self.assertEqual(
-            self.user_binding.invader_parent_id, self.company_binding
-        )
+        self.assertEqual(self.user_binding.invader_parent_id, self.company_binding)
 
     def test_is_invader_user(self):
         self.backend.customer_multi_user = False
@@ -44,9 +39,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertTrue(self.user_binding.record_id.has_invader_user)
 
     def test_get_shop_partner_multi_enabled_company(self):
-        self.assertEqual(
-            self.backend.multi_user_profile_policy, "main_partner_id"
-        )
+        self.assertEqual(self.backend.multi_user_profile_policy, "main_partner_id")
         customer_partner = self.company.get_shop_partner(self.backend)
         self.assertEqual(customer_partner, self.company)
 
@@ -56,21 +49,15 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.assertEqual(customer_partner, self.company)
 
     def test_get_shop_partner_multi_enabled_simple_user(self):
-        self.assertEqual(
-            self.backend.multi_user_profile_policy, "main_partner_id"
-        )
+        self.assertEqual(self.backend.multi_user_profile_policy, "main_partner_id")
 
-        customer_partner = self.user_binding.record_id.get_shop_partner(
-            self.backend
-        )
+        customer_partner = self.user_binding.record_id.get_shop_partner(self.backend)
         self.assertEqual(customer_partner, self.user_binding.main_partner_id)
 
         # change policy
         self.backend.multi_user_profile_policy = "record_id"
         # now we get the same partner as customer
-        customer_partner = self.user_binding.record_id.get_shop_partner(
-            self.backend
-        )
+        customer_partner = self.user_binding.record_id.get_shop_partner(self.backend)
         self.assertEqual(customer_partner, self.user_binding.record_id)
 
     def test_main_partner_recompute(self):
@@ -80,9 +67,7 @@ class TestMultiUserPartner(TestMultiUserCommon):
         self.user_binding.parent_id = new_parent
         self.assertEqual(self.user_binding.main_partner_id, new_parent)
 
-        self.backend.multi_user_main_partner_domain = (
-            "[('type', '=', 'delivery')]"
-        )
+        self.backend.multi_user_main_partner_domain = "[('type', '=', 'delivery')]"
         # force recompute
         self.user_binding._compute_main_partner_id()
         # the parent partner does not match the domain

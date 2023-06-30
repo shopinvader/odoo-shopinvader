@@ -43,9 +43,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         email (after having removed the first binding)
         :return:
         """
-        self.assertFalse(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
-        )
+        self.assertFalse(self.env["res.partner"]._is_partner_duplicate_prevented())
         # we create a first binding
         binding = self.env["shopinvader.partner"].create(
             {
@@ -55,9 +53,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             }
         )
         # a partner has been created for this binding
-        res = self.env["res.partner"].search(
-            [("email", "=", self.unique_email)]
-        )
+        res = self.env["res.partner"].search([("email", "=", self.unique_email)])
         self.assertEqual(binding.record_id, res)
         # if we remove the partner and create a new binding with the same email
         # a new partner will be created
@@ -69,9 +65,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
                 "backend_id": self.backend.id,
             }
         )
-        res = self.env["res.partner"].search(
-            [("email", "=", self.unique_email)]
-        )
+        res = self.env["res.partner"].search([("email", "=", self.unique_email)])
         self.assertEqual(len(res), 2)
 
     def test_partner_no_duplicate(self):
@@ -87,9 +81,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
-        )
+        self.assertTrue(self.env["res.partner"]._is_partner_duplicate_prevented())
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
@@ -117,9 +109,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.env["ir.config_parameter"].create(
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
-        self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
-        )
+        self.assertTrue(self.env["res.partner"]._is_partner_duplicate_prevented())
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
         partner = self.env["res.partner"].create(vals)
@@ -142,7 +132,5 @@ class TestShopinvaderPartner(SavepointComponentCase):
         self.assertEqual(child.street, "my street")
 
         # only one partner should exists with this email
-        res = self.env["res.partner"].search(
-            [("email", "=", self.unique_email)]
-        )
+        res = self.env["res.partner"].search([("email", "=", self.unique_email)])
         self.assertEqual(len(res), 1)

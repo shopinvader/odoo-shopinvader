@@ -50,7 +50,8 @@ class ShopinvaderBackend(models.Model):
             force_company=self.company_id.id
         )
         fpos_id = fp_model.get_fiscal_position(
-            partner.id, delivery_id=partner.id,
+            partner.id,
+            delivery_id=partner.id,
         )
         return fpos_id
 

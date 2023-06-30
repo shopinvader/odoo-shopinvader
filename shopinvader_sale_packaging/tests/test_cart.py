@@ -52,9 +52,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
 
     def test_add_item(self):
         self.remove_cart()
-        last_order = self.env["sale.order"].search(
-            [], limit=1, order="id desc"
-        )
+        last_order = self.env["sale.order"].search([], limit=1, order="id desc")
         # TODO: in theory we should be able to skip prod qty
         # since it's computed in `sale_order_line_packaging_qty `
         cart = self.add_item(
@@ -97,9 +95,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
         self.assertEqual(line.product_packaging_qty, 3.0)
         self.assertEqual(line.product_uom_qty, 6000)
         # Check cart line values
-        cart_line = [x for x in cart["lines"]["items"] if x["id"] == line.id][
-            0
-        ]
+        cart_line = [x for x in cart["lines"]["items"] if x["id"] == line.id][0]
         self.check_product_and_qty(cart_line, product.id, 6000)
         self.assertEqual(
             cart_line["packaging"],
@@ -127,9 +123,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
             self.service.dispatch("copy", params={"id": self.cart.id})
         )
         cart_line = [
-            x
-            for x in cart["lines"]["items"]
-            if x["product"]["objectID"] == product.id
+            x for x in cart["lines"]["items"] if x["product"]["objectID"] == product.id
         ][0]
         self.assertIn("sell_only_by_packaging", cart_line["product"])
         self.check_product_and_qty(cart_line, product.id, 8000)

@@ -29,15 +29,16 @@ class ShopinvaderPartner(models.Model):
         string="Partner Email",
     )
     role = fields.Char(compute="_compute_role")
-    state = fields.Selection(selection="_select_state", default=STATE_ACTIVE,)
+    state = fields.Selection(
+        selection="_select_state",
+        default=STATE_ACTIVE,
+    )
     # Common interface to mimic the same behavior as res.partner.
     # On the binding we have a selection for the state
     # and we can set the value for each backend.
     # On addresses is relevant only if the record is enabled or not for the shop.
     # Having the same field on both models allows to use simple conditions to check.
-    is_shopinvader_active = fields.Boolean(
-        compute="_compute_is_shopinvader_active"
-    )
+    is_shopinvader_active = fields.Boolean(compute="_compute_is_shopinvader_active")
 
     def _select_state(self):
         return [
@@ -126,12 +127,10 @@ class ShopinvaderPartner(models.Model):
 
     @api.model
     def _is_same_partner_value(self, partner, vals):
-        """ we check if one of the given value is different than values
-            of the given partner
+        """we check if one of the given value is different than values
+        of the given partner
         """
-        keys_to_check = self._is_same_partner_value_keys_to_check(
-            partner, vals
-        )
+        keys_to_check = self._is_same_partner_value_keys_to_check(partner, vals)
         data = partner._convert_to_write(partner._cache)
         for key in keys_to_check:
             if data[key] != vals[key]:
@@ -174,9 +173,7 @@ class ShopinvaderPartner(models.Model):
 
     def action_shopinvader_validate(self):
         wiz = self._get_shopinvader_validate_wizard()
-        action = self.env.ref(
-            "shopinvader.shopinvader_partner_validate_act_window"
-        )
+        action = self.env.ref("shopinvader.shopinvader_partner_validate_act_window")
         action_data = action.read()[0]
         action_data["res_id"] = wiz.id
         return action_data

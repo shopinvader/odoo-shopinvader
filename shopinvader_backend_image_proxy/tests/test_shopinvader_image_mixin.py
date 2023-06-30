@@ -19,9 +19,7 @@ class TestShopinvaderImageMixin(ProductCommonCase, ProductImageCommonCase):
                 "groups_id": [
                     (
                         4,
-                        self.env.ref(
-                            "shopinvader.group_shopinvader_manager"
-                        ).id,
+                        self.env.ref("shopinvader.group_shopinvader_manager").id,
                     )
                 ]
             }

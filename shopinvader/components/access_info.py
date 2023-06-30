@@ -50,9 +50,7 @@ class PartnerAccess(Component):
         if self.partner_user is not None:
             if not self.is_main_partner():
                 if not self.is_owner(address_id):
-                    info.update(
-                        {"read": True, "update": False, "delete": False}
-                    )
+                    info.update({"read": True, "update": False, "delete": False})
                 else:
                     # only main partner can delete your address
                     info["delete"] = False

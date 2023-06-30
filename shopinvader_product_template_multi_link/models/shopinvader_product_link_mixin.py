@@ -25,9 +25,7 @@ class ShopinvaderProductLinkMixin(models.AbstractModel):
     def _compute_product_links(self):
         for record in self:
             record.product_links = record._get_product_links_by_type(
-                record._get_product_links().filtered(
-                    lambda x: x.is_link_active
-                )
+                record._get_product_links().filtered(lambda x: x.is_link_active)
             )
 
     def _get_product_links(self):

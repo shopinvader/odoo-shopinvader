@@ -20,9 +20,7 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
                 img = image[scale.key]
                 self.assertEqual(img["alt"], self.shopinvader_variant.name)
                 self.assertIn(
-                    "customizable-desk-config_{0.size_x}_{0.size_y}".format(
-                        scale
-                    ),
+                    "customizable-desk-config_{0.size_x}_{0.size_y}".format(scale),
                     img["src"],
                 )
                 self.assertIn("tag", img)
@@ -41,18 +39,14 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
     def test_images_recompute(self):
         variant = self.shopinvader_variant
         self.assertTrue(variant._images_must_recompute())
-        with mock.patch.object(
-            type(variant), "_get_image_data_for_record"
-        ) as mocked:
+        with mock.patch.object(type(variant), "_get_image_data_for_record") as mocked:
             mocked.return_value = [{"a": 1, "b": 2}]
             self.assertEqual(variant.images, [{"a": 1, "b": 2}])
             mocked.assert_called()
 
         variant.invalidate_cache(["images"])
         self.assertFalse(variant._images_must_recompute())
-        with mock.patch.object(
-            type(variant), "_get_image_data_for_record"
-        ) as mocked:
+        with mock.patch.object(type(variant), "_get_image_data_for_record") as mocked:
             mocked.return_value = [{"c": 3, "d": 4}]
             # same value as before
             self.assertEqual(variant.images, [{"a": 1, "b": 2}])
@@ -62,9 +56,7 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
         self.backend.shopinvader_variant_resize_ids[0].key = "very-small"
         variant.invalidate_cache(["images"])
         self.assertTrue(variant._images_must_recompute())
-        with mock.patch.object(
-            type(variant), "_get_image_data_for_record"
-        ) as mocked:
+        with mock.patch.object(type(variant), "_get_image_data_for_record") as mocked:
             mocked.return_value = [{"c": 3, "d": 4}]
             # recomputed
             self.assertEqual(variant.images, [{"c": 3, "d": 4}])

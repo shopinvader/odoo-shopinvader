@@ -47,9 +47,7 @@ class InvaderController(main.RestController):
                 if len(partner) > 1:
                     _logger.warning(
                         "More than one shopinvader.partner found for:"
-                        " backend_id={} email={}".format(
-                            backend.id, partner_email
-                        )
+                        " backend_id={} email={}".format(backend.id, partner_email)
                     )
                 # Could be because the email is not related to a partner or
                 # because the partner is inactive
@@ -62,9 +60,7 @@ class InvaderController(main.RestController):
             ("partner_email", "=", partner_email),
             ("backend_id", "=", backend.id),
         ]
-        return request.env["shopinvader.partner"].search(
-            partner_domain, limit=2
-        )
+        return request.env["shopinvader.partner"].search(partner_domain, limit=2)
 
     @classmethod
     def _validate_partner(cls, backend, partner):
@@ -97,15 +93,11 @@ class InvaderController(main.RestController):
         * shopinvader_backend: current shopinvader backend (matching API key)
         """
         res = super(InvaderController, self)._get_component_context()
-        res[
-            "shopinvader_backend"
-        ] = self._get_shopinvader_backend_from_request()
+        res["shopinvader_backend"] = self._get_shopinvader_backend_from_request()
         headers = request.httprequest.environ
         # TODO: all services should rely on shopinvader partner
         # rather than the real partner
         shopinvader_partner = self._get_partner_from_headers(headers)
         res.update(get_partner_work_context(shopinvader_partner))
-        res[
-            "shopinvader_session"
-        ] = self._get_shopinvader_session_from_headers(headers)
+        res["shopinvader_session"] = self._get_shopinvader_session_from_headers(headers)
         return res

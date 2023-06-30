@@ -49,16 +49,10 @@ class CommonAddressCase(CommonCase):
 
 class AddressTestCase(object):
     def _test_create_address(self, params, expected):
-        existing = [
-            address["id"] for address in self.address_service.search()["data"]
-        ]
-        address_list = self.address_service.dispatch("create", params=params)[
-            "data"
-        ]
+        existing = [address["id"] for address in self.address_service.search()["data"]]
+        address_list = self.address_service.dispatch("create", params=params)["data"]
         created_id = [
-            address["id"]
-            for address in address_list
-            if address["id"] not in existing
+            address["id"] for address in address_list if address["id"] not in existing
         ][0]
         address = self.env["res.partner"].browse(created_id)
         self.check_data(address, expected)
@@ -89,9 +83,7 @@ class AddressTestCase(object):
             address["id"] for address in self.address_service.search()["data"]
         ]
         with self.assertRaises(UserError):
-            self.address_service.dispatch(
-                "create", params=self.address_params
-            )["data"]
+            self.address_service.dispatch("create", params=self.address_params)["data"]
         self.address_params.update({"type": "invoice"})
         address_list = self.address_service.dispatch(
             "create", params=self.address_params
@@ -133,9 +125,7 @@ class AddressTestCase(object):
         # Create an invoice address
         # Search it
         self.address_params.update({"type": "invoice"})
-        self.address_service.dispatch("create", params=self.address_params)[
-            "data"
-        ]
+        self.address_service.dispatch("create", params=self.address_params)["data"]
         res = self.address_service.dispatch(
             "search", params={"scope": {"type": "invoice"}}
         )["data"]
@@ -150,9 +140,7 @@ class AddressTestCase(object):
 
     def test_search_per_page(self):
         # Ensure the 'per_page' is working into search.
-        res = self.address_service.dispatch("search", params={"per_page": 2})[
-            "data"
-        ]
+        res = self.address_service.dispatch("search", params={"per_page": 2})["data"]
         self.assertEqual(len(res), 2)
         # Ensure the 'page' is working. As there is 3 address for logged user, we
         # should have only 1 remaining result on the second page.
@@ -166,9 +154,7 @@ class AddressTestCase(object):
         self.address_service.delete(address_id)
         address = self.env["res.partner"].search([("id", "=", address_id)])
         self.assertEqual(len(address), 0)
-        partner = self.env["res.partner"].search(
-            [("id", "=", self.partner.id)]
-        )
+        partner = self.env["res.partner"].search([("id", "=", self.partner.id)])
         self.assertEqual(len(partner), 1)
 
     def test_delete_main_address(self):
@@ -177,4 +163,4 @@ class AddressTestCase(object):
 
 
 class AddressCase(CommonAddressCase, AddressTestCase):
-    """ Test address"""
+    """Test address"""

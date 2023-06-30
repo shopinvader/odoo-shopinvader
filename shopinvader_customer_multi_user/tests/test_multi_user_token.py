@@ -8,8 +8,7 @@ from .common import TestMultiUserCommon
 
 
 class TestMultiUserToken(TestMultiUserCommon):
-    """Test partner token generation and lookup.
-    """
+    """Test partner token generation and lookup."""
 
     def test_token_manual_override(self):
         self.assertEqual(self.company.invader_user_token, "ABCDEF")

@@ -17,9 +17,7 @@ class SaleOrder(models.Model):
     )
 
     def _compute_shopinvader_state_depends(self):
-        return super()._compute_shopinvader_state_depends() + (
-            "delivery_state",
-        )
+        return super()._compute_shopinvader_state_depends() + ("delivery_state",)
 
     def _get_shopinvader_state(self):
         if self.delivery_state == "no":

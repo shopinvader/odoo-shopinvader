@@ -8,8 +8,7 @@ from odoo.addons.component.core import Component
 
 
 class SaleService(Component):
-    """Shopinvader service to expose sale orders records.
-    """
+    """Shopinvader service to expose sale orders records."""
 
     _inherit = [
         "shopinvader.abstract.sale.service",
@@ -54,9 +53,7 @@ class SaleService(Component):
     def _validator_search(self):
         default_search_validator = self._default_validator_search()
         default_search_validator.pop("domain", {})
-        default_search_validator.update(
-            {"id": {"coerce": to_int, "type": "integer"}}
-        )
+        default_search_validator.update({"id": {"coerce": to_int, "type": "integer"}})
         return default_search_validator
 
     def _validator_ask_email_invoice(self):
@@ -68,8 +65,7 @@ class SaleService(Component):
 
     def _get_base_search_domain(self):
         return expression.normalize_domain(
-            self._default_domain_for_partner_records()
-            + [("typology", "=", "sale")]
+            self._default_domain_for_partner_records() + [("typology", "=", "sale")]
         )
 
     def _get_email_notification_type(self, record):
@@ -93,9 +89,7 @@ class SaleService(Component):
         """
         if notif_type == "invoice_send_email":
             target = target.invoice_ids
-        return super(SaleService, self)._launch_notification(
-            target, notif_type
-        )
+        return super(SaleService, self)._launch_notification(target, notif_type)
 
     def _convert_one_sale(self, sale):
         res = super(SaleService, self)._convert_one_sale(sale)

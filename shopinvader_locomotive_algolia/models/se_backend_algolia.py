@@ -10,9 +10,7 @@ class SeBackendAlgolia(models.Model):
     _inherit = "se.backend.algolia"
 
     # change help msg
-    algolia_api_key = fields.Char(
-        help="Admin API key with rights to write on indexes"
-    )
+    algolia_api_key = fields.Char(help="Admin API key with rights to write on indexes")
     algolia_api_key_public = fields.Char(
         string="Public API KEY",
         help="Readonly API key with rights to search only",

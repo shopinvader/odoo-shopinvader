@@ -61,17 +61,14 @@ class TestMultiUserCommon(TestCustomerCommon):
 
 
 class TestUserManagementCommmon(TestMultiUserCommon):
-    """Test interaction with /users endpoint.
-    """
+    """Test interaction with /users endpoint."""
 
     def _get_service(self, partner, usage="users"):
         with self.work_on_services(partner=partner) as work:
             return work.component(usage=usage)
 
     def _test_search(self, service, expected):
-        _res = sorted(
-            service.dispatch("search")["data"], key=lambda x: x["email"]
-        )
+        _res = sorted(service.dispatch("search")["data"], key=lambda x: x["email"])
         self.assertEqual(
             _res,
             [

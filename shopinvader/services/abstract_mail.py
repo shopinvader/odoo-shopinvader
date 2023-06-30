@@ -80,9 +80,7 @@ class AbstractMailService(AbstractComponent):
         if not target:
             return {}
         notif_type = self._get_email_notification_type(target)
-        allow = self._allow_email_notification(
-            self.partner, target, notif_type
-        )
+        allow = self._allow_email_notification(self.partner, target, notif_type)
         if notif_type and allow:
             self._launch_notification(target, notif_type)
         return {}

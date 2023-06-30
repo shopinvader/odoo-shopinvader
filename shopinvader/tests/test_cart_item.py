@@ -17,25 +17,19 @@ class ItemCaseMixin(object):
         cls.pricelist = cls.env.ref("product.list0")
 
     def extract_cart(self, response):
-        self.shopinvader_session["cart_id"] = response["set_session"][
-            "cart_id"
-        ]
+        self.shopinvader_session["cart_id"] = response["set_session"]["cart_id"]
         self.assertEqual(response["store_cache"], {"cart": response["data"]})
         return response["data"]
 
     def add_item(self, product_id, qty, **kw):
         params = {"product_id": product_id, "item_qty": qty}
         params.update(kw)
-        return self.extract_cart(
-            self.service.dispatch("add_item", params=params)
-        )
+        return self.extract_cart(self.service.dispatch("add_item", params=params))
 
     def update_item(self, item_id, qty, **kw):
         params = {"item_id": item_id, "item_qty": qty}
         params.update(kw)
-        return self.extract_cart(
-            self.service.dispatch("update_item", params=params)
-        )
+        return self.extract_cart(self.service.dispatch("update_item", params=params))
 
     def delete_item(self, item_id):
         return self.extract_cart(
@@ -60,16 +54,12 @@ class AbstractItemCase(ItemCaseMixin):
 
     def test_add_item_without_cart(self):
         self.remove_cart()
-        last_order = self.env["sale.order"].search(
-            [], limit=1, order="id desc"
-        )
+        last_order = self.env["sale.order"].search([], limit=1, order="id desc")
         cart = self.add_item(self.product_1.id, 2)
         self.assertGreater(cart["id"], last_order.id)
         self.assertEqual(len(cart["lines"]["items"]), 1)
         self.assertEqual(cart["lines"]["count"], 2)
-        self.check_product_and_qty(
-            cart["lines"]["items"][0], self.product_1.id, 2
-        )
+        self.check_product_and_qty(cart["lines"]["items"][0], self.product_1.id, 2)
         self.check_partner(cart)
 
     def test_add_item_with_an_existing_cart(self):
@@ -79,9 +69,7 @@ class AbstractItemCase(ItemCaseMixin):
         cart = self.add_item(self.product_1.id, 2)
         self.assertEqual(cart["id"], self.cart.id)
         self.assertEqual(len(cart["lines"]["items"]), nbr_line + 1)
-        self.check_product_and_qty(
-            cart["lines"]["items"][-1], self.product_1.id, 2
-        )
+        self.check_product_and_qty(cart["lines"]["items"][-1], self.product_1.id, 2)
         self.check_partner(cart)
 
     def test_update_item(self):
@@ -133,14 +121,10 @@ class AbstractItemCase(ItemCaseMixin):
         self.remove_cart()
         cart = self.add_item(self.product_1.id, 1)
         self.assertEqual(len(cart["lines"]["items"]), 1)
-        self.check_product_and_qty(
-            cart["lines"]["items"][0], self.product_1.id, 1
-        )
+        self.check_product_and_qty(cart["lines"]["items"][0], self.product_1.id, 1)
         cart = self.add_item(self.product_1.id, 1)
         self.assertEqual(len(cart["lines"]["items"]), 1)
-        self.check_product_and_qty(
-            cart["lines"]["items"][0], self.product_1.id, 2
-        )
+        self.check_product_and_qty(cart["lines"]["items"][0], self.product_1.id, 2)
 
     @mute_logger("odoo.models.unlink")
     def test_add_item_with_product_not_allowed(self):
@@ -154,11 +138,7 @@ class AbstractItemCase(ItemCaseMixin):
         self.remove_cart()
         # be sure that discount group is active for user
         self.env.user.write(
-            {
-                "groups_id": [
-                    (4, self.ref("product.group_discount_per_so_line"), 0)
-                ]
-            }
+            {"groups_id": [(4, self.ref("product.group_discount_per_so_line"), 0)]}
         )
         # we create a new pricelist for the product with a discount of 10%
         self.env["product.pricelist.item"].create(

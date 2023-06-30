@@ -25,9 +25,7 @@ class NotificationPickingCase(CommonCase, NotificationCaseMixin):
         self.picking.action_done()
         self._check_nbr_job_created(1)
         self._perform_created_job()
-        self._check_notification(
-            "stock_picking_outgoing_validated", self.picking
-        )
+        self._check_notification("stock_picking_outgoing_validated", self.picking)
 
     def test_picking_notification2(self):
         """

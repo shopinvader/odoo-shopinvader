@@ -21,9 +21,7 @@ class ShopinvaderBackend(models.Model):
         return self.env["ir.model"].search(domain)
 
     def force_recompute_all_binding_index(self):
-        self.sudo_tech().mapped(
-            "se_backend_id.index_ids"
-        ).force_recompute_all_binding()
+        self.sudo_tech().mapped("se_backend_id.index_ids").force_recompute_all_binding()
         return True
 
     def force_batch_export_index(self):

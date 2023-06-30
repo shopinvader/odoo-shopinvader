@@ -28,9 +28,7 @@ class TestProductFilter(CommonCase):
             {"name": "Test attribute", "create_variant": "no_variant"}
         )
 
-        cls.variant_attribute.with_context(
-            lang="fr_FR"
-        ).name = "Test attribute FR"
+        cls.variant_attribute.with_context(lang="fr_FR").name = "Test attribute FR"
 
         cls.filter_on_field = cls.env["product.filter"].create(
             {

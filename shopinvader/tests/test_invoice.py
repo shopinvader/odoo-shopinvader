@@ -140,18 +140,14 @@ class TestInvoice(CommonCase, CommonTestDownload):
         self.invoice.post()
         self.non_sale_invoice.post()
         domain = self.invoice_service._get_base_search_domain()
-        self.assertNotIn(
-            self.non_sale_invoice, self.invoice_obj.search(domain)
-        )
+        self.assertNotIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertNotIn(self.invoice, self.invoice_obj.search(domain))
         # pay both invoices
         self._make_payment(self.invoice)
         self._make_payment(self.non_sale_invoice)
         domain = self.invoice_service._get_base_search_domain()
         # Extra invoice still not found
-        self.assertNotIn(
-            self.non_sale_invoice, self.invoice_obj.search(domain)
-        )
+        self.assertNotIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertIn(self.invoice, self.invoice_obj.search(domain))
 
     def test_domain_02(self):
@@ -163,9 +159,7 @@ class TestInvoice(CommonCase, CommonTestDownload):
         self.invoice.post()
         self.non_sale_invoice.post()
         domain = self.invoice_service._get_base_search_domain()
-        self.assertNotIn(
-            self.non_sale_invoice, self.invoice_obj.search(domain)
-        )
+        self.assertNotIn(self.non_sale_invoice, self.invoice_obj.search(domain))
         self.assertNotIn(self.invoice, self.invoice_obj.search(domain))
         # pay both invoices
         self._make_payment(self.invoice)

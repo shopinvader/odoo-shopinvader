@@ -77,9 +77,7 @@ class ShopinvaderPartner(models.Model):
             shopinv_partners = self.filtered(
                 lambda p, c=company: p.backend_id.company_id.id == c.id
             )
-            shopinv_partners = shopinv_partners.with_context(
-                force_company=company.id
-            )
+            shopinv_partners = shopinv_partners.with_context(force_company=company.id)
             for binding in shopinv_partners:
                 sale_profile = sale_profile_obj.browse()
                 # Only if the related backend use sale profiles
@@ -117,9 +115,7 @@ class ShopinvaderPartner(models.Model):
                 and p.pricelist_id.id == pl.id
                 and p.backend_id.id == b.id
             )
-            sale_profile = first(
-                sale_profile.with_prefetch(self._prefetch_ids)
-            )
+            sale_profile = first(sale_profile.with_prefetch(self._prefetch_ids))
         else:
             pricelist = partner.property_product_pricelist
             sale_profile = sale_profiles.filtered(
@@ -127,17 +123,13 @@ class ShopinvaderPartner(models.Model):
                 and p.pricelist_id.id == pl.id
                 and p.backend_id.id == b.id
             )
-            sale_profile = first(
-                sale_profile.with_prefetch(self._prefetch_ids)
-            )
+            sale_profile = first(sale_profile.with_prefetch(self._prefetch_ids))
         if not sale_profile:
             # Get the default sale profile
             sale_profile = default_sale_profiles.filtered(
                 lambda p, b=backend: p.backend_id.id == b.id
             )
-            sale_profile = first(
-                sale_profile.with_prefetch(self._prefetch_ids)
-            )
+            sale_profile = first(sale_profile.with_prefetch(self._prefetch_ids))
             if not sale_profile:
                 message = (
                     _("No default sale profile found for the backend" " %s")
@@ -146,9 +138,7 @@ class ShopinvaderPartner(models.Model):
                 raise exceptions.UserError(message)
         return sale_profile
 
-    def _get_sale_profiles(
-        self, backend_ids, pricelists, fposition_ids, company=False
-    ):
+    def _get_sale_profiles(self, backend_ids, pricelists, fposition_ids, company=False):
         """Get sale profiles for given backends, fiscal positions, pricelists.
 
         :param fposition_ids: list of int
@@ -159,9 +149,7 @@ class ShopinvaderPartner(models.Model):
         """
         sale_profile_obj = self.env["shopinvader.sale.profile"]
         if company:
-            sale_profile_obj = sale_profile_obj.with_context(
-                force_company=company.id
-            )
+            sale_profile_obj = sale_profile_obj.with_context(force_company=company.id)
         domain = [
             "|",
             ("fiscal_position_ids", "in", fposition_ids),
@@ -184,9 +172,7 @@ class ShopinvaderPartner(models.Model):
             ("default", "=", True),
             ("backend_id", "in", backend_ids),
         ]
-        default_sale_profiles = sale_profile_obj.search(
-            domain_default_profiles
-        )
+        default_sale_profiles = sale_profile_obj.search(domain_default_profiles)
         return default_sale_profiles
 
     @api.model
@@ -199,9 +185,7 @@ class ShopinvaderPartner(models.Model):
         """
         fposition_obj = self.env["account.fiscal.position"]
         if company_id:
-            fposition_obj = fposition_obj.with_context(
-                force_company=company_id
-            )
+            fposition_obj = fposition_obj.with_context(force_company=company_id)
         fposition_by_partner = {}
         for partner in partners:
             fpos_id = fposition_obj.get_fiscal_position(

@@ -82,10 +82,7 @@ class ProductFilter(models.Model):
             error = None
             if rec.based_on == "field" and not rec.field_id:
                 error = based_on_field_error % rec.id
-            elif (
-                rec.based_on == "variant_attribute"
-                and not rec.variant_attribute_id
-            ):
+            elif rec.based_on == "variant_attribute" and not rec.variant_attribute_id:
                 error = based_on_attr_error % rec.id
             if error:
                 raise exceptions.UserError(error)

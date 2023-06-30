@@ -22,9 +22,7 @@ class CartCase(CommonCase):
         self.default_fposition = self.env.ref("shopinvader.fiscal_position_0")
         self.product_1 = self.env.ref("product.product_product_4b")
         templates = self.env["product.template"].search([])
-        templates.write(
-            {"taxes_id": [(6, 0, [self.env.ref("shopinvader.tax_1").id])]}
-        )
+        templates.write({"taxes_id": [(6, 0, [self.env.ref("shopinvader.tax_1").id])]})
 
     def _create_notification_config(self):
         template = self.env.ref("account.email_template_edi_invoice")
@@ -33,9 +31,7 @@ class CartCase(CommonCase):
             "notification_type": "cart_send_email",
             "template_id": template.id,
         }
-        self.service.shopinvader_backend.write(
-            {"notification_ids": [(0, 0, values)]}
-        )
+        self.service.shopinvader_backend.write({"notification_ids": [(0, 0, values)]})
 
     def tearDown(self):
         self.registry.leave_test_mode()
@@ -124,9 +120,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
         self.assertEqual(cart.partner_id, partner)
         self.assertEqual(cart.partner_shipping_id, partner)
         self.assertEqual(cart.partner_invoice_id, partner)
-        self.assertEqual(
-            cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id
-        )
+        self.assertEqual(cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id)
 
     def test_ask_email(self):
         """
@@ -138,9 +132,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
         now = fields.Date.today()
         self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
-        description = "Notify {} for {},{}".format(
-            notif, self.cart._name, self.cart.id
-        )
+        description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
         # It should not create any queue job because the user is not logged
         self.assertEquals(self.env["queue.job"].search_count(domain), 0)
@@ -176,9 +168,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
                 )
             ],
         }
-        first_pricelist = self.env["product.pricelist"].create(
-            pricelist_values
-        )
+        first_pricelist = self.env["product.pricelist"].create(pricelist_values)
         pricelist_values = {
             "name": "Custom pricelist 2",
             "discount_policy": "without_discount",
@@ -199,9 +189,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
                 )
             ],
         }
-        second_pricelist = self.env["product.pricelist"].create(
-            pricelist_values
-        )
+        second_pricelist = self.env["product.pricelist"].create(pricelist_values)
         # First, create the SO manually
         sale = self.env["sale.order"].create(
             {
@@ -221,9 +209,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
             "product_id": self.product_1.id,
             "product_uom_qty": 1,
         }
-        new_line_values = so_line_obj.play_onchanges(
-            line_values, line_values.keys()
-        )
+        new_line_values = so_line_obj.play_onchanges(line_values, line_values.keys())
         new_line_values.update(line_values)
         line = so_line_obj.create(new_line_values)
         expected_price = line.price_total
@@ -277,9 +263,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
         """
         self.assertTrue(self.service.shopinvader_session.get("cart_id"))
         search_result = self.service.search()
-        self.assertEqual(
-            search_result["store_cache"]["cart"]["name"], self.cart.name
-        )
+        self.assertEqual(search_result["store_cache"]["cart"]["name"], self.cart.name)
         # reset cart_id parameter
         self.service.shopinvader_session.update({"cart_id": False})
         search_result = self.service.search()
@@ -288,9 +272,9 @@ class AnonymousCartCase(CartCase, CartClearTest):
 
 class CommonConnectedCartCase(CartCase):
     """
-       Common class for connected cart tests
-       DON'T override it with tests
-       """
+    Common class for connected cart tests
+    DON'T override it with tests
+    """
 
     def setUp(self, *args, **kwargs):
         super(CommonConnectedCartCase, self).setUp(*args, **kwargs)
@@ -338,9 +322,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         cart = self.cart
         invoice_addr = self.env.ref("shopinvader.partner_1_address_2")
         cart.partner_invoice_id = invoice_addr
-        self.backend.cart_checkout_address_policy = (
-            "invoice_defaults_to_shipping"
-        )
+        self.backend.cart_checkout_address_policy = "invoice_defaults_to_shipping"
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
         )
@@ -359,9 +341,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.assertEqual(cart.partner_id, self.partner)
         self.assertEqual(cart.partner_shipping_id, self.partner)
         self.assertEqual(cart.partner_invoice_id, self.address)
-        self.assertEqual(
-            cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id
-        )
+        self.assertEqual(cart.pricelist_id, cart.shopinvader_backend_id.pricelist_id)
 
     def test_confirm_cart_maually(self):
         self.assertEqual(self.cart.typology, "cart")
@@ -379,9 +359,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         now = fields.Datetime.now()
         self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
-        description = "Notify {} for {},{}".format(
-            notif, self.cart._name, self.cart.id
-        )
+        description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
         self.assertEquals(self.env["queue.job"].search_count(domain), 1)
 
@@ -397,9 +375,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         now = fields.Datetime.now()
         self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
-        description = "Notify {} for {},{}".format(
-            notif, self.cart._name, self.cart.id
-        )
+        description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
         self.assertEquals(self.env["queue.job"].search_count(domain), 0)
 
@@ -415,9 +391,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.cart.write({"partner_id": self.partner.copy({}).id})
         self.service.dispatch("ask_email", self.cart.id)
         notif = "cart_send_email"
-        description = "Notify {} for {},{}".format(
-            notif, self.cart._name, self.cart.id
-        )
+        description = "Notify {} for {},{}".format(notif, self.cart._name, self.cart.id)
         domain = [("name", "=", description), ("date_created", ">=", now)]
         self.assertEquals(self.env["queue.job"].search_count(domain), 0)
 
@@ -437,9 +411,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.assertEqual(cart_bis.typology, "cart")
         self.assertEqual(cart_bis.state, "draft")
         self.assertEqual(cart_bis.partner_id, self.partner)
-        self.assertEqual(
-            self.backend.account_analytic_id, cart_bis.analytic_account_id
-        )
+        self.assertEqual(self.backend.account_analytic_id, cart_bis.analytic_account_id)
 
     @mute_logger("odoo.models.unlink")
     def test_cart_delete_robustness(self):

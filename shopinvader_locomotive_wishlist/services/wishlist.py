@@ -14,7 +14,5 @@ class WishlistService(Component):
         # `replace_items` uses SQL to avoid useless writes
         # hence the normal write event is not triggered on lines.
         # Trigger forced sync on the wishlist itself.
-        record._event("on_record_write").notify(
-            record.with_context(_force_export=True)
-        )
+        record._event("on_record_write").notify(record.with_context(_force_export=True))
         return set_lines

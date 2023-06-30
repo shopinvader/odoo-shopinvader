@@ -20,9 +20,7 @@ class TestUserManagement(TestUserManagementCommmon):
             self.user_binding3,
         ):
             service = self._get_service(binding.record_id)
-            with self.assertRaisesRegex(
-                exceptions.AccessError, "User not allowed"
-            ):
+            with self.assertRaisesRegex(exceptions.AccessError, "User not allowed"):
                 service.dispatch("search")
 
     def test_create_as_admin(self):
@@ -44,9 +42,7 @@ class TestUserManagement(TestUserManagementCommmon):
                 "name": "Created by " + binding.name,
                 "email": "created_by_" + binding.email,
             }
-            with self.assertRaisesRegex(
-                exceptions.AccessError, "User not allowed"
-            ):
+            with self.assertRaisesRegex(exceptions.AccessError, "User not allowed"):
                 service.dispatch("create", params=params)
 
     def test_update_as_admin(self):
@@ -70,9 +66,7 @@ class TestUserManagement(TestUserManagementCommmon):
             params = {
                 "name": self.user_binding.name + " UPDATED",
             }
-            with self.assertRaisesRegex(
-                exceptions.AccessError, "User not allowed"
-            ):
+            with self.assertRaisesRegex(exceptions.AccessError, "User not allowed"):
                 service.dispatch("update", self.user_binding.id, params)
 
     def test_delete_as_admin(self):
@@ -98,9 +92,7 @@ class TestUserManagement(TestUserManagementCommmon):
             self.user_binding3,
         ):
             service = self._get_service(binding.record_id)
-            with self.assertRaisesRegex(
-                exceptions.AccessError, "User not allowed"
-            ):
+            with self.assertRaisesRegex(exceptions.AccessError, "User not allowed"):
                 service.dispatch("delete", self.user_binding2.id)
 
 

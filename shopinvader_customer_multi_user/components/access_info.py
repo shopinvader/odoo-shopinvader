@@ -20,8 +20,7 @@ class PartnerAccess(Component):
         # - admin account
         if self.partner_user is not None:
             can_manage = (
-                self.is_owner(address_id)
-                or self.invader_partner_user.is_admin_account
+                self.is_owner(address_id) or self.invader_partner_user.is_admin_account
             )
             if can_manage:
                 info.update({"read": True, "update": True, "delete": True})

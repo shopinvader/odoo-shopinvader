@@ -101,9 +101,7 @@ class PartnerServiceMixin(AbstractComponent):
         return partner.parent_id if partner.parent_id else partner
 
     def _notify_partner_type(self, partner, mode):
-        handler = getattr(
-            self, "_notify_partner_type_" + partner.address_type, None
-        )
+        handler = getattr(self, "_notify_partner_type_" + partner.address_type, None)
         if handler:
             return handler(partner, mode)
         return partner
@@ -143,9 +141,7 @@ class PartnerServiceMixin(AbstractComponent):
         return partner.parent_id if partner.parent_id else partner
 
     def _notify_salesman_needed(self, backend_policy, partner, mode):
-        handler = getattr(
-            self, "_notify_salesman_needed_" + partner.address_type, None
-        )
+        handler = getattr(self, "_notify_salesman_needed_" + partner.address_type, None)
         if handler:
             return handler(backend_policy, partner, mode)
         return partner

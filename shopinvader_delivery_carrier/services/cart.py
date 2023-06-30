@@ -17,11 +17,11 @@ class CartService(Component):
 
     def set_carrier(self, **params):
         """
-           This service will set the given delivery method to the current
-           cart
-       :param params: The carrier_id to set
-       :return:
-       """
+            This service will set the given delivery method to the current
+            cart
+        :param params: The carrier_id to set
+        :return:
+        """
         cart = self._get()
         if not cart:
             raise UserError(_("There is not cart"))
@@ -44,9 +44,7 @@ class CartService(Component):
             "search",
             "delivery_carrier",
         )
-        return self.component("delivery_carrier").search(
-            target="current_cart"
-        )["rows"]
+        return self.component("delivery_carrier").search(target="current_cart")["rows"]
 
     def apply_delivery_method(self, **params):
         """
@@ -113,12 +111,8 @@ class CartService(Component):
         return res
 
     def _set_carrier(self, cart, carrier_id):
-        if carrier_id not in [
-            x["id"] for x in cart._invader_available_carriers()
-        ]:
-            raise UserError(
-                _("This delivery method is not available for you order")
-            )
+        if carrier_id not in [x["id"] for x in cart._invader_available_carriers()]:
+            raise UserError(_("This delivery method is not available for you order"))
         cart._set_carrier_and_price(carrier_id)
 
     def _unset_carrier(self, cart):

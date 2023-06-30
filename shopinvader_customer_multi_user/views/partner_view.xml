@@ -1,21 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
 
   <record id="res_partner_view_form" model="ir.ui.view">
     <field name="model">res.partner</field>
-    <field name="inherit_id" ref="shopinvader.res_partner_view_form"/>
+    <field name="inherit_id" ref="shopinvader.res_partner_view_form" />
     <field name="arch" type="xml">
       <group name="extras" position="inside">
-        <group name="multi_user" attrs="{'invisible':[('shopinvader_bind_ids','=',False),('address_type', '=', 'profile')]}">
-          <field name="invader_user_token"/>
-          <button name="action_regenerate_invader_user_token" type="object"
-                  string="Re-generate token"
-                  attrs="{'invisible': [('invader_user_token','=',False)]}"/>
+        <group
+                    name="multi_user"
+                    attrs="{'invisible':[('shopinvader_bind_ids','=',False),('address_type', '=', 'profile')]}"
+                >
+          <field name="invader_user_token" />
+          <button
+                        name="action_regenerate_invader_user_token"
+                        type="object"
+                        string="Re-generate token"
+                        attrs="{'invisible': [('invader_user_token','=',False)]}"
+                    />
         </group>
       </group>
 
-      <xpath expr="//field[@name='shopinvader_bind_ids']//field[@name='backend_id']" position="after">
-        <field name="main_partner_id"/>
+      <xpath
+                expr="//field[@name='shopinvader_bind_ids']//field[@name='backend_id']"
+                position="after"
+            >
+        <field name="main_partner_id" />
       </xpath>
     </field>
   </record>

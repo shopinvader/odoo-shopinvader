@@ -178,6 +178,4 @@ class DeliveryService(Component):
         sale_service = self.component(usage="sales")
         sale_domain = sale_service._get_base_search_domain()
         sales = self.env[sale_service._expose_model].search(sale_domain)
-        return [
-            ("sale_id", "in", sales.ids)
-        ] + self._get_allowed_picking_domain()
+        return [("sale_id", "in", sales.ids)] + self._get_allowed_picking_domain()
