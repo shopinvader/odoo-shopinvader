@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_partner_binding_form_view">
+        <field name="name">shopinvader.partner.binding.form (in shopinvader)</field>
+        <field name="model">shopinvader.partner.binding</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="shopinvader_backend_id" widget="selection" />
+                    </group>
+                    <group />
+                </group>
+                <div>
+                    Select which partners should belong to the Shopinvader backend in the list below.
+                    The email address of each selected contact must be valid and unique.
+                    Partners already binded are ignored.
+                </div>
+                <group>
+                    <field name="binding_lines" colspan="2" nolabel="1">
+                        <tree editable="bottom" create="false" delete="false">
+                            <field name="partner_id" force_save="1" />
+                            <field name="email" />
+                            <field name="bind" />
+                        </tree>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        string="Apply"
+                        name="action_apply"
+                        type="object"
+                        class="btn-primary"
+                    />
+                    <button string="Cancel" class="btn-default" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="shopinvader_partner_binding_act_window">
+        <field name="name">Shopinvader Partner Binding Wizard</field>
+        <field name="res_model">shopinvader.partner.binding</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="base.model_res_partner" />
+        <field name="view_id" ref="shopinvader_partner_binding_form_view" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('shopinvader_v1_base.group_shopinvader_partner_binding'))]"
+        />
+    </record>
+
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_partner_view_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="shopinvader_v1_base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="backend_id" position="after">
+                <field name="external_id" readonly="True" />
+            </xpath>
+
+
+        </field>
+    </record>
+
+</odoo>
