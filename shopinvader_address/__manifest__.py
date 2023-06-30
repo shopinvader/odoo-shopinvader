@@ -11,7 +11,6 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
         "sale",
-        "shopinvader_schema_address",
     ],
     "data": [],
     "demo": [],
