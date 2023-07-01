@@ -15,8 +15,13 @@ from odoo.addons.shopinvader_anonymous_partner.models.res_partner import COOKIE_
 class TestController(Controller):
     @route("/test/anonymous_partner_create", type="http", auth="none")
     def anonymous_partner_create(self):
-        partner = request.env["res.partner"]._create_anonymous_partner__cookie(
-            request.future_response
+        # Set a company in context to avoid an error in some unrelated module
+        # that I could not track down.
+        company = request.env["res.company"].sudo().search([], limit=1)
+        partner = (
+            request.env["res.partner"]
+            .with_company(company)
+            ._create_anonymous_partner__cookie(request.future_response)
         )
         return str(partner.id)
 
