@@ -1,6 +1,8 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from typing import Optional
+
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
 
@@ -13,7 +15,7 @@ class SaleOrderLine(BaseModel, metaclass=ExtendableModelMeta):
     id: int
     product_id: int
     name: str
-    amount: SaleLineAmount | None
+    amount: Optional[SaleLineAmount]
     qty: float
 
     class Config:

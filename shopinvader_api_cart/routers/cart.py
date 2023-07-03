@@ -1,7 +1,13 @@
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import sys
 from collections import OrderedDict
-from typing import Annotated
+from typing import List, Optional
+
+if sys.version_info >= (3, 9):
+    from typing import Annotated
+else:
+    from typing_extensions import Annotated
 
 from fastapi import APIRouter, Depends
 
@@ -14,20 +20,19 @@ from odoo.addons.fastapi.dependencies import (
     authenticated_partner,
     authenticated_partner_env,
 )
-from odoo.addons.sale.models.sale_order import SaleOrder
-from odoo.addons.sale.models.sale_order_line import SaleOrderLine
+from odoo.addons.sale.models.sale import SaleOrder, SaleOrderLine
 
 from ..schemas import CartResponse, CartSyncInput, CartTransaction
 
 cart_router = APIRouter(tags=["carts"])
 
 
-@cart_router.get("/", response_model=CartResponse | dict)
-@cart_router.get("/{uuid}", response_model=CartResponse | dict)
+@cart_router.get("/")
+@cart_router.get("/{uuid}")
 def get(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: str | None = None,
+    uuid: Optional[str] = None,
 ) -> CartResponse:
     """
     Return an empty dict if no cart was found
@@ -36,13 +41,13 @@ def get(
     return CartResponse.from_cart(cart) if cart else {}
 
 
-@cart_router.post("/sync", response_model=CartResponse | dict, status_code=201)
-@cart_router.post("/sync/{uuid}", response_model=CartResponse | dict, status_code=201)
+@cart_router.post("/sync", status_code=201)
+@cart_router.post("/sync/{uuid}", status_code=201)
 def sync(
     data: CartSyncInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: str | None = None,
+    uuid: Optional[str] = None,
 ) -> CartResponse:
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
     cart = env["shopinvader_api_cart.service.helper"]._sync_cart(
@@ -56,7 +61,7 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
     _description = "ShopInvader API Cart Service Helper"
 
     @api.model
-    def _check_transactions(self, transactions: list[CartTransaction]):
+    def _check_transactions(self, transactions: List[CartTransaction]):
         """Check if the transactions info are valid.
 
         This method car be extended to validate if the product_id is
@@ -69,7 +74,7 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
                 )
 
     @api.model
-    def _group_transactions_by_product_id(self, transactions: list[CartTransaction]):
+    def _group_transactions_by_product_id(self, transactions: List[CartTransaction]):
         """
         Gather together transactions that are linked to the same product.
         """
@@ -87,7 +92,7 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
 
     @api.model
     def _apply_transactions_on_existing_cart_line(
-        self, cart_line: SaleOrderLine, transactions: list[CartTransaction]
+        self, cart_line: SaleOrderLine, transactions: List[CartTransaction]
     ):
         """Apply transactions to current line and return a record write command
         to apply to the one2many field on SO.
@@ -107,7 +112,7 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
 
     @api.model
     def _apply_transactions_creating_new_cart_line(
-        self, cart: SaleOrder, transactions: list[CartTransaction]
+        self, cart: SaleOrder, transactions: List[CartTransaction]
     ):
         """Create a record create command to apply to the one2many field on SO
         from transactions.
@@ -130,7 +135,7 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
 
     @api.model
     def _prepare_line_from_transactions(
-        self, cart: SaleOrder, transactions: list[CartTransaction]
+        self, cart: SaleOrder, transactions: List[CartTransaction]
     ):
         """ """
         delta_qty = sum(t.qty for t in transactions)
@@ -156,7 +161,7 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
         return vals
 
     @api.model
-    def _apply_transactions(self, cart, transactions: list[CartTransaction]):
+    def _apply_transactions(self, cart, transactions: List[CartTransaction]):
         """Apply transactions to the given cart."""
         if not transactions:
             return
@@ -198,7 +203,7 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
         partner: ResPartner,
         cart: SaleOrder,
         uuid: str,
-        transactions: list[CartTransaction],
+        transactions: List[CartTransaction],
     ):
         if not cart and transactions:
             cart = self.env["sale.order"]._create_empty_cart(partner.id)

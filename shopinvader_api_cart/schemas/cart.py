@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 from extendable_pydantic import ExtendableModelMeta
 from pydantic import BaseModel
@@ -18,7 +18,7 @@ from .sale_order_line import SaleOrderLine
 
 
 class CartTransaction(BaseModel, metaclass=ExtendableModelMeta):
-    uuid: str | None
+    uuid: Optional[str]
     qty: float
     product_id: int
 
@@ -32,16 +32,16 @@ class CartSyncInput(BaseModel, metaclass=ExtendableModelMeta):
 
 
 class CartResponse(BaseModel, metaclass=ExtendableModelMeta):
-    uuid: str | None
+    uuid: Optional[str]
     id: int
     state: str
     name: str
     date_order: datetime
     lines: List[SaleOrderLine]
-    amount: SaleAmount | None
-    delivery: ShippingAddress | None
-    invoicing: BillingAddress | None
-    note: str | None
+    amount: Optional[SaleAmount]
+    delivery: Optional[ShippingAddress]
+    invoicing: Optional[BillingAddress]
+    note: Optional[str]
 
     class Config:
         orm_mode = True
