@@ -11,9 +11,9 @@ class CommonSearchCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
-        cls.address = cls.env.ref("shopinvader.partner_1_address_1")
-        cls.address_2 = cls.env.ref("shopinvader.partner_1_address_2")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.address = cls.env.ref("shopinvader_v1_base.partner_1_address_1")
+        cls.address_2 = cls.env.ref("shopinvader_v1_base.partner_1_address_2")
 
     def setUp(self):
         super().setUp()

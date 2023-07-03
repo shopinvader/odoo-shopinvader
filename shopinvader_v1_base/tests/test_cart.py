@@ -17,12 +17,14 @@ class CartCase(CommonCase):
     def setUp(self):
         super(CartCase, self).setUp()
         self.registry.enter_test_mode(self.env.cr)
-        self.address = self.env.ref("shopinvader.partner_1_address_1")
-        self.fposition = self.env.ref("shopinvader.fiscal_position_2")
-        self.default_fposition = self.env.ref("shopinvader.fiscal_position_0")
+        self.address = self.env.ref("shopinvader_v1_base.partner_1_address_1")
+        self.fposition = self.env.ref("shopinvader_v1_base.fiscal_position_2")
+        self.default_fposition = self.env.ref("shopinvader_v1_base.fiscal_position_0")
         self.product_1 = self.env.ref("product.product_product_4b")
         templates = self.env["product.template"].search([])
-        templates.write({"taxes_id": [(6, 0, [self.env.ref("shopinvader.tax_1").id])]})
+        templates.write(
+            {"taxes_id": [(6, 0, [self.env.ref("shopinvader_v1_base.tax_1").id])]}
+        )
 
     def _create_notification_config(self):
         template = self.env.ref("account.email_template_edi_invoice")
@@ -97,7 +99,7 @@ class CartClearTest(object):
 class AnonymousCartCase(CartCase, CartClearTest):
     def setUp(self, *args, **kwargs):
         super(AnonymousCartCase, self).setUp(*args, **kwargs)
-        self.cart = self.env.ref("shopinvader.sale_order_1")
+        self.cart = self.env.ref("shopinvader_v1_base.sale_order_1")
         self.shopinvader_session = {"cart_id": self.cart.id}
         self.partner = self.backend.anonymous_partner_id
         self.product_1 = self.env.ref("product.product_product_4b")
@@ -114,7 +116,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
 
     def test_anonymous_cart_then_sign(self):
         cart = self.cart
-        invader_partner = self.env.ref("shopinvader.shopinvader_partner_1")
+        invader_partner = self.env.ref("shopinvader_v1_base.shopinvader_partner_1")
         partner = invader_partner.record_id
         last_external_update_date = self._get_last_external_update_date(cart)
         self._sign_with(invader_partner)
@@ -287,10 +289,10 @@ class CommonConnectedCartCase(CartCase):
 
     def setUp(self, *args, **kwargs):
         super(CommonConnectedCartCase, self).setUp(*args, **kwargs)
-        self.cart = self.env.ref("shopinvader.sale_order_2")
+        self.cart = self.env.ref("shopinvader_v1_base.sale_order_2")
         self.shopinvader_session = {"cart_id": self.cart.id}
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.address = self.env.ref("shopinvader.partner_1_address_1")
+        self.partner = self.env.ref("shopinvader_v1_base.partner_1")
+        self.address = self.env.ref("shopinvader_v1_base.partner_1_address_1")
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:
@@ -317,7 +319,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
     def test_set_shipping_address_no_default_invocing(self):
         cart = self.cart
         self.backend.cart_checkout_address_policy = "no_defaults"
-        invoice_addr = self.env.ref("shopinvader.partner_1_address_2")
+        invoice_addr = self.env.ref("shopinvader_v1_base.partner_1_address_2")
         cart.partner_invoice_id = invoice_addr
         self.service.dispatch(
             "update", params={"shipping": {"address": {"id": self.address.id}}}
@@ -330,7 +332,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
     def test_set_shipping_address_default_invoicing(self):
         cart = self.cart
         last_external_update_date = self._get_last_external_update_date(cart)
-        invoice_addr = self.env.ref("shopinvader.partner_1_address_2")
+        invoice_addr = self.env.ref("shopinvader_v1_base.partner_1_address_2")
         cart.partner_invoice_id = invoice_addr
         self.backend.cart_checkout_address_policy = "invoice_defaults_to_shipping"
         self.service.dispatch(
@@ -462,10 +464,10 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
 class ConnectedCartNoTaxCase(CartCase):
     def setUp(self, *args, **kwargs):
         super(ConnectedCartNoTaxCase, self).setUp(*args, **kwargs)
-        self.cart = self.env.ref("shopinvader.sale_order_3")
+        self.cart = self.env.ref("shopinvader_v1_base.sale_order_3")
         self.shopinvader_session = {"cart_id": self.cart.id}
-        self.partner = self.env.ref("shopinvader.partner_2")
-        self.address = self.env.ref("shopinvader.partner_2_address_1")
+        self.partner = self.env.ref("shopinvader_v1_base.partner_2")
+        self.address = self.env.ref("shopinvader_v1_base.partner_2_address_1")
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:

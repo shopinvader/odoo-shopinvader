@@ -12,7 +12,7 @@ class NotificationCartCase(CommonCase, NotificationCaseMixin):
     @classmethod
     def setUpClass(cls):
         super(NotificationCartCase, cls).setUpClass()
-        cls.cart = cls.env.ref("shopinvader.sale_order_2")
+        cls.cart = cls.env.ref("shopinvader_v1_base.sale_order_2")
 
     def test_cart_notification(self):
         self._init_job_counter()
@@ -53,7 +53,7 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
     def _create_customer(self, **kw):
         data = {
             "email": "new@customer.example.com",
-            "external_id": "D5CdkqOEL",
+            # "external_id": "D5CdkqOEL", # TRANFÉRÉ dans product
             "name": "Purple",
             "street": "Rue du jardin",
             "zip": "43110",

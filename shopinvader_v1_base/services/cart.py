@@ -290,7 +290,7 @@ class CartService(Component):
         return cart
 
     def _add_item(self, cart, params):
-        self._check_allowed_product(cart, params)
+        # self._check_allowed_product(cart, params) # MOVED IN PRODUCT
         item = self._check_existing_cart_item(cart, params)
         if item:
             self._upgrade_cart_item_quantity(cart, item, params, action="sum")

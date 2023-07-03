@@ -8,7 +8,7 @@ class TestPartnerAccessInfo(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         cls.invader_partner = cls.partner._get_invader_partner(cls.backend)
         cls.invader_contact = cls._create_invader_partner(
             cls.env,

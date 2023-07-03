@@ -4,7 +4,6 @@
 
 import time
 
-from odoo import exceptions
 from odoo.tools import mute_logger
 
 from .common import CommonCase
@@ -135,14 +134,6 @@ class AbstractItemCase(ItemCaseMixin):
         self.assertEqual(len(cart["lines"]["items"]), 1)
         self.check_product_and_qty(cart["lines"]["items"][0], self.product_1.id, 2)
 
-    @mute_logger("odoo.models.unlink")
-    def test_add_item_with_product_not_allowed(self):
-        self.remove_cart()
-        # drop bindings and try to add the product
-        self.product_1.shopinvader_bind_ids.unlink()
-        with self.assertRaises(exceptions.UserError):
-            self.add_item(self.product_1.id, 1)
-
     def _test_pricelist_product(self):
         self.remove_cart()
         # be sure that discount group is active for user
@@ -207,7 +198,7 @@ class AnonymousItemCase(AbstractItemCase, CommonCase):
     def setUpClass(cls):
         super(AnonymousItemCase, cls).setUpClass()
         cls.partner = cls.backend.anonymous_partner_id
-        cls.cart = cls.env.ref("shopinvader.sale_order_1")
+        cls.cart = cls.env.ref("shopinvader_v1_base.sale_order_1")
 
     def setUp(self, *args, **kwargs):
         super(AnonymousItemCase, self).setUp(*args, **kwargs)
@@ -226,8 +217,8 @@ class ConnectedItemCase(AbstractItemCase, CommonCase):
     @classmethod
     def setUpClass(cls):
         super(ConnectedItemCase, cls).setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
-        cls.cart = cls.env.ref("shopinvader.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.cart = cls.env.ref("shopinvader_v1_base.sale_order_2")
 
     def setUp(self, *args, **kwargs):
         super(ConnectedItemCase, self).setUp(*args, **kwargs)

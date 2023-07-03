@@ -10,8 +10,8 @@ class TestInvoice(CommonCase, CommonTestDownload):
         super(TestInvoice, cls).setUpClass()
         cls.register_payments_obj = cls.env["account.payment.register"]
         cls.journal_obj = cls.env["account.journal"]
-        cls.sale = cls.env.ref("shopinvader.sale_order_2")
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.sale = cls.env.ref("shopinvader_v1_base.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         cls.payment_method_manual_in = cls.env.ref(
             "account.account_payment_method_manual_in"
         )

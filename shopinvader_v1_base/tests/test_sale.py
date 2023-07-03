@@ -13,8 +13,8 @@ class CommonSaleCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.sale = cls.env.ref("shopinvader.sale_order_2")
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.sale = cls.env.ref("shopinvader_v1_base.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         cls.register_payments_obj = cls.env["account.payment.register"]
         cls.journal_obj = cls.env["account.journal"]
         cls.payment_method_manual_in = cls.env.ref(

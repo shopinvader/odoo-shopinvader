@@ -17,10 +17,10 @@ class TestCustomerCommon(CommonCase):
     @classmethod
     def setUpClass(cls):
         super(TestCustomerCommon, cls).setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
-        cls.partner_binding = cls.env.ref("shopinvader.shopinvader_partner_1")
-        cls.address = cls.env.ref("shopinvader.partner_1_address_1")
-        cls.partner_2 = cls.env.ref("shopinvader.partner_2")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.partner_binding = cls.env.ref("shopinvader_v1_base.shopinvader_partner_1")
+        cls.address = cls.env.ref("shopinvader_v1_base.partner_1_address_1")
+        cls.partner_2 = cls.env.ref("shopinvader_v1_base.partner_2")
 
     def setUp(self, *args, **kwargs):
         super(TestCustomerCommon, self).setUp(*args, **kwargs)
@@ -51,13 +51,13 @@ class TestCustomerCommon(CommonCase):
 
 class TestCustomer(TestCustomerCommon):
     def test_create_customer(self):
-        self.data["external_id"] = "D5CdkqOEL"
+        # self.data["external_id"] = "D5CdkqOEL" # MOVED IN PRODUCT
         res = self.service.dispatch("create", params=self.data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
         self._test_partner_data(partner, self.data)
 
     def test_create_customer_business_vat_only(self):
-        self.data["external_id"] = "D5CdkqOEL"
+        # self.data["external_id"] = "D5CdkqOEL" # MOVED IN PRODUCT
         # no `is_company` flag
         self.data["vat"] = "BE0477472701"
         res = self.service.dispatch("create", params=self.data)["data"]
@@ -66,7 +66,7 @@ class TestCustomer(TestCustomerCommon):
         self.assertEqual(partner.is_company, False)
 
     def test_create_customer_business(self):
-        self.data["external_id"] = "D5CdkqOEL"
+        # self.data["external_id"] = "D5CdkqOEL" # MOVED IN PRODUCT
         self.data["is_company"] = True
         self.data["vat"] = "BE0477472701"
         res = self.service.dispatch("create", params=self.data)["data"]
@@ -74,9 +74,9 @@ class TestCustomer(TestCustomerCommon):
         self.assertEqual(partner.is_company, True)
 
     def test_address_type(self):
-        partner = self.env.ref("shopinvader.partner_1")
+        partner = self.env.ref("shopinvader_v1_base.partner_1")
         self.assertEqual(partner.address_type, "profile")
-        address = self.env.ref("shopinvader.partner_1_address_1")
+        address = self.env.ref("shopinvader_v1_base.partner_1_address_1")
         self.assertEqual(address.address_type, "address")
 
     def test_update_address_type(self):
@@ -92,7 +92,7 @@ class TestCustomer(TestCustomerCommon):
         """
         Create a customer should not create an empty cart
         """
-        self.data["external_id"] = "D5CdkqOEL"
+        # self.data["external_id"] = "D5CdkqOEL" # MOVED IN PRODUCT
         res = self.service.dispatch("create", params=self.data)["data"]
         partner = self.env["res.partner"].browse(res["id"])
         sale_domain = [("partner_id", "=", partner.id)]
@@ -104,7 +104,7 @@ class TestCustomer(TestCustomerCommon):
         """
         Customer sign-in should not create an empty cart
         """
-        partner = self.env.ref("shopinvader.partner_1")
+        partner = self.env.ref("shopinvader_v1_base.partner_1")
         sale_domain = [("partner_id", "=", partner.id)]
         SaleOrder = self.env["sale.order"]
         SaleOrder.search(sale_domain).unlink()
@@ -128,13 +128,14 @@ class TestCustomer(TestCustomerCommon):
         with self.assertRaises(UserError):
             self.service.dispatch("update", self.partner.id, params=params)
 
-    def test_update_customer_binding(self):
-        params = {"external_id": "D5CdkqOEL"}
-        res = self.service_with_partner.dispatch(
-            "update", self.partner.id, params=params
-        )
-        self.assertEqual(res["data"]["id"], self.partner.id)
-        self.assertEqual(self.partner_binding.external_id, "D5CdkqOEL")
+    # TO_MOVE IN PRODUCT
+    # def test_update_customer_binding(self):
+    #     params = {"external_id": "D5CdkqOEL"}
+    #     res = self.service_with_partner.dispatch(
+    #         "update", self.partner.id, params=params
+    #     )
+    #     self.assertEqual(res["data"]["id"], self.partner.id)
+    #     self.assertEqual(self.partner_binding.external_id, "D5CdkqOEL")
 
     def test_update_customer_not_allowed(self):
         params = {"street": "New Street"}

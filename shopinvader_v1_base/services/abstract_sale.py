@@ -43,6 +43,9 @@ class AbstractSaleService(AbstractComponent):
     def _is_item(self, line):
         return True
 
+    def _get_product_information(self, line):
+        return {"id": line.product_id.id}
+
     def _convert_one_line(self, line):
         # variant = line.product_id._get_invader_variant(
         #     self.shopinvader_backend, self.env.context.get("lang")
@@ -60,11 +63,14 @@ class AbstractSaleService(AbstractComponent):
         #         self.shopinvader_backend, line.order_id.partner_id.lang
         #     )
         # product = self._convert_one_line_product(variant)
-        product = self.get_product_information(self, line)
+
+        # TRANSFÉRÉ DANS PRODUCT
+        # product = self.get_product_information(self, line)
         return {
             "id": line.id,
             "name": line.name,
-            "product": product,
+            # "product": product,
+            "product": self._get_product_information(line),
             "amount": {
                 "price": line.price_unit,
                 "untaxed": line.price_subtotal,
@@ -75,9 +81,6 @@ class AbstractSaleService(AbstractComponent):
             "qty": line.product_uom_qty,
             "discount": {"rate": line.discount, "value": line.discount_total},
         }
-
-    def _convert_one_line_product(self, variant):
-        return variant.get_shop_data() if variant else {}
 
     def _convert_lines(self, sale):
         items = []

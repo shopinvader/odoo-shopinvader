@@ -52,7 +52,7 @@ class PartnerServiceMixin(AbstractComponent):
             "res_id": self._notify_salesman_recipient(partner, mode).id,
             "user_id": self._get_salesman(partner).id,
             "activity_type_id": self.env.ref(
-                "shopinvader.mail_activity_review_customer"
+                "shopinvader_v1_base.mail_activity_review_customer"
             ).id,
             "summary": msg,
         }
