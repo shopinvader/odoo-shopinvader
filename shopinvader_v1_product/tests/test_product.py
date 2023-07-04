@@ -533,7 +533,9 @@ class ProductCase(ProductCommonCase):
                     (4, self.env.ref("sales_team.group_sale_manager").id),
                     (
                         4,
-                        self.env.ref("shopinvader.group_shopinvader_manager").id,
+                        self.env.ref(
+                            "shopinvader_v1_base.group_shopinvader_manager"
+                        ).id,
                     ),
                 ]
             }

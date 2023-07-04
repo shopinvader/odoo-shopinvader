@@ -9,13 +9,13 @@
     <menuitem
         id="menu_shopinvader_products"
         name="Products"
-        parent="menu_shopinvader_root"
+        parent="shopinvader_v1_base.menu_shopinvader_root"
         sequence="10"
     />
     <menuitem
         id="menu_shopinvader_config_products"
         name="Products"
-        parent="menu_shopinvader_config"
+        parent="shopinvader_v1_base.menu_shopinvader_config"
         sequence="10"
     />
 

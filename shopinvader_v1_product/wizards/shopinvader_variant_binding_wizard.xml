@@ -39,7 +39,7 @@
         <field name="view_id" ref="shopinvader_variant_binding_wizard_form_view" />
         <field
             name="groups_id"
-            eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"
+            eval="[(4, ref('shopinvader_v1_base.group_shopinvader_manager'))]"
         />
     </record>
 

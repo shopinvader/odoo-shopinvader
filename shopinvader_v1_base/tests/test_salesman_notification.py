@@ -18,7 +18,7 @@ class TestCustomer(CommonCase):
             "phone": "0485485454",
             "country": {"id": cls.env.ref("base.fr").id},
             "is_company": False,
-            # "external_id": "12345678",
+            "external_id": "12345678",
         }
         cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
 
@@ -74,7 +74,7 @@ class TestCustomer(CommonCase):
         self.assertFalse(self._find_activity(partner))
         # company create -> none
         partner = self._create_customer(
-            # external_id="12345678X", # Moved to product
+            external_id="12345678X",
             is_company=True,
             vat="BE0477472701",
             email="acme@foo.com",
@@ -101,7 +101,7 @@ class TestCustomer(CommonCase):
         self.assertFalse(self._find_activity(partner))
         # company create -> yes
         partner = self._create_customer(
-            # external_id="12345678X", # Moved to product
+            external_id="12345678X",
             is_company=True,
             vat="BE0477472701",
             email="acme@foo.com",
@@ -139,7 +139,7 @@ class TestCustomer(CommonCase):
         self.assertEqual(self._find_activity(partner), 2)
         # company
         partner = self._create_customer(
-            # external_id="12345678X",# Moved to product
+            external_id="12345678X",
             is_company=True,
             vat="BE0477472701",
             email="acme@foo.com",
@@ -169,7 +169,7 @@ class TestCustomer(CommonCase):
         self.backend.salesman_notify_update = "company_and_user"
         # company create -> yes
         partner = self._create_customer(
-            # external_id="12345678X", # Moved to product
+            external_id="12345678X",
             is_company=True,
             vat="BE0477472701",
             email="acme@foo.com",
@@ -203,7 +203,7 @@ class TestCustomer(CommonCase):
         self.assertFalse(self._find_activity(partner))
         # company create -> none
         partner = self._create_customer(
-            # external_id="12345678X", # Moved to product
+            external_id="12345678X",
             is_company=True,
             vat="BE0477472701",
             email="acme@foo.com",

@@ -28,8 +28,7 @@
                                 invisible="not context.get('shopinvader_partner_main_view')"
                             />
                             <field name="partner_email" />
-                            <!-- tranféré dans shopinvader_v1_product
-                            <field name="external_id" /> -->
+                            <field name="external_id" />
                         </group>
                     </group>
                     <notebook />
@@ -49,16 +48,14 @@
                 />
                 <field name="partner_email" />
                 <field name="backend_id" />
-                <!-- tranféré dans shopinvader_v1_product
-                <field name="external_id" /> -->
+                <field name="external_id" />
                 <field name="create_date" readonly="1" />
-                <!-- tranféré dans shopinvader_v1_product
                 <field
                     name="company_id"
                     widget="selection"
                     groups="base.group_multi_company"
                     optional="show"
-                /> -->
+                />
                 <field name="sync_date" />
             </tree>
         </field>
@@ -70,11 +67,9 @@
             <search string="Shopinvader Partner">
                 <field name="name" />
                 <field name="email" />
-                <!--tranféré dans shopinvader_v1_product
-                 <field name="external_id" /> -->
+                <field name="external_id" />
                 <field name="parent_id" />
-                <!--tranféré dans shopinvader_v1_product
-                 <field name="company_id" groups="base.group_multi_company" /> -->
+                <field name="company_id" groups="base.group_multi_company" />
                 <group string="Group By">
                     <filter
                         name="group_by_backend_id"

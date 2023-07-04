@@ -53,7 +53,7 @@ class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):
     def _create_customer(self, **kw):
         data = {
             "email": "new@customer.example.com",
-            # "external_id": "D5CdkqOEL", # TRANFÉRÉ dans product
+            "external_id": "D5CdkqOEL",
             "name": "Purple",
             "street": "Rue du jardin",
             "zip": "43110",

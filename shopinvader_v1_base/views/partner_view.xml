@@ -11,8 +11,7 @@
                     <field name="shopinvader_bind_ids" nolabel="1">
                         <tree editable="bottom">
                             <field name="backend_id" />
-                            <!-- tranféré dans shopinvader_v1_product
-                                <field name="external_id" readonly="True" /> -->
+                            <field name="external_id" readonly="True" />
                             <field name="create_date" readonly="True" />
                             <field name="sync_date" readonly="True" />
                             <button

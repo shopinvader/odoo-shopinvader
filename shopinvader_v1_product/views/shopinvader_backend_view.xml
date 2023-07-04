@@ -10,14 +10,14 @@
                         type="action"
                         string="Bind Products"
                         class="oe_highlight"
-                        groups="shopinvader.group_shopinvader_manager"
+                        groups="shopinvader_v1_base.group_shopinvader_manager"
                     />
                     <button
                         name="%(shopinvader_category_binding_wizard_act_window)d"
                         type="action"
                         string="Bind Category"
                         class="oe_highlight"
-                        groups="shopinvader.group_shopinvader_manager"
+                        groups="shopinvader_v1_base.group_shopinvader_manager"
                     />
                 </header>
                 <sheet>
@@ -50,7 +50,7 @@
                         </button>
                         <button
                             class="oe_stat_button"
-                            name="%(action_cart)d"
+                            name="%(shopinvader_v1_base.action_cart)d"
                             type="action"
                             icon="fa-shopping-cart"
                             context="{'search_default_shopinvader_backend_id': active_id}"
@@ -59,7 +59,7 @@
                         </button>
                         <button
                             class="oe_stat_button"
-                            name="%(action_sale)d"
+                            name="%(shopinvader_v1_base.action_sale)d"
                             type="action"
                             icon="fa-credit-card"
                             context="{'search_default_shopinvader_backend_id': active_id}"
@@ -262,7 +262,7 @@
         id="menu_shopinvader_backend"
         name="Websites"
         sequence="0"
-        parent="menu_shopinvader_root"
+        parent="shopinvader_v1_base.menu_shopinvader_root"
         action="action_shopinvader_backend"
     />
 

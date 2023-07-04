@@ -37,6 +37,7 @@ class ShopinvaderPartner(models.Model):
     is_shopinvader_active = fields.Boolean(compute="_compute_is_shopinvader_active")
     backend_id = fields.Many2one("shopinvader.backend", string="Backend", required=True)
     sync_date = fields.Datetime(string="Last synchronization date")
+    external_id = fields.Char(string="External ID")
 
     def _compute_is_shopinvader_active_depends(self):
         return ()
