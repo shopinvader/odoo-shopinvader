@@ -12,7 +12,7 @@
     "license": "AGPL-3",
     "category": "Generic Modules",
     "depends": [
-        "shopinvader",
+        "shopinvader_v1_base",
         "connector_search_engine",
         "base_technical_user",
     ],

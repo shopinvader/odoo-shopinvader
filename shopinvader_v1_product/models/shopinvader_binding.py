@@ -4,6 +4,8 @@
 
 from odoo import fields, models
 
+from odoo.addons.base_sparse_field.models.fields import Serialized
+
 
 class ShopinvaderBinding(models.AbstractModel):
     _name = "shopinvader.binding"
@@ -15,7 +17,7 @@ class ShopinvaderBinding(models.AbstractModel):
     )
     external_id = fields.Char(string="External ID")
     sync_date = fields.Datetime(string="Last synchronization date")
-    redirect_url_key = fields.Serialized(
+    redirect_url_key = Serialized(
         compute="_compute_redirect_url_key", string="Redirect Url Keys"
     )
 

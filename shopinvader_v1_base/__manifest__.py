@@ -26,6 +26,7 @@
         "onchange_helper",
         "queue_job",
         "mail",
+        "base",
     ],
     "data": [
         "security/shopinvader_security.xml",
