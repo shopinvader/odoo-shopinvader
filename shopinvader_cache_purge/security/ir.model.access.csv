@@ -1,3 +1,0 @@
-id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_custom_shopinvader_cache_purge,full access cache_purge,model_shopinvader_url_purge,base.group_user,1,1,1,1
-access_custom_shopinvader_cache_purge_type,full access cache_purge_type,model_shopinvader_url_purge_type,base.group_user,1,1,1,1

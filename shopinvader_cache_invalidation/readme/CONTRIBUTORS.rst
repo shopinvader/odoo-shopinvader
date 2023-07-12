@@ -1,1 +1,1 @@
-* Matthieu Saison <matthiue.saison@akretion.com>
+* Matthieu SAISON <matthieu.saison@akretion.com>

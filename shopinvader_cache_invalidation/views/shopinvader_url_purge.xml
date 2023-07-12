@@ -13,7 +13,7 @@
         <field name="name">shopinvader.url.purge.tree.view</field>
         <field name="model">shopinvader.url.purge</field>
         <field name="arch" type="xml">
-            <tree editable="bottom">
+            <tree>
                 <field name="url" />
                 <field name="to_purge" />
                 <field name="purge_type_id" />
@@ -29,11 +29,22 @@
         <field name="context">{}</field>
     </record>
 
+    <record model="ir.actions.server" id="action_purge">
+        <field name="name">Purger</field>
+        <field name="model_id" ref="model_shopinvader_url_purge" />
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">
+            records._purge_url()
+        </field>
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]" />
+    </record>
+
     <menuitem
         id="shopinvader_url_purge_root_menu"
-        parent="connector.menu_connector_root"
+        parent="shopinvader.menu_shopinvader_root"
         name="Url Purge List"
-        sequence="20"
+        sequence="120"
         action="shopinvader_url_purge_act_window"
     />
 
