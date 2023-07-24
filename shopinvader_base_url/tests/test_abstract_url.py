@@ -12,9 +12,9 @@ class TestAbstractUrl(TransactionCase, FakeModelLoader):
         super().setUpClass()
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
-        from .models import FakeProduct
+        from .models import FakeCateg, FakeProduct
 
-        cls.loader.update_registry([FakeProduct])
+        cls.loader.update_registry([FakeProduct, FakeCateg])
 
         cls.lang_en = cls.env.ref("base.lang_en")
         cls.lang_fr = cls.env.ref("base.lang_fr")
@@ -84,6 +84,16 @@ class TestAbstractUrl(TransactionCase, FakeModelLoader):
         self.product._update_url_key("global", "en_US")
         self._expect_url_for_lang("en_US", "my-product-never-had-url-generated")
         self.assertEqual(len(self.product.url_ids), 1)
+
+    def test_update_with_relation(self):
+        self.product._update_url_key("global", "en_US")
+        categ = self.env["fake.categ"].create({"name": "Foo"})
+        self.product.write({"categ_id": categ.id})
+        self.product._update_url_key("global", "en_US")
+        self.assertEqual(len(self.product.url_ids), 2)
+        redirects = self.product._get_redirect_urls("global", "en_US")
+        self.assertEqual(len(redirects), 1)
+        self._expect_url_for_lang("en_US", "foo-my-product")
 
     def test_create_manual_url(self):
         self.env["url.url"].create(
