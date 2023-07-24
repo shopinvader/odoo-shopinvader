@@ -5,10 +5,10 @@ from datetime import datetime
 
 from odoo.exceptions import ValidationError
 
-from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.addons.component.tests.common import TransactionComponentCase
 
 
-class TestResPartner(SavepointComponentCase):
+class TestResPartner(TransactionComponentCase):
     @classmethod
     def setUpClass(cls):
         super(TestResPartner, cls).setUpClass()

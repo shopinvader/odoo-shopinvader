@@ -92,6 +92,7 @@
                             />
                         </group>
                         <group name="record" invisible="context.get('hide_record_id')">
+                            <field name="company_id" invisible="1" />
                             <field
                                 name="record_id"
                                 required="not context.get('hide_record_id')"

@@ -2,12 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.tools import mute_logger
 
-from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.addons.component.tests.common import TransactionComponentCase
 
 
 @mute_logger("odoo.models.unlink")
 @mute_logger("odoo.addons.base.models.ir_model")
-class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
+class TestShopinvaderVariantBindingWizard(TransactionComponentCase):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderVariantBindingWizard, cls).setUpClass()

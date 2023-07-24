@@ -27,14 +27,14 @@ class ShopinvaderVariant(models.Model):
         "shopinvader.product",
         required=True,
         ondelete="cascade",
-        index=True,
+        index="btree",
         check_company=True,
     )
     tmpl_record_id = fields.Many2one(
         string="Product template",
         related="shopinvader_product_id.record_id",
         store=True,
-        index=True,
+        index="btree",
         check_company=True,
     )
     record_id = fields.Many2one(
@@ -42,7 +42,7 @@ class ShopinvaderVariant(models.Model):
         comodel_name="product.product",
         required=True,
         ondelete="cascade",
-        index=True,
+        index="btree",
         check_company=True,
     )
     variant_count = fields.Integer(
@@ -217,7 +217,7 @@ class ShopinvaderVariant(models.Model):
         # Always filter taxes by the company
         taxes = product.taxes_id.filtered(lambda tax: tax.company_id == company)
         # Apply fiscal position
-        taxes = fposition.map_tax(taxes, product) if fposition else taxes
+        taxes = fposition.map_tax(taxes) if fposition else taxes
         # Set context. Some of the methods used here depend on these values
         product_context = dict(
             self.env.context,
@@ -228,9 +228,11 @@ class ShopinvaderVariant(models.Model):
         )
         product = product.with_context(**product_context)
         pricelist = pricelist.with_context(**product_context) if pricelist else None
-        # If we have a pricelist, use product.price as it already accounts
-        # for pricelist rules and quantity (in context)
-        price_unit = product.price if pricelist else product.lst_price
+        price_unit = (
+            pricelist._get_product_price(product, qty, date=date)
+            if pricelist
+            else product.lst_price
+        )
         price_unit = AccountTax._fix_tax_included_price_company(
             price_unit, product.taxes_id, taxes, company
         )
@@ -246,26 +248,12 @@ class ShopinvaderVariant(models.Model):
         # Handle pricelists.discount_policy == "without_discount"
         if pricelist and pricelist.discount_policy == "without_discount":
             # Get the price rule
-            price_unit, rule_id = pricelist.get_product_price_rule(
-                product, qty, None, date=date
+            price_unit, rule_id = pricelist._get_product_price_rule(
+                product, qty, date=date
             )
             # Get the price before applying the pricelist
-            SaleOrderLine = self.env["sale.order.line"].with_context(**product_context)
-            original_price_unit, currency = SaleOrderLine._get_real_price_currency(
-                product, rule_id, qty, product.uom_id, pricelist.id
-            )
+            original_price_unit = product.lst_price
             price_dp = self.env["decimal.precision"].precision_get("Product Price")
-            # Convert currency if necessary
-            if (
-                not float_is_zero(original_price_unit, precision_digits=price_dp)
-                and pricelist.currency_id != currency
-            ):
-                original_price_unit = currency._convert(
-                    original_price_unit,
-                    pricelist.currency_id,
-                    company or self.env.company,
-                    fields.Date.today(),
-                )
             # Compute discount
             if not float_is_zero(
                 original_price_unit, precision_digits=price_dp
@@ -297,7 +285,11 @@ class ShopinvaderVariant(models.Model):
         # Respect same order.
         order_by = [x.strip() for x in self.env["product.product"]._order.split(",")]
         backends = self.mapped("backend_id")
-        fields_to_read = ["shopinvader_product_id", "backend_id", "lang_id"] + order_by
+        fields_to_read = [
+            "shopinvader_product_id",
+            "backend_id",
+            "lang_id",
+        ] + [f.split(" ")[0] for f in order_by]
         product_ids = self.mapped("shopinvader_product_id").ids
         # Use sudo to bypass permissions (we don't care)
         _variants = self.sudo().search(
@@ -315,22 +307,23 @@ class ShopinvaderVariant(models.Model):
         )
 
         def pick_1st_variant(variants):
-            # NOTE: if the order is changed by adding `asc/desc` this can be broken
-            # but it's very unlikely that the default order for product.product
-            # will be changed.
             def get_value(record, key):
                 if record[key] is False and self._fields[key].type in ("char", "text"):
                     return ""
                 else:
                     return record[key]
 
-            ordered = sorted(
-                variants, key=lambda var: [get_value(var, x) for x in order_by]
-            )
-            return ordered[0].get("id") if ordered else None
+            for order_key in reversed(order_by):
+                order_key_split = order_key.split(" ")
+                reverse = len(order_key_split) > 1 and order_key_split[1] == "desc"
+                variants.sort(
+                    key=lambda var: get_value(var, order_key_split[0]),
+                    reverse=reverse,
+                )
+            return variants[0].get("id") if variants else None
 
         main_by_product = {
-            product: pick_1st_variant(tuple(variants))
+            product: pick_1st_variant(list(variants))
             for product, variants in var_by_product
         }
         for record in self:

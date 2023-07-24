@@ -23,7 +23,7 @@ class ShopinvaderCategory(models.Model):
         "product.category",
         required=True,
         ondelete="cascade",
-        index=True,
+        index="btree",
     )
     sequence = fields.Integer()
     meta_description = fields.Char()
@@ -36,7 +36,7 @@ class ShopinvaderCategory(models.Model):
         "Shopinvader Parent",
         compute="_compute_parent_category",
         store=True,
-        index=True,
+        index="btree",
         compute_sudo=True,
     )
     shopinvader_child_ids = fields.Many2many(
@@ -44,13 +44,14 @@ class ShopinvaderCategory(models.Model):
         "Shopinvader Childs",
         compute="_compute_child_category",
     )
-    level = fields.Integer(compute="_compute_level")
+    level = fields.Integer(compute="_compute_level", recursive=True)
     active = fields.Boolean(
         default=True,
         compute="_compute_active",
         store=True,
         readonly=False,
     )
+    automatic_url_key = fields.Char(recursive=True)
 
     _sql_constraints = [
         (

@@ -30,7 +30,7 @@ class ProductProduct(models.Model):
         "Shopinvader binded",
         compute="_compute_is_shopinvader_binded",
         store=True,
-        index=True,
+        index="btree",
         help="Technical field to know if this product is related by a"
         "(at least one) shopinvader backend",
     )

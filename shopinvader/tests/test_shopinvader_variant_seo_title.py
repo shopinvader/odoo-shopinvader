@@ -46,7 +46,7 @@ class TestShopinvaderVariantTest(ProductCommonCase):
             self.assertEqual(variant.seo_title, title)
             self.assertEqual(variant.manual_seo_title, title)
         # Invalidate cache to ensure data stay in memory
-        self.shopinvader_variants.invalidate_cache()
+        self.shopinvader_variants.invalidate_recordset()
         self._check_expected_seo_name(self.backend, self.shopinvader_variants)
 
     def test_public_name_normal(self):

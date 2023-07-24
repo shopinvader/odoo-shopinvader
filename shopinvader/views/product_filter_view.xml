@@ -32,7 +32,7 @@
     <record id="product_filter_view_tree" model="ir.ui.view">
         <field name="model">product.filter</field>
         <field name="arch" type="xml">
-            <tree string="Filter">
+            <tree>
                 <field name="sequence" widget="handle" />
                 <field name="name" />
             </tree>

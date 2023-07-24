@@ -170,18 +170,18 @@ class AbstractItemCase(ItemCaseMixin):
         self.pricelist.discount_policy = "without_discount"
         amount = self._test_pricelist_product()
         # into the cart, the price must be the price without discount
-        self.assertEqual(amount["price"], 16.5)
+        self.assertEqual(amount["price"], 33)
         # but the total for the line into the cart info must be the price with
         # discount
-        self.assertEqual(amount["total"], 14.85)
+        self.assertEqual(amount["total"], 29.7)
 
     def test_pricelist_product_price_unit_with_discount(self):
         self.pricelist.discount_policy = "with_discount"
         amount = self._test_pricelist_product()
         # into the cart, the price must be the price with discount
-        self.assertEqual(amount["price"], 14.85)
+        self.assertEqual(amount["price"], 29.7)
         # same for the total
-        self.assertEqual(amount["total"], 14.85)
+        self.assertEqual(amount["total"], 29.7)
 
     def test_upgrade_last_update_date(self):
         last_external_update_date = self._get_last_external_update_date(self.cart)

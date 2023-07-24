@@ -37,13 +37,11 @@ class ProductTemplate(models.Model):
             record.shopinvader_bind_ids.unlink()
         return super(ProductTemplate, self).unlink()
 
-    @api.model
-    def create(self, vals):
+    @api.model_create_multi
+    def create(self, vals_list):
         """Due to the order in which product.template, product.product,
         and bindings, are created, this is to handle the case in which
         a product.template + its bindings are created in one function call"""
-        result = super().create(vals)
-        bindings = result.shopinvader_bind_ids
-        if bindings:
-            bindings.active = True
+        result = super().create(vals_list)
+        result.mapped("shopinvader_bind_ids").active = True
         return result

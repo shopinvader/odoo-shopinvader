@@ -19,7 +19,7 @@ EXPECTED_GET_TITLE = (
     "Professor",
 )
 EXPECTED_GET_INDUSTRY = (
-    "Administrative",
+    "Administrative/Utilities",
     "Agriculture",
     "Construction",
     "Education",
@@ -27,7 +27,7 @@ EXPECTED_GET_INDUSTRY = (
     "Entertainment",
     "Extraterritorial",
     "Finance/Insurance",
-    "Food",
+    "Food/Hospitality",
     "Health/Social",
     "Households",
     "IT/Communication",
@@ -37,7 +37,7 @@ EXPECTED_GET_INDUSTRY = (
     "Public Administration",
     "Real Estate",
     "Scientific",
-    "Transportation",
+    "Transportation/Logistics",
     "Water supply",
     "Wholesale/Retail",
 )

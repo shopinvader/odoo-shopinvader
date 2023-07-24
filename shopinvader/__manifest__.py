@@ -5,13 +5,13 @@
 {
     "name": "Shopinvader",
     "summary": "Shopinvader",
-    "version": "14.0.5.24.12",
+    "version": "16.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "application": True,
-    "installable": False,
+    "installable": True,
     "external_dependencies": {"python": ["cerberus", "unidecode"], "bin": []},
     "depends": [
         "base_rest",

@@ -86,7 +86,7 @@ class TestProductFilter(CommonCase):
         with self.assertRaises(exceptions.UserError) as err:
             self.filter_on_field.write({"field_id": False})
         self.assertEqual(
-            err.exception.name,
+            err.exception.args[0],
             "Product filter ID=%d is based on field: "
             "requires a field!" % self.filter_on_field.id,
         )
@@ -95,7 +95,7 @@ class TestProductFilter(CommonCase):
         with self.assertRaises(exceptions.UserError) as err:
             self.filter_on_attr.write({"variant_attribute_id": False})
         self.assertEqual(
-            err.exception.name,
+            err.exception.args[0],
             "Product filter ID=%d is based on variant attribute: "
             "requires an attribute!" % self.filter_on_attr.id,
         )

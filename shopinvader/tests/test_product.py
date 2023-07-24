@@ -66,7 +66,7 @@ class ProductCase(ProductCommonCase):
                 "percent_price": 50,
             }
         )
-        self.variant.price = 423.4
+        self.variant.list_price = 423.4
         self.assertEqual(self.shopinvader_variant.price["default"]["value"], 211.70)
 
     @contextmanager
@@ -79,7 +79,7 @@ class ProductCase(ProductCommonCase):
         shopinv_variant_names = {r: r.name for r in shopinvader_variants}
         shopinv_variant_urls = {r: r.url_url_ids for r in shopinvader_variants}
         yield
-        shopinvader_variants.refresh()
+        shopinvader_variants.invalidate_recordset()
         for shopinv_variant in shopinvader_variants:
             existing_urls = shopinv_variant_urls.get(shopinv_variant)
             new_url = shopinv_variant.url_url_ids.filtered(
@@ -342,7 +342,7 @@ class ProductCase(ProductCommonCase):
         lang = self._install_lang("base.lang_fr")
         product = self.env.ref("product.product_product_4")
         product.with_context(lang="fr_FR").name = "Bureau Personnalisable"
-        product.flush()
+        product.flush_recordset()
         self.backend.lang_ids |= lang
         self.backend.bind_all_category()
         self.backend.bind_all_product()
@@ -353,7 +353,7 @@ class ProductCase(ProductCommonCase):
             if binding.lang_id.code == "fr_FR":
                 self.assertEqual(binding.url_key, "bureau-personnalisable")
             elif binding.lang_id.code == "en_US":
-                self.assertEqual(binding.url_key, "customizable-desk-config")
+                self.assertEqual(binding.url_key, "customizable-desk")
 
     def test_create_product_binding1(self):
         """
@@ -770,11 +770,11 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(urls.model_id, bind_product)
         bind_product.write({"active": False})
 
-        bind_product.flush()
+        bind_product.flush_recordset()
         self.assertEqual(urls.model_id, bind_categ)
         bind_product.write({"active": True})
 
-        bind_product.flush()
+        bind_product.flush_recordset()
         self.assertEqual(urls.model_id, bind_product)
 
     def test_product_url2(self):
@@ -834,11 +834,11 @@ class ProductCase(ProductCommonCase):
         self.assertEqual(urls.model_id, bind_product)
         bind_product.write({"active": False})
 
-        bind_product.flush()
+        bind_product.flush_recordset()
         self.assertEqual(urls.model_id, bind_categ2)
         bind_product.write({"active": True})
 
-        bind_product.flush()
+        bind_product.flush_recordset()
         self.assertEqual(urls.model_id, bind_product)
 
     @contextmanager
@@ -962,7 +962,8 @@ class ProductCase(ProductCommonCase):
         # change order
         tmpl.product_variant_ids[0].default_code = "ZZZZZZZ"
         tmpl.product_variant_ids[0].name = "ZZZZZZ"
-        tmpl.product_variant_ids.invalidate_cache()
+        tmpl.product_variant_ids.invalidate_recordset()
+        invader_variants.invalidate_recordset()
         main_variant1 = tmpl.product_variant_ids[0]
         self.assertNotEqual(main_variant, main_variant1)
         self.assertTrue(

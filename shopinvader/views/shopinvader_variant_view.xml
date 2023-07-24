@@ -57,7 +57,7 @@
         <field name="name">shopinvader.variant.tree (in shopinvader)</field>
         <field name="model">shopinvader.variant</field>
         <field name="arch" type="xml">
-             <tree string="Product" create="0">
+             <tree create="0">
                 <field name="default_code" optional="show" />
                 <field name="name" />
                 <field name="backend_id" />
@@ -105,6 +105,7 @@
                                 />
                             </group>
                             <group name="variant">
+                                <field name="company_id" invisible="1" />
                                 <field name="default_code" />
                                 <field name="tmpl_record_id" />
                                 <field name="record_id" />

@@ -1,11 +1,11 @@
 # Copyright 2020 Camptocamp (http://www.camptocamp.com).
 # @author Simone Orsi <simahawk@gmail.com>
-from odoo.addons.component.tests.common import SavepointComponentCase
+from odoo.addons.component.tests.common import TransactionComponentCase
 
 from .common import CommonMixin
 
 
-class TestShopinvaderCategoryBase(SavepointComponentCase, CommonMixin):
+class TestShopinvaderCategoryBase(TransactionComponentCase, CommonMixin):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderCategoryBase, cls).setUpClass()

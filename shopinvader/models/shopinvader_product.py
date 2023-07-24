@@ -16,7 +16,7 @@ class ShopinvaderProduct(models.Model):
         "product.template",
         required=True,
         ondelete="cascade",
-        index=True,
+        index="btree",
         check_company=True,
     )
     meta_description = fields.Char()
@@ -37,7 +37,6 @@ class ShopinvaderProduct(models.Model):
         related="backend_id.use_shopinvader_product_name", store=True
     )
     shopinvader_name = fields.Char(
-        string="Shopinvader Name",
         help="Name for shopinvader, if not set the product name will be used.",
     )
     shopinvader_display_name = fields.Char(compute="_compute_name", readonly=True)
@@ -142,12 +141,13 @@ class ShopinvaderProduct(models.Model):
                 shopinv_variants |= shopinv_variant_obj.create(vals)
         return shopinv_variants
 
-    @api.model
-    def create(self, vals):
-        binding = super(ShopinvaderProduct, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        bindings = super(ShopinvaderProduct, self).create(vals_list)
         if self.env.context.get("map_children"):
-            binding._create_shopinvader_variant()
-        return binding
+            for binding in bindings:
+                binding._create_shopinvader_variant()
+        return bindings
 
     def _get_url_keywords(self):
         self.ensure_one()
