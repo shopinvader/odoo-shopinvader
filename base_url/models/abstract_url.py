@@ -37,7 +37,7 @@ class AbstractUrl(models.AbstractModel):
         compute="_compute_redirect_url_url_ids", comodel_name="url.url"
     )
     lang_id = fields.Many2one("res.lang", string="Lang", required=True)
-    active = fields.Boolean(string="Active", default=True)
+    active = fields.Boolean(default=True)
 
     @api.constrains("url_builder", "manual_url_key")
     def _check_manual_url_key(self):
@@ -128,7 +128,7 @@ class AbstractUrl(models.AbstractModel):
 
     @api.depends("url_key")
     def _compute_redirect_url_url_ids(self):
-        self.flush()
+        self.flush_model()
         for record in self:
             record.redirect_url_url_ids = record.env["url.url"].search(
                 [
@@ -139,7 +139,7 @@ class AbstractUrl(models.AbstractModel):
 
     @api.depends("url_key")
     def _compute_url_url_ids(self):
-        self.flush()
+        self.flush_model()
         for record in self:
             record.url_url_ids = record.env["url.url"].search(
                 [("model_id", "=", get_model_ref(record))]
@@ -182,15 +182,16 @@ class AbstractUrl(models.AbstractModel):
                 else:
                     raise UserError(
                         _(
-                            "Url_key already exist in other model"
-                            "\n- name: %s\n - id: %s\n"
-                            "- url_key: %s\n - url_key_id %s"
-                        )
-                        % (
-                            existing_url.model_id.name,
-                            existing_url.model_id.id,
-                            existing_url.url_key,
-                            existing_url.id,
+                            "Url_key already exist in other model\n"
+                            "- name: {model_name}\n"
+                            "- id: {model_id}\n"
+                            "- url_key: {url_key}\n"
+                            "- url_key_id {ur_id}"
+                        ).format(
+                            model_name=existing_url.model_id.name,
+                            model_id=existing_url.model_id.id,
+                            url_key=existing_url.url_key,
+                            url_id=existing_url.id,
                         )
                     )
             else:
@@ -210,7 +211,7 @@ class AbstractUrl(models.AbstractModel):
         # we must explicitly invalidate the cache since there is no depends
         # defined on this computed fields and this field could have already
         # been loaded into the cache
-        self.invalidate_cache(fnames=["url_url_ids"], ids=self.ids)
+        self.invalidate_recordset(fnames=["url_url_ids"])
 
     def _redirect_existing_url(self):
         """
@@ -226,5 +227,5 @@ class AbstractUrl(models.AbstractModel):
                 [("model_id", "=", get_model_ref(record))]
             )
             urls.unlink()
-        self.flush()
+        self.flush_model()
         return super(AbstractUrl, self).unlink()

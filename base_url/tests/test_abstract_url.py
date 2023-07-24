@@ -1,13 +1,14 @@
 # Copyright 2019 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-import mock
+from unittest import mock
+
 from odoo_test_helper import FakeModelLoader
 
 from odoo.exceptions import ValidationError
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class TestAbstractUrl(SavepointCase, FakeModelLoader):
+class TestAbstractUrl(TransactionCase, FakeModelLoader):
     @classmethod
     def setUpClass(cls):
         super(TestAbstractUrl, cls).setUpClass()
@@ -96,7 +97,7 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
     def test_write_launching_automatic_url_key(self):
         my_partner = self._create_auto()
         # call flush to force to apply the recompute
-        my_partner.flush()
+        my_partner.flush_recordset()
         my_partner.name = "my new name"
         self.assertEqual(2, len(my_partner.url_url_ids))
         url_keys = set(my_partner.mapped("url_url_ids.url_key"))
@@ -105,7 +106,7 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
     def test_write_on_related_record_launching_automatic_url_key(self):
         my_partner = self._create_auto()
         # call flush to force to apply the recompute
-        my_partner.flush()
+        my_partner.flush_recordset()
         my_partner.record_id.name = "my new name"
         self.assertEqual(2, len(my_partner.url_url_ids))
         url_keys = set(my_partner.mapped("url_url_ids.url_key"))
@@ -119,5 +120,5 @@ class TestAbstractUrl(SavepointCase, FakeModelLoader):
         ) as mocked_redirect:
             my_partner.active = False
             # call flush to force to apply the recompute
-            my_partner.flush()
+            my_partner.flush_recordset()
             mocked_redirect.assert_called_once()

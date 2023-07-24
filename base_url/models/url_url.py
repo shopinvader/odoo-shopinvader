@@ -23,7 +23,7 @@ class UrlUrl(models.Model):
         readonly=True,
         string="Model",
         required=True,
-        index=True,
+        index="btree",
     )
     redirect = fields.Boolean(help="If tick this url is a redirection to the new url")
     backend_id = fields.Reference(
