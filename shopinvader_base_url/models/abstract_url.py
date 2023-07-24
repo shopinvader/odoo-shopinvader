@@ -23,25 +23,44 @@ class AbstractUrl(models.AbstractModel):
     _have_url = True
 
     url_ids = fields.One2many("url.url", "res_id")
+    url_need_refresh = fields.Boolean(
+        compute="_compute_url_need_refresh", store=True, readonly=False
+    )
 
-    def _get_url_keywords(self):
-        """This method return a list of keyword that will be concatenated
+    def _compute_url_need_refresh_depends(self):
+        return self._get_keyword_fields()
+
+    @api.depends(lambda self: self._compute_url_need_refresh_depends())
+    def _compute_url_need_refresh(self):
+        for record in self:
+            record.url_need_refresh = True
+
+    def _get_keyword_fields(self):
+        """This method return a list of field that will be concatenated
         with '-' to generate the url
-        Ex: if you return ['foo', '42'] the url will be foo-42
+        Ex: if you return ['name', 'code'] the url will be f"{record.name}-{record.code}"
 
-        Note the self already include in the context the lang of the record
+        Note: the self already include in the context the lang of the record
+        Note: you can return key like in depends ex: ["categ_id.name", "code"]
         """
-        self.ensure_one()
         # TODO: IMO we should add the ID here by default
         # to make sure the URL is always unique
         # seb.beau: not sure, most of site do not have id in url
         # the url have an seo impact so it's better to only put meaning information
         # moreover for unicity you can put the default code of the product or ean13
-        return [self.name]
+        return ["name"]
 
     def _generate_url_key(self):
+        def get(self, key_path):
+            value = self
+            for key_field in key_path.split("."):
+                value = value[key_field]
+            return value
+
         self.ensure_one()
-        return slugify("-".join(self._get_url_keywords()))
+        return slugify(
+            "-".join([get(self, k) for k in self._get_keyword_fields() if get(self, k)])
+        )
 
     def _get_redirect_urls(self, referential, lang):
         self.ensure_one()
@@ -89,10 +108,25 @@ class AbstractUrl(models.AbstractModel):
             # so we can skip this check if nothing have changed
             current_url = record._get_main_url(referential, lang)
             if not current_url.manual:
-                url_key = record._generate_url_key()
-                if current_url.key != url_key:
-                    current_url.redirect = True
-                    record._add_url(referential, lang, url_key)
+                # Updating an url is done for a specific context
+                # a lang and a referential
+                # if something have changed on the record the url_need_refresh
+                # is flagged.
+                # Before updating one specific url (referential + lang)
+                # the flag is propagated on all valid url
+                if record.url_need_refresh:
+                    record.url_need_refresh = False
+                    record.url_ids.filtered(
+                        lambda s: not s.redirect and not s.manual
+                    ).write({"need_refresh": True})
+                if not current_url or current_url.need_refresh:
+                    current_url.need_refresh = False
+                    url_key = record._generate_url_key()
+                    # maybe some change have been done but the url is the same
+                    # so check it
+                    if current_url.key != url_key:
+                        current_url.redirect = True
+                        record._add_url(referential, lang, url_key)
 
     def _add_url(self, referential, lang, url_key):
         self.ensure_one()

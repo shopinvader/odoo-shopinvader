@@ -33,6 +33,7 @@ class UrlUrl(models.Model):
         default="global",
     )
     lang_id = fields.Many2one("res.lang", "Lang", index=True, required=True)
+    need_refresh = fields.Boolean()
 
     _sql_constraints = [
         (
