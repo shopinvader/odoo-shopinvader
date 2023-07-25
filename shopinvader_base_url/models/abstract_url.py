@@ -4,6 +4,8 @@
 
 import logging
 
+from lxml import etree
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -17,6 +19,18 @@ except ImportError:
     _logger.debug("Cannot `import slugify`.")
 
 
+SMART_BUTTON = """
+<button class="oe_stat_button"
+       name="open_url"
+       icon="fa-list-ul"
+       type="object">
+       <div class="o_field_widget o_stat_info">
+            <span class="o_stat_value"><field name="count_url"/></span>
+            <span>URL</span>
+       </div>
+</button>"""
+
+
 class AbstractUrl(models.AbstractModel):
     _name = "abstract.url"
     _description = "Abstract Url"
@@ -26,6 +40,20 @@ class AbstractUrl(models.AbstractModel):
     url_need_refresh = fields.Boolean(
         compute="_compute_url_need_refresh", store=True, readonly=False
     )
+    count_url = fields.Integer(compute="_compute_count_url")
+
+    def _compute_count_url(self):
+        res = self.env["url.url"].read_group(
+            domain=[
+                ("res_id", "in", self.ids),
+                ("res_model", "=", self._name),
+            ],
+            fields=["res_id"],
+            groupby=["res_id"],
+        )
+        id2count = {item["res_id"]: item["res_id_count"] for item in res}
+        for record in self:
+            record.count_url = id2count.get(record.id, 0)
 
     def _compute_url_need_refresh_depends(self):
         return self._get_keyword_fields()
@@ -50,7 +78,7 @@ class AbstractUrl(models.AbstractModel):
         # moreover for unicity you can put the default code of the product or ean13
         return ["name"]
 
-    def _generate_url_key(self):
+    def _generate_url_key(self, referential, lang):
         def get(self, key_path):
             value = self
             for key_field in key_path.split("."):
@@ -89,6 +117,7 @@ class AbstractUrl(models.AbstractModel):
             "res_id": self.id,
             "referential": referential,
             "lang_id": self.env["res.lang"]._lang_get_id(lang),
+            "manual": False,
         }
 
     def _reuse_url(self, existing_url):
@@ -115,18 +144,18 @@ class AbstractUrl(models.AbstractModel):
                 # Before updating one specific url (referential + lang)
                 # the flag is propagated on all valid url
                 if record.url_need_refresh:
-                    record.url_need_refresh = False
                     record.url_ids.filtered(
                         lambda s: not s.redirect and not s.manual
                     ).write({"need_refresh": True})
                 if not current_url or current_url.need_refresh:
                     current_url.need_refresh = False
-                    url_key = record._generate_url_key()
+                    url_key = record._generate_url_key(referential, lang)
                     # maybe some change have been done but the url is the same
                     # so check it
                     if current_url.key != url_key:
                         current_url.redirect = True
                         record._add_url(referential, lang, url_key)
+            record.url_need_refresh = False
 
     def _add_url(self, referential, lang, url_key):
         self.ensure_one()
@@ -179,3 +208,23 @@ class AbstractUrl(models.AbstractModel):
         if "active" in vals and not vals["active"]:
             self._redirect_existing_url("archived")
         return res
+
+    @api.model
+    def _get_view(self, view_id=None, view_type="form", **options):
+        arch, view = super()._get_view(view_id=view_id, view_type=view_type, **options)
+        button_box = arch.xpath("//div[@name='button_box']")
+        if button_box:
+            button_box[0].append(etree.fromstring(SMART_BUTTON))
+        return arch, view
+
+    def open_url(self):
+        self.ensure_one()
+        action = self.env.ref("shopinvader_base_url.base_url_action_view").read()[0]
+        action["domain"] = [("res_model", "=", self._name), ("res_id", "in", self.ids)]
+        action["context"] = {
+            "hide_res_model": True,
+            "hide_res_id": True,
+            "default_res_model": self._name,
+            "default_res_id": self.id,
+        }
+        return action

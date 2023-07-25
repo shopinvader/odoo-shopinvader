@@ -14,7 +14,7 @@ class UrlUrl(models.Model):
     _description = "Url"
     _order = "res_model,res_id,redirect desc"
 
-    manual = fields.Boolean()
+    manual = fields.Boolean(default=True, readonly=True)
     key = fields.Char(required=True, index=True)
     res_id = fields.Many2oneReference(
         string="Record ID",
@@ -31,6 +31,7 @@ class UrlUrl(models.Model):
         selection=lambda s: s._get_all_referential(),
         index=True,
         default="global",
+        required=True,
     )
     lang_id = fields.Many2one("res.lang", "Lang", index=True, required=True)
     need_refresh = fields.Boolean()
@@ -42,6 +43,14 @@ class UrlUrl(models.Model):
             "Already exists in database",
         )
     ]
+
+    def init(self):
+        self.env.cr.execute(
+            f"""CREATE UNIQUE INDEX IF NOT EXISTS main_url_uniq
+            ON {self._table} (referential, lang_id, res_id, res_model)
+            WHERE redirect = False"""
+        )
+        return super().init()
 
     @tools.ormcache()
     @api.model
