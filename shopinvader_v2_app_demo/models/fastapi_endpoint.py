@@ -32,7 +32,6 @@ class FastapiEndpoint(models.Model):
     )
     auth_jwt_validator_id = fields.Many2one("auth.jwt.validator")
 
-    @api.model
     def _get_fastapi_routers(self):
         if self.app == "shopinvader_demo":
             return self._get_shopinvader_demo_fastapi_routers()
