@@ -6,8 +6,6 @@ from pydantic import BaseModel, Field
 
 from odoo.tools.float_utils import float_round
 
-from odoo.addons.pydantic import utils
-
 
 class SaleAmount(BaseModel, metaclass=ExtendableModelMeta):
     tax: float = Field(description="Tax amount")
@@ -18,35 +16,29 @@ class SaleAmount(BaseModel, metaclass=ExtendableModelMeta):
 
     @classmethod
     def from_sale_order(cls, sale_order):
-        res = cls.construct()
         precision = sale_order.currency_id.decimal_places
-        res.discount_total = float_round(sale_order.discount_total, precision)
-        res.total_without_discount = float_round(
-            sale_order.price_total_no_discount, precision
+        return cls.model_construct(
+            discount_total=float_round(sale_order.discount_total, precision),
+            total_without_discount=float_round(
+                sale_order.price_total_no_discount, precision
+            ),
+            tax=float_round(sale_order.amount_tax, precision),
+            untaxed=float_round(sale_order.amount_untaxed, precision),
+            total=float_round(sale_order.amount_total, precision),
         )
-        res.tax = float_round(sale_order.amount_tax, precision)
-        res.untaxed = float_round(sale_order.amount_untaxed, precision)
-        res.total = float_round(sale_order.amount_total, precision)
-
-        return res
 
     @classmethod
     def from_sale_order_line(cls, order_line):
-        res = cls.construct()
         precision = order_line.order_id.currency_id.decimal_places
-        res.discount_total = float_round(order_line.discount_total, precision)
-        res.total_without_discount = float_round(
-            order_line.price_total_no_discount, precision
+        return cls.model_construct(
+            discount_total=float_round(order_line.discount_total, precision),
+            total_without_discount=float_round(
+                order_line.price_total_no_discount, precision
+            ),
+            tax=float_round(order_line.price_tax, precision),
+            untaxed=float_round(order_line.price_subtotal, precision),
+            total=float_round(order_line.price_total, precision),
         )
-        res.tax = float_round(order_line.price_tax, precision)
-        res.untaxed = float_round(order_line.price_subtotal, precision)
-        res.total = float_round(order_line.price_total, precision)
-
-        return res
-
-    class Config:
-        orm_mode = True
-        getter_dict = utils.GenericOdooGetter
 
 
 class SaleLineAmount(SaleAmount):

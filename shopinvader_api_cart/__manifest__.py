@@ -35,8 +35,8 @@
     "external_dependencies": {
         "python": [
             "fastapi",
-            "pydantic",
-            "extendable-pydantic",
+            "pydantic>=2.0.0",
+            "extendable-pydantic>=1.0.0",
         ]
     },
     "pre_init_hook": "pre_init_hook",

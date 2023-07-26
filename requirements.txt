@@ -1,5 +1,5 @@
 # generated from manifests external_dependencies
-extendable-pydantic
+extendable-pydantic>=1.0.0
 fastapi
 openupgradelib
-pydantic
+pydantic>=2.0.0
