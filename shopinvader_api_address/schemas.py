@@ -11,15 +11,15 @@ class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
     state and country can be name or code
     """
 
-    name: str | None
-    street: str | None
-    street2: str | None
-    zip: str | None
-    city: str | None
-    phone: str | None
-    email: str | None
-    state_id: int | None
-    country_id: int | None
+    name: str | None = None
+    street: str | None = None
+    street2: str | None = None
+    zip: str | None = None
+    city: str | None = None
+    phone: str | None = None
+    email: str | None = None
+    state_id: int | None = None
+    country_id: int | None = None
 
     def to_res_partner_vals(self) -> dict:
         vals = {
@@ -43,15 +43,15 @@ class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
     state and country can be name or code
     """
 
-    name: str | None
-    street: str | None
-    street2: str | None
-    zip: str | None
-    city: str | None
-    phone: str | None
-    email: str | None
-    state_id: int | None
-    country_id: int | None
+    name: str | None = None
+    street: str | None = None
+    street2: str | None = None
+    zip: str | None = None
+    city: str | None = None
+    phone: str | None = None
+    email: str | None = None
+    state_id: int | None = None
+    country_id: int | None = None
 
     def to_res_partner_vals(self) -> dict:
         vals = {
@@ -79,7 +79,7 @@ class BillingAddressCreate(AddressUpdate):
     partner's address
     """
 
-    vat: str | None
+    vat: str | None = None
 
     def to_res_partner_vals(self) -> dict:
         vals = super().to_res_partner_vals()
@@ -94,7 +94,7 @@ class BillingAddressUpdate(AddressUpdate):
     Update of Billing Address
     """
 
-    vat: str | None
+    vat: str | None = None
 
     def to_res_partner_vals(self) -> dict:
         vals = super().to_res_partner_vals()

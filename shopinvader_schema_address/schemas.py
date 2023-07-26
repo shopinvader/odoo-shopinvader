@@ -2,26 +2,21 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from extendable_pydantic import ExtendableModelMeta
-from pydantic import BaseModel
-
-from odoo.addons.pydantic import utils
+from pydantic import BaseModel, ConfigDict
 
 
 class Address(BaseModel, metaclass=ExtendableModelMeta):
     id: int
-    name: str | None
-    street: str | None
-    street2: str | None
-    zip: str | None
-    city: str | None
-    phone: str | None
-    email: str | None
-    state_id: int | None
-    country_id: int | None
-
-    class Config:
-        orm_mode = True
-        getter_dict = utils.GenericOdooGetter
+    name: str | None = None
+    street: str | None = None
+    street2: str | None = None
+    zip: str | None = None
+    city: str | None = None
+    phone: str | None = None
+    email: str | None = None
+    state_id: int | None = None
+    country_id: int | None = None
+    model_config: ConfigDict = ConfigDict(from_attributes=True)
 
     @classmethod
     def from_res_partner(cls, odoo_rec):
@@ -44,7 +39,7 @@ class BillingAddress(Address):
     Billing Address
     """
 
-    vat: str | None
+    vat: str | None = None
 
     @classmethod
     def from_res_partner(cls, odoo_rec):

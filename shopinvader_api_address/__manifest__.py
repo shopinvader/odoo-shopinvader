@@ -20,6 +20,8 @@
         "security/res_groups.xml",
         "security/res_partner.xml",
     ],
-    "external_dependencies": {"python": ["fastapi", "extendable_pydantic", "pydantic"]},
+    "external_dependencies": {
+        "python": ["fastapi", "extendable_pydantic>=1.0.0", "pydantic>=2.0.0"]
+    },
     "installable": True,
 }

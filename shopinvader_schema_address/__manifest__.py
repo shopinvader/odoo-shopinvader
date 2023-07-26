@@ -14,7 +14,9 @@
         "extendable",
         "extendable_fastapi",
     ],
-    "external_dependencies": {"python": ["extendable_pydantic", "pydantic"]},
+    "external_dependencies": {
+        "python": ["extendable_pydantic>=1.0.0", "pydantic>=2.0.0"]
+    },
     "data": [],
     "demo": [],
     "installable": True,
