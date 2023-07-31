@@ -74,40 +74,47 @@ class FastapiEndpoint(models.Model):
             ] = "/shopinvader_demo/docs/oauth2-redirect"
         return params
 
+    def _get_shopinvader_demo_app_dependencies_overrides(self):
+        oauth2_scheme = OAuth2AuthorizationCodeBearer(
+            authorizationUrl=(
+                "https://keycloak.demo16.shopinvader.com/"
+                "auth/realms/master/protocol/openid-connect/auth"
+            ),
+            tokenUrl=(
+                "https://keycloak.demo16.shopinvader.com/"
+                "auth/realms/master/protocol/openid-connect/token"
+            ),
+            scopes={"openid": "", "email": "", "profile": ""},
+            # Don't fail if missing Authorization header, as we look for the cookie too.
+            auto_error=False,
+        )
+        return {
+            authenticated_partner_impl: auth_jwt_authenticated_or_anonymous_partner,
+            auth_jwt_default_validator_name: partial(
+                lambda a: a, self.auth_jwt_validator_id.name or None
+            ),
+            auth_jwt_http_header_authorization: oauth2_scheme,
+        }
+
+    def _get_cart_app_dependencies_overrides(self):
+        return {
+            authenticated_partner_impl: auth_jwt_authenticated_or_anonymous_partner_autocreate,
+        }
+
     def _get_app(self):
         app = super()._get_app()
         if self.app == "shopinvader_demo":
-            oauth2_scheme = OAuth2AuthorizationCodeBearer(
-                authorizationUrl=(
-                    "https://keycloak.demo16.shopinvader.com/"
-                    "auth/realms/master/protocol/openid-connect/auth"
-                ),
-                tokenUrl=(
-                    "https://keycloak.demo16.shopinvader.com/"
-                    "auth/realms/master/protocol/openid-connect/token"
-                ),
-                scopes={"openid": "", "email": "", "profile": ""},
-                # Don't fail if missing Authorization header, as we look for the cookie too.
-                auto_error=False,
+            app.dependency_overrides.update(
+                self._get_shopinvader_demo_app_dependencies_overrides()
             )
-            app.dependency_overrides[
-                authenticated_partner_impl
-            ] = auth_jwt_authenticated_or_anonymous_partner
-            app.dependency_overrides[auth_jwt_default_validator_name] = partial(
-                lambda a: a, self.auth_jwt_validator_id.name or None
-            )
-            app.dependency_overrides[auth_jwt_http_header_authorization] = oauth2_scheme
             cart_app = FastAPI()
             cart_app.include_router(cart_router)
-            cart_app.dependency_overrides[
-                authenticated_partner_impl
-            ] = auth_jwt_authenticated_or_anonymous_partner_autocreate
-            cart_app.dependency_overrides[auth_jwt_default_validator_name] = partial(
-                lambda a: a, self.auth_jwt_validator_id.name or None
+            # First copy dependecies overrides from the main app
+            cart_app.dependency_overrides.update(self._get_app_dependencies_override())
+            # Then add/modify specific dependencies overrides
+            cart_app.dependency_overrides.update(
+                self._get_cart_app_dependencies_overrides()
             )
-            cart_app.dependency_overrides[
-                auth_jwt_http_header_authorization
-            ] = oauth2_scheme
             app.mount("/carts", cart_app)
 
         return app
