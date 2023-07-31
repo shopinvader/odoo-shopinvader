@@ -35,7 +35,7 @@ class FastapiEndpoint(models.Model):
     def _get_fastapi_routers(self):
         if self.app == "shopinvader_demo":
             return self._get_shopinvader_demo_fastapi_routers()
-        return super().get_fastapi_routers()
+        return super()._get_fastapi_routers()
 
     @api.model
     def _get_shopinvader_demo_fastapi_routers(self) -> List[APIRouter]:
