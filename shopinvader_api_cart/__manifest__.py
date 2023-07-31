@@ -36,7 +36,7 @@
         "python": [
             "fastapi",
             "pydantic>=2.0.0",
-            "extendable-pydantic>=1.0.0",
+            "extendable-pydantic>=1.1.0",
         ]
     },
     "pre_init_hook": "pre_init_hook",

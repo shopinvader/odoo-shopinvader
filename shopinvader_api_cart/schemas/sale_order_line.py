@@ -1,13 +1,12 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from extendable_pydantic import ExtendableModelMeta
-from pydantic import BaseModel
+from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 from .amount import SaleLineAmount
 
 
-class SaleOrderLine(BaseModel, metaclass=ExtendableModelMeta):
+class SaleOrderLine(StrictExtendableBaseModel):
     id: int
     product_id: int
     name: str

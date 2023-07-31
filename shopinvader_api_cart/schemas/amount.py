@@ -1,13 +1,14 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from extendable_pydantic import ExtendableModelMeta
-from pydantic import BaseModel, Field
+from pydantic import Field
 
 from odoo.tools.float_utils import float_round
 
+from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
-class SaleAmount(BaseModel, metaclass=ExtendableModelMeta):
+
+class SaleAmount(StrictExtendableBaseModel):
     tax: float = Field(description="Tax amount")
     untaxed: float = Field(description="Amount untaxed")
     total: float = Field(description="Total amount")

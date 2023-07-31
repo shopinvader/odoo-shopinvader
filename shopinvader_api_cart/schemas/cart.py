@@ -4,9 +4,7 @@
 from datetime import datetime
 from typing import List
 
-from extendable_pydantic import ExtendableModelMeta
-from pydantic import BaseModel
-
+from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 from odoo.addons.shopinvader_schema_address.schemas import (
     BillingAddress,
     ShippingAddress,
@@ -16,17 +14,17 @@ from .amount import SaleAmount
 from .sale_order_line import SaleOrderLine
 
 
-class CartTransaction(BaseModel, metaclass=ExtendableModelMeta):
+class CartTransaction(StrictExtendableBaseModel):
     uuid: str | None = None
     qty: float
     product_id: int
 
 
-class CartSyncInput(BaseModel, metaclass=ExtendableModelMeta):
+class CartSyncInput(StrictExtendableBaseModel):
     transactions: List[CartTransaction]
 
 
-class CartResponse(BaseModel, metaclass=ExtendableModelMeta):
+class CartResponse(StrictExtendableBaseModel):
     uuid: str | None = None
     id: int
     state: str

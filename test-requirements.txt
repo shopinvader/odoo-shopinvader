@@ -8,9 +8,4 @@ vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
 httpx  # For FastAPI tests
-odoo-addon-shopinvader-schema-address @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1361/head#subdirectory=setup/shopinvader_schema_address
-odoo-addon-shopinvader-api-address @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1361/head#subdirectory=setup/shopinvader_api_address
-odoo-addon-shopinvader-address @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1361/head#subdirectory=setup/shopinvader_address
-odoo-addon-extendable @ git+https://github.com/oca/rest-framework@refs/pull/348/head#subdirectory=setup/extendable
-odoo-addon-fastapi @ git+https://github.com/oca/rest-framework@refs/pull/348/head#subdirectory=setup/fastapi
-odoo-addon-extendable-fastapi @ git+https://github.com/oca/rest-framework@refs/pull/348/head#subdirectory=setup/extendable_fastapi
+odoo-addon-extendable-fastapi @ git+https://github.com/oca/rest-framework@refs/pull/364/head#subdirectory=setup/extendable_fastapi
