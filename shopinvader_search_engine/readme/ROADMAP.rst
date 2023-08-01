@@ -1,1 +1,2 @@
-* harmonize/simplify names: Connector, backend...
+* Export price on product
+* Export SEO title on product
