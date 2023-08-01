@@ -2,10 +2,10 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 
-class BindingCase(SavepointCase):
+class BindingCase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

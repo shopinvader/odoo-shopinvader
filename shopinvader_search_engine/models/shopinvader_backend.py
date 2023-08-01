@@ -24,7 +24,7 @@ class ShopinvaderBackend(models.Model):
     @api.model
     def _get_default_models(self):
         domain = self.env["se.index"]._model_id_domain()
-        return self.env["ir.model"].search(domain)
+        return self.sudo().env["ir.model"].search(domain)
 
     def force_recompute_all_binding_index(self):
         self.sudo_tech().mapped("se_backend_id.index_ids").force_recompute_all_binding()

@@ -5,12 +5,12 @@
 from odoo_test_helper import FakeModelLoader
 
 from odoo import fields, models
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 from odoo.addons.shopinvader.tests.common import _install_lang_odoo
 
 
-class BackendCaseBase(SavepointCase):
+class BackendCaseBase(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
