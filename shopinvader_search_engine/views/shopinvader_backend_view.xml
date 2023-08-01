@@ -17,7 +17,7 @@
                         nolabel="1"
                         context="{'shopinvader_backend_id': active_id}"
                     >
-                        <tree colors="red:not is_valid" create="0" delete="0">
+                        <tree decoration-danger="not is_valid" create="0" delete="0">
                             <field name="name" />
                             <field name="lang_id" />
                             <field name="model_id" />
