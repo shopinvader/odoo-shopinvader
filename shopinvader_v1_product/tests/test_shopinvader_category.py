@@ -10,8 +10,8 @@ class TestShopinvaderCategoryBase(SavepointComponentCase, CommonMixin):
     def setUpClass(cls):
         super(TestShopinvaderCategoryBase, cls).setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.backend = cls.env.ref("shopinvader.backend_1")
-        cls.backend2 = cls.env.ref("shopinvader.backend_2")
+        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
+        cls.backend2 = cls.env.ref("shopinvader_v1_base.backend_2")
         cls.product_category = cls.env.ref("product.product_category_4")
         cls.category_bind_model = cls.env["shopinvader.category"]
         cat_obj = cls.env["product.category"]

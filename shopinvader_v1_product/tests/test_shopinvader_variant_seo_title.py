@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from odoo.tools import mute_logger
 
-from .common import ProductCommonCase
+from odoo.addons.shopinvader_v1_base.tests.common import ProductCommonCase
 
 
 @mute_logger("odoo.models.unlink")

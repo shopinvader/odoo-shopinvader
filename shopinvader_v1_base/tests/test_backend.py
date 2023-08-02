@@ -14,9 +14,6 @@ class BackendCase(CommonCase):
         cls.env = cls.env(context=dict(cls.env.context, test_queue_job_no_delay=True))
         cls.backend = cls.backend.with_context(test_queue_job_no_delay=True)
 
-    def _all_products_count(self):
-        return self.env["product.template"].search_count([("sale_ok", "=", True)])
-
     def test_lookup_by_website_unique_key(self):
         website_unique_key = self.backend.website_unique_key
         self.assertTrue(website_unique_key)

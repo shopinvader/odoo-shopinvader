@@ -9,8 +9,8 @@ from itertools import groupby
 from odoo import api, fields, models
 from odoo.tools import float_compare, float_is_zero
 
-from odoo.addons.shopinvader_v1_base.models.tools import sanitize_attr_name
-from odoo.addons.shopinvader_v1_base.utils import float_round
+from ..utils import float_round
+from .tools import sanitize_attr_name
 
 
 class ShopinvaderVariant(models.Model):

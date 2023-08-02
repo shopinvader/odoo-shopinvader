@@ -53,7 +53,7 @@ class ShopinvaderPartner(models.Model):
     _sql_constraints = [
         (
             "record_uniq",
-            "unique(sync_date, record_id, partner_email)",
+            "unique(backend_id, record_id, partner_email)",
             "A partner can only have one binding by backend.",
         ),
         (

@@ -4,7 +4,7 @@
 from odoo import exceptions
 from odoo.tools import mute_logger
 
-from .common import CommonCase
+from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
 
 
 class TestProductFilter(CommonCase):

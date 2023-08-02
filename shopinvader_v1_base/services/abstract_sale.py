@@ -47,29 +47,9 @@ class AbstractSaleService(AbstractComponent):
         return {"id": line.product_id.id}
 
     def _convert_one_line(self, line):
-        # variant = line.product_id._get_invader_variant(
-        #     self.shopinvader_backend, self.env.context.get("lang")
-        # )
-        # if not variant:
-        #     _logger.debug(
-        #         "No variant found with ctx lang `%s`. "
-        #         "Falling back to partner lang `%s",
-        #         self.env.context.get("lang"),
-        #         line.order_id.partner_id.lang,
-        #     )
-        #     # this likely should never happen if the request from client
-        #     # is forwarded properly
-        #     variant = line.product_id._get_invader_variant(
-        #         self.shopinvader_backend, line.order_id.partner_id.lang
-        #     )
-        # product = self._convert_one_line_product(variant)
-
-        # TRANSFÉRÉ DANS PRODUCT
-        # product = self.get_product_information(self, line)
         return {
             "id": line.id,
             "name": line.name,
-            # "product": product,
             "product": self._get_product_information(line),
             "amount": {
                 "price": line.price_unit,

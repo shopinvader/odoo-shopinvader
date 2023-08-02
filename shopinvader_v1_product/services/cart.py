@@ -22,3 +22,7 @@ class CartService(Component):
             self.shopinvader_backend, partner=self.partner
         ):
             raise UserError(_("Product %s is not allowed") % product.name)
+
+    def _add_item(self, cart, params):
+        self._check_allowed_product(cart, params)
+        super()._add_item(self, cart, params)

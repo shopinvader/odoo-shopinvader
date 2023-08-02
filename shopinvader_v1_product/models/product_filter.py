@@ -7,7 +7,7 @@
 
 from odoo import _, api, exceptions, fields, models
 
-from odoo.addons.shopinvader_v1_base.models.tools import sanitize_attr_name
+from .tools import sanitize_attr_name
 
 
 class ProductFilter(models.Model):

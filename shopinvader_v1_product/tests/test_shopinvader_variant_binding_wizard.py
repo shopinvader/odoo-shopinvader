@@ -18,7 +18,7 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
                 test_queue_job_no_delay=True,
             )
         )
-        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
         cls.template = cls.env.ref("product.product_product_4_product_template")
         cls.variant = cls.env.ref("product.product_product_4b")
         cls.bind_wizard_model = cls.env["shopinvader.variant.binding.wizard"]

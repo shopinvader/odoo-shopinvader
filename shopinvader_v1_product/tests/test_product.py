@@ -8,7 +8,7 @@ from uuid import uuid4
 from odoo import fields
 from odoo.tools import mute_logger
 
-from .common import ProductCommonCase
+from odoo.addons.shopinvader_v1_base.tests.common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):
@@ -109,7 +109,7 @@ class ProductCase(ProductCommonCase):
 
     def test_product_get_price(self):
         # self.base_pricelist doesn't define a tax mapping. We are tax included
-        fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
+        fiscal_position_fr = self.env.ref("shopinvader_v1_base.fiscal_position_0")
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=fiscal_position_fr
         )
@@ -175,7 +175,7 @@ class ProductCase(ProductCommonCase):
                 "fixed_price": 10,
             }
         )
-        fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
+        fiscal_position_fr = self.env.ref("shopinvader_v1_base.fiscal_position_0")
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=fiscal_position_fr
         )
@@ -191,7 +191,7 @@ class ProductCase(ProductCommonCase):
 
     def test_product_get_price_per_qty(self):
         # Define a promotion price for the product with min_qty = 10
-        fposition = self.env.ref("shopinvader.fiscal_position_0")
+        fposition = self.env.ref("shopinvader_v1_base.fiscal_position_0")
         pricelist = self.base_pricelist
         self.env["product.pricelist.item"].create(
             {
@@ -239,7 +239,7 @@ class ProductCase(ProductCommonCase):
         # self.base_pricelist doesn't define a tax mapping. We are tax included
         # we modify the discount_policy
         self.base_pricelist.discount_policy = "without_discount"
-        fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
+        fiscal_position_fr = self.env.ref("shopinvader_v1_base.fiscal_position_0")
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=fiscal_position_fr
         )

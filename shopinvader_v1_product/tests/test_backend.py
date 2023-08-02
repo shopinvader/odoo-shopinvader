@@ -4,13 +4,22 @@
 
 from odoo.tools import mute_logger
 
-from .common import CommonCase
+from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+
+from .common import CommonMixin
 
 
-class BackendCase(CommonCase):
+class BackendCase(CommonCase, CommonMixin):
     @classmethod
     def setUpClass(cls):
         super(BackendCase, cls).setUpClass()
+        cls.lang_fr = cls._install_lang(cls, "base.lang_fr")
+        cls.env = cls.env(context=dict(cls.env.context, test_queue_job_no_delay=True))
+        cls.backend = cls.backend.with_context(test_queue_job_no_delay=True)
+        CommonMixin._setup_backend(cls)
+
+    def _all_products_count(self):
+        return self.env["product.template"].search_count([("sale_ok", "=", True)])
 
     def _all_products_binding_count(self):
         return self.env["shopinvader.product"].search_count([])
@@ -36,14 +45,16 @@ class BackendCase(CommonCase):
         self.env["shopinvader.variant"].search([]).unlink()
         self.env["shopinvader.product"].search([]).unlink()
         prod1 = self.env.ref(
-            "shopinvader_v1_base.product_template_armchair_mid_century"
+            "shopinvader_v1_product.product_template_armchair_mid_century"
         )
         prod2 = self.env.ref(
-            "shopinvader_v1_base.product_product_table_walmut"
+            "shopinvader_v1_product.product_product_table_walmut"
         ).product_tmpl_id
-        prod3 = self.env.ref("shopinvader_v1_base.product_template_chair_mid_century")
+        prod3 = self.env.ref(
+            "shopinvader_v1_product.product_template_chair_mid_century"
+        )
         prod4 = self.env.ref(
-            "shopinvader_v1_base.product_product_chair_mid_century_red"
+            "shopinvader_v1_product.product_product_chair_mid_century_red"
         ).product_tmpl_id
         # create our own categories w/ specific hierarchy to avoid
         # test data conflicts / regressions
@@ -92,7 +103,7 @@ class BackendCase(CommonCase):
         self.backend.category_root_binding_level = 1
         self.backend.category_binding_level = 3
         records = self._setup_bind_all_products()
-        # self._bind_all_product([("id", "in", records["all_prods"].ids)])
+        self._bind_all_product([("id", "in", records["all_prods"].ids)])
         # categ_lvl4 is included because attached directly to the product
         expected = records["all_categs"] - records["categ_lvl0"]
         self.assertEqual(
@@ -101,7 +112,7 @@ class BackendCase(CommonCase):
         # remove another level
         self.backend.category_root_binding_level = 2
         self.env["shopinvader.category"].search([]).unlink()
-        # self._bind_all_product([("id", "in", records["all_prods"].ids)])
+        self._bind_all_product([("id", "in", records["all_prods"].ids)])
         expected = records["categ_lvl2"] + records["categ_lvl3"] + records["categ_lvl4"]
         self.assertEqual(
             len(expected), self.env["shopinvader.category"].search_count([])
