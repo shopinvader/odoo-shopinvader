@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <!-- disable cart menu from shopinvader as double of sale_cart -->
+    <record id="shopinvader.menu_cart" model="ir.ui.menu">
+        <field name="active" eval="0" />
+    </record>
+</odoo>

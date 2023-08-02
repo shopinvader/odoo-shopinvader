@@ -14,7 +14,6 @@ class SaleOrder(models.Model):
     _name = "sale.order"
     _inherit = ["sale.order", "track.external.mixin"]
 
-    typology = fields.Selection([("sale", "Sale"), ("cart", "Cart")], default="sale")
     shopinvader_backend_id = fields.Many2one("shopinvader.backend", "Backend")
     current_step_id = fields.Many2one(
         "shopinvader.cart.step", "Current Cart Step", readonly=True

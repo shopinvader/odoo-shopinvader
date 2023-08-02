@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2022 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_backend_view_form">
+        <field name="name">shopinvader.backend.form (in shopinvader_sale_cart_delivery)
+        </field>
+        <field name="model">shopinvader.backend</field>
+        <field
+            name="inherit_id"
+            ref="shopinvader_delivery_carrier.shopinvader_backend_view_form"
+        />
+        <field name="arch" type="xml">
+            <group name="carrier" position="before">
+                <group>
+                    <field name="charge_delivery_fee_on_order" />
+                </group>
+            </group>
+        </field>
+    </record>
+</odoo>
