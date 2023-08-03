@@ -7,3 +7,4 @@ from . import shopinvader_variant
 from . import product_product
 from . import product_filter
 from . import product_category
+from . import shopinvader_backend
