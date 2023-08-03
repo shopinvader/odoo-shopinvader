@@ -6,7 +6,7 @@
 from odoo import fields
 from odoo.exceptions import AccessError, UserError
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
 
 
 class TestImpersonate(CommonCase):

@@ -8,7 +8,7 @@ from freezegun import freeze_time
 
 from odoo import fields
 
-from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
+from odoo.addons.shopinvader_v1_base.tests.test_cart import CommonConnectedCartCase
 
 
 class TestCartService(CommonConnectedCartCase):

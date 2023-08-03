@@ -4,8 +4,10 @@
 
 from odoo import models
 
-from odoo.addons.shopinvader.tests.common import CommonCase
-from odoo.addons.shopinvader.tests.test_notification import NotificationCaseMixin
+from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_v1_base.tests.test_notification import (
+    NotificationCaseMixin,
+)
 
 
 class LeadCase(CommonCase, NotificationCaseMixin):

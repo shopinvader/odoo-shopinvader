@@ -7,7 +7,7 @@ from dateutil import parser
 
 from odoo import fields
 
-from odoo.addons.shopinvader.tests.common import CommonCase, CommonTestDownload
+from odoo.addons.shopinvader_v1_base.tests.common import CommonCase, CommonTestDownload
 
 
 class TestDeliveryService(CommonCase, CommonTestDownload):

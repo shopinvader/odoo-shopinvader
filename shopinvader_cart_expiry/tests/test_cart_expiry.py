@@ -6,7 +6,7 @@ import mock
 
 from odoo import fields
 
-from odoo.addons.shopinvader.tests.test_cart import CartCase
+from odoo.addons.shopinvader_v1_base.tests.test_cart import CartCase
 
 
 class TestCartExpiry(CartCase):

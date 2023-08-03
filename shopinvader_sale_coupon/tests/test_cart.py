@@ -5,7 +5,7 @@
 from odoo.exceptions import UserError
 
 from odoo.addons.sale_coupon.tests.common import TestSaleCouponCommon
-from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
+from odoo.addons.shopinvader_v1_base.tests.test_cart import CommonConnectedCartCase
 
 
 class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):

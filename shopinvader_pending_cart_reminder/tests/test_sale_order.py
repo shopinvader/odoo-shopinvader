@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from odoo import api, fields
 
-from odoo.addons.shopinvader.tests.test_notification import CommonCase
+from odoo.addons.shopinvader_v1_base.tests.test_notification import CommonCase
 
 
 class TestSaleOrder(CommonCase):

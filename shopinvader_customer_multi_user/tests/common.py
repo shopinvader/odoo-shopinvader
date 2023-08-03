@@ -6,7 +6,7 @@ from functools import partial
 from os import urandom
 from textwrap import dedent
 
-from odoo.addons.shopinvader.tests.test_customer import TestCustomerCommon
+from odoo.addons.shopinvader_v1_base.tests.test_customer import TestCustomerCommon
 
 
 class TestMultiUserCommon(TestCustomerCommon):

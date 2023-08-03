@@ -4,7 +4,7 @@
 
 from odoo.addons.component.tests.common import ComponentRegistryCase
 from odoo.addons.product_seasonality.tests.common import CommonCaseWithLines
-from odoo.addons.shopinvader.tests.common import UtilsMixin
+from odoo.addons.shopinvader_v1_base.tests.common import UtilsMixin
 
 # Reminders for lines' data (from CommonCaseWithLines):
 #

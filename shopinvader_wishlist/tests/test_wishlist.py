@@ -7,7 +7,7 @@ from werkzeug.exceptions import NotFound
 
 from odoo import exceptions
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
 
 
 class CommonWishlistCase(CommonCase):

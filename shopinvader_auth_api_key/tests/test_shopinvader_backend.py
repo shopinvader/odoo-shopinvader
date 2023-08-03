@@ -5,7 +5,7 @@ from psycopg2 import IntegrityError
 
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader.tests import common
+from odoo.addons.shopinvader_v1_base.tests import common
 
 
 class TestShopinvaderBackend(common.CommonCase):

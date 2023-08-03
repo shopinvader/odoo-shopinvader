@@ -10,7 +10,7 @@ import requests
 
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader.tests.common import ShopinvaderRestCase
+from odoo.addons.shopinvader_v1_base.tests.common import ShopinvaderRestCase
 
 
 @unittest.skipIf(os.getenv("SKIP_HTTP_CASE"), "HTTP case disabled.")

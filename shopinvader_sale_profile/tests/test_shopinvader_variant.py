@@ -2,7 +2,7 @@
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.addons.shopinvader.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_v1_product.tests.common import ProductCommonCase
 
 
 class TestShopinvaderVariant(ProductCommonCase):

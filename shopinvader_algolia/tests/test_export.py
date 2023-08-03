@@ -9,7 +9,7 @@ import os
 
 from odoo.addons.connector_algolia.components.adapter import AlgoliaAdapter
 from odoo.addons.connector_search_engine.tests.test_all import TestBindingIndexBase
-from odoo.addons.shopinvader.tests.common import _install_lang_odoo
+from odoo.addons.shopinvader_v1_product.tests.common import _install_lang_odoo
 
 try:
     from vcr_unittest import VCRMixin

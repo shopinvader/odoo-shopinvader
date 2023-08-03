@@ -7,7 +7,7 @@ from odoo_test_helper import FakeModelLoader
 from odoo import fields, models
 from odoo.tests import SavepointCase
 
-from odoo.addons.shopinvader.tests.common import _install_lang_odoo
+from odoo.addons.shopinvader_v1_base.tests.common import _install_lang_odoo
 
 
 class BackendCaseBase(SavepointCase):

@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 from odoo.addons.sale_promotion_rule.tests.test_promotion import (
     AbstractCommonPromotionCase,
 )
-from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
+from odoo.addons.shopinvader_v1_base.tests.test_cart import CommonConnectedCartCase
 
 
 class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):

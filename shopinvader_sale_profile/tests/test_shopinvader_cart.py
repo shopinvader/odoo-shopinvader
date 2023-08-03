@@ -1,8 +1,8 @@
 # Copyright 2022 ACSONE SA/NV (<https://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.shopinvader.tests.common import ProductCommonCase
-from odoo.addons.shopinvader.tests.test_cart_item import ItemCaseMixin
+from odoo.addons.shopinvader_v1_base.tests.test_cart_item import ItemCaseMixin
+from odoo.addons.shopinvader_v1_product.tests.common import ProductCommonCase
 
 
 class SaleProfileCartTest(ItemCaseMixin, ProductCommonCase):
