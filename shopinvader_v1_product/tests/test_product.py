@@ -8,7 +8,7 @@ from uuid import uuid4
 from odoo import fields
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader_v1_base.tests.common import ProductCommonCase
+from .common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):
@@ -123,7 +123,7 @@ class ProductCase(ProductCommonCase):
             },
         )
         # promotion price list define a discount of 20% on all product
-        promotion_price_list = self.env.ref("shopinvader.pricelist_1")
+        promotion_price_list = self.env.ref("shopinvader_v1_base.pricelist_1")
         price = self.shopinvader_variant._get_price(
             pricelist=promotion_price_list, fposition=fiscal_position_fr
         )
@@ -138,7 +138,9 @@ class ProductCase(ProductCommonCase):
         )
         # use a fiscal position defining a mapping from tax included to tax
         # excluded
-        tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
+        tax_exclude_fiscal_position = self.env.ref(
+            "shopinvader_v1_base.fiscal_position_1"
+        )
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=tax_exclude_fiscal_position
         )
@@ -254,7 +256,7 @@ class ProductCase(ProductCommonCase):
         )
         # promotion price list define a discount of 20% on all product
         # we modify the discount_policy
-        promotion_price_list = self.env.ref("shopinvader.pricelist_1")
+        promotion_price_list = self.env.ref("shopinvader_v1_base.pricelist_1")
         promotion_price_list.discount_policy = "without_discount"
         price = self.shopinvader_variant._get_price(
             pricelist=promotion_price_list, fposition=fiscal_position_fr
@@ -272,7 +274,9 @@ class ProductCase(ProductCommonCase):
         # excluded
         # Tax mapping should not impact the computation of the discount and
         # the original value
-        tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
+        tax_exclude_fiscal_position = self.env.ref(
+            "shopinvader_v1_base.fiscal_position_1"
+        )
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=tax_exclude_fiscal_position
         )

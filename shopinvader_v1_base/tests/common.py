@@ -96,7 +96,6 @@ class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
     def _setup_backend(cls):
         cls.env = cls.env(context={"lang": "en_US"})
         cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
-        # cls.backend.bind_all_product()
         cls.shopinvader_session = {}
         cls.existing_jobs = cls.env["queue.job"].browse()
 
@@ -200,31 +199,6 @@ class CommonCase(SavepointCase, CommonMixin):
             self.assertTrue(record.last_external_update_date)
             if previous_date:
                 self.assertTrue(record.last_external_update_date > previous_date)
-
-
-class ProductCommonCase(CommonCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.template = cls.env.ref("product.product_product_4_product_template")
-        cls.variant = cls.env.ref("product.product_product_4b")
-        cls.template.taxes_id = cls.env.ref("shopinvader_v1_base.tax_1")
-        cls.shopinvader_variants = cls.env["shopinvader.variant"].search(
-            [
-                ("record_id", "in", cls.template.product_variant_ids.ids),
-                ("backend_id", "=", cls.backend.id),
-            ]
-        )
-        cls.shopinvader_variant = cls.env["shopinvader.variant"].search(
-            [
-                ("record_id", "=", cls.variant.id),
-                ("backend_id", "=", cls.backend.id),
-            ]
-        )
-        cls.env.user.company_id.currency_id = cls.env.ref("base.USD")
-        cls.base_pricelist = cls.env.ref("product.list0")
-        cls.base_pricelist.currency_id = cls.env.ref("base.USD")
-        cls.shopinvader_variant.record_id.currency_id = cls.env.ref("base.USD")
 
 
 class ShopinvaderRestCase(BaseRestCase):

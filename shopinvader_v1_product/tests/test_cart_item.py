@@ -18,7 +18,5 @@ class AbstractItemCase(ItemCaseMixin):
     @mute_logger("odoo.models.unlink")
     def test_add_item_with_product_not_allowed(self):
         self.remove_cart()
-        # drop bindings and try to add the product
-        self.product_1.shopinvader_bind_ids.unlink()
         with self.assertRaises(exceptions.UserError):
             self.add_item(self.product_1.id, 1)

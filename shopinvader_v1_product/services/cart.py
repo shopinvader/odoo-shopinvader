@@ -25,4 +25,4 @@ class CartService(Component):
 
     def _add_item(self, cart, params):
         self._check_allowed_product(cart, params)
-        super()._add_item(self, cart, params)
+        return super()._add_item(cart, params)

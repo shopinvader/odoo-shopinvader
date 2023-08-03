@@ -2,10 +2,10 @@
 # @author Simone Orsi <simahawk@gmail.com>
 from odoo.addons.component.tests.common import SavepointComponentCase
 
-from .common import CommonMixin
+from .common import ProductCommonCase
 
 
-class TestShopinvaderCategoryBase(SavepointComponentCase, CommonMixin):
+class TestShopinvaderCategoryBase(SavepointComponentCase, ProductCommonCase):
     @classmethod
     def setUpClass(cls):
         super(TestShopinvaderCategoryBase, cls).setUpClass()

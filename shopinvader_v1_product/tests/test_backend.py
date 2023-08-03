@@ -4,19 +4,16 @@
 
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
-
-from .common import CommonMixin
+from .common import ProductCommonCase
 
 
-class BackendCase(CommonCase, CommonMixin):
+class BackendCase(ProductCommonCase):
     @classmethod
     def setUpClass(cls):
         super(BackendCase, cls).setUpClass()
         cls.lang_fr = cls._install_lang(cls, "base.lang_fr")
         cls.env = cls.env(context=dict(cls.env.context, test_queue_job_no_delay=True))
         cls.backend = cls.backend.with_context(test_queue_job_no_delay=True)
-        CommonMixin._setup_backend(cls)
 
     def _all_products_count(self):
         return self.env["product.template"].search_count([("sale_ok", "=", True)])

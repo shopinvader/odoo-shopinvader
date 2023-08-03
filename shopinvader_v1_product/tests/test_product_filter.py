@@ -4,10 +4,10 @@
 from odoo import exceptions
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from .common import ProductCommonCase
 
 
-class TestProductFilter(CommonCase):
+class TestProductFilter(ProductCommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
