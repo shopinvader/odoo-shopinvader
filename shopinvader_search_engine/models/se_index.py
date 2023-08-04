@@ -1,24 +1,46 @@
-# Copyright 2013 Akretion (http://www.akretion.com)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+# Copyright 2023 ACSONE SA/NV
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
 
-from odoo import api, fields, models
+from ..tools.category_serializer import ProductCategoryShopinvaderSerializer
+from ..tools.product_serializer import ProductProductShopinvaderSerializer
 
 
 class SeIndex(models.Model):
 
     _inherit = "se.index"
 
-    is_valid = fields.Char(compute="_compute_is_valid")
+    serializer_type = fields.Selection(
+        selection_add=[
+            ("shopinvader_category_exports", "Shopinvader Category"),
+            ("shopinvader_product_exports", "Shopinvader Product"),
+        ],
+        ondelete="set null",
+    )
 
-    @api.depends("lang_id", "model_id")
-    @api.depends_context("shopinvader_backend_id")
-    def _compute_is_valid(self):
-        backend = self.env["shopinvader.backend"]
-        backend_id = self.env.context.get("shopinvader_backend_id")
-        if backend_id:
-            backend = backend.browse(backend_id)
-        for rec in self:
-            if not rec.lang_id or not backend:
-                rec.is_valid = True
-                continue
-            rec.is_valid = rec.lang_id.id in backend.lang_ids.ids
+    @api.constrains("model_id", "serializer_type")
+    def _check_model(self):
+        category_model = self.env["ir.model"].search(
+            [("model", "=", "product.category")], limit=1
+        )
+        product_model = self.env["ir.model"].search(
+            [("model", "=", "product.product")], limit=1
+        )
+        for se_index in self:
+            if (
+                se_index.serialize_type == "shopinvader_category_exports"
+                and se_index.model_id != category_model
+            ) or (
+                se_index.serialize_type == "shopinvader_product_exports"
+                and se_index.model_id != product_model
+            ):
+                raise ValidationError(_("'Serializer Type' must match 'Model'"))
+
+    def _get_serializer(self):
+        if self.serializer_type == "shopinvader_category_exports":
+            return ProductCategoryShopinvaderSerializer()
+        elif self.serializer_type == "shopinvader_product_exports":
+            return ProductProductShopinvaderSerializer()
+        else:
+            return super()._get_serializer()
