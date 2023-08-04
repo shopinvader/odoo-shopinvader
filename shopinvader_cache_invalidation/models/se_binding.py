@@ -17,16 +17,17 @@ class SeBinding(models.AbstractModel):
 
     def synchronize(self):
         res = super().synchronize()
-        # some fields "url_key" are missing in self.data
-        url_keys = {binding.data.get("url_key") for binding in self}
-
-        for url_key in url_keys:
-            for sbackend in self.shopinvader_backend_ids:
-                if url_key:
-                    self.env["shopinvader.url.purge"]._request_purge(
-                        url_key,
-                        self._name,
-                        self._description,
-                        sbackend.id,
-                    )
+        for backend in self.mapped("backend_id"):
+            url_keys = {
+                binding.data.get("url_key")
+                for binding in self
+                if binding.backend_id == backend and binding.data.get("url_key")
+            }
+            for url_key in url_keys:
+                self.env["shopinvader.url.purge"]._request_purge(
+                    url_key,
+                    self._name,
+                    self._description,
+                    backend.id,
+                )
         return res

@@ -10,6 +10,8 @@
         <field name="doall" eval="False" />
         <field name="model_id" ref="model_shopinvader_url_purge" />
         <field name="state">code</field>
-        <field name="code">model.search([("to_purge", "=", True)])._purge_url()</field>
+        <field
+            name="code"
+        >model.search([("state", "=", "to_purge")]).purge_url()</field>
     </record>
 </odoo>

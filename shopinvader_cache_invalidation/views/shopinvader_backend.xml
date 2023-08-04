@@ -17,6 +17,9 @@
                     <field name="purge_nbr" string="purge lines" widget="statinfo" />
                 </button>
             </div>
+            <field name="se_backend_id" position="after">
+                <field name="cache_refresh_secret" />
+            </field>
         </field>
     </record>
 

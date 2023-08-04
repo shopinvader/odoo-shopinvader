@@ -16,12 +16,13 @@
         "python": [],
         "bin": [],
     },
-    "depends": ["connector_search_engine", "connector", "shopinvader"],
+    "depends": ["shopinvader_search_engine"],
     "data": [
         "data/ir_cron.xml",
         "security/ir.model.access.csv",
         "views/shopinvader_url_purge.xml",
         "views/shopinvader_backend.xml",
+        "views/shopinvader_url_purge_type_view.xml",
     ],
     "demo": [],
 }
