@@ -9,8 +9,8 @@ class PortalModeCommonCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
-        cls.shop_sales = cls.env.ref("shopinvader.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.shop_sales = cls.env.ref("shopinvader_v1_base.sale_order_2")
         cls.shop_sales += cls.shop_sales.copy()
         cls.shop_sales.action_confirm()
         cls.shop_sales.write(

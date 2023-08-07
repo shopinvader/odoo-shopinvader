@@ -7,7 +7,10 @@
             name="name"
         >Shopinvader.backend.form (in shopinvader_backend_image_proxy)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.shopinvader_backend_view_form"
+        />
         <field name="priority" eval="90" />
         <field name="arch" type="xml">
             <field name="shopinvader_variant_resize_ids" position="before">

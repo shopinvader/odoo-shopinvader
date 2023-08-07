@@ -3,7 +3,7 @@
 
 <record id="res_partner_view_form" model="ir.ui.view">
     <field name="model">res.partner</field>
-    <field name="inherit_id" ref="shopinvader.res_partner_view_form" />
+    <field name="inherit_id" ref="shopinvader_v1_base.res_partner_view_form" />
     <field name="arch" type="xml">
         <field name="external_id" position="after">
             <button
@@ -17,7 +17,7 @@
 
 <record id="shopinvader_partner_view_tree" model="ir.ui.view">
     <field name="model">shopinvader.partner</field>
-    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree" />
+    <field name="inherit_id" ref="shopinvader_v1_base.shopinvader_partner_view_tree" />
     <field name="arch" type="xml">
         <field name="create_date" position="after">
             <field name="last_pwd_reset_datetime" />
@@ -29,7 +29,10 @@
 
 <record id="shopinvader_partner_view_search" model="ir.ui.view">
     <field name="model">shopinvader.partner</field>
-    <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search" />
+    <field
+            name="inherit_id"
+            ref="shopinvader_v1_base.shopinvader_partner_view_search"
+        />
     <field name="arch" type="xml">
         <field name="external_id" position="after">
             <filter

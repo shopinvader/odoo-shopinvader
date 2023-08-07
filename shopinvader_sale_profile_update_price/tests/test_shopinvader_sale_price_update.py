@@ -10,7 +10,7 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product_1 = cls.env.ref("product.product_product_24")
-        cls.line = cls.env.ref("shopinvader.sale_order_line_4")
+        cls.line = cls.env.ref("shopinvader_v1_base.sale_order_line_4")
         cls.sale_profile = cls.env.ref(
             "shopinvader_sale_profile.shopinvader_sale_profile_3"
         )

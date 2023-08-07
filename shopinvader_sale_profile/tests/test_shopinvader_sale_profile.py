@@ -34,7 +34,7 @@ class TestShopinvaderSaleProfile(CommonCase):
         sale_profile = self.env.ref(
             "shopinvader_sale_profile.shopinvader_sale_profile_3"
         )
-        fposition = self.env.ref("shopinvader.fiscal_position_0")
+        fposition = self.env.ref("shopinvader_v1_base.fiscal_position_0")
         with self.assertRaises(ValidationError):
             sale_profile.fiscal_position_ids = [(4, fposition.id)]
         return True

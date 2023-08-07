@@ -9,9 +9,9 @@ class TestSaleOrderPackaging(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.sale = cls.env.ref("shopinvader.sale_order_2")
-        cls.sale_line1 = cls.env.ref("shopinvader.sale_order_line_4")
-        cls.sale_line2 = cls.env.ref("shopinvader.sale_order_line_5")
+        cls.sale = cls.env.ref("shopinvader_v1_base.sale_order_2")
+        cls.sale_line1 = cls.env.ref("shopinvader_v1_base.sale_order_line_4")
+        cls.sale_line2 = cls.env.ref("shopinvader_v1_base.sale_order_line_5")
         cls.pkg_box = cls.env["product.packaging"].create(
             {
                 "name": "Box",
@@ -24,7 +24,7 @@ class TestSaleOrderPackaging(CommonCase):
             {"product_packaging": cls.pkg_box.id, "product_packaging_qty": 5}
         )
         cls.sale.action_confirm()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         # This module adds new keys: recompute
         cls._refresh_json_data(cls, cls.sale.mapped("order_line.product_id"))
 

@@ -9,7 +9,7 @@ class SaleProfileCartTest(ItemCaseMixin, ProductCommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         vals = {
             "name": "Pricelist Shopinvader Profile",
             "item_ids": [

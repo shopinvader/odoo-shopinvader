@@ -52,7 +52,7 @@ class TestProductSeasonalityCase(
         cls.line2 = cls.seasonal_conf.config_for_product(cls.prod2)
         cls.config_line_model = cls.env["seasonal.config.line"]
         cls.s_config_line_model = cls.env["shopinvader.seasonal.config.line"]
-        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
         cls.s_line1 = cls.s_config_line_model.create(
             {
                 "record_id": cls.line1.id,

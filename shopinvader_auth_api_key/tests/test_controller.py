@@ -18,9 +18,9 @@ class ShopinvaderControllerCase(ShopinvaderRestCase):
     def setUp(self, *args, **kwargs):
         super(ShopinvaderControllerCase, self).setUp(*args, **kwargs)
         self.url = self.base_url + "/shopinvader/addresses"
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.address_1 = self.env.ref("shopinvader.partner_1_address_1")
-        self.address_2 = self.env.ref("shopinvader.partner_1_address_2")
+        self.partner = self.env.ref("shopinvader_v1_base.partner_1")
+        self.address_1 = self.env.ref("shopinvader_v1_base.partner_1_address_1")
+        self.address_2 = self.env.ref("shopinvader_v1_base.partner_1_address_2")
 
     def test_get_addresses_with_correct_api_key_and_partner(self):
         result = requests.get(

@@ -10,11 +10,11 @@ class CommonCustomerPriceCase(ProductCommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.partner1 = cls.env.ref("shopinvader.partner_1")
-        cls.partner2 = cls.env.ref("shopinvader.partner_2")
-        cls.discount_pricelist = cls.env.ref("shopinvader.pricelist_1")
-        cls.fiscal_pos1 = cls.env.ref("shopinvader.fiscal_position_0")
-        cls.fiscal_pos2 = cls.env.ref("shopinvader.fiscal_position_2")
+        cls.partner1 = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.partner2 = cls.env.ref("shopinvader_v1_base.partner_2")
+        cls.discount_pricelist = cls.env.ref("shopinvader_v1_base.pricelist_1")
+        cls.fiscal_pos1 = cls.env.ref("shopinvader_v1_base.fiscal_position_0")
+        cls.fiscal_pos2 = cls.env.ref("shopinvader_v1_base.fiscal_position_2")
         cls.pricelist_field = cls.env.ref(
             "product.field_res_partner__property_product_pricelist"
         )

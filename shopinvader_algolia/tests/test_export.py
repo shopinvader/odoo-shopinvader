@@ -30,7 +30,7 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
         cls.backend_specific.algolia_api_key = os.environ.get(
             "ALGOLIA_API_KEY", "FAKE_KEY"
         )
-        cls.shopinvader_backend = cls.env.ref("shopinvader.backend_1")
+        cls.shopinvader_backend = cls.env.ref("shopinvader_v1_base.backend_1")
         cls.shopinvader_backend.bind_all_product()
         cls.shopinvader_backend.bind_all_category()
         cls.index_product = cls.env.ref("shopinvader_algolia.index_1")
@@ -112,8 +112,8 @@ class TestAlgoliaBackend(VCRMixin, TestBindingIndexBase):
 
     def test_facet_settings(self):
         _install_lang_odoo(self.env, "base.lang_fr")
-        filter1 = self.env.ref("shopinvader.product_filter_1")
-        filter2 = self.env.ref("shopinvader.product_filter_2")
+        filter1 = self.env.ref("shopinvader_v1_product.product_filter_1")
+        filter2 = self.env.ref("shopinvader_v1_product.product_filter_2")
         attr1 = filter1.variant_attribute_id
         attr2 = filter2.variant_attribute_id
         attr1.with_context(lang="fr_FR").name = attr1.name + " FR"

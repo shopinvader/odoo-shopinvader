@@ -138,7 +138,7 @@ class TestMultiUserPartnerDomainCommon(TestMultiUserCommon):
 
     @classmethod
     def _create_sales_and_invoices(cls, partners, invoice=True):
-        base_sale_order = cls.env.ref("shopinvader.sale_order_2")
+        base_sale_order = cls.env.ref("shopinvader_v1_base.sale_order_2")
         sales = cls.env["sale.order"]
         for partner in partners:
             sale = base_sale_order.copy({"partner_id": partner.id})

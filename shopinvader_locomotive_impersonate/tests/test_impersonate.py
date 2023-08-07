@@ -12,7 +12,7 @@ from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
 class TestImpersonate(CommonCase):
     def setUp(self):
         super().setUp()
-        self.partner = self.env.ref("shopinvader.shopinvader_partner_1")
+        self.partner = self.env.ref("shopinvader_v1_base.shopinvader_partner_1")
         with self.work_on_services() as work:
             self.service = work.component(usage="customer")
 

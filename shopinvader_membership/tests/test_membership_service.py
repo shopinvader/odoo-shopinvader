@@ -15,7 +15,7 @@ class TestMembershipService(CommonCase):
         super().setUpClass()
         cls.membership_line_obj = cls.env["membership.membership_line"]
         cls.product_obj = cls.env["product.product"]
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         str_today = fields.Date.today()
         cls.date_today = fields.Date.from_string(str_today)
         cls.next_month = fields.Date.to_string(cls.date_today + timedelta(days=30))

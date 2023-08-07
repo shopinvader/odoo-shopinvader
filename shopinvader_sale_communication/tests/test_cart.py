@@ -8,9 +8,9 @@ from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
 class TestCart(CommonCase):
     def setUp(self):
         super(TestCart, self).setUp()
-        self.cart = self.env.ref("shopinvader.sale_order_2")
+        self.cart = self.env.ref("shopinvader_v1_base.sale_order_2")
         self.shopinvader_session = {"cart_id": self.cart.id}
-        self.partner = self.env.ref("shopinvader.partner_1")
+        self.partner = self.env.ref("shopinvader_v1_base.partner_1")
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:

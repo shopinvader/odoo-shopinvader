@@ -4,6 +4,9 @@
 <odoo>
     <record id="ir_exp_shopinvader_variant_image_category" model="ir.exports.line">
         <field name="name">image_categories</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+        <field
+            name="export_id"
+            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+        />
     </record>
 </odoo>

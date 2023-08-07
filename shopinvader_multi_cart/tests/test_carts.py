@@ -62,7 +62,7 @@ class TestCarts(CommonConnectedMultiCartCase):
 
     def test_carts_search_unauthorized(self):
         # saved_cart now belongs to another partner
-        self.saved_cart.partner_id = self.env.ref("shopinvader.anonymous")
+        self.saved_cart.partner_id = self.env.ref("shopinvader_v1_base.anonymous")
         self.assertFalse(self._search())
 
     def test_carts_select(self):
@@ -78,7 +78,7 @@ class TestCarts(CommonConnectedMultiCartCase):
 
     def test_carts_select_unauthorized(self):
         # saved_cart now belongs to another partner
-        self.saved_cart.partner_id = self.env.ref("shopinvader.anonymous")
+        self.saved_cart.partner_id = self.env.ref("shopinvader_v1_base.anonymous")
         with self.assertRaises(MissingError):
             self._select(self.saved_cart.id)
         self.assertEqual(
@@ -98,7 +98,7 @@ class TestCarts(CommonConnectedMultiCartCase):
 
     def test_carts_delete_unauthorized(self):
         # saved_cart now belongs to another partner
-        self.saved_cart.partner_id = self.env.ref("shopinvader.anonymous")
+        self.saved_cart.partner_id = self.env.ref("shopinvader_v1_base.anonymous")
         with self.assertRaises(MissingError):
             self._delete(self.saved_cart.id)
 

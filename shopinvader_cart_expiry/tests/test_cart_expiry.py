@@ -17,8 +17,8 @@ class TestCartExpiry(CartCase):
     def setUp(self):
         super().setUp()
         self.sale_obj = self.env["sale.order"]
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.sale = self.cart = self.env.ref("shopinvader.sale_order_1")
+        self.partner = self.env.ref("shopinvader_v1_base.partner_1")
+        self.sale = self.cart = self.env.ref("shopinvader_v1_base.sale_order_1")
         self.cart.write({"last_external_update_date": fields.Datetime.now()})
         self.so_date = self.cart.last_external_update_date
         self.shopinvader_session = {"cart_id": self.cart.id}

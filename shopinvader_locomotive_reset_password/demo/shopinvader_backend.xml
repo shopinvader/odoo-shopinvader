@@ -3,7 +3,7 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo noupdate="1">
 
-    <record id="shopinvader.backend_1" model="shopinvader.backend">
+    <record id="shopinvader_v1_base.backend_1" model="shopinvader.backend">
         <field name="password_validity">0</field>
         <field
             name="password_reset_template_id"

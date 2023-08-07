@@ -9,19 +9,28 @@
     <record id="ir_exp_shopinvader_variant_tags_id" model="ir.exports.line">
         <field name="name">tag_ids/id</field>
         <field name="target">tag_ids:tags/id</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+        <field
+            name="export_id"
+            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+        />
     </record>
 
     <record id="ir_exp_shopinvader_variant_tags_name" model="ir.exports.line">
         <field name="name">tag_ids/name</field>
         <field name="target">tag_ids:tags/name</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+        <field
+            name="export_id"
+            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+        />
     </record>
 
     <record id="ir_exp_shopinvader_variant_tags_sequence" model="ir.exports.line">
         <field name="name">tag_ids/sequence</field>
         <field name="target">tag_ids:tags/sequence</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+        <field
+            name="export_id"
+            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+        />
     </record>
 
 </odoo>

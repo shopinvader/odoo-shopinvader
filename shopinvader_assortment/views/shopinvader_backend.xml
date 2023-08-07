@@ -6,7 +6,10 @@
     <record model="ir.ui.view" id="shopinvader_backend_form_view">
         <field name="name">shopinvader.backend.form (in shopinvader_assortment)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.shopinvader_backend_view_form"
+        />
         <field name="arch" type="xml">
             <button
                 name="%(shopinvader.shopinvader_variant_binding_wizard_act_window)d"
@@ -17,7 +20,7 @@
                 >{'invisible': [('product_manual_binding', '=', False)]}</attribute>
             </button>
             <button
-                name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d"
+                name="%(shopinvader_v1_product.shopinvader_category_binding_wizard_act_window)d"
                 position="attributes"
             >
                 <attribute

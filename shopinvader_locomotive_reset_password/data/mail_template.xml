@@ -10,7 +10,10 @@
             name="subject"
         >Reset Password Instructions (${object.backend_id.name})</field>
             <field name="partner_to">${object.record_id.id}</field>
-            <field name="model_id" ref="shopinvader.model_shopinvader_partner" />
+            <field
+            name="model_id"
+            ref="shopinvader_v1_base.model_shopinvader_partner"
+        />
             <field name="auto_delete" eval="True" />
             <field name="report_name">${(object.name or '').replace('/','_')}</field>
             <field name="lang">${object.lang}</field>

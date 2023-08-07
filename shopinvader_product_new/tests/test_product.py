@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 class TestProductNew(TransactionCase):
     def setUp(self):
         super().setUp()
-        self.backend = self.env.ref("shopinvader.backend_1")
+        self.backend = self.env.ref("shopinvader_v1_base.backend_1")
         self.backend.bind_all_product()
 
     def test_scheduler_new_product(self):

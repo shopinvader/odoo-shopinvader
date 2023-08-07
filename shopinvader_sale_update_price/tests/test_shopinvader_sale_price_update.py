@@ -9,7 +9,7 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.product_1 = cls.env.ref("product.product_product_24")
-        cls.line = cls.env.ref("shopinvader.sale_order_line_4")
+        cls.line = cls.env.ref("shopinvader_v1_base.sale_order_line_4")
         cls.precision = cls.env["decimal.precision"].precision_get("Product Price")
 
     def _create_pricelists(self, fixed_price, reduction):

@@ -13,7 +13,7 @@
       <group name="config" position="after">
         <group
                     name="shopinvader"
-                    groups="shopinvader.group_shopinvader_manager"
+                    groups="shopinvader_v1_base.group_shopinvader_manager"
                     colspan="4"
                 >
           <field name="shopinvader_bind_ids">

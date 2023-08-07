@@ -3,7 +3,10 @@
 
     <record id="ir_exp_shopinvader_variant_images" model="ir.exports.line">
         <field name="name">images</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+        <field
+            name="export_id"
+            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+        />
     </record>
 
 </odoo>

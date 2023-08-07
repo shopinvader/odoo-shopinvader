@@ -10,7 +10,7 @@ class TestShopinvaderResetExpiredPassword(CommonCase):
     def setUpClass(cls):
         super(TestShopinvaderResetExpiredPassword, cls).setUpClass()
         cls.backend.password_validity = 10
-        cls.partner = cls.env.ref("shopinvader.shopinvader_partner_1")
+        cls.partner = cls.env.ref("shopinvader_v1_base.shopinvader_partner_1")
         cls.partner.last_pwd_reset_datetime = "2019-12-31 12:00:00"
 
     def test_reset_expired_password(self):

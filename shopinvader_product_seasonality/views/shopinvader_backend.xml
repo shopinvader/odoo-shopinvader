@@ -6,10 +6,13 @@
             name="name"
         >shopinvader.backend.form (in shopinvader_product_seasonality)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.shopinvader_backend_view_form"
+        />
         <field name="arch" type="xml">
             <button
-                name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d"
+                name="%(shopinvader_v1_product.shopinvader_category_binding_wizard_act_window)d"
                 position="after"
             >
                 <button
@@ -17,7 +20,7 @@
                     type="object"
                     string="Bind Seasonal config lines"
                     class="oe_highlight"
-                    groups="shopinvader.group_shopinvader_manager"
+                    groups="shopinvader_v1_base.group_shopinvader_manager"
                 />
             </button>
         </field>

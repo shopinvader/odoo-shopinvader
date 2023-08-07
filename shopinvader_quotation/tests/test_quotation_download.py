@@ -8,9 +8,9 @@ class QuotationDownloadCase(CommonCase, CommonTestDownload):
     @classmethod
     def setUpClass(cls, *args, **kwargs):
         super().setUpClass(*args, **kwargs)
-        cls.quotation = cls.env.ref("shopinvader.sale_order_2")
+        cls.quotation = cls.env.ref("shopinvader_v1_base.sale_order_2")
         cls.quotation.write({"typology": "quotation"})
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
 
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)

@@ -12,7 +12,7 @@ class TestCustomerService(CommonValidationToken):
         return "customer"
 
     def _get_partner(self):
-        return self.env.ref("shopinvader.partner_1")
+        return self.env.ref("shopinvader_v1_base.partner_1")
 
     def _get_notification_type(self):
         return "partner_token_customer"

@@ -9,14 +9,16 @@ class TestCustomerSpecialProduct(ProductCommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.ir_export = cls.env.ref("shopinvader.ir_exp_shopinvader_variant")
+        cls.ir_export = cls.env.ref("shopinvader_v1_product.ir_exp_shopinvader_variant")
         cls.parser = cls.ir_export.get_json_parser()
         cls.customer = cls.env.ref("base.res_partner_2")
         cls.shopinvader_variant.manufactured_for_partner_ids = [
             (6, 0, cls.customer.ids)
         ]
         cls.category = cls.shopinvader_variant.tmpl_record_id.categ_id
-        cls.categ_bind_wizard_model = cls.env["shopinvader.category.binding.wizard"]
+        cls.categ_bind_wizard_model = cls.env[
+            "shopinvader_v1_product.category.binding.wizard"
+        ]
         bind_wizard = cls.categ_bind_wizard_model.create(
             {
                 "backend_id": cls.backend.id,

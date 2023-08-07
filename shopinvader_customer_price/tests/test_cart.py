@@ -11,7 +11,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls._setup_products()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         cls.custom_pricelist = cls.env["product.pricelist"].create(
             {"name": "Test Pricelist"}
         )

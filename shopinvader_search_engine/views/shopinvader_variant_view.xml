@@ -3,7 +3,10 @@
 
 <record id="shopinvader_variant_tree_view" model="ir.ui.view">
     <field name="model">shopinvader.variant</field>
-    <field name="inherit_id" ref="shopinvader.shopinvader_variant_tree_view" />
+    <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.shopinvader_variant_tree_view"
+        />
     <field name="arch" type="xml">
         <field name="lang_id" position="after">
             <field name="index_id" />
@@ -16,7 +19,10 @@
 
 <record id="shopinvader_variant_form_view" model="ir.ui.view">
     <field name="model">shopinvader.variant</field>
-    <field name="inherit_id" ref="shopinvader.shopinvader_variant_form_view" />
+    <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.shopinvader_variant_form_view"
+        />
     <field name="arch" type="xml">
         <group name="variant" position="after">
             <group name="search_engine" string="Search engine">
@@ -37,7 +43,10 @@
 
 <record id="shopinvader_variant_search_view" model="ir.ui.view">
     <field name="model">shopinvader.variant</field>
-    <field name="inherit_id" ref="shopinvader.shopinvader_variant_search_view" />
+    <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.shopinvader_variant_search_view"
+        />
     <field name="arch" type="xml">
         <field name="lang_id" position="after">
             <field name="index_id" />
@@ -89,8 +98,11 @@
 
 <record model="ir.actions.server" id="action_recompute_shopinvader_product_on_binding">
     <field name="name">Recompute shopinvader product</field>
-    <field name="model_id" ref="shopinvader.model_shopinvader_variant" />
-    <field name="binding_model_id" ref="shopinvader.model_shopinvader_variant" />
+    <field name="model_id" ref="shopinvader_v1_product.model_shopinvader_variant" />
+    <field
+            name="binding_model_id"
+            ref="shopinvader_v1_product.model_shopinvader_variant"
+        />
     <field name="state">code</field>
     <field name="code">
         records.jobify_recompute_json(force_export=True)

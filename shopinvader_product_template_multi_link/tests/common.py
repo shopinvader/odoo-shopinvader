@@ -23,7 +23,9 @@ class ProductLinkCaseBase(ProductCommonCase):
             "shopinvader.product_template_armchair_mid_century"
         )
         cls.template_1.product_template_link_ids.unlink()
-        cls.template_2 = cls.env.ref("shopinvader.product_template_chair_mid_century")
+        cls.template_2 = cls.env.ref(
+            "shopinvader_v1_product.product_template_chair_mid_century"
+        )
         cls.template_2.product_template_link_ids.unlink()
         cls.template_3 = cls.env.ref(
             "shopinvader.product_template_tv_cabinet_shaker_wood"

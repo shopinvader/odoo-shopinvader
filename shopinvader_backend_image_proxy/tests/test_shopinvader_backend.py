@@ -17,7 +17,7 @@ class TestShopinvaderBackendTest(ProductCommonCase, ProductImageCommonCase):
                 "groups_id": [
                     (
                         4,
-                        cls.env.ref("shopinvader.group_shopinvader_manager").id,
+                        cls.env.ref("shopinvader_v1_base.group_shopinvader_manager").id,
                     )
                 ]
             }

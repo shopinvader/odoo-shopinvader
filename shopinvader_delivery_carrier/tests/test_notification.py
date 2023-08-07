@@ -11,7 +11,7 @@ class NotificationPickingCase(CommonCase, NotificationCaseMixin):
     @classmethod
     def setUpClass(cls):
         super(NotificationPickingCase, cls).setUpClass()
-        cls.cart = cls.env.ref("shopinvader.sale_order_2")
+        cls.cart = cls.env.ref("shopinvader_v1_base.sale_order_2")
         cls.cart.action_confirm()
         cls.picking = cls.cart.picking_ids
 

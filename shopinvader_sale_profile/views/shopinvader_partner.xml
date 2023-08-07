@@ -6,7 +6,10 @@
 
     <record model="ir.ui.view" id="shopinvader_partner_view_form">
         <field name="model">shopinvader.partner</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_v1_base.shopinvader_partner_view_form"
+        />
         <field name="arch" type="xml">
             <field name="partner_email" position="after">
                 <field name="sale_profile_id" widget="selection" />
@@ -16,7 +19,10 @@
 
     <record model="ir.ui.view" id="shopinvader_partner_view_tree">
         <field name="model">shopinvader.partner</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_v1_base.shopinvader_partner_view_tree"
+        />
         <field name="priority" eval="90" />
         <field name="arch" type="xml">
             <field name="partner_email" position="after">
@@ -27,7 +33,10 @@
 
     <record model="ir.ui.view" id="shopinvader_partner_view_search">
         <field name="model">shopinvader.partner</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_v1_base.shopinvader_partner_view_search"
+        />
         <field name="priority" eval="90" />
         <field name="arch" type="xml">
             <field name="email" position="after">

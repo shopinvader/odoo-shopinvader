@@ -35,13 +35,17 @@ class BackendCaseBase(SavepointCase):
         cls.se_backend = (
             cls.env[SeBackendFake._name].create({"name": "Fake SE"}).se_backend_id
         )
-        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
         cls.backend.se_backend_id = cls.se_backend
-        cls.prod_export = cls.env.ref("shopinvader.ir_exp_shopinvader_variant")
-        cls.categ_export = cls.env.ref("shopinvader.ir_exp_shopinvader_category")
+        cls.prod_export = cls.env.ref(
+            "shopinvader_v1_product.ir_exp_shopinvader_variant"
+        )
+        cls.categ_export = cls.env.ref(
+            "shopinvader_v1_base.ir_exp_shopinvader_category"
+        )
         cls.ir_model_model = cls.env["ir.model"]
-        cls.variant_model = cls.ir_model_model._get("shopinvader.variant")
-        cls.categ_model = cls.ir_model_model._get("shopinvader.category")
+        cls.variant_model = cls.ir_model_model._get("shopinvader_v1_product.variant")
+        cls.categ_model = cls.ir_model_model._get("shopinvader_v1_product.category")
         cls.agnostic_model = cls.ir_model_model._get(cls.AgnosticBinding._name)
         cls.lang_en = cls.backend.lang_ids
         cls.lang_fr = _install_lang_odoo(cls.env, "base.lang_fr")

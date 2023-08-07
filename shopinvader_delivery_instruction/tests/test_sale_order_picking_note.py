@@ -13,10 +13,10 @@ class TestSaleOrderDeliveryNote(CommonCase):
 
     def setUp(self):
         super().setUp()
-        self.cart = self.env.ref("shopinvader.sale_order_2")
+        self.cart = self.env.ref("shopinvader_v1_base.sale_order_2")
         self.shopinvader_session = {"cart_id": self.cart.id}
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.address = self.env.ref("shopinvader.partner_1_address_1")
+        self.partner = self.env.ref("shopinvader_v1_base.partner_1")
+        self.address = self.env.ref("shopinvader_v1_base.partner_1_address_1")
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:

@@ -526,7 +526,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__sale_order__typology__cart
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_cart
+#: model:ir.ui.menu,name:shopinvader_v1_base.menu_shopinvader_config_cart
 msgid "Cart"
 msgstr ""
 
@@ -813,7 +813,7 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config
+#: model:ir.ui.menu,name:shopinvader_v1_base.menu_shopinvader_config
 msgid "Configuration"
 msgstr ""
 
@@ -2135,7 +2135,7 @@ msgid "Main small image URL"
 msgstr ""
 
 #. module: shopinvader
-#: model:res.groups,name:shopinvader.group_shopinvader_manager
+#: model:res.groups,name:shopinvader_v1_base.group_shopinvader_manager
 msgid "Manager"
 msgstr ""
 
@@ -2641,7 +2641,7 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.actions.act_window,name:shopinvader.action_sale
 #: model:ir.ui.menu,name:shopinvader.menu_sale
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_orders
+#: model:ir.ui.menu,name:shopinvader_v1_base.menu_shopinvader_orders
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
 msgid "Orders"
 msgstr ""
@@ -2728,7 +2728,7 @@ msgid "Partner with same Tax ID"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_partners
+#: model:ir.ui.menu,name:shopinvader_v1_base.menu_shopinvader_config_partners
 #: model:ir.ui.menu,name:shopinvader.menu_shopinvader_partner
 msgid "Partners"
 msgstr ""
@@ -2936,7 +2936,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__product_variant_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_binding_wizard__product_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant_unbinding_wizard__shopinvader_variant_ids
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_products
+#: model:ir.ui.menu,name:shopinvader_v1_base.menu_shopinvader_config_products
 #: model:ir.ui.menu,name:shopinvader.menu_shopinvader_products
 #: model:ir.ui.menu,name:shopinvader.shopinvader_product_menu
 #: model_terms:ir.ui.view,arch_db:shopinvader.shopinvader_backend_view_form
@@ -3859,7 +3859,7 @@ msgid "Tech Name"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.ui.menu,name:shopinvader.menu_shopinvader_config_technical
+#: model:ir.ui.menu,name:shopinvader_v1_base.menu_shopinvader_config_technical
 msgid "Technical"
 msgstr ""
 

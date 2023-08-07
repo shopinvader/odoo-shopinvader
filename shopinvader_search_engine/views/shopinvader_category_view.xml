@@ -3,7 +3,10 @@
 
 <record id="view_shopinvader_category_tree" model="ir.ui.view">
     <field name="model">shopinvader.category</field>
-    <field name="inherit_id" ref="shopinvader.view_shopinvader_category_tree" />
+    <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.view_shopinvader_category_tree"
+        />
     <field name="arch" type="xml">
         <field name="backend_id" position="after">
             <field name="index_id" />
@@ -16,7 +19,10 @@
 
 <record id="view_shopinvader_category_search" model="ir.ui.view">
     <field name="model">shopinvader.category</field>
-    <field name="inherit_id" ref="shopinvader.view_shopinvader_category_search" />
+    <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.view_shopinvader_category_search"
+        />
     <field name="arch" type="xml">
         <field name="backend_id" position="after">
             <field name="index_id" />

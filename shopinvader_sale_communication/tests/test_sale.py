@@ -19,7 +19,7 @@ class TestSale(CommonCase):
                 "partner_id": self.env.ref("base.res_partner_2").id,
                 "online_information_for_customer": online_information_for_customer,
                 "shopinvader_backend_id": self.env.ref(
-                    "shopinvader.backend_1"
+                    "shopinvader_v1_product.backend_1"
                 ).id,
                 "typology": "sale",
             }

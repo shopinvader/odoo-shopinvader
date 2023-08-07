@@ -22,7 +22,7 @@ class TestSettingsService(CommonCase):
             "shopinvader_elasticsearch.backend_elasticsearch_demo"
         )
         with self.work_on_services(
-            partner=self.env.ref("shopinvader.partner_1")
+            partner=self.env.ref("shopinvader_v1_base.partner_1")
         ) as work:
             self.settings_service = work.component(usage="settings")
 

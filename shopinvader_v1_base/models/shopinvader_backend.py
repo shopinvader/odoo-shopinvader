@@ -6,6 +6,7 @@
 
 import hashlib
 import os
+from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
 from odoo.osv import expression
@@ -288,6 +289,34 @@ class ShopinvaderBackend(models.Model):
 
     def _extract_configuration(self):
         return {}
+
+    def _bind_langs(self, lang_ids):
+        self.ensure_one()
+        self.env["shopinvader.variant.binding.wizard"].bind_langs(self, lang_ids)
+        self.env["shopinvader.category.binding.wizard"].bind_langs(self, lang_ids)
+
+    def _unbind_langs(self, lang_ids):
+        self.ensure_one()
+        self.env["shopinvader.variant.unbinding.wizard"].unbind_langs(self, lang_ids)
+        self.env["shopinvader.category.unbinding.wizard"].unbind_langs(self, lang_ids)
+
+    @contextmanager
+    def _keep_binding_sync_with_langs(self):
+        lang_ids_by_record = {}
+        for record in self:
+            lang_ids_by_record[record.id] = record.lang_ids.ids
+        yield
+        for record in self:
+            old_lang_ids = set(lang_ids_by_record[record.id])
+            actual_lang_ids = set(record.lang_ids.ids)
+            if old_lang_ids == actual_lang_ids:
+                continue
+            added_lang_ids = actual_lang_ids - old_lang_ids
+            if added_lang_ids:
+                record._bind_langs(list(added_lang_ids))
+            removed_lang_ids = old_lang_ids - actual_lang_ids
+            if removed_lang_ids:
+                record._unbind_langs(list(removed_lang_ids))
 
     def _get_backend_pricelist(self):
         """The pricelist configure by this backend."""

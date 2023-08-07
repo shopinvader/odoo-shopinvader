@@ -11,8 +11,8 @@ class TestCompanyNewsletter(SavepointCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.shop_backend_1 = cls.env.ref("shopinvader.backend_1")
-        cls.shop_backend_2 = cls.env.ref("shopinvader.backend_2")
+        cls.shop_backend_1 = cls.env.ref("shopinvader_v1_base.backend_1")
+        cls.shop_backend_2 = cls.env.ref("shopinvader_v1_base.backend_2")
         cls.company = cls.env.ref("base.main_company")
         cls.company.shopinvader_company_backend_id = cls.shop_backend_1
         cls.product = cls.env["product.product"].create({"name": "Test Product"})

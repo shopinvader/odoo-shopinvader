@@ -10,7 +10,7 @@ class TestShopinvaderBackend(SavepointComponentCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.backend = cls.env.ref("shopinvader.backend_1")
+        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
         cls.backend.is_guest_mode_allowed = True
 
     def test_guest_mode_constrains(self):

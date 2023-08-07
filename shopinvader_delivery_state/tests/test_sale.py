@@ -9,8 +9,8 @@ class TestSalesService(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
-        cls.shop_sales = cls.env.ref("shopinvader.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.shop_sales = cls.env.ref("shopinvader_v1_base.sale_order_2")
         cls.shop_sales += cls.shop_sales.copy()
 
     def _get_service(self):

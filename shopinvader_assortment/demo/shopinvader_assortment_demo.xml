@@ -13,7 +13,7 @@
         <field name="is_assortment" eval="True" />
     </record>
 
-    <record id="shopinvader.backend_1" model="shopinvader.backend">
+    <record id="shopinvader_v1_base.backend_1" model="shopinvader.backend">
         <field name="product_assortment_id" ref="shopinvader_assortment1" />
         <field name="product_manual_binding" eval="False" />
         <field name="category_binding_level">3</field>

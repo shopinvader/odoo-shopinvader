@@ -465,7 +465,7 @@ class IrModelData(models.Model):
         if module == "shopinvader":
             if name in SHOPINVADER_V1_PRODUCT_XMLID:
                 _logger.warning(
-                    "Old name for shopinvader is used. "
+                    f"Old name for shopinvader is used: {xmlid} \n"
                     "Please rename module ref to "
                     "shopinvader_v1_product"
                 )
@@ -473,7 +473,7 @@ class IrModelData(models.Model):
             elif name in SHOPINVADER_V1_BASE_XMLID:
                 xmlid = f"shopinvader_v1_product.{name}"
                 _logger.warning(
-                    "Old name for shopinvader is used. "
+                    f"Old name for shopinvader is used: {xmlid} \n"
                     "Please rename module ref to shopinvader_v1_base"
                 )
         try:

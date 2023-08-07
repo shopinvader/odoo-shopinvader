@@ -65,13 +65,16 @@
         <field name="context">{}</field>
         <field
             name="groups_id"
-            eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"
+            eval="[(4, ref('shopinvader_v1_base.group_shopinvader_manager'))]"
         />
     </record>
 
     <record model="ir.ui.menu" id="shopinvader_seasonal_config_menu">
         <field name="name">Seasonal config lines</field>
-        <field name="parent_id" ref="shopinvader.menu_shopinvader_products" />
+        <field
+            name="parent_id"
+            ref="shopinvader_v1_product.menu_shopinvader_products"
+        />
         <field name="action" ref="shopinvader_seasonal_config_act_window" />
         <field name="sequence" eval="50" />
     </record>

@@ -5,7 +5,10 @@
 
     <record id="shopinvader_backend_view_form" model="ir.ui.view">
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_v1_product.shopinvader_backend_view_form"
+        />
         <field name="arch" type="xml">
             <page name="config" position="after">
                 <page name="locomotive" string="LocomotiveCMS">
@@ -41,7 +44,7 @@
                             type="object"
                             string="Synchronize Metadata"
                             class="oe_highlight"
-                            groups="shopinvader.group_shopinvader_manager"
+                            groups="shopinvader_v1_base.group_shopinvader_manager"
                         />
                         <span>
                             Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>
@@ -50,7 +53,7 @@
                             type="object"
                             string="Reset site settings"
                             class="oe_highlight"
-                            groups="shopinvader.group_shopinvader_manager"
+                            groups="shopinvader_v1_base.group_shopinvader_manager"
                         />
                     </group>
                 </page>

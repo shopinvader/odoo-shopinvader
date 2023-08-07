@@ -92,7 +92,11 @@ class TestShopInvaderCustomerService(CommonCase):
         # set a specific pricelist depending on vat number
         # so we set it manually
         shopinvader_partner.write(
-            {"property_product_pricelist": self.env.ref("shopinvader.pricelist_1").id}
+            {
+                "property_product_pricelist": self.env.ref(
+                    "shopinvader_v1_base.pricelist_1"
+                ).id
+            }
         )
         self.assertEqual(shopinvader_partner.sale_profile_id, self.profile_pro_tax_exc)
 

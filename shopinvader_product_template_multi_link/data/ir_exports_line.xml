@@ -4,7 +4,10 @@
     <record id="ir_exp_shopinvader_variant_links" model="ir.exports.line">
         <field name="name">product_links</field>
         <field name="target">product_links:links</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+        <field
+            name="export_id"
+            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+        />
     </record>
 
 </odoo>

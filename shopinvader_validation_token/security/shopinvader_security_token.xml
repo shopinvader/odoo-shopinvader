@@ -20,7 +20,7 @@
     >
         <field name="name">Shopinvader.security.token manager</field>
         <field name="model_id" ref="model_shopinvader_security_token" />
-        <field name="group_id" ref="shopinvader.group_shopinvader_manager" />
+        <field name="group_id" ref="shopinvader_v1_base.group_shopinvader_manager" />
         <field name="perm_create" eval="1" />
         <field name="perm_read" eval="1" />
         <field name="perm_write" eval="1" />
