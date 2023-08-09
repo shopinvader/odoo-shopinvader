@@ -355,4 +355,4 @@ class ShopinvaderVariant(models.Model):
         return self.jsonify(exporter.get_json_parser(), one=True)
 
     def _jsonify_get_exporter(self):
-        return self.env.ref("shopinvader_v1_base.ir_exp_shopinvader_variant").sudo()
+        return self.env.ref("shopinvader_v1_product.ir_exp_shopinvader_variant").sudo()

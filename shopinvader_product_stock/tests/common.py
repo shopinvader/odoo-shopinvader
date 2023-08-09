@@ -37,7 +37,7 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
                     "shopinvader_v1_product.ir_exp_shopinvader_variant"
                 ).id,
                 "lang_id": ref("base.lang_en").id,
-                "model_id": ref("shopinvader_v1_productmodel_shopinvader_variant").id,
+                "model_id": ref("shopinvader_v1_product.model_shopinvader_variant").id,
             }
         )
         cls.shopinvader_backend.write(

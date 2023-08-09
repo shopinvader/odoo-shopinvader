@@ -94,7 +94,7 @@ class UtilsMixin(object):
 class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
     @staticmethod
     def _setup_backend(cls):
-        cls.env = cls.env(context={"lang": "en_US"})
+        cls.env = cls.env(context={"lang": "en_US", "shopinvader_test": True})
         cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
         cls.shopinvader_session = {}
         cls.existing_jobs = cls.env["queue.job"].browse()

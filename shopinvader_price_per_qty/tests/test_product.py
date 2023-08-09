@@ -5,7 +5,7 @@
 
 from datetime import datetime, timedelta
 
-from openerp.addons.shopinvader.tests.common import ProductCommonCase
+from openerp.addons.shopinvader_v1_product.tests.common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):

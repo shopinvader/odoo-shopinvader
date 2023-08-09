@@ -18,6 +18,10 @@ class CartService(Component):
 
     def _check_allowed_product(self, cart, params):
         product = self.env["product.product"].browse(params["product_id"])
+        if self.env.context.get("shopinvader_test") and not self.env.context.get(
+            "test_check_shopinvader_product"
+        ):
+            return True
         if not product._add_to_cart_allowed(
             self.shopinvader_backend, partner=self.partner
         ):

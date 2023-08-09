@@ -16,9 +16,7 @@ class TestCustomerSpecialProduct(ProductCommonCase):
             (6, 0, cls.customer.ids)
         ]
         cls.category = cls.shopinvader_variant.tmpl_record_id.categ_id
-        cls.categ_bind_wizard_model = cls.env[
-            "shopinvader_v1_product.category.binding.wizard"
-        ]
+        cls.categ_bind_wizard_model = cls.env["shopinvader.category.binding.wizard"]
         bind_wizard = cls.categ_bind_wizard_model.create(
             {
                 "backend_id": cls.backend.id,

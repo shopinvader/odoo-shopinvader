@@ -25,6 +25,7 @@ class ShopinvaderCartQuotationCase(CommonConnectedCartCase):
         self.assertEqual(self.cart.typology, "sale")
 
     def test_only_quotation_in_cart_info(self):
+        self.backend.bind_all_product()
         response = self.service.dispatch("search")
         self.assertIn(
             "only_quotation", response["data"]["lines"]["items"][0]["product"]

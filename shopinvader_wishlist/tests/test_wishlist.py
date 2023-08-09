@@ -29,6 +29,7 @@ class CommonWishlistCase(CommonCase):
                 {"product_id": cls.prod2.id, "quantity": 5.0},
             ],
         }
+        cls.backend.bind_all_product()
 
     def setUp(self, *args, **kwargs):
         super(CommonWishlistCase, self).setUp(*args, **kwargs)

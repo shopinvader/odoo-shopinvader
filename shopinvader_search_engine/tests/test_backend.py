@@ -41,11 +41,11 @@ class BackendCaseBase(SavepointCase):
             "shopinvader_v1_product.ir_exp_shopinvader_variant"
         )
         cls.categ_export = cls.env.ref(
-            "shopinvader_v1_base.ir_exp_shopinvader_category"
+            "shopinvader_v1_product.ir_exp_shopinvader_category"
         )
         cls.ir_model_model = cls.env["ir.model"]
-        cls.variant_model = cls.ir_model_model._get("shopinvader_v1_product.variant")
-        cls.categ_model = cls.ir_model_model._get("shopinvader_v1_product.category")
+        cls.variant_model = cls.ir_model_model._get("shopinvader.variant")
+        cls.categ_model = cls.ir_model_model._get("shopinvader.category")
         cls.agnostic_model = cls.ir_model_model._get(cls.AgnosticBinding._name)
         cls.lang_en = cls.backend.lang_ids
         cls.lang_fr = _install_lang_odoo(cls.env, "base.lang_fr")

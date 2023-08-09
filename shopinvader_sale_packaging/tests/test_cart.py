@@ -11,6 +11,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls._setup_products()
+        cls.backend.bind_all_product()
         cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
         cls.cart = cls.env.ref("shopinvader_v1_base.sale_order_2")
         cls.pkg_box = cls.env["product.packaging"].create(

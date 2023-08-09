@@ -30,7 +30,10 @@ class AbstractSaleService(AbstractComponent):
             variant = line.product_id._get_invader_variant(
                 self.shopinvader_backend, line.order_id.partner_id.lang
             )
-        return self._convert_one_line_product(variant)
+        if variant:
+            return self._convert_one_line_product(variant)
+        else:
+            return super()._get_product_information(line)
 
     def _convert_one_line_product(self, variant):
-        return variant.get_shop_data() if variant else {}
+        return variant.get_shop_data()

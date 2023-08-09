@@ -36,6 +36,7 @@ class TestSaleOrderPackaging(CommonCase):
             self.service = work.component(usage="sales")
 
     def test_sale_line_data(self):
+        self.backend.bind_all_product()
         res = self.service.search()
         sale = res["data"][0]
         for line in sale["lines"]["items"]:

@@ -11,5 +11,11 @@ class ShopinvaderVariant(models.Model):
     _description = "Shopinvader Variant"
 
     def _get_shop_data(self):
-        """Use pre-computed index data."""
-        return self.get_export_data()
+        """Use pre-computed index data if exist."""
+        # Normally data always exist but in some special case (like test)
+        # it can be not computed yet, so we fall back to computed value
+        data = self.get_export_data()
+        if data:
+            return data
+        else:
+            return super()._get_shop_data()
