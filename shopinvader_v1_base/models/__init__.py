@@ -11,4 +11,3 @@ from . import shopinvader_partner
 from . import shopinvader_notification
 from . import res_config_settings
 from . import res_partner
-from . import ir_model
