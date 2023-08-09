@@ -168,7 +168,7 @@ class CommonCase(SavepointCase, CommonMixin):
     @classmethod
     def tearDownClass(cls):
         super().tearDownClass()
-        _rest_controllers_per_module["shopinvader"] = []
+        _rest_controllers_per_module["shopinvader_v1_base"] = []
 
     def setUp(self):
         SavepointCase.setUp(self)
