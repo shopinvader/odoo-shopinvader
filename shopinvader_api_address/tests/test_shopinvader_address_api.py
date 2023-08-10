@@ -216,7 +216,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
             "city": "Waterloo",
             "country_id": self.env.ref("base.be").id,
             "street": "rue test",
-            "vat": "test_vat",
+            "vat": "BE0477472701",
         }
 
         with self._create_test_client(router=address_router) as test_client:
@@ -234,7 +234,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         address = response_json
 
-        self.assertEqual(address.get("vat"), "test_vat")
+        self.assertEqual(address.get("vat"), "BE0477472701")
         self.assertEqual(address.get("vat"), self.test_partner.vat)
 
     def test_create_shipping_address(self):
