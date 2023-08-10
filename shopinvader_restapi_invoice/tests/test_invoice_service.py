@@ -45,7 +45,6 @@ class TestInvoiceServiceAnonymous(CommonInvoiceCase):
             {
                 "payment_date": fields.Date.today(),
                 "journal_id": self.bank_journal_euro.id,
-                "payment_method_id": self.payment_method_manual_in.id,
             }
         )
         values = {}

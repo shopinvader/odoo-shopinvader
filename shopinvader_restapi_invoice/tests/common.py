@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class CommonInvoiceCase(CommonCase):
@@ -10,22 +10,23 @@ class CommonInvoiceCase(CommonCase):
     Common for invoice service
     """
 
-    def setUp(self, *args, **kwargs):
-        super(CommonInvoiceCase, self).setUp(*args, **kwargs)
-        self.invoice_obj = self.env["account.move"]
-        self.journal_obj = self.env["account.journal"]
-        self.register_payments_obj = self.env["account.payment.register"]
-        self.sale = self.env.ref("shopinvader.sale_order_2")
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.partner2 = self.env.ref("shopinvader.partner_2")
-        self.product = self.env.ref("product.product_product_4")
-        self.bank_journal_euro = self.journal_obj.create(
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.invoice_obj = cls.env["account.move"]
+        cls.journal_obj = cls.env["account.journal"]
+        cls.register_payments_obj = cls.env["account.payment.register"]
+        cls.sale = cls.env.ref("shopinvader_restapi.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
+        cls.partner2 = cls.env.ref("shopinvader_restapi.partner_2")
+        cls.product = cls.env.ref("product.product_product_4")
+        cls.bank_journal_euro = cls.journal_obj.create(
             {"name": "Bank", "type": "bank", "code": "BNK67"}
         )
-        self.payment_method_manual_in = self.env.ref(
-            "account.account_payment_method_manual_in"
-        )
-        self.precision = 2
+        cls.precision = 2
+
+    def setUp(self, *args, **kwargs):
+        super().setUp(*args, **kwargs)
         with self.work_on_services(partner=self.partner) as work:
             self.service = work.component(usage="invoices")
         with self.work_on_services(partner=self.backend.anonymous_partner_id) as work:
@@ -103,12 +104,11 @@ class CommonInvoiceCase(CommonCase):
         :return: bool
         """
         ctx = {"active_model": invoice._name, "active_ids": invoice.ids}
-        wizard_obj = self.register_payments_obj.with_context(ctx)
+        wizard_obj = self.register_payments_obj.with_context(**ctx)
         register_payments = wizard_obj.create(
             {
                 "payment_date": fields.Date.today(),
                 "journal_id": self.bank_journal_euro.id,
-                "payment_method_id": self.payment_method_manual_in.id,
             }
         )
         if journal:
