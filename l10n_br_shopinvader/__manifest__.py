@@ -16,6 +16,7 @@
     "external_dependencies": {"python": [], "bin": []},
     "depends": [
         "shopinvader",
+        "base_rest",
         "l10n_br_zip",
     ],
     "data": ["views/delivery_view.xml"],
