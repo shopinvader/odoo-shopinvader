@@ -1,5 +1,6 @@
 # generated from manifests external_dependencies
 cerberus
+erpbrasil.base>=2.3.0
 locomotivecms
 python-magic
 python-slugify

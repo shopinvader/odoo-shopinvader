@@ -13,11 +13,17 @@
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {"python": [], "bin": []},
+    "external_dependencies": {
+        "python": [
+            "erpbrasil.base>=2.3.0",
+        ],
+        "bin": [],
+    },
     "depends": [
-        "shopinvader",
-        "base_rest",
         "l10n_br_zip",
+        "shopinvader_base_address_city",
+        "shopinvader_base_address_extended",
+        "shopinvader_delivery_carrier",
     ],
     "data": ["views/delivery_view.xml"],
 }

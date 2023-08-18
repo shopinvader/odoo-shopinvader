@@ -23,7 +23,7 @@ class CustomSaleServiceTest(CommonCase):
         sale.action_confirm_cart()
 
         # I write in the custom_field
-        sale.write({"custom_field": "foo"})
+        # sale.write({"custom_field": "foo"})
 
         # Now I call the rest api by calling the get method on the sale service
         api_response = self.sale_service.dispatch("get", sale.id)

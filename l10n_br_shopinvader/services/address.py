@@ -2,6 +2,10 @@
 # @author Cristiano Rodrigues <cristiano.rodrigues@kmee.com.br>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import json
+
+from odoo.http import Response
+
 from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
@@ -15,7 +19,6 @@ class AddressService(Component):
         res.append("legal_name")
         res.append("cnpj_cpf")
         res.append("inscr_est")
-        res.remove(("state_id", ["id", "name"]))
 
         return res
 
@@ -98,7 +101,12 @@ class AddressService(Component):
     )
     def zip_code(self, **params):
         zip_code = params.get("zip_code")
-        address = self.env["l10n_br.zip"]._consultar_cep(zip_code)
+        try:
+            address = self.env["l10n_br.zip"]._consultar_cep(zip_code)
+        except Exception as e:
+            return Response(
+                json.dumps(str(e)), content_type="application/json", status=404
+            )
         res = self.env["res.city"].search([("id", "=", address["city_id"])])
         city = {"id": res.id, "name": res.name}
         state = {
@@ -110,7 +118,7 @@ class AddressService(Component):
 
         return {
             "zip_code": address["zip_code"],
-            "street": address["street_name"],
+            "street_name": address["street_name"],
             "zip_complement": address["zip_complement"],
             "district": address["district"],
             "city_id": city,
@@ -121,7 +129,6 @@ class AddressService(Component):
     def _validator_zip_code(self):
         return {
             "zip_code": {"type": "string", "required": True},
-            "current_cart": {"type": "string", "required": True},
         }
 
     def _validator_return_zip_code(self):
@@ -139,6 +146,7 @@ class AddressService(Component):
             "street_name": {
                 "type": "string",
                 "required": False,
+                "nullable": True,
             },
             "zip_complement": {
                 "type": "string",
@@ -148,6 +156,7 @@ class AddressService(Component):
             "district": {
                 "type": "string",
                 "required": False,
+                "nullable": True,
             },
             "city_id": {
                 "type": "dict",
@@ -196,19 +205,37 @@ class AddressService(Component):
 
     @restapi.method(
         [(["/states"], "GET")],
+        input_param=restapi.CerberusValidator("_validator_states"),
         output_param=restapi.CerberusValidator("_validator_return_states"),
         cors="*",
     )
     def search_states(self, **params):
         """Return a list of states registered on the database."""
-        state_ids = self.env["res.country.state"].search(
-            [("country_id.code", "=", self.env.company.country_code)]
+
+        country_code = params.get("country_code")
+        shopinvader_backend = self.env["shopinvader.backend"].browse()
+        allowed_country = shopinvader_backend.allowed_country_ids.search(
+            [("code", "=", country_code)]
         )
-        if state_ids:
-            states = []
-            for state in state_ids:
-                states += [{"id": state.id, "name": state.name, "code": state.code}]
-        return {"state_ids": states}
+        state_ids = self.env["res.country.state"].search(
+            [("country_id.code", "=", country_code)]
+        )
+        if allowed_country and state_ids:
+            if state_ids:
+                states = []
+                for state in state_ids:
+                    states += [{"id": state.id, "name": state.name, "code": state.code}]
+            return {"state_ids": states}
+        return {
+            "state_ids": [
+                {"id": False, "name": "", "code": ""},
+            ]
+        }
+
+    def _validator_states(self):
+        return {
+            "country_code": {"type": "string", "required": True},
+        }
 
     @staticmethod
     def _validator_return_states():
@@ -221,14 +248,17 @@ class AddressService(Component):
                         "id": {
                             "type": "integer",
                             "required": True,
+                            "nullable": True,
                         },
                         "name": {
                             "type": "string",
                             "required": True,
+                            "nullable": True,
                         },
                         "code": {
                             "type": "string",
                             "required": True,
+                            "nullable": True,
                         },
                     },
                 },
