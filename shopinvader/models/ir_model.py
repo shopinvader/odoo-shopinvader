@@ -107,6 +107,18 @@ SHOPINVADER_V1_BASE_XMLID = [
     "shopinvader_notification_sale",
     "shopinvader_partner_1",
     "shopinvader_partner_2",
+    "model_shopinvader_backend",
+    "model_sale_order",
+    "model_shopinvader_partner_binding",
+    "model_shopinvader_partner_binding_line",
+    "model_res_partner",
+    "model_res_config_settings",
+    "model_sale_order_line",
+    "model_account_move",
+    "model_track_external_mixin",
+    "model_shopinvader_notification",
+    "model_shopinvader_cart_step",
+    "model_shopinvader_partner",
 ]
 
 SHOPINVADER_V1_PRODUCT_XMLID = [
@@ -315,29 +327,38 @@ SHOPINVADER_V1_PRODUCT_XMLID = [
 ]
 
 
-class IrModelData(models.Model):
+def mapped_xml_id(xmlid):
+    # fix the existing ref to shopinvader by new name
+    module, name = xmlid.split(".")
+    if module == "shopinvader":
+        if name in SHOPINVADER_V1_PRODUCT_XMLID:
+            _logger.warning(
+                f"Old name for shopinvader is used: {xmlid} \n"
+                "Please rename module ref to "
+                "shopinvader_v1_product"
+            )
+            xmlid = f"shopinvader_v1_product.{name}"
+        elif name in SHOPINVADER_V1_BASE_XMLID:
+            xmlid = f"shopinvader_v1_base.{name}"
+            _logger.warning(
+                f"Old name for shopinvader is used: {xmlid} \n"
+                "Please rename module ref to shopinvader_v1_base"
+            )
+    return xmlid
 
+
+class IrModelData(models.Model):
     _inherit = "ir.model.data"
 
     @api.model
-    def xmlid_to_res_model_res_id(self, xmlid, raise_if_not_found=False):
-        """Return (res_model, res_id)"""
-        # fix the existing ref to shopinvader by new name
-        module, name = xmlid.split(".")
-        if module == "shopinvader":
-            if name in SHOPINVADER_V1_PRODUCT_XMLID:
-                _logger.warning(
-                    f"Old name for shopinvader is used: {xmlid} \n"
-                    "Please rename module ref to "
-                    "shopinvader_v1_product"
-                )
-                xmlid = f"shopinvader_v1_product.{name}"
-            elif name in SHOPINVADER_V1_BASE_XMLID:
-                xmlid = f"shopinvader_v1_base.{name}"
-                _logger.warning(
-                    f"Old name for shopinvader is used: {xmlid} \n"
-                    "Please rename module ref to shopinvader_v1_base"
-                )
-        return super().xmlid_to_res_model_res_id(
-            xmlid, raise_if_not_found=raise_if_not_found
-        )
+    def xmlid_lookup(self, xmlid):
+        xmlid = mapped_xml_id(xmlid)
+        return super().xmlid_lookup(xmlid)
+
+
+class IrFieldsConverter(models.AbstractModel):
+    _inherit = "ir.fields.converter"
+
+    def _xmlid_to_record_id(self, xmlid, model):
+        xmlid = mapped_xml_id(xmlid)
+        return super()._xmlid_to_record_id(xmlid, model)
