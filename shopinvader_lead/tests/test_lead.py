@@ -4,8 +4,8 @@
 
 from odoo import models
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
-from odoo.addons.shopinvader_v1_base.tests.test_notification import (
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.test_notification import (
     NotificationCaseMixin,
 )
 
@@ -52,7 +52,7 @@ class LeadCase(CommonCase, NotificationCaseMixin):
         self._check_notification("lead_confirmation", lead)
 
     def test_create_lead_with_logged_partner(self):
-        partner = self.env.ref("shopinvader_v1_base.partner_1")
+        partner = self.env.ref("shopinvader_restapi.partner_1")
         service = self._get_service(partner)
         data = {
             "name": "Besoin d'un nouveau site",

@@ -5,7 +5,7 @@
     <field name="model">shopinvader.variant</field>
     <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_variant_tree_view"
+            ref="shopinvader_product_binding.shopinvader_variant_tree_view"
         />
     <field name="arch" type="xml">
         <field name="lang_id" position="after">
@@ -21,7 +21,7 @@
     <field name="model">shopinvader.variant</field>
     <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_variant_form_view"
+            ref="shopinvader_product_binding.shopinvader_variant_form_view"
         />
     <field name="arch" type="xml">
         <group name="variant" position="after">
@@ -45,7 +45,7 @@
     <field name="model">shopinvader.variant</field>
     <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_variant_search_view"
+            ref="shopinvader_product_binding.shopinvader_variant_search_view"
         />
     <field name="arch" type="xml">
         <field name="lang_id" position="after">
@@ -98,10 +98,13 @@
 
 <record model="ir.actions.server" id="action_recompute_shopinvader_product_on_binding">
     <field name="name">Recompute shopinvader product</field>
-    <field name="model_id" ref="shopinvader_v1_product.model_shopinvader_variant" />
+    <field
+            name="model_id"
+            ref="shopinvader_product_binding.model_shopinvader_variant"
+        />
     <field
             name="binding_model_id"
-            ref="shopinvader_v1_product.model_shopinvader_variant"
+            ref="shopinvader_product_binding.model_shopinvader_variant"
         />
     <field name="state">code</field>
     <field name="code">

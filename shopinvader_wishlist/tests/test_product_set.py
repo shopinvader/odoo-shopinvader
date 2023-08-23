@@ -5,7 +5,7 @@
 from odoo import exceptions
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader_v1_product.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 
 
 class ProductSet(ProductCommonCase):

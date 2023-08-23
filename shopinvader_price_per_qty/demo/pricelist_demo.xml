@@ -2,7 +2,7 @@
 <odoo noupdate="1">
 
     <record id="item_10_discount_30" model="product.pricelist.item">
-        <field name="pricelist_id" ref="shopinvader_v1_base.pricelist_1" />
+        <field name="pricelist_id" ref="shopinvader_restapi.pricelist_1" />
         <field name="base">list_price</field>
         <field name="applied_on">0_product_variant</field>
         <field name="compute_price">percentage</field>
@@ -12,7 +12,7 @@
     </record>
 
     <record id="item_20_discount_40" model="product.pricelist.item">
-        <field name="pricelist_id" ref="shopinvader_v1_base.pricelist_1" />
+        <field name="pricelist_id" ref="shopinvader_restapi.pricelist_1" />
         <field name="base">list_price</field>
         <field name="applied_on">0_product_variant</field>
         <field name="compute_price">percentage</field>
@@ -22,7 +22,7 @@
     </record>
 
     <record id="item_30_discount_50" model="product.pricelist.item">
-        <field name="pricelist_id" ref="shopinvader_v1_base.pricelist_1" />
+        <field name="pricelist_id" ref="shopinvader_restapi.pricelist_1" />
         <field name="base">list_price</field>
         <field name="applied_on">0_product_variant</field>
         <field name="compute_price">percentage</field>
@@ -32,7 +32,7 @@
     </record>
 
     <record id="item_40_discount_60" model="product.pricelist.item">
-        <field name="pricelist_id" ref="shopinvader_v1_base.pricelist_1" />
+        <field name="pricelist_id" ref="shopinvader_restapi.pricelist_1" />
         <field name="base">list_price</field>
         <field name="applied_on">0_product_variant</field>
         <field name="compute_price">percentage</field>

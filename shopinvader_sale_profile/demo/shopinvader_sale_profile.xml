@@ -4,7 +4,7 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
     <record id="shopinvader_sale_profile_1" model="shopinvader.sale.profile">
-        <field name="backend_id" ref="shopinvader_v1_base.backend_1" />
+        <field name="backend_id" ref="shopinvader_restapi.backend_1" />
         <field name="pricelist_id" ref="product.list0" />
         <field name="default" eval="True" />
         <field name="code">public_tax_inc</field>
@@ -15,8 +15,8 @@
     </record>
 
     <record id="shopinvader_sale_profile_2" model="shopinvader.sale.profile">
-        <field name="backend_id" ref="shopinvader_v1_base.backend_1" />
-        <field name="pricelist_id" ref="shopinvader_v1_base.pricelist_1" />
+        <field name="backend_id" ref="shopinvader_restapi.backend_1" />
+        <field name="pricelist_id" ref="shopinvader_restapi.pricelist_1" />
         <field name="code">pro_tax_exc</field>
         <field
             name="fiscal_position_ids"
@@ -25,7 +25,7 @@
     </record>
 
     <record id="shopinvader_sale_profile_3" model="shopinvader.sale.profile">
-        <field name="backend_id" ref="shopinvader_v1_base.backend_1" />
+        <field name="backend_id" ref="shopinvader_restapi.backend_1" />
         <field name="pricelist_id" ref="product.list0" />
         <field name="code">public_tax_exc</field>
         <field

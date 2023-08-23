@@ -7,7 +7,7 @@
         <field name="pricelist_id" ref="product.list0" />
         <field
             name="account_analytic_id"
-            ref="shopinvader_v1_base.account_analytic_0"
+            ref="shopinvader_restapi.account_analytic_0"
         />
         <field
             name="allowed_country_ids"
@@ -25,10 +25,13 @@
         <field name="name">elastic-product</field>
         <field name="config_id" ref="index_config_1" />
         <field name="lang_id" ref="base.lang_en" />
-        <field name="model_id" ref="shopinvader_v1_product.model_shopinvader_variant" />
+        <field
+            name="model_id"
+            ref="shopinvader_product_binding.model_shopinvader_variant"
+        />
         <field
             name="exporter_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 
@@ -39,11 +42,11 @@
         <field name="lang_id" ref="base.lang_en" />
         <field
             name="model_id"
-            ref="shopinvader_v1_product.model_shopinvader_category"
+            ref="shopinvader_product_binding.model_shopinvader_category"
         />
         <field
             name="exporter_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_category"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
         />
     </record>
 

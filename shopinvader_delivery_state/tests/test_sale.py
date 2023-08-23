@@ -2,15 +2,15 @@
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestSalesService(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
-        cls.shop_sales = cls.env.ref("shopinvader_v1_base.sale_order_2")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
+        cls.shop_sales = cls.env.ref("shopinvader_restapi.sale_order_2")
         cls.shop_sales += cls.shop_sales.copy()
 
     def _get_service(self):

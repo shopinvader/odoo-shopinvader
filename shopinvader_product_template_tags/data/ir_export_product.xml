@@ -11,7 +11,7 @@
         <field name="target">tag_ids:tags/id</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 
@@ -20,7 +20,7 @@
         <field name="target">tag_ids:tags/name</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 
@@ -29,7 +29,7 @@
         <field name="target">tag_ids:tags/sequence</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 

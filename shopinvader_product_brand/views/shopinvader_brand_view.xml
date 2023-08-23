@@ -112,7 +112,7 @@
 <menuitem
         id="menu_shopinvader_brand"
         name="Brands"
-        parent="shopinvader_v1_product.menu_shopinvader_products"
+        parent="shopinvader_product_binding.menu_shopinvader_products"
         sequence="25"
         action="act_open_shopinvader_brand_view"
     />

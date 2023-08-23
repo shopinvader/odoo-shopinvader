@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 from odoo.addons.sale_promotion_rule.tests.test_promotion import (
     AbstractCommonPromotionCase,
 )
-from odoo.addons.shopinvader_v1_base.tests.test_cart import CommonConnectedCartCase
+from odoo.addons.shopinvader_restapi.tests.test_cart import CommonConnectedCartCase
 
 
 class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
@@ -99,7 +99,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         count_existing_lines = len(self.cart.order_line)
         # each time we add an item the promotion is recomputed and the coupon
         # code is preserved
-        self.cart.current_step_id = self.env.ref("shopinvader_v1_base.cart_index").id
+        self.cart.current_step_id = self.env.ref("shopinvader_restapi.cart_index").id
         self.service.dispatch(
             "add_item", params={"product_id": self.product_1.id, "item_qty": 2}
         )
@@ -124,7 +124,7 @@ class TestCart(CommonConnectedCartCase, AbstractCommonPromotionCase):
         fiscal position using the write_with_onchange (on cart).
         :return:
         """
-        fiscal_position = self.env.ref("shopinvader_v1_base.fiscal_position_0")
+        fiscal_position = self.env.ref("shopinvader_restapi.fiscal_position_0")
         # Apply promo rule
         self.cart.apply_promotions()
         # Then ensure a promo should be applied

@@ -10,7 +10,7 @@
         <field name="model">shopinvader.backend</field>
         <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_backend_view_form"
+            ref="shopinvader_product_binding.shopinvader_backend_view_form"
         />
         <field name="model">shopinvader.backend</field>
         <field name="arch" type="xml">

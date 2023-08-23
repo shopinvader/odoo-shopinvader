@@ -1,6 +1,6 @@
 # Copyright 2018 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo.addons.shopinvader_v1_product.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 from odoo.addons.storage_image_product.tests.common import ProductImageCommonCase
 
 
@@ -17,7 +17,7 @@ class TestShopinvaderBackendTest(ProductCommonCase, ProductImageCommonCase):
                 "groups_id": [
                     (
                         4,
-                        cls.env.ref("shopinvader_v1_base.group_shopinvader_manager").id,
+                        cls.env.ref("shopinvader_restapi.group_shopinvader_manager").id,
                     )
                 ]
             }

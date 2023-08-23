@@ -6,7 +6,7 @@
         <field name="target">video_ids:video/sequence</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_category"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
         />
     </record>
 
@@ -15,7 +15,7 @@
         <field name="target">video_ids:video/name</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_category"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
         />
     </record>
 
@@ -27,7 +27,7 @@
         <field name="target">video_ids:video/provider_id:provider/code</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_category"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
         />
     </record>
 
@@ -36,7 +36,7 @@
         <field name="target">video_ids:video/identifier</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_category"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
         />
     </record>
 
@@ -45,7 +45,7 @@
         <field name="target">video_ids:video/url</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_category"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
         />
     </record>
 
@@ -57,7 +57,7 @@
         <field name="target">video_ids:video/thumbnail_url</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_category"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
         />
     </record>
 

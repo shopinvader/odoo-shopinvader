@@ -4,7 +4,7 @@
 
 from odoo import exceptions
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class AddressValidationTestCase(CommonCase):

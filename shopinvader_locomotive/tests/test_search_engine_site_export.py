@@ -100,10 +100,10 @@ class TestSiteSearchEngineExport(TestSiteSearchEngineExportBase):
                 "name": "index-product",
                 "lang_id": cls.env.ref("base.lang_en").id,
                 "model_id": cls.env.ref(
-                    "shopinvader_v1_product.model_shopinvader_variant"
+                    "shopinvader_product_binding.model_shopinvader_variant"
                 ).id,
                 "exporter_id": cls.env.ref(
-                    "shopinvader_v1_product.ir_exp_shopinvader_variant"
+                    "shopinvader_product_binding.ir_exp_shopinvader_variant"
                 ).id,
             }
         )
@@ -113,7 +113,7 @@ class TestSiteSearchEngineExport(TestSiteSearchEngineExportBase):
                 "name": "index-category",
                 "lang_id": cls.env.ref("base.lang_en").id,
                 "model_id": cls.env.ref(
-                    "shopinvader_v1_product.model_shopinvader_category"
+                    "shopinvader_product_binding.model_shopinvader_category"
                 ).id,
                 "exporter_id": cls.env.ref(
                     "shopinvader.ir_exp_shopinvader_category"

@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from uuid import uuid4
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestSaleOrderDeliveryNote(CommonCase):
@@ -13,10 +13,10 @@ class TestSaleOrderDeliveryNote(CommonCase):
 
     def setUp(self):
         super().setUp()
-        self.cart = self.env.ref("shopinvader_v1_base.sale_order_2")
+        self.cart = self.env.ref("shopinvader_restapi.sale_order_2")
         self.shopinvader_session = {"cart_id": self.cart.id}
-        self.partner = self.env.ref("shopinvader_v1_base.partner_1")
-        self.address = self.env.ref("shopinvader_v1_base.partner_1_address_1")
+        self.partner = self.env.ref("shopinvader_restapi.partner_1")
+        self.address = self.env.ref("shopinvader_restapi.partner_1_address_1")
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:

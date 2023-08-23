@@ -1,7 +1,7 @@
 # Copyright 2020 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html)
 
-from odoo.addons.shopinvader_v1_product.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 
 
 class TestCustomerSpecialProduct(ProductCommonCase):
@@ -9,7 +9,9 @@ class TestCustomerSpecialProduct(ProductCommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.ir_export = cls.env.ref("shopinvader_v1_product.ir_exp_shopinvader_variant")
+        cls.ir_export = cls.env.ref(
+            "shopinvader_product_binding.ir_exp_shopinvader_variant"
+        )
         cls.parser = cls.ir_export.get_json_parser()
         cls.customer = cls.env.ref("base.res_partner_2")
         cls.shopinvader_variant.manufactured_for_partner_ids = [

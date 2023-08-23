@@ -14,8 +14,8 @@ class TestResPartner(SavepointComponentCase):
         super(TestResPartner, cls).setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.unique_email = datetime.now().isoformat() + "@test.com"
-        cls.backend1 = cls.env.ref("shopinvader_v1_base.backend_1")
-        cls.backend2 = cls.env.ref("shopinvader_v1_base.backend_2")
+        cls.backend1 = cls.env.ref("shopinvader_restapi.backend_1")
+        cls.backend2 = cls.env.ref("shopinvader_restapi.backend_2")
 
     def test_unique_email_partner(self):
         self.assertFalse(self.env["res.partner"]._is_partner_duplicate_prevented())

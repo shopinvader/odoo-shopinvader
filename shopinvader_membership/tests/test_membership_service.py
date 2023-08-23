@@ -6,7 +6,7 @@ from datetime import timedelta
 from odoo import fields
 from odoo.exceptions import UserError
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestMembershipService(CommonCase):
@@ -15,7 +15,7 @@ class TestMembershipService(CommonCase):
         super().setUpClass()
         cls.membership_line_obj = cls.env["membership.membership_line"]
         cls.product_obj = cls.env["product.product"]
-        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
         str_today = fields.Date.today()
         cls.date_today = fields.Date.from_string(str_today)
         cls.next_month = fields.Date.to_string(cls.date_today + timedelta(days=30))

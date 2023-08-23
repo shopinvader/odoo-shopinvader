@@ -7,7 +7,7 @@ class TestProductAutoBind(SavepointCase):
     @classmethod
     def setUpClass(cls):
         super(TestProductAutoBind, cls).setUpClass()
-        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1").with_context(
+        cls.backend = cls.env.ref("shopinvader_restapi.backend_1").with_context(
             bind_products_immediately=True
         )
         cls.variant_obj = cls.env["shopinvader.variant"]

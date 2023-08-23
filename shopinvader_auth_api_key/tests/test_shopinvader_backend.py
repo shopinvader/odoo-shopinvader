@@ -5,14 +5,14 @@ from psycopg2 import IntegrityError
 
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader_v1_base.tests import common
+from odoo.addons.shopinvader_restapi.tests import common
 
 
 class TestShopinvaderBackend(common.CommonCase):
     @mute_logger("odoo.sql_db")
     def test_api_key_unique(self):
-        backend1 = self.env.ref("shopinvader_v1_base.backend_1")
-        backend2 = self.env.ref("shopinvader_v1_base.backend_2")
+        backend1 = self.env.ref("shopinvader_restapi.backend_1")
+        backend2 = self.env.ref("shopinvader_restapi.backend_2")
 
         with self.assertRaises(IntegrityError), self.env.cr.savepoint():
             backend2.write(

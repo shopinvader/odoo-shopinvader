@@ -7,14 +7,14 @@ from werkzeug.exceptions import NotFound
 
 from odoo import exceptions
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class CommonWishlistCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super(CommonWishlistCase, cls).setUpClass()
-        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
         cls.prod1 = cls.env.ref("product.product_product_11")
         cls.prod2 = cls.env.ref("product.product_product_13")
         cls.prod3 = cls.env.ref("product.product_product_10")

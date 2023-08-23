@@ -6,7 +6,7 @@
         <field name="name">image_categories</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 </odoo>

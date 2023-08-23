@@ -2,8 +2,8 @@
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader_v1_base.tests.common import NotificationCaseMixin
-from odoo.addons.shopinvader_v1_base.tests.test_address import CommonAddressCase
+from odoo.addons.shopinvader_restapi.tests.common import NotificationCaseMixin
+from odoo.addons.shopinvader_restapi.tests.test_address import CommonAddressCase
 
 
 class NotificationCustomerCase(CommonAddressCase, NotificationCaseMixin):

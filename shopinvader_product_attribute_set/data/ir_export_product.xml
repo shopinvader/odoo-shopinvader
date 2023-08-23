@@ -5,7 +5,7 @@
         <field name="name">attributes</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 
@@ -13,7 +13,7 @@
         <field name="name">structured_attributes</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 
@@ -22,7 +22,7 @@
         <field name="target">attribute_set_id:attribute_set/name</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 

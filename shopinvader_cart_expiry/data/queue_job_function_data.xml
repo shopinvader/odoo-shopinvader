@@ -5,6 +5,6 @@
     >
         <field name="model_id" ref="model_shopinvader_backend" />
         <field name="method">manage_cart_expiry</field>
-        <field name="channel_id" ref="shopinvader_v1_base.channel_shopinvader" />
+        <field name="channel_id" ref="shopinvader_restapi.channel_shopinvader" />
     </record>
 </odoo>

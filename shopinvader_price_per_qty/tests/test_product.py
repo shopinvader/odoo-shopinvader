@@ -5,14 +5,14 @@
 
 from datetime import datetime, timedelta
 
-from openerp.addons.shopinvader_v1_product.tests.common import ProductCommonCase
+from openerp.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):
     def test_price(self):
         price_per_qty = {10.0: 456.52, 20.0: 391.3, 30.0: 326.09, 40.0: 260.87}
-        pricelist = self.env.ref("shopinvader_v1_base.pricelist_1")
-        fposition = self.env.ref("shopinvader_v1_base.fiscal_position_1")
+        pricelist = self.env.ref("shopinvader_restapi.pricelist_1")
+        fposition = self.env.ref("shopinvader_restapi.fiscal_position_1")
         price = self.shopinvader_variant._get_price(
             pricelist=pricelist, fposition=fposition
         )
@@ -26,8 +26,8 @@ class ProductCase(ProductCommonCase):
                 "date_end": end,
             }
         )
-        pricelist = self.env.ref("shopinvader_v1_base.pricelist_1")
-        fposition = self.env.ref("shopinvader_v1_base.fiscal_position_1")
+        pricelist = self.env.ref("shopinvader_restapi.pricelist_1")
+        fposition = self.env.ref("shopinvader_restapi.fiscal_position_1")
         price = self.shopinvader_variant._get_price(
             pricelist=pricelist, fposition=fposition
         )

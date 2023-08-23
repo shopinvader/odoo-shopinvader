@@ -10,7 +10,7 @@
         <field name="model">shopinvader.product</field>
         <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_product_tree_view"
+            ref="shopinvader_product_binding.shopinvader_product_tree_view"
         />
         <field name="priority" eval="9999" />
         <field name="arch" type="xml">
@@ -24,7 +24,7 @@
         <field name="model">shopinvader.product</field>
         <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_product_form_view"
+            ref="shopinvader_product_binding.shopinvader_product_form_view"
         />
         <field name="arch" type="xml">
             <group name="backend" position="inside">

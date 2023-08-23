@@ -4,7 +4,7 @@
 
 from odoo.addons.component.tests.common import ComponentRegistryCase
 from odoo.addons.product_seasonality.tests.common import CommonCaseWithLines
-from odoo.addons.shopinvader_v1_base.tests.common import UtilsMixin
+from odoo.addons.shopinvader_restapi.tests.common import UtilsMixin
 
 # Reminders for lines' data (from CommonCaseWithLines):
 #
@@ -52,7 +52,7 @@ class TestProductSeasonalityCase(
         cls.line2 = cls.seasonal_conf.config_for_product(cls.prod2)
         cls.config_line_model = cls.env["seasonal.config.line"]
         cls.s_config_line_model = cls.env["shopinvader.seasonal.config.line"]
-        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
+        cls.backend = cls.env.ref("shopinvader_restapi.backend_1")
         cls.s_line1 = cls.s_config_line_model.create(
             {
                 "record_id": cls.line1.id,

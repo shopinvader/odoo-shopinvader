@@ -2,16 +2,16 @@
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestSaleOrderPackaging(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.sale = cls.env.ref("shopinvader_v1_base.sale_order_2")
-        cls.sale_line1 = cls.env.ref("shopinvader_v1_base.sale_order_line_4")
-        cls.sale_line2 = cls.env.ref("shopinvader_v1_base.sale_order_line_5")
+        cls.sale = cls.env.ref("shopinvader_restapi.sale_order_2")
+        cls.sale_line1 = cls.env.ref("shopinvader_restapi.sale_order_line_4")
+        cls.sale_line2 = cls.env.ref("shopinvader_restapi.sale_order_line_5")
         cls.pkg_box = cls.env["product.packaging"].create(
             {
                 "name": "Box",
@@ -24,7 +24,7 @@ class TestSaleOrderPackaging(CommonCase):
             {"product_packaging": cls.pkg_box.id, "product_packaging_qty": 5}
         )
         cls.sale.action_confirm()
-        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
         # This module adds new keys: recompute
         cls._refresh_json_data(cls, cls.sale.mapped("order_line.product_id"))
 

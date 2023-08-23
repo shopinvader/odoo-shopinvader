@@ -7,7 +7,7 @@
         <field name="model">shopinvader.backend</field>
         <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_backend_view_form"
+            ref="shopinvader_product_binding.shopinvader_backend_view_form"
         />
         <field name="arch" type="xml">
             <page name="config" position="after">
@@ -44,7 +44,7 @@
                             type="object"
                             string="Synchronize Metadata"
                             class="oe_highlight"
-                            groups="shopinvader_v1_base.group_shopinvader_manager"
+                            groups="shopinvader_restapi.group_shopinvader_manager"
                         />
                         <span>
                             Reset all the required metadata even those normally not updated by the Synchonize Metadata process.</span>
@@ -53,7 +53,7 @@
                             type="object"
                             string="Reset site settings"
                             class="oe_highlight"
-                            groups="shopinvader_v1_base.group_shopinvader_manager"
+                            groups="shopinvader_restapi.group_shopinvader_manager"
                         />
                     </group>
                 </page>

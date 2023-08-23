@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2017 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="shopinvader_variant_unbinding_wizard_form_view">
+        <field
+            name="name"
+        >shopinvader.variant.unbinding.wizard.form (in shopinvader)</field>
+        <field name="model">shopinvader.variant.unbinding.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Shopinvader Variant Unbinding Wizard">
+               <field name='shopinvader_variant_ids' />
+                <footer>
+                    <button
+                        string="Unbind Products"
+                        name="unbind_products"
+                        type="object"
+                        class="oe_highlight"
+                        confirm="Do you really want to unbind these products ?"
+                    />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record
+        model="ir.actions.act_window"
+        id="shopinvader_variant_unbinding_wizard_act_window"
+    >
+        <field name="name">Shopinvader Variant Unbinding Wizard</field>
+        <field name="res_model">shopinvader.variant.unbinding.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+        <field
+            name="binding_model_id"
+            ref="shopinvader_product_binding.model_shopinvader_variant"
+        />
+        <field name="view_id" ref="shopinvader_variant_unbinding_wizard_form_view" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('shopinvader_restapi.group_shopinvader_manager'))]"
+        />
+    </record>
+
+</odoo>

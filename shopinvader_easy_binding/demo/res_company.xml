@@ -4,7 +4,7 @@
         <record id="base.main_company" model="res.company">
             <field
                 name="shopinvader_company_backend_id"
-                ref="shopinvader_v1_base.backend_1"
+                ref="shopinvader_restapi.backend_1"
             />
         </record>
     </data>

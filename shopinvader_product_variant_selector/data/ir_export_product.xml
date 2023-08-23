@@ -5,7 +5,7 @@
         <field name="name">variant_selector</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 

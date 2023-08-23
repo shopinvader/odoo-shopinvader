@@ -1,14 +1,14 @@
 # Copyright 2019 Camptocamp (http://www.camptocamp.com).
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestPartnerAccessInfo(CommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
         cls.invader_partner = cls.partner._get_invader_partner(cls.backend)
         cls.invader_contact = cls._create_invader_partner(
             cls.env,

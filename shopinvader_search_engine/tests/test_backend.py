@@ -7,7 +7,7 @@ from odoo_test_helper import FakeModelLoader
 from odoo import fields, models
 from odoo.tests import SavepointCase
 
-from odoo.addons.shopinvader_v1_base.tests.common import _install_lang_odoo
+from odoo.addons.shopinvader_restapi.tests.common import _install_lang_odoo
 
 
 class BackendCaseBase(SavepointCase):
@@ -35,13 +35,13 @@ class BackendCaseBase(SavepointCase):
         cls.se_backend = (
             cls.env[SeBackendFake._name].create({"name": "Fake SE"}).se_backend_id
         )
-        cls.backend = cls.env.ref("shopinvader_v1_base.backend_1")
+        cls.backend = cls.env.ref("shopinvader_restapi.backend_1")
         cls.backend.se_backend_id = cls.se_backend
         cls.prod_export = cls.env.ref(
-            "shopinvader_v1_product.ir_exp_shopinvader_variant"
+            "shopinvader_product_binding.ir_exp_shopinvader_variant"
         )
         cls.categ_export = cls.env.ref(
-            "shopinvader_v1_product.ir_exp_shopinvader_category"
+            "shopinvader_product_binding.ir_exp_shopinvader_category"
         )
         cls.ir_model_model = cls.env["ir.model"]
         cls.variant_model = cls.ir_model_model._get("shopinvader.variant")

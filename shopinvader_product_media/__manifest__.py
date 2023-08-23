@@ -12,6 +12,6 @@
     "license": "AGPL-3",
     "installable": True,
     "auto_install": True,
-    "depends": ["shopinvader_v1_product", "storage_media_product"],
+    "depends": ["shopinvader_product_binding", "storage_media_product"],
     "data": ["data/ir_product_export.xml"],
 }

@@ -11,7 +11,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
     <field name="model">shopinvader.variant</field>
     <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_variant_tree_view"
+            ref="shopinvader_product_binding.shopinvader_variant_tree_view"
         />
     <field name="arch" type="xml">
       <field name="name" position="after">
@@ -25,7 +25,7 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
     <field name="model">shopinvader.variant</field>
     <field
             name="inherit_id"
-            ref="shopinvader_v1_product.shopinvader_variant_form_view"
+            ref="shopinvader_product_binding.shopinvader_variant_form_view"
         />
     <field name="arch" type="xml">
       <field name="date_syncronized" position="after">

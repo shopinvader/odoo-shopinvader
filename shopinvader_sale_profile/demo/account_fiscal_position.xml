@@ -2,15 +2,15 @@
 <!-- Copyright 2018 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record id="shopinvader_v1_base.fiscal_position_0" model="account.fiscal.position">
+    <record id="shopinvader_restapi.fiscal_position_0" model="account.fiscal.position">
         <field name="company_id" ref="base.main_company" />
     </record>
 
-    <record id="shopinvader_v1_base.fiscal_position_1" model="account.fiscal.position">
+    <record id="shopinvader_restapi.fiscal_position_1" model="account.fiscal.position">
         <field name="company_id" ref="base.main_company" />
     </record>
 
-    <record id="shopinvader_v1_base.fiscal_position_2" model="account.fiscal.position">
+    <record id="shopinvader_restapi.fiscal_position_2" model="account.fiscal.position">
         <field name="company_id" ref="base.main_company" />
     </record>
 </odoo>

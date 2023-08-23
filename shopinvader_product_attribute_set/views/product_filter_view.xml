@@ -3,7 +3,10 @@
 
 <record id="product_filter_view_form" model="ir.ui.view">
     <field name="model">product.filter</field>
-    <field name="inherit_id" ref="shopinvader_v1_product.product_filter_view_form" />
+    <field
+            name="inherit_id"
+            ref="shopinvader_product_binding.product_filter_view_form"
+        />
     <field name="arch" type="xml">
         <field name="variant_attribute_id" position="after">
             <field

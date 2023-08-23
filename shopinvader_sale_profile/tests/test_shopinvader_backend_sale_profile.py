@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import mock
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestShopinvaderBackendSaleProfile(CommonCase):
@@ -41,7 +41,7 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
         self.assertEqual(self.backend._get_cart_pricelist(), expected)
 
     def test_get_pricelist_partner_default(self):
-        partner = self.env.ref("shopinvader_v1_base.partner_2")
+        partner = self.env.ref("shopinvader_restapi.partner_2")
         expected = self.backend.pricelist_id
         self.assertEqual(self.backend._get_cart_pricelist(partner), expected)
 
@@ -49,7 +49,7 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
         self.backend.write({"use_sale_profile": True})
         profile1 = self.env.ref("shopinvader_sale_profile.shopinvader_sale_profile_1")
         profile2 = self.env.ref("shopinvader_sale_profile.shopinvader_sale_profile_2")
-        partner = self.env.ref("shopinvader_v1_base.partner_2")
+        partner = self.env.ref("shopinvader_restapi.partner_2")
         invader_partner = partner._get_invader_partner(self.backend)
         # Ingnore how sale profile is computed, just simulate its value
         with mock.patch.object(
@@ -68,7 +68,7 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
         self.backend.write({"use_sale_profile": True})
         profile1 = self.env.ref("shopinvader_sale_profile.shopinvader_sale_profile_1")
         profile2 = self.env.ref("shopinvader_sale_profile.shopinvader_sale_profile_2")
-        partner = self.env.ref("shopinvader_v1_base.partner_2")
+        partner = self.env.ref("shopinvader_restapi.partner_2")
         invader_partner = partner._get_invader_partner(self.backend)
         # Ingnore how sale profile is computed, just simulate its value
         with mock.patch.object(

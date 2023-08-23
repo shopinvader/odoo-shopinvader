@@ -5,7 +5,7 @@
     <field name="model">shopinvader.category</field>
     <field
             name="inherit_id"
-            ref="shopinvader_v1_product.view_shopinvader_category_tree"
+            ref="shopinvader_product_binding.view_shopinvader_category_tree"
         />
     <field name="arch" type="xml">
         <field name="backend_id" position="after">
@@ -21,7 +21,7 @@
     <field name="model">shopinvader.category</field>
     <field
             name="inherit_id"
-            ref="shopinvader_v1_product.view_shopinvader_category_search"
+            ref="shopinvader_product_binding.view_shopinvader_category_search"
         />
     <field name="arch" type="xml">
         <field name="backend_id" position="after">

@@ -55,7 +55,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             {
                 "code": "NoFPos",
                 "pricelist_id": pricelist.id,
-                "backend_id": self.env.ref("shopinvader_v1_base.backend_1").id,
+                "backend_id": self.env.ref("shopinvader_restapi.backend_1").id,
             }
         )
         self.data.update(

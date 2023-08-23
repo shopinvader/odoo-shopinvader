@@ -335,14 +335,14 @@ def mapped_xml_id(xmlid):
             _logger.warning(
                 f"Old name for shopinvader is used: {xmlid} \n"
                 "Please rename module ref to "
-                "shopinvader_v1_product"
+                "shopinvader_product_binding"
             )
-            xmlid = f"shopinvader_v1_product.{name}"
+            xmlid = f"shopinvader_product_binding.{name}"
         elif name in SHOPINVADER_V1_BASE_XMLID:
-            xmlid = f"shopinvader_v1_base.{name}"
+            xmlid = f"shopinvader_restapi.{name}"
             _logger.warning(
                 f"Old name for shopinvader is used: {xmlid} \n"
-                "Please rename module ref to shopinvader_v1_base"
+                "Please rename module ref to shopinvader_restapi"
             )
     return xmlid
 

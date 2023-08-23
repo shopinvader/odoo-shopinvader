@@ -11,5 +11,5 @@
     "license": "AGPL-3",
     "application": True,
     "installable": True,
-    "depends": ["shopinvader_v1_base", "shopinvader_v1_product"],
+    "depends": ["shopinvader_restapi", "shopinvader_product_binding"],
 }

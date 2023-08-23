@@ -1,15 +1,15 @@
 # Copyright 2022 ACSONE SA/NV (<https://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.shopinvader_v1_base.tests.test_cart_item import ItemCaseMixin
-from odoo.addons.shopinvader_v1_product.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_restapi.tests.test_cart_item import ItemCaseMixin
 
 
 class SaleProfileCartTest(ItemCaseMixin, ProductCommonCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner = cls.env.ref("shopinvader_v1_base.partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
         vals = {
             "name": "Pricelist Shopinvader Profile",
             "item_ids": [

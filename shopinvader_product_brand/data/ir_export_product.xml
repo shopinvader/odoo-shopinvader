@@ -7,7 +7,7 @@
         <field name="instance_method_name">_jsonify_m2o_to_id</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 
@@ -16,7 +16,7 @@
         <field name="target">shopinvader_brand_id:brand/name</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 
@@ -25,7 +25,7 @@
         <field name="target">shopinvader_brand_id:brand/url_key</field>
         <field
             name="export_id"
-            ref="shopinvader_v1_product.ir_exp_shopinvader_variant"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
         />
     </record>
 

@@ -10,7 +10,7 @@
         <field name="model">shopinvader.partner</field>
         <field
             name="inherit_id"
-            ref="shopinvader_v1_base.shopinvader_partner_view_form"
+            ref="shopinvader_restapi.shopinvader_partner_view_form"
         />
         <field name="arch" type="xml">
             <field name="sync_date" position="before">
@@ -24,7 +24,7 @@
         <field name="model">shopinvader.partner</field>
         <field
             name="inherit_id"
-            ref="shopinvader_v1_base.shopinvader_partner_view_tree"
+            ref="shopinvader_restapi.shopinvader_partner_view_tree"
         />
         <field name="arch" type="xml">
             <field name="sync_date" position="before">

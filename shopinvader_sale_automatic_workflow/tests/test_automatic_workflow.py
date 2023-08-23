@@ -4,7 +4,7 @@
 
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader_v1_base.tests.test_cart import CommonConnectedCartCase
+from odoo.addons.shopinvader_restapi.tests.test_cart import CommonConnectedCartCase
 
 
 class TestShopinvaderOrderSaleWorkflow(CommonConnectedCartCase):

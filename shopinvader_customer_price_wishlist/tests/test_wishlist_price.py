@@ -4,7 +4,7 @@
 
 from odoo.tests import tagged
 
-from odoo.addons.shopinvader_v1_product.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 from odoo.addons.shopinvader_wishlist.tests.test_wishlist import CommonWishlistCase
 
 
@@ -15,8 +15,8 @@ class WishlistCase(CommonWishlistCase, ProductCommonCase):
         super().setUpClass()
         cls.prod_set = cls.env.ref("shopinvader_wishlist.wishlist_1")
         cls.prod_set.shopinvader_backend_id = cls.backend
-        cls.partner2 = cls.env.ref("shopinvader_v1_base.partner_2")
-        cls.discount_pricelist = cls.env.ref("shopinvader_v1_base.pricelist_1")
+        cls.partner2 = cls.env.ref("shopinvader_restapi.partner_2")
+        cls.discount_pricelist = cls.env.ref("shopinvader_restapi.pricelist_1")
         cls.pricelist_field = cls.env.ref(
             "product.field_res_partner__property_product_pricelist"
         )

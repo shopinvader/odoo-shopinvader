@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.fields import first
 
-from odoo.addons.shopinvader_v1_base.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestShopInvaderCustomerService(CommonCase):
@@ -94,7 +94,7 @@ class TestShopInvaderCustomerService(CommonCase):
         shopinvader_partner.write(
             {
                 "property_product_pricelist": self.env.ref(
-                    "shopinvader_v1_base.pricelist_1"
+                    "shopinvader_restapi.pricelist_1"
                 ).id
             }
         )
