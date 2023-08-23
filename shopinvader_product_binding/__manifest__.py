@@ -57,4 +57,5 @@
         "demo/product_attribute_value_demo.xml",
         "demo/product_product_demo.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
 }

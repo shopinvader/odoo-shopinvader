@@ -57,4 +57,5 @@
         "demo/notification_demo.xml",
     ],
     "qweb": [],
+    "pre_init_hook": "pre_init_hook",
 }
