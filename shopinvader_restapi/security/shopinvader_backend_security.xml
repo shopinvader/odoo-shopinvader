@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+
+    <!-- Multi - Company Rules -->
+    <record model="ir.rule" id="shopinvader_backend_comp_rule">
+        <field name="name">Shopinvader Backend multi-company</field>
+        <field name="model_id" ref="model_shopinvader_backend" />
+        <field name="global" eval="True" />
+        <field name="domain_force">
+            ['|', ('company_id','=',False), ('company_id','in',company_ids)]
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="res_partner_view_form" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page name="shopinvader" string="Shopinvader">
+                    <separator string="Shopinvader users" />
+                    <field name="shopinvader_bind_ids" nolabel="1">
+                        <tree editable="bottom">
+                            <field name="backend_id" />
+                            <field name="external_id" readonly="True" />
+                            <field name="create_date" readonly="True" />
+                            <field name="sync_date" readonly="True" />
+                            <button
+                                name="action_edit_in_form"
+                                type="object"
+                                title="Edit in form"
+                                icon="fa-pencil"
+                            />
+                        </tree>
+                    </field>
+                    <group name="shopinvader_options">
+                        <!-- empty group for other modules to add subgroups into -->
+                    </group>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="view_res_partner_filter" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter" />
+        <field name="arch" type="xml">
+            <filter name="inactive" position="after">
+                <separator />
+                <filter
+                    string="Shopinvader: active user"
+                    name="shopinvader_active_user"
+                    domain="[('has_shopinvader_user', '=', True)]"
+                />
+                <filter
+                    string="Shopinvader: addresses"
+                    name="shopinvader_active_user_children"
+                    domain="[('parent_has_shopinvader_user','=', True), ('address_type','=','address')]"
+                />
+            </filter>
+        </field>
+    </record>
+
+</odoo>

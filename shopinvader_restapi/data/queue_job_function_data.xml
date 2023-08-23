@@ -1,0 +1,23 @@
+<odoo noupdate="1">
+    <record id="job_function_shopinvader_notification_send" model="queue.job.function">
+        <field name="model_id" ref="model_shopinvader_notification" />
+        <field name="method">send</field>
+        <field name="channel_id" ref="channel_shopinvader_notification" />
+    </record>
+    <record
+        id="job_function_shopinvader_bind_selected_products"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_backend" />
+        <field name="method">bind_selected_products</field>
+        <field name="channel_id" ref="channel_shopinvader_bind_products" />
+    </record>
+    <record
+        id="job_function_shopinvader_bind_single_product"
+        model="queue.job.function"
+    >
+        <field name="model_id" ref="model_shopinvader_backend" />
+        <field name="method">bind_single_product</field>
+        <field name="channel_id" ref="channel_shopinvader_bind_products" />
+    </record>
+</odoo>
