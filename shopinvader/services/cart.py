@@ -7,6 +7,7 @@ import logging
 from cerberus import Validator
 from werkzeug.exceptions import NotFound
 
+from odoo import http
 from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
@@ -38,25 +39,33 @@ class CartService(Component):
 
     def update(self, **params):
         cart = self._get()
-        response = self._update(cart, params)
-        if response.get("redirect_to"):
-            return response
-        else:
-            return self._to_json(cart)
+        try:
+            response = self._update(cart, params)
+            if response.get("redirect_to"):
+                return response
+            else:
+                return self._to_json(cart)
+        except Exception as e:
+            return http.Response(str(e), status=404)
 
     def add_item(self, **params):
         cart = self._get(create_if_not_found=False)
         if not cart:
             cart_params = self._add_item_create_cart_params(**params)
             cart = self._create_empty_cart(**cart_params)
-
-        self._add_item(cart, params)
-        return self._to_json(cart)
+        try:
+            self._add_item(cart, params)
+            return self._to_json(cart)
+        except Exception as e:
+            return http.Response(str(e), status=404)
 
     def update_item(self, **params):
         cart = self._get()
-        self._update_item(cart, params)
-        return self._to_json(cart)
+        try:
+            self._update_item(cart, params)
+            return self._to_json(cart)
+        except Exception as e:
+            return http.Response(str(e), status=404)
 
     def delete_item(self, **params):
         cart = self._get()
@@ -400,6 +409,7 @@ class CartService(Component):
         params = self._prepare_update(cart, params)
         if params:
             cart.write_with_onchange(params)
+
         return {}
 
     def _get_step_from_code(self, code):
@@ -440,9 +450,12 @@ class CartService(Component):
         cart = (
             self.env["sale.order"].browse(self.cart_id).exists().filtered_domain(domain)
         )
-        if not cart and create_if_not_found:
-            cart = self._create_empty_cart()
-        return cart
+        try:
+            if not cart and create_if_not_found:
+                cart = self._create_empty_cart()
+            return cart
+        except Exception as e:
+            return http.Response(str(e), status=404)
 
     def _create_empty_cart(self, **cart_params):
         vals = self._prepare_cart(**cart_params)
