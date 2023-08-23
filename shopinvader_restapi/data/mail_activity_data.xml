@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data noupdate="1">
+    <record id="mail_activity_review_customer" model="mail.activity.type">
+      <field name="name">Shop - Validate customer</field>
+      <field name="icon">fa-tasks</field>
+      <field name="sequence">3</field>
+      <field name="decoration_type">warning</field>
+    </record>
+  </data>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="cart_index" model="shopinvader.cart.step">
+        <field name="name">My cart</field>
+        <field name="code">cart_index</field>
+    </record>
+
+    <record id="cart_login" model="shopinvader.cart.step">
+        <field name="name">Login</field>
+        <field name="code">cart_login</field>
+    </record>
+
+    <record id="cart_address" model="shopinvader.cart.step">
+        <field name="name">Address</field>
+        <field name="code">cart_address</field>
+    </record>
+
+    <record id="cart_checkout" model="shopinvader.cart.step">
+        <field name="name">Checkout</field>
+        <field name="code">cart_checkout</field>
+    </record>
+
+    <record id="cart_end" model="shopinvader.cart.step">
+        <field name="name">Finish</field>
+        <field name="code">cart_end</field>
+    </record>
+
+</odoo>
