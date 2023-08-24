@@ -207,5 +207,5 @@ class CustomerService(Component):
             search = self.env["shopinvader.partner"].search([(field, "=", value)])
             if search and field == "partner_email":
                 return field
-            if search and field == "cnpj_cpf":
+            if search and field == "cnpj_cpf" and value:
                 return field
