@@ -5,7 +5,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=method-required-super, consider-merging-classes-inherited
 
-from odoo import _
+from odoo import _, http
 from odoo.exceptions import AccessError
 
 from odoo.addons.base_rest.components.service import to_bool, to_int
@@ -40,30 +40,40 @@ class AddressService(Component):
     # pylint: disable=W8106
     def create(self, **params):
         params["parent_id"] = self.partner.id
-        partner = self.env["res.partner"].create(self._prepare_params(params))
-        self._post_create(partner)
-        return self.search()
+        try:
+            partner = self.env["res.partner"].create(self._prepare_params(params))
+            self._post_create(partner)
+            return self._to_json(partner)
+            # return self.search()
+        except Exception as e:
+            return http.Response(str(e))
 
     def update(self, _id, **params):
         address = self._get(_id)
-        address.write(self._prepare_params(params, mode="update"))
-        res = self.search()
-        if self._store_cache_needed(address):
-            res["store_cache"] = {"customer": self._to_json(address)[0]}
-            customer = self.component(usage="customer")
-            response = shopinvader_response.get()
-            customer_data = customer._to_customer_info(address)
-            response.set_store_cache("customer", customer_data)
+        try:
+            address.write(self._prepare_params(params, mode="update"))
+            res = self.search()
+            if self._store_cache_needed(address):
+                res["store_cache"] = {"customer": self._to_json(address)[0]}
+                customer = self.component(usage="customer")
+                response = shopinvader_response.get()
+                customer_data = customer._to_customer_info(address)
+                response.set_store_cache("customer", customer_data)
 
-        self._post_update(address)
-        return res
+            self._post_update(address)
+            return res
+        except Exception as e:
+            return http.Response(str(e))
 
     def delete(self, _id):
         address = self._get(_id)
-        if self.partner == address:
-            raise AccessError(_("Can not delete the partner account"))
-        address.active = False
-        return self.search()
+        try:
+            if self.partner == address:
+                raise AccessError(_("Can not delete the partner account"))
+            address.active = False
+            return self.search()
+        except Exception as e:
+            return http.Response(str(e))
 
     # The following method are 'private' and should be never never NEVER call
     # from the controller.
