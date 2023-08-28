@@ -8,10 +8,10 @@ from odoo.http import Response
 
 from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
-from odoo.addons.component.core import Component
+from odoo.addons.component.core import AbstractComponent
 
 
-class AddressService(Component):
+class AddressService(AbstractComponent):
     _inherit = "shopinvader.partner.service.mixin"
 
     def _json_parser(self):
