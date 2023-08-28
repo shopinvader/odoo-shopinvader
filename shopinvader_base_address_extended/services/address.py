@@ -2,7 +2,6 @@
 # @author Cristiano Rodrigues <cristiano.rodrigues@kmee.com.br>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 
@@ -16,8 +15,6 @@ class AddressService(Component):
         res.append("street_number")
         res.append("street_name")
         res.remove("street")
-        res.remove("city")
-        res.append(("city_id", ["id", "name"]))
 
         return res
 
@@ -26,14 +23,6 @@ class AddressService(Component):
 
         if "street" in res:
             del res["street"]
-
-        if "city" in res:
-            del res["city"]
-
-        del res["state"]
-
-        res["zip"]["required"] = False
-        res["country"]["required"] = False
 
         res["district"] = {
             "type": "string",
@@ -46,20 +35,6 @@ class AddressService(Component):
         res["street_name"] = {
             "type": "string",
             "required": False,
-        }
-        res["city_id"] = {
-            "type": "dict",
-            "schema": {
-                "id": {
-                    "coerce": to_int,
-                    "nullable": False,
-                    "type": "integer",
-                },
-                "name": {
-                    "type": "string",
-                    "nullable": False,
-                },
-            },
         }
 
         return res
