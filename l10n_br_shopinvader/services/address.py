@@ -24,7 +24,6 @@ class AddressService(Component):
 
     def _validator_create(self):
         res = super()._validator_create()
-        del res["state"]
 
         res["zip"]["required"] = False
         res["country"]["required"] = False
