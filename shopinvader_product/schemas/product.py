@@ -31,8 +31,6 @@ class ShopinvaderVariant(StrictExtendableBaseModel):
     description: str | None = None
     full_name: str | None = None
     short_name: str | None = None
-    seo_title: str | None = None
-    meta_keywords: str | None = None
     variant_count: int | None = None
     categories: list[ShortShopinvaderCategory] = []
     sku: str | None = None
@@ -51,8 +49,6 @@ class ShopinvaderVariant(StrictExtendableBaseModel):
             description=odoo_rec.description or None,
             full_name=odoo_rec.name or None,
             short_name=odoo_rec.short_name or None,
-            seo_title=odoo_rec.seo_title or None,
-            meta_keywords=odoo_rec.meta_keywords or None,
             variant_count=odoo_rec.variant_count or None,
             categories=[
                 ShortShopinvaderCategory.from_shopinvader_category(shopinvader_category)
