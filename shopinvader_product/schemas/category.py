@@ -4,20 +4,6 @@
 from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 
-class ProductFilter(StrictExtendableBaseModel):
-    name: str
-    code: str | None = None
-    help: str | None = None
-
-    @classmethod
-    def from_product_filter(cls, odoo_rec):
-        return cls.model_construct(
-            name=odoo_rec.name,
-            code=odoo_rec.display_name or None,
-            help=odoo_rec.help or None,
-        )
-
-
 class ShortShopinvaderCategory(StrictExtendableBaseModel):
     id: int
     name: str
@@ -54,7 +40,6 @@ class ShopinvaderCategory(ShortShopinvaderCategory):
     meta_description: str | None = None
     description: str | None = None
     short_description: str | None = None
-    filters: list[ProductFilter] = []
 
     @classmethod
     def from_shopinvader_category(cls, odoo_rec):
@@ -66,8 +51,4 @@ class ShopinvaderCategory(ShortShopinvaderCategory):
         obj.meta_description = odoo_rec.meta_description or None
         obj.description = odoo_rec.description or None
         obj.short_description = odoo_rec.short_description or None
-        obj.filters = [
-            ProductFilter.from_product_filter(product_filter)
-            for product_filter in odoo_rec.filter_ids
-        ]
         return obj
