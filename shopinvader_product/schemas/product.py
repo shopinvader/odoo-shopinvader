@@ -27,8 +27,6 @@ class ShopinvaderVariant(StrictExtendableBaseModel):
     id: int
     model: ShopinvaderProduct
     main: bool = False
-    short_description: str | None = None
-    description: str | None = None
     full_name: str | None = None
     short_name: str | None = None
     variant_count: int | None = None
@@ -45,8 +43,6 @@ class ShopinvaderVariant(StrictExtendableBaseModel):
                 odoo_rec.shopinvader_product_id
             ),
             main=odoo_rec.main,
-            short_description=odoo_rec.short_description or None,
-            description=odoo_rec.description or None,
             full_name=odoo_rec.name or None,
             short_name=odoo_rec.short_name or None,
             variant_count=odoo_rec.variant_count or None,
