@@ -33,16 +33,10 @@ class ShortShopinvaderCategory(StrictExtendableBaseModel):
 
 
 class ShopinvaderCategory(ShortShopinvaderCategory):
-    subtitle: str | None = None
     sequence: int | None = None
-    description: str | None = None
-    short_description: str | None = None
 
     @classmethod
     def from_shopinvader_category(cls, odoo_rec):
         obj = super().from_shopinvader_category(odoo_rec, with_hierarchy=True)
-        obj.subtitle = odoo_rec.subtitle or None
         obj.sequence = odoo_rec.sequence or None
-        obj.description = odoo_rec.description or None
-        obj.short_description = odoo_rec.short_description or None
         return obj
