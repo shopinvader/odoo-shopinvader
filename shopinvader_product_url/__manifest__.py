@@ -18,7 +18,7 @@
     },
     "depends": [
         "shopinvader_base_url",
-        "product",
+        "shopinvader_product",
     ],
     "data": [],
     "demo": [],
