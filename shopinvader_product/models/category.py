@@ -6,8 +6,7 @@ from odoo.osv import expression
 
 
 class ProductCategory(models.Model):
-    _name = "product.category"
-    _inherit = ["product.category", "abstract.url"]
+    _inherit = "product.category"
     # V13 restore translate on category name...
     # This code is a transversal fix and should go into a dedicated addon...
     # The translate=True has been removed in
