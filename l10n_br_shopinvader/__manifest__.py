@@ -21,6 +21,7 @@
     },
     "depends": [
         "l10n_br_zip",
+        "l10n_br_fiscal",
         "shopinvader_base_address_city",
         "shopinvader_base_address_extended",
         "shopinvader_delivery_carrier",
