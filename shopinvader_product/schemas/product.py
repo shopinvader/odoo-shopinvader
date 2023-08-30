@@ -29,7 +29,7 @@ class ShopinvaderVariant(StrictExtendableBaseModel):
     main: bool = False
     full_name: str | None = None
     short_name: str | None = None
-    variant_count: int | None = None
+    variant_count: int = 0
     categories: list[ShortShopinvaderCategory] = []
     sku: str | None = None
     variant_attributes: dict[str:Any] = {}
@@ -45,7 +45,7 @@ class ShopinvaderVariant(StrictExtendableBaseModel):
             main=odoo_rec.main,
             full_name=odoo_rec.name or None,
             short_name=odoo_rec.short_name or None,
-            variant_count=odoo_rec.variant_count or None,
+            variant_count=odoo_rec.product_variant_count,
             categories=[
                 ShortShopinvaderCategory.from_shopinvader_category(shopinvader_category)
                 for shopinvader_category in odoo_rec.shopinvader_categ_ids
