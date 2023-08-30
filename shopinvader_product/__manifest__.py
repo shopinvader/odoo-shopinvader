@@ -17,7 +17,7 @@
     "data": ["views/product_category.xml", "views/product_template.xml"],
     "demo": [],
     "external_dependencies": {
-        "python": ["extendable_pydantic>=1.1.0", "pydantic>=2.0.0"]
+        "python": ["extendable_pydantic>=1.1.0", "pydantic>=2.0.0", "unidecode"]
     },
     "installable": True,
 }
