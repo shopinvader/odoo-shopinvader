@@ -11,7 +11,8 @@ class AddressService(Component):
 
     def _json_parser(self):
         res = super()._json_parser()
-
+        if "city" in res:
+            res.remove("city")
         res.append(("city_id", ["id", "name"]))
 
         return res
