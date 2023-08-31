@@ -24,6 +24,33 @@ class CustomerService(Component):
     _inherit = "shopinvader.customer.service"
     _usage = "customer"
 
+    def _prepare_params(self, params, mode="create"):
+        if params.get("city_id"):
+            params["city_id"] = (
+                params.get("city_id")["id"]
+                if type(params["city_id"]) == dict
+                else params.get("city_id")
+            )
+
+        if params["state"]["id"] and not params["state"]["code"]:
+            params["state_id"] = (
+                params["state"]["id"]
+                if type(params["state_id"]) == dict
+                else params["state"]
+            )
+        if params["state"]["code"]:
+            if params["country"]:
+                state_id = self.env["res.country.state"].search(
+                    [
+                        ("code", "=", params["state"]["code"]),
+                        ("country_id", "=", params["country"]["id"]),
+                    ]
+                )
+
+        res = super(CustomerService, self)._prepare_params(params, mode)
+        res["state_id"] = state_id.id
+        return res
+
     @staticmethod
     def get_cnpj_cpf_type(raw_cnpj_cpf):
         cnpj_cpf = sub("[^0-9]", "", raw_cnpj_cpf)
