@@ -8,11 +8,11 @@ from odoo.http import Response
 
 from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
-from odoo.addons.component.core import AbstractComponent
+from odoo.addons.component.core import Component
 
 
-class AddressService(AbstractComponent):
-    _inherit = "shopinvader.partner.service.mixin"
+class AddressService(Component):
+    _inherit = "shopinvader.address.service"
 
     def _json_parser(self):
         res = super()._json_parser()
@@ -52,10 +52,6 @@ class AddressService(AbstractComponent):
                     "nullable": False,
                     "type": "integer",
                 },
-                "code": {
-                    "type": "string",
-                    "nullable": False,
-                },
             },
         }
 
@@ -66,6 +62,9 @@ class AddressService(AbstractComponent):
         return res
 
     def _prepare_params(self, params, mode="create"):
+        if not params.get("legal_name") and params.get("name"):
+            params["legal_name"] = params.get("name")
+
         if params.get("city_id"):
             params["city_id"] = (
                 params.get("city_id")["id"]
@@ -73,23 +72,15 @@ class AddressService(AbstractComponent):
                 else params.get("city_id")
             )
 
-        if params["state"]["id"] and not params["state"]["code"]:
+        if params["state"]["id"]:
             params["state_id"] = (
                 params["state"]["id"]
-                if type(params["state_id"]) == dict
+                if type(params["state"]) == dict
                 else params["state"]
             )
-        if params["state"]["code"]:
-            if params["country"]:
-                state_id = self.env["res.country.state"].search(
-                    [
-                        ("code", "=", params["state"]["code"]),
-                        ("country_id", "=", params["country"]["id"]),
-                    ]
-                )
 
         res = super(AddressService, self)._prepare_params(params, mode)
-        res["state_id"] = state_id.id
+        res["state_id"] = params["state_id"]
         return res
 
     @restapi.method(
@@ -181,10 +172,6 @@ class AddressService(AbstractComponent):
                         "type": "string",
                         "required": True,
                     },
-                    "code": {
-                        "type": "string",
-                        "required": True,
-                    },
                 },
             },
             "country_id": {
@@ -254,11 +241,11 @@ class AddressService(AbstractComponent):
                             "required": True,
                             "nullable": True,
                         },
-                        "code": {
-                            "type": "string",
-                            "required": True,
-                            "nullable": True,
-                        },
+                        # "code": {
+                        #     "type": "string",
+                        #     "required": False,
+                        #     "nullable": False,
+                        # },
                     },
                 },
             },
