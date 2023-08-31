@@ -5,8 +5,8 @@
 from odoo.addons.component.core import Component
 
 
-class AddressService(Component):
-    _inherit = "shopinvader.address.service"
+class CustomerService(Component):
+    _inherit = "shopinvader.customer.service"
 
     def _json_parser(self):
         res = super()._json_parser()
