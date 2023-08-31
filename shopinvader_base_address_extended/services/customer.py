@@ -14,7 +14,8 @@ class CustomerService(Component):
         res.append("district")
         res.append("street_number")
         res.append("street_name")
-        res.remove("street")
+        if "street" in res:
+            res.remove("street")
 
         return res
 
