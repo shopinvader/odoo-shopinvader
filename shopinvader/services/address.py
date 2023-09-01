@@ -4,6 +4,7 @@
 # @author Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=method-required-super, consider-merging-classes-inherited
+import logging
 
 from odoo import _, http
 from odoo.exceptions import AccessError
@@ -12,6 +13,8 @@ from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
 
 from .. import shopinvader_response
+
+_logger = logging.getLogger(__name__)
 
 
 class AddressService(Component):
@@ -46,6 +49,7 @@ class AddressService(Component):
             return self._to_json(partner)
             # return self.search()
         except Exception as e:
+            _logger.error(e)
             return http.Response(str(e))
 
     def update(self, _id, **params):
@@ -63,6 +67,7 @@ class AddressService(Component):
             self._post_update(address)
             return res
         except Exception as e:
+            _logger.error(e)
             return http.Response(str(e))
 
     def delete(self, _id):
@@ -73,6 +78,7 @@ class AddressService(Component):
             address.active = False
             return self.search()
         except Exception as e:
+            _logger.error(e)
             return http.Response(str(e))
 
     # The following method are 'private' and should be never never NEVER call
