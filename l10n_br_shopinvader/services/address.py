@@ -7,7 +7,6 @@ import json
 from odoo.http import Response
 
 from odoo.addons.base_rest import restapi
-from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
 
 
@@ -44,16 +43,6 @@ class AddressService(Component):
             "type": "string",
             "required": False,
         }
-        res["state"] = {
-            "type": "dict",
-            "schema": {
-                "id": {
-                    "coerce": to_int,
-                    "nullable": False,
-                    "type": "integer",
-                },
-            },
-        }
 
         return res
 
@@ -62,25 +51,10 @@ class AddressService(Component):
         return res
 
     def _prepare_params(self, params, mode="create"):
-        if not params.get("legal_name") and params.get("name"):
-            params["legal_name"] = params.get("name")
-
-        if params.get("city_id"):
-            params["city_id"] = (
-                params.get("city_id")["id"]
-                if type(params["city_id"]) == dict
-                else params.get("city_id")
-            )
-
-        if params["state"]["id"]:
-            params["state_id"] = (
-                params["state"]["id"]
-                if type(params["state"]) == dict
-                else params["state"]
-            )
-
         res = super(AddressService, self)._prepare_params(params, mode)
-        res["state_id"] = params["state_id"]
+        if not params.get("legal_name") and params.get("name"):
+            res["legal_name"] = params.get("name")
+
         return res
 
     @restapi.method(
@@ -241,11 +215,11 @@ class AddressService(Component):
                             "required": True,
                             "nullable": True,
                         },
-                        # "code": {
-                        #     "type": "string",
-                        #     "required": False,
-                        #     "nullable": False,
-                        # },
+                        "code": {
+                            "type": "string",
+                            "required": False,
+                            "nullable": False,
+                        },
                     },
                 },
             },
