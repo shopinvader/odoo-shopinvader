@@ -18,6 +18,8 @@ class ProductProduct(models.Model):
         compute="_compute_attribute_value_ids",
         readonly=True,
     )
+    short_name = fields.Char(compute="_compute_names")
+    full_name = fields.Char(compute="_compute_names")
 
     def _compute_variant_attributes(self):
         for record in self:
@@ -33,3 +35,19 @@ class ProductProduct(models.Model):
             record.attribute_value_ids = record.mapped(
                 "product_template_attribute_value_ids.product_attribute_value_id"
             )
+
+    def _prepare_variant_name_and_short_name(self):
+        self.ensure_one()
+        attributes = self.attribute_value_ids
+        short_name = ", ".join(attributes.mapped("name"))
+        full_name = self.display_name
+        if short_name:
+            full_name += " (%s)" % short_name
+        return full_name, short_name
+
+    def _compute_names(self):
+        for record in self:
+            (
+                record.full_name,
+                record.short_name,
+            ) = record._prepare_variant_name_and_short_name()

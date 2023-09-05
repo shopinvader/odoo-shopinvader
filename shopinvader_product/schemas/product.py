@@ -13,7 +13,7 @@ class ShopinvaderProduct(StrictExtendableBaseModel):
 
     @classmethod
     def from_shopinvader_product(cls, odoo_rec):
-        return cls.model_construct(name=odoo_rec.shopinvader_display_name)
+        return cls.model_construct(name=odoo_rec.display_name)
 
 
 class ShopinvaderProductPriceInfo(StrictExtendableBaseModel):
