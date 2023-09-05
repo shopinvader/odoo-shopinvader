@@ -12,8 +12,8 @@ class ShopinvaderCategory(BaseShopinvaderCategory, extends=True):
     short_description: str | None = None
 
     @classmethod
-    def from_shopinvader_category(cls, odoo_rec):
-        obj = super().from_shopinvader_category(odoo_rec)
+    def from_shopinvader_category(cls, odoo_rec, index=None):
+        obj = super().from_shopinvader_category(odoo_rec, index=index)
         obj.subtitle = odoo_rec.subtitle or None
         obj.description = odoo_rec.description or None
         obj.short_description = odoo_rec.short_description or None

@@ -5,5 +5,8 @@ from odoo.addons.shopinvader_product.schemas.product import ShopinvaderVariant
 
 
 class ProductProductShopinvaderSerializer:
+    def __init__(self, index):
+        self.index = index
+
     def serialize(self, record):
-        return ShopinvaderVariant.from_shopinvader_variant(record)
+        return ShopinvaderVariant.from_shopinvader_variant(record, index=self.index)

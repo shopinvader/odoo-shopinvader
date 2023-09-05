@@ -12,8 +12,8 @@ class ShopinvaderCategory(BaseShopinvaderCategory, extends=True):
     meta_description: str | None = None
 
     @classmethod
-    def from_shopinvader_category(cls, odoo_rec):
-        obj = super().from_shopinvader_category(odoo_rec)
+    def from_shopinvader_category(cls, odoo_rec, index=None):
+        obj = super().from_shopinvader_category(odoo_rec, index=index)
         obj.seo_title = odoo_rec.seo_title or None
         obj.meta_keywords = odoo_rec.meta_keywords or None
         obj.meta_description = odoo_rec.meta_description or None

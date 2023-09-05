@@ -11,8 +11,8 @@ class ShopinvaderVariant(BaseShopinvaderVariant, extends=True):
     description: str | None = None
 
     @classmethod
-    def from_shopinvader_variant(cls, odoo_rec):
-        obj = super().from_shopinvader_variant(odoo_rec)
+    def from_shopinvader_variant(cls, odoo_rec, index=None):
+        obj = super().from_shopinvader_variant(odoo_rec, index=index)
         obj.short_description = odoo_rec.short_description or None
         obj.description = odoo_rec.description or None
         return obj

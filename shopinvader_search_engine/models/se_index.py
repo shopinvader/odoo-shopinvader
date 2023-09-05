@@ -38,9 +38,10 @@ class SeIndex(models.Model):
                 raise ValidationError(_("'Serializer Type' must match 'Model'"))
 
     def _get_serializer(self):
+        self.ensure_one()
         if self.serializer_type == "shopinvader_category_exports":
-            return ProductCategoryShopinvaderSerializer()
+            return ProductCategoryShopinvaderSerializer(self)
         elif self.serializer_type == "shopinvader_product_exports":
-            return ProductProductShopinvaderSerializer()
+            return ProductProductShopinvaderSerializer(self)
         else:
             return super()._get_serializer()
