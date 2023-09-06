@@ -15,21 +15,15 @@ class AbstractSaleService(AbstractComponent):
         res = super()._convert_one_sale(sale)
         res.update(
             {
-                "promo_code": sale.promo_code,
+                "promo_codes": sale.promo_codes,
                 "reward_amount": sale.reward_amount,
                 "reward_amount_tax_incl": sale.reward_amount_tax_incl,
                 "applied_coupon_ids": self._convert_coupon(sale.applied_coupon_ids),
                 "generated_coupon_ids": self._convert_coupon(sale.generated_coupon_ids),
-                "no_code_promo_program_ids": self._convert_coupon_programs(
-                    sale.no_code_promo_program_ids
+                "no_code_promo_program_ids": self._convert_program(
+                    sale.no_code_program_ids
                 ),
-                "code_promo_program_id": (
-                    sale.code_promo_program_id.jsonify(
-                        self._parser_coupon_program(), one=True
-                    )
-                    if sale.code_promo_program_id
-                    else False
-                ),
+                "code_promo_program_ids": self._convert_program(sale.code_program_ids),
             }
         )
         return res
@@ -47,16 +41,15 @@ class AbstractSaleService(AbstractComponent):
         return [
             "id",
             "code",
-            "state",
             "expiration_date",
             ("partner_id:partner", self._parser_coupon_partner()),
-            ("program_id:program", self._parser_coupon_program()),
+            ("program_id:program", self._parser_program()),
         ]
 
     def _parser_coupon_partner(self):
         return ["id", "name"]
 
-    def _parser_coupon_program(self):
+    def _parser_program(self):
         return ["id", "name"]
 
     def _convert_coupon(self, coupons):
@@ -65,8 +58,8 @@ class AbstractSaleService(AbstractComponent):
             "count": len(coupons),
         }
 
-    def _convert_coupon_programs(self, programs):
+    def _convert_program(self, programs):
         return {
-            "items": programs.jsonify(self._parser_coupon_program()),
+            "items": programs.jsonify(self._parser_program()),
             "count": len(programs),
         }
