@@ -17,7 +17,6 @@
         "base_rest",
         "jsonifier",
         "base_sparse_field_list_support",
-        "base_url",
         "base_vat",
         "component_event",
         "sale",
