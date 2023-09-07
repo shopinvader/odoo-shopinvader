@@ -59,7 +59,7 @@ class ResPartner(models.Model):
     def _check_unique_email(self):
         if not self._is_partner_duplicate_prevented():
             return True
-        self.env["res.partner"].flush(["email", "shopinvader_bind_ids"])
+        self.env["res.partner"].flush_model(["email", "shopinvader_bind_ids"])
         self.env.cr.execute(
             """
             SELECT

@@ -4,12 +4,11 @@
 # pylint: disable=method-required-super
 
 from contextlib import contextmanager
-
-import mock
+from unittest import mock
 
 from odoo import fields
 from odoo.exceptions import MissingError
-from odoo.tests import SavepointCase
+from odoo.tests import TransactionCase
 
 from odoo.addons.base_rest.controllers.main import RestController
 from odoo.addons.base_rest.core import _rest_controllers_per_module
@@ -97,7 +96,7 @@ class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
             self._perform_job(job)
 
 
-class CommonCase(SavepointCase, CommonMixin):
+class CommonCase(TransactionCase, CommonMixin):
 
     # by default disable tracking suite-wise, it's a time saver :)
     tracking_disable = True
@@ -120,7 +119,7 @@ class CommonCase(SavepointCase, CommonMixin):
         # TODO FIXME
         # It seem that setUpComponent / setUpRegistry loose stuff from
         # the cache so we do an explicit flush here to avoid losing data
-        cls.env["base"].flush()
+        cls.env["base"].flush_model()
         cls.setUpComponent()
         cls.setUpRegistry()
 
@@ -130,7 +129,7 @@ class CommonCase(SavepointCase, CommonMixin):
         _rest_controllers_per_module["shopinvader_restapi"] = []
 
     def setUp(self):
-        SavepointCase.setUp(self)
+        TransactionCase.setUp(self)
         CommonMixin.setUp(self)
 
         shopinvader_response.set_testmode(True)
@@ -246,12 +245,12 @@ class CommonTestDownload(object):
         """
         self._ensure_posted(invoice)
         ctx = {"active_ids": invoice.ids, "active_model": "account.move"}
-        wizard_obj = self.register_payments_obj.with_context(ctx)
+        wizard_obj = self.register_payments_obj.with_context(**ctx)
         register_payments = wizard_obj.create(
             {
                 "payment_date": fields.Date.today(),
                 "journal_id": self.bank_journal_euro.id,
-                "payment_method_id": self.payment_method_manual_in.id,
+                "payment_method_line_id": self.payment_method_line_manual_in.id,
             }
         )
         register_payments._create_payments()

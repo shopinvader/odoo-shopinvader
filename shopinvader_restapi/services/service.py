@@ -97,7 +97,11 @@ class BaseShopinvaderService(AbstractComponent):
                 domain.append((key, op, value))
             return domain
         except Exception as e:
-            raise UserError(_("Invalid scope %s, error: %s") % (str(scope), str(e)))
+            raise UserError(
+                _("Invalid scope {scope}, error: {error}").format(
+                    scope=str(scope), error=str(e)
+                )
+            ) from e
 
     # Validator
     def _default_validator_search(self):
@@ -171,7 +175,9 @@ class BaseShopinvaderService(AbstractComponent):
         record = self._exposed_model.search(domain)
         if not record:
             raise MissingError(
-                _("The record %s %s does not exist") % (self._expose_model, _id)
+                _("The record {model} {id} does not exist").format(
+                    model=self._expose_model, id=_id
+                )
             )
         else:
             return record

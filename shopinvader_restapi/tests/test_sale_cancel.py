@@ -21,7 +21,7 @@ class TestSaleCancel(CommonSaleCase):
         self.sale.action_confirm()
         # deliver only 1 line
         self.sale.order_line[0].write({"qty_delivered": 1})
-        self.env["sale.order.line"].flush(records=self.sale.order_line)
+        self.sale.order_line.flush_recordset()
         with self.assertRaises(UserError):
             self.service.dispatch("cancel", self.sale.id)
         self.assertEqual("sale", self.sale.typology)

@@ -129,5 +129,5 @@ class SaleOrderLine(models.Model):
 
     def reset_price_tax(self):
         for line in self:
-            line.product_id_change()
-            line._onchange_discount()
+            line._compute_tax_id()
+            line._compute_discount()

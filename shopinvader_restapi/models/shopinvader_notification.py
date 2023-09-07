@@ -13,7 +13,6 @@ class ShopinvaderNotification(models.Model):
     backend_id = fields.Many2one("shopinvader.backend", "Backend", required=False)
     notification_type = fields.Selection(
         selection="_selection_notification_type",
-        string="Notification Type",
         required=True,
     )
     model_id = fields.Many2one("ir.model", "Model", required=True, ondelete="cascade")

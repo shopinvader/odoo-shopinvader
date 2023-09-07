@@ -277,10 +277,10 @@ class ShopinvaderBackend(models.Model):
                 ("notification_type", "=", notification),
             ]
         )
-        description = _("Notify %s for %s,%s") % (
-            notification,
-            record._name,
-            record.id,
+        description = _("Notify {notification} for {name},{id}").format(
+            notification=notification,
+            name=record._name,
+            id=record.id,
         )
         for notif in notifs:
             notif.with_delay(description=description).send(record.id)

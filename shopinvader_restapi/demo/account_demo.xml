@@ -59,7 +59,12 @@
         <field name="tax_dest_id" ref="tax_3" />
     </record>
 
+    <record id="account_analytic_plan_0" model="account.analytic.plan">
+        <field name="name">ShopInvader Analytic Plan</field>
+    </record>
+
     <record id="account_analytic_0" model="account.analytic.account">
         <field name="name">ShopInvader Analytic</field>
+        <field name="plan_id" ref="shopinvader_restapi.account_analytic_plan_0" />
     </record>
 </odoo>
