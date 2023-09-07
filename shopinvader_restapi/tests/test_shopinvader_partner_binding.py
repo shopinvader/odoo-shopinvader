@@ -31,7 +31,7 @@ class TestShopinvaderPartnerBinding(CommonCase):
                 "active_model": self.partner._name,
             }
         )
-        wizard_obj = self.binding_wiz_obj.with_context(context)
+        wizard_obj = self.binding_wiz_obj.with_context(**context)
         fields_list = wizard_obj.fields_get().keys()
         values = wizard_obj.default_get(fields_list)
         values.update({"shopinvader_backend_id": self.backend.id})
@@ -40,7 +40,7 @@ class TestShopinvaderPartnerBinding(CommonCase):
         wizard.binding_lines.write({"bind": False})
         with self.assertRaises(exceptions.UserError) as e:
             wizard.action_apply()
-        self.assertIn("unbind is not implemented", e.exception.name)
+        self.assertIn("unbind is not implemented", e.exception.args[0])
         shopinv_partner = self.partner._get_invader_partner(self.backend)
         # As we set bind = False, we check if the binding is not executed.
         self.assertFalse(shopinv_partner)

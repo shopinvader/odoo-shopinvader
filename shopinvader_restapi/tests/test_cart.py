@@ -1,6 +1,7 @@
 # Copyright 2017 Akretion (http://www.akretion.com).
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+from datetime import timedelta
 
 from odoo import fields
 from odoo.tools import mute_logger
@@ -188,7 +189,7 @@ class AnonymousCartCase(CartCase, CartClearTest):
                         "price_surcharge": -100,
                         "base_pricelist_id": first_pricelist.id,
                         "date_start": fields.Date.today(),
-                        "date_end": fields.Date.today(),
+                        "date_end": fields.Date.today() + timedelta(days=1),
                     },
                 )
             ],
@@ -458,7 +459,7 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
     def test_writing_note(self):
         res = self.service.dispatch("update", params={"note": "FOO"})
         self.assertIn("note", res["data"])
-        self.assertEqual("FOO", res["data"]["note"])
+        self.assertEqual("<p>FOO</p>", res["data"]["note"])
 
 
 class ConnectedCartNoTaxCase(CartCase):

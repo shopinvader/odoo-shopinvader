@@ -243,7 +243,7 @@ class CartService(Component):
             cart._cache["order_line"] = tuple(real_line_ids)
             vals.update(new_values)
             item.order_id.write({"order_line": [(1, item.id, vals)]})
-        cart.recompute()
+        cart.flush_recordset()
 
     def _do_clear_cart_cancel(self, cart):
         """
@@ -296,7 +296,7 @@ class CartService(Component):
         else:
             with self.env.norecompute():
                 item = self._create_cart_line(cart, params)
-            cart.recompute()
+            cart.flush_recordset()
         return item
 
     def _create_cart_line(self, cart, params):
@@ -505,6 +505,7 @@ class CartService(Component):
                 "product_uom_qty": params["item_qty"],
                 "order_id": cart.id,
                 "sequence": max(cart.order_line.mapped("sequence"), default=0) + 1,
+                "currency_id": cart.currency_id.id,
             }
         )
         return _params

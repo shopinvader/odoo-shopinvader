@@ -142,7 +142,7 @@ class SaleService(Component):
     def _cancel(self, sale, reset_to_cart=False):
         if not self._is_cancel_allowed(sale):
             raise UserError(_("This order cannot be cancelled"))
-        sale.action_cancel()
+        sale.with_context(disable_cancel_warning=True).action_cancel()
         if reset_to_cart:
             sale.action_draft()
             sale.typology = "cart"

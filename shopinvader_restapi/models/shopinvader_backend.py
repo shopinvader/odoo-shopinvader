@@ -63,7 +63,6 @@ class ShopinvaderBackend(models.Model):
         help="This analytic account will be used to fill the "
         "field on the sale order created.",
     )
-    filter_ids = fields.Many2many(comodel_name="product.filter", string="Filter")
     website_public_name = fields.Char(
         help="Public name of your backend/website.\n"
         " Used for products name referencing."
@@ -278,10 +277,10 @@ class ShopinvaderBackend(models.Model):
                 ("notification_type", "=", notification),
             ]
         )
-        description = _("Notify %s for %s,%s") % (
-            notification,
-            record._name,
-            record.id,
+        description = _("Notify {notification} for {name},{id}").format(
+            notification=notification,
+            name=record._name,
+            id=record.id,
         )
         for notif in notifs:
             notif.with_delay(description=description).send(record.id)

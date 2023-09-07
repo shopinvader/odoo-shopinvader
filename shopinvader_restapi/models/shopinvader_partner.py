@@ -74,10 +74,12 @@ class ShopinvaderPartner(models.Model):
     def _get_role(self):
         return self.backend_id.customer_default_role
 
-    @api.model
-    def create(self, vals):
-        vals = self._prepare_create_params(vals)
-        return super(ShopinvaderPartner, self).create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        new_vals_list = []
+        for vals in vals_list:
+            new_vals_list.append(self._prepare_create_params(vals))
+        return super(ShopinvaderPartner, self).create(new_vals_list)
 
     @api.model
     def _prepare_create_params(self, vals):

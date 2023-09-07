@@ -1,5 +1,7 @@
 # generated from manifests external_dependencies
+cerberus
 extendable_pydantic>=1.0.0
 fastapi
 openupgradelib
 pydantic>=2.0.0
+unidecode

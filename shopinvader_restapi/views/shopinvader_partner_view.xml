@@ -23,6 +23,7 @@
                             <field name="sync_date" />
                         </group>
                         <group name="record">
+                            <field name="company_id" invisible="1" />
                             <field
                                 name="record_id"
                                 invisible="not context.get('shopinvader_partner_main_view')"
@@ -41,7 +42,7 @@
     <record id="shopinvader_partner_view_tree" model="ir.ui.view">
         <field name="model">shopinvader.partner</field>
         <field name="arch" type="xml">
-            <tree string="Shopinvader Partner">
+            <tree>
                 <field
                     name="record_id"
                     invisible="not context.get('shopinvader_partner_main_view')"
