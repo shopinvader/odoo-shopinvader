@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) Akretion 2023 -->
+<!-- License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="product_catalog_view_form" model="ir.ui.view">
+        <field name="model">product.catalog</field>
+        <field name="inherit_id" ref="product_catalog.product_catalog_view_form" />
+        <field name="arch" type="xml">
+           <field name="channel_ids" position="after">
+                <field name="shopinvader_backend_ids" />
+           </field>
+        </field>
+    </record>
+
+</odoo>
