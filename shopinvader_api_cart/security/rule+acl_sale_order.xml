@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+  <record model="ir.model.access" id="shopinvader_sale_order_access_view">
+    <field name="name">sale order shopinvader user access</field>
+    <field name="model_id" ref="sale.model_sale_order" />
+    <field name="group_id" ref="shopinvader_api_cart.shopinvader_cart_user_group" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="1" />
+    <field name="perm_write" eval="1" />
+    <field name="perm_unlink" eval="0" />
+  </record>
+
+  <record model="ir.rule" id="shopinvader_user_access_own_carts_rule">
+    <field name="name">shopinvader user can only access its own carts</field>
+    <field name="model_id" ref="sale.model_sale_order" />
+    <field name="domain_force">[
+      ('partner_id', '=', authenticated_partner_id)
+        ]
+    </field>
+    <field name="groups" eval="[(6, 0, [ref('shopinvader_cart_user_group')])]" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="1" />
+    <field name="perm_write" eval="1" />
+    <field name="perm_unlink" eval="0" />
+  </record>
+
+</odoo>
