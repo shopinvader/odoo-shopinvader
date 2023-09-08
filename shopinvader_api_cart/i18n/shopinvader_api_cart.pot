@@ -1,0 +1,34 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_api_cart
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_api_cart
+#: model:ir.model.fields,field_description:shopinvader_api_cart.field_sale_order__applied_cart_api_transaction_uuids
+msgid "Applied Cart Api Transaction Uuids"
+msgstr ""
+
+#. module: shopinvader_api_cart
+#: model:res.groups,name:shopinvader_api_cart.shopinvader_cart_user_group
+msgid "Sale Cart user"
+msgstr ""
+
+#. module: shopinvader_api_cart
+#: model:ir.model,name:shopinvader_api_cart.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: shopinvader_api_cart
+#: model:ir.model,name:shopinvader_api_cart.model_shopinvader_api_cart_service_helper
+msgid "ShopInvader API Cart Service Helper"
+msgstr ""
