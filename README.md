@@ -24,9 +24,9 @@ addon | version | maintainers | summary
 [sale_cart](sale_cart/) | 16.0.1.0.0 |  | Uee Sale Orders as cart.
 [shopinvader_address](shopinvader_address/) | 16.0.1.0.0 |  | Shopinvader Address: Shipping,Billing
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.0.1 |  | Manage anonymous partners with a cookie.
-[shopinvader_api_address](shopinvader_api_address/) | 16.0.1.0.0 |  | Adds a service to manage shopinvader billing and shipping address
+[shopinvader_api_address](shopinvader_api_address/) | 16.0.1.1.0 |  | Adds a service to manage shopinvader billing and shipping address
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
-[shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.0.0 |  | Adds shchema address: address billing_address delivery_address
+[shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.0 |  | Adds shchema address: address billing_address delivery_address
 
 
 Unported addons
