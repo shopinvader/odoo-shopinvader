@@ -12,7 +12,9 @@ setuptools.setup(
         'odoo-addon-shopinvader_address>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_anonymous_partner>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_api_address>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_api_cart>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_fastapi_auth_jwt>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_sale_cart>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_schema_address>=16.0dev,<16.1dev',
     ],
     classifiers=[
