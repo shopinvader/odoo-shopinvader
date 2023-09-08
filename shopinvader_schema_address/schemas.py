@@ -1,11 +1,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from extendable_pydantic import ExtendableModelMeta
-from pydantic import BaseModel, ConfigDict
+from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 
-class Address(BaseModel, metaclass=ExtendableModelMeta):
+class Address(StrictExtendableBaseModel):
     id: int
     name: str | None = None
     street: str | None = None
@@ -16,11 +15,10 @@ class Address(BaseModel, metaclass=ExtendableModelMeta):
     email: str | None = None
     state_id: int | None = None
     country_id: int | None = None
-    model_config: ConfigDict = ConfigDict(from_attributes=True)
 
     @classmethod
     def from_res_partner(cls, odoo_rec):
-        return cls(
+        return cls.model_construct(
             id=odoo_rec.id,
             name=odoo_rec.name or None,
             street=odoo_rec.street or None,

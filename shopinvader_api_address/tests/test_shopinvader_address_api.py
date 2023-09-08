@@ -267,6 +267,9 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         self.assertEqual(address.get("street"), "test Street")
         self.assertNotEqual(address.get("street"), self.test_partner.street)
 
+        address_odoo = self.env["res.partner"].browse(address.get("id"))
+        self.assertEqual(address_odoo.type, "delivery")
+
     def test_delete_shipping_address(self):
         """
         Test to delete shipping address
@@ -318,8 +321,6 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
             "zip": "5000",
             "city": "Namur",
             "country_id": self.env.ref("base.be").id,
-            "parent_id": self.test_partner.id,
-            "type": "delivery",
         }
 
         with self._create_test_client(router=address_router) as test_client:

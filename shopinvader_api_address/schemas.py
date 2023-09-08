@@ -1,11 +1,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from extendable_pydantic import ExtendableModelMeta
-from pydantic import BaseModel
+from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 
-class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
+class AddressCreate(StrictExtendableBaseModel):
     """
     used to create new address (res.partner)
     state and country can be name or code
@@ -37,7 +36,7 @@ class AddressCreate(BaseModel, metaclass=ExtendableModelMeta):
         return vals
 
 
-class AddressUpdate(BaseModel, metaclass=ExtendableModelMeta):
+class AddressUpdate(StrictExtendableBaseModel):
     """
     used to update address (res.partner)
     state and country can be name or code
