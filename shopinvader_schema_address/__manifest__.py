@@ -5,7 +5,7 @@
     "name": "Shopinvader Schema Address",
     "summary": """
         Adds shchema address: address billing_address delivery_address""",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.1.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
