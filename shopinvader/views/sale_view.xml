@@ -7,7 +7,6 @@
         <field name="priority" eval="20" />
         <field name="arch" type="xml">
             <field name="partner_id" position="after">
-                <field name="typology" invisible="True" />
                 <field
                     name="current_step_id"
                     attrs="{'invisible': [('typology', '!=', 'cart')]}"
