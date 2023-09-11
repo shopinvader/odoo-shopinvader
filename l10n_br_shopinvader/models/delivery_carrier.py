@@ -21,11 +21,8 @@ class Carrier(models.Model):
         """
         self.ensure_one()
         res = super().rate_shipment(order)
-        # TODO: Localização deveria ter uma maior aderencia
-        #  aos metodos do core, mapear melhor os processos,
-        #  com dados de demo e testes.
-        # Se o Valor Total de Frete estiver preenchido ele tem
-        # preferencia sobre o valor Calculado.
+        # If the Total Freight Value is filled in, it has
+        # preference over the Calculated value.
         res["calculated_price"] = res["price"]
         if order.amount_freight_value > 0.0:
             res["price"] = order.amount_freight_value
