@@ -23,30 +23,8 @@ class ProductProduct(models.Model):
                 rec.product_catalog_ids.shopinvader_backend_ids
             )
 
+    # TODO: _add_to_cart_allowed,_check_allowed_product,_add_item
+    # are also in shopinvader_product_binding
     def _add_to_cart_allowed(self, backend, partner=None):
         """Check if you can add current product to a cart."""
-        # no super() here because we don't have any shopinvader.variant
-        # anymore
         return backend.sale_channel_id.is_add_to_sol_authorized(self)
-
-    def _get_invader_variant(self, backend, lang):
-        """deprecated
-        now a variant is a product.product
-
-        :param backend: backend recordset
-        :param lang: lang code
-        no lang anymore
-        """
-        return self._add_to_cart_allowed(backend) and self
-
-    def get_shop_data(self):
-        return self._get_shop_data()
-
-    # rest_api way ?
-    def _get_shop_data(self):
-        """Compute shop data jsonifier parser."""
-        exporter = self._jsonify_get_exporter()
-        return self.jsonify(exporter.get_json_parser(), one=True)
-
-    def _jsonify_get_exporter(self):
-        return self.env.ref("shopinvader.ir_exp_shopinvader_variant").sudo()
