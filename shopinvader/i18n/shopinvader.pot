@@ -2181,7 +2181,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__manufactured_for_partner_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__manufactured_for_partner_ids
 msgid "Manufactured for"
 msgstr ""
