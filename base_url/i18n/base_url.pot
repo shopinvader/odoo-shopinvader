@@ -30,6 +30,9 @@ msgstr ""
 
 #. module: base_url
 #: model:ir.model.fields.selection,name:base_url.selection__abstract_url__url_builder__auto
+#: model:ir.model.fields.selection,name:base_url.selection__shopinvader_brand__url_builder__auto
+#: model:ir.model.fields.selection,name:base_url.selection__shopinvader_category__url_builder__auto
+#: model:ir.model.fields.selection,name:base_url.selection__shopinvader_product__url_builder__auto
 msgid "Automatic"
 msgstr ""
 
@@ -99,6 +102,9 @@ msgstr ""
 
 #. module: base_url
 #: model:ir.model.fields.selection,name:base_url.selection__abstract_url__url_builder__manual
+#: model:ir.model.fields.selection,name:base_url.selection__shopinvader_brand__url_builder__manual
+#: model:ir.model.fields.selection,name:base_url.selection__shopinvader_category__url_builder__manual
+#: model:ir.model.fields.selection,name:base_url.selection__shopinvader_product__url_builder__manual
 msgid "Manual"
 msgstr ""
 
