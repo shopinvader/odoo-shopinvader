@@ -7,12 +7,13 @@ import json
 from fastapi import status
 from requests import Response
 
-from odoo.tests.common import tagged
 from odoo import models
+from odoo.tests.common import tagged
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
 from ..routers.lead import leads_router
+
 
 @tagged("post_install", "-at_install")
 class TestShopinvaderLeadsApi(FastAPITransactionCase):
@@ -27,10 +28,10 @@ class TestShopinvaderLeadsApi(FastAPITransactionCase):
                 "zip": "1410",
                 "city": "Waterloo",
                 "country_id": cls.env.ref("base.be").id,
-                "email": "osiris@shopinvader.com"
+                "email": "osiris@shopinvader.com",
             }
         )
-
+        cls.default_fastapi_authenticated_partner = cls.env["res.partner"]
         cls.default_fastapi_router = leads_router
 
     def test_create_lead(self):
@@ -53,11 +54,8 @@ class TestShopinvaderLeadsApi(FastAPITransactionCase):
                 "email_from": check_data.pop("email"),
             }
         )
-        import pdb; pdb.set_trace()
         with self._create_test_client() as test_client:
-            response: Response = test_client.post(
-                "/leads", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/leads", content=json.dumps(data))
         self.assertEqual(
             response.status_code,
             status.HTTP_201_CREATED,
@@ -74,17 +72,14 @@ class TestShopinvaderLeadsApi(FastAPITransactionCase):
         # self._check_notification("lead_confirmation", lead)
 
     def test_create_lead_with_logged_partner(self):
-        self.default_fastapi_authenticated_partner = self.test_partner
 
         data = {
             "name": "Besoin d'un nouveau site",
             "description": "Help, on ne supporte plus magento",
             "email": "bliblablo@example.org",
         }
-        with self._create_test_client() as test_client:
-            response: Response = test_client.post(
-                "/leads", content=json.dumps(data)
-            )
+        with self._create_test_client(partner=self.test_partner) as test_client:
+            response: Response = test_client.post("/leads", content=json.dumps(data))
         self.assertEqual(
             response.status_code,
             status.HTTP_201_CREATED,

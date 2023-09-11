@@ -1,4 +1,5 @@
 # generated from manifests external_dependencies
+extendable-pydantic>=1.0.0
 extendable-pydantic>=1.1.0
 extendable_pydantic>=1.0.0
 extendable_pydantic>=1.1.0

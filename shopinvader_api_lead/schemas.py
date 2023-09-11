@@ -1,7 +1,4 @@
-import pydantic
 from pydantic import BaseModel
-
-from odoo.addons.fastapi.dependencies import odoo_env
 
 
 class LeadService(BaseModel):
@@ -19,7 +16,6 @@ class LeadService(BaseModel):
     country_id: int | None = None
     team_id: int | None = None
     contact_name: str | None = None
-
 
     # # faire un module supp pour ces champs
     # if "crm_lead_firstname" in odoo_env().registry._init_modules:
