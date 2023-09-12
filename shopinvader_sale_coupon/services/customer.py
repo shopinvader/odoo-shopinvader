@@ -12,35 +12,52 @@ class CustomerService(Component):
         return [
             "id",
             "code",
-            "state",
             "expiration_date",
             (
                 "program_id:program",
                 [
                     "id",
                     "name",
-                    "reward_type",
-                    "reward_product_id",
-                    "reward_product_quantity",
-                    "discount_type",
-                    "discount_percentage",
-                    "discount_fixed_amount",
+                    "program_type",
+                    ("reward_ids:rewards", self._parser_coupon_reward()),
                 ],
             ),
         ]
 
+    def _parser_coupon_reward(self):
+        return [
+            "id",
+            "reward_type",
+            "discount",
+            "discount_mode",
+            "discount_applicability",
+            ("all_discount_product_ids:discount_products", self._parser_product()),
+            ("reward_product_id:reward_product", self._parser_product()),
+        ]
+
+    def _parser_product(self):
+        return [
+            "id",
+            "name",
+        ]
+
     def _add_coupon_info(self, partner, info):
         coupons = (
-            self.env["coupon.coupon"]
+            self.env["loyalty.card"]
             .search(
                 [
                     ("partner_id", "=", partner.id),
-                    ("state", "in", ("new", "sent")),
                 ]
             )
             .filtered(
-                lambda coupon: not coupon.expiration_date
-                or coupon.expiration_date >= fields.Date.context_today(partner)
+                lambda coupon: (
+                    not coupon.expiration_date
+                    or coupon.expiration_date >= fields.Date.context_today(partner)
+                )
+                and (
+                    not coupon.program_id.date_to
+                    or coupon.program_id.date_to >= fields.Date.context_today(partner)
+                )
             )
         )
         if coupons:
