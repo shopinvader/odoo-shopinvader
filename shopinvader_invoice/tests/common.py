@@ -74,6 +74,42 @@ class CommonInvoiceCase(CommonCase):
                 invoice.amount_total_signed,
             )
             self.assertEqual(current_data.get("amount_due"), invoice.amount_residual)
+
+            self.assertEqual(
+                len(current_data.get("lines")), len(invoice.invoice_line_ids)
+            )
+
+            # lines are not ordered (sorted)
+            # so this code checks each line of the invoice
+            # with each line of the output
+            number_of_lines_ok = 0
+            for current_line in current_data.get("lines"):
+                for line in invoice.invoice_line_ids:
+
+                    mappings = [
+                        # (in invoice line, in output)
+                        ("name", "name"),
+                        ("price_unit", "price"),
+                        ("price_subtotal", "untaxed"),
+                        ("price_total", "total"),
+                        ("quantity", "qty"),
+                    ]
+                    out = {}
+                    for mapping in mappings:
+                        out[mapping[1]] = line[mapping[0]]
+
+                    # sku is a bit special
+                    out["sku"] = line.product_id.default_code
+                    try:
+                        self.assertDictEqual(out, current_line)
+                        number_of_lines_ok += 1
+                    except Exception:
+                        # only care about the count
+                        # of assertDictEqual not failing
+                        pass
+
+            self.assertEqual(number_of_lines_ok, len(invoice.invoice_line_ids))
+
         return True
 
     def _confirm_and_invoice_sale(self, sale, validate=True, payment=True):
@@ -144,7 +180,18 @@ class CommonInvoiceCase(CommonCase):
                         "account_id": account.id,
                         "name": self.product.display_name,
                     },
-                )
+                ),
+                (
+                    0,
+                    False,
+                    {
+                        "product_id": self.product.id,
+                        "quantity": 4,
+                        "price_unit": 40,
+                        "account_id": account.id,
+                        "name": self.product.display_name,
+                    },
+                ),
             ],
         }
         invoice = self.invoice_obj.create(values)
