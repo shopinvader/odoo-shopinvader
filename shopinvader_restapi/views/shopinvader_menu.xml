@@ -10,7 +10,7 @@
         id="menu_shopinvader_root"
         name="Shopinvader"
         sequence="10"
-        web_icon="shopinvader,static/description/icon.png"
+        web_icon="shopinvader_restapi,static/description/icon.png"
         groups="group_shopinvader_manager"
     />
 
