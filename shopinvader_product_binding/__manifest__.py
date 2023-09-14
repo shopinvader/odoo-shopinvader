@@ -14,9 +14,6 @@
     "external_dependencies": {"python": ["cerberus", "unidecode"], "bin": []},
     "depends": [
         "shopinvader_restapi",
-        # "component_event",  # product_event_listener
-        # "base_url",  # shopinvader.category
-        # "base_sparse_field_list_support",  # shopinvader.binding
         "base_sparse_field",
         "base_rest",
         "jsonifier",
