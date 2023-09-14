@@ -2,8 +2,12 @@
 <odoo>
     <record id="shopinvader_backend_view_form" model="ir.ui.view">
         <field name="model">shopinvader.backend</field>
+        <field
+            name="inherit_id"
+            ref="shopinvader_restapi.shopinvader_backend_view_form"
+        />
         <field name="arch" type="xml">
-            <form string="Shopinvader Website">
+            <xpath expr="//sheet" position="before">
                 <header>
                     <button
                         name="%(shopinvader_variant_binding_wizard_act_window)d"
@@ -20,250 +24,68 @@
                         groups="shopinvader_restapi.group_shopinvader_manager"
                     />
                 </header>
-                <sheet>
-                    <div class="oe_button_box" name="buttons">
-                        <button
-                            class="oe_stat_button"
-                            name="%(shopinvader_variant_act_window)d"
-                            type="action"
-                            icon="fa-th-list"
-                            context="{'search_default_backend_id': active_id}"
-                        >
-                            <field
-                                name="nbr_variant"
-                                string="Products"
-                                widget="statinfo"
+            </xpath>
+            <xpath expr="//div[@name='buttons']" position="inside">
+                <button
+                    class="oe_stat_button"
+                    name="%(shopinvader_variant_act_window)d"
+                    type="action"
+                    icon="fa-th-list"
+                    context="{'search_default_backend_id': active_id}"
+                >
+                    <field name="nbr_variant" string="Products" widget="statinfo" />
+                </button>
+                <button
+                    class="oe_stat_button"
+                    name="%(act_open_shopinvader_category_view)d"
+                    type="action"
+                    icon="fa-th-list"
+                    context="{'search_default_backend_id': active_id}"
+                >
+                    <field name="nbr_category" string="Categories" widget="statinfo" />
+                </button>
+            </xpath>
+            <page name="sale" position="after">
+                <page name="products" string="Products">
+                    <group>
+                        <field name="use_shopinvader_product_name" />
+                    </group>
+                </page>
+            </page>
+            <page name="invoices" position="after">
+                <page name="developer" string="Developer">
+                    <group name="developer" colspan="4">
+                        <group name="product" string="Product" col="10" colspan="4">
+                            <field name="nbr_product" />
+                            <button
+                                name="bind_all_product"
+                                string="Bind all product"
+                                type="object"
                             />
-                        </button>
-                        <button
-                            class="oe_stat_button"
-                            name="%(act_open_shopinvader_category_view)d"
-                            type="action"
-                            icon="fa-th-list"
-                            context="{'search_default_backend_id': active_id}"
-                        >
-                            <field
-                                name="nbr_category"
-                                string="Categories"
-                                widget="statinfo"
+                        </group>
+                        <group name="category" string="Category" col="10" colspan="4">
+                            <field name="category_root_binding_level" /><newline />
+                            <field name="category_binding_level" /><newline />
+                            <span
+                            >Levels of categories to automatically bind such as:</span><newline
                             />
-                        </button>
-                        <button
-                            class="oe_stat_button"
-                            name="%(shopinvader_restapi.action_cart)d"
-                            type="action"
-                            icon="fa-shopping-cart"
-                            context="{'search_default_shopinvader_backend_id': active_id}"
-                        >
-                            <field name="nbr_cart" string="Carts" widget="statinfo" />
-                        </button>
-                        <button
-                            class="oe_stat_button"
-                            name="%(shopinvader_restapi.action_sale)d"
-                            type="action"
-                            icon="fa-credit-card"
-                            context="{'search_default_shopinvader_backend_id': active_id}"
-                        >
-                            <field name="nbr_sale" string="Orders" widget="statinfo" />
-                        </button>
-                    </div>
-                    <label for="name" class="oe_edit_only" />
-                    <h1>
-                        <field name="name" class="oe_inline" />
-                    </h1>
-                    <notebook>
-                        <page name="config" string="Main">
-                            <group name="config_main" colspan="4" col="4">
-                                <group name="config" colspan="2" col="2">
-                                    <field name="tech_name" />
-                                    <field name="website_unique_key" />
-                                    <field name="frontend_data_source" required="1" />
-                                </group>
-                                <group name="auth" colspan="2" col="2">
-                                </group>
-                            </group>
-                        </page>
-                        <page
-                            name="search_eng"
-                            string="Search engine"
-                            attrs="{'invisible': [('frontend_data_source', '!=', 'search_engine')]}"
-                        >
-                            <group name="website_name">
-                                <field name="website_public_name" />
-                            </group>
-                            <group name="search_filters" string="Filters" colspan="4">
-                                <field
-                                    name="filter_ids"
-                                    nolabel="1"
-                                    context="{'tree_view_ref': 'shopinvader.product_filter_view_tree'}"
-                                />
-                            </group>
-                        </page>
-                        <page name="sale" string="Sale">
-                            <group name="cart_conf" string="Cart configuration">
-                                <field name="clear_cart_options" />
-                                <field name="cart_checkout_address_policy" />
-                                <field name="pricelist_id" required="1" />
-                            </group>
-                            <group name="sale_conf" string="Sale configuration">
-                                <field
-                                    name="company_id"
-                                    widget="selection"
-                                    groups="base.group_multi_company"
-                                />
-                                <field name="sequence_id" />
-                                <field name="account_analytic_id" />
-                            </group>
-                            <group name="sale_customer" string="Customer configuration">
-                                <field name="customer_default_role" />
-                                <field name="anonymous_partner_id" />
-                            </group>
-                            <group name="notify" string="Internal Notification">
-                                <field name="salesman_notify_create" />
-                                <field name="salesman_notify_update" />
-                            </group>
-                            <group name="related" string="Related records">
-                                <field
-                                    name="partner_title_ids"
-                                    widget="many2many_tags"
-                                />
-                                <field
-                                    name="partner_industry_ids"
-                                    widget="many2many_tags"
-                                />
-                            </group>
-                        </page>
-                        <page name="products" string="Products">
-                            <group>
-                                <field name="use_shopinvader_product_name" />
-                            </group>
-                        </page>
-                        <page name="localization" string="Localization">
-                            <group name="languages" string="Languages">
-                                <span>Available languages in the website.</span>
-                                <newline />
-                                <field
-                                    name="lang_ids"
-                                    nolabel="1"
-                                    widget="many2many_tags"
-                                />
-                            </group>
-                        </page>
-                        <page name="email" string="Notifications">
-                            <group name="notification" string="Notification">
-                                <field name="notification_ids" nolabel="1" required="1">
-                                    <tree editable="bottom">
-                                        <field name="notification_type" />
-                                        <field name="model_id" />
-                                        <field
-                                            name="template_id"
-                                            domain="[('model_id', '=', model_id)]"
-                                        />
-                                    </tree>
-                                </field>
-                            </group>
-                        </page>
-                        <page name="delivery" string="Delivery">
-                            <group name="allowed_country" string="Countries">
-                                <span
-                                >Allowed countries in delivery addresses</span><newline
-                                />
-                                <field name="allowed_country_ids" nolabel="1" />
-                            </group>
-                        </page>
-                        <page name="invoices" string="Invoices">
-                            <group
-                                name="invoice_visibility"
-                                string="Invoice visibility"
-                            >
-                                <field name="invoice_linked_to_sale_only" />
-                                <field name="invoice_access_open" />
-                            </group>
-                            <group name="invoice_report" string="Invoice report">
-                                <field
-                                    name="invoice_report_id"
-                                    options="{'no_create': True, 'no_open': True}"
-                                />
-                            </group>
-                        </page>
-                        <page name="developer" string="Developer">
-                            <group name="developer" colspan="4">
-                                <group
-                                    name="product"
-                                    string="Product"
-                                    col="10"
-                                    colspan="4"
-                                >
-                                    <field name="nbr_product" />
-                                    <button
-                                        name="bind_all_product"
-                                        string="Bind all product"
-                                        type="object"
-                                    />
-                                </group>
-                                <group
-                                    name="category"
-                                    string="Category"
-                                    col="10"
-                                    colspan="4"
-                                >
-                                    <field name="category_root_binding_level" /><newline
-                                    />
-                                    <field name="category_binding_level" /><newline />
-                                    <span
-                                    >Levels of categories to automatically bind such as:</span><newline
-                                    />
-                                    <span>- 0: none</span><newline />
-                                    <span>- 1: parent_category1</span><newline />
-                                    <span
-                                    >- 2: parent_category1/child_category2</span><newline
-                                    />
-                                    <span
-                                    >- 3: parent_category1/child_category2/child_category3</span><newline
-                                    />
-                                    <button
-                                        name="bind_all_category"
-                                        string="Bind all category"
-                                        type="object"
-                                    />
-                                </group>
-                            </group>
-                        </page>
-                    </notebook>
-                </sheet>
-            </form>
+                            <span>- 0: none</span><newline />
+                            <span>- 1: parent_category1</span><newline />
+                            <span>- 2: parent_category1/child_category2</span><newline
+                            />
+                            <span
+                            >- 3: parent_category1/child_category2/child_category3</span><newline
+                            />
+                            <button
+                                name="bind_all_category"
+                                string="Bind all category"
+                                type="object"
+                            />
+                        </group>
+                    </group>
+                </page>
+            </page>
         </field>
     </record>
-
-    <record id="view_shopinvader_backend_tree" model="ir.ui.view">
-        <field name="model">shopinvader.backend</field>
-        <field name="arch" type="xml">
-            <tree>
-                <field name="name" />
-                <field name="tech_name" />
-                <field
-                    name="company_id"
-                    widget="selection"
-                    groups="base.group_multi_company"
-                    optional="show"
-                />
-            </tree>
-        </field>
-    </record>
-
-    <record id="action_shopinvader_backend" model="ir.actions.act_window">
-        <field name="name">Shopinvader Website</field>
-        <field name="res_model">shopinvader.backend</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_shopinvader_backend_tree" />
-    </record>
-
-    <menuitem
-        id="menu_shopinvader_backend"
-        name="Websites"
-        sequence="0"
-        parent="shopinvader_restapi.menu_shopinvader_root"
-        action="action_shopinvader_backend"
-    />
 
 </odoo>

@@ -41,6 +41,7 @@
         "views/sale_view.xml",
         "views/shopinvader_sale_view.xml",
         "views/partner_view.xml",
+        "views/shopinvader_backend_view.xml",
         "data/res_partner.xml",
         "data/cart_step.xml",
         "data/mail_activity_data.xml",
