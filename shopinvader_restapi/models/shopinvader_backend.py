@@ -63,7 +63,6 @@ class ShopinvaderBackend(models.Model):
         help="This analytic account will be used to fill the "
         "field on the sale order created.",
     )
-    filter_ids = fields.Many2many(comodel_name="product.filter", string="Filter")
     website_public_name = fields.Char(
         help="Public name of your backend/website.\n"
         " Used for products name referencing."
