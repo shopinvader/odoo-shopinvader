@@ -39,7 +39,8 @@ class ShopinvaderBackend(models.Model):
         "Set 2 to auto-bind the direct category and his parent.\n"
         "etc.",
     )
-
+    filter_ids = fields.Many2many(comodel_name="product.filter", string="Filter")
+    
     @api.model
     def _to_compute_nbr_content(self):
         """
