@@ -38,47 +38,6 @@ def _install_lang_odoo(env, lang_xml_id, full_install=False):
 
 
 class UtilsMixin(object):
-    def _bind_products(self, products, backend=None):
-        backend = backend or self.backend
-        bind_wizard_model = self.env["shopinvader.variant.binding.wizard"]
-        bind_wizard = bind_wizard_model.create(
-            {
-                "backend_id": backend.id,
-                "product_ids": [(6, 0, products.ids)],
-                "run_immediately": True,
-            }
-        )
-        bind_wizard.bind_products()
-
-    def _refresh_json_data(self, products, backend=None):
-        """Force recomputation of JSON data for given products.
-
-        Especially helpful if your module adds new JSON keys
-        but the product are already there and computed w/out your key.
-        """
-        if not products:
-            return
-        backend = backend or self.backend
-        # TODO: remove hasattr check once `jsonify_stored` is ready.
-        # The json-store machinery comes from search engine module.
-        # We rely on it for product data BUT only
-        # `shopinvader_search_engine` requires that dependency.
-        # Hence, tests that need fresh product data because they add
-        # new keys to ir.exports record will be broken w/out refresh
-        # IF `shopinvader_search_engine` is installed (like on Travis).
-        # `jsonify_stored` will extrapolate the feature
-        # and allow to get rid of this hack.
-        # For full story see
-        # https://github.com/shopinvader/odoo-shopinvader/pull/783
-        if not hasattr(self.env["shopinvader.variant"], "recompute_json"):
-            return
-        invader_variants = products
-        if invader_variants._name == "product.product":
-            invader_variants = products.shopinvader_bind_ids
-        invader_variants.filtered_domain(
-            [("backend_id", "=", backend.id)]
-        ).recompute_json()
-
     def _install_lang(self, lang_xml_id):
         return _install_lang_odoo(self.env, lang_xml_id)
 
