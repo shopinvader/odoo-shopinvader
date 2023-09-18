@@ -3,17 +3,17 @@
         id="job_function_shopinvader_partner_reset_password"
         model="queue.job.function"
     >
-        <field name="model_id" ref="shopinvader.model_shopinvader_partner" />
+        <field name="model_id" ref="shopinvader_restapi.model_shopinvader_partner" />
         <field name="method">reset_password</field>
-        <field name="channel_id" ref="shopinvader.channel_shopinvader" />
+        <field name="channel_id" ref="shopinvader_restapi.channel_shopinvader" />
     </record>
 
     <record
         id="job_function_shopinvader_partner_reset_expired_password"
         model="queue.job.function"
     >
-        <field name="model_id" ref="shopinvader.model_shopinvader_partner" />
+        <field name="model_id" ref="shopinvader_restapi.model_shopinvader_partner" />
         <field name="method">reset_expired_password</field>
-        <field name="channel_id" ref="shopinvader.channel_shopinvader" />
+        <field name="channel_id" ref="shopinvader_restapi.channel_shopinvader" />
     </record>
 </odoo>

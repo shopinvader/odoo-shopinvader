@@ -4,7 +4,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.shopinvader.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 
 
 class ProductLinkCaseBase(ProductCommonCase):
@@ -23,7 +23,9 @@ class ProductLinkCaseBase(ProductCommonCase):
             "shopinvader.product_template_armchair_mid_century"
         )
         cls.template_1.product_template_link_ids.unlink()
-        cls.template_2 = cls.env.ref("shopinvader.product_template_chair_mid_century")
+        cls.template_2 = cls.env.ref(
+            "shopinvader_product_binding.product_template_chair_mid_century"
+        )
         cls.template_2.product_template_link_ids.unlink()
         cls.template_3 = cls.env.ref(
             "shopinvader.product_template_tv_cabinet_shaker_wood"

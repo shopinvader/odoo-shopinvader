@@ -2,7 +2,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields
 
-from odoo.addons.shopinvader.tests.test_customer import TestCustomerCommon
+from odoo.addons.shopinvader_restapi.tests.test_customer import TestCustomerCommon
 
 
 class TestCustomer(TestCustomerCommon):

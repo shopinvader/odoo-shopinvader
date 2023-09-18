@@ -28,8 +28,8 @@ class TestBackendCommonCase(LocoCommonCase):
         cls.api_url = "{}/shopinvader".format(cls.odoo_url)
         country_ids = [ref("base.fr").id, ref("base.us").id]
         filter_ids = [
-            ref("shopinvader.product_filter_1").id,
-            ref("shopinvader.product_filter_2").id,
+            ref("shopinvader_product_binding.product_filter_1").id,
+            ref("shopinvader_product_binding.product_filter_2").id,
         ]
         currency_ids = [ref("base.USD").id, ref("base.EUR").id]
         title_ids = [

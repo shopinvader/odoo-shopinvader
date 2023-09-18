@@ -7,7 +7,7 @@
     <record id="product_image_relation_1" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_chair_mid_century"
+            ref="shopinvader_product_binding.product_template_chair_mid_century"
         />
         <field name="image_id" ref="storage_image_1" />
         <field name="tag_id" ref="image_tag_1" />
@@ -22,7 +22,7 @@
     <record id="product_image_relation_5" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_product_tv_cbinet_ameriwood_product_template"
+            ref="shopinvader_product_binding.product_product_tv_cbinet_ameriwood_product_template"
         />
         <field name="image_id" ref="storage_image_5" />
         <field name="tag_id" ref="image_tag_1" />
@@ -31,7 +31,7 @@
     <record id="product_image_relation_6" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_product_tv_cbinet_ameriwood_product_template"
+            ref="shopinvader_product_binding.product_product_tv_cbinet_ameriwood_product_template"
         />
         <field name="image_id" ref="storage_image_6" />
         <field name="tag_id" ref="image_tag_2" />
@@ -42,7 +42,7 @@
     <record id="product_image_relation_7" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_concept_design"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_concept_design"
         />
         <field name="image_id" ref="storage_image_7" />
         <field name="tag_id" ref="image_tag_1" />
@@ -55,7 +55,7 @@
     <record id="product_image_relation_8" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_concept_design"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_concept_design"
         />
         <field name="image_id" ref="storage_image_8" />
         <field name="tag_id" ref="image_tag_2" />
@@ -70,7 +70,7 @@
     <record id="product_image_relation_9" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_cmcharper"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_cmcharper"
         />
         <field name="image_id" ref="storage_image_9" />
         <field name="tag_id" ref="image_tag_1" />
@@ -83,7 +83,7 @@
     <record id="product_image_relation_10" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_cmcharper"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_cmcharper"
         />
         <field name="image_id" ref="storage_image_10" />
         <field name="tag_id" ref="image_tag_2" />
@@ -96,7 +96,7 @@
     <record id="product_image_relation_11" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_cmcharper"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_cmcharper"
         />
         <field name="image_id" ref="storage_image_11" />
         <field name="tag_id" ref="image_tag_2" />
@@ -109,7 +109,7 @@
     <record id="product_image_relation_12" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_cmcharper"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_cmcharper"
         />
         <field name="image_id" ref="storage_image_12" />
         <field name="tag_id" ref="image_tag_2" />
@@ -124,7 +124,7 @@
     <record id="product_image_relation_13" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_13" />
         <field name="tag_id" ref="image_tag_1" />
@@ -137,7 +137,7 @@
     <record id="product_image_relation_14" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_14" />
         <field name="tag_id" ref="image_tag_2" />
@@ -150,7 +150,7 @@
     <record id="product_image_relation_15" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_15" />
         <field name="tag_id" ref="image_tag_2" />
@@ -163,7 +163,7 @@
     <record id="product_image_relation_16" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_16" />
         <field name="tag_id" ref="image_tag_1" />
@@ -176,7 +176,7 @@
     <record id="product_image_relation_17" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_17" />
         <field name="tag_id" ref="image_tag_2" />
@@ -189,7 +189,7 @@
     <record id="product_image_relation_18" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_18" />
         <field name="tag_id" ref="image_tag_2" />
@@ -202,7 +202,7 @@
     <record id="product_image_relation_19" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_19" />
         <field name="tag_id" ref="image_tag_1" />
@@ -215,7 +215,7 @@
     <record id="product_image_relation_21" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_20" />
         <field name="tag_id" ref="image_tag_1" />
@@ -228,7 +228,7 @@
     <record id="product_image_relation_22" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_21" />
         <field name="tag_id" ref="image_tag_2" />
@@ -241,7 +241,7 @@
     <record id="product_image_relation_23" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_armchair_mid_century"
+            ref="shopinvader_product_binding.product_template_armchair_mid_century"
         />
         <field name="image_id" ref="storage_image_22" />
         <field name="tag_id" ref="image_tag_2" />
@@ -256,7 +256,7 @@
     <record id="product_image_relation_24" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_mid_century"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_mid_century"
         />
         <field name="image_id" ref="storage_image_23" />
         <field name="tag_id" ref="image_tag_1" />
@@ -269,7 +269,7 @@
     <record id="product_image_relation_25" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_mid_century"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_mid_century"
         />
         <field name="image_id" ref="storage_image_24" />
         <field name="tag_id" ref="image_tag_2" />
@@ -284,7 +284,7 @@
     <record id="product_image_relation_26" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_coffee_table_caftman"
+            ref="shopinvader_product_binding.product_template_coffee_table_caftman"
         />
         <field name="image_id" ref="storage_image_25" />
         <field name="tag_id" ref="image_tag_1" />
@@ -297,7 +297,7 @@
     <record id="product_image_relation_27" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_coffee_table_caftman"
+            ref="shopinvader_product_binding.product_template_coffee_table_caftman"
         />
         <field name="image_id" ref="storage_image_26" />
         <field name="tag_id" ref="image_tag_2" />
@@ -312,7 +312,7 @@
     <record id="product_image_relation_28" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_product_park_entertainment_product_template"
+            ref="shopinvader_product_binding.product_product_park_entertainment_product_template"
         />
         <field name="image_id" ref="storage_image_27" />
         <field name="tag_id" ref="image_tag_1" />
@@ -321,7 +321,7 @@
     <record id="product_image_relation_29" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_product_park_entertainment_product_template"
+            ref="shopinvader_product_binding.product_product_park_entertainment_product_template"
         />
         <field name="image_id" ref="storage_image_28" />
         <field name="tag_id" ref="image_tag_2" />
@@ -330,7 +330,7 @@
     <record id="product_image_relation_30" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_product_park_entertainment_product_template"
+            ref="shopinvader_product_binding.product_product_park_entertainment_product_template"
         />
         <field name="image_id" ref="storage_image_29" />
         <field name="tag_id" ref="image_tag_2" />
@@ -341,7 +341,7 @@
     <record id="product_image_relation_31" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_round_table_mid_century"
+            ref="shopinvader_product_binding.product_template_round_table_mid_century"
         />
         <field name="image_id" ref="storage_image_30" />
         <field name="tag_id" ref="image_tag_1" />
@@ -356,7 +356,7 @@
     <record id="product_image_relation_32" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_shaker_wood"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_shaker_wood"
         />
         <field name="image_id" ref="storage_image_31" />
         <field name="tag_id" ref="image_tag_1" />
@@ -369,7 +369,7 @@
     <record id="product_image_relation_33" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_shaker_wood"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_shaker_wood"
         />
         <field name="image_id" ref="storage_image_32" />
         <field name="tag_id" ref="image_tag_2" />
@@ -382,7 +382,7 @@
     <record id="product_image_relation_34" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_shaker_wood"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_shaker_wood"
         />
         <field name="image_id" ref="storage_image_33" />
         <field name="tag_id" ref="image_tag_1" />
@@ -395,7 +395,7 @@
     <record id="product_image_relation_35" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_shaker_wood"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_shaker_wood"
         />
         <field name="image_id" ref="storage_image_34" />
         <field name="tag_id" ref="image_tag_2" />
@@ -410,7 +410,7 @@
     <record id="product_image_relation_36" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_cabinet_mid_century"
+            ref="shopinvader_product_binding.product_template_tv_cabinet_mid_century"
         />
         <field name="image_id" ref="storage_image_35" />
         <field name="tag_id" ref="image_tag_2" />
@@ -423,7 +423,10 @@
     <!-- Product: Vortex Side Chair -->
 
     <record id="product_image_relation_38" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_chair_vortex" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_chair_vortex"
+        />
         <field name="image_id" ref="storage_image_37" />
         <field name="tag_id" ref="image_tag_1" />
         <field
@@ -433,7 +436,10 @@
     </record>
 
     <record id="product_image_relation_39" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_chair_vortex" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_chair_vortex"
+        />
         <field name="image_id" ref="storage_image_38" />
         <field name="tag_id" ref="image_tag_2" />
         <field
@@ -443,7 +449,10 @@
     </record>
 
     <record id="product_image_relation_40" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_chair_vortex" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_chair_vortex"
+        />
         <field name="image_id" ref="storage_image_39" />
         <field name="tag_id" ref="image_tag_1" />
         <field
@@ -453,7 +462,10 @@
     </record>
 
     <record id="product_image_relation_41" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_chair_vortex" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_chair_vortex"
+        />
         <field name="image_id" ref="storage_image_40" />
         <field name="tag_id" ref="image_tag_2" />
         <field
@@ -467,7 +479,7 @@
     <record id="product_image_relation_42" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_chair_mid_century"
+            ref="shopinvader_product_binding.product_template_chair_mid_century"
         />
         <field name="image_id" ref="storage_image_41" />
         <field name="tag_id" ref="image_tag_1" />
@@ -480,7 +492,7 @@
     <record id="product_image_relation_43" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_chair_mid_century"
+            ref="shopinvader_product_binding.product_template_chair_mid_century"
         />
         <field name="image_id" ref="storage_image_42" />
         <field name="tag_id" ref="image_tag_2" />
@@ -493,7 +505,7 @@
     <record id="product_image_relation_44" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_chair_mid_century"
+            ref="shopinvader_product_binding.product_template_chair_mid_century"
         />
         <field name="image_id" ref="storage_image_43" />
         <field name="tag_id" ref="image_tag_2" />
@@ -506,7 +518,7 @@
     <record id="product_image_relation_45" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_chair_mid_century"
+            ref="shopinvader_product_binding.product_template_chair_mid_century"
         />
         <field name="image_id" ref="storage_image_44" />
         <field name="tag_id" ref="image_tag_2" />
@@ -519,7 +531,7 @@
     <record id="product_image_relation_46" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_chair_mid_century"
+            ref="shopinvader_product_binding.product_template_chair_mid_century"
         />
         <field name="image_id" ref="storage_image_45" />
         <field name="tag_id" ref="image_tag_2" />
@@ -534,7 +546,7 @@
     <record id="product_image_relation_53" model="product.image.relation">
         <field
             name="product_tmpl_id"
-            ref="shopinvader.product_template_tv_stand_wood_and_glass"
+            ref="shopinvader_product_binding.product_template_tv_stand_wood_and_glass"
         />
         <field name="image_id" ref="storage_image_55" />
         <field name="tag_id" ref="image_tag_1" />
@@ -547,31 +559,46 @@
     <!-- Product: Themla -->
 
     <record id="product_image_relation_54" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_thelma" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_thelma"
+        />
         <field name="image_id" ref="storage_image_56" />
         <field name="tag_id" ref="image_tag_1" />
     </record>
 
     <record id="product_image_relation_55" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_thelma" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_thelma"
+        />
         <field name="image_id" ref="storage_image_57" />
         <field name="tag_id" ref="image_tag_2" />
     </record>
 
     <record id="product_image_relation_56" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_thelma" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_thelma"
+        />
         <field name="image_id" ref="storage_image_58" />
         <field name="tag_id" ref="image_tag_2" />
     </record>
 
     <record id="product_image_relation_57" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_thelma" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_thelma"
+        />
         <field name="image_id" ref="storage_image_60" />
         <field name="tag_id" ref="" />
     </record>
 
     <record id="product_image_relation_58" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_thelma" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_thelma"
+        />
         <field name="image_id" ref="storage_image_61" />
         <field name="tag_id" ref="image_tag_1" />
         <field
@@ -581,7 +608,10 @@
     </record>
 
     <record id="product_image_relation_59" model="product.image.relation">
-        <field name="product_tmpl_id" ref="shopinvader.product_template_thelma" />
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product_binding.product_template_thelma"
+        />
         <field name="image_id" ref="storage_image_62" />
         <field name="tag_id" ref="image_tag_1" />
         <field

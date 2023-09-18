@@ -2,15 +2,15 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestCart(CommonCase):
     def setUp(self):
         super(TestCart, self).setUp()
-        self.cart = self.env.ref("shopinvader.sale_order_2")
+        self.cart = self.env.ref("shopinvader_restapi.sale_order_2")
         self.shopinvader_session = {"cart_id": self.cart.id}
-        self.partner = self.env.ref("shopinvader.partner_1")
+        self.partner = self.env.ref("shopinvader_restapi.partner_1")
         with self.work_on_services(
             partner=self.partner, shopinvader_session=self.shopinvader_session
         ) as work:

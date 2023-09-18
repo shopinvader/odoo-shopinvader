@@ -9,8 +9,8 @@ def _upgrade_shopinvader_model_access(env):
     Upgrade the "shopinvader partner binding edit" access rights
     (as it's not update)
     """
-    sec_group = env.ref("shopinvader.group_shopinvader_partner_binding")
-    env.ref("shopinvader.access_shopinvader_partner_edit").write(
+    sec_group = env.ref("shopinvader_restapi.group_shopinvader_partner_binding")
+    env.ref("shopinvader_restapi.access_shopinvader_partner_edit").write(
         {
             "group_id": sec_group.id,
         }

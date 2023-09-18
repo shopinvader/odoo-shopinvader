@@ -32,14 +32,14 @@
         <field name="context">{}</field>
         <field
             name="groups_id"
-            eval="[(4, ref('shopinvader.group_shopinvader_manager'))]"
+            eval="[(4, ref('shopinvader_restapi.group_shopinvader_manager'))]"
         />
     </record>
 
     <menuitem
         id="menu_shopinvader_config_image"
         name="Images"
-        parent="shopinvader.menu_shopinvader_config"
+        parent="shopinvader_restapi.menu_shopinvader_config"
         sequence="150"
     />
 

@@ -12,7 +12,7 @@ class ShopinvaderVariantCase(SavepointCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         ref = cls.env.ref
-        cls.backend = ref("shopinvader.backend_1")
+        cls.backend = ref("shopinvader_restapi.backend_1")
         cls.lang = ref("base.lang_en")
         cls.template = cls.mref("product_template_1")
         cls.maxDiff = None

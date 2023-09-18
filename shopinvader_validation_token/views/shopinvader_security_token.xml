@@ -80,7 +80,7 @@
 
     <record model="ir.ui.menu" id="shopinvader_security_token_menu">
         <field name="name">Security tokens</field>
-        <field name="parent_id" ref="shopinvader.menu_shopinvader_config" />
+        <field name="parent_id" ref="shopinvader_restapi.menu_shopinvader_config" />
         <field name="action" ref="shopinvader_security_token_action" />
         <field name="sequence" eval="100" />
     </record>

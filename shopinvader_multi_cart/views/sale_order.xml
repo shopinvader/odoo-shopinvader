@@ -8,7 +8,7 @@
 
     <record id="view_sales_order_filter" model="ir.ui.view">
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="shopinvader.view_sales_order_filter" />
+        <field name="inherit_id" ref="shopinvader_restapi.view_sales_order_filter" />
         <field name="arch" type="xml">
             <filter name="shopinvader_cart" position="after">
                 <filter
@@ -25,7 +25,7 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">sale.order</field>
         <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
-        <field name="view_id" ref="shopinvader.view_shop_quotation_tree" />
+        <field name="view_id" ref="shopinvader_restapi.view_shop_quotation_tree" />
         <field
             name="search_view_id"
             ref="sale.sale_order_view_search_inherit_quotation"
@@ -39,7 +39,7 @@
     <menuitem
         action="action_saved_carts"
         id="menu_saved_cart"
-        parent="shopinvader.menu_shopinvader_orders"
+        parent="shopinvader_restapi.menu_shopinvader_orders"
         sequence="11"
     />
 

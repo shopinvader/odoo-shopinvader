@@ -1,7 +1,7 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.test_sale import CommonSaleCase
+from odoo.addons.shopinvader_restapi.tests.test_sale import CommonSaleCase
 
 
 class TestShopinvaderSalePriceUpdate(CommonSaleCase):
@@ -10,7 +10,7 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product_1 = cls.env.ref("product.product_product_24")
-        cls.line = cls.env.ref("shopinvader.sale_order_line_4")
+        cls.line = cls.env.ref("shopinvader_restapi.sale_order_line_4")
         cls.sale_profile = cls.env.ref(
             "shopinvader_sale_profile.shopinvader_sale_profile_3"
         )

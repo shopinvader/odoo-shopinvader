@@ -5,7 +5,10 @@
     <record model="ir.ui.view" id="shopinvader_backend_form_view">
         <field name="name">shopinvader.backend.form (in shopinvader_cart_expiry)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_product_binding.shopinvader_backend_view_form"
+        />
         <field name="priority" eval="90" />
         <field name="arch" type="xml">
             <page name="sale" position="inside">

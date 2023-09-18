@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo.addons.queue_job.job import Job
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestShopinvaderResetExpiredPassword(CommonCase):
@@ -10,7 +10,7 @@ class TestShopinvaderResetExpiredPassword(CommonCase):
     def setUpClass(cls):
         super(TestShopinvaderResetExpiredPassword, cls).setUpClass()
         cls.backend.password_validity = 10
-        cls.partner = cls.env.ref("shopinvader.shopinvader_partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.shopinvader_partner_1")
         cls.partner.last_pwd_reset_datetime = "2019-12-31 12:00:00"
 
     def test_reset_expired_password(self):

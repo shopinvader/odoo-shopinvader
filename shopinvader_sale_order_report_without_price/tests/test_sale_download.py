@@ -1,13 +1,14 @@
 import mock
 
-from odoo.addons.shopinvader.services import abstract_download
-from odoo.addons.shopinvader.tests.test_sale import CommonSaleCase
+from odoo.addons.shopinvader_restapi.services import abstract_download
+from odoo.addons.shopinvader_restapi.tests.test_sale import CommonSaleCase
 
 
 class SaleCase(CommonSaleCase):
     def download(self, id, **params):
         with mock.patch(
-            "odoo.addons.shopinvader.services." "abstract_download.content_disposition"
+            "odoo.addons.shopinvader_restapi.services."
+            "abstract_download.content_disposition"
         ) as mocked_cd:
             request = mock.MagicMock()
             abstract_download.request = request

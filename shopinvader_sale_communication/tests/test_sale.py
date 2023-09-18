@@ -2,7 +2,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestSale(CommonCase):
@@ -19,7 +19,7 @@ class TestSale(CommonCase):
                 "partner_id": self.env.ref("base.res_partner_2").id,
                 "online_information_for_customer": online_information_for_customer,
                 "shopinvader_backend_id": self.env.ref(
-                    "shopinvader.backend_1"
+                    "shopinvader_product_binding.backend_1"
                 ).id,
                 "typology": "sale",
             }

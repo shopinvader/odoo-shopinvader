@@ -4,13 +4,19 @@
     <record id="ir_exp_shopinvader_category_video_sequence" model="ir.exports.line">
         <field name="name">video_ids/sequence</field>
         <field name="target">video_ids:video/sequence</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_category" />
+        <field
+            name="export_id"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
+        />
     </record>
 
     <record id="ir_exp_shopinvader_category_video_name" model="ir.exports.line">
         <field name="name">video_ids/name</field>
         <field name="target">video_ids:video/name</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_category" />
+        <field
+            name="export_id"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
+        />
     </record>
 
     <record
@@ -19,19 +25,28 @@
     >
         <field name="name">video_ids/provider_id/code</field>
         <field name="target">video_ids:video/provider_id:provider/code</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_category" />
+        <field
+            name="export_id"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
+        />
     </record>
 
     <record id="ir_exp_shopinvader_category_video_identifier" model="ir.exports.line">
         <field name="name">video_ids/identifier</field>
         <field name="target">video_ids:video/identifier</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_category" />
+        <field
+            name="export_id"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
+        />
     </record>
 
     <record id="ir_exp_shopinvader_category_video_url" model="ir.exports.line">
         <field name="name">video_ids/url</field>
         <field name="target">video_ids:video/url</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_category" />
+        <field
+            name="export_id"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
+        />
     </record>
 
     <record
@@ -40,7 +55,10 @@
     >
         <field name="name">video_ids/thumbnail_url</field>
         <field name="target">video_ids:video/thumbnail_url</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_category" />
+        <field
+            name="export_id"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_category"
+        />
     </record>
 
 </odoo>

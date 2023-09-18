@@ -5,7 +5,7 @@
 import logging
 from contextlib import contextmanager
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 _logger = logging.getLogger(__name__)
 

@@ -2,7 +2,7 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 
 
 class CommonCustomerPriceCase(ProductCommonCase):
@@ -10,11 +10,11 @@ class CommonCustomerPriceCase(ProductCommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        cls.partner1 = cls.env.ref("shopinvader.partner_1")
-        cls.partner2 = cls.env.ref("shopinvader.partner_2")
-        cls.discount_pricelist = cls.env.ref("shopinvader.pricelist_1")
-        cls.fiscal_pos1 = cls.env.ref("shopinvader.fiscal_position_0")
-        cls.fiscal_pos2 = cls.env.ref("shopinvader.fiscal_position_2")
+        cls.partner1 = cls.env.ref("shopinvader_restapi.partner_1")
+        cls.partner2 = cls.env.ref("shopinvader_restapi.partner_2")
+        cls.discount_pricelist = cls.env.ref("shopinvader_restapi.pricelist_1")
+        cls.fiscal_pos1 = cls.env.ref("shopinvader_restapi.fiscal_position_0")
+        cls.fiscal_pos2 = cls.env.ref("shopinvader_restapi.fiscal_position_2")
         cls.pricelist_field = cls.env.ref(
             "product.field_res_partner__property_product_pricelist"
         )

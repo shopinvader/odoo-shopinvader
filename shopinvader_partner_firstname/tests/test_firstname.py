@@ -6,7 +6,7 @@ from cerberus.errors import EXCLUDES_FIELD, BasicErrorHandler
 
 from odoo.exceptions import UserError
 
-from odoo.addons.shopinvader.tests.test_customer import TestCustomerCommon
+from odoo.addons.shopinvader_restapi.tests.test_customer import TestCustomerCommon
 
 
 class TestCustomer(TestCustomerCommon):

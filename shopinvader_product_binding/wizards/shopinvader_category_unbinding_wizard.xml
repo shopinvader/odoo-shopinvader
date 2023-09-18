@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="shopinvader_category_unbinding_wizard_form_view">
+        <field
+            name="name"
+        >shopinvader.category.unbinding.wizard.form (in shopinvader)</field>
+        <field name="model">shopinvader.category.unbinding.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Shopinvader Category Unbinding Wizard">
+               <field name='shopinvader_category_ids' />
+                <footer>
+                    <button
+                        string="Unbind Categories"
+                        name="action_unbind_categories"
+                        type="object"
+                        class="oe_highlight"
+                        confirm="Do you really want to unbind these categories ?"
+                    />
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record
+        model="ir.actions.act_window"
+        id="shopinvader_category_unbinding_wizard_act_window"
+    >
+        <field name="name">Shopinvader Category Unbinding Wizard</field>
+        <field name="res_model">shopinvader.category.unbinding.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+        <field
+            name="binding_model_id"
+            ref="shopinvader_product_binding.model_shopinvader_category"
+        />
+        <field name="view_id" ref="shopinvader_category_unbinding_wizard_form_view" />
+        <field
+            name="groups_id"
+            eval="[(4, ref('shopinvader_restapi.group_shopinvader_manager'))]"
+        />
+    </record>
+
+</odoo>

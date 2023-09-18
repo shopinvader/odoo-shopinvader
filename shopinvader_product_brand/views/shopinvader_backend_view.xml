@@ -6,10 +6,13 @@
             name="name"
         >shopinvader.backend.form (in shopinvader_product_brand)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_product_binding.shopinvader_backend_view_form"
+        />
         <field name="arch" type="xml">
             <button
-                name="%(shopinvader.shopinvader_category_binding_wizard_act_window)d"
+                name="%(shopinvader_product_binding.shopinvader_category_binding_wizard_act_window)d"
                 position="after"
             >
                 <!-- TODO: this action should stay only in `developer` tab and should be replaced by a wizard
@@ -19,7 +22,7 @@
                     type="object"
                     string="Bind all brands"
                     class="oe_highlight"
-                    groups="shopinvader.group_shopinvader_manager"
+                    groups="shopinvader_restapi.group_shopinvader_manager"
                 />
             </button>
 

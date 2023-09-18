@@ -2,7 +2,7 @@
 # @author Iván Todorovich <ivan.todorovich@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import ProductCommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductCommonCase
 
 
 class ProductCase(ProductCommonCase):
@@ -31,7 +31,7 @@ class ProductCase(ProductCommonCase):
 
     def test_product_get_price(self):
         # self.base_pricelist doesn't define a tax mapping. We are tax included
-        fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
+        fiscal_position_fr = self.env.ref("shopinvader_restapi.fiscal_position_0")
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=fiscal_position_fr
         )
@@ -45,7 +45,7 @@ class ProductCase(ProductCommonCase):
             },
         )
         # promotion price list define a discount of 20% on all product
-        promotion_price_list = self.env.ref("shopinvader.pricelist_1")
+        promotion_price_list = self.env.ref("shopinvader_restapi.pricelist_1")
         price = self.shopinvader_variant._get_price(
             pricelist=promotion_price_list, fposition=fiscal_position_fr
         )
@@ -60,7 +60,9 @@ class ProductCase(ProductCommonCase):
         )
         # use a fiscal position defining a mapping from tax included to tax
         # excluded
-        tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
+        tax_exclude_fiscal_position = self.env.ref(
+            "shopinvader_restapi.fiscal_position_1"
+        )
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=tax_exclude_fiscal_position
         )
@@ -88,7 +90,7 @@ class ProductCase(ProductCommonCase):
 
     def test_product_get_price_per_qty(self):
         # Define a promotion price for the product with min_qty = 10
-        fposition = self.env.ref("shopinvader.fiscal_position_0")
+        fposition = self.env.ref("shopinvader_restapi.fiscal_position_0")
         pricelist = self.base_pricelist
         self.env["product.pricelist.item"].create(
             {
@@ -136,7 +138,7 @@ class ProductCase(ProductCommonCase):
         # self.base_pricelist doesn't define a tax mapping. We are tax included
         # we modify the discount_policy
         self.base_pricelist.discount_policy = "without_discount"
-        fiscal_position_fr = self.env.ref("shopinvader.fiscal_position_0")
+        fiscal_position_fr = self.env.ref("shopinvader_restapi.fiscal_position_0")
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=fiscal_position_fr
         )
@@ -151,7 +153,7 @@ class ProductCase(ProductCommonCase):
         )
         # promotion price list define a discount of 20% on all product
         # we modify the discount_policy
-        promotion_price_list = self.env.ref("shopinvader.pricelist_1")
+        promotion_price_list = self.env.ref("shopinvader_restapi.pricelist_1")
         promotion_price_list.discount_policy = "without_discount"
         price = self.shopinvader_variant._get_price(
             pricelist=promotion_price_list, fposition=fiscal_position_fr
@@ -169,7 +171,9 @@ class ProductCase(ProductCommonCase):
         # excluded
         # Tax mapping should not impact the computation of the discount and
         # the original value
-        tax_exclude_fiscal_position = self.env.ref("shopinvader.fiscal_position_1")
+        tax_exclude_fiscal_position = self.env.ref(
+            "shopinvader_restapi.fiscal_position_1"
+        )
         price = self.shopinvader_variant._get_price(
             pricelist=self.base_pricelist, fposition=tax_exclude_fiscal_position
         )

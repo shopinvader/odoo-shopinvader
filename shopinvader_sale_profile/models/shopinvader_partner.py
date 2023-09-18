@@ -58,8 +58,10 @@ class ShopinvaderPartner(models.Model):
     def _compute_sale_profile_id(self):
         """Compute sale_profile_id"""
         records = self.filtered("backend_id.use_sale_profile")
-        for company in records.company_id:
-            company_records = records.filtered(lambda rec: rec.company_id == company)
+        for company in records.backend_id.company_id:
+            company_records = records.filtered(
+                lambda rec: rec.backend_id.company_id == company
+            )
             company_records = company_records.with_company(company)
             for rec in company_records:
                 rec.sale_profile_id = rec._get_sale_profile()

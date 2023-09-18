@@ -8,7 +8,10 @@
             name="name"
         >shopinvader.partner.search (in shopinvader_guest_mode)</field>
         <field name="model">shopinvader.partner</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_search" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_restapi.shopinvader_partner_view_search"
+        />
         <field name="arch" type="xml">
             <field name="external_id" position="after">
                 <separator />
@@ -30,7 +33,10 @@
     <record model="ir.ui.view" id="shopinvader_partner_tree_view">
         <field name="name">shopinvader.partner.tree (in shopinvader_guest_mode)</field>
         <field name="model">shopinvader.partner</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_partner_view_tree" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_restapi.shopinvader_partner_view_tree"
+        />
         <field name="arch" type="xml">
             <field name="create_date" position="after">
                 <field name="expiry_dt" />

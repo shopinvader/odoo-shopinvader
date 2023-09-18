@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="shopinvader_backend_view_form" model="ir.ui.view">
+        <field name="model">shopinvader.backend</field>
+        <field
+            name="inherit_id"
+            ref="shopinvader_restapi.shopinvader_backend_view_form"
+        />
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <header>
+                    <button
+                        name="%(shopinvader_variant_binding_wizard_act_window)d"
+                        type="action"
+                        string="Bind Products"
+                        class="oe_highlight"
+                        groups="shopinvader_restapi.group_shopinvader_manager"
+                    />
+                    <button
+                        name="%(shopinvader_category_binding_wizard_act_window)d"
+                        type="action"
+                        string="Bind Category"
+                        class="oe_highlight"
+                        groups="shopinvader_restapi.group_shopinvader_manager"
+                    />
+                </header>
+            </xpath>
+            <xpath expr="//div[@name='buttons']" position="inside">
+                <button
+                    class="oe_stat_button"
+                    name="%(shopinvader_variant_act_window)d"
+                    type="action"
+                    icon="fa-th-list"
+                    context="{'search_default_backend_id': active_id}"
+                >
+                    <field name="nbr_variant" string="Products" widget="statinfo" />
+                </button>
+                <button
+                    class="oe_stat_button"
+                    name="%(act_open_shopinvader_category_view)d"
+                    type="action"
+                    icon="fa-th-list"
+                    context="{'search_default_backend_id': active_id}"
+                >
+                    <field name="nbr_category" string="Categories" widget="statinfo" />
+                </button>
+            </xpath>
+            <page name="search_eng" position="inside">
+                <group name="website_name" position="after">
+                    <group name="search_filters" string="Filters" colspan="4">
+                        <field
+                            name="filter_ids"
+                            nolabel="1"
+                            context="{'tree_view_ref': 'shopinvader.product_filter_view_tree'}"
+                        />
+                    </group>
+                </group>
+            </page>
+            <page name="sale" position="after">
+                <page name="products" string="Products">
+                    <group>
+                        <field name="use_shopinvader_product_name" />
+                    </group>
+                </page>
+            </page>
+            <page name="invoices" position="after">
+                <page name="developer" string="Developer">
+                    <group name="developer" colspan="4">
+                        <group name="product" string="Product" col="10" colspan="4">
+                            <field name="nbr_product" />
+                            <button
+                                name="bind_all_product"
+                                string="Bind all product"
+                                type="object"
+                            />
+                        </group>
+                        <group name="category" string="Category" col="10" colspan="4">
+                            <field name="category_root_binding_level" /><newline />
+                            <field name="category_binding_level" /><newline />
+                            <span
+                            >Levels of categories to automatically bind such as:</span><newline
+                            />
+                            <span>- 0: none</span><newline />
+                            <span>- 1: parent_category1</span><newline />
+                            <span>- 2: parent_category1/child_category2</span><newline
+                            />
+                            <span
+                            >- 3: parent_category1/child_category2/child_category3</span><newline
+                            />
+                            <button
+                                name="bind_all_category"
+                                string="Bind all category"
+                                type="object"
+                            />
+                        </group>
+                    </group>
+                </page>
+            </page>
+        </field>
+    </record>
+
+</odoo>

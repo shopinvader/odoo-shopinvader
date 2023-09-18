@@ -2,7 +2,7 @@
 # @author Iván Todorovich <ivan.todorovich@camptocamp.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.test_address import CommonAddressCase
+from odoo.addons.shopinvader_restapi.tests.test_address import CommonAddressCase
 
 
 class TestAddress(CommonAddressCase):

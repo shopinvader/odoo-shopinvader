@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo.fields import first
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestShopInvaderCustomerService(CommonCase):
@@ -92,7 +92,11 @@ class TestShopInvaderCustomerService(CommonCase):
         # set a specific pricelist depending on vat number
         # so we set it manually
         shopinvader_partner.write(
-            {"property_product_pricelist": self.env.ref("shopinvader.pricelist_1").id}
+            {
+                "property_product_pricelist": self.env.ref(
+                    "shopinvader_restapi.pricelist_1"
+                ).id
+            }
         )
         self.assertEqual(shopinvader_partner.sale_profile_id, self.profile_pro_tax_exc)
 

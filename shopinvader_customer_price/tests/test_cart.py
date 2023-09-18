@@ -2,8 +2,8 @@
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
-from odoo.addons.shopinvader.tests.common import CommonCase
-from odoo.addons.shopinvader.tests.test_cart_item import ItemCaseMixin
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.test_cart_item import ItemCaseMixin
 
 
 class ConnectedItemCase(ItemCaseMixin, CommonCase):
@@ -11,7 +11,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls._setup_products()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
         cls.custom_pricelist = cls.env["product.pricelist"].create(
             {"name": "Test Pricelist"}
         )

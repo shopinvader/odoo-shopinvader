@@ -2,7 +2,7 @@
 # @author Iván Todorovich <ivan.todorovich@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
+from odoo.addons.shopinvader_restapi.tests.test_cart import CommonConnectedCartCase
 
 
 class TestCart(CommonConnectedCartCase):

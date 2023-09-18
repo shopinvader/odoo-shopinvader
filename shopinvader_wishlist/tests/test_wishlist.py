@@ -7,14 +7,15 @@ from werkzeug.exceptions import NotFound
 
 from odoo import exceptions
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_product_binding.tests.common import ProductUtilsMixin
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class CommonWishlistCase(CommonCase):
     @classmethod
     def setUpClass(cls):
         super(CommonWishlistCase, cls).setUpClass()
-        cls.partner = cls.env.ref("shopinvader.partner_1")
+        cls.partner = cls.env.ref("shopinvader_restapi.partner_1")
         cls.prod1 = cls.env.ref("product.product_product_11")
         cls.prod2 = cls.env.ref("product.product_product_13")
         cls.prod3 = cls.env.ref("product.product_product_10")
@@ -29,6 +30,7 @@ class CommonWishlistCase(CommonCase):
                 {"product_id": cls.prod2.id, "quantity": 5.0},
             ],
         }
+        cls.backend.bind_all_product()
 
     def setUp(self, *args, **kwargs):
         super(CommonWishlistCase, self).setUp(*args, **kwargs)
@@ -51,7 +53,7 @@ class CommonWishlistCase(CommonCase):
                     self.assertEqual(list_line[key], dline.get(key))
 
 
-class WishlistCase(CommonWishlistCase):
+class WishlistCase(CommonWishlistCase, ProductUtilsMixin):
     @classmethod
     def setUpClass(cls):
         super(WishlistCase, cls).setUpClass()

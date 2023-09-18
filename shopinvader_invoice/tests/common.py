@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class CommonInvoiceCase(CommonCase):
@@ -15,9 +15,9 @@ class CommonInvoiceCase(CommonCase):
         self.invoice_obj = self.env["account.move"]
         self.journal_obj = self.env["account.journal"]
         self.register_payments_obj = self.env["account.payment.register"]
-        self.sale = self.env.ref("shopinvader.sale_order_2")
-        self.partner = self.env.ref("shopinvader.partner_1")
-        self.partner2 = self.env.ref("shopinvader.partner_2")
+        self.sale = self.env.ref("shopinvader_restapi.sale_order_2")
+        self.partner = self.env.ref("shopinvader_restapi.partner_1")
+        self.partner2 = self.env.ref("shopinvader_restapi.partner_2")
         self.product = self.env.ref("product.product_product_4")
         self.bank_journal_euro = self.journal_obj.create(
             {"name": "Bank", "type": "bank", "code": "BNK67"}

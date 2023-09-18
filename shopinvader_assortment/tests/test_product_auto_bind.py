@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class TestProductAutoBind(TransactionCase):
     def setUp(self):
         super().setUp()
-        self.backend = self.env.ref("shopinvader.backend_1").with_context(
+        self.backend = self.env.ref("shopinvader_restapi.backend_1").with_context(
             bind_products_immediately=True
         )
         self.variant_obj = self.env["shopinvader.variant"]

@@ -17,7 +17,7 @@ class BindingCase(SavepointCase):
             .create(
                 {
                     "record_id": cls.template.id,
-                    "backend_id": cls.env.ref("shopinvader.backend_1").id,
+                    "backend_id": cls.env.ref("shopinvader_restapi.backend_1").id,
                     "lang_id": cls.env.ref("base.lang_en").id,
                 }
             )

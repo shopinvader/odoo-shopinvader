@@ -6,13 +6,13 @@
 from odoo import fields
 from odoo.exceptions import AccessError, UserError
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestImpersonate(CommonCase):
     def setUp(self):
         super().setUp()
-        self.partner = self.env.ref("shopinvader.shopinvader_partner_1")
+        self.partner = self.env.ref("shopinvader_restapi.shopinvader_partner_1")
         with self.work_on_services() as work:
             self.service = work.component(usage="customer")
 

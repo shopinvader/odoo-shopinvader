@@ -8,7 +8,10 @@
             name="name"
         >shopinvader.backend.form (in shopinvader_customer_autobind)</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_product_binding.shopinvader_backend_view_form"
+        />
         <field name="arch" type="xml">
             <field name="account_analytic_id" position="after">
                 <field name="bind_new_customers" />

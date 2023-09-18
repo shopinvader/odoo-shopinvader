@@ -11,7 +11,10 @@
         <field
             name="target"
         >shopinvader_brand_id:brand/serialized_tag_ids:tag_ids</field>
-        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+        <field
+            name="export_id"
+            ref="shopinvader_product_binding.ir_exp_shopinvader_variant"
+        />
     </record>
 
 </odoo>

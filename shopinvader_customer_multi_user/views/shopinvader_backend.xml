@@ -8,7 +8,10 @@
             name="name"
         >shopinvader.backend.shopinvader_customer_multi_user.form</field>
         <field name="model">shopinvader.backend</field>
-        <field name="inherit_id" ref="shopinvader.shopinvader_backend_view_form" />
+        <field
+            name="inherit_id"
+            ref="shopinvader_product_binding.shopinvader_backend_view_form"
+        />
         <field name="arch" type="xml">
             <group name="sale_customer" position="inside">
                 <group name="multi_user" string="Multiple users">

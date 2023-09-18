@@ -1,7 +1,7 @@
 # Copyright 2021 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.test_sale import CommonSaleCase
+from odoo.addons.shopinvader_restapi.tests.test_sale import CommonSaleCase
 
 
 class TestShopinvaderSalePriceUpdate(CommonSaleCase):
@@ -9,7 +9,7 @@ class TestShopinvaderSalePriceUpdate(CommonSaleCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.product_1 = cls.env.ref("product.product_product_24")
-        cls.line = cls.env.ref("shopinvader.sale_order_line_4")
+        cls.line = cls.env.ref("shopinvader_restapi.sale_order_line_4")
         cls.precision = cls.env["decimal.precision"].precision_get("Product Price")
 
     def _create_pricelists(self, fixed_price, reduction):

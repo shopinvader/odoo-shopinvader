@@ -20,7 +20,7 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
             )
         )
         ref = cls.env.ref
-        cls.shopinvader_backend = ref("shopinvader.backend_1")
+        cls.shopinvader_backend = ref("shopinvader_restapi.backend_1")
         cls.warehouse_1 = ref("stock.warehouse0")
         cls.loc_1 = cls.warehouse_1.lot_stock_id
         cls.warehouse_2 = ref("stock.stock_warehouse_shop0")
@@ -33,9 +33,13 @@ class StockCommonCase(TestBindingIndexBaseFake, JobMixin):
             {
                 "name": "test-product-index",
                 "backend_id": cls.backend_specific.se_backend_id.id,
-                "exporter_id": ref("shopinvader.ir_exp_shopinvader_variant").id,
+                "exporter_id": ref(
+                    "shopinvader_product_binding.ir_exp_shopinvader_variant"
+                ).id,
                 "lang_id": ref("base.lang_en").id,
-                "model_id": ref("shopinvader.model_shopinvader_variant").id,
+                "model_id": ref(
+                    "shopinvader_product_binding.model_shopinvader_variant"
+                ).id,
             }
         )
         cls.shopinvader_backend.write(

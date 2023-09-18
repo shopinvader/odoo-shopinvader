@@ -133,7 +133,10 @@
 
     <record model="ir.ui.menu" id="menu_backend_shopinvader_image_import">
         <field name="name">Import product images</field>
-        <field name="parent_id" ref="shopinvader.menu_shopinvader_products" />
+        <field
+            name="parent_id"
+            ref="shopinvader_product_binding.menu_shopinvader_products"
+        />
         <field name="action" ref="import_image_action" />
         <field name="sequence" eval="200" />
     </record>

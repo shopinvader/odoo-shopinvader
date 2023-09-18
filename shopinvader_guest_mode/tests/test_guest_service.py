@@ -3,7 +3,7 @@
 
 from werkzeug.exceptions import Forbidden, NotFound
 
-from odoo.addons.shopinvader.tests.common import CommonCase
+from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
 class TestGuestService(CommonCase):

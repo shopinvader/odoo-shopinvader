@@ -4,12 +4,13 @@
 # Copyright 2020 Camptocamp SA (http://www.camptocamp.com)
 # Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo.addons.shopinvader.tests.common import UtilsMixin
+from odoo.addons.shopinvader_product_binding.tests.common import ProductUtilsMixin
+from odoo.addons.shopinvader_restapi.tests.common import UtilsMixin
 
 from .common import StockCommonCase
 
 
-class TestProductProduct(StockCommonCase, UtilsMixin):
+class TestProductProduct(StockCommonCase, UtilsMixin, ProductUtilsMixin):
     """Tests for product stock info."""
 
     def _expectect_qty_by_wh(self, warehouse_recs, prod):
