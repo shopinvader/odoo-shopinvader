@@ -50,13 +50,6 @@
                             <group name="website_name">
                                 <field name="website_public_name" />
                             </group>
-                            <group name="search_filters" string="Filters" colspan="4">
-                                <field
-                                    name="filter_ids"
-                                    nolabel="1"
-                                    context="{'tree_view_ref': 'shopinvader.product_filter_view_tree'}"
-                                />
-                            </group>
                         </page>
                         <page name="sale" string="Sale">
                             <group name="cart_conf" string="Cart configuration">

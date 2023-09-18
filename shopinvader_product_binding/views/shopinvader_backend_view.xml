@@ -45,6 +45,17 @@
                     <field name="nbr_category" string="Categories" widget="statinfo" />
                 </button>
             </xpath>
+            <page name="search_eng" position="inside">
+                <group name="website_name" position="after">
+                    <group name="search_filters" string="Filters" colspan="4">
+                        <field
+                            name="filter_ids"
+                            nolabel="1"
+                            context="{'tree_view_ref': 'shopinvader.product_filter_view_tree'}"
+                        />
+                    </group>
+                </group>
+            </page>
             <page name="sale" position="after">
                 <page name="products" string="Products">
                     <group>
