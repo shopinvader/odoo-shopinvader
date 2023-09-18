@@ -13,9 +13,13 @@
     "maintainer": ["hparfr"],
     "depends": [
         "shopinvader_sale_channel",
+        "sale_channel_product_category",
         "sale_channel_product_catalog",
+        "product_sale_description",
     ],
     "data": [
+        "data/ir_export_product.xml",
+        "data/ir_export_category.xml",
         "views/product_catalog.xml",
     ],
 }
