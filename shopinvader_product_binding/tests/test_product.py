@@ -8,10 +8,12 @@ from uuid import uuid4
 from odoo import fields
 from odoo.tools import mute_logger
 
+from odoo.addons.shopinvader_product_binding.tests.common import ProductUtilsMixin
+
 from .common import ProductCommonCase
 
 
-class ProductCase(ProductCommonCase):
+class ProductCase(ProductCommonCase, ProductUtilsMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

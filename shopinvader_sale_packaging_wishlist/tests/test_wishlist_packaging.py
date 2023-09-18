@@ -2,10 +2,11 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.addons.shopinvader_product_binding.tests.common import ProductUtilsMixin
 from odoo.addons.shopinvader_wishlist.tests.test_wishlist import CommonWishlistCase
 
 
-class WishlistCase(CommonWishlistCase):
+class WishlistCase(CommonWishlistCase, ProductUtilsMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

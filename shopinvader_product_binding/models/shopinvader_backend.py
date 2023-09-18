@@ -40,7 +40,7 @@ class ShopinvaderBackend(models.Model):
         "etc.",
     )
     filter_ids = fields.Many2many(comodel_name="product.filter", string="Filter")
-    
+
     @api.model
     def _to_compute_nbr_content(self):
         """

@@ -8,6 +8,7 @@ import logging
 from odoo.addons.shopinvader_locomotive.tests.test_shopinvader_partner import (
     CommonShopinvaderPartner,
 )
+from odoo.addons.shopinvader_product_binding.tests.common import ProductUtilsMixin
 
 _logger = logging.getLogger(__name__)
 
@@ -18,7 +19,7 @@ except (ImportError, IOError) as err:
     _logger.debug(err)
 
 
-class TestShopinvaderWishlistSync(CommonShopinvaderPartner):
+class TestShopinvaderWishlistSync(CommonShopinvaderPartner, ProductUtilsMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

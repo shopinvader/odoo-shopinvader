@@ -7,6 +7,7 @@ from werkzeug.exceptions import NotFound
 
 from odoo import exceptions
 
+from odoo.addons.shopinvader_product_binding.tests.common import ProductUtilsMixin
 from odoo.addons.shopinvader_restapi.tests.common import CommonCase
 
 
@@ -52,7 +53,7 @@ class CommonWishlistCase(CommonCase):
                     self.assertEqual(list_line[key], dline.get(key))
 
 
-class WishlistCase(CommonWishlistCase):
+class WishlistCase(CommonWishlistCase, ProductUtilsMixin):
     @classmethod
     def setUpClass(cls):
         super(WishlistCase, cls).setUpClass()
