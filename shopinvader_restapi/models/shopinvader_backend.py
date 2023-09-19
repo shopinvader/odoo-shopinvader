@@ -6,7 +6,6 @@
 
 import hashlib
 import os
-from contextlib import contextmanager
 
 from odoo import _, api, fields, models, tools
 from odoo.osv import expression
@@ -51,7 +50,7 @@ class ShopinvaderBackend(models.Model):
     sequence_id = fields.Many2one(
         "ir.sequence", "Sequence", help="Naming policy for orders and carts"
     )
-    lang_ids = fields.Many2many("res.lang", string="Lang", required=True)
+    lang_ids = fields.Many2many("res.lang", string="Lang")
     pricelist_id = fields.Many2one(
         "product.pricelist",
         string="Pricelist",
@@ -289,34 +288,6 @@ class ShopinvaderBackend(models.Model):
     def _extract_configuration(self):
         return {}
 
-    def _bind_langs(self, lang_ids):
-        self.ensure_one()
-        self.env["shopinvader.variant.binding.wizard"].bind_langs(self, lang_ids)
-        self.env["shopinvader.category.binding.wizard"].bind_langs(self, lang_ids)
-
-    def _unbind_langs(self, lang_ids):
-        self.ensure_one()
-        self.env["shopinvader.variant.unbinding.wizard"].unbind_langs(self, lang_ids)
-        self.env["shopinvader.category.unbinding.wizard"].unbind_langs(self, lang_ids)
-
-    @contextmanager
-    def _keep_binding_sync_with_langs(self):
-        lang_ids_by_record = {}
-        for record in self:
-            lang_ids_by_record[record.id] = record.lang_ids.ids
-        yield
-        for record in self:
-            old_lang_ids = set(lang_ids_by_record[record.id])
-            actual_lang_ids = set(record.lang_ids.ids)
-            if old_lang_ids == actual_lang_ids:
-                continue
-            added_lang_ids = actual_lang_ids - old_lang_ids
-            if added_lang_ids:
-                record._bind_langs(list(added_lang_ids))
-            removed_lang_ids = old_lang_ids - actual_lang_ids
-            if removed_lang_ids:
-                record._unbind_langs(list(removed_lang_ids))
-
     def _get_backend_pricelist(self):
         """The pricelist configure by this backend."""
         # There must be a pricelist somehow: safe fallback to default Odoo one
@@ -365,5 +336,4 @@ class ShopinvaderBackend(models.Model):
     def write(self, values):
         if "website_unique_key" in values:
             self._get_id_from_website_unique_key.clear_cache(self.env[self._name])
-        with self._keep_binding_sync_with_langs():
-            return super(ShopinvaderBackend, self).write(values)
+        return super(ShopinvaderBackend, self).write(values)
