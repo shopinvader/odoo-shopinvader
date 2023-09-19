@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Shopvinvader Sale Coupon",  # TODO: rename shopinvader_restapi_sale_loyalty?
+    "name": "Shopvinvader Restapi Sale Loyalty",
     "summary": "Manage Promotion and Coupon programs in Shopinvader",
     "version": "16.0.1.2.0",
     "category": "Sale",
