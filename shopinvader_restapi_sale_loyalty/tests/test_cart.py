@@ -7,25 +7,18 @@ from odoo.exceptions import UserError
 from odoo.addons.sale_loyalty.tests.common import TestSaleCouponCommon
 from odoo.addons.shopinvader_restapi.tests.test_cart import CommonConnectedCartCase
 
+from .common import TestShopinvaderSaleLoyaltyCommon
 
-class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
+
+class TestCart(
+    CommonConnectedCartCase, TestSaleCouponCommon, TestShopinvaderSaleLoyaltyCommon
+):
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)
         # Start with an empty cart
         self.cart.order_line.unlink()
         # Archive immediate promotion program or it will be applied everywhere
         self.immediate_promotion_program.active = False
-
-    def _generate_coupons(self, program, qty=1):
-        existing_coupons = program.coupon_ids
-        # Create coupons
-        self.env["loyalty.generate.wizard"].with_context(active_id=program.id).create(
-            {
-                "coupon_qty": qty,
-            }
-        ).generate_coupons()
-        # Return only the created coupons
-        return program.coupon_ids - existing_coupons
 
     def _create_promotion_program_A_B(self):
 
@@ -383,46 +376,7 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         -> when adding coupon code, if reward is not specified, an error is
         raised.
         """
-        program = self.env["loyalty.program"].create(
-            {
-                "name": "Buy 1A, choose 10% on all or 25% on cheapest",
-                "program_type": "coupons",
-                "trigger": "with_code",
-                "applies_on": "current",
-                "company_id": self.env.company.id,
-                "rule_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_ids": [(4, self.product_A.id)],
-                            "minimum_qty": 1,
-                        },
-                    )
-                ],
-                "reward_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "reward_type": "discount",
-                            "discount": 10,
-                            "required_points": 1,
-                        },
-                    ),
-                    (
-                        0,
-                        0,
-                        {
-                            "reward_type": "discount",
-                            "discount": 25,
-                            "discount_applicability": "cheapest",
-                            "required_points": 1,
-                        },
-                    ),
-                ],
-            }
-        )
+        program = self._create_program_choice_reward(self.product_A)
         coupon = self._generate_coupons(program)
         self.service.dispatch(
             "add_item",
@@ -466,37 +420,10 @@ class TestCart(CommonConnectedCartCase, TestSaleCouponCommon):
         -> when adding coupon code, if product is not specified, an error is
         raised.
         """
-        product_tag = self.env["product.tag"].create({"name": "Gift Product"})
-        self.product_B.product_tag_ids = [(4, product_tag.id)]
-        self.product_C.product_tag_ids = [(4, product_tag.id)]
-        program = self.env["loyalty.program"].create(
-            {
-                "name": "Choice 1B or 1C free if 1A bought",
-                "program_type": "coupons",
-                "trigger": "with_code",
-                "applies_on": "current",
-                "company_id": self.env.company.id,
-                "rule_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "product_ids": [(4, self.product_A.id)],
-                            "minimum_qty": 1,
-                        },
-                    )
-                ],
-                "reward_ids": [
-                    (
-                        0,
-                        0,
-                        {
-                            "reward_type": "product",
-                            "reward_product_tag_id": product_tag.id,
-                        },
-                    )
-                ],
-            }
+        self.product_B.product_tag_ids = [(4, self.gift_product_tag.id)]
+        self.product_C.product_tag_ids = [(4, self.gift_product_tag.id)]
+        program = self._create_program_free_product_choice(
+            self.product_A, self.gift_product_tag
         )
         coupon = self._generate_coupons(program)
         self.service.dispatch(
