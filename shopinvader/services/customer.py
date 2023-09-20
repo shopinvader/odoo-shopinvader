@@ -4,7 +4,7 @@
 # Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=consider-merging-classes-inherited,method-required-super
-from odoo import _, http
+from odoo import _
 from odoo.exceptions import UserError
 
 from odoo.addons.component.core import Component
@@ -33,16 +33,10 @@ class CustomerService(Component):
     # pylint: disable=W8106
     def create(self, **params):
         vals = self._prepare_params(params)
-        _valid_binding = self._valid_before_binding(params)
-        if not _valid_binding:
-            binding = self.env["shopinvader.partner"].create(vals)
-            self._load_partner_work_context(binding, True)
-            self._post_create(self.work.partner)
-            return self._prepare_create_response(binding)
-        if _valid_binding == "cnpj_cpf":
-            return http.Response("CPF/CNPJ already registered.", status=409)
-        if _valid_binding == "partner_email":
-            return http.Response("An email must be uniq per backend.", status=409)
+        binding = self.env["shopinvader.partner"].create(vals)
+        self._load_partner_work_context(binding, True)
+        self._post_create(self.work.partner)
+        return self._prepare_create_response(binding)
 
     def update(self, _id, **params):
         # We get the binding from the partner
@@ -199,13 +193,3 @@ class CustomerService(Component):
             "role": binding.role,
         }
         return response
-
-    def _valid_before_binding(self, params):
-        fields = ["partner_email", "cnpj_cpf"]
-        values = [params.get("email"), params.get("cnpj_cpf")]
-        for field, value in zip(fields, values):
-            search = self.env["shopinvader.partner"].search([(field, "=", value)])
-            if search and field == "partner_email":
-                return field
-            if search and field == "cnpj_cpf" and value:
-                return field
