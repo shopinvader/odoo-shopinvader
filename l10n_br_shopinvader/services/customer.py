@@ -6,7 +6,7 @@ from re import sub
 
 from erpbrasil.base.fiscal.cnpj_cpf import validar
 
-from odoo import _
+from odoo import _, http
 
 from odoo.addons.base_rest import restapi
 from odoo.addons.component.core import Component
@@ -70,3 +70,28 @@ class CustomerService(Component):
             "message": {"type": "string", "required": False},
             "type": {"type": "string", "required": False},
         }
+
+    def create(self, **params):
+        vals = self._prepare_params(params)
+        _valid_binding = self._validate_before_binding(params)
+        if not _valid_binding:
+            binding = self.env["shopinvader.partner"].create(vals)
+            self._load_partner_work_context(binding, True)
+            self._post_create(self.work.partner)
+            return self._prepare_create_response(binding)
+        if _valid_binding == "cnpj_cpf":
+            return http.Response("CPF/CNPJ already registered.", status=409)
+        if _valid_binding == "partner_email":
+            return http.Response("An email must be uniq per backend.", status=409)
+
+        return super(CustomerService, self).create(**params)
+
+    def _validate_before_binding(self, params):
+        fields = ["partner_email", "cnpj_cpf"]
+        values = [params.get("email"), params.get("cnpj_cpf")]
+        for field, value in zip(fields, values):
+            search = self.env["shopinvader.partner"].search([(field, "=", value)])
+            if search and field == "partner_email":
+                return field
+            if search and field == "cnpj_cpf" and value:
+                return field
