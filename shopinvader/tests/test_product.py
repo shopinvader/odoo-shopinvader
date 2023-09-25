@@ -911,6 +911,30 @@ class ProductCase(ProductCommonCase):
         with self._check_correct_unbind_active(self.shopinvader_variants):
             fields.first(self.shopinvader_variants).write({"active": False})
 
+    def test_toggle_active(self):
+        """
+        Ensure toggle active of the shopinvader.variant is propagated
+        If active=False is set on shopinvader.product,
+            then all variants should be active=False
+        If active=True is set on shopinvader.product,
+            then all variant should be active=True
+        :return:
+        """
+        shopinv_product = self.shopinvader_variants.mapped("shopinvader_product_id")
+        self.assertEqual(len(shopinv_product), 1)
+        self.assertGreaterEqual(len(self.shopinvader_variants), 1)
+        # Init: every variants and shopinv product are active True
+        self.shopinvader_variants.write({"active": True})
+        shopinv_product.write({"active": True})
+
+        # Disable the product
+        shopinv_product.write({"active": False})
+        self.assertFalse(all([a.active for a in self.shopinvader_variants]))
+
+        # Re-enable the product
+        shopinv_product.write({"active": True})
+        self.assertTrue(all([a.active for a in self.shopinvader_variants]))
+
     def test_get_invader_variant(self):
         lang = self._install_lang("base.lang_fr")
         self.backend.lang_ids |= lang

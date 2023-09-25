@@ -164,6 +164,7 @@
                                             name="shopinvader_backend_ids"
                                             widget="many2many_tags"
                                         />
+                                        <field name="active" widget="boolean_toggle" />
                                     </tree>
                                 </field>
                             </group>

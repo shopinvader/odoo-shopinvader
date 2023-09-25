@@ -77,11 +77,7 @@ class ShopinvaderVariant(models.Model):
     def _compute_active(self):
         """Deactivate bindings if related records are archived"""
         for rec in self:
-            rec.active = (
-                rec.active
-                and rec.shopinvader_product_id.active
-                and rec.record_id.active
-            )
+            rec.active = rec.shopinvader_product_id.active and rec.record_id.active
 
     @api.depends("product_template_attribute_value_ids")
     def _compute_attribute_value_ids(self):
