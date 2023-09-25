@@ -2,7 +2,8 @@
 # @author Cristiano Rodrigues <cristiano.rodrigues@kmee.com.br>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.exceptions import UserError, ValidationError
+from odoo import _, http
+from odoo.exceptions import ValidationError
 
 from odoo.addons.base_rest import restapi
 from odoo.addons.component.core import AbstractComponent
@@ -21,27 +22,64 @@ class SearchServiceCities(AbstractComponent):
         cors="*",
     )
     def search(self, **params):
-        state = params.get("state")
+        country_code = params.get("country_code")
+        state_code = params.get("state_code")
         try:
-            country_id = self.shopinvader_backend.company_id.country_id
+            country_id = self.env["res.country"].search([("code", "=", country_code)])
+
+            if not country_id:
+                country_id = self.shopinvader_backend.company_id.country_id
+
+            if not country_id:
+                return http.Response(
+                    _(
+                        {
+                            "result": False,
+                            "error": f"country_code: {country_code} not found",
+                        }
+                    ),
+                    status=404,
+                )
+
             if country_id:
                 state_id = self.env["res.country.state"].search(
-                    [("country_id", "=", country_id.id), ("code", "=", state)]
+                    [("country_id", "=", country_id.id), ("code", "=", state_code)]
                 )
                 city_ids = self.env["res.city"].search(
                     [("country_id", "=", country_id.id), ("state_id", "=", state_id.id)]
                 )
-                cities = []
-                for x in city_ids:
-                    cities.append({"name": x.name, "id": x.id})
-        except (UserError, ValidationError) as e:
-            return {"result": False, "error": str(e)}
 
-        return {"result": cities}
+                res = []
+                if not city_ids:
+                    res.append({"id": state_id.id, "name": state_id.name})
+
+                for x in city_ids:
+                    res.append({"id": x.id, "name": x.name})
+
+                if not state_id:
+                    return http.Response(
+                        _(
+                            {
+                                "result": False,
+                                "error": f"state_code: {state_code} not found",
+                            }
+                        ),
+                        status=404,
+                    )
+                elif not city_ids:
+                    return http.Response(
+                        _({"result": False, "error": "Cities: not found"}), status=404
+                    )
+
+        except ValidationError as e:
+            return http.Response(_({"result": False, "error": str(e)}), status=404)
+
+        return {"result": res}
 
     def _validator_search(self):
         return {
-            "state": {"type": "string", "required": True},
+            "country_code": {"type": "string", "required": True},
+            "state_code": {"type": "string", "required": True},
         }
 
     def _validator_return_search(self):

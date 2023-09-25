@@ -23,7 +23,9 @@ Shopinvader Base Address City
 
 |badge1| |badge2| |badge3|
 
-REST Services for To list Brazilian cities.
+REST Services for To list cities.
+By default, this module returns a list of cities in a given country by state code.
+
 
 **Table of contents**
 
@@ -33,9 +35,15 @@ REST Services for To list Brazilian cities.
 Usage
 =====
 
-Call this endpoint every time you need to fetch Brazilian cities from a state.
-
+Find cities by country code or state code. Passing estre json:\n
+{
+  "country_code": "",
+  "state_code": ""
+}
+If you don't pass the country code in the json, the Api will\n
+ search for the country of the company released on Shopinvader.
 Bug Tracker
+
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
