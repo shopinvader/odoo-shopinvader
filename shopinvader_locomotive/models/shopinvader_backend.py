@@ -12,6 +12,11 @@ class ShopinvaderBackend(models.Model):
     _inherit = ["connector.backend", "shopinvader.backend"]
     _backend_name = "locomotivecms"
 
+    is_locomotive = fields.Boolean(
+        default=True,
+        help="In an hybrid setup, some backends are not tied to Locomotive",
+    )
+
     location = fields.Char(
         help="Locomotive URL (see Developers section Locomotive site)"
     )
@@ -70,6 +75,8 @@ class ShopinvaderBackend(models.Model):
 
     def _export_metafields_store(self, fields=None, force=False):
         for record in self:
+            if not record.is_locomotive:
+                continue
             with record.work_on(record._name) as work:
                 exporter = work.component(usage="record.exporter")
                 exporter.run(fields=fields, force=force)

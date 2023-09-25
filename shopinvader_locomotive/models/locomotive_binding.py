@@ -12,11 +12,15 @@ class LocomotiveBinding(models.AbstractModel):
 
     def export_record(self, _fields=None):
         self.ensure_one()
+        if not self.backend_id.is_locomotive:
+            return False
         with self.backend_id.work_on(self._name) as work:
             exporter = work.component(usage="record.exporter")
             return exporter.run(self.sudo())
 
     def export_delete_record(self, backend, external_id):
+        if not backend.is_locomotive:
+            return False
         with backend.work_on(self._name) as work:
             deleter = work.component(usage="record.exporter.deleter")
             return deleter.run(external_id)

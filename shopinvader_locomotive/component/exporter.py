@@ -33,6 +33,8 @@ class LocomotiveSiteExporter(Component):
         return json.loads(site_infos["metafields"])
 
     def run(self, fields=None, force=False):
+        if not self.backend_record.is_locomotive:
+            return
         self.binding = self.backend_record
         self.external_id = self.backend_record.handle
         map_record = self._map_data()
