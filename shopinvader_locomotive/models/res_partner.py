@@ -11,4 +11,6 @@ class ResPartner(models.Model):
         Get every shopinvader partner to export
         :return: shopinvader.partner recordset
         """
-        return self.mapped("shopinvader_bind_ids")
+        return self.mapped("shopinvader_bind_ids").filtered(
+            lambda x: x.backend_id.is_locomotive
+        )

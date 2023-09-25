@@ -28,6 +28,10 @@ class LocomotiveAdapter(AbstractComponent):
     def __init__(self, work_context):
         super().__init__(work_context)
         backend = self.collection
+        if not backend.is_locomotive:
+            # Connection with locomotive to a non-locomotive backend
+            # A code path may be unprotected with is_locomotive
+            raise UserError(_("Backend %s is not locomotive") % backend.name)
         self.client = locomotivecms.LocomotiveClient(
             backend.username,
             backend.password,

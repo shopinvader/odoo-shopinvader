@@ -10,6 +10,7 @@
             <page name="config" position="after">
                 <page name="locomotive" string="LocomotiveCMS">
                     <group name="locomotive_credentials" string="Credentials">
+                        <field name="is_locomotive" />
                         <field
                             name="location"
                             placeholder="e.g. https://ecommerce.shopinvader.com"

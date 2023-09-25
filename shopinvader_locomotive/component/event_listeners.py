@@ -14,13 +14,19 @@ class ShopinvaderBindingListener(Component):
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_create(self, record, fields=None):
+        if not record.backend_id.is_locomotive:
+            return
         record.with_delay().export_record(_fields=fields)
 
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_write(self, record, fields=None):
+        if not record.backend_id.is_locomotive:
+            return
         record.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record):
+        if not record.backend_id.is_locomotive:
+            return
         with record.backend_id.work_on(record._name) as work:
             external_id = work.component(usage="binder").to_external(record)
             if external_id:
@@ -52,4 +58,6 @@ class ShopinvaderRecordListener(Component):
         if "shopinvader_bind_ids" not in record._fields:
             return
         for binding in record.shopinvader_bind_ids:
+            if not binding.backend_id.is_locomotive:
+                continue
             binding.unlink()
