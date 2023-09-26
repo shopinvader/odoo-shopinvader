@@ -95,6 +95,7 @@ class InvoiceService(Component):
                     "not_paid",
                     "paid",
                     "partial",
+                    "in_payment",
                     "reversed",
                     "invoicing_legacy",
                 ],
