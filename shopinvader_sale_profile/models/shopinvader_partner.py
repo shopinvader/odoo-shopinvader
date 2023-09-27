@@ -59,7 +59,6 @@ class ShopinvaderPartner(models.Model):
             .ids
         )
         partners = self.mapped("record_id")
-        pricelists = partners.mapped("property_product_pricelist")
         default_sale_profiles = self._get_default_profiles(backend_ids)
         # company_id field is mandatory so we don't have manage empty value
         for company in self.mapped("backend_id.company_id"):
@@ -71,6 +70,7 @@ class ShopinvaderPartner(models.Model):
                 )
             # Get every fiscal position ids (without duplicates)
             fposition_ids = list(set(fposition_by_partner.values()))
+            pricelists = partners.with_context(force_company=company.id).mapped("property_product_pricelist")
             sale_profiles = self._get_sale_profiles(
                 backend_ids, pricelists, fposition_ids, company
             )
@@ -108,9 +108,9 @@ class ShopinvaderPartner(models.Model):
         sale_profile = self.env["shopinvader.sale.profile"].browse()
         partner = self.record_id
         backend = self.backend_id
+        pricelist = partner.property_product_pricelist
         if fposition_id:
             # Get the sale profile using the fiscal position, pricelist,...
-            pricelist = partner.property_product_pricelist
             sale_profile = sale_profiles.filtered(
                 lambda p, fpos=fposition_id, pl=pricelist, b=backend: fpos
                 in p.fiscal_position_ids.ids
@@ -121,7 +121,6 @@ class ShopinvaderPartner(models.Model):
                 sale_profile.with_prefetch(self._prefetch_ids)
             )
         else:
-            pricelist = partner.property_product_pricelist
             sale_profile = sale_profiles.filtered(
                 lambda p, pl=pricelist, b=backend: not p.fiscal_position_ids
                 and p.pricelist_id.id == pl.id
