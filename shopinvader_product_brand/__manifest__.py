@@ -15,7 +15,6 @@
     "installable": True,
     "depends": [
         # OCA
-        "extendable_fastapi",
         "product_brand",
         # Shopinvader
         "shopinvader_base_url",
@@ -26,4 +25,6 @@
         "views/product_brand_view.xml",
     ],
     "demo": [],
+    "external_dependencies": {"python": ["extendable_pydantic>=1.2.0"]},
+    "development_status": "Alpha",
 }
