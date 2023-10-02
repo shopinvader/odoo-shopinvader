@@ -51,7 +51,6 @@ exclude: |
   ^shopinvader_pos/|
   ^shopinvader_price_per_qty/|
   ^shopinvader_product_attribute_set/|
-  ^shopinvader_product_brand_tag/|
   ^shopinvader_product_manufactured_for/|
   ^shopinvader_product_media/|
   ^shopinvader_product_new/|
