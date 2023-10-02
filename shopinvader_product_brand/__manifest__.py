@@ -6,30 +6,24 @@
 {
     "name": "Shopinvader Product Brand",
     "summary": "Shopinvader product Brand",
-    "version": "14.0.1.3.1",
+    "version": "16.0.1.0.0",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
     "application": False,
     "installable": True,
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    },
     "depends": [
+        # OCA
+        "extendable_fastapi",
         "product_brand",
-        # To avoid too much glue module we directly depend of shopinvader_search_engine
-        # if someone really need this module without the search part please do a PR
-        "shopinvader_search_engine",
+        # Shopinvader
+        "shopinvader_base_url",
+        "shopinvader_product",
+        "shopinvader_product_seo",
     ],
     "data": [
         "views/product_brand_view.xml",
-        "views/shopinvader_brand_view.xml",
-        "views/shopinvader_backend_view.xml",
-        "data/ir_export_brand.xml",
-        "data/ir_export_product.xml",
-        "security/ir.model.access.csv",
     ],
     "demo": [],
 }

@@ -6,16 +6,11 @@ from odoo import fields, models
 
 
 class ProductBrand(models.Model):
-    _inherit = "product.brand"
+    _name = "product.brand"
+    _inherit = ["product.brand", "seo.title.mixin", "abstract.url"]
 
-    shopinvader_bind_ids = fields.One2many(
-        "shopinvader.brand",
-        "record_id",
-        string="Shopinvader Binding",
-        context={"active_test": False},
-    )
-    active = fields.Boolean(default=True, inverse="_inverse_active")
-
-    def _inverse_active(self):
-        brands = self.filtered(lambda p: not p.active)
-        brands.mapped("shopinvader_bind_ids").write({"active": False})
+    active = fields.Boolean(default=True)
+    sequence = fields.Integer()
+    meta_description = fields.Char()
+    meta_keywords = fields.Char()
+    short_description = fields.Text()

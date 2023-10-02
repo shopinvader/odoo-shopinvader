@@ -5,17 +5,30 @@
         <field name="model">product.brand</field>
         <field name="inherit_id" ref="product_brand.view_product_brand_form" />
         <field name="arch" type="xml">
-            <notebook position="inside">
-                <page name="shopinvader" string="Shopinvader">
-                    <field name="shopinvader_bind_ids" nolabel="1">
-                        <tree>
-                            <field name="backend_id" />
-                            <field name="lang_id" />
-                            <field name="sync_date" />
-                        </tree>
-                    </field>
+            <field name="description" position="before">
+               <group>
+                    <field name="short_description" />
+               </group>
+            </field>
+            <page name="description" position="after">
+                <page name="seo" string="SEO">
+                    <group name="meta_and_url">
+                        <field name="seo_title" />
+                        <field name="meta_keywords" />
+                        <field name="meta_description" />
+                    </group>
                 </page>
-            </notebook>
+            </page>
+        </field>
+    </record>
+
+    <record id="view_product_brand_tree" model="ir.ui.view">
+        <field name="model">product.brand</field>
+        <field name="inherit_id" ref="product_brand.view_product_brand_tree" />
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="sequence" widget="handle" />
+            </field>
         </field>
     </record>
 
