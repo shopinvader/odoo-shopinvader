@@ -1,0 +1,1057 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!-- pylint:disable=file-not-used -->
+<odoo>
+
+    <!-- Mid Century Modern Eames Chair with Molded Arms and Wood Legs -->
+
+
+    <record
+        id="product_image_relation_1"
+        model="fs.product.image"
+        context="{'fs_filename': '71c62lnhnxl_sx522_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_blue')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71c62lnhnxl_sx522_-2.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+
+    <!-- Ameriwood Home 1783213COM - Meuble TV -->
+
+    <record
+        id="product_image_relation_5"
+        model="fs.product.image"
+        context="{'fs_filename': '71ezvti-0l_sx522_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_product_tv_cbinet_ameriwood_product_template"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71ezvti-0l_sx522_-32.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_6"
+        model="fs.product.image"
+        context="{'fs_filename': '71qy77hpsgl_sx522_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_product_tv_cbinet_ameriwood_product_template"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71qy77hpsgl_sx522_-35.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <!-- Convenience Concepts Designs2Go Oslo - meuble TV -->
+
+    <record
+        id="product_image_relation_7"
+        model="fs.product.image"
+        context="{'fs_filename': '71guazzso7l_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_concept_design"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_white')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71guazzso7l_sl1500_-50.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_8"
+        model="fs.product.image"
+        context="{'fs_filename': '71gulsoprfl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_concept_design"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_white')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71gulsoprfl_sl1500_-53.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <!-- Meuble TV 40 cmHARPER -->
+
+    <record
+        id="product_image_relation_9"
+        model="fs.product.image"
+        context="{'fs_filename': 'g_631993_a.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_cmcharper"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/g_631993_a-56.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_10"
+        model="fs.product.image"
+        context="{'fs_filename': 'g_631993_c.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_cmcharper"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/g_631993_c-59.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <record
+        id="product_image_relation_11"
+        model="fs.product.image"
+        context="{'fs_filename': 'g_631993_g.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_cmcharper"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/g_631993_g-62.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <record
+        id="product_image_relation_12"
+        model="fs.product.image"
+        context="{'fs_filename': 'g_631993_e.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_cmcharper"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/g_631993_e-65.jpg"
+        />
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- Fauteuil Style Mid-Century avec assise tapissée -->
+
+    <record
+        id="product_image_relation_13"
+        model="fs.product.image"
+        context="{'fs_filename': '81ggpnkpool_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_yellow')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81ggpnkpool_sl1500_-104.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_14"
+        model="fs.product.image"
+        context="{'fs_filename': '81ufdwjleal_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_yellow')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81ufdwjleal_sl1500_-107.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <record
+        id="product_image_relation_15"
+        model="fs.product.image"
+        context="{'fs_filename': '81wca6qkcul_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_yellow')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81wca6qkcul_sl1500_-110.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <record
+        id="product_image_relation_16"
+        model="fs.product.image"
+        context="{'fs_filename': '91sxta7ujhl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_grey')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/91sxta7ujhl_sl1500_-113.jpg"
+        />
+        <field name="sequence">4</field>
+    </record>
+
+    <record
+        id="product_image_relation_17"
+        model="fs.product.image"
+        context="{'fs_filename': '81gbmzexsrl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_grey')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81gbmzexsrl_sl1500_-116.jpg"
+        />
+        <field name="sequence">5</field>
+    </record>
+
+    <record
+        id="product_image_relation_18"
+        model="fs.product.image"
+        context="{'fs_filename': '81hd-h2mghl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_grey')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81hd-h2mghl_sl1500_-119.jpg"
+        />
+        <field name="sequence">6</field>
+    </record>
+
+    <record
+        id="product_image_relation_19"
+        model="fs.product.image"
+        context="{'fs_filename': '81zBNebzzNL._SL1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_red')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81zBNebzzNL._SL1500_-122.jpg"
+        />
+        <field name="sequence">7</field>
+    </record>
+
+    <record
+        id="product_image_relation_21"
+        model="fs.product.image"
+        context="{'fs_filename': '81ra3tx1yfl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_blue')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81ra3tx1yfl_sl1500_-125.jpg"
+        />
+        <field name="sequence">8</field>
+    </record>
+
+    <record
+        id="product_image_relation_22"
+        model="fs.product.image"
+        context="{'fs_filename': '81rt1sqjedl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_blue')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81rt1sqjedl_sl1500_-128.jpg"
+        />
+        <field name="sequence">9</field>
+    </record>
+
+    <record
+        id="product_image_relation_23"
+        model="fs.product.image"
+        context="{'fs_filename': '81c0m6olhjl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_armchair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_blue')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/81c0m6olhjl_sl1500_-131.jpg"
+        />
+        <field name="sequence">10</field>
+    </record>
+
+    <!-- Table style Mid-Century Modern Chêne -->
+
+    <record
+        id="product_image_relation_24"
+        model="fs.product.image"
+        context="{'fs_filename': 'table-mid-century-natural-wood.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/table-mid-century-natural-wood-152.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_25"
+        model="fs.product.image"
+        context="{'fs_filename': 'mid-century-modern-wood-dining-table-natural-side.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/mid-century-modern-wood-dining-table-natural-side-155.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <!-- Sauder 420011 Coffee Table, Furniture, Craftsman Oak -->
+
+    <record
+        id="product_image_relation_26"
+        model="fs.product.image"
+        context="{'fs_filename': 'sauder-420011-coffee-table-furniture-craftsman-oak.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_coffee_table_caftman"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/sauder-420011-coffee-table-furniture-craftsman-oak-158.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_27"
+        model="fs.product.image"
+        context="{'fs_filename': 'sauder-420011-coffee-table-furniture-craftsman-oak-close.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_coffee_table_caftman"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/sauder-420011-coffee-table-furniture-craftsman-oak-close-161.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <!-- Sauder Harvey Park Entertainment Credenza, chêne clair -->
+
+    <record
+        id="product_image_relation_28"
+        model="fs.product.image"
+        context="{'fs_filename': 'sauder-harvey-park-entertainment-credenza-chene-clair.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_product_park_entertainment_product_template"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/sauder-harvey-park-entertainment-credenza-chene-clair-164.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_29"
+        model="fs.product.image"
+        context="{'fs_filename': 'sauder-harvey-park-entertainment-credenza-chene-clair-scene.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_product_park_entertainment_product_template"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/sauder-harvey-park-entertainment-credenza-chene-clair-scene-167.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <record
+        id="product_image_relation_30"
+        model="fs.product.image"
+        context="{'fs_filename': 'sauder-harvey-park-entertainment-credenza-chene-clair-scene-front.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_product_park_entertainment_product_template"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/sauder-harvey-park-entertainment-credenza-chene-clair-scene-front-170.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <!-- Table ronde style mid-century plateau laqué -->
+
+    <record
+        id="product_image_relation_31"
+        model="fs.product.image"
+        context="{'fs_filename': 'kitchen-dining-table-white-round-coffee-table-modern-leisure-wooden-tea-table-office-conference-pedestal-desk.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_round_table_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_white')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/kitchen-dining-table-white-round-coffee-table-modern-leisure-wooden-tea-table-office-conference-pedestal-desk-215.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <!-- Meuble TV Warm Shaker bois massif 183cm -->
+
+    <record
+        id="product_image_relation_32"
+        model="fs.product.image"
+        context="{'fs_filename': 'meuble-tv-warm-shaker-bois-massif-183cm.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_shaker_wood"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/meuble-tv-warm-shaker-bois-massif-183cm-218.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_33"
+        model="fs.product.image"
+        context="{'fs_filename': 'meuble-tv-warm-shaker-bois-massif-183cm-scene.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_shaker_wood"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/meuble-tv-warm-shaker-bois-massif-183cm-scene-221.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <record
+        id="product_image_relation_34"
+        model="fs.product.image"
+        context="{'fs_filename': 'meuble-tv-warm-shaker-bois-massif-183cm-gris.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_shaker_wood"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_grey')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/meuble-tv-warm-shaker-bois-massif-183cm-gris-224.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <record
+        id="product_image_relation_35"
+        model="fs.product.image"
+        context="{'fs_filename': 'meuble-tv-warm-shaker-bois-massif-183cm-scene-gris.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_shaker_wood"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_grey')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/meuble-tv-warm-shaker-bois-massif-183cm-scene-gris-227.jpg"
+        />
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- Table style Mid-Century Modern Chêne -->
+
+    <record
+        id="product_image_relation_36"
+        model="fs.product.image"
+        context="{'fs_filename': 'table-side-wood-oak.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_cabinet_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_brown')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/table-side-wood-oak-260.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <!-- Product: Vortex Side Chair -->
+
+    <record
+        id="product_image_relation_38"
+        model="fs.product.image"
+        context="{'fs_filename': '61kcwirwmjl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_vortex"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_white')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/61kcwirwmjl_sl1500_-289.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_39"
+        model="fs.product.image"
+        context="{'fs_filename': '61vffbcilbl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_vortex"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_white')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/61vffbcilbl_sl1500_-292.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <record
+        id="product_image_relation_40"
+        model="fs.product.image"
+        context="{'fs_filename': '61vvazh7fbl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_vortex"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_blue')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/61vvazh7fbl_sl1500_-295.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <record
+        id="product_image_relation_41"
+        model="fs.product.image"
+        context="{'fs_filename': '61ncsqkegrl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_vortex"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_blue')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/61ncsqkegrl_sl1500_-298.jpg"
+        />
+        <field name="sequence">4</field>
+    </record>
+
+    <!-- Product: Mid Century Modern Eames Chair with Molded Arms and Wood Legs -->
+
+    <record
+        id="product_image_relation_42"
+        model="fs.product.image"
+        context="{'fs_filename': '71xi8za0npl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_red')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71xi8za0npl_sl1500_-301.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <record
+        id="product_image_relation_43"
+        model="fs.product.image"
+        context="{'fs_filename': '71r0tdtl1sl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_red')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71r0tdtl1sl_sl1500_-304.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <record
+        id="product_image_relation_44"
+        model="fs.product.image"
+        context="{'fs_filename': '71tq2sgsacl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_blue')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71tq2sgsacl_sl1500_-307.jpg"
+        />
+        <field name="sequence">4</field>
+    </record>
+
+    <record
+        id="product_image_relation_45"
+        model="fs.product.image"
+        context="{'fs_filename': '71fudutmpl_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('product.product_attribute_value_4')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71fudutmpl_sl1500_-310.jpg"
+        />
+        <field name="sequence">5</field>
+    </record>
+
+    <record
+        id="product_image_relation_46"
+        model="fs.product.image"
+        context="{'fs_filename': '71uans-wol_sl1500_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_chair_mid_century"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('product.product_attribute_value_4')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/71uans-wol_sl1500_-313.jpg"
+        />
+        <field name="sequence">6</field>
+    </record>
+
+    <!-- Product: ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70 -->
+
+    <record
+        id="product_image_relation_53"
+        model="fs.product.image"
+        context="{'fs_filename': '51gnjksrxml_sl1024_.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_tv_stand_wood_and_glass"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_white')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/51gnjksrxml_sl1024_-497.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <!-- Product: Themla -->
+
+    <record
+        id="product_image_relation_54"
+        model="fs.product.image"
+        context="{'fs_filename': 'thelma-couple-chair.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_thelma"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/thelma-couple-chair-508.jpg"
+        />
+        <field name="sequence">1</field>
+    </record>
+
+    <record
+        id="product_image_relation_55"
+        model="fs.product.image"
+        context="{'fs_filename': '5c7f91a29eb6294768ad59bbce80ed04fcaff33d_chathm001gry_uk_thelma_dining_chairs_oak_grey02.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_thelma"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/5c7f91a29eb6294768ad59bbce80ed04fcaff33d_chathm001gry_uk_thelma_dining_chairs_oak_grey02-515.jpg"
+        />
+        <field name="sequence">2</field>
+    </record>
+
+    <record
+        id="product_image_relation_56"
+        model="fs.product.image"
+        context="{'fs_filename': '9affc871da0e733ee523fd6f78fa8d597b4dd25c_chathm001gry_uk_thelma_dining_chairs_oak_grey03.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_thelma"
+        />
+        <field name="tag_id" ref="image_tag_2" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/9affc871da0e733ee523fd6f78fa8d597b4dd25c_chathm001gry_uk_thelma_dining_chairs_oak_grey03-518.jpg"
+        />
+        <field name="sequence">3</field>
+    </record>
+
+    <record
+        id="product_image_relation_57"
+        model="fs.product.image"
+        context="{'fs_filename': '2be1238822f7edbc3b3c5f64c6e12f36ec84c861_chathm001gry_uk_thelma_dining_chairs_oak_grey07.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_thelma"
+        />
+        <field name="tag_id" ref="" />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/2be1238822f7edbc3b3c5f64c6e12f36ec84c861_chathm001gry_uk_thelma_dining_chairs_oak_grey07-524.jpg"
+        />
+        <field name="sequence">4</field>
+    </record>
+
+    <record
+        id="product_image_relation_58"
+        model="fs.product.image"
+        context="{'fs_filename': '73e214f2ec8bbe6b0687bcc7e53a55b2f70a2a38_chathm006bla_uk_2xthelma_dining_chairs_black_walnut_lb01.jpg'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_thelma"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('product.product_attribute_value_4')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/73e214f2ec8bbe6b0687bcc7e53a55b2f70a2a38_chathm006bla_uk_2xthelma_dining_chairs_black_walnut_lb01-551.jpg"
+        />
+        <field name="sequence">5</field>
+    </record>
+
+    <record
+        id="product_image_relation_59"
+        model="fs.product.image"
+        context="{'fs_filename': 'c47c477bc85febd3f99aa3f9c651c02cfa071958_chathm005red_uk_2xthelma_dining_chairs_red_walnut_lb01jpg.png'}"
+    >
+        <field
+            name="product_tmpl_id"
+            ref="shopinvader_product.product_template_thelma"
+        />
+        <field name="tag_id" ref="image_tag_1" />
+        <field
+            name="attribute_value_ids"
+            eval="[(6,0,[ref('shopinvader_product.product_attribute_value_color_red')])]"
+        />
+        <field
+            name="specific_image"
+            type="base64"
+            file="shopinvader_search_engine_image/static/img/c47c477bc85febd3f99aa3f9c651c02cfa071958_chathm005red_uk_2xthelma_dining_chairs_red_walnut_lb01jpg-554.png"
+        />
+        <field name="sequence">6</field>
+    </record>
+
+</odoo>
