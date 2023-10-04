@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Product Brand Image",
     "summary": "Shopinvader product Brand Image",
-    "version": "14.0.1.1.0",
+    "version": "16.0.1.0.0",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
@@ -19,14 +19,10 @@
     },
     "depends": [
         "shopinvader_product_brand",
-        "shopinvader_image",
-        "storage_image_product_brand",
+        "shopinvader_search_engine_image",
+        "shopinvader_search_engine_product_brand",
+        "fs_product_brand_multi_image",
     ],
-    "data": [
-        "data/ir_export_brand.xml",
-        "views/shopinvader_backend_view.xml",
-    ],
-    "demo": [
-        "demo/backend_demo.xml",
-    ],
+    "data": [],
+    "demo": [],
 }
