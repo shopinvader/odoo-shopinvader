@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="thumbnail_size_product" model="se.image.field.thumbnail.size">
+        <field
+            name="size_ids"
+            eval="[(6, 0, [ref('shopinvader_search_engine_image.small'), ref('shopinvader_search_engine_image.medium'), ref('shopinvader_search_engine_image.large')])]"
+        />
+        <field name="model_id" ref="product.model_product_product" />
+        <field
+            name="field_id"
+            ref="fs_product_multi_image.field_product_product__variant_image_ids"
+        />
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+    </record>
+
+    <record id="thumbnail_size_category" model="se.image.field.thumbnail.size">
+        <field
+            name="size_ids"
+            eval="[(6, 0, [ref('shopinvader_search_engine_image.small'), ref('shopinvader_search_engine_image.medium'), ref('shopinvader_search_engine_image.large')])]"
+        />
+        <field name="model_id" ref="product.model_product_category" />
+        <field
+            name="field_id"
+            ref="fs_product_multi_image.field_product_category__image_ids"
+        />
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+    </record>
+
+    <record id="thumbnail_size_product_brand" model="se.image.field.thumbnail.size">
+        <field
+            name="size_ids"
+            eval="[(6, 0, [ref('shopinvader_search_engine_image.small'), ref('shopinvader_search_engine_image.medium'), ref('shopinvader_search_engine_image.large')])]"
+        />
+        <field name="model_id" ref="product_brand.model_product_brand" />
+        <field
+            name="field_id"
+            ref="fs_product_brand_multi_image.field_product_brand__image_ids"
+        />
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+    </record>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="fs_storage_shopinvader_demo" model="fs.storage">
+        <field name="name">Shopinvader Demo File Storage</field>
+        <field name="protocol">odoofs</field>
+        <field name="code">fsshop</field>
+        <field name="directory_path">shopinvader</field>
+        <field
+            name="model_xmlids"
+        >search_engine_image_thumbnail.model_se_thumbnail</field>
+        <field name="use_filename_obfuscation" eval="0" />
+        <field name="autovacuum_gc" eval="False" />
+    </record>
+</odoo>

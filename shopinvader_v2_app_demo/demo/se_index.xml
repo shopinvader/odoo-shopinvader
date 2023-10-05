@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="index_product_product_en" model="se.index">
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+        <field name="name">elastic-product-en</field>
+        <field name="config_id" ref="index_config_product_product" />
+        <field name="lang_id" ref="base.lang_en" />
+        <field name="model_id" ref="product.model_product_product" />
+        <field name="serializer_type">shopinvader_product_exports</field>
+    </record>
+    <record id="index_product_product_fr" model="se.index">
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+        <field name="name">elastic-product-fr</field>
+        <field name="config_id" ref="index_config_product_product" />
+        <field name="lang_id" ref="base.lang_fr" />
+        <field name="model_id" ref="product.model_product_product" />
+        <field name="serializer_type">shopinvader_product_exports</field>
+    </record>
+
+    <record id="index_product_category_en" model="se.index">
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+        <field name="name">elastic-category-en</field>
+        <field name="config_id" ref="index_config_product_category" />
+        <field name="lang_id" ref="base.lang_en" />
+        <field name="model_id" ref="product.model_product_category" />
+        <field name="serializer_type">shopinvader_category_exports</field>
+    </record>
+    <record id="index_product_category_fr" model="se.index">
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+        <field name="name">elastic-category-fr</field>
+        <field name="config_id" ref="index_config_product_category" />
+        <field name="lang_id" ref="base.lang_fr" />
+        <field name="model_id" ref="product.model_product_category" />
+        <field name="serializer_type">shopinvader_category_exports</field>
+    </record>
+
+    <record id="index_product_brand_en" model="se.index">
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+        <field name="name">elastic-brand-en</field>
+        <field name="config_id" ref="index_config_product_brand" />
+        <field name="lang_id" ref="base.lang_en" />
+        <field name="model_id" ref="product_brand.model_product_brand" />
+        <field name="serializer_type">shopinvader_brand_exports</field>
+    </record>
+
+    <record id="index_product_brand_fr" model="se.index">
+        <field name="backend_id" ref="se_backend_shopinvader_demo" />
+        <field name="name">elastic-brand-fr</field>
+        <field name="config_id" ref="index_config_product_brand" />
+        <field name="lang_id" ref="base.lang_fr" />
+        <field name="model_id" ref="product_brand.model_product_brand" />
+        <field name="serializer_type">shopinvader_brand_exports</field>
+    </record>
+
+</odoo>

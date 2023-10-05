@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="se_backend_shopinvader_demo" model="se.backend">
+        <field name="name">Shopinvader Demo Elasticsearch Backend</field>
+        <field name="tech_name">se_backend_shopinvader_demo</field>
+        <field name="es_server_host">https://index.demo16.shopinvader.com/</field>
+        <field name="backend_type">elasticsearch</field>
+    </record>
+</odoo>
