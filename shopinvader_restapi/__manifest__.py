@@ -20,6 +20,7 @@
         "base_vat",
         "component_event",
         "sale",
+        "sale_cart",
         "sale_discount_display_amount",
         "server_environment",
         "onchange_helper",

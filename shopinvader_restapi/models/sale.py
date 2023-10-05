@@ -14,7 +14,6 @@ class SaleOrder(models.Model):
     _name = "sale.order"
     _inherit = ["sale.order", "track.external.mixin"]
 
-    typology = fields.Selection([("sale", "Sale"), ("cart", "Cart")], default="sale")
     shopinvader_backend_id = fields.Many2one("shopinvader.backend", "Backend")
     current_step_id = fields.Many2one(
         "shopinvader.cart.step", "Current Cart Step", readonly=True
@@ -62,28 +61,18 @@ class SaleOrder(models.Model):
         res["shopinvader_backend_id"] = self.shopinvader_backend_id.id
         return res
 
-    def action_confirm_cart(self):
-        for record in self:
-            if record.typology == "sale":
-                # cart is already confirmed
-                continue
-            record.write({"typology": "sale"})
-            if record.shopinvader_backend_id:
-                record.shopinvader_backend_id._send_notification(
-                    "cart_confirmation", record
-                )
-        return True
+    def _confirm_cart(self):
+        self.ensure_one()
+        res = super()._confirm_cart()
+        if self.shopinvader_backend_id:
+            self.shopinvader_backend_id._send_notification("cart_confirmation", self)
+        return res
 
-    def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
-        for record in self:
-            if record.state != "draft" and record.shopinvader_backend_id:
-                # If we confirm a cart directly we change the typology
-                if record.typology != "sale":
-                    record.typology = "sale"
-                record.shopinvader_backend_id._send_notification(
-                    "sale_confirmation", record
-                )
+    def _confirm_sale(self):
+        self.ensure_one()
+        res = super()._confirm_sale()
+        if self.shopinvader_backend_id:
+            self.shopinvader_backend_id._send_notification("sale_confirmation", self)
         return res
 
     def reset_price_tax(self):

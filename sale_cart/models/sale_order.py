@@ -10,17 +10,26 @@ class SaleOrder(models.Model):
 
     typology = fields.Selection([("sale", "Sale"), ("cart", "Cart")], default="sale")
 
+    def _confirm_cart(self):
+        self.ensure_one()
+        self.write({"typology": "sale"})
+
     def action_confirm_cart(self):
         for record in self:
             if record.typology == "sale":
                 # cart is already confirmed
                 continue
-            record.write({"typology": "sale"})
+            record._confirm_cart()
         return True
+
+    def _confirm_sale(self):
+        self.ensure_one()
+        if self.typology != "sale":
+            self.typology = "sale"
 
     def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         for record in self:
-            if record.state != "draft" and record.typology != "sale":
-                record.typology = "sale"
+            if record.state != "draft":
+                record._confirm_sale()
         return res
