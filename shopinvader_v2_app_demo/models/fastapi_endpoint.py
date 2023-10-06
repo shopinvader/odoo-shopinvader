@@ -110,7 +110,7 @@ class FastapiEndpoint(models.Model):
             cart_app = FastAPI()
             cart_app.include_router(cart_router)
             # First copy dependecies overrides from the main app
-            cart_app.dependency_overrides.update(self._get_app_dependencies_override())
+            cart_app.dependency_overrides.update(self._get_app_dependencies_overrides())
             # Then add/modify specific dependencies overrides
             cart_app.dependency_overrides.update(
                 self._get_cart_app_dependencies_overrides()
