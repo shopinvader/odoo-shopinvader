@@ -26,6 +26,8 @@
         "shopinvader_product_brand_tag",
         "shopinvader_search_engine_product_brand_image",
         "connector_elasticsearch",
+        "shopinvader_restapi",
+        "shopinvader_restapi_auth_jwt",
     ],
     "external_dependencies": {"python": ["fastapi"]},
     "data": [
