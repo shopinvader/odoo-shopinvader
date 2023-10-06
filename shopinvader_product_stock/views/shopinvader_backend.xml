@@ -7,9 +7,11 @@
         <field name="arch" type="xml">
             <page name="products" position="inside">
                 <group name="stock" string="Stock">
+                    <field name="warehouse_location_ids" invisible="True" />
                     <field name="product_stock_field_id" widget="selection"/>
                     <field name="synchronize_stock" widget="selection"/>
-                    <field name="warehouse_ids" widget="many2many_tags"/>
+                    <field name="warehouse_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit': True}" />
+                    <field name="location_ids" widget="many2many_tags" domain="[('id', 'in', warehouse_location_ids)]" options="{'no_create': True, 'no_create_edit': True}" />
                     <field name="stock_level_config"/>
                 </group>
             </page>

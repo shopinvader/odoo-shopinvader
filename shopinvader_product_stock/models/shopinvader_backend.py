@@ -6,7 +6,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import logging
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -24,6 +24,8 @@ class ShopinvaderBackend(models.Model):
         default=lambda self: self._default_warehouse_ids(),
         required=True,
     )
+    location_ids = fields.Many2many(comodel_name="stock.location", string="Locations", help="Specific locations to consider within the specified Warehouses.")
+    warehouse_location_ids = fields.Many2many(comodel_name="stock.location", compute="_compute_warehouse_location_ids")
     product_stock_field_id = fields.Many2one(
         "ir.model.fields",
         "Product stock field",
@@ -71,11 +73,24 @@ class ShopinvaderBackend(models.Model):
 
         :return: dict with warehouse code as key and warehouse_ids as value """
         self.ensure_one()
-        result = {"global": self.warehouse_ids.ids}
+        result = {"global": (self.warehouse_ids.ids, self.location_ids.ids)}
         if len(self.warehouse_ids) > 1:
             for warehouse in self.warehouse_ids:
-                result[self._make_warehouse_key(warehouse)] = [warehouse.id]
+                locations = False
+                if self.location_ids:
+                    locations = self.env["stock.location"].search(["&", ("id", "in", self.location_ids.ids), ("id", "child_of", [warehouse.view_location_id.id])])
+                result[self._make_warehouse_key(warehouse)] = ([warehouse.id], locations.ids if locations else False)
         return result
 
     def _make_warehouse_key(self, wh):
         return slugify(wh.code)
+
+    @api.depends("warehouse_ids")
+    def _compute_warehouse_location_ids(self):
+        for backend in self:
+            locations = self.env["stock.location"]
+            for warehouse in backend.warehouse_ids:
+                parent_location_id = warehouse.view_location_id.id
+                wh_locations = self.env["stock.location"].search([("id", "child_of", [parent_location_id])]).filtered(lambda l: l.usage == "internal")
+                locations |= wh_locations
+            backend.warehouse_location_ids = locations
