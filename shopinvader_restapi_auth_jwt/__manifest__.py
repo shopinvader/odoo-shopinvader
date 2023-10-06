@@ -3,18 +3,18 @@
 
 {
     "name": "Shopinvader JWT Authentication",
-    "version": "14.0.1.2.0",
+    "version": "16.0.1.2.0",
     "summary": "Find shopinvader backend and partner from JWT token",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "license": "AGPL-3",
     "depends": [
-        "shopinvader",
+        "shopinvader_restapi",
         "auth_jwt",
     ],
     "data": [
         "views/shopinvader_backend.xml",
     ],
     "demo": [],
-    "installable": False,
+    "installable": True,
 }
