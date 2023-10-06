@@ -4,14 +4,16 @@
 
 {
     "name": "Shopinvader Product Media",
-    "summary": "Index storage media data into external search engine",
-    "version": "14.0.1.0.0",
-    "category": "e-commerce",
+    "summary": "Index storage media data into search engine",
+    "version": "16.0.1.0.0",
+    "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
     "installable": True,
-    "auto_install": True,
-    "depends": ["shopinvader", "storage_media_product"],
-    "data": ["data/ir_product_export.xml"],
+    "depends": [
+        "shopinvader_product",
+        "shopinvader_search_engine",
+        "fs_product_multi_media",
+    ],
 }
