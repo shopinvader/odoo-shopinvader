@@ -44,4 +44,9 @@
         "demo/se_image_field_thumbnail_size.xml",
         "demo/fs_storage.xml",
     ],
+    "assets": {
+        "web.assets_frontend": [
+            "shopinvader_v2_app_demo/static/src/js/swagger_ui.js",
+        ],
+    },
 }
