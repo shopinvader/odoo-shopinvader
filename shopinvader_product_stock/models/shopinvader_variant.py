@@ -38,9 +38,13 @@ class ShopinvaderVariant(models.Model):
             loc_records = self.filtered(lambda s: s.backend_id == backend)
             for (
                 wh_key,
-                wh_ids,
+                (wh_ids, loc_ids),
             ) in backend._get_warehouse_list_for_export().items():
-                for loc_record in loc_records.with_context(warehouse=wh_ids):
+                if loc_ids:
+                    loc_records = loc_records.with_context(location=loc_ids)
+                else:
+                    loc_records = loc_records.with_context(warehouse=wh_ids)
+                for loc_record in loc_records:
                     result[loc_record.id][
                         wh_key
                     ] = loc_record._prepare_stock_data()

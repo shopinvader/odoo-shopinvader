@@ -17,9 +17,13 @@ class ShopinvaderBackend(models.Model):
         self.ensure_one()
         self_ctx = self
         warehouse_keys = self._get_warehouse_list_for_export()
-        warehouse_ids = warehouse_keys.get("global")
-        if warehouse_ids:
-            self_ctx = self.with_context(warehouse=warehouse_ids)
+        wh_key_tuple = warehouse_keys.get("global")
+        if wh_key_tuple:
+            warehouse_ids, location_ids = wh_key_tuple
+            if location_ids:
+                self_ctx = self.with_context(location=location_ids)
+            else:
+                self_ctx = self.with_context(warehouse=warehouse_ids)
         return super(
             ShopinvaderBackend, self_ctx
         )._autobind_product_from_assortment()
