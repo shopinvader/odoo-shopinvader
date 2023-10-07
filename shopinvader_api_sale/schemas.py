@@ -6,8 +6,8 @@
 from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 
-class SaleOrderSearch(StrictExtendableBaseModel):
-    name: str | None
+class SaleSearch(StrictExtendableBaseModel):
+    name: str | None = None
     typology: str | None = "sale"
 
     def to_domain(self):

@@ -3,10 +3,8 @@
 
 from typing import List
 
-from .amount import SaleAmount
-from .sale_order_line import SaleOrderLine
 from extendable_pydantic import StrictExtendableBaseModel
-from odoo.addons.shopinvader_schema_sale.schemas import BaseSaleOrder
+from odoo.addons.shopinvader_schema_sale.schemas import BaseSale
 
 
 class CartTransaction(StrictExtendableBaseModel):
@@ -19,7 +17,7 @@ class CartSyncInput(StrictExtendableBaseModel):
     transactions: List[CartTransaction]
 
 
-class CartResponse(BaseSaleOrder):
+class CartResponse(BaseSale):
     uuid: str | None = None
 
     @classmethod

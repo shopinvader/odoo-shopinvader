@@ -12,7 +12,7 @@ from .sale_order_line import SaleOrderLine
 from .shipping import ShippingInfo
 
 
-class BaseSaleOrder(StrictExtendableBaseModel):
+class BaseSale(StrictExtendableBaseModel):
     id: int
     state: str
     name: str
@@ -45,7 +45,7 @@ class BaseSaleOrder(StrictExtendableBaseModel):
         )
 
 
-class SaleOrder(StrictExtendableBaseModel):
+class Sale(BaseSale):
 
     date_delivery: datetime | None = None
 

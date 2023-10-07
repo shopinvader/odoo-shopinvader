@@ -16,25 +16,25 @@ from odoo.addons.fastapi.dependencies import (
     paging,
 )
 from odoo.addons.fastapi.schemas import PagedCollection, Paging
-from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.shopinvader_schema_sale.schemas import Sale
 
-from ..schemas import SaleOrderSearch
+from ..schemas import SaleSearch
 
 sale_router = APIRouter(tags=["sales"])
 
 
-@sale_router.get("/sales/")
+@sale_router.get("/sales")
 def search(
-    sale_search_params: Annotated[SaleOrderSearch, Depends()],
+    sale_search_params: Annotated[SaleSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
-) -> PagedCollection[SaleOrder]:
+) -> PagedCollection[Sale]:
     """Get the list of sale orders."""
-    domain = SaleOrderSearch.to_domain()
+    domain = sale_search_params.to_domain()
     count = env["sale.order"].search_count(domain)
     orders = env["sale.order"].search(domain, limit=paging.limit, offset=paging.offset)
-    return PagedCollection[SaleOrder](
+    return PagedCollection[Sale](
         total=count,
-        items=[SaleOrder.model_validate(order) for order in orders],
+        items=[Sale.from_sale_order(order) for order in orders],
     )
