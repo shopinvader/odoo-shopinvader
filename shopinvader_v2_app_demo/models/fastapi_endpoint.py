@@ -72,6 +72,9 @@ class FastapiEndpoint(models.Model):
             params[
                 "swagger_ui_oauth2_redirect_url"
             ] = "/shopinvader_demo/docs/oauth2-redirect"
+            params["swagger_ui_init_oauth"] = {
+                "clientId": "demo16.shopinvader.com",
+            }
         return params
 
     def _get_shopinvader_demo_app_dependencies_overrides(self):
