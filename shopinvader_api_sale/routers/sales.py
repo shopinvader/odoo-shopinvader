@@ -38,3 +38,16 @@ def search(
         total=count,
         items=[Sale.from_sale_order(order) for order in orders],
     )
+
+
+@sale_router.get("/sales/{sale_id}")
+def get(
+    sale_id: int,
+    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
+    partner: Annotated["ResPartner", Depends(authenticated_partner)],
+) -> Sale:
+    """
+    Get sale order of authenticated user with specific sale_id
+    sale corresponds to authenticated partner
+    """
+    return Sale.from_sale_order(env["sale.order"].browse(sale_id))

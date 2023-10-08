@@ -1,1 +1,1 @@
-from .cart import CartTransaction, CartSyncInput, CartResponse
+from .cart import CartTransaction, CartSyncInput

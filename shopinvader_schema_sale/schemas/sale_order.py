@@ -12,12 +12,14 @@ from .sale_order_line import SaleOrderLine
 from .shipping import ShippingInfo
 
 
-class BaseSale(StrictExtendableBaseModel):
+class Sale(StrictExtendableBaseModel):
+    uuid: str | None = None
     id: int
     state: str
     name: str
     client_order_ref: str | None = None
     date_order: datetime
+    date_commitment: datetime | None = None
     lines: List[SaleOrderLine]
     amount: SaleAmount | None = None
     # TODO discuss about this (should we keep the same schema for this field)
@@ -30,11 +32,14 @@ class BaseSale(StrictExtendableBaseModel):
     @classmethod
     def from_sale_order(cls, odoo_rec):
         return cls.model_construct(
+            uuid=odoo_rec.uuid or None,
             id=odoo_rec.id,
             state=odoo_rec.state,
             name=odoo_rec.name,
-            client_order_ref=odoo_rec.name,
+            typology=odoo_rec.typology,
+            client_order_ref=odoo_rec.client_order_ref or None,
             date_order=odoo_rec.date_order,
+            date_commitment=odoo_rec.commitment_date or None,
             lines=[
                 SaleOrderLine.from_sale_order_line(line) for line in odoo_rec.order_line
             ],
@@ -43,14 +48,3 @@ class BaseSale(StrictExtendableBaseModel):
             invoicing=InvoicingInfo.from_sale_order(odoo_rec),
             note=odoo_rec.note or None,
         )
-
-
-class Sale(BaseSale):
-
-    date_delivery: datetime | None = None
-
-    @classmethod
-    def from_sale_order(cls, odoo_rec):
-        res = super().from_sale_order(odoo_rec)
-        res.date_delivery = odoo_rec.date_delivery or None
-        return res

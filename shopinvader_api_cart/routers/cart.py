@@ -16,8 +16,9 @@ from odoo.addons.fastapi.dependencies import (
 )
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale.models.sale_order_line import SaleOrderLine
+from odoo.addons.shopinvader_schema_sale.schemas import Sale
 
-from ..schemas import CartResponse, CartSyncInput, CartTransaction
+from ..schemas import CartSyncInput, CartTransaction
 
 cart_router = APIRouter(tags=["carts"])
 
@@ -28,12 +29,12 @@ def get(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: str | None = None,
-) -> CartResponse | None:
+) -> Sale | None:
     """
     Return an empty dict if no cart was found
     """
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
-    return CartResponse.from_cart(cart) if cart else None
+    return Sale.from_sale_order(cart) if cart else None
 
 
 @cart_router.post("/sync", status_code=201)
@@ -43,12 +44,12 @@ def sync(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: str | None = None,
-) -> CartResponse | None:
+) -> Sale | None:
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
     cart = env["shopinvader_api_cart.service.helper"]._sync_cart(
         partner, cart, uuid, data.transactions
     )
-    return CartResponse.from_cart(cart) if cart else None
+    return Sale.from_sale_order(cart) if cart else None
 
 
 class ShopinvaderApiCartServiceHelper(models.AbstractModel):

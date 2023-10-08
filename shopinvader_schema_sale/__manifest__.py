@@ -11,9 +11,7 @@
     "author": " Akretion",
     "license": "AGPL-3",
     "depends": [
-        "pydantic",
-        "extendable",
-        "extendable_fastapi",
+        "shopinvader_schema_address",
     ],
     "external_dependencies": {
         "python": ["extendable_pydantic>=1.1.0", "pydantic>=2.0.0"]

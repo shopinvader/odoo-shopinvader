@@ -18,6 +18,7 @@
     },
     "depends": [
         "shopinvader_schema_sale",
+        "shopinvader_api_cart",  # TODO access right
     ],
     "data": [],
     "demo": [],
