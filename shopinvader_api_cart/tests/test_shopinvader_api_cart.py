@@ -420,3 +420,25 @@ class TestSaleCart(FastAPITransactionCase):
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
         self.assertEqual(so.applied_cart_api_transaction_uuids, "uuid2,uuid3,uuid4")
+
+    def test_update(self) -> None:
+        partner = self.default_fastapi_authenticated_partner
+        address = self.env["res.partner"].create(
+            {
+                "name": "Shipping",
+                "parent_id": partner.id,
+                "type": "delivery",
+            }
+        )
+        so = self.env["sale.order"]._create_empty_cart(
+            self.default_fastapi_authenticated_partner.id
+        )
+        # TODO FIXME how to not pass the key invoicing ?
+        data = {"shipping": {"address_id": address.id}, "invoicing": None}
+        with self._create_test_client(router=cart_router) as test_client:
+            response: Response = test_client.post(
+                f"/update/{so.uuid}", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(so.partner_shipping_id, address)
+        self.assertEqual(so.partner_invoice_id, partner)

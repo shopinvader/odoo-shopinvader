@@ -18,7 +18,7 @@ from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale.models.sale_order_line import SaleOrderLine
 from odoo.addons.shopinvader_schema_sale.schemas import Sale
 
-from ..schemas import CartSyncInput, CartTransaction
+from ..schemas import CartSyncInput, CartTransaction, CartUpdateInput
 
 cart_router = APIRouter(tags=["carts"])
 
@@ -50,6 +50,21 @@ def sync(
         partner, cart, uuid, data.transactions
     )
     return Sale.from_sale_order(cart) if cart else None
+
+
+@cart_router.post("/update")
+@cart_router.post("/update/{uuid}")
+def update(
+    data: CartUpdateInput,
+    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
+    partner: Annotated["ResPartner", Depends(authenticated_partner)],
+    uuid: str | None = None,
+) -> Sale:
+    cart = env["sale.order"]._find_open_cart(partner.id, uuid)
+    if not cart:
+        cart = env["sale.order"]._create_empty_cart()
+    cart.write(data.to_vals())
+    return Sale.from_sale_order(cart)
 
 
 class ShopinvaderApiCartServiceHelper(models.AbstractModel):

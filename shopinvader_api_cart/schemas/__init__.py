@@ -1,1 +1,7 @@
-from .cart import CartTransaction, CartSyncInput
+from .cart import (
+    CartTransaction,
+    CartSyncInput,
+    CartUpdateInput,
+    ShippingUpdateInfo,
+    InvoicingUpdateInfo,
+)
