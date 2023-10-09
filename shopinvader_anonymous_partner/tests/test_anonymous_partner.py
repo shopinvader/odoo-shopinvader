@@ -5,6 +5,7 @@ from unittest import mock
 
 import psycopg2
 
+from odoo import SUPERUSER_ID
 from odoo.http import Controller, request, route
 from odoo.tests.common import HttpCase, TransactionCase
 from odoo.tools import mute_logger
@@ -15,15 +16,19 @@ from odoo.addons.shopinvader_anonymous_partner.models.res_partner import COOKIE_
 class TestController(Controller):
     @route("/test/anonymous_partner_create", type="http", auth="none")
     def anonymous_partner_create(self):
-        partner = request.env["res.partner"]._create_anonymous_partner__cookie(
-            request.future_response
+        partner = (
+            request.env["res.partner"]
+            .with_user(SUPERUSER_ID)
+            ._create_anonymous_partner__cookie(request.future_response)
         )
         return str(partner.id)
 
     @route("/test/anonymous_partner_get", type="http", auth="none")
     def anonymous_partner_get(self):
-        partner = request.env["res.partner"]._get_anonymous_partner__cookie(
-            request.httprequest.cookies
+        partner = (
+            request.env["res.partner"]
+            .with_user(SUPERUSER_ID)
+            ._get_anonymous_partner__cookie(request.httprequest.cookies)
         )
         if partner:
             return str(partner.id)
