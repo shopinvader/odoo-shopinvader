@@ -10,7 +10,7 @@
     "development_status": "Alpha",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "author": " Akretion",
+    "author": " Akretion, ACSONE SA/NV",
     "license": "AGPL-3",
     "external_dependencies": {
         "python": [],

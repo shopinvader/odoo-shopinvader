@@ -1,2 +1,2 @@
-from . import category
-from . import product
+from .category import ProductCategory, ShortProductCategory
+from .product import ProductProduct

@@ -4,8 +4,6 @@
 
 from odoo import fields, models
 
-from odoo.addons.shopinvader_base_url.models.abstract_url import DEFAULT_LANG
-
 
 class ProductCategory(models.Model):
     _inherit = ["product.category", "abstract.url"]
@@ -13,7 +11,7 @@ class ProductCategory(models.Model):
 
     url_need_refresh = fields.Boolean(recursive=True)
 
-    def _update_url_key(self, referential="global", lang=DEFAULT_LANG):
+    def _update_url_key(self, referential="global", lang=None):
         # Ensure that parent url is up to date before updating the current url
         if self.parent_id:
             self.parent_id._update_url_key(referential=referential, lang=lang)

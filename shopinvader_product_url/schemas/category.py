@@ -13,6 +13,8 @@ class ShortProductCategory(BaseShortProductCategory, extends=True):
     @classmethod
     def from_product_category(cls, odoo_rec, *args, **kwargs):
         obj = super().from_product_category(odoo_rec, *args, **kwargs)
+        # ensure url is up to date
+        odoo_rec._update_url_key(lang=odoo_rec.env.context.get("lang"))
         obj.url_key = odoo_rec.url_key or None
         return obj
 
@@ -23,5 +25,5 @@ class ProductCategory(BaseProductCategory, extends=True):
     @classmethod
     def from_product_category(cls, odoo_rec):
         obj = super().from_product_category(odoo_rec)
-        obj.redirect_url_key = odoo_rec.redirect_url_key
+        obj.redirect_url_key = odoo_rec.redirect_url_key or []
         return obj
