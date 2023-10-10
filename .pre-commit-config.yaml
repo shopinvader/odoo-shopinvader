@@ -1,7 +1,6 @@
 exclude: |
   (?x)
   # NOT INSTALLABLE ADDONS
-  ^base_url/|
   ^partner_contact_company/|
   ^product_online_category/|
   ^shopinvader/|
