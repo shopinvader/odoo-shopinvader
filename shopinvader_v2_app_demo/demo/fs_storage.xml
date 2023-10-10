@@ -13,6 +13,7 @@
         <field name="use_filename_obfuscation" eval="True" />
         <field name="autovacuum_gc" eval="False" />
         <field name="base_url">https://media.demo16.shopinvader.com/images</field>
+        <field name="force_db_for_default_attachment_rules">{}</field>
         <field
             name="options"
         >{"key": "admin", "secret": "CHANGEME",  "client_kwargs":{"endpoint_url": "http://minio:9000"}, "s3_additional_kwargs": {"CacheControl": "max-age=31536000, public"}}</field>
