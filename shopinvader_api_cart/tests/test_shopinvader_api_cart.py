@@ -434,7 +434,7 @@ class TestSaleCart(FastAPITransactionCase):
             self.default_fastapi_authenticated_partner.id
         )
         # TODO FIXME how to not pass the key invoicing ?
-        data = {"shipping": {"address_id": address.id}, "invoicing": None}
+        data = {"delivery": {"address_id": address.id}, "invoicing": None}
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.post(
                 f"/update/{so.uuid}", content=json.dumps(data)

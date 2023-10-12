@@ -26,11 +26,11 @@ class InvoicingUpdateInfo(StrictExtendableBaseModel):
 
 class CartUpdateInput(StrictExtendableBaseModel):
     client_order_ref: str | None = None
-    shipping: ShippingUpdateInfo | None = None
+    delivery: ShippingUpdateInfo | None = None
     invoicing: InvoicingUpdateInfo | None = None
     note: str | None = None
 
-    def _convert_shipping_values(self, values):
+    def _convert_delivery_values(self, values):
         if "address_id" in values:
             return {"partner_shipping_id": values["address_id"]}
         else:
@@ -43,10 +43,10 @@ class CartUpdateInput(StrictExtendableBaseModel):
             return {}
 
     def _update_values(self, values):
-        if "shipping" in values:
-            shipping = values.pop("shipping")
-            if shipping:
-                values.update(self._convert_shipping_values(shipping))
+        if "delivery" in values:
+            delivery = values.pop("delivery")
+            if delivery:
+                values.update(self._convert_delivery_values(delivery))
         if "invoicing" in values:
             invoicing = values.pop("invoicing")
             if invoicing:
