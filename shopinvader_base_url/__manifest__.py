@@ -5,16 +5,20 @@
 
 {
     "name": "Base Url",
-    "version": "14.0.1.0.2",
+    "version": "16.0.1.0.2",
     "category": "tools",
     "license": "AGPL-3",
     "summary": "keep history of url for products & categories  ",
     "author": "Akretion, ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     # any module necessary for this one to work correctly
-    "depends": ["base"],
+    "depends": ["base", "base_sparse_field_list_support"],
     "external_dependencies": {"python": ["python-slugify"]},
-    "data": ["views/url_view.xml", "security/ir.model.access.csv"],
+    "data": [
+        "views/url_view.xml",
+        "security/res_groups.xml",
+        "security/ir.model.access.csv",
+    ],
     "url": "",
-    "installable": False,
+    "installable": True,
 }
