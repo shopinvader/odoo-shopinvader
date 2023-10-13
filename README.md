@@ -34,6 +34,7 @@ addon | version | maintainers | summary
 [shopinvader_product_description](shopinvader_product_description/) | 16.0.1.0.0 |  | Description fields for Shopinvader
 [shopinvader_product_seo](shopinvader_product_seo/) | 16.0.1.0.0 |  | SEO fields for Shopinvader
 [shopinvader_product_url](shopinvader_product_url/) | 16.0.1.0.0 |  | Generate url for product and category
+[shopinvader_restapi](shopinvader_restapi/) | 16.0.1.0.0 |  | Shopinvader
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.1 |  | Adds shchema address: address billing_address delivery_address
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.1 |  | Shopinvader Catalog Search Engine Connector
