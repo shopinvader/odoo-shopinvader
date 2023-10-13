@@ -4,7 +4,8 @@
 from datetime import datetime
 from typing import List
 
-from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
+from extendable_pydantic import StrictExtendableBaseModel
+
 from odoo.addons.shopinvader_schema_address.schemas import (
     BillingAddress,
     ShippingAddress,

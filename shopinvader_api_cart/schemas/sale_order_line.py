@@ -1,7 +1,7 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
+from extendable_pydantic import StrictExtendableBaseModel
 
 from .amount import SaleLineAmount
 
