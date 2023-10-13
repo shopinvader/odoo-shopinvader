@@ -1,0 +1,2 @@
+Technical changes to import the *StrictExtendableBaseModel* from its new
+location in the *extendable_pydantic* module.

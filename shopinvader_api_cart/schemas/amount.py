@@ -1,11 +1,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from extendable_pydantic import StrictExtendableBaseModel
 from pydantic import Field
 
 from odoo.tools.float_utils import float_round
-
-from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 
 class SaleAmount(StrictExtendableBaseModel):
