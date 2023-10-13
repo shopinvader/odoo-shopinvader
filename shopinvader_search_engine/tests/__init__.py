@@ -1,3 +1,2 @@
-from . import test_delete_product
-from . import test_action_server
-from . import test_backend
+from . import test_category_binding
+from . import test_product_binding

@@ -1,3 +1,2 @@
-Usually, you will not install this module directly.
-It will be a dependency of another module like
-'shopinvader_algolia'.
+To work, this module requires a concrete implementation of a search engine.
+The *connector_elasticsearch* module provides a connector for Elasticsearch.

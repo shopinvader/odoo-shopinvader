@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="product_category_form_view">
+        <field name="name">product.category.form (in shopinvader_product)</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_form_view" />
+        <field name="arch" type="xml">
+            <sheet position="inside">
+                <notebook>
+                    <page name="shopinvader" string="Shopinvader" />
+                </notebook>
+            </sheet>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="product_category_tree_view">
+        <field name="name">product.category.tree (in shopinvader_product)</field>
+        <field name="model">product.category</field>
+        <field name="inherit_id" ref="product.product_category_list_view" />
+        <field name="arch" type="xml">
+            <field name="display_name" position="before">
+                <field name="sequence" widget="handle" />
+            </field>
+        </field>
+    </record>
+
+</odoo>
