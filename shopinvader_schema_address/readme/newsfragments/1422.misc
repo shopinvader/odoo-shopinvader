@@ -1,3 +1,0 @@
-The module no more depends on fastapi. The *StrictExtendableBaseModel* is now
-provided by the *extendable_pydantic* python module. This change allows to
-lower the number of dependencies of the module.
