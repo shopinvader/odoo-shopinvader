@@ -40,6 +40,7 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.0 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
+[shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.0 |  | Index storage media data into search engine
 
 
 Unported addons
@@ -97,7 +98,6 @@ addon | version | maintainers | summary
 [shopinvader_price_per_qty](shopinvader_price_per_qty/) | 14.0.1.0.1 (unported) |  | Shopinvader price per quantity
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 (unported) |  | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_manufactured_for](shopinvader_product_manufactured_for/) | 14.0.1.0.0 (unported) |  | Manage Product Made Specially For Some Customers
-[shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 (unported) |  | Index storage media data into external search engine
 [shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.1 (unported) |  | Shopinvader product new
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.1.0 (unported) |  | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.2.0 (unported) |  | Exposes product prices with and without taxes
