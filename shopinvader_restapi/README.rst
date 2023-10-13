@@ -7,64 +7,51 @@ Shopinvader
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/shopinvader/odoo-shopinvader/tree/14.0/shopinvader
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_restapi
     :alt: shopinvader/odoo-shopinvader
 
 |badge1| |badge2| |badge3| 
 
-This is shopinvader the odoo module for the new generation of e-commerce.
+This addon provides the legacy REST api provided by the *shopinvader* addon
+in previous versions.
 
-ShopInvader is an ecommerce software to create and manage easily your online store with Odoo.
+From version 16.0, a rework of the REST api has been started. This rework
+has as goal to provide a more consistent and documented API. This rework is also
+based on a new technical stack (FastAPI_, Pydantic_, extendable_pydantic_, ..).
 
-This is the Odoo side of the `Shopinvader E-commerce Solution`_.
+Some endpoints provided by the legacy API are already available in the new API.
 
-.. _Shopinvader E-commerce Solution: https://shopinvader.com
+* ``cart``: The *shopinvader_api_cart* addon provides the new API for the cart
+  management.
+* ``address``: The *shopinvader_api_address* addon provides the new API for the
+  address management.
+
+Others endpoints will be available in the future.
+
+The *shopinvader_v2_app_demo* addon highlights how you can aggregate the new
+API and the legacy API in the same Odoo instance but also how you can combine
+the different parts of the new API into a single application.
+
+.. _FastAPI: https://fastapi.tiangolo.com/
+.. _Pydantic: https://pydantic-docs.helpmanual.io/
+.. _extendable_pydantic: https://pypi.org/project/extendable-pydantic/
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 
 .. contents::
    :local:
-
-Known issues / Roadmap
-======================
-
-* Customer validation limitation
-
-Customer validation is global: enable/disable affects all websites, if you have more than one.
-
-Technical
-~~~~~~~~~
-
-* Create methods should be rewritten to support multi
-*  The logic to bind / unbind products and categories should be implemented as
-   component in place of wizard.
-   Previously it was possible to work with in-memory record of the wizard to
-   call the same logic from within odoo. In Odoo 13 it's no more the case.
-   That means that to rebind thousand of records we must create thousand of
-   rows into the database to reuse the logic provided by the wizard.
-*  On product.category the name is no more translatable in V13.
-   This functionality has been restored into shopinvader.
-   This should be moved into a dedicated addon
-
-Changelog
-=========
-
-10.0.1.0.0 (2017-04-11)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* First real version : [REF] rename project to the real name : shoptor is dead long live to shopinvader", 2017-04-11)
-
-12.0.1.0.0 (2019-05-10)
-~~~~~~~~~~~~~~~~~~~~~~~
-
-* [12.0][MIG] shopinvader
 
 Bug Tracker
 ===========
@@ -72,7 +59,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_restapi%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -83,6 +70,7 @@ Authors
 ~~~~~~~
 
 * Akretion
+* ACSONE SA/NV
 
 Contributors
 ~~~~~~~~~~~~
@@ -92,6 +80,7 @@ Contributors
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Raphaël Reverdy <raphael.reverdy@akretion.com>
 * Kevin Khao <kevin.khao@akretion.com>
+* Quentin Groulard <quentin.groulard@acsone.eu>
 
 Other credits
 ~~~~~~~~~~~~~
@@ -104,10 +93,11 @@ The development of this module has been financially supported by:
 * Abilis
 * Camptocamp
 * Cosanum
+* ACSONE
 
 Maintainers
 ~~~~~~~~~~~
 
-This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/14.0/shopinvader>`_ project on GitHub.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_restapi>`_ project on GitHub.
 
 You are welcome to contribute.
