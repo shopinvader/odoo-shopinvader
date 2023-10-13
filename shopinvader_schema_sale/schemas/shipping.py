@@ -13,9 +13,5 @@ class ShippingInfo(StrictExtendableBaseModel):
     @classmethod
     def from_sale_order(cls, odoo_rec):
         return cls.model_construct(
-            address=(
-                ShippingAddress.from_res_partner(odoo_rec.partner_shipping_id)
-                if odoo_rec.partner_shipping_id
-                else None
-            )
+            address=(ShippingAddress.from_res_partner(odoo_rec.partner_shipping_id))
         )

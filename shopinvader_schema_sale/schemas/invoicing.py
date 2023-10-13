@@ -13,9 +13,5 @@ class InvoicingInfo(StrictExtendableBaseModel):
     @classmethod
     def from_sale_order(cls, odoo_rec):
         return cls.model_construct(
-            address=(
-                BillingAddress.from_res_partner(odoo_rec.partner_invoice_id)
-                if odoo_rec.partner_invoice_id
-                else None
-            )
+            address=(BillingAddress.from_res_partner(odoo_rec.partner_invoice_id))
         )
