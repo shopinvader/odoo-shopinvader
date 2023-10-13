@@ -22,6 +22,7 @@ setuptools.setup(
         'odoo-addon-shopinvader_sale_cart>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_schema_address>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_search_engine>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_search_engine_image>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
