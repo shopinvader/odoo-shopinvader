@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,174 +14,54 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__active
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__active
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__active
-msgid "Active"
+#. odoo-python
+#: code:addons/shopinvader_search_engine/models/se_index.py:0
+#, python-format
+msgid "'Serializer Type' must match 'Model'"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Add missing indexes"
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_category__count_se_binding_done
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_product__count_se_binding_done
+msgid "Count Se Binding Done"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Clear"
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_category__count_se_binding_error
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_product__count_se_binding_error
+msgid "Count Se Binding Error"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_category__data_size
-#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_se_binding__data_size
-#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_variant__data_size
-msgid ""
-"Computed size of the index. Algolia limits record size to 10KB and exports "
-"fail if your record exceeds the quota."
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_category__count_se_binding_pending
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_product__count_se_binding_pending
+msgid "Count Se Binding Pending"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__data
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__data
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__data
-msgid "Data"
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_category__count_se_binding_total
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_product__count_se_binding_total
+msgid "Count Se Binding Total"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__data_display
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__data_display
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__data_display
-msgid "Data Display"
+#: model:ir.model,name:shopinvader_search_engine.model_se_indexable_record
+msgid "Mixin that make record indexable in a search engine"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__date_modified
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__date_modified
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__date_modified
-msgid "Date Modified"
+#: model:ir.model,name:shopinvader_search_engine.model_product_template
+msgid "Product"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__date_syncronized
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__date_syncronized
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__date_syncronized
-msgid "Date Syncronized"
+#: model:ir.model,name:shopinvader_search_engine.model_product_category
+msgid "Product Category"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_se_index__display_name
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_backend__display_name
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__display_name
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__display_name
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
-msgid "Done"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Export"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Export index settings"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_se_index__id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_backend__id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__id
-msgid "ID"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_category__data_display
-#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_se_binding__data_display
-#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_variant__data_display
-msgid "Include this in debug mode to be able to inspect index data."
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_backend__index_ids
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__index_id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__index_id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__index_id
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
-msgid "Index"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__data_size
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__data_size
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__data_size
-msgid "Index record size"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Indexes"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_se_index__is_valid
-msgid "Is Valid"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_se_index____last_update
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_backend____last_update
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category____last_update
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding____last_update
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_backend
-msgid "Locomotive CMS Backend"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid ""
-"Loop trough all the indexes and export their settings (filters, facets, "
-"etc).                                   This is mandatory if you have "
-"updated filters."
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Re-synchronize"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Recompute"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.actions.server,name:shopinvader_search_engine.action_recompute_shopinvader_category
-msgid "Recompute shopinvader category"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.actions.server,name:shopinvader_search_engine.action_recompute_shopinvader_product_on_binding
-#: model:ir.actions.server,name:shopinvader_search_engine.action_recompute_shopinvader_product_on_template
-msgid "Recompute shopinvader product"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
-msgid "Scheduled"
+#: model:ir.model,name:shopinvader_search_engine.model_product_product
+msgid "Product Variant"
 msgstr ""
 
 #. module: shopinvader_search_engine
@@ -190,76 +70,32 @@ msgid "Se Index"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_backend__se_backend_id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__se_backend_id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__se_backend_id
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__se_backend_id
-msgid "Search Engine Backend"
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_category__se_binding_ids
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_product__se_binding_ids
+msgid "Seacrh Engine Bindings"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model.fields,help:shopinvader_search_engine.field_shopinvader_backend__se_backend_id
-msgid "Search Engine backend configuration to use"
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_se_index__serializer_type
+msgid "Serializer Type"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_form_view
-msgid "Search engine"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid "Search engine indexes"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_category
+#: model:ir.model.fields.selection,name:shopinvader_search_engine.selection__se_index__serializer_type__shopinvader_category_exports
 msgid "Shopinvader Category"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_se_binding
-msgid "Shopinvader Se Binding"
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_category__shopinvader_child_ids
+msgid "Shopinvader Child"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model:ir.model,name:shopinvader_search_engine.model_shopinvader_variant
-msgid "Shopinvader Variant"
+#: model:ir.model.fields,field_description:shopinvader_search_engine.field_product_category__shopinvader_parent_id
+msgid "Shopinvader Parent"
 msgstr ""
 
 #. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
-msgid "State"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_category__sync_state
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_se_binding__sync_state
-#: model:ir.model.fields,field_description:shopinvader_search_engine.field_shopinvader_variant__sync_state
-msgid "Sync State"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_backend_view_form
-msgid ""
-"This will iter on all items in the index of the search engine"
-"                             if the corresponding binding does not exist on "
-"odoo it will create a job                             that delete all the "
-"obsolete items.                             You should not use this method "
-"for day to day job, it is only an helper                             for "
-"recovering your index after a damage.                             You can "
-"also drop index but this will introduce downtime, so it's"
-"                             better to force a resynchronization"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
-msgid "To Check"
-msgstr ""
-
-#. module: shopinvader_search_engine
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.shopinvader_variant_search_view
-#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine.view_shopinvader_category_search
-msgid "To Update"
+#: model:ir.model.fields.selection,name:shopinvader_search_engine.selection__se_index__serializer_type__shopinvader_product_exports
+msgid "Shopinvader Product"
 msgstr ""
