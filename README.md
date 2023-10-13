@@ -35,6 +35,7 @@ addon | version | maintainers | summary
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.0 |  | Adds shchema address: address billing_address delivery_address
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.0 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.0 |  | Add the export of Image for Shopinvader
 
 
 Unported addons
@@ -69,7 +70,6 @@ addon | version | maintainers | summary
 [shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easily manage Shopinvader bindings for your company backend.
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.3.0.1 (unported) |  | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 14.0.1.1.0 (unported) |  | Guest mode for Shopinvader
-[shopinvader_image](shopinvader_image/) | 14.0.1.3.0 (unported) |  | Add the export of Image for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.1 (unported) |  | Import product images
 [shopinvader_invoice](shopinvader_invoice/) | 14.0.2.2.0 (unported) |  | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.1.0 (unported) |  | Shopinvader Lead Management
