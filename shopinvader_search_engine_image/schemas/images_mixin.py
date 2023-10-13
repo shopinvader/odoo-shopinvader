@@ -1,9 +1,9 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from extendable_pydantic import StrictExtendableBaseModel
 from pydantic import fields
 
-from odoo.addons.extendable_fastapi.schemas import StrictExtendableBaseModel
 from odoo.addons.search_engine_image_thumbnail.models.se_indexable_record import (
     SeIndexableRecord,
 )
