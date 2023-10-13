@@ -379,56 +379,89 @@ Only for development or testing purpose, do not use in production.
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#usage" id="id3">Usage</a></li>
-<li><a class="reference internal" href="#known-issues-roadmap" id="id4">Known issues / Roadmap</a></li>
-<li><a class="reference internal" href="#changelog" id="id5">Changelog</a><ul>
-<li><a class="reference internal" href="#id1" id="id6">10.0.1.0.0 (2017-04-11)</a></li>
-<li><a class="reference internal" href="#id2" id="id7">12.0.1.0.0 (2019-05-21)</a></li>
+<li><a class="reference internal" href="#usage" id="id6">Usage</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="id7">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#changelog" id="id8">Changelog</a><ul>
+<li><a class="reference internal" href="#id1" id="id9">16.0.1.0.1 (2023-10-13)</a></li>
+<li><a class="reference internal" href="#id4" id="id10">10.0.1.0.0 (2017-04-11)</a></li>
+<li><a class="reference internal" href="#id5" id="id11">12.0.1.0.0 (2019-05-21)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#bug-tracker" id="id8">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="id9">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="id10">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="id11">Contributors</a></li>
-<li><a class="reference internal" href="#other-credits" id="id12">Other credits</a><ul>
-<li><a class="reference internal" href="#funders" id="id13">Funders</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="id12">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="id13">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="id14">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="id15">Contributors</a></li>
+<li><a class="reference internal" href="#other-credits" id="id16">Other credits</a><ul>
+<li><a class="reference internal" href="#funders" id="id17">Funders</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#maintainers" id="id14">Maintainers</a></li>
+<li><a class="reference internal" href="#maintainers" id="id18">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="usage">
-<h1><a class="toc-backref" href="#id3">Usage</a></h1>
+<h1><a class="toc-backref" href="#id6">Usage</a></h1>
 <p>Go to Connector menu.</p>
 <p>Under the ‘Search Engine Connector’ menu,
 you will find a list of all search engines (Backends) defined</p>
 </div>
 <div class="section" id="known-issues-roadmap">
-<h1><a class="toc-backref" href="#id4">Known issues / Roadmap</a></h1>
+<h1><a class="toc-backref" href="#id7">Known issues / Roadmap</a></h1>
 <ul class="simple">
 <li>Export price on product</li>
 <li>Export SEO title on product</li>
 </ul>
 </div>
 <div class="section" id="changelog">
-<h1><a class="toc-backref" href="#id5">Changelog</a></h1>
+<h1><a class="toc-backref" href="#id8">Changelog</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id6">10.0.1.0.0 (2017-04-11)</a></h2>
+<h2><a class="toc-backref" href="#id9">16.0.1.0.1 (2023-10-13)</a></h2>
+<p><strong>Features</strong></p>
+<ul>
+<li><p class="first">A complete refactoring has been done to the code. This refactoring was driven by
+the following goals:</p>
+<ul class="simple">
+<li>Make the code more readable and maintainable.</li>
+<li>Put in place a way to validate data exported to the indexes</li>
+<li>Ease the work of frontend developers by providing a schema for the data
+exported to the indexes.</li>
+</ul>
+<p>Some technical choices have been made to achieve these goals:</p>
+<ul class="simple">
+<li>We removed the need to force the developer to define a specific binding model
+for each model that needs to be indexed.</li>
+<li>We defined serializers based on Pydantic models. This choice allows you to
+validate the data, generate the documentation and the schema of the data
+exported to the indexes. It also makes the serialization mechanism more
+explicit and easier to understand.</li>
+<li>We defined more fine-grained modules.</li>
+</ul>
+<p>If you need to add additional information to the data exported to the indexes,
+you only need to extends the Pydantic models by adding your additional fields
+and extending the method initializing the model from an odoo record. (<a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/issues/1390">#1390</a>)</p>
+</li>
+</ul>
+<p><strong>Misc</strong></p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/issues/1423">#1423</a></li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id10">10.0.1.0.0 (2017-04-11)</a></h2>
 <ul class="simple">
 <li>First real version : [REF] rename project to the real name : shoptor is dead long live to shopinvader”, 2017-04-11)</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2><a class="toc-backref" href="#id7">12.0.1.0.0 (2019-05-21)</a></h2>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id11">12.0.1.0.0 (2019-05-21)</a></h2>
 <ul class="simple">
 <li>[12.0][MIG] shopinvader_search_engine</li>
 </ul>
 </div>
 </div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#id8">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#id12">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
@@ -436,15 +469,15 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#id9">Credits</a></h1>
+<h1><a class="toc-backref" href="#id13">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#id10">Authors</a></h2>
+<h2><a class="toc-backref" href="#id14">Authors</a></h2>
 <ul class="simple">
 <li>Akretion</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#id11">Contributors</a></h2>
+<h2><a class="toc-backref" href="#id15">Contributors</a></h2>
 <ul class="simple">
 <li>Sebastien BEAU &lt;<a class="reference external" href="mailto:sebastien.beau&#64;akretion.com">sebastien.beau&#64;akretion.com</a>&gt;</li>
 <li>Laurent Mignon &lt;<a class="reference external" href="mailto:laurent.mignon&#64;acsone.eu">laurent.mignon&#64;acsone.eu</a>&gt;</li>
@@ -455,9 +488,9 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 </ul>
 </div>
 <div class="section" id="other-credits">
-<h2><a class="toc-backref" href="#id12">Other credits</a></h2>
+<h2><a class="toc-backref" href="#id16">Other credits</a></h2>
 <div class="section" id="funders">
-<h3><a class="toc-backref" href="#id13">Funders</a></h3>
+<h3><a class="toc-backref" href="#id17">Funders</a></h3>
 <p>The development of this module has been financially supported by:</p>
 <ul class="simple">
 <li>Akretion R&amp;D</li>
@@ -465,7 +498,7 @@ If you spotted it first, help us smashing it by providing a detailed and welcome
 </div>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#id14">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#id18">Maintainers</a></h2>
 <p>This module is part of the <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_search_engine">shopinvader/odoo-shopinvader</a> project on GitHub.</p>
 <p>You are welcome to contribute.</p>
 </div>
