@@ -1,0 +1,258 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_product
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_category__active
+msgid "Active"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_product_tv_cbinet_ameriwood_product_template
+msgid "Ameriwood Home 1783213COM - Meuble TV"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_31
+msgid "Appliances"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__attribute_value_ids
+msgid "Attribute Value"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_27
+msgid "Chaise"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_24
+msgid "Chambre"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_tv_cabinet_concept_design
+msgid "Convenience Concepts Designs2Go Oslo - meuble TV"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_30
+msgid "Cuisine"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_226
+msgid "Electronique et informatique"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__full_name
+msgid "Full Name"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.attribute.value,name:shopinvader_product.product_attribute_value_color_grey
+msgid "Grey"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_category__level
+msgid "Level"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__main
+msgid "Main"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_21
+msgid "Meuble"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_29
+msgid "Meuble TV"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_tv_cabinet_cmcharper
+msgid "Meuble TV 40 cmHARPER"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_tv_cabinet_shaker_wood
+msgid "Meuble TV Warm Shaker bois massif 183cm"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_chair_mid_century
+msgid "Mid Century Modern Eames Chair with Molded Arms and Wood Legs"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_category__name
+msgid "Name"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_227
+msgid "Ordinateur, Tablettes & Accessoires"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_228
+msgid "PC Portable"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model,name:shopinvader_product.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model,name:shopinvader_product.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model,name:shopinvader_product.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_26
+msgid "Rangement"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_tv_stand_wood_and_glass
+msgid "ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70\""
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_25
+msgid "Salle de bain"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_23
+msgid "Salle à manger"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_22
+msgid "Salon"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_coffee_table_caftman
+msgid "Sauder 420011 Coffee Table, Furniture, Craftsman Oak"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_product_park_entertainment_product_template
+msgid "Sauder Harvey Park Entertainment Credenza, chêne clair"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_category__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: shopinvader_product
+#: model_terms:ir.ui.view,arch_db:shopinvader_product.product_category_form_view
+#: model_terms:ir.ui.view,arch_db:shopinvader_product.product_template_form_view
+msgid "Shopinvader"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__variant_attributes
+msgid "Shopinvader Attributes"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__shopinvader_categ_ids
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_template__shopinvader_categ_ids
+msgid "Shopinvader Categories"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__price
+msgid "Shopinvader Price"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__short_name
+msgid "Short Name"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_round_table_mid_century
+msgid "Table ronde style mid-century plateau laqué"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_tv_cabinet_mid_century
+msgid "Table style Mid-Century Modern Chêne"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.category,name:shopinvader_product.product_category_28
+msgid "Tables"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_thelma
+msgid "Thelma"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_chair_vortex
+msgid "Vortex Side Chair"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.template,name:shopinvader_product.product_template_armchair_mid_century
+msgid ""
+"Walnut Side End Table Nightstand with Storage Drawer Solid Wood Legs Living Room Furniture\n"
+"        "
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.attribute.value,name:shopinvader_product.product_attribute_value_color_blue
+msgid "blue"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.attribute.value,name:shopinvader_product.product_attribute_value_color_brown
+msgid "brown"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.attribute.value,name:shopinvader_product.product_attribute_value_color_red
+msgid "red"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.attribute.value,name:shopinvader_product.product_attribute_value_color_white
+msgid "white"
+msgstr ""
+
+#. module: shopinvader_product
+#: model:product.attribute.value,name:shopinvader_product.product_attribute_value_color_yellow
+msgid "yellow"
+msgstr ""
