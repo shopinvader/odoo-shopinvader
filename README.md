@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.2 |  | keep history of url for products & categories
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.0 |  | Adds shopinvader product fields and schemas
+[shopinvader_product_brand](shopinvader_product_brand/) | 16.0.1.0.0 |  | Shopinvader product Brand
 [shopinvader_product_description](shopinvader_product_description/) | 16.0.1.0.0 |  | Description fields for Shopinvader
 [shopinvader_product_seo](shopinvader_product_seo/) | 16.0.1.0.0 |  | SEO fields for Shopinvader
 [shopinvader_product_url](shopinvader_product_url/) | 16.0.1.0.0 |  | Generate url for product and category
@@ -36,6 +37,7 @@ addon | version | maintainers | summary
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.0 |  | Adds shchema address: address billing_address delivery_address
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.0 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.0 |  | Add the export of Image for Shopinvader
+[shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
 
 
 Unported addons
@@ -92,7 +94,6 @@ addon | version | maintainers | summary
 [shopinvader_pos](shopinvader_pos/) | 14.0.2.2.0 (unported) |  | Shopinvader for PoS
 [shopinvader_price_per_qty](shopinvader_price_per_qty/) | 14.0.1.0.1 (unported) |  | Shopinvader price per quantity
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 (unported) |  | Expose all PIM' Attribute sets with Shopinvader
-[shopinvader_product_brand](shopinvader_product_brand/) | 14.0.1.3.1 (unported) |  | Shopinvader product Brand
 [shopinvader_product_brand_image](shopinvader_product_brand_image/) | 14.0.1.1.0 (unported) |  | Shopinvader product Brand Image
 [shopinvader_product_brand_tag](shopinvader_product_brand_tag/) | 14.0.1.0.0 (unported) |  | Index Product Brand Tags in Shopinvader
 [shopinvader_product_manufactured_for](shopinvader_product_manufactured_for/) | 14.0.1.0.0 (unported) |  | Manage Product Made Specially For Some Customers
