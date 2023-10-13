@@ -16,8 +16,9 @@ except (ImportError, IOError) as err:
     _logger.debug(err)
 
 
-class ShopinvaderBackend(models.Model):
-    _inherit = "shopinvader.backend"
+class SeIndex(models.Model):
+
+    _inherit = "se.index"
 
     warehouse_ids = fields.Many2many(
         "stock.warehouse",
@@ -60,9 +61,7 @@ class ShopinvaderBackend(models.Model):
         return self.env["stock.warehouse"].search([], limit=1)
 
     def _selection_stock_level_config(self):
-        return [
-            ("only_qty", "Only Quantity"),
-        ]
+        return [("only_qty", "Only Quantity")]
 
     def _get_warehouse_list_for_export(self):
         """Get list of warehouse to be used for exporting stock level.

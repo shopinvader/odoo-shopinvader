@@ -3,3 +3,4 @@
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Denis Roussel <denis.roussel@acsone.eu>
 * Simone Orsi <simahawk@gmail.com>
+* Quentin Groulard <quentin.groulard@acsone.eu>

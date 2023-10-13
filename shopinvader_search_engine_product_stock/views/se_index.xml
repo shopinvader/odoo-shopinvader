@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="se_index_form_view">
+        <field
+            name="name"
+        >se.index.form (in shopinvader_search_engine_product_stock)</field>
+        <field name="model">se.index</field>
+        <field name="inherit_id" ref="connector_search_engine.se_index_form_view" />
+        <field name="arch" type="xml">
+            <group name="config" position="after">
+                <group name="stock" string="Stock" colspan="4">
+                    <field name="product_stock_field_id" widget="selection" />
+                    <field name="synchronize_stock" widget="selection" />
+                    <field name="warehouse_ids" widget="many2many_tags" />
+                    <field name="stock_level_config" />
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

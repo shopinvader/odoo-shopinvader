@@ -15,7 +15,7 @@ class StockMove(models.Model):
         # Maybe we can be more restrictive
         # depending of the move location and destination
         # For now we take all moves and bound products
-        return self.mapped("product_id").filtered(lambda p: p.is_shopinvader_binded)
+        return self.mapped("product_id").filtered(lambda p: p.se_binding_ids)
 
     def _jobify_product_stock_update(self):
         """

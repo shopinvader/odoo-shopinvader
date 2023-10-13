@@ -41,7 +41,7 @@ class TestStockMove(StockCommonCase):
     def test_action_confirm_not_bound(self):
         """action_confirm for non bound products should not create a job."""
         job = self.job_counter()
-        self.product.shopinvader_bind_ids.unlink()
+        self.product_binding.unlink()
         move = self._create_incoming_move()
         move._action_confirm()
         self.assertEqual(job.count_created(), 0)
