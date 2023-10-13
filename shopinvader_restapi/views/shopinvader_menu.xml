@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2017 Akretion
+    Copyright 2021 Camptocamp (http://www.camptocamp.com).
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+
+    <menuitem
+        id="menu_shopinvader_root"
+        name="Shopinvader"
+        sequence="10"
+        web_icon="shopinvader_restapi,static/description/icon.png"
+        groups="group_shopinvader_manager"
+    />
+
+    <menuitem
+        id="menu_shopinvader_orders"
+        name="Orders"
+        parent="menu_shopinvader_root"
+        sequence="5"
+        groups="sales_team.group_sale_salesman"
+    />
+
+    <menuitem
+        id="menu_shopinvader_config"
+        name="Configuration"
+        sequence="100"
+        parent="menu_shopinvader_root"
+        groups="group_shopinvader_manager"
+    />
+
+
+    <menuitem
+        id="menu_shopinvader_config_partners"
+        name="Partners"
+        parent="menu_shopinvader_config"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_shopinvader_config_cart"
+        name="Cart"
+        parent="menu_shopinvader_config"
+        sequence="50"
+    />
+
+    <menuitem
+        id="menu_shopinvader_config_technical"
+        name="Technical"
+        parent="menu_shopinvader_config"
+        sequence="1000"
+    />
+
+</odoo>

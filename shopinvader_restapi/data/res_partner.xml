@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="anonymous" model="res.partner">
+        <field name="name">Anonymous</field>
+    </record>
+
+</odoo>

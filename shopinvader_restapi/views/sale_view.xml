@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="sale_order_view_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="priority" eval="20" />
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="typology" invisible="True" />
+                <field
+                    name="current_step_id"
+                    attrs="{'invisible': [('typology', '!=', 'cart')]}"
+                />
+                <field
+                    name="done_step_ids"
+                    widget="many2many_tags"
+                    attrs="{'invisible': [('typology', '!=', 'cart')]}"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_sales_order_filter" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter" />
+        <field name="arch" type="xml">
+            <field name="team_id" position="after">
+                <field name="shopinvader_backend_id" />
+                <field name="typology" />
+            </field>
+            <filter name="activities_overdue" position="before">
+                <separator />
+                <filter
+                    name="shopinvader_cart"
+                    string="Shopinvader Carts"
+                    domain="[('typology', '=', 'cart'), ('shopinvader_backend_id', '!=', False)]"
+                />
+                <filter
+                    name="shopinvader_sale"
+                    string="Shopinvader Orders"
+                    domain="[('typology', '=', 'sale'), ('shopinvader_backend_id', '!=', False)]"
+                />
+                <separator />
+            </filter>
+        </field>
+    </record>
+
+    <record id="view_order_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_tree" />
+        <field name="arch" type="xml">
+            <field name="invoice_status" position="before">
+                <field name="shopinvader_backend_id" optional="hide" />
+                <field name="typology" optional="hide" />
+            </field>
+            <field name="invoice_status" position="after">
+                <field
+                    name="shopinvader_state"
+                    optional="hide"
+                    decoration-info="shopinvader_state in ['pending', 'processing']"
+                    decoration-success="shopinvader_state == 'shipped'"
+                    widget="badge"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="shopinvader_backend_id" optional="hide" />
+                <field name="typology" optional="hide" />
+            </field>
+            <field name="state" position="after">
+                <field
+                    name="shopinvader_state"
+                    optional="hide"
+                    decoration-info="shopinvader_state in ['pending', 'processing']"
+                    decoration-success="shopinvader_state == 'shipped'"
+                    widget="badge"
+                />
+            </field>
+        </field>
+    </record>
+
+    <record id="sale.action_quotations" model="ir.actions.act_window">
+        <field name="domain">[('typology', '=', 'sale')]</field>
+    </record>
+
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+        <field name="domain">[('typology', '=', 'sale')]</field>
+    </record>
+
+</odoo>

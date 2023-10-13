@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="shopinvader_notification_cart" model="shopinvader.notification">
+        <field name="backend_id" ref="backend_1" />
+        <field name="notification_type">cart_confirmation</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="template_id" ref="email_cart_notification" />
+    </record>
+
+    <record id="shopinvader_notification_sale" model="shopinvader.notification">
+        <field name="backend_id" ref="backend_1" />
+        <field name="notification_type">sale_confirmation</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field name="template_id" ref="email_sale_notification" />
+    </record>
+
+    <record id="shopinvader_notification_invoice" model="shopinvader.notification">
+        <field name="backend_id" ref="backend_1" />
+        <field name="notification_type">invoice_open</field>
+        <field name="model_id" ref="account.model_account_move" />
+        <field name="template_id" ref="email_invoice_notification" />
+    </record>
+
+    <record
+        id="shopinvader_notification_new_customer_welcome"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="backend_1" />
+        <field name="notification_type">new_customer_welcome</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="template_id" ref="email_new_customer_welcome_notification" />
+    </record>
+
+    <record
+        id="shopinvader_notification_customer_updated"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="backend_1" />
+        <field name="notification_type">customer_updated</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="template_id" ref="email_customer_updated_notification" />
+    </record>
+
+    <record
+        id="shopinvader_notification_address_created"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="backend_1" />
+        <field name="notification_type">address_created</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="template_id" ref="email_address_created_notification" />
+    </record>
+
+    <record
+        id="shopinvader_notification_address_updated"
+        model="shopinvader.notification"
+    >
+        <field name="backend_id" ref="backend_1" />
+        <field name="notification_type">address_updated</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="template_id" ref="email_address_updated_notification" />
+    </record>
+
+</odoo>
