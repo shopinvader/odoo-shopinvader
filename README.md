@@ -24,8 +24,8 @@ addon | version | maintainers | summary
 [sale_cart](sale_cart/) | 16.0.1.0.0 |  | Uee Sale Orders as cart.
 [shopinvader_address](shopinvader_address/) | 16.0.1.0.0 |  | Shopinvader Address: Shipping,Billing
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.0.1 |  | Manage anonymous partners with a cookie.
-[shopinvader_api_address](shopinvader_api_address/) | 16.0.1.1.0 |  | Adds a service to manage shopinvader billing and shipping address
-[shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.0.1 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
+[shopinvader_api_address](shopinvader_api_address/) | 16.0.1.1.1 |  | Adds a service to manage shopinvader billing and shipping address
+[shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.0.2 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.2 |  | keep history of url for products & categories
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.0 |  | Adds shopinvader product fields and schemas
@@ -34,7 +34,7 @@ addon | version | maintainers | summary
 [shopinvader_product_seo](shopinvader_product_seo/) | 16.0.1.0.0 |  | SEO fields for Shopinvader
 [shopinvader_product_url](shopinvader_product_url/) | 16.0.1.0.0 |  | Generate url for product and category
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.0 |  | ShopInvader logic for sale carts.
-[shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.0 |  | Adds shchema address: address billing_address delivery_address
+[shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.1 |  | Adds shchema address: address billing_address delivery_address
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.0 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.0 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
