@@ -1,0 +1,66 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_search_engine_product_brand
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_search_engine_product_brand
+#. odoo-python
+#: code:addons/shopinvader_search_engine_product_brand/models/se_index.py:0
+#, python-format
+msgid "'Serializer Type' must match 'Model'"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_brand.field_product_brand__count_se_binding_done
+msgid "Count Se Binding Done"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_brand.field_product_brand__count_se_binding_error
+msgid "Count Se Binding Error"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_brand.field_product_brand__count_se_binding_pending
+msgid "Count Se Binding Pending"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_brand.field_product_brand__count_se_binding_total
+msgid "Count Se Binding Total"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model,name:shopinvader_search_engine_product_brand.model_product_brand
+msgid "Product Brand"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model,name:shopinvader_search_engine_product_brand.model_se_index
+msgid "Se Index"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_brand.field_product_brand__se_binding_ids
+msgid "Seacrh Engine Bindings"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_brand.field_se_index__serializer_type
+msgid "Serializer Type"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_brand
+#: model:ir.model.fields.selection,name:shopinvader_search_engine_product_brand.selection__se_index__serializer_type__shopinvader_brand_exports
+msgid "Shopinvader Product Brand"
+msgstr ""
