@@ -1,0 +1,54 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_product_url
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_product_url
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_category__count_url
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_template__count_url
+msgid "Count Url"
+msgstr ""
+
+#. module: shopinvader_product_url
+#: model:ir.model,name:shopinvader_product_url.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: shopinvader_product_url
+#: model:ir.model,name:shopinvader_product_url.model_product_category
+msgid "Product Category"
+msgstr ""
+
+#. module: shopinvader_product_url
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_category__redirect_url_key
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_template__redirect_url_key
+msgid "Redirect Url Keys"
+msgstr ""
+
+#. module: shopinvader_product_url
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_category__url_ids
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_template__url_ids
+msgid "Url"
+msgstr ""
+
+#. module: shopinvader_product_url
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_category__url_key
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_template__url_key
+msgid "Url Key"
+msgstr ""
+
+#. module: shopinvader_product_url
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_category__url_need_refresh
+#: model:ir.model.fields,field_description:shopinvader_product_url.field_product_template__url_need_refresh
+msgid "Url Need Refresh"
+msgstr ""
