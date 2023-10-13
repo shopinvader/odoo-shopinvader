@@ -1,0 +1,77 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_search_engine_image
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_search_engine_image
+#: model:ir.model.fields,help:shopinvader_search_engine_image.field_se_backend__image_data_url_strategy
+msgid ""
+"\n"
+"\n"
+"The URL is one of the fields stored in the image's JSON data exported to the\n"
+"search engine. The images exported are stored in a filesystem storage.\n"
+"Therefore, the image is addressable in a different.\n"
+"\n"
+"* By default, an internal url can be used to access the image through the\n"
+"    Odoo server.\n"
+"* On a fs.storage backend, you can also specifiy a base url to access the\n"
+"    image directly through the storage server. This is useful to avoid\n"
+"    unnecessary load on the Odoo server. This url is available in the\n"
+"    `url`field of the image's JSON data.\n"
+"\n"
+"When indexing the images, you can also choose to only export the relative\n"
+"path of the image. This is useful if you want to use the same storage\n"
+"backend with different CDN and will reduce the payload size w/o duplicating\n"
+"data.\n"
+"\n"
+"To resume, you can choose between 3 options:\n"
+"\n"
+"* `Odoo URL`: the URL will be the internal URL of the Odoo server\n"
+"* `FS Storage URL`: the URL will be the URL of the image served by the storage server\n"
+"* `Relative path URL`: the URL will be the relative path of the image\n"
+"\n"
+"In the last case, you must take care of adding the CDN URL on your frontend to\n"
+"all images' relative path.\n"
+msgstr ""
+
+#. module: shopinvader_search_engine_image
+#: model:ir.model.fields.selection,name:shopinvader_search_engine_image.selection__se_backend__image_data_url_strategy__storage_url
+msgid "FS Storage URL"
+msgstr ""
+
+#. module: shopinvader_search_engine_image
+#: model:ir.model.fields,field_description:shopinvader_search_engine_image.field_se_backend__image_data_url_strategy
+msgid "Image Data Url Strategy"
+msgstr ""
+
+#. module: shopinvader_search_engine_image
+#. odoo-python
+#: code:addons/shopinvader_search_engine_image/models/se_backend.py:0
+#, python-format
+msgid "No URL found for image %(image_name)s with strategy %(strategy)s"
+msgstr ""
+
+#. module: shopinvader_search_engine_image
+#: model:ir.model.fields.selection,name:shopinvader_search_engine_image.selection__se_backend__image_data_url_strategy__odoo
+msgid "Odoo URL"
+msgstr ""
+
+#. module: shopinvader_search_engine_image
+#: model:ir.model.fields.selection,name:shopinvader_search_engine_image.selection__se_backend__image_data_url_strategy__url_path
+msgid "Relative path URL"
+msgstr ""
+
+#. module: shopinvader_search_engine_image
+#: model:ir.model,name:shopinvader_search_engine_image.model_se_backend
+msgid "Se Backend"
+msgstr ""
