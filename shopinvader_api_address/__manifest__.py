@@ -5,7 +5,7 @@
     "name": "Shopinvader Address Api",
     "summary": """
         Adds a service to manage shopinvader billing and shipping address""",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
