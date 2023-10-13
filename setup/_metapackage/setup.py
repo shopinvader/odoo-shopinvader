@@ -16,6 +16,7 @@ setuptools.setup(
         'odoo-addon-shopinvader_base_url>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_fastapi_auth_jwt>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_product>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_product_brand>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_product_description>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_product_seo>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_product_url>=16.0dev,<16.1dev',
@@ -23,6 +24,7 @@ setuptools.setup(
         'odoo-addon-shopinvader_schema_address>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_search_engine>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_search_engine_image>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_search_engine_product_brand>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
