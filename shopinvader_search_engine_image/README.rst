@@ -7,38 +7,39 @@ Shopinvader image
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/shopinvader/odoo-shopinvader/tree/14.0/shopinvader_image
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_search_engine_image
     :alt: shopinvader/odoo-shopinvader
 
 |badge1| |badge2| |badge3| 
 
-This module builds up on functionality defined in storage_image to define new Shopinvader-specific functionality,
-and implements them on the Shopinvader version of categories and variants.
+This module extends the search_engine_image_thumbnail module to generate
+thumbnails for images for products and categories. The related information
+is then exported to the search engine as part of the product and category
+data.
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 
 .. contents::
    :local:
 
-Installation
-============
-
-Follow the documentation of the storage_backend module
-
 Usage
 =====
 
-Essentially, call _compute_images whenever you want to refresh all image thumbnails/resizes
-on your records. Resized images are then accessible through the "images" serialized field.
-
-For an example of full implementation on a new model, you can view shopinvader_banner.
+To activate the generation and the export of the thumbnails information
+to a search engine, you must define thumbnails size and configure on you index
+the sizes you want to export and for which fields theses sizes are valid.
 
 Changelog
 =========
@@ -59,7 +60,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_image%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_search_engine_image%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -70,6 +71,7 @@ Authors
 ~~~~~~~
 
 * Akretion
+* ACSONE SA/NV
 
 Contributors
 ~~~~~~~~~~~~
@@ -83,6 +85,6 @@ Contributors
 Maintainers
 ~~~~~~~~~~~
 
-This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/14.0/shopinvader_image>`_ project on GitHub.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_search_engine_image>`_ project on GitHub.
 
 You are welcome to contribute.
