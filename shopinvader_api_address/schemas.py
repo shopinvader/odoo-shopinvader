@@ -69,7 +69,7 @@ class AddressUpdate(StrictExtendableBaseModel):
 
 
 # --- Billing Address ---
-class BillingAddressCreate(AddressUpdate):
+class BillingAddressCreate(AddressCreate):
     """
     Creation of Billing Address
 
@@ -106,7 +106,7 @@ class BillingAddressUpdate(AddressUpdate):
 # --- Shipping Address ---
 
 
-class ShippingAddressCreate(AddressUpdate):
+class ShippingAddressCreate(AddressCreate):
     """
     Creation of Shipping Address
     """

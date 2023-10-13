@@ -22,7 +22,7 @@ address_router = APIRouter(tags=["addresses"])
 # --- Billing addresses ---
 
 
-@address_router.get("/addresses/billing", response_model=List[BillingAddress])
+@address_router.get("/addresses/billing")
 def get_billing_addresses(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> List[BillingAddress]:
@@ -34,7 +34,7 @@ def get_billing_addresses(
     return [BillingAddress.from_res_partner(rec) for rec in address]
 
 
-@address_router.get("/addresses/billing/{address_id}", response_model=BillingAddress)
+@address_router.get("/addresses/billing/{address_id}")
 def get_billing_address(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int,
@@ -47,9 +47,7 @@ def get_billing_address(
     return BillingAddress.from_res_partner(address)
 
 
-@address_router.post(
-    "/addresses/billing", response_model=BillingAddress, status_code=201
-)
+@address_router.post("/addresses/billing", status_code=201)
 def create_billing_address(
     data: BillingAddressCreate,
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
@@ -63,7 +61,7 @@ def create_billing_address(
     return BillingAddress.from_res_partner(address)
 
 
-@address_router.post("/addresses/billing/{address_id}", response_model=BillingAddress)
+@address_router.post("/addresses/billing/{address_id}")
 def update_billing_address(
     data: BillingAddressUpdate,
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
@@ -86,7 +84,7 @@ def update_billing_address(
 # --- Shipping address ---
 
 
-@address_router.get("/addresses/shipping", response_model=List[ShippingAddress])
+@address_router.get("/addresses/shipping")
 def get_shipping_addresses(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> List[ShippingAddress]:
@@ -98,7 +96,7 @@ def get_shipping_addresses(
     return [ShippingAddress.from_res_partner(rec) for rec in addresses]
 
 
-@address_router.get("/addresses/shipping/{address_id}", response_model=ShippingAddress)
+@address_router.get("/addresses/shipping/{address_id}")
 def get_shipping_address(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int,
@@ -111,9 +109,7 @@ def get_shipping_address(
     return ShippingAddress.from_res_partner(addresses)
 
 
-@address_router.post(
-    "/addresses/shipping", response_model=ShippingAddress, status_code=201
-)
+@address_router.post("/addresses/shipping", status_code=201)
 def create_shipping_address(
     data: ShippingAddressCreate,
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
@@ -127,7 +123,7 @@ def create_shipping_address(
     return ShippingAddress.from_res_partner(address)
 
 
-@address_router.post("/addresses/shipping/{address_id}", response_model=ShippingAddress)
+@address_router.post("/addresses/shipping/{address_id}")
 def update_shipping_address(
     data: ShippingAddressUpdate,
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
