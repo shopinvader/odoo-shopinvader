@@ -38,6 +38,7 @@ addon | version | maintainers | summary
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.0 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.0 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
+[shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
 
 
 Unported addons
@@ -94,7 +95,6 @@ addon | version | maintainers | summary
 [shopinvader_pos](shopinvader_pos/) | 14.0.2.2.0 (unported) |  | Shopinvader for PoS
 [shopinvader_price_per_qty](shopinvader_price_per_qty/) | 14.0.1.0.1 (unported) |  | Shopinvader price per quantity
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 (unported) |  | Expose all PIM' Attribute sets with Shopinvader
-[shopinvader_product_brand_image](shopinvader_product_brand_image/) | 14.0.1.1.0 (unported) |  | Shopinvader product Brand Image
 [shopinvader_product_brand_tag](shopinvader_product_brand_tag/) | 14.0.1.0.0 (unported) |  | Index Product Brand Tags in Shopinvader
 [shopinvader_product_manufactured_for](shopinvader_product_manufactured_for/) | 14.0.1.0.0 (unported) |  | Manage Product Made Specially For Some Customers
 [shopinvader_product_media](shopinvader_product_media/) | 14.0.1.0.0 (unported) |  | Index storage media data into external search engine
