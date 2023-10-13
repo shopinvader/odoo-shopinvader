@@ -8,12 +8,3 @@ from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 class SaleSearch(StrictExtendableBaseModel):
     name: str | None = None
-    typology: str | None = "sale"
-
-    def to_domain(self):
-        domain = []
-        if self.name:
-            domain.append(("name", "ilike", self.name))
-        if self.typology:
-            domain.append(("typology", "=", self.typology))
-        return domain

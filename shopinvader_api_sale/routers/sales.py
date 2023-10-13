@@ -56,8 +56,14 @@ class ShopinvaderApiSaleServiceHelper(models.Model):
     _name = "shopinvader_api_sale.service.helper"
     _description = "Shopinvader Api Sale Service Helper"
 
+    def _convert_search_domain(self, params):
+        domain = [("typology", "=", "sale")]
+        if params.name:
+            domain.append(("name", "ilike", self.name))
+        return domain
+
     def _search(self, params, paging):
-        domain = params.to_domain()
+        domain = self._convert_search_domain(params)
         count = self.env["sale.order"].search_count(domain)
         return count, self.env["sale.order"].search(
             domain, limit=paging.limit, offset=paging.offset
