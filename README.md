@@ -27,8 +27,12 @@ addon | version | maintainers | summary
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.1.0 |  | Adds a service to manage shopinvader billing and shipping address
 [shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.0.1 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
+[shopinvader_product](shopinvader_product/) | 16.0.1.0.0 |  | Adds shopinvader product fields and schemas
+[shopinvader_product_description](shopinvader_product_description/) | 16.0.1.0.0 |  | Description fields for Shopinvader
+[shopinvader_product_seo](shopinvader_product_seo/) | 16.0.1.0.0 |  | SEO fields for Shopinvader
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.0 |  | Adds shchema address: address billing_address delivery_address
+[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.0 |  | Shopinvader Catalog Search Engine Connector
 
 
 Unported addons
@@ -116,7 +120,6 @@ addon | version | maintainers | summary
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 (unported) |  | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.3.0 (unported) |  | ShopInvader - Sale profile
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) |  | Shopinvader addons to extend sale report with backend
-[shopinvader_search_engine](shopinvader_search_engine/) | 14.0.1.4.1 (unported) |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.1.0 (unported) |  | Handle shop wishlist
 
 [//]: # (end addons)
