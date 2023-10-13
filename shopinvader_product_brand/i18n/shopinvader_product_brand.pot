@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,249 +14,35 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.shopinvader_backend_form_view
-msgid "<span class=\"o_stat_text\">Brands</span>"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.constraint,message:shopinvader_product_brand.constraint_shopinvader_brand_record_uniq
-msgid "A category can only have one binding by backend."
-msgstr ""
-
-#. module: shopinvader_product_brand
 #: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__active
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__active
 msgid "Active"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__automatic_url_key
-msgid "Automatic Url Key"
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__count_url
+msgid "Count Url"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__backend_id
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_search
-msgid "Backend"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.shopinvader_backend_form_view
-msgid "Bind all brands"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.shopinvader_backend_form_view
-msgid "Brand"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__name
-msgid "Brand Name"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__product_ids
-msgid "Brand Products"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.ui.menu,name:shopinvader_product_brand.menu_shopinvader_brand
-msgid "Brands"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__company_id
-msgid "Company"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,help:shopinvader_product_brand.field_shopinvader_brand__data_size
-msgid ""
-"Computed size of the index. Algolia limits record size to 10KB and exports "
-"fail if your record exceeds the quota."
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__create_date
-msgid "Created on"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__data
-msgid "Data"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__data_display
-msgid "Data Display"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__date_modified
-msgid "Date Modified"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__date_syncronized
-msgid "Date Syncronized"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__description
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_form
-msgid "Description"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__display_name
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend__display_name
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__display_name
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_product__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__external_id
-msgid "External ID"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_search
-msgid "Group By"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__id
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend__id
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__id
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_product__id
-msgid "ID"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,help:shopinvader_product_brand.field_shopinvader_brand__seo_title
+#: model:ir.model.fields,help:shopinvader_product_brand.field_product_brand__seo_title
 msgid ""
 "If you specify a custom value and you want to rollback to the default value,"
 " just let the field blank."
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__image_ids
-msgid "Images"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,help:shopinvader_product_brand.field_shopinvader_brand__data_display
-msgid "Include this in debug mode to be able to inspect index data."
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__index_id
-msgid "Index"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_form
-msgid "Index data"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__data_size
-msgid "Index record size"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__lang_id
-msgid "Lang"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand____last_update
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend____last_update
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand____last_update
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_product____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__write_date
-msgid "Last Updated on"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__sync_date
-msgid "Last synchronization date"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model,name:shopinvader_product_brand.model_shopinvader_backend
-msgid "Locomotive CMS Backend"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__logo
-msgid "Logo File"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__main_image_id
-msgid "Main Image"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__image_medium_url
-msgid "Main Image URL (medium)"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__image_small_url
-msgid "Main Image URL (small)"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__manual_seo_title
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__manual_seo_title
 msgid "Manual SEO Title"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__manual_url_key
-msgid "Manual Url Key"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__meta_description
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__meta_description
 msgid "Meta Description"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__meta_keywords
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__meta_keywords
 msgid "Meta Keywords"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_backend__nbr_brand
-msgid "Nbr Brand"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__products_count
-msgid "Number of products"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__partner_id
-msgid "Partner"
 msgstr ""
 
 #. module: shopinvader_product_brand
@@ -265,109 +51,41 @@ msgid "Product Brand"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.actions.server,name:shopinvader_product_brand.action_recompute_shopinvader_brand_on_binding
-#: model:ir.actions.server,name:shopinvader_product_brand.action_recompute_shopinvader_brand_on_brand
-msgid "Recompute shopinvader brand"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__record_id
-msgid "Record"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_form
-msgid "Redirect Url"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__redirect_url_key
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__redirect_url_key
 msgid "Redirect Url Keys"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__redirect_url_url_ids
-msgid "Redirect Url Url"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_form
+#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_product_brand_form
 msgid "SEO"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__seo_title
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__seo_title
 msgid "SEO Title"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__se_backend_id
-msgid "Search Engine Backend"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,help:shopinvader_product_brand.field_shopinvader_brand__partner_id
-msgid "Select a partner for this brand if any."
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__sequence
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__sequence
 msgid "Sequence"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_product_brand_form
-msgid "Shopinvader"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__shopinvader_bind_ids
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__shopinvader_bind_ids
-msgid "Shopinvader Binding"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.actions.act_window,name:shopinvader_product_brand.act_open_shopinvader_brand_view
-#: model:ir.model,name:shopinvader_product_brand.model_shopinvader_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_product__shopinvader_brand_id
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_variant__shopinvader_brand_id
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_search
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_tree
-msgid "Shopinvader Brand"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model,name:shopinvader_product_brand.model_shopinvader_product
-msgid "Shopinvader Product"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__short_description
-#: model_terms:ir.ui.view,arch_db:shopinvader_product_brand.view_shopinvader_brand_form
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__short_description
 msgid "Short Description"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__sync_state
-msgid "Sync State"
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__url_ids
+msgid "Url"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__tag_ids
-msgid "Tags"
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__url_key
+msgid "Url Key"
 msgstr ""
 
 #. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__url_builder
-msgid "Url Builder"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__url_url_ids
-msgid "Url Url"
-msgstr ""
-
-#. module: shopinvader_product_brand
-#: model:ir.model.fields,field_description:shopinvader_product_brand.field_shopinvader_brand__url_key
-msgid "Url key"
+#: model:ir.model.fields,field_description:shopinvader_product_brand.field_product_brand__url_need_refresh
+msgid "Url Need Refresh"
 msgstr ""
