@@ -1,10 +1,9 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* shopinvader_product_brand_tag
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 14.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -12,28 +11,3 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: shopinvader_product_brand_tag
-#: model:ir.model.fields,field_description:shopinvader_product_brand_tag.field_shopinvader_brand__display_name
-msgid "Display Name"
-msgstr ""
-
-#. module: shopinvader_product_brand_tag
-#: model:ir.model.fields,field_description:shopinvader_product_brand_tag.field_shopinvader_brand__id
-msgid "ID"
-msgstr ""
-
-#. module: shopinvader_product_brand_tag
-#: model:ir.model.fields,field_description:shopinvader_product_brand_tag.field_shopinvader_brand____last_update
-msgid "Last Modified on"
-msgstr ""
-
-#. module: shopinvader_product_brand_tag
-#: model:ir.model.fields,field_description:shopinvader_product_brand_tag.field_shopinvader_brand__serialized_tag_ids
-msgid "Serialized Tag"
-msgstr ""
-
-#. module: shopinvader_product_brand_tag
-#: model:ir.model,name:shopinvader_product_brand_tag.model_shopinvader_brand
-msgid "Shopinvader Brand"
-msgstr ""
