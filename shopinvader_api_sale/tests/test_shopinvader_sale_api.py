@@ -75,7 +75,7 @@ class TestSale(FastAPITransactionCase):
         with self._create_test_client(router=sale_router) as test_client:
             response: Response = test_client.get("/sales")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["total"], 1)
+        self.assertEqual(response.json()["count"], 1)
 
     def test_get_sale(self):
         sale = self.env["sale.order"].create(
