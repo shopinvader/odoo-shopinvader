@@ -28,6 +28,16 @@ It has been designed and thought to be used in shopinvader services.
 .. contents::
    :local:
 
+Changelog
+=========
+
+16.0.1.1.1 (2023-10-13)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Misc**
+
+- `#1422 <https://github.com/shopinvader/odoo-shopinvader/issues/1422>`_
+
 Bug Tracker
 ===========
 
