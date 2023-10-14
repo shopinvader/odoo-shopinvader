@@ -4,22 +4,24 @@
 from odoo import _, models
 from odoo.exceptions import MissingError, UserError
 
+from odoo.addons.base.models.res_partner import Partner as ResPartner
 
-class ResPartner(models.Model):
 
-    _inherit = "res.partner"
+class ShopinvaderAddressServiceHelper(models.Model):
+    _name = "shopinvader_address.service.helper"
+    _description = "Shopinvader Address Service Helper"
 
-    def _ensure_shopinvader_billing_address_not_used(self) -> None:
+    def _ensure_billing_address_not_used(self, address) -> None:
         """
         Check if Billing Address is used on confirmed sale order
         """
-        self.ensure_one()
+        address.ensure_one()
         sale_order = (
             self.env["sale.order"]
             .sudo()
             .search(
                 [
-                    ("partner_invoice_id", "=", self.id),
+                    ("partner_invoice_id", "=", address.id),
                     ("state", "in", ("done", "sale")),
                 ],
                 limit=1,
@@ -30,21 +32,21 @@ class ResPartner(models.Model):
                 _(
                     "Can not update billing addresses(%(address_id)d)"
                     "because it is already used on confirmed sale order",
-                    address_id=self.id,
+                    address_id=address.id,
                 )
             )
 
-    def _ensure_shopinvader_shipping_address_not_used(self) -> None:
+    def _ensure_shipping_address_not_used(self, address) -> None:
         """
         Check if Shipping Address is used on confirmed sale order
         """
-        self.ensure_one()
+        address.ensure_one()
         sale_order = (
             self.env["sale.order"]
             .sudo()
             .search(
                 [
-                    ("partner_shipping_id", "=", self.id),
+                    ("partner_shipping_id", "=", address.id),
                     ("state", "in", ("done", "sale")),
                 ],
                 limit=1,
@@ -55,20 +57,20 @@ class ResPartner(models.Model):
                 _(
                     "Can not delete Shipping address(%(address_id)d)"
                     "because it is already used on confirmed sale order",
-                    address_id=self.id,
+                    address_id=address.id,
                 )
             )
 
     # --- Billing ---
     # Billing address is unique and corresponds to authenticated_partner
 
-    def _get_shopinvader_billing_addresses(self) -> "ResPartner":
-        self.ensure_one()
-        return self
+    def _get_billing_addresses(self, partner) -> "ResPartner":
+        partner.ensure_one()
+        return partner
 
-    def _get_shopinvader_billing_address(self, address_id: int) -> "ResPartner":
-        self.ensure_one()
-        addresses = self._get_shopinvader_billing_addresses()
+    def _get_billing_address(self, partner, address_id: int) -> "ResPartner":
+        partner.ensure_one()
+        addresses = self._get_billing_addresses(partner)
         address = addresses.filtered(lambda rec: rec.id == address_id)
         if not address:
             raise MissingError(
@@ -79,18 +81,18 @@ class ResPartner(models.Model):
             )
         return address
 
-    def _create_shopinvader_billing_address(self, vals: dict) -> "ResPartner":
+    def _create_billing_address(self, partner, vals: dict) -> "ResPartner":
         raise UserError(_("Creation of billing addresses is not supported"))
 
-    def _update_shopinvader_billing_address(
-        self, vals: dict, address_id: int
+    def _update_billing_address(
+        self, partner, vals: dict, address_id: int
     ) -> "ResPartner":
-        self.ensure_one()
-        address = self._get_shopinvader_billing_address(address_id)
+        partner.ensure_one()
+        address = self._get_billing_address(partner, address_id)
 
         # if billing address is already used, it is not possible to modify it
         # an error will be raised
-        address._ensure_shopinvader_billing_address_not_used()
+        self._ensure_billing_address_not_used(address)
 
         address.write(vals)
 
@@ -98,16 +100,16 @@ class ResPartner(models.Model):
 
     # ---Shipping ---
 
-    def _get_shopinvader_shipping_addresses(self) -> "ResPartner":
-        self.ensure_one()
-        domain = [("type", "=", "delivery"), ("parent_id", "=", self.id)]
+    def _get_shipping_addresses(self, partner) -> "ResPartner":
+        partner.ensure_one()
+        domain = [("type", "=", "delivery"), ("parent_id", "=", partner.id)]
 
         return self.env["res.partner"].search(domain)
 
-    def _get_shopinvader_shipping_address(self, address_id: int) -> "ResPartner":
-        self.ensure_one()
+    def _get_shipping_address(self, partner, address_id: int) -> "ResPartner":
+        partner.ensure_one()
 
-        addresses = self._get_shopinvader_shipping_addresses()
+        addresses = self._get_shipping_addresses(partner)
         address = addresses.filtered(lambda rec: rec.id == address_id)
         if not address:
             raise MissingError(
@@ -119,13 +121,13 @@ class ResPartner(models.Model):
 
         return address
 
-    def _create_shopinvader_shipping_address(self, vals: dict) -> "ResPartner":
-        self.ensure_one()
-        vals = dict(vals, parent_id=self.id, type="delivery")
+    def _create_shipping_address(self, partner, vals: dict) -> "ResPartner":
+        partner.ensure_one()
+        vals = dict(vals, parent_id=partner.id, type="delivery")
         return self.env["res.partner"].create(vals)
 
-    def _update_shopinvader_shipping_address(
-        self, vals: dict, address_id: int
+    def _update_shipping_address(
+        self, partner, vals: dict, address_id: int
     ) -> "ResPartner":
 
         if any(key in vals for key in ("parent_id", "type")):
@@ -137,23 +139,23 @@ class ResPartner(models.Model):
                 )
             )
 
-        self.ensure_one()
-        address = self._get_shopinvader_shipping_address(address_id)
+        partner.ensure_one()
+        address = self._get_shipping_address(partner, address_id)
 
         # if shipping address is already used, it is not possible to modify it
-        address._ensure_shopinvader_shipping_address_not_used()
+        self._ensure_shipping_address_not_used(address)
 
         # update_address
         address.write(vals)
         return address
 
-    def _delete_shopinvader_shipping_address(self, address_id: int) -> None:
+    def _delete_shipping_address(self, partner, address_id: int) -> None:
         """
         Delete of shopinvader shipping addresses will result to an archive
         """
-        address = self._get_shopinvader_shipping_address(address_id)
+        address = self._get_shipping_address(partner, address_id)
         if address:
-            address._ensure_shopinvader_shipping_address_not_used()
+            self._ensure_shipping_address_not_used(address)
 
             # archive address
             address.active = False
