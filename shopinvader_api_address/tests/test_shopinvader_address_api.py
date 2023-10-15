@@ -326,3 +326,36 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         )
         self.assertEqual(new_address.name, data.get("name"))
         self.assertEqual(new_address.street, data.get("street"))
+
+    def test_update_partial_shipping_address(self):
+        """
+        Test to update shipping address
+        """
+        new_address = self.env["res.partner"].create(
+            {
+                "name": "test New Addr",
+                "street": "test Street",
+                "zip": "5000",
+                "city": "Namur",
+                "country_id": self.env.ref("base.be").id,
+                "parent_id": self.test_partner.id,
+                "type": "delivery",
+            }
+        )
+
+        data = {
+            "name": "test Addr2 Changed",
+        }
+
+        with self._create_test_client(router=address_router) as test_client:
+            response: Response = test_client.post(
+                f"/addresses/shipping/{new_address.id}", content=json.dumps(data)
+            )
+
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+        self.assertEqual(new_address.name, "test Addr2 Changed")
+        self.assertEqual(new_address.street, "test Street")

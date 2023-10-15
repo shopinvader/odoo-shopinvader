@@ -53,19 +53,7 @@ class AddressUpdate(StrictExtendableBaseModel):
     country_id: int | None = None
 
     def to_res_partner_vals(self) -> dict:
-        vals = {
-            "name": self.name,
-            "street": self.street,
-            "street2": self.street2,
-            "zip": self.zip,
-            "city": self.city,
-            "phone": self.phone,
-            "email": self.email,
-            "state_id": self.state_id,
-            "country_id": self.country_id,
-        }
-
-        return vals
+        return self.model_dump(exclude_unset=True)
 
 
 class AddressSearch(StrictExtendableBaseModel):
