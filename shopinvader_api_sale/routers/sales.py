@@ -32,7 +32,7 @@ def search(
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
 ) -> PagedCollection[Sale]:
     """Get the list of sale orders."""
-    count, orders = env["shopinvader_api_sale.service.helper"]._search(params, paging)
+    count, orders = env["shopinvader_api_sale.service.sales"]._search(paging, params)
     return PagedCollection[Sale](
         count=count,
         items=[Sale.from_sale_order(order) for order in orders],
@@ -49,22 +49,21 @@ def get(
     Get sale order of authenticated user with specific sale_id
     sale corresponds to authenticated partner
     """
-    return Sale.from_sale_order(env["sale.order"].browse(sale_id))
+    return Sale.from_sale_order(env["shopinvader_api_sale.service.sales"]._get(sale_id))
 
 
-class ShopinvaderApiSaleServiceHelper(models.Model):
-    _name = "shopinvader_api_sale.service.helper"
+class ShopinvaderApiServiceSales(models.AbstractModel):
+    _inherit = "fastapi.service.base"
+    _name = "shopinvader_api_sale.service.sales"
     _description = "Shopinvader Api Sale Service Helper"
+    _odoo_model = "sale.order"
 
-    def _convert_search_domain(self, params):
-        domain = [("typology", "=", "sale")]
+    @property
+    def _odoo_model_domain_restrict(self):
+        return [("typology", "=", "sale")]
+
+    def _convert_search_params_to_domain(self, params):
         if params.name:
-            domain.append(("name", "ilike", self.name))
-        return domain
-
-    def _search(self, params, paging):
-        domain = self._convert_search_domain(params)
-        count = self.env["sale.order"].search_count(domain)
-        return count, self.env["sale.order"].search(
-            domain, limit=paging.limit, offset=paging.offset
-        )
+            return [("name", "ilike", self.name)]
+        else:
+            return []
