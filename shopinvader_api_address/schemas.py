@@ -68,6 +68,14 @@ class AddressUpdate(StrictExtendableBaseModel):
         return vals
 
 
+class AddressSearch(StrictExtendableBaseModel):
+    """
+    used to search address (res.partner)
+    """
+
+    name: str | None = None
+
+
 # --- Billing Address ---
 class BillingAddressCreate(AddressCreate):
     """
@@ -103,6 +111,12 @@ class BillingAddressUpdate(AddressUpdate):
         return vals
 
 
+class BillingAddressSearch(AddressSearch):
+    """
+    Search of Billing Address
+    """
+
+
 # --- Shipping Address ---
 
 
@@ -115,4 +129,10 @@ class ShippingAddressCreate(AddressCreate):
 class ShippingAddressUpdate(AddressUpdate):
     """
     Update of Shipping Address
+    """
+
+
+class ShippingAddressSearch(AddressSearch):
+    """
+    Search of Shipping Address
     """

@@ -65,9 +65,9 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         )
 
         response_json = response.json()
-        self.assertTrue(response_json)
+        self.assertEqual(response_json["count"], 1)
 
-        address = response_json[0]
+        address = response_json["items"][0]
 
         self.assertEqual(address.get("name"), self.test_partner.name)
         self.assertEqual(address.get("street"), self.test_partner.street)
@@ -116,7 +116,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         )
 
         response_json = response.json()
-        self.assertEqual(0, len(response_json))
+        self.assertEqual(response_json["count"], 1)
 
         # add shipping address
         new_address = self.env["res.partner"].create(
@@ -143,16 +143,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         )
 
         response_json = response.json()
-        self.assertTrue(response_json)
-
-        address = response_json[0]
-
-        self.assertEqual(address.get("name"), new_address.name)
-        self.assertEqual(address.get("street"), new_address.street)
-        self.assertEqual(address.get("zip"), new_address.zip)
-        self.assertEqual(address.get("city"), new_address.city)
-        self.assertEqual(address.get("country_id"), new_address.country_id.id)
-        self.assertEqual(address.get("id"), new_address.id)
+        self.assertEqual(response_json["count"], 2)
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.get(

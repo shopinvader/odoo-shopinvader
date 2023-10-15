@@ -1,7 +1,6 @@
 # generated from manifests external_dependencies
 cerberus
 extendable-pydantic>=1.2.0
-extendable_pydantic>=1.0.0
 extendable_pydantic>=1.2.0
 fastapi
 openupgradelib

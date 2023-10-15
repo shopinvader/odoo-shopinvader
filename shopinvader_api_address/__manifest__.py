@@ -13,7 +13,7 @@
         "extendable",
         "extendable_fastapi",
         "fastapi",
-        "shopinvader_address",
+        "sale",
         "shopinvader_schema_address",
     ],
     "data": [
@@ -21,7 +21,11 @@
         "security/res_partner.xml",
     ],
     "external_dependencies": {
-        "python": ["fastapi", "extendable_pydantic>=1.0.0", "pydantic>=2.0.0"]
+        "python": [
+            "fastapi",
+            "pydantic>=2.0.0",
+            "extendable-pydantic>=1.2.0",
+        ]
     },
     "installable": True,
 }
