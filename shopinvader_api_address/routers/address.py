@@ -3,7 +3,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends
 
 from odoo import _, api, models
-from odoo.exceptions import AccessError, UserError
+from odoo.exceptions import UserError
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
@@ -47,7 +47,7 @@ def get_invoicing_addresses(
     """
     count, addresses = env[
         "shopinvader_api_address.invoicing_address_router.helper"
-    ]._search(paging, params)
+    ]._search(partner, paging, params)
     return PagedCollection[InvoicingAddress](
         count=count, items=[InvoicingAddress.from_res_partner(rec) for rec in addresses]
     )
@@ -64,7 +64,7 @@ def get_invoicing_address(
     invoicing address corresponds to authenticated partner
     """
     address = env["shopinvader_api_address.invoicing_address_router.helper"]._get(
-        address_id
+        partner, address_id
     )
     return InvoicingAddress.from_res_partner(address)
 
@@ -127,7 +127,7 @@ def get_delivery_addresses(
     """
     count, addresses = env[
         "shopinvader_api_address.delivery_address_router.helper"
-    ]._search(paging, params)
+    ]._search(partner, paging, params)
     return PagedCollection[DeliveryAddress](
         count=count, items=[DeliveryAddress.from_res_partner(rec) for rec in addresses]
     )
@@ -144,7 +144,7 @@ def get_delivery_address(
     Can be used to get one specific address: /addresses/delivery/address_id
     """
     addresses = env["shopinvader_api_address.delivery_address_router.helper"]._get(
-        address_id
+        partner, address_id
     )
     return DeliveryAddress.from_res_partner(addresses)
 
@@ -215,9 +215,12 @@ class ShopinvaderApiBaseAddressRouterHelper(models.AbstractModel):
     _name = "shopinvader_api_address.base_address_router.helper"
     _description = "Shopinvader Api Address Base Address Router Helper"
 
+    def _prepare_create_vals(self, partner, vals: dict) -> "ResPartner":
+        vals["parent_id"] = partner.id
+        return vals
+
     def _create(self, partner, vals: dict) -> "ResPartner":
-        vals = dict(vals, parent_id=partner.id, type=self._odoo_address_type)
-        return self.env["res.partner"].create(vals)
+        return self.env["res.partner"].create(self._prepare_create_vals(partner, vals))
 
     def _update(self, partner, vals: dict, address_id: int) -> "ResPartner":
         if any(key in vals for key in ("parent_id", "type")):
@@ -229,7 +232,7 @@ class ShopinvaderApiBaseAddressRouterHelper(models.AbstractModel):
                 )
             )
 
-        address = self._get(address_id)
+        address = self._get(partner, address_id)
 
         # if address is already used, it is not possible to modify it
         self._ensure_address_not_used(address)
@@ -242,7 +245,7 @@ class ShopinvaderApiBaseAddressRouterHelper(models.AbstractModel):
         """
         Delete of delivery addresses will result to an archive
         """
-        address = self._get(address_id)
+        address = self._get(partner, address_id)
         address.active = False
 
     def _domain_address_used(self, address):
@@ -269,21 +272,20 @@ class ShopinvaderApiBaseAddressRouterHelper(models.AbstractModel):
                 )
             )
 
-    @property
-    def partner_id(self):
-        partner_id = self._context.get("authenticated_partner_id")
-        if not partner_id:
-            # This case should never happen as authenticated_partner is required
-            # for this addresses route
-            raise AccessError(_("Wrong Authentication"))
-        else:
-            return partner_id
+    def _get_domain_adapter(self):
+        raise NotImplementedError
 
-    def _get(self, record_id):
-        return self.adapter.get(record_id)
+    def _get_adapter(self, partner):
+        return FilteredDomainAdapter(
+            self.env["res.partner"],
+            self._get_domain_adapter(partner),
+        )
 
-    def _search(self, paging, params):
-        return self.adapter.search_with_count(
+    def _get(self, partner, record_id):
+        return self._get_adapter(partner).get(record_id)
+
+    def _search(self, partner, paging, params):
+        return self._get_adapter(partner).search_with_count(
             params.to_odoo_domain(),
             limit=paging.limit,
             offset=paging.offset,
@@ -297,14 +299,14 @@ class ShopinvaderApiDeliveryAddressRouterHelper(models.Model):
     _inherit = "shopinvader_api_address.base_address_router.helper"
     _name = "shopinvader_api_address.delivery_address_router.helper"
     _description = "Shopinvader Api Address Delivery Address Router Helper"
-    _odoo_address_type = "delivery"
 
-    @property
-    def adapter(self):
-        return FilteredDomainAdapter(
-            self.env["res.partner"],
-            ["|", ("type", "=", "delivery"), ("id", "=", self.partner_id)],
-        )
+    def _prepare_create_vals(self, partner, vals: dict) -> "ResPartner":
+        vals = super()._prepare_create_vals(partner, vals)
+        vals["type"] = "delivery"
+        return vals
+
+    def _get_domain_adapter(self, partner):
+        return ["|", ("type", "=", "delivery"), ("id", "=", partner.id)]
 
 
 class ShopinvaderApiInvoicingAddressRouterHelper(models.Model):
@@ -312,9 +314,10 @@ class ShopinvaderApiInvoicingAddressRouterHelper(models.Model):
     _name = "shopinvader_api_address.invoicing_address_router.helper"
     _description = "Shopinvader Api Address Invoicing Address Router Helper"
 
-    @property
-    def adapter(self):
-        return FilteredDomainAdapter(
-            self.env["res.partner"],
-            [("id", "=", self.partner_id)],
-        )
+    def _prepare_create_vals(self, partner, vals: dict) -> "ResPartner":
+        vals = super()._prepare_create_vals(partner, vals)
+        vals["type"] = "invoicing"
+        return vals
+
+    def _get_domain_adapter(self, partner):
+        return [("id", "=", partner.id)]
