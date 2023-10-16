@@ -17,6 +17,7 @@ from odoo.addons.fastapi.dependencies import (
     paging,
 )
 from odoo.addons.fastapi.schemas import Paging
+from odoo.addons.fastapi.utils import FilteredDomainAdapter
 from odoo.addons.shopinvader_schema_sale.schemas import Sale
 
 from ..schemas import SaleSearch
@@ -32,7 +33,9 @@ def search(
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
 ) -> PagedCollection[Sale]:
     """Get the list of sale orders."""
-    count, orders = env["shopinvader_api_sale.service.sales"]._search(paging, params)
+    count, orders = env["shopinvader_api_sale.sales_router.helper"]._search(
+        paging, params
+    )
     return PagedCollection[Sale](
         count=count,
         items=[Sale.from_sale_order(order) for order in orders],
@@ -49,21 +52,27 @@ def get(
     Get sale order of authenticated user with specific sale_id
     sale corresponds to authenticated partner
     """
-    return Sale.from_sale_order(env["shopinvader_api_sale.service.sales"]._get(sale_id))
+    return Sale.from_sale_order(
+        env["shopinvader_api_sale.sales_router.helper"]._get(sale_id)
+    )
 
 
-class ShopinvaderApiServiceSales(models.AbstractModel):
-    _inherit = "fastapi.service.base"
-    _name = "shopinvader_api_sale.service.sales"
+class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
+    _name = "shopinvader_api_sale.sales_router.helper"
     _description = "Shopinvader Api Sale Service Helper"
-    _odoo_model = "sale.order"
 
     @property
-    def _odoo_model_domain_restrict(self):
-        return [("typology", "=", "sale")]
+    def adapter(self):
+        return FilteredDomainAdapter(
+            self.env["sale.order"], [("typology", "=", "sale")]
+        )
 
-    def _convert_search_params_to_domain(self, params):
-        if params.name:
-            return [("name", "ilike", self.name)]
-        else:
-            return []
+    def _get(self, record_id):
+        return self.adapter.get(record_id)
+
+    def _search(self, paging, params):
+        return self.adapter.search_with_count(
+            params.to_odoo_domain(),
+            limit=paging.limit,
+            offset=paging.offset,
+        )

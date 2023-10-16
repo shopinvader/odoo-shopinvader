@@ -8,3 +8,9 @@ from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 class SaleSearch(StrictExtendableBaseModel):
     name: str | None = None
+
+    def to_odoo_domain(self):
+        if self.name:
+            return [("name", "ilike", self.name)]
+        else:
+            return []

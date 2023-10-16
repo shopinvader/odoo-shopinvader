@@ -46,7 +46,7 @@ def sync(
     uuid: str | None = None,
 ) -> Sale | None:
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
-    cart = env["shopinvader_api_cart.service.helper"]._sync_cart(
+    cart = env["shopinvader_api_cart.cart_router.helper"]._sync_cart(
         partner, cart, uuid, data.transactions
     )
     return Sale.from_sale_order(cart) if cart else None
@@ -60,14 +60,14 @@ def update(
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: str | None = None,
 ) -> Sale:
-    cart = env["shopinvader_api_cart.service.helper"]._update(partner, data, uuid)
+    cart = env["shopinvader_api_cart.cart_router.helper"]._update(partner, data, uuid)
 
     return Sale.from_sale_order(cart)
 
 
-class ShopinvaderApiCartServiceHelper(models.AbstractModel):
-    _name = "shopinvader_api_cart.service.helper"
-    _description = "ShopInvader API Cart Service Helper"
+class ShopinvaderApiCartRouterHelper(models.AbstractModel):
+    _name = "shopinvader_api_cart.cart_router.helper"
+    _description = "ShopInvader API Cart Router Helper"
 
     @api.model
     def _check_transactions(self, transactions: list[CartTransaction]):
@@ -225,37 +225,9 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
             self._apply_transactions(cart, transactions)
         return cart
 
-    def _convert_delivery_values(self, values):
-        if values and values.get("address_id"):
-            return {"partner_shipping_id": values["address_id"]}
-        else:
-            return {}
-
-    def _convert_invoicing_values(self, values):
-        if values and values.get("address_id"):
-            return {"partner_invoice_id": values["address_id"]}
-        else:
-            return {}
-
-    def _prepare_cart_vals(self, values):
-        for key, func in self._get_update_mapping().items():
-            if key in values:
-                values.update(getattr(self, func)(values.pop(key)))
-        return values
-
-    def _get_update_mapping(self):
-        """Mapping are needed only if you want to alter the input data.
-        if a mapping is define, the key is pop and the result will update the value
-        if their is not mapping for a key the key/value will be kept as it is"""
-        return {
-            "delivery": "_convert_delivery_values",
-            "invoicing": "_convert_invoicing_values",
-        }
-
     def _update(self, partner, data, uuid):
         cart = self.env["sale.order"]._find_open_cart(partner.id, uuid)
         if not cart:
             cart = self.env["sale.order"]._create_empty_cart()
-        values = data.model_dump(exclude_unset=True)
-        cart.write(self._prepare_cart_vals(values))
+        cart.write(data.convert_to_sale_write())
         return cart

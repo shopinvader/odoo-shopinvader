@@ -29,3 +29,16 @@ class CartUpdateInput(StrictExtendableBaseModel):
     delivery: ShippingUpdateInfo | None = None
     invoicing: InvoicingUpdateInfo | None = None
     note: str | None = None
+
+    def convert_to_sale_write(self):
+        vals = {}
+        data = self.model_dump(exclude_unset=True)
+        if "client_order_ref" in data:
+            vals["client_order_ref"] = data["client_order_ref"]
+        if "note" in data:
+            vals["note"] = data["note"]
+        if (data.get("delivery") or {}).get("address_id"):
+            vals["partner_shipping_id"] = data["delivery"]["address_id"]
+        if (data.get("invoicing") or {}).get("address_id"):
+            vals["partner_invoicing_id"] = data["invoicing"]["address_id"]
+        return vals

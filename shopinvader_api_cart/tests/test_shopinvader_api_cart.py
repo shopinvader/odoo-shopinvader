@@ -382,7 +382,7 @@ class TestSaleCart(FastAPITransactionCase):
             self.default_fastapi_authenticated_partner.id
         )
         create_line_vals = self.env[
-            "shopinvader_api_cart.service.helper"
+            "shopinvader_api_cart.cart_router.helper"
         ]._apply_transactions_creating_new_cart_line(
             so, [CartTransaction(uuid="uuid1", product_id=self.product_1.id, qty=1)]
         )
@@ -433,8 +433,7 @@ class TestSaleCart(FastAPITransactionCase):
         so = self.env["sale.order"]._create_empty_cart(
             self.default_fastapi_authenticated_partner.id
         )
-        # TODO FIXME how to not pass the key invoicing ?
-        data = {"delivery": {"address_id": address.id}, "invoicing": None}
+        data = {"delivery": {"address_id": address.id}}
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.post(
                 f"/update/{so.uuid}", content=json.dumps(data)
