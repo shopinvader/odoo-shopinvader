@@ -13,6 +13,7 @@ from odoo.addons.fastapi.dependencies import (
     paging,
 )
 from odoo.addons.fastapi.schemas import Paging
+from odoo.addons.fastapi.utils import FilteredDomainAdapter
 from odoo.addons.shopinvader_schema_address.schemas import (
     DeliveryAddress,
     InvoicingAddress,
@@ -44,9 +45,9 @@ def get_invoicing_addresses(
     Get invoicing address of authenticated user
     invoicing address corresponds to authenticated partner
     """
-    count, addresses = env["shopinvader_api_address.service.invoicing_address"]._search(
-        paging, params
-    )
+    count, addresses = env[
+        "shopinvader_api_address.invoicing_address_router.helper"
+    ]._search(paging, params)
     return PagedCollection[InvoicingAddress](
         count=count, items=[InvoicingAddress.from_res_partner(rec) for rec in addresses]
     )
@@ -62,7 +63,9 @@ def get_invoicing_address(
     Get invoicing address of authenticated user with specific address_id
     invoicing address corresponds to authenticated partner
     """
-    address = env["shopinvader_api_address.service.invoicing_address"]._get(address_id)
+    address = env["shopinvader_api_address.invoicing_address_router.helper"]._get(
+        address_id
+    )
     return InvoicingAddress.from_res_partner(address)
 
 
@@ -77,7 +80,7 @@ def create_invoicing_address(
     Raise error since invoicing address is the authenticated partner
     """
     vals = data.to_res_partner_vals()
-    address = env["shopinvader_api_address.service.invoicing_address"]._create(
+    address = env["shopinvader_api_address.invoicing_address_router.helper"]._create(
         partner, vals
     )
     return InvoicingAddress.from_res_partner(address)
@@ -101,7 +104,7 @@ def update_invoicing_address(
     # the enspoint's user
     # (e.g. snailmail/models/res_partner.py)
     address = (
-        env["shopinvader_api_address.service.invoicing_address"]
+        env["shopinvader_api_address.invoicing_address_router.helper"]
         .sudo()
         ._update(partner, vals, address_id)
     )
@@ -122,9 +125,9 @@ def get_delivery_addresses(
     Get delivery addresses of authenticated user
     Can be used to get every delivery address: /addresses/delivery
     """
-    count, addresses = env["shopinvader_api_address.service.delivery_address"]._search(
-        paging, params
-    )
+    count, addresses = env[
+        "shopinvader_api_address.delivery_address_router.helper"
+    ]._search(paging, params)
     return PagedCollection[DeliveryAddress](
         count=count, items=[DeliveryAddress.from_res_partner(rec) for rec in addresses]
     )
@@ -140,7 +143,9 @@ def get_delivery_address(
     Get delivery addresses of authenticated user
     Can be used to get one specific address: /addresses/delivery/address_id
     """
-    addresses = env["shopinvader_api_address.service.delivery_address"]._get(address_id)
+    addresses = env["shopinvader_api_address.delivery_address_router.helper"]._get(
+        address_id
+    )
     return DeliveryAddress.from_res_partner(addresses)
 
 
@@ -154,7 +159,7 @@ def create_delivery_address(
     Create delivery address of authenticated user
     """
     vals = data.to_res_partner_vals()
-    address = env["shopinvader_api_address.service.delivery_address"]._create(
+    address = env["shopinvader_api_address.delivery_address_router.helper"]._create(
         partner, vals
     )
 
@@ -178,7 +183,7 @@ def update_delivery_address(
     # the enspoint's user
     # (e.g. snailmail/models/res_partner.py)
     address = (
-        env["shopinvader_api_address.service.delivery_address"]
+        env["shopinvader_api_address.delivery_address_router.helper"]
         .sudo()
         ._update(partner, vals, address_id)
     )
@@ -201,23 +206,14 @@ def delete_delivery_address(
     # These checks need more rights than what we are giving to
     # the enspoint's user
     # (e.g. snailmail/models/res_partner.py)
-    env["shopinvader_api_address.service.delivery_address"].sudo()._delete(
+    env["shopinvader_api_address.delivery_address_router.helper"].sudo()._delete(
         partner, address_id
     )
 
 
-class ShopinvaderApiServiceBaseAddress(models.AbstractModel):
-    _inherit = "fastapi.service.base"
-    _name = "shopinvader_api_address.service.base_address"
-    _description = "Shopinvader Api Address Service Base Address"
-    _odoo_model = "res.partner"
-    _odoo_address_type = None
-
-    def _convert_search_params_to_domain(self, params):
-        if params.name:
-            return [("name", "ilike", self.name)]
-        else:
-            return []
+class ShopinvaderApiBaseAddressRouterHelper(models.AbstractModel):
+    _name = "shopinvader_api_address.base_address_router.helper"
+    _description = "Shopinvader Api Address Base Address Router Helper"
 
     def _create(self, partner, vals: dict) -> "ResPartner":
         vals = dict(vals, parent_id=partner.id, type=self._odoo_address_type)
@@ -283,31 +279,42 @@ class ShopinvaderApiServiceBaseAddress(models.AbstractModel):
         else:
             return partner_id
 
+    def _get(self, record_id):
+        return self.adapter.get(record_id)
+
+    def _search(self, paging, params):
+        return self.adapter.search_with_count(
+            params.to_odoo_domain(),
+            limit=paging.limit,
+            offset=paging.offset,
+        )
+
 
 # pylint: disable=consider-merging-classes-inherited
 
 
-class ShopinvaderApiServiceDeliveryAddress(models.Model):
-    _inherit = "shopinvader_api_address.service.base_address"
-    _name = "shopinvader_api_address.service.delivery_address"
-    _description = "Shopinvader Api Address Service Delivery Address"
+class ShopinvaderApiDeliveryAddressRouterHelper(models.Model):
+    _inherit = "shopinvader_api_address.base_address_router.helper"
+    _name = "shopinvader_api_address.delivery_address_router.helper"
+    _description = "Shopinvader Api Address Delivery Address Router Helper"
     _odoo_address_type = "delivery"
 
     @property
-    def _odoo_model_domain_restrict(self):
-        return [
-            "|",
-            ("type", "=", self._odoo_address_type),
-            ("id", "=", self.partner_id),
-        ]
+    def adapter(self):
+        return FilteredDomainAdapter(
+            self.env["res.partner"],
+            ["|", ("type", "=", "delivery"), ("id", "=", self.partner_id)],
+        )
 
 
-class ShopinvaderApiServiceInvoicingAddress(models.Model):
-    _inherit = "shopinvader_api_address.service.base_address"
-    _name = "shopinvader_api_address.service.invoicing_address"
-    _description = "Shopinvader Api Address Service Invoicing Address"
-    _odoo_address_type = "invoice"
+class ShopinvaderApiInvoicingAddressRouterHelper(models.Model):
+    _inherit = "shopinvader_api_address.base_address_router.helper"
+    _name = "shopinvader_api_address.invoicing_address_router.helper"
+    _description = "Shopinvader Api Address Invoicing Address Router Helper"
 
     @property
-    def _odoo_model_domain_restrict(self):
-        return [("id", "=", self.partner_id)]
+    def adapter(self):
+        return FilteredDomainAdapter(
+            self.env["res.partner"],
+            [("id", "=", self.partner_id)],
+        )
