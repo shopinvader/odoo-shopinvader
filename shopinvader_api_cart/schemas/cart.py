@@ -7,8 +7,8 @@ from typing import List
 from extendable_pydantic import StrictExtendableBaseModel
 
 from odoo.addons.shopinvader_schema_address.schemas import (
-    BillingAddress,
-    ShippingAddress,
+    DeliveryAddress,
+    InvoicingAddress,
 )
 
 from .amount import SaleAmount
@@ -33,8 +33,8 @@ class CartResponse(StrictExtendableBaseModel):
     date_order: datetime
     lines: List[SaleOrderLine]
     amount: SaleAmount | None = None
-    delivery: ShippingAddress | None = None
-    invoicing: BillingAddress | None = None
+    delivery: DeliveryAddress | None = None
+    invoicing: InvoicingAddress | None = None
     note: str | None = None
 
     @classmethod
@@ -50,12 +50,12 @@ class CartResponse(StrictExtendableBaseModel):
             ],
             amount=SaleAmount.from_sale_order(odoo_rec),
             delivery=(
-                ShippingAddress.from_res_partner(odoo_rec.partner_shipping_id)
+                DeliveryAddress.from_res_partner(odoo_rec.partner_shipping_id)
                 if odoo_rec.partner_shipping_id
                 else None
             ),
             invoicing=(
-                BillingAddress.from_res_partner(odoo_rec.partner_invoice_id)
+                InvoicingAddress.from_res_partner(odoo_rec.partner_invoice_id)
                 if odoo_rec.partner_invoice_id
                 else None
             ),

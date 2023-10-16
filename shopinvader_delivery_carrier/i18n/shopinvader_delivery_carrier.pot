@@ -103,7 +103,7 @@ msgstr ""
 
 #. module: shopinvader_delivery_carrier
 #: model:ir.model,name:shopinvader_delivery_carrier.model_delivery_carrier
-msgid "Shipping Methods"
+msgid "Delivery Methods"
 msgstr ""
 
 #. module: shopinvader_delivery_carrier

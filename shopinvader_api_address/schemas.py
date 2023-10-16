@@ -64,13 +64,13 @@ class AddressSearch(StrictExtendableBaseModel):
     name: str | None = None
 
 
-# --- Billing Address ---
-class BillingAddressCreate(AddressCreate):
+# --- Invoicing Address ---
+class InvoicingAddressCreate(AddressCreate):
     """
-    Creation of Billing Address
+    Creation of Invoicing Address
 
     Remark: it is actually not used since
-    the billing address is the authenticated
+    the invoicing address is the authenticated
     partner's address
     """
 
@@ -84,9 +84,9 @@ class BillingAddressCreate(AddressCreate):
         return vals
 
 
-class BillingAddressUpdate(AddressUpdate):
+class InvoicingAddressUpdate(AddressUpdate):
     """
-    Update of Billing Address
+    Update of Invoicing Address
     """
 
     vat: str | None = None
@@ -99,28 +99,28 @@ class BillingAddressUpdate(AddressUpdate):
         return vals
 
 
-class BillingAddressSearch(AddressSearch):
+class InvoicingAddressSearch(AddressSearch):
     """
-    Search of Billing Address
-    """
-
-
-# --- Shipping Address ---
-
-
-class ShippingAddressCreate(AddressCreate):
-    """
-    Creation of Shipping Address
+    Search of Invoicing Address
     """
 
 
-class ShippingAddressUpdate(AddressUpdate):
+# --- Delivery Address ---
+
+
+class DeliveryAddressCreate(AddressCreate):
     """
-    Update of Shipping Address
+    Creation of Delivery Address
     """
 
 
-class ShippingAddressSearch(AddressSearch):
+class DeliveryAddressUpdate(AddressUpdate):
     """
-    Search of Shipping Address
+    Update of Delivery Address
+    """
+
+
+class DeliveryAddressSearch(AddressSearch):
+    """
+    Search of Delivery Address
     """

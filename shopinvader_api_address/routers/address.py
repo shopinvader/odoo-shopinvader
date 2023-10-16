@@ -14,85 +14,85 @@ from odoo.addons.fastapi.dependencies import (
 )
 from odoo.addons.fastapi.schemas import Paging
 from odoo.addons.shopinvader_schema_address.schemas import (
-    BillingAddress,
-    ShippingAddress,
+    DeliveryAddress,
+    InvoicingAddress,
 )
 
 from ..schemas import (
-    BillingAddressCreate,
-    BillingAddressSearch,
-    BillingAddressUpdate,
-    ShippingAddressCreate,
-    ShippingAddressSearch,
-    ShippingAddressUpdate,
+    DeliveryAddressCreate,
+    DeliveryAddressSearch,
+    DeliveryAddressUpdate,
+    InvoicingAddressCreate,
+    InvoicingAddressSearch,
+    InvoicingAddressUpdate,
 )
 
 # create a router
 address_router = APIRouter(tags=["addresses"])
 
-# --- Billing addresses ---
+# --- Invoicing addresses ---
 
 
-@address_router.get("/addresses/billing")
-def get_billing_addresses(
-    params: Annotated[BillingAddressSearch, Depends()],
+@address_router.get("/addresses/invoicing")
+def get_invoicing_addresses(
+    params: Annotated[InvoicingAddressSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-) -> PagedCollection[BillingAddress]:
+) -> PagedCollection[InvoicingAddress]:
     """
-    Get billing address of authenticated user
-    billing address corresponds to authenticated partner
+    Get invoicing address of authenticated user
+    invoicing address corresponds to authenticated partner
     """
     count, addresses = env["shopinvader_api_address.service.invoicing_address"]._search(
         paging, params
     )
-    return PagedCollection[BillingAddress](
-        count=count, items=[BillingAddress.from_res_partner(rec) for rec in addresses]
+    return PagedCollection[InvoicingAddress](
+        count=count, items=[InvoicingAddress.from_res_partner(rec) for rec in addresses]
     )
 
 
-@address_router.get("/addresses/billing/{address_id}")
-def get_billing_address(
+@address_router.get("/addresses/invoicing/{address_id}")
+def get_invoicing_address(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int,
-) -> BillingAddress:
+) -> InvoicingAddress:
     """
-    Get billing address of authenticated user with specific address_id
-    billing address corresponds to authenticated partner
+    Get invoicing address of authenticated user with specific address_id
+    invoicing address corresponds to authenticated partner
     """
     address = env["shopinvader_api_address.service.invoicing_address"]._get(address_id)
-    return BillingAddress.from_res_partner(address)
+    return InvoicingAddress.from_res_partner(address)
 
 
-@address_router.post("/addresses/billing", status_code=201)
-def create_billing_address(
-    data: BillingAddressCreate,
+@address_router.post("/addresses/invoicing", status_code=201)
+def create_invoicing_address(
+    data: InvoicingAddressCreate,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-) -> BillingAddress:
+) -> InvoicingAddress:
     """
-    Create billing address
-    Raise error since billing address is the authenticated partner
+    Create invoicing address
+    Raise error since invoicing address is the authenticated partner
     """
     vals = data.to_res_partner_vals()
     address = env["shopinvader_api_address.service.invoicing_address"]._create(
         partner, vals
     )
-    return BillingAddress.from_res_partner(address)
+    return InvoicingAddress.from_res_partner(address)
 
 
-@address_router.post("/addresses/billing/{address_id}")
-def update_billing_address(
-    data: BillingAddressUpdate,
+@address_router.post("/addresses/invoicing/{address_id}")
+def update_invoicing_address(
+    data: InvoicingAddressUpdate,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int,
-) -> BillingAddress:
+) -> InvoicingAddress:
     """
-    Update billing address of authenticated user
-    billing address corresponds to authenticated partner
+    Update invoicing address of authenticated user
+    invoicing address corresponds to authenticated partner
     """
     vals = data.to_res_partner_vals()
     # sudo() is needed because some addons override the write
@@ -105,71 +105,71 @@ def update_billing_address(
         .sudo()
         ._update(partner, vals, address_id)
     )
-    return BillingAddress.from_res_partner(address)
+    return InvoicingAddress.from_res_partner(address)
 
 
-# --- Shipping address ---
+# --- Delivery address ---
 
 
-@address_router.get("/addresses/shipping")
-def get_shipping_addresses(
-    params: Annotated[ShippingAddressSearch, Depends()],
+@address_router.get("/addresses/delivery")
+def get_delivery_addresses(
+    params: Annotated[DeliveryAddressSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-) -> PagedCollection[ShippingAddress]:
+) -> PagedCollection[DeliveryAddress]:
     """
-    Get shipping addresses of authenticated user
-    Can be used to get every shipping address: /addresses/shipping
+    Get delivery addresses of authenticated user
+    Can be used to get every delivery address: /addresses/delivery
     """
     count, addresses = env["shopinvader_api_address.service.delivery_address"]._search(
         paging, params
     )
-    return PagedCollection[ShippingAddress](
-        count=count, items=[ShippingAddress.from_res_partner(rec) for rec in addresses]
+    return PagedCollection[DeliveryAddress](
+        count=count, items=[DeliveryAddress.from_res_partner(rec) for rec in addresses]
     )
 
 
-@address_router.get("/addresses/shipping/{address_id}")
-def get_shipping_address(
+@address_router.get("/addresses/delivery/{address_id}")
+def get_delivery_address(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int,
-) -> ShippingAddress:
+) -> DeliveryAddress:
     """
-    Get shipping addresses of authenticated user
-    Can be used to get one specific address: /addresses/shipping/address_id
+    Get delivery addresses of authenticated user
+    Can be used to get one specific address: /addresses/delivery/address_id
     """
     addresses = env["shopinvader_api_address.service.delivery_address"]._get(address_id)
-    return ShippingAddress.from_res_partner(addresses)
+    return DeliveryAddress.from_res_partner(addresses)
 
 
-@address_router.post("/addresses/shipping", status_code=201)
-def create_shipping_address(
-    data: ShippingAddressCreate,
+@address_router.post("/addresses/delivery", status_code=201)
+def create_delivery_address(
+    data: DeliveryAddressCreate,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-) -> ShippingAddress:
+) -> DeliveryAddress:
     """
-    Create shipping address of authenticated user
+    Create delivery address of authenticated user
     """
     vals = data.to_res_partner_vals()
     address = env["shopinvader_api_address.service.delivery_address"]._create(
         partner, vals
     )
 
-    return ShippingAddress.from_res_partner(address)
+    return DeliveryAddress.from_res_partner(address)
 
 
-@address_router.post("/addresses/shipping/{address_id}")
-def update_shipping_address(
-    data: ShippingAddressUpdate,
+@address_router.post("/addresses/delivery/{address_id}")
+def update_delivery_address(
+    data: DeliveryAddressUpdate,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     address_id: int,
-) -> ShippingAddress:
+) -> DeliveryAddress:
     """
-    Update shipping address of authenticated user
+    Update delivery address of authenticated user
     """
     vals = data.to_res_partner_vals()
     # sudo() is needed because some addons override the write
@@ -182,17 +182,17 @@ def update_shipping_address(
         .sudo()
         ._update(partner, vals, address_id)
     )
-    return ShippingAddress.from_res_partner(address)
+    return DeliveryAddress.from_res_partner(address)
 
 
-@address_router.delete("/addresses/shipping/{address_id}")
-def delete_shipping_address(
+@address_router.delete("/addresses/delivery/{address_id}")
+def delete_delivery_address(
     address_id: int,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> None:
     """
-    Delete shipping address of authenticated user
+    Delete delivery address of authenticated user
     Address will be archived.
     """
 
@@ -244,7 +244,7 @@ class ShopinvaderApiServiceBaseAddress(models.AbstractModel):
 
     def _delete(self, partner, address_id: int) -> None:
         """
-        Delete of shipping addresses will result to an archive
+        Delete of delivery addresses will result to an archive
         """
         address = self._get(address_id)
         address.active = False

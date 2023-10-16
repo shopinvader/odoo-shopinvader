@@ -32,9 +32,9 @@ class Address(StrictExtendableBaseModel):
         )
 
 
-class BillingAddress(Address):
+class InvoicingAddress(Address):
     """
-    Billing Address
+    Invoicing Address
     """
 
     vat: str | None = None
@@ -47,7 +47,7 @@ class BillingAddress(Address):
         return res
 
 
-class ShippingAddress(Address):
+class DeliveryAddress(Address):
     """
-    Shipping Address
+    Delivery Address
     """

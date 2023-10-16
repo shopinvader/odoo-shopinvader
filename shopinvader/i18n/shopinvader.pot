@@ -3362,7 +3362,7 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_delivery_id
-msgid "Shipping address"
+msgid "Delivery address"
 msgstr ""
 
 #. module: shopinvader
