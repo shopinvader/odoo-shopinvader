@@ -7,7 +7,6 @@ exclude: |
   ^shopinvader_algolia/|
   ^shopinvader_assortment/|
   ^shopinvader_auth_api_key/|
-  ^shopinvader_auth_jwt/|
   ^shopinvader_backend_image_proxy/|
   ^shopinvader_cart_expiry/|
   ^shopinvader_category_image_for_product/|
