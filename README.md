@@ -35,6 +35,7 @@ addon | version | maintainers | summary
 [shopinvader_product_seo](shopinvader_product_seo/) | 16.0.1.0.0 |  | SEO fields for Shopinvader
 [shopinvader_product_url](shopinvader_product_url/) | 16.0.1.0.0 |  | Generate url for product and category
 [shopinvader_restapi](shopinvader_restapi/) | 16.0.1.0.0 |  | Shopinvader
+[shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.1 |  | Adds shchema address: address billing_address delivery_address
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.1 |  | Shopinvader Catalog Search Engine Connector
@@ -54,7 +55,6 @@ addon | version | maintainers | summary
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 (unported) |  | Shopinvader Algolia Connector
 [shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 (unported) |  | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.1 (unported) |  | Shopinvader API_KEY Authentication
-[shopinvader_auth_jwt](shopinvader_auth_jwt/) | 14.0.1.2.0 (unported) |  | Find shopinvader backend and partner from JWT token
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.2 (unported) |  | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 (unported) |  | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 (unported) |  | Shopinvader Display category image for product
