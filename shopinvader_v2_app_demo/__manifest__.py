@@ -15,6 +15,7 @@
         "fastapi",
         "shopinvader_api_address",
         "shopinvader_api_cart",
+        "shopinvader_api_sale_loyalty",
         "shopinvader_anonymous_partner",
         "shopinvader_fastapi_auth_jwt",
         "shopinvader_product",
