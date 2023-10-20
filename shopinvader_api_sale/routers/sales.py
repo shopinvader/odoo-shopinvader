@@ -18,9 +18,7 @@ from odoo.addons.fastapi.dependencies import (
 )
 from odoo.addons.fastapi.schemas import Paging
 from odoo.addons.fastapi.utils import FilteredDomainAdapter
-from odoo.addons.shopinvader_schema_sale.schemas import Sale
-
-from ..schemas import SaleSearch
+from odoo.addons.shopinvader_schema_sale.schemas import Sale, SaleSearch
 
 sale_router = APIRouter(tags=["sales"])
 

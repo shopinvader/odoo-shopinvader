@@ -48,3 +48,13 @@ class Sale(StrictExtendableBaseModel):
             invoicing=InvoicingInfo.from_sale_order(odoo_rec),
             note=odoo_rec.note or None,
         )
+
+
+class SaleSearch(StrictExtendableBaseModel):
+    name: str | None = None
+
+    def to_odoo_domain(self):
+        if self.name:
+            return [("name", "ilike", self.name)]
+        else:
+            return []
