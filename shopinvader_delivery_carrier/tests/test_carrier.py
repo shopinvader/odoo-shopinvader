@@ -73,6 +73,58 @@ class CarrierCase(CommonCarrierCase):
             },
         )
 
+    def test_setting_other_carrier(self):
+        self.backend.carrier_ids |= self.other_carrier
+        cart = self._set_carrier(self.other_carrier)
+        self.assertEqual(cart["shipping"]["amount"]["total"], 60)
+        self.assertEqual(
+            cart["shipping"]["selected_carrier"],
+            {
+                "description": self.other_carrier.description,
+                "id": self.other_carrier.id,
+                "name": self.other_carrier.name,
+                "code": self.other_carrier.code,
+            },
+        )
+
+    def test_setting_other_carrier_add_item(self):
+        self.backend.carrier_ids |= self.other_carrier
+        cart = self._set_carrier(self.other_carrier)
+        self.assertEqual(cart["shipping"]["amount"]["total"], 60)
+        self.assertEqual(
+            cart["shipping"]["selected_carrier"],
+            {
+                "description": self.other_carrier.description,
+                "id": self.other_carrier.id,
+                "name": self.other_carrier.name,
+                "code": self.other_carrier.code,
+            },
+        )
+        cart = self.add_item(self.product_1.id, 2)
+        cart = self._set_carrier(self.other_carrier)
+        self.assertEqual(cart["shipping"]["amount"]["total"], 80)
+
+    def test_setting_other_carrier_update_carrier_shipping_costs(self):
+        self.backend.carrier_ids |= self.other_carrier
+        cart = self._set_carrier(self.other_carrier)
+        self.assertEqual(cart["shipping"]["amount"]["total"], 60)
+        self.assertEqual(
+            cart["shipping"]["selected_carrier"],
+            {
+                "description": self.other_carrier.description,
+                "id": self.other_carrier.id,
+                "name": self.other_carrier.name,
+                "code": self.other_carrier.code,
+            },
+        )
+        self.other_carrier.write({"per_unit_price": 100})
+
+        cart = self.extract_cart(self.service.dispatch("search"))
+        self.assertEqual(cart["shipping"]["amount"]["total"], 60)
+
+        cart = self.update_carrier_shipping_costs()
+        self.assertEqual(cart["shipping"]["amount"]["total"], 600)
+
     def test_reset_carrier_on_add_item(self):
         self._apply_carrier_and_assert_set()
         cart = self.add_item(self.product_1.id, 2)

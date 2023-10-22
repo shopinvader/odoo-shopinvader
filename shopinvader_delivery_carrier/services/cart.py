@@ -28,6 +28,7 @@ class CartService(Component):
             raise UserError(_("There is not cart"))
         else:
             self._set_carrier(cart, params["carrier_id"])
+            self._update_carrier_shipping_costs(cart)
             return self._to_json(cart)
 
     # DEPRECATED METHODS #
@@ -64,6 +65,17 @@ class CartService(Component):
         :return:
         """
         return self.set_carrier(carrier_id=params["carrier"]["id"])
+
+    def update_carrier_shipping_costs(self):
+        """
+        Update the shipping costs of the current cart from carrier
+        :return: dict
+        """
+        cart = self._get()
+        if not cart:
+            raise UserError(_("There is not cart"))
+        self._update_carrier_shipping_costs(cart)
+        return self._to_json(cart)
 
     # Validator
     def _validator_apply_delivery_method(self):
@@ -130,3 +142,22 @@ class CartService(Component):
         # Override. Don't copy delivery lines.
         res = super()._get_lines_to_copy(cart)
         return res.filtered(lambda l: not l.is_delivery)
+
+    def _update_carrier_shipping_costs(self, cart):
+        if cart.carrier_id and cart.carrier_id.delivery_type not in [
+            "fixed",
+            "base_on_rule",
+        ]:
+            # Rate the SO shipment from the current carrier
+            vals = cart.carrier_id.rate_shipment(cart)
+            if vals.get("success"):
+                delivery_price = vals["price"]
+                delivery_message = vals.get("warning_message", False)
+                cart.set_delivery_line(cart.carrier_id, delivery_price)
+                # Update odoo UI
+                cart.write(
+                    {
+                        "recompute_delivery_price": False,
+                        "delivery_message": delivery_message,
+                    }
+                )
