@@ -94,6 +94,9 @@ class BaseShopinvaderService(AbstractComponent):
                     op = self._scope_to_domain_operators[op]
                 else:
                     op = "="
+                # If the key is a many2one field, we need to convert the value to an int
+                if key.endswith("_id") and isinstance(value, str) and value.isdigit():
+                    value = int(value)
                 domain.append((key, op, value))
             return domain
         except Exception as e:
