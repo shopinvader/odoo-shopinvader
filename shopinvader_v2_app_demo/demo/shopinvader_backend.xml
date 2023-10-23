@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+
+    <record id="shopinvader_restapi.backend_1" model="shopinvader.backend">
+        <field name="jwt_aud">shopinvader_jwt</field>
+    </record>
+
+    <record id="shopinvader_restapi.backend_2" model="shopinvader.backend">
+        <field name="active" eval="False" />
+    </record>
+
+</odoo>

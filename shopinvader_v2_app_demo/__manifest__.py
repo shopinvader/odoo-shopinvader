@@ -44,6 +44,7 @@
         "demo/se_index.xml",
         "demo/se_image_field_thumbnail_size.xml",
         "demo/fs_storage.xml",
+        "demo/shopinvader_backend.xml",
     ],
     "assets": {
         "web.assets_frontend": [
