@@ -199,6 +199,7 @@ class ShopinvaderBackend(models.Model):
         help="Technical field to control form fields appeareance",
         default="search_engine",
     )
+    active = fields.Boolean(default=True)
     _sql_constraints = [
         (
             "unique_website_unique_key",

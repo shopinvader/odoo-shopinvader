@@ -6,7 +6,13 @@
             <form string="Shopinvader Website">
                 <sheet>
                     <div class="oe_button_box" name="buttons">
-
+                        <widget
+                            name="web_ribbon"
+                            title="Archived"
+                            bg_color="bg-danger"
+                            attrs="{'invisible': [('active', '=', True)]}"
+                        />
+                        <field name="active" invisible="1" />
                         <button
                             class="oe_stat_button"
                             name="%(shopinvader_restapi.action_cart)d"
@@ -154,6 +160,22 @@
             </tree>
         </field>
     </record>
+
+    <record id="search_shopinvader_backend" model="ir.ui.view">
+            <field name="name">shopinvader.backend.search</field>
+            <field name="model">shopinvader.backend</field>
+            <field name="arch" type="xml">
+                <search string="Search Backend">
+                    <field name="name" filter_domain="[('name', 'ilike', self)]" />
+                    <separator />
+                    <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active', '=', False)]"
+                />
+                </search>
+            </field>
+        </record>
 
     <record id="action_shopinvader_backend" model="ir.actions.act_window">
         <field name="name">Shopinvader Website</field>
