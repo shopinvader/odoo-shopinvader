@@ -24,7 +24,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
     def _get_shopinvader_partner(self, shopinvader_partner, external_id):
         with requests_mock.mock() as m:
             m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
+                self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"}
             )
             # Request to modify / fake json arg
             res = m.put(
@@ -39,7 +39,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
     def test_profile_create_shopinvader_partner_from_odoo(self):
 
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
         self.assertEquals("default", role)
@@ -51,7 +51,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         shop_partner.record_id.write({"vat": "BE0477472701"})
         self._check_nbr_job_created(1)
         partner, params = self._get_shopinvader_partner(
-            shop_partner, u"5a953d6aae1c744cfcfb3cd3"
+            shop_partner, "5a953d6aae1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
         self.assertEquals("public_tax_inc", role)
@@ -75,14 +75,14 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
             }
         )
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953dmpefe1c744cfcfb3cd3"
+            self.data, "5a953dmpefe1c744cfcfb3cd3"
         )
 
         self.assertEqual(shop_partner.property_product_pricelist, pricelist)
         self.backend.pricelist_id = False
         self.backend.use_sale_profile = True
         partner, params = self._get_shopinvader_partner(
-            shop_partner, u"5a953dmpefe1c744cfcfb3cd3"
+            shop_partner, "5a953dmpefe1c744cfcfb3cd3"
         )
         role = params.get("content_entry").get("role")
         self.assertEquals(role, profile.code)

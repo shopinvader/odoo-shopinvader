@@ -42,7 +42,7 @@ class CommonShopinvaderPartner(LocoCommonCase):
         self._check_nbr_job_created(1)
         with requests_mock.mock() as m:
             m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
+                self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"}
             )
             res = m.post(
                 self.base_url + "/content_types/customers/entries",
@@ -55,23 +55,23 @@ class CommonShopinvaderPartner(LocoCommonCase):
 class TestShopinvaderPartner(CommonShopinvaderPartner):
     def test_create_shopinvader_partner_from_odoo(self):
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )
         self.assertEqual(
             params,
             {
-                u"content_entry": {
-                    u"role": u"default",
-                    u"email": u"new@customer.example.com",
-                    u"name": u"Purple",
+                "content_entry": {
+                    "role": "default",
+                    "email": "new@customer.example.com",
+                    "name": "Purple",
                 }
             },
         )
-        self.assertEqual(shop_partner.external_id, u"5a953d6aae1c744cfcfb3cd3")
+        self.assertEqual(shop_partner.external_id, "5a953d6aae1c744cfcfb3cd3")
 
     def test_delete_shopinvader_partner_from_odoo(self):
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )
         self._init_job_counter()
         shop_partner.unlink()
@@ -80,7 +80,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         self._check_nbr_job_created(1)
         with requests_mock.mock() as m:
             m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
+                self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"}
             )
             m.delete(
                 self.base_url
@@ -91,7 +91,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
 
     def test_update_shopinvader_partner_from_odoo(self):
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )
         self._init_job_counter()
         partner = shop_partner.record_id
@@ -101,7 +101,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
 
     def test_no_update_shopinvader_partner_from_odoo(self):
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )
         self._init_job_counter()
         partner = shop_partner.record_id
@@ -111,7 +111,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
 
     def test_binding_access_rights(self):
         shop_partner, params = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )
         demo_user_id = self.ref("base.user_demo")
         self._init_job_counter()
@@ -128,7 +128,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         self._check_nbr_job_created(1)
         with requests_mock.mock() as m:
             m.post(
-                self.base_url + "/tokens.json", json={"token": u"744cfcfb3cd3"}
+                self.base_url + "/tokens.json", json={"token": "744cfcfb3cd3"}
             )
             m.put(
                 self.base_url
@@ -145,7 +145,7 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         :return:
         """
         shop_partner = self._create_shopinvader_partner(
-            self.data, u"5a953d6aae1c744cfcfb3cd3"
+            self.data, "5a953d6aae1c744cfcfb3cd3"
         )[0]
         partner = shop_partner.record_id
         self.assertEqual(partner._get_binding_to_export(), shop_partner)

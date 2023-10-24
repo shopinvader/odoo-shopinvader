@@ -30,7 +30,7 @@ class CartService(Component):
 
     def search(self):
         """Return the cart that have been set in the session or
-           search an existing cart for the current partner"""
+        search an existing cart for the current partner"""
         if not self.cart_id:
             return {}
         return self._to_json(self._get())

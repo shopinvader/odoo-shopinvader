@@ -166,7 +166,7 @@ class AbstractUrl(models.AbstractModel):
         )
 
     def set_url(self, url_key):
-        """ Se a new url
+        """Se a new url
         backup old url
 
         1 find url redirect true and same model_id

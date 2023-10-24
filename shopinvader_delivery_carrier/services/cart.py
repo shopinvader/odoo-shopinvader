@@ -17,11 +17,11 @@ class CartService(Component):
 
     def set_carrier(self, **params):
         """
-           This service will set the given delivery method to the current
-           cart
-       :param params: The carrier_id to set
-       :return:
-       """
+            This service will set the given delivery method to the current
+            cart
+        :param params: The carrier_id to set
+        :return:
+        """
         cart = self._get()
         if not cart:
             raise UserError(_("There is not cart"))

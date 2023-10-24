@@ -20,13 +20,13 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
 
     def test_product_binding(self):
         """
-            Select a product and
-            - bind it to a shopinvader backend
-              check that only the selected variant is binded (and the template)
-              but not the other variants
-            - bind the others variants
-            - unbind it
-            - bind it again
+        Select a product and
+        - bind it to a shopinvader backend
+          check that only the selected variant is binded (and the template)
+          but not the other variants
+        - bind the others variants
+        - unbind it
+        - bind it again
         """
         self.assertFalse(self.template.shopinvader_bind_ids)
         self.assertFalse(
@@ -142,8 +142,8 @@ class TestShopinvaderVariantBindingWizard(SavepointComponentCase):
 
     def test_product_inactivation(self):
         """
-            Select a product and bind it to a Lengow Catalogue
-            Inactivation of the product must unbind the product
+        Select a product and bind it to a Lengow Catalogue
+        Inactivation of the product must unbind the product
         """
         # --------------------------------
         # Bind the product to the Backend

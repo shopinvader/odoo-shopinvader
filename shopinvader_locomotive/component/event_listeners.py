@@ -49,7 +49,7 @@ class ShopinvaderRecordListener(Component):
             binding.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record, fields=None):
-        """ Unlink all binding before removing the record in order to
+        """Unlink all binding before removing the record in order to
         trigger an event for deleting the record in locomotive"""
         if "shopinvader_bind_ids" not in record._fields:
             return

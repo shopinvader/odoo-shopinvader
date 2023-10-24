@@ -185,17 +185,17 @@ class ShopinvaderSiteExportMapper(Component):
 
     def finalize(self, map_record, values):
         """
-           By default, custom information are stored in the field "_store"
-           of the site. Initially, it was not possible to update any other
-           information from the site. To remove this limitation, without
-           breaking existing code, the following euristic has been put in
-           place.
-           If the key of a value provided by the mapper is a key
-           of the current mmetafields values from the site, we update this
-           key into the metafields.
-           Otherwise, this key is a custom field part of the '_store'
-           sub-dictionary and the its value must be serialized
-       """
+        By default, custom information are stored in the field "_store"
+        of the site. Initially, it was not possible to update any other
+        information from the site. To remove this limitation, without
+        breaking existing code, the following euristic has been put in
+        place.
+        If the key of a value provided by the mapper is a key
+        of the current mmetafields values from the site, we update this
+        key into the metafields.
+        Otherwise, this key is a custom field part of the '_store'
+        sub-dictionary and the its value must be serialized
+        """
         values = super().finalize(map_record, values)
         current_values = self.options["current_values"]
         store_values = current_values.setdefault("_store", {})

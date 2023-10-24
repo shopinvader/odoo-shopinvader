@@ -52,7 +52,7 @@ class ShopinvaderBackend(models.Model):
         """Return the list of warehouse what will be used for exporting the
         stock level. A global key "global" is added with the list of all
         warehouse ids
-        :return: dict with warehouse code as key and warehouse_ids as value """
+        :return: dict with warehouse code as key and warehouse_ids as value"""
         self.ensure_one()
         result = {"global": self.warehouse_ids.ids}
         if len(self.warehouse_ids) > 1:
