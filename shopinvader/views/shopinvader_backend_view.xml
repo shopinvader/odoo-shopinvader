@@ -114,7 +114,10 @@
                         </page>
                         <page name="products" string="Products">
                             <group>
-                                <field name="use_shopinvader_product_name"/>
+                                <group>
+                                    <field name="use_shopinvader_product_name" />
+                                    <field name="variant_exporter_id" />
+                                </group>
                             </group>
                         </page>
                         <page name="localization" string="Localization">
