@@ -64,12 +64,14 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "Poster",
+                            "multi_variation": False,
                             "sku": "Poster",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Wooden",
+                            "multi_variation": False,
                             "sku": "Wooden",
                             "selected": False,
                             "available": True,
@@ -90,12 +92,14 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "Poster",
+                            "multi_variation": False,
                             "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Wooden",
+                            "multi_variation": False,
                             "sku": "Wooden-White",
                             "selected": False,
                             "available": True,
@@ -107,18 +111,21 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "White",
+                            "multi_variation": False,
                             "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Black",
+                            "multi_variation": False,
                             "sku": "Poster-Black",
                             "selected": False,
                             "available": True,
                         },
                         {
                             "name": "Grey",
+                            "multi_variation": False,
                             "sku": "Poster-Grey",
                             "selected": False,
                             "available": True,
@@ -140,12 +147,14 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "Poster",
+                            "multi_variation": False,
                             "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Wooden",
+                            "multi_variation": False,
                             "sku": "Wooden-White",
                             "selected": False,
                             "available": True,
@@ -157,18 +166,21 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "White",
+                            "multi_variation": False,
                             "sku": "Poster-White",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Black",
+                            "multi_variation": False,
                             "sku": "",
                             "selected": False,
                             "available": False,
                         },
                         {
                             "name": "Grey",
+                            "multi_variation": False,
                             "sku": "Poster-Grey",
                             "selected": False,
                             "available": True,
@@ -189,12 +201,14 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "Poster",
+                            "multi_variation": False,
                             "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Wooden",
+                            "multi_variation": False,
                             "sku": "Wooden-White-70x50cm",
                             "selected": False,
                             "available": True,
@@ -206,18 +220,21 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "White",
+                            "multi_variation": False,
                             "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Black",
+                            "multi_variation": False,
                             "sku": "Poster-Black-70x50cm",
                             "selected": False,
                             "available": True,
                         },
                         {
                             "name": "Grey",
+                            "multi_variation": False,
                             "sku": "Poster-Grey-70x50cm",
                             "selected": False,
                             "available": True,
@@ -229,18 +246,21 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "45x30cm",
+                            "multi_variation": False,
                             "sku": "",
                             "selected": False,
                             "available": False,
                         },
                         {
                             "name": "70x50cm",
+                            "multi_variation": False,
                             "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "90x60cm",
+                            "multi_variation": False,
                             "sku": "Poster-White-90x60cm",
                             "selected": False,
                             "available": True,
@@ -274,12 +294,14 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "Poster",
+                            "multi_variation": False,
                             "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Wooden",
+                            "multi_variation": True,
                             "sku": "Wooden-Black-45x30cm",
                             "selected": False,
                             "available": True,
@@ -291,18 +313,21 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "White",
+                            "multi_variation": False,
                             "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "Black",
+                            "multi_variation": True,
                             "sku": "Poster-Black-45x30cm",
                             "selected": False,
                             "available": True,
                         },
                         {
                             "name": "Grey",
+                            "multi_variation": False,
                             "sku": "Poster-Grey-70x50cm",
                             "selected": False,
                             "available": True,
@@ -314,18 +339,21 @@ class ShopinvaderVariantCase(SavepointCase):
                     "values": [
                         {
                             "name": "45x30cm",
+                            "multi_variation": False,
                             "sku": "",
                             "selected": False,
                             "available": False,
                         },
                         {
                             "name": "70x50cm",
+                            "multi_variation": False,
                             "sku": "Poster-White-70x50cm",
                             "selected": True,
                             "available": True,
                         },
                         {
                             "name": "90x60cm",
+                            "multi_variation": False,
                             "sku": "Poster-White-90x60cm",
                             "selected": False,
                             "available": True,
