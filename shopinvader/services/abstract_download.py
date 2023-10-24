@@ -69,7 +69,7 @@ class AbstractDownload(AbstractComponent):
         target_report_def = self._get_report_action(target, params=params)
         report_name = target_report_def.get("report_name")
         report_type = target_report_def.get("report_type")
-        report = self._get_report(report_name, report_type)
+        report = self.env["ir.actions.report"]._get_report_from_name(report_name)
         content, extension = report._render(
             target.ids, data={"report_type": report_type}
         )
