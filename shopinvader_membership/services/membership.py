@@ -1,12 +1,17 @@
 # Copyright 2020 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+
 from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools.translate import _
 
+from odoo.addons.base_rest import restapi
 from odoo.addons.base_rest.components.service import to_int
 from odoo.addons.component.core import Component
+
+_logger = logging.getLogger(__name__)
 
 
 class MembershipService(Component):
@@ -41,21 +46,41 @@ class MembershipService(Component):
         """
         return self._paginate_search(**params)
 
-    def subscribe(self, _id):
+    @restapi.method(
+        [(["/<int:_id>/subscribe"], "GET")],
+        input_param=restapi.CerberusValidator({}),
+        output_param=restapi.CerberusValidator("_validator_return_subscribe"),
+    )
+    def get_subscribe(self, _id):
         """
+        DEPRECATED: you should use `subscribe` with a POST.
         Subscribe to a membership product with logged user
         :param _id: id of product.product
         :return: dict with invoice_id
         """
+        _logger.warning("DEPRECATED: You should use `subscribe` with a POST")
+        return self.post_subscribe(**{"membership_product_id": _id})
+
+    @restapi.method(
+        [(["/subscribe"], "POST")],
+        input_param=restapi.CerberusValidator("_validator_subscribe"),
+        output_param=restapi.CerberusValidator("_validator_return_subscribe"),
+    )
+    def post_subscribe(self, **params):
+        """
+        Subscribe to a membership product with logged user
+        :return: dict with invoice_id
+        """
+        product_id = params.get("membership_product_id")
         if not self._is_logged_in():
             raise UserError(_("A user should be logged"))
         membership_product = self.env["product.product"].search(
-            [("id", "=", _id), ("membership", "=", True)]
+            [("id", "=", product_id), ("membership", "=", True)], limit=1
         )
         if not membership_product:
-            raise UserError(_("No membership product found with id %s") % _id)
+            raise UserError(_("No membership product found with id %s") % product_id)
         wizard = self.env["membership.invoice"].create(
-            {"product_id": _id, "member_price": membership_product.list_price}
+            {"product_id": product_id, "member_price": membership_product.list_price}
         )
         invoices_views_dict = wizard.with_context(
             active_ids=self.partner.ids
@@ -67,7 +92,7 @@ class MembershipService(Component):
         Validator for the subscribe
         :return: dict
         """
-        return {"membership_product_id": {"type": "integer"}}
+        return {"membership_product_id": {"type": "integer", "required": True}}
 
     def _validator_return_subscribe(self):
         """
