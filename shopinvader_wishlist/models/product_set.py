@@ -17,6 +17,20 @@ class ProductSet(models.Model):
         help="If you are using this set for shopinvader customer "
         "you must select a backend.",
     )
+    shopinvader_has_line_to_check = fields.Boolean(
+        compute="_compute_shopinvader_has_line_to_check"
+    )
+
+    def _compute_shopinvader_has_line_to_check(self):
+        for rec in self:
+            rec.shopinvader_has_line_to_check = rec._has_line_to_check()
+
+    def _has_line_to_check(self):
+        if not self.shopinvader_backend_id:
+            return False
+        for line in self.set_line_ids:
+            if line.shopinvader_to_check:
+                return True
 
     def get_lines_by_products(self, product_ids=None, invader_variant_ids=None):
         if not product_ids and not invader_variant_ids:
@@ -40,6 +54,16 @@ class ProductSetLine(models.Model):
         compute="_compute_shopinvader_variant",
         inverse="_inverse_shopinvader_variant",
     )
+    shopinvader_to_check = fields.Boolean(compute="_compute_shopinvader_to_check")
+
+    def _compute_shopinvader_to_check(self):
+        for rec in self:
+            backend = rec.product_set_id.shopinvader_backend_id
+            if not backend:
+                rec.shopinvader_to_check = False
+                continue
+            variant = rec.shopinvader_variant_id
+            rec.shopinvader_to_check = not variant or not variant.active
 
     def _inverse_shopinvader_variant(self):
         for record in self:
@@ -49,13 +73,23 @@ class ProductSetLine(models.Model):
     @api.depends("product_id")
     @api.depends_context("lang")
     def _compute_shopinvader_variant(self):
+        # Load inactive records too
+        # because it's not granted that the product has an active variant.
         for record in self.with_context(active_test=False):
-            if record.product_id and not record.shopinvader_variant_id:
-                backend = record.product_set_id.shopinvader_backend_id
-                lang = self.env.context.get("lang")
+            backend = record.product_set_id.shopinvader_backend_id
+            lang = self.env.context.get("lang")
+            variant = record.product_id._get_invader_variant(backend, lang)
+            if not variant:
+                lang = record.product_set_id.partner_id.lang
+                # try w/ partner lang
                 variant = record.product_id._get_invader_variant(backend, lang)
-                if not variant:
-                    lang = record.product_set_id.partner_id.lang
-                    # try w/ partner lang
-                    variant = record.product_id._get_invader_variant(backend, lang)
-                record.shopinvader_variant_id = variant
+            if len(variant) > 1:
+                # Pick the 1st active variant if any.
+                # If there's only an inactive variant
+                # the wishlist service is already safe
+                # as it will return the product as not available.
+                # See `_json_parser_binding_not_available_data`.
+                # However, if there's at least an active variant, let's use it.
+                active_variant = variant.filtered(lambda x: x.active)
+                variant = fields.first(active_variant) if active_variant else variant[0]
+            record.shopinvader_variant_id = variant

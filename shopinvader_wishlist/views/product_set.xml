@@ -8,6 +8,41 @@
     <field name="arch" type="xml">
       <field name="name" position="before">
         <field name="shopinvader_backend_id" />
+        <field name="shopinvader_has_line_to_check" invisible="1" />
+      </field>
+      <label for="set_line_ids" position="before">
+        <div
+                    class="alert alert-warning"
+                    role="alert"
+                    attrs="{'invisible': [('shopinvader_has_line_to_check', '=', False)]}"
+                >
+          <p>
+            At least one line has no available Shopinvader variant (either empty or inactive).
+            To check the lines, show the optional field 'Shopinvader variant' in the lines list to identify the invalid lines.
+          </p>
+        </div>
+      </label>
+      <xpath
+                expr="//field[@name='set_line_ids']/tree/field[@name='product_id']"
+                position="after"
+            >
+          <field name="shopinvader_to_check" invisible="1" />
+          <field
+                    name="shopinvader_variant_id"
+                    context="{'active_test': False}"
+                    optional="hide"
+                    decoration-danger="shopinvader_to_check == True"
+                />
+      </xpath>
+    </field>
+  </record>
+
+  <record id="view_product_set_tree" model="ir.ui.view">
+    <field name="model">product.set</field>
+    <field name="inherit_id" ref="sale_product_set.view_product_set_tree" />
+    <field name="arch" type="xml">
+      <field name="company_id" position="after">
+        <field name="shopinvader_has_line_to_check" optional="hide" />
       </field>
     </field>
   </record>
