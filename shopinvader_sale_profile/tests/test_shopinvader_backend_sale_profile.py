@@ -107,3 +107,39 @@ class TestShopinvaderBackendSaleProfile(CommonCase):
             self.assertEqual(
                 self.backend._get_cart_pricelist(partner), expected,
             )
+
+    def test_get_pricelist_partner_no_fpos_configured(self):
+        self.backend.write({"use_sale_profile": True})
+        profile1 = self.env.ref(
+            "shopinvader_sale_profile.shopinvader_sale_profile_1"
+        )
+        profile2 = self.env.ref(
+            "shopinvader_sale_profile.shopinvader_sale_profile_2"
+        )
+        profile3 = self.env.ref(
+            "shopinvader_sale_profile.shopinvader_sale_profile_3"
+        )
+        profile1.default = True
+        profile2.default = False
+        profile3.default = False
+        # Partner from France
+        partner = self.env.ref("shopinvader.partner_1")
+        invader_partner = partner._get_invader_partner(self.backend)
+        # Set USD Pricelist
+        partner_pricelist = self.env.ref("shopinvader.pricelist_1")
+        partner.property_product_pricelist = partner_pricelist.id
+        fpos_pricelist = profile1.pricelist_id
+        # Recompute sale profile from invader partner
+        invader_partner._compute_sale_profile_id()
+        self.assertEqual(
+            self.backend._get_cart_pricelist(partner), fpos_pricelist
+        )
+        # Drop fpos from demo profiles
+        profile1.fiscal_position_ids = False
+        profile2.fiscal_position_ids = False
+        profile3.fiscal_position_ids = False
+        # Recompute sale profile from invader partner
+        invader_partner._compute_sale_profile_id()
+        self.assertEqual(
+            self.backend._get_cart_pricelist(partner), partner_pricelist
+        )
