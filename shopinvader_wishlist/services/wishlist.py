@@ -10,7 +10,7 @@ from werkzeug.exceptions import NotFound
 from odoo import _, exceptions
 from odoo.osv import expression
 
-from odoo.addons.base_rest.components.service import to_int
+from odoo.addons.base_rest.components.service import to_bool, to_int
 from odoo.addons.component.core import Component
 
 
@@ -84,7 +84,8 @@ class WishlistService(Component):
         cart = cart_service._get()
         prod_ids = [x["product_id"] for x in params["lines"]]
         lines = record.get_lines_by_products(product_ids=prod_ids)
-        self._add_items_to_cart(record, cart, lines)
+        skip_existing_products = params.get("skip_existing_products", True)
+        self._add_items_to_cart(record, cart, lines, skip_existing_products)
         # return new cart
         return cart_service._to_json(cart)
 
@@ -224,6 +225,12 @@ class WishlistService(Component):
                         },
                     },
                 },
+                "skip_existing_products": {
+                    "coerce": to_bool,
+                    "type": "boolean",
+                    "nullable": True,
+                    "required": False,
+                },
             }
         )
         return schema
@@ -317,21 +324,25 @@ class WishlistService(Component):
             return expression.FALSE_DOMAIN
         return self._default_domain_for_partner_records()
 
-    def _get_add_to_cart_wizard(self, record, cart):
+    def _get_add_to_cart_wizard(self, record, cart, skip_existing_products):
         return self.env["product.set.add"].create(
             {
                 "order_id": cart.id,
                 "product_set_id": record.id,
-                "skip_existing_products": True,
+                "skip_existing_products": skip_existing_products,
             }
         )
 
-    def _add_to_cart(self, record, cart):
-        wizard = self._get_add_to_cart_wizard(record, cart)
+    def _add_to_cart(self, record, cart, skip_existing_products=True):
+        wizard = self._get_add_to_cart_wizard(
+            record, cart, skip_existing_products
+        )
         return wizard.add_set()
 
-    def _add_items_to_cart(self, record, cart, lines):
-        wizard = self._get_add_to_cart_wizard(record, cart)
+    def _add_items_to_cart(self, record, cart, lines, skip_existing_products):
+        wizard = self._get_add_to_cart_wizard(
+            record, cart, skip_existing_products
+        )
         wizard.product_set_line_ids = lines
         return wizard.add_set()
 
