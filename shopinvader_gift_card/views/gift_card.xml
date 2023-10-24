@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+ <record id="gift_card_inherit" model="ir.ui.view">
+     <field name="name">gift.card.inherit</field>
+     <field name="model">gift.card</field>
+     <field name="inherit_id" ref="gift_card.gift_card_form_view" />
+     <field name="arch" type="xml">
+         <group name="attributes" position="after">
+             <group name="contact" string="Contacts Information">
+                <field name="buyer_name" />
+                <field name="buyer_email" />
+                <field name="beneficiary_name" />
+                <field name="beneficiary_email" />
+                <field name="comment" />
+            </group>
+         </group>
+     </field>
+ </record>
+</odoo>
