@@ -229,6 +229,12 @@ class ShopinvaderBackend(models.Model):
         help="Technical field to control form fields appeareance",
         default="search_engine",
     )
+
+    product_ids = fields.One2many(
+        comodel_name="shopinvader.variant",
+        inverse_name="backend_id",
+        string="Products",
+    )
     _sql_constraints = [
         (
             "unique_website_unique_key",
