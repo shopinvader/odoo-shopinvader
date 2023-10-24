@@ -12,7 +12,6 @@ from .test_address import _check_partner_data
 
 _logger = logging.getLogger(__name__)
 
-
 class TestCustomerCommon(CommonCase):
     @classmethod
     def setUpClass(cls):
@@ -21,6 +20,16 @@ class TestCustomerCommon(CommonCase):
         cls.partner_binding = cls.env.ref("shopinvader.shopinvader_partner_1")
         cls.address = cls.env.ref("shopinvader.partner_1_address_1")
         cls.partner_2 = cls.env.ref("shopinvader.partner_2")
+
+        cls.partner_service_data = {
+            "name": "Osiris",
+            "email": "osiris@shopinvader.com",
+            "street": "pré du haut",
+            "city": "Aurec sur Loire",
+            "zip": "43110",
+            "country": {"id": cls.env.ref("base.fr").id, "name": "France", "code": "FR"},
+            "payment_term": cls.env.ref("account.account_payment_term_immediate").display_name,
+        }
 
     def setUp(self, *args, **kwargs):
         super(TestCustomerCommon, self).setUp(*args, **kwargs)
@@ -50,6 +59,11 @@ class TestCustomerCommon(CommonCase):
 
 
 class TestCustomer(TestCustomerCommon):
+
+    def test_customer(self):
+        data = self.service_with_partner.dispatch("get")["data"]
+        self.assertDictContainsSubset(self.partner_service_data, data)
+
     def test_create_customer(self):
         self.data["external_id"] = "D5CdkqOEL"
         res = self.service.dispatch("create", params=self.data)["data"]

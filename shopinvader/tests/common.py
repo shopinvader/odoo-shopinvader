@@ -89,6 +89,13 @@ class UtilsMixin(object):
         return env["shopinvader.partner"].create(values)
 
 
+class CommonFR(UtilsMixin):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        _install_lang_odoo(cls.env, "base.lang_fr", True)
+
+
 class CommonMixin(RegistryMixin, ComponentMixin, UtilsMixin):
     @staticmethod
     def _setup_backend(cls):
