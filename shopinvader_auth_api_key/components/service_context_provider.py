@@ -45,7 +45,9 @@ class ShopinvaderAuthApiKeyServiceContextProvider(Component):
         if not backend:
             # no explicit backend, fallback on the one linKed to the api_key
             auth_api_key_id = getattr(self.request, "auth_api_key_id", None)
-            backend = self.env["shopinvader.backend"]._get_from_auth_api_key(
-                auth_api_key_id
+            backend = (
+                self.env["shopinvader.backend"]
+                .sudo()
+                ._get_from_auth_api_key(auth_api_key_id)
             )
         return backend
