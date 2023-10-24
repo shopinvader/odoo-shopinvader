@@ -4,9 +4,13 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
+
 from odoo import fields, models
 
 from odoo.addons.base_sparse_field.models.fields import Serialized
+
+_logger = logging.getLogger(__file__)
 
 
 class ShopinvaderImageMixin(models.AbstractModel):
@@ -100,18 +104,33 @@ class ShopinvaderImageMixin(models.AbstractModel):
     def _get_image_data_for_record(self):
         self.ensure_one()
         res = []
+        failed = {}
         resizes = self._resize_scales()
         for image_relation in self[self._image_field]:
             url_key = self._get_image_url_key(image_relation)
             image_data = {}
             for resize in resizes:
-                thumbnail = image_relation.image_id.get_or_create_thumbnail(
-                    resize.size_x, resize.size_y, url_key=url_key
-                )
-                image_data[resize.key] = self._prepare_data_resize(
-                    thumbnail, image_relation
-                )
+                try:
+                    thumbnail = image_relation.image_id.get_or_create_thumbnail(
+                        resize.size_x, resize.size_y, url_key=url_key
+                    )
+                except FileNotFoundError:
+                    # If get/set the file to/from external storage fails
+                    # skip the image and do not let the whole data compute fail
+                    failed.setdefault(tuple(self.ids), []).append(
+                        f"{resize.size_x}x{resize.size_y}"
+                    )
+                else:
+                    image_data[resize.key] = self._prepare_data_resize(
+                        thumbnail, image_relation
+                    )
             res.append(image_data)
+        if failed:
+            _logger.error(
+                "File not found for IDs=%s SCALES=%s",
+                ", ".join(self.ids),
+                ", ".join(failed[tuple(self.ids)]),
+            )
         return res
 
     def _prepare_data_resize(self, thumbnail, image_relation):
