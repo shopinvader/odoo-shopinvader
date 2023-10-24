@@ -14,14 +14,14 @@ class TestProductAutoBind(TransactionCase):
         self.product_obj = self.env["product.product"]
         self.backend.product_assortment_id.domain = "[('sale_ok', '=', True)]"
 
-    def test_shopinvader_auto_product_auto_bind(self):
+    def test_shopinvader_force_product_auto_bind(self):
         # Test bind all products from assortment domain
         variants = self.variant_obj.search([("backend_id", "=", self.backend.id)])
         self.assertFalse(variants)
         domain = self.backend.product_assortment_id._get_eval_domain()
         products_to_bind = self.product_obj.search(domain)
 
-        self.backend.autobind_product_from_assortment()
+        self.backend.force_recompute_all_binding_index()
 
         variants = self.variant_obj.search([("backend_id", "=", self.backend.id)])
 
@@ -35,7 +35,7 @@ class TestProductAutoBind(TransactionCase):
             {"blacklist_product_ids": [(4, excluded_product.id)]}
         )
 
-        self.backend.autobind_product_from_assortment()
+        self.backend.force_recompute_all_binding_index()
 
         excluded_variant = self.variant_obj.with_context(active_test=False).search(
             [
@@ -53,7 +53,7 @@ class TestProductAutoBind(TransactionCase):
             {"blacklist_product_ids": [(5, False, False)]}
         )
 
-        self.backend.autobind_product_from_assortment()
+        self.backend.force_recompute_all_binding_index()
 
         excluded_variant = self.variant_obj.search(
             [

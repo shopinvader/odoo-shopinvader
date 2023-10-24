@@ -39,6 +39,11 @@
                             'default_is_assortment': 1,
                         }"
                     />
+                    <button
+                        name="action_run_autobind"
+                        string="Autobind now"
+                        type="object"
+                    />
                 </group>
             </page>
         </field>

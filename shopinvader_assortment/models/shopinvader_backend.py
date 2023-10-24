@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from odoo import _, api, fields, models
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 
 
@@ -63,24 +63,26 @@ class ShopinvaderBackend(models.Model):
 
     @api.model
     def autobind_product_from_assortment(self, domain=None):
-        if domain is None:
-            domain = []
-        domain = expression.AND(
+        for backend in self.search(self._autobind_domain(domain=domain)):
+            backend._autobind_product_from_assortment()
+
+    def _autobind_domain(self, domain=None):
+        return expression.AND(
             [
-                domain,
+                domain or [],
                 [
                     ("product_manual_binding", "!=", True),
                     ("product_assortment_id", "!=", False),
                 ],
             ]
         )
-        for backend in self.search(domain):
-            backend._autobind_product_from_assortment()
 
-    def force_recompute_all_binding_index(self):
-        records = self.filtered(
-            lambda r: not r.product_manual_binding and r.product_assortment_id
-        )
-        for record in records:
-            record._autobind_product_from_assortment()
-        return super().force_recompute_all_binding_index()
+    def action_run_autobind(self):
+        backends = self.filtered_domain(self._autobind_domain())
+        if not backends:
+            raise UserError(
+                _("Auto-bind not enabled on backend(s): %s")
+                % ", ".join(self.mapped("name"))
+            )
+        for backend in backends:
+            backend._autobind_product_from_assortment()

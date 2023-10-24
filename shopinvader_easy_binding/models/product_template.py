@@ -34,8 +34,14 @@ class ProductTemplate(models.Model):
             )
 
     def _inverse_company_shopinvader_published(self):
+        params = self.env.context.get("params", {})
+        # Sadly setting the ctx key on the flag won't work :/
+        bind_immediately = (
+            params.get("model") == "product.template"
+            and params.get("view_type") == "form"
+        ) or self.env.context.get("bind_immediately")
         # Binding/unbinding of templates is taken care of by variants
-        for rec in self:
+        for rec in self.with_context(bind_immediately=bind_immediately):
             rec.product_variant_ids.company_shopinvader_published = (
                 rec.company_shopinvader_published
             )
