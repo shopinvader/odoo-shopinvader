@@ -51,7 +51,10 @@ class UsersService(Component):
     """
 
     _name = "shopinvader.users.service"
-    _inherit = "base.shopinvader.service"
+    _inherit = [
+        "base.shopinvader.service",
+        "shopinvader.partner.service.mixin",
+    ]
     _usage = "users"
     _expose_model = "shopinvader.partner"
     _description = __doc__
@@ -68,7 +71,7 @@ class UsersService(Component):
     def create(self, **params):
         vals = self._prepare_params(params.copy())
         record = self.env[self._expose_model].create(vals)
-        self._post_create(record)
+        self._post_create(record.record_id)
         return {"data": self._to_json(record, one=True)}
 
     @protect_by_invader_user("is_users_manager")
@@ -76,7 +79,7 @@ class UsersService(Component):
         # TODO: prevent update of records not in the same hierarchy?
         record = self._get(_id)
         record.write(self._prepare_params(params.copy(), mode="update"))
-        self._post_update(record)
+        self._post_update(record.record_id)
         return self.search()
 
     @protect_by_invader_user("is_users_manager")
@@ -87,12 +90,6 @@ class UsersService(Component):
         binding = self._get(_id)
         self._delete(binding)
         return self.search()
-
-    def _post_create(self, record):
-        pass
-
-    def _post_update(self, record):
-        pass
 
     def _validator_search(self):
         return {
