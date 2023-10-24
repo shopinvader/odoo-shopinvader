@@ -13,6 +13,7 @@
         "auth_jwt",
     ],
     "data": [
+        "data/auth_jwt_validator.xml",
         "views/shopinvader_backend.xml",
     ],
     "demo": [],

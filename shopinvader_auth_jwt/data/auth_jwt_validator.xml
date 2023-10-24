@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data noupdate="1">
+    <record id="auth_jwt_validator_shopinvader" model="auth.jwt.validator">
+      <field name="name">shopinvader</field>
+      <field name="signature_type">public_key</field>
+      <field name="audience">shopinvader_jwt</field>
+      <field name="issuer">https://localhost:8443/auth/realms/shopinvader</field>
+      <field
+                name="public_key_jwk_uri"
+            >https://localhost:8443/auth/realms/shopinvader/protocol/openid-connect/certs</field>
+      <field name="partner_id_strategy">email</field>
+    </record>
+  </data>
+</odoo>
