@@ -14,6 +14,7 @@
     "installable": True,
     "depends": ["stock", "shopinvader_search_engine"],
     "data": [
+        "views/se_backend.xml",
         "views/se_index.xml",
         "data/queue_job_channel_data.xml",
         "data/queue_job_function_data.xml",

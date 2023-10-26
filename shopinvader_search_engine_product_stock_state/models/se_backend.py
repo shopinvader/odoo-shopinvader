@@ -6,8 +6,8 @@
 from odoo import models
 
 
-class SeIndex(models.Model):
-    _inherit = "se.index"
+class SeBackend(models.Model):
+    _inherit = "se.backend"
 
     def _selection_stock_level_config(self):
         return super()._selection_stock_level_config() + [

@@ -48,10 +48,9 @@ class SeIndex(models.Model):
     # It's here to allow extending modules to define their own policies.
     # See example in `shopinvader_product_stock_state`.
     stock_level_config = fields.Selection(
-        selection="_selection_stock_level_config",
-        default="only_qty",
-        required=True,
-        help="Define stock level export policy",
+        selection=lambda self: self.backend_id._selection_stock_level_config(),
+        help="Define stock level export policy, "
+        "keep empty to take configuration from the backend",
     )
 
     def _default_stock_field_id(self):
@@ -60,8 +59,9 @@ class SeIndex(models.Model):
     def _default_warehouse_ids(self):
         return self.env["stock.warehouse"].search([], limit=1)
 
-    def _selection_stock_level_config(self):
-        return [("only_qty", "Only Quantity")]
+    def _get_stock_level_config(self):
+        self.ensure_one()
+        return self.stock_level_config or self.backend_id.stock_level_config
 
     def _get_warehouse_list_for_export(self):
         """Get list of warehouse to be used for exporting stock level.

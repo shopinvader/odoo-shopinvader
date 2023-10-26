@@ -16,7 +16,7 @@ class ProductProduct(models.Model):
         index_id = self.env.context.get("index_id", False)
         if index_id:
             index = self.env["se.index"].browse(index_id)
-            if "state" in index.stock_level_config:
+            if "state" in index._get_stock_level_config():
                 res["state"] = self.stock_state
             if self._skip_stock_qty_update(index):
                 res.pop("qty", None)
@@ -25,7 +25,7 @@ class ProductProduct(models.Model):
     def _skip_stock_qty_update(self, index=None):
         self.ensure_one()
         if index:
-            config = index.stock_level_config
+            config = index._get_stock_level_config()
             return config == "only_state" or (
                 config == "state_and_low_qty" and self.stock_state != "in_limited_stock"
             )
