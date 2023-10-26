@@ -14,6 +14,6 @@ class ProductProduct(models.Model):
         variants = variants._filter_by_index()
         return variants
 
-    @api.depends_context("index")
+    @api.depends_context("index_id")
     def _compute_main_product(self):
         return super()._compute_main_product()

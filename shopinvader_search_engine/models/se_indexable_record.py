@@ -8,10 +8,11 @@ class SeIndexableRecord(models.AbstractModel):
     _inherit = "se.indexable.record"
 
     def _filter_by_index(self):
-        index = self._context.get("index", False)
+        index_id = self.env.context.get("index_id", False)
         records = self
-        if index:
+        if index_id:
             records = records.filtered(
-                lambda rec, index=index: index in rec.se_binding_ids.mapped("index_id")
+                lambda rec, index_id=index_id: index_id
+                in rec.se_binding_ids.mapped("index_id").ids
             )
         return records
