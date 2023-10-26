@@ -65,7 +65,7 @@ class ResPartner(models.Model):
             record.opt_in = not record.is_blacklisted
 
     def _inverse_opt_in(self):
-        blacklist_model = self.env["mail.blacklist"]
+        blacklist_model = self.env["mail.blacklist"].sudo()
         for record in self:
             if record.opt_in:
                 blacklist_model._remove(record.email)
