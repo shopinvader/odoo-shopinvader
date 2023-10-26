@@ -31,7 +31,7 @@ class TestProductProduct(StockCommonCase):
         self.assertEqual(job.count_created(), 1)
 
     def _test_update_stock(self, sync_immediatly=True):
-        self.product_binding.with_context(index=self.index).recompute_json()
+        self.product_binding.recompute_json()
         self.assertEqual(self.product_binding.data["stock"], {"global": {"qty": 0.0}})
 
         jobs = self.job_counter()
@@ -68,7 +68,7 @@ class TestProductProduct(StockCommonCase):
         warehouses = self.warehouse_1 + self.warehouse_2
         self.index.write({"warehouse_ids": [(6, 0, warehouses.ids)]})
 
-        self.product_binding.with_context(index=self.index).recompute_json()
+        self.product_binding.recompute_json()
         expected = self._expectect_qty_by_wh(warehouses, self.product)
         self.assertEqual(self.product_binding.data["stock"], expected)
 

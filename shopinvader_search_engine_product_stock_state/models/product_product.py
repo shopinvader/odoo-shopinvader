@@ -13,8 +13,9 @@ class ProductProduct(models.Model):
     def _prepare_stock_data(self):
         self.ensure_one()
         res = super()._prepare_stock_data()
-        index = self._context.get("index", False)
-        if index:
+        index_id = self.env.context.get("index_id", False)
+        if index_id:
+            index = self.env["se.index"].browse(index_id)
             if "state" in index.stock_level_config:
                 res["state"] = self.stock_state
             if self._skip_stock_qty_update(index):

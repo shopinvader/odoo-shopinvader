@@ -17,7 +17,7 @@ class TestProductProduct(StockCommonCase):
         super(TestProductProduct, cls).setUpClass()
         cls.company = cls.env.ref("base.main_company")
         cls.index.stock_level_config = "state_and_low_qty"
-        cls.product = cls.product.with_context(index=cls.index)
+        cls.product = cls.product.with_context(index_id=cls.index.id)
 
     def test_out_of_stock(self):
         self.assertEqual(

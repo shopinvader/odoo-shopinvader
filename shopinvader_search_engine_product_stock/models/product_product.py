@@ -15,17 +15,19 @@ class ProductProduct(models.Model):
 
     def _prepare_stock_data(self):
         self.ensure_one()
-        index = self._context.get("index", False)
-        if index:
+        index_id = self._context.get("index_id", False)
+        if index_id:
+            index = self.env["se.index"].browse(index_id)
             stock_field = index.product_stock_field_id.name
             return {"qty": self[stock_field]}
         return {"qty": None}
 
-    @api.depends_context("index")
+    @api.depends_context("index_id")
     def _compute_stock_data(self):
         result = defaultdict(dict)
-        index = self._context.get("index", False)
-        if index:
+        index_id = self.env.context.get("index_id", False)
+        if index_id:
+            index = self.env["se.index"].browse(index_id)
             loc_records = self._filter_by_index()
             for (wh_key, wh_ids) in index._get_warehouse_list_for_export().items():
                 for loc_record in loc_records.with_context(warehouse=wh_ids):
@@ -53,7 +55,7 @@ class ProductProduct(models.Model):
         all_bindinds = products.mapped("se_binding_ids")
         indexes = all_bindinds.mapped("index_id")
         for index in indexes:
-            for product in products.with_context(index=index)._filter_by_index():
+            for product in products.with_context(index_id=index.id)._filter_by_index():
                 binding = product.sudo().se_binding_ids.filtered(
                     lambda b, i=index: b.index_id == i
                 )
