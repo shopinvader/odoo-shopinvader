@@ -14,8 +14,9 @@ class ProductTemplate(models.Model):
         :return: str
         """
         self.ensure_one()
-        index = self._context.get("index", False)
-        if index:
+        index_id = self.env.context.get("index_id", False)
+        if index_id:
+            index = self.env["se.index"].browse(index_id)
             return "{} | {}".format(
                 self.name or "", index.backend_id.seo_title_suffix or ""
             )
