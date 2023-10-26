@@ -33,7 +33,6 @@ class TestProductBinding(TestBindingIndexBase):
             "shopinvader_product.product_product_chair_vortex_white"
         )
         cls.product_binding = cls.product._add_to_index(cls.se_index)
-        cls.product_expected = {"id": cls.product.id, "name": cls.product.name}
 
     def test_serialize(self):
         self.product_binding.recompute_json()
@@ -48,12 +47,12 @@ class TestProductBinding(TestBindingIndexBase):
         self.assertEqual(data["price"], {})
 
     def test_serialize_categories_not_in_index(self):
-        self.product_binding.with_context(index=self.se_index).recompute_json()
+        self.product_binding.recompute_json()
         self.assertFalse(self.product_binding.data["categories"])
 
     def test_serialize_categories_in_index(self):
         self.product.categ_id._add_to_index(self.se_index)
-        self.product_binding.with_context(index=self.se_index).recompute_json()
+        self.product_binding.recompute_json()
         self.assertEqual(len(self.product_binding.data["categories"]), 1)
         category_data = self.product_binding.data["categories"][0]
         self.assertEqual(category_data["id"], self.product.categ_id.id)
@@ -64,16 +63,18 @@ class TestProductBinding(TestBindingIndexBase):
         variants = self.product.product_tmpl_id.product_variant_ids
         for variant in variants:
             variant._add_to_index(self.se_index)
-        main_variant = variants.with_context(index=self.se_index).filtered("main")
+        main_variant = variants.with_context(index_id=self.se_index.id).filtered("main")
         self.assertEqual(len(main_variant), 1)
         main_variant_binding = main_variant.se_binding_ids[0]
-        main_variant_binding.with_context(index=self.se_index).recompute_json()
+        main_variant_binding.recompute_json()
         self.assertTrue(main_variant_binding.data["main"])
 
         main_variant.se_binding_ids.unlink()
-        main_variant2 = variants.with_context(index=self.se_index).filtered("main")
+        main_variant2 = variants.with_context(index_id=self.se_index.id).filtered(
+            "main"
+        )
         self.assertEqual(len(main_variant2), 1)
         self.assertNotEqual(main_variant, main_variant2)
         main_variant2_binding = main_variant2.se_binding_ids[0]
-        main_variant2_binding.with_context(index=self.se_index).recompute_json()
+        main_variant2_binding.recompute_json()
         self.assertTrue(main_variant2_binding.data["main"])

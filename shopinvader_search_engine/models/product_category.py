@@ -19,13 +19,13 @@ class ProductCategory(models.Model):
         compute="_compute_child_category",
     )
 
-    @api.depends_context("index")
+    @api.depends_context("index_id")
     @api.depends("parent_id", "parent_id.se_binding_ids")
     def _compute_parent_category(self):
         for record in self:
             record.shopinvader_parent_id = record.parent_id._filter_by_index()
 
-    @api.depends_context("index")
+    @api.depends_context("index_id")
     @api.depends("child_id", "child_id.se_binding_ids")
     def _compute_child_category(self):
         for record in self:
