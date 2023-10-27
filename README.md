@@ -38,7 +38,7 @@ addon | version | maintainers | summary
 [shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.1 |  | Adds shchema address: address billing_address delivery_address
-[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.1 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.2 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.1 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
