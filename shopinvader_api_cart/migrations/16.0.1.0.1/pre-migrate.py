@@ -5,7 +5,9 @@ import logging
 
 from openupgradelib import openupgrade
 
-from odoo.addons.shopinvader_api_cart import hooks  # pylint: disable=W7950
+from odoo.addons.shopinvader_api_cart import (  # pylint: disable=odoo-addons-relative-import
+    hooks,
+)
 
 _logger = logging.getLogger(__name__)
 
