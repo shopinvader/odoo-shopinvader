@@ -129,11 +129,6 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__additional_info
-msgid "Additional info"
-msgstr ""
-
-#. module: shopinvader_restapi
 #: model:ir.model.fields.selection,name:shopinvader_restapi.selection__res_partner__address_type__address
 msgid "Address"
 msgstr ""
@@ -281,16 +276,6 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__is_blacklisted
 msgid "Blacklist"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__mobile_blacklisted
-msgid "Blacklisted Phone Is Mobile"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__phone_blacklisted
-msgid "Blacklisted Phone is Phone"
 msgstr ""
 
 #. module: shopinvader_restapi
@@ -455,11 +440,6 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__company_type
 msgid "Company Type"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__partner_gid
-msgid "Company database ID"
 msgstr ""
 
 #. module: shopinvader_restapi
@@ -674,13 +654,6 @@ msgid "External ID"
 msgstr ""
 
 #. module: shopinvader_restapi
-#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__phone_sanitized
-msgid ""
-"Field used to store sanitized phone number. Helps speeding up searches and "
-"comparisons."
-msgstr ""
-
-#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__property_account_position_id
 msgid "Fiscal Position"
 msgstr ""
@@ -784,7 +757,6 @@ msgstr ""
 
 #. module: shopinvader_restapi
 #: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__message_has_error
-#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -820,13 +792,6 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader_restapi
-#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__phone_sanitized_blacklisted
-msgid ""
-"If the sanitized phone number is on the blacklist, the contact won't receive"
-" mass mailing sms anymore, from any list"
-msgstr ""
-
-#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__image_1920
 msgid "Image"
 msgstr ""
@@ -849,22 +814,6 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__image_512
 msgid "Image 512"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__mobile_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a mobile number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__phone_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a phone number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
 msgstr ""
 
 #. module: shopinvader_restapi
@@ -1381,16 +1330,6 @@ msgid "Phone"
 msgstr ""
 
 #. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__phone_sanitized_blacklisted
-msgid "Phone Blacklisted"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__phone_mobile_search
-msgid "Phone/Mobile"
-msgstr ""
-
-#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_backend__pricelist_id
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__property_product_pricelist
 msgid "Pricelist"
@@ -1441,11 +1380,6 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__role
 msgid "Role"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: shopinvader_restapi
@@ -1526,11 +1460,6 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__user_id
 msgid "Salesperson"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__phone_sanitized
-msgid "Sanitized Number"
 msgstr ""
 
 #. module: shopinvader_restapi
