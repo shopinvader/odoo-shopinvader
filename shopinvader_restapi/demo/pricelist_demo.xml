@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- pylint:disable=duplicate-xml-record-id -->
+<!-- oca-hooks:disable=xml-duplicate-record-id -->
 <odoo noupdate="1">
 
     <record id="pricelist_1" model="product.pricelist">
