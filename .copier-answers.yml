@@ -2,6 +2,7 @@
 _commit: v1.17.2
 _src_path: https://github.com/OCA/oca-addons-repo-template.git
 ci: GitHub
+dependency_installation_mode: PIP
 generate_requirements_txt: true
 github_check_license: true
 github_ci_extra_env:
@@ -21,4 +22,6 @@ repo_description: Odoo REST APIs for e-commerce.
 repo_name: Shopinvader
 repo_slug: odoo-shopinvader
 repo_website: https://github.com/shopinvader/odoo-shopinvader
+travis_apt_packages: []
+travis_apt_sources: []
 
