@@ -44,6 +44,7 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
 [shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.0 |  | Index storage media data into search engine
+[shopinvader_search_engine_product_seo](shopinvader_search_engine_product_seo/) | 16.0.1.0.0 |  | This module allows to configure a seo title suffix on se backends
 
 
 Unported addons
