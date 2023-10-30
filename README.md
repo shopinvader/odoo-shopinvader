@@ -36,6 +36,7 @@ addon | version | maintainers | summary
 [shopinvader_product_url](shopinvader_product_url/) | 16.0.1.0.0 |  | Generate url for product and category
 [shopinvader_restapi](shopinvader_restapi/) | 16.0.1.0.1 |  | Shopinvader
 [shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
+[shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.1.1 |  | Adds shchema address: address billing_address delivery_address
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.2 |  | Shopinvader Catalog Search Engine Connector
@@ -77,7 +78,6 @@ addon | version | maintainers | summary
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.3.0.1 (unported) |  | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 14.0.1.1.0 (unported) |  | Guest mode for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.1 (unported) |  | Import product images
-[shopinvader_invoice](shopinvader_invoice/) | 14.0.2.2.0 (unported) |  | Shopinvader Invoice module
 [shopinvader_lead](shopinvader_lead/) | 14.0.1.1.0 (unported) |  | Shopinvader Lead Management
 [shopinvader_locomotive](shopinvader_locomotive/) | 14.0.2.1.1 (unported) |  | Manage communications between Shopinvader and Locomotive CMS
 [shopinvader_locomotive_algolia](shopinvader_locomotive_algolia/) | 14.0.1.0.0 (unported) |  | This addons is used to push the initial algolia configuration to locomotive
