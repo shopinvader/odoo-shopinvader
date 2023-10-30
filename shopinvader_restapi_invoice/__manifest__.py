@@ -1,15 +1,15 @@
 # Copyright 2019 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
-    "name": "Shopinvader Invoice",
-    "summary": """Shopinvader Invoice module""",
+    "name": "Shopinvader Restapi Invoice",
+    "summary": """Shopinvader Restapi Invoice module""",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "category": "shopinvader",
-    "version": "14.0.2.2.0",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
-    "depends": ["account", "shopinvader"],
+    "depends": ["account", "shopinvader_restapi"],
     "data": [],
     "demo": [],
-    "installable": False,
+    "installable": True,
 }
