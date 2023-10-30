@@ -99,6 +99,7 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_backend__active
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__active
 msgid "Active"
 msgstr ""
@@ -203,6 +204,12 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model_terms:ir.ui.view,arch_db:shopinvader_restapi.shopinvader_partner_binding_form_view
 msgid "Apply"
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model_terms:ir.ui.view,arch_db:shopinvader_restapi.search_shopinvader_backend
+#: model_terms:ir.ui.view,arch_db:shopinvader_restapi.shopinvader_backend_view_form
+msgid "Archived"
 msgstr ""
 
 #. module: shopinvader_restapi
@@ -1460,6 +1467,11 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__user_id
 msgid "Salesperson"
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model_terms:ir.ui.view,arch_db:shopinvader_restapi.search_shopinvader_backend
+msgid "Search Backend"
 msgstr ""
 
 #. module: shopinvader_restapi
