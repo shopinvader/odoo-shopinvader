@@ -543,6 +543,11 @@ msgid "Customer Default Role"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__property_stock_customer
+msgid "Customer Location"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__property_payment_term_id
 msgid "Customer Payment Terms"
 msgstr ""
@@ -1052,6 +1057,11 @@ msgid "Message for Sales Order"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__picking_warn_msg
+msgid "Message for Stock Picking"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__message_ids
 msgid "Messages"
 msgstr ""
@@ -1497,6 +1507,7 @@ msgstr ""
 
 #. module: shopinvader_restapi
 #: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__invoice_warn
+#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__picking_warn
 #: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__sale_warn
 msgid ""
 "Selecting the \"Warning\" option will notify user with the message, "
@@ -1713,6 +1724,11 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__picking_warn
+msgid "Stock Picking"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__street
 msgid "Street"
 msgstr ""
@@ -1809,6 +1825,18 @@ msgstr ""
 msgid ""
 "The registry number of the company. Use it if it is different from the Tax "
 "ID. It must be unique across all partners of a same country"
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__property_stock_customer
+msgid ""
+"The stock location used as destination when sending goods to this contact."
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__property_stock_supplier
+msgid ""
+"The stock location used as source when receiving goods from this contact."
 msgstr ""
 
 #. module: shopinvader_restapi
@@ -1988,6 +2016,11 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__user_ids
 msgid "Users"
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__property_stock_supplier
+msgid "Vendor Location"
 msgstr ""
 
 #. module: shopinvader_restapi
