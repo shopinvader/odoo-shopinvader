@@ -16,13 +16,6 @@ class ProductTemplate(StrictExtendableBaseModel):
         return cls.model_construct(name=odoo_rec.display_name)
 
 
-class ProductTemplatePriceInfo(StrictExtendableBaseModel):
-    value: float = 0
-    tax_included: bool = False
-    original_value: float = 0
-    discount: float = 0
-
-
 class ProductProduct(StrictExtendableBaseModel):
     id: int
     model: ProductTemplate
@@ -33,7 +26,6 @@ class ProductProduct(StrictExtendableBaseModel):
     categories: list[ShortProductCategory] = []
     sku: str | None = None
     variant_attributes: dict[str, Any] = {}
-    price: dict[str, ProductTemplatePriceInfo] = {}
 
     @classmethod
     def from_product_product(cls, odoo_rec):
@@ -50,5 +42,4 @@ class ProductProduct(StrictExtendableBaseModel):
             ],
             sku=odoo_rec.default_code or None,
             variant_attributes=odoo_rec.variant_attributes,
-            price=odoo_rec.price,
         )

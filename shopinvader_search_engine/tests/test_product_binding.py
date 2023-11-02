@@ -15,7 +15,6 @@ class TestProductBinding(TestProductBindingBase):
         self.assertEqual(data["variant_count"], 2)
         self.assertEqual(data["sku"], "VORCHAIR-001")
         self.assertEqual(data["variant_attributes"], {"color": "blue"})
-        self.assertEqual(data["price"], {})
 
     def test_serialize_categories_not_in_index(self):
         self.product_binding.recompute_json()

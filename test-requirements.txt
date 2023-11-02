@@ -8,3 +8,4 @@ vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
 httpx  # For FastAPI tests
+odoo-addon-product-get-price-helper @ git+https://github.com/OCA/product-attribute@refs/pull/1445/head#subdirectory=setup/product_get_price_helper
