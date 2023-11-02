@@ -20,7 +20,7 @@ class AddressService(Component):
                     "nullable": True,
                     "coerce": to_int,
                 },
-                "partner_delivery_id": {
+                "partner_shipping_id": {
                     "type": "integer",
                     "required": False,
                     "nullable": True,
@@ -34,6 +34,6 @@ class AddressService(Component):
         res = super()._json_parser()
         res += [
             ("partner_invoice_id", ["id", "display_name"]),
-            ("partner_delivery_id", ["id", "display_name"]),
+            ("partner_shipping_id", ["id", "display_name"]),
         ]
         return res

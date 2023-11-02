@@ -3361,7 +3361,7 @@ msgid "Shipped"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_delivery_id
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_shipping_id
 msgid "Shipping address"
 msgstr ""
 
