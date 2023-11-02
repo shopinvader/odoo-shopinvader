@@ -45,6 +45,12 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
 [shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.0 |  | Index storage media data into search engine
 [shopinvader_search_engine_product_seo](shopinvader_search_engine_product_seo/) | 16.0.1.0.0 |  | This module allows to configure a seo title suffix on se backends
+[shopinvader_search_engine_update](shopinvader_search_engine_update/) | 16.0.1.0.0 |  | Shopinvader: Mark product binding to export on product update
+[shopinvader_search_engine_update_image](shopinvader_search_engine_update_image/) | 16.0.1.0.0 |  | Shopinvader: Mark products linked to an image to be updated when the image change
+[shopinvader_search_engine_update_product_brand](shopinvader_search_engine_update_product_brand/) | 16.0.1.0.0 |  | Shopinvader: Mark brand and product bindings to export on product brand update
+[shopinvader_search_engine_update_product_brand_image](shopinvader_search_engine_update_product_brand_image/) | 16.0.1.0.0 |  | Mark brand and product bindings to export on product image brand update
+[shopinvader_search_engine_update_product_brand_tag](shopinvader_search_engine_update_product_brand_tag/) | 16.0.1.0.0 |  | Mark brand and product bindings to export on product image tag update
+[shopinvader_search_engine_update_product_media](shopinvader_search_engine_update_product_media/) | 16.0.1.0.0 |  | Shopinvader: Mark products linked to a media to be updated when the media change
 
 
 Unported addons
