@@ -1,0 +1,111 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_search_engine_product_stock
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,help:shopinvader_search_engine_product_stock.field_se_backend__stock_level_config
+msgid "Define stock level export policy"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,help:shopinvader_search_engine_product_stock.field_se_index__stock_level_config
+msgid ""
+"Define stock level export policy, keep empty to take configuration from the "
+"backend"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,help:shopinvader_search_engine_product_stock.field_se_index__product_stock_field_id
+msgid "Field used to have the current stock of a product.product"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,help:shopinvader_search_engine_product_stock.field_se_index__synchronize_stock
+msgid ""
+"If immediatly the stock will be exported after each modification. If \"In "
+"batch\" the stock exported every X time depending on the cron configuration"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields.selection,name:shopinvader_search_engine_product_stock.selection__se_index__synchronize_stock__immediatly
+msgid "Immediatly"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields.selection,name:shopinvader_search_engine_product_stock.selection__se_index__synchronize_stock__in_batch
+msgid "In Batch"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model,name:shopinvader_search_engine_product_stock.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_stock.field_se_index__product_stock_field_id
+msgid "Product stock field"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model,name:shopinvader_search_engine_product_stock.model_se_backend
+msgid "Se Backend"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model,name:shopinvader_search_engine_product_stock.model_se_index
+msgid "Se Index"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_stock.field_se_backend__show_stock_level_config
+msgid "Show Stock Level Config"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model_terms:ir.ui.view,arch_db:shopinvader_search_engine_product_stock.se_index_form_view
+msgid "Stock"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_stock.field_product_product__stock_data
+msgid "Stock Data"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_stock.field_se_backend__stock_level_config
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_stock.field_se_index__stock_level_config
+msgid "Stock Level Config"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model,name:shopinvader_search_engine_product_stock.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_stock.field_se_index__synchronize_stock
+msgid "Synchronize Stock"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#. odoo-python
+#: code:addons/shopinvader_search_engine_product_stock/models/stock_move.py:0
+#, python-format
+msgid "Update shopinvader variants (stock update trigger)"
+msgstr ""
+
+#. module: shopinvader_search_engine_product_stock
+#: model:ir.model.fields,field_description:shopinvader_search_engine_product_stock.field_se_index__warehouse_ids
+msgid "Warehouse"
+msgstr ""
