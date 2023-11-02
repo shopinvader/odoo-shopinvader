@@ -45,6 +45,8 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
 [shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.0 |  | Index storage media data into search engine
 [shopinvader_search_engine_product_seo](shopinvader_search_engine_product_seo/) | 16.0.1.0.0 |  | This module allows to configure a seo title suffix on se backends
+[shopinvader_search_engine_product_stock](shopinvader_search_engine_product_stock/) | 16.0.1.0.0 |  | This module is used to export stock data to search engine
+[shopinvader_search_engine_product_stock_state](shopinvader_search_engine_product_stock_state/) | 16.0.1.0.0 |  | This module is used to choose a stock state during theexport t search engine
 [shopinvader_search_engine_update](shopinvader_search_engine_update/) | 16.0.1.0.0 |  | Shopinvader: Mark product binding to export on product update
 [shopinvader_search_engine_update_image](shopinvader_search_engine_update_image/) | 16.0.1.0.0 |  | Shopinvader: Mark products linked to an image to be updated when the image change
 [shopinvader_search_engine_update_product_brand](shopinvader_search_engine_update_product_brand/) | 16.0.1.0.0 |  | Shopinvader: Mark brand and product bindings to export on product brand update
@@ -109,11 +111,9 @@ addon | version | maintainers | summary
 [shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.1 (unported) |  | Shopinvader product new
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.1.0 (unported) |  | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.2.0 (unported) |  | Exposes product prices with and without taxes
-[shopinvader_product_stock](shopinvader_product_stock/) | 14.0.1.0.3 (unported) |  | This module is used to choose a stock field during theexport (by backend)
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.2 (unported) |  | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
 [shopinvader_product_stock_forecast](shopinvader_product_stock_forecast/) | 14.0.1.0.0 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Export Stock Forecast data along with product stocks.
 [shopinvader_product_stock_forecast_expiry](shopinvader_product_stock_forecast_expiry/) | 14.0.1.0.0 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates product lot expiration into the forecast
-[shopinvader_product_stock_state](shopinvader_product_stock_state/) | 14.0.1.0.0 (unported) |  | This module is used to choose a stock state during theexport (by backend)
 [shopinvader_product_template_multi_link](shopinvader_product_template_multi_link/) | 14.0.1.1.0 (unported) |  | Shopinvader Product Link
 [shopinvader_product_template_multi_link_date_span](shopinvader_product_template_multi_link_date_span/) | 14.0.1.0.0 (unported) |  | Integrate `product_template_multi_link_date_span` in Shopinvader
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 (unported) |  | Index Product Template Tags in Shopinvader
