@@ -1,39 +1,10 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from .common import TestBindingIndexBase
+from .common import TestProductBindingBase
 
 
-class TestProductBinding(TestBindingIndexBase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.setup_records()
-
-    @classmethod
-    def _prepare_index_values(cls, backend=None):
-        backend = backend or cls.backend
-        return {
-            "name": "Product Index",
-            "backend_id": backend.id,
-            "model_id": cls.env["ir.model"]
-            .search([("model", "=", "product.product")], limit=1)
-            .id,
-            "lang_id": cls.env.ref("base.lang_en").id,
-            "serializer_type": "shopinvader_product_exports",
-        }
-
-    @classmethod
-    def setup_records(cls, backend=None):
-        backend = backend or cls.backend
-        # create an index for product model
-        cls.se_index = cls.se_index_model.create(cls._prepare_index_values(backend))
-        # create a binding + product alltogether
-        cls.product = cls.env.ref(
-            "shopinvader_product.product_product_chair_vortex_white"
-        )
-        cls.product_binding = cls.product._add_to_index(cls.se_index)
-
+class TestProductBinding(TestProductBindingBase):
     def test_serialize(self):
         self.product_binding.recompute_json()
         data = self.product_binding.data

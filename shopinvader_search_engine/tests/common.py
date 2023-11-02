@@ -36,3 +36,71 @@ class TestBindingIndexBase(TestSeBackendCaseBase, FakeModelLoader, ExtendableMix
         cls.loader.restore_registry()
         cls.reset_extendable_registry()
         super().tearDownClass()
+
+
+class TestCategoryBindingBase(TestBindingIndexBase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.setup_records()
+
+    @classmethod
+    def _prepare_index_values(cls, backend=None):
+        backend = backend or cls.backend
+        return {
+            "name": "Category Index",
+            "backend_id": backend.id,
+            "model_id": cls.env["ir.model"]
+            .search([("model", "=", "product.category")], limit=1)
+            .id,
+            "lang_id": cls.env.ref("base.lang_en").id,
+            "serializer_type": "shopinvader_category_exports",
+        }
+
+    @classmethod
+    def setup_records(cls, backend=None):
+        backend = backend or cls.backend
+        # create an index for category model
+        cls.se_index = cls.se_index_model.create(cls._prepare_index_values(backend))
+        # create a binding + category alltogether
+        cls.category = cls.env["product.category"].create({"name": "Test category"})
+        cls.category_binding = cls.category._add_to_index(cls.se_index)
+
+
+class TestProductBindingMixin:
+    @classmethod
+    def _prepare_index_values(cls, tst_cls, backend=None):
+        backend = backend or tst_cls.backend
+        return {
+            "name": "Product Index",
+            "backend_id": backend.id,
+            "model_id": tst_cls.env["ir.model"]
+            .search([("model", "=", "product.product")], limit=1)
+            .id,
+            "lang_id": tst_cls.env.ref("base.lang_en").id,
+            "serializer_type": "shopinvader_product_exports",
+        }
+
+    @classmethod
+    def setup_records(cls, tst_cls, backend=None):
+        backend = backend or tst_cls.backend
+        # create an index for product model
+        tst_cls.se_index = tst_cls.env["se.index"].create(
+            cls._prepare_index_values(tst_cls, backend)
+        )
+        # create a binding + product alltogether
+        tst_cls.product = tst_cls.env.ref(
+            "shopinvader_product.product_product_chair_vortex_white"
+        )
+        tst_cls.product_binding = tst_cls.product._add_to_index(tst_cls.se_index)
+        tst_cls.product_expected = {
+            "id": tst_cls.product.id,
+            "name": tst_cls.product.name,
+        }
+
+
+class TestProductBindingBase(TestBindingIndexBase, TestProductBindingMixin):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        TestProductBindingMixin.setup_records(cls)
