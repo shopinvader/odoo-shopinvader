@@ -53,19 +53,19 @@ class AddressUpdate(StrictExtendableBaseModel):
     country_id: int | None = None
 
     def to_res_partner_vals(self) -> dict:
-        vals = {
-            "name": self.name,
-            "street": self.street,
-            "street2": self.street2,
-            "zip": self.zip,
-            "city": self.city,
-            "phone": self.phone,
-            "email": self.email,
-            "state_id": self.state_id,
-            "country_id": self.country_id,
-        }
-
-        return vals
+        fields = [
+            "name",
+            "street",
+            "street2",
+            "zip",
+            "city",
+            "phone",
+            "email",
+            "state_id",
+            "country_id",
+        ]
+        values = self.model_dump(exclude_unset=True)
+        return {f: values[f] for f in fields if f in values}
 
 
 # --- Billing Address ---
