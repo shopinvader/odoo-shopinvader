@@ -53,11 +53,9 @@ exclude: |
   ^shopinvader_product_new/|
   ^shopinvader_product_order/|
   ^shopinvader_product_price_tax/|
-  ^shopinvader_product_stock/|
   ^shopinvader_product_stock_assortment/|
   ^shopinvader_product_stock_forecast/|
   ^shopinvader_product_stock_forecast_expiry/|
-  ^shopinvader_product_stock_state/|
   ^shopinvader_product_template_multi_link/|
   ^shopinvader_product_template_multi_link_date_span/|
   ^shopinvader_product_template_tags/|
