@@ -172,40 +172,63 @@ class ResPartner(models.Model):
             else:
                 partner.address_type = "profile"
 
+    @api.model
+    def _get_unique_email_query_params(self):
+        select_query = """
+            email,
+            backend_id
+        """
+        from_query = """
+            (
+                SELECT
+                    rp.email,
+                    sp.backend_id,
+                    COUNT(*) OVER (PARTITION BY rp.email, sp.backend_id) AS email_backend_count
+                FROM
+                    res_partner rp
+                JOIN
+                    shopinvader_partner sp ON sp.record_id = rp.id
+                WHERE email IS NOT NULL
+                    AND rp.active = TRUE
+                    AND rp.has_shopinvader_user_active = TRUE
+            ) dups
+        """
+        where_query = """
+            dups.email_backend_count > 1
+        """
+        return select_query, from_query, where_query
+
     @api.constrains("email", "has_shopinvader_user_active")
     def _check_unique_email(self):
         if not self._is_partner_duplicate_prevented():
             return True
         self.env["res.partner"].flush(["email", "has_shopinvader_user_active"])
-        self.env.cr.execute(
-            """
-            SELECT
-                email
-            FROM (
-                SELECT
-                    id,
-                    email,
-                    ROW_NUMBER() OVER (PARTITION BY email) AS Row
-                FROM
-                    res_partner
-                WHERE email is not null
-                    and active = True
-                    and has_shopinvader_user_active = True
-                ) dups
-            WHERE dups.Row > 1;
-        """
-        )
-        duplicate_emails = {r[0] for r in self.env.cr.fetchall()}
-        invalid_emails = [
-            e for e in self.mapped("email") if e in duplicate_emails
-        ]
-        if invalid_emails:
+        select_query, from_query, where_query = self._get_unique_email_query_params()
+        query = """
+            SELECT %s
+            FROM %s
+            WHERE %s;
+        """ % (select_query, from_query, where_query)
+        self.env.cr.execute(query)
+        duplicate_emails_dict = dict()
+        for backend_id, email in self.env.cr.fetchall():
+            if not duplicate_emails_dict.get(backend_id):
+                duplicate_emails_dict.setdefault(backend_id, [email])
+            else:
+                duplicate_emails_dict[backend_id].append(email)
+        if duplicate_emails_dict:
+            backend_id = list(duplicate_emails_dict.keys())[0]
+            backend = self.env["shopinvader.backend"].browse(backend_id)
+            duplicate_emails = duplicate_emails_dict.get(backend_id)
+            invalid_emails = [
+                e for e in self.mapped("email") if e in duplicate_emails
+            ]
             raise ValidationError(
                 _(
-                    "Email must be unique: The following "
-                    "mails are not unique: %s"
+                    "Email must be unique within the same Website: For the %s, the following "
+                    "emails are not unique: %s"
                 )
-                % ", ".join(invalid_emails)
+                % (backend.name, ", ".join(invalid_emails))
             )
 
     def write(self, vals):
