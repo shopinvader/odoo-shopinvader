@@ -6,11 +6,14 @@ from uuid import UUID
 
 from extendable_pydantic import StrictExtendableBaseModel
 
+from odoo.addons.shopinvader_schema_sale.schemas.sale_line_option import SaleLineOption
+
 
 class CartTransaction(StrictExtendableBaseModel):
     uuid: UUID | None = None
     qty: float
     product_id: int
+    options: SaleLineOption | None = None
 
 
 class CartSyncInput(StrictExtendableBaseModel, extra="ignore"):
