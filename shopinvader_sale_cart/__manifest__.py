@@ -11,6 +11,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
         "sale",
+        "onchange_helper",
     ],
     "data": [
         "views/sale_order.xml",
