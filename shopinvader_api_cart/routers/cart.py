@@ -1,5 +1,6 @@
 # Copyright 2022 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import json
 from collections import OrderedDict
 from typing import Annotated
 
@@ -83,21 +84,29 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
                 )
 
     @api.model
-    def _group_transactions_by_product_id(self, transactions: list[CartTransaction]):
+    def _group_transactions_by_product_and_option(
+        self, transactions: list[CartTransaction]
+    ):
         """
         Gather together transactions that are linked to the same product.
         """
         # take an ordered dict to ensure to create lines into the same
         # order as the transactions list
-        transactions_by_product_id = OrderedDict()
+        transactions_by_product_and_option = OrderedDict()
         for trans in transactions:
             product_id = trans.product_id
-            transactions = transactions_by_product_id.get(product_id)
+            options = (
+                json.dumps(trans.options.model_dump(exclude_unset=True), sort_keys=True)
+                if trans.options
+                else "{}"
+            )
+            transactions = transactions_by_product_and_option.get((product_id, options))
             if not transactions:
+                # TODO why transactions var?
                 transactions = []
-                transactions_by_product_id[product_id] = transactions
+                transactions_by_product_and_option[(product_id, options)] = transactions
             transactions.append(trans)
-        return transactions_by_product_id
+        return transactions_by_product_and_option
 
     @api.model
     def _apply_transactions_on_existing_cart_line(
@@ -176,18 +185,23 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             return
         cart.ensure_one()
         self._check_transactions(transactions=transactions)
-        transactions_by_product_id = self._group_transactions_by_product_id(
-            transactions=transactions
+        transactions_by_product_and_option = (
+            self._group_transactions_by_product_and_option(transactions=transactions)
         )
         update_cmds = []
         with self.env.norecompute():
             # prefetch all products
-            self.env["product.product"].browse(transactions_by_product_id.keys())
+            self.env["product.product"].browse(
+                [p[0] for p in transactions_by_product_and_option]
+            )
             # here we avoid that each on change on a line trigger all the
             # recompute methods on the SO. These methods will be triggered
             # by the orm into the 'write' process
-            for product_id, trxs in transactions_by_product_id.items():
-                line = cart._get_cart_line(product_id)
+            for (
+                product_id,
+                options,
+            ), trxs in transactions_by_product_and_option.items():
+                line = cart._get_cart_line(product_id, json.loads(options))
                 if line:
                     cmd = self._apply_transactions_on_existing_cart_line(line, trxs)
                 else:

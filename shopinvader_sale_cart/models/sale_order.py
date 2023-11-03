@@ -75,11 +75,14 @@ class SaleOrder(models.Model):
         vals = self._prepare_cart(partner_id)
         return self.create(vals)
 
-    def _get_cart_line(self, product_id):
+    def _matching_line(self, product_id, options):
+        return self.order_line.filtered(
+            lambda l, product_id=product_id: l.product_id.id == product_id
+        )
+
+    def _get_cart_line(self, product_id, options):
         """
         Return the sale order line of the cart associated to the given product.
         """
         self.ensure_one()
-        return self.order_line.filtered(
-            lambda l, product_id=product_id: l.product_id.id == product_id
-        )[:1]
+        return self._matching_line(product_id, options)[:1]
