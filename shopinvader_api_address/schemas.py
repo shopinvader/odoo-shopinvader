@@ -68,13 +68,13 @@ class AddressUpdate(StrictExtendableBaseModel):
         return vals
 
 
-# --- Billing Address ---
-class BillingAddressCreate(AddressUpdate):
+# --- Invoicing Address ---
+class InvoicingAddressCreate(AddressCreate):
     """
-    Creation of Billing Address
+    Creation of Invoicing Address
 
     Remark: it is actually not used since
-    the billing address is the authenticated
+    the invoicing address is the authenticated
     partner's address
     """
 
@@ -88,9 +88,9 @@ class BillingAddressCreate(AddressUpdate):
         return vals
 
 
-class BillingAddressUpdate(AddressUpdate):
+class InvoicingAddressUpdate(AddressUpdate):
     """
-    Update of Billing Address
+    Update of Invoicing Address
     """
 
     vat: str | None = None
@@ -103,16 +103,16 @@ class BillingAddressUpdate(AddressUpdate):
         return vals
 
 
-# --- Shipping Address ---
+# --- Delivery Address ---
 
 
-class ShippingAddressCreate(AddressUpdate):
+class DeliveryAddressCreate(AddressCreate):
     """
-    Creation of Shipping Address
+    Creation of Delivery Address
     """
 
 
-class ShippingAddressUpdate(AddressUpdate):
+class DeliveryAddressUpdate(AddressUpdate):
     """
-    Update of Shipping Address
+    Update of Delivery Address
     """

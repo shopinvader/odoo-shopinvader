@@ -17,7 +17,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/shopinvader_address/models/res_partner.py:0
 #, python-format
-msgid "Billing address not found, id: %(address_id)d"
+msgid "Invoicing address not found, id: %(address_id)d"
 msgstr ""
 
 #. module: shopinvader_address
@@ -25,7 +25,7 @@ msgstr ""
 #: code:addons/shopinvader_address/models/res_partner.py:0
 #, python-format
 msgid ""
-"Can not delete Shipping address(%(address_id)d)because it is already used on"
+"Can not delete Delivery address(%(address_id)d)because it is already used on"
 " confirmed sale order"
 msgstr ""
 
@@ -34,7 +34,7 @@ msgstr ""
 #: code:addons/shopinvader_address/models/res_partner.py:0
 #, python-format
 msgid ""
-"Can not update billing addresses(%(address_id)d)because it is already used "
+"Can not update invoicing addresses(%(address_id)d)because it is already used "
 "on confirmed sale order"
 msgstr ""
 
@@ -47,7 +47,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/shopinvader_address/models/res_partner.py:0
 #, python-format
-msgid "Creation of billing addresses is not supported"
+msgid "Creation of invoicing addresses is not supported"
 msgstr ""
 
 #. module: shopinvader_address
@@ -61,7 +61,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/shopinvader_address/models/res_partner.py:0
 #, python-format
-msgid "Shipping address not found, id: %(address_id)d"
+msgid "Delivery address not found, id: %(address_id)d"
 msgstr ""
 
 #. module: shopinvader_address
@@ -69,6 +69,6 @@ msgstr ""
 #: code:addons/shopinvader_address/models/res_partner.py:0
 #, python-format
 msgid ""
-"parent_id and type cannot be modified on shopinvader shipping address, id: "
+"parent_id and type cannot be modified on shopinvader delivery address, id: "
 "%(address_id)d"
 msgstr ""
