@@ -14,7 +14,6 @@
         "sale",
         "sale_cart",
         "sale_discount_display_amount",
-        "onchange_helper",
         "pydantic",
         "extendable",
         "fastapi",
