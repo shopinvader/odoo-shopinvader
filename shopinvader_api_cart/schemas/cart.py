@@ -34,11 +34,11 @@ class CartUpdateInput(StrictExtendableBaseModel):
         vals = {}
         data = self.model_dump(exclude_unset=True)
         if "client_order_ref" in data:
-            vals["client_order_ref"] = data["client_order_ref"]
+            vals["client_order_ref"] = self.client_order_ref
         if "note" in data:
-            vals["note"] = data["note"]
+            vals["note"] = self.note
         if (data.get("delivery") or {}).get("address_id"):
-            vals["partner_shipping_id"] = data["delivery"]["address_id"]
+            vals["partner_shipping_id"] = self.delivery.address_id
         if (data.get("invoicing") or {}).get("address_id"):
-            vals["partner_invoicing_id"] = data["invoicing"]["address_id"]
+            vals["partner_invoicing_id"] = self.invoicing.address_id
         return vals
