@@ -11,7 +11,7 @@
     "author": "Camptocamp",
     "license": "AGPL-3",
     "installable": False,
-    "auto_install": True,
+    #"auto_install": True,
     "depends": [
         "shopinvader_product_template_multi_link",
         "product_template_multi_link_date_span",
