@@ -20,6 +20,7 @@
         "extendable_fastapi",
         "shopinvader_sale_cart",
         "shopinvader_schema_address",
+        "shopinvader_schema_sale",
     ],
     "data": [
         "security/groups.xml",
