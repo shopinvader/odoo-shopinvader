@@ -2,7 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
-from typing import List
+from typing import Annotated, List
+
+from pydantic import Field
+
+from odoo import api
 
 from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
@@ -21,10 +25,8 @@ class Sale(StrictExtendableBaseModel):
     date_commitment: datetime | None = None
     lines: List[SaleOrderLine]
     amount: SaleAmount | None = None
-    # TODO discuss about this (should we keep the same schema for this field)
     shipping: ShippingInfo | None = None
     invoicing: InvoicingInfo | None = None
-    # TODO END
     typology: str
     note: str | None = None
 
@@ -49,9 +51,15 @@ class Sale(StrictExtendableBaseModel):
 
 
 class SaleSearch(StrictExtendableBaseModel):
-    name: str | None = None
+    name: Annotated[
+        str | None,
+        Field(
+            description="When used, the search look for any sale oder where name "
+            "contains the given value case insensitively."
+        ),
+    ] = None
 
-    def to_odoo_domain(self):
+    def to_odoo_domain(self, env: api.Environment):
         if self.name:
             return [("name", "ilike", self.name)]
         else:

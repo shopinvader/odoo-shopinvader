@@ -70,7 +70,7 @@ class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
 
     def _search(self, paging, params):
         return self.adapter.search_with_count(
-            params.to_odoo_domain(),
+            params.to_odoo_domain(self.env),
             limit=paging.limit,
             offset=paging.offset,
         )
