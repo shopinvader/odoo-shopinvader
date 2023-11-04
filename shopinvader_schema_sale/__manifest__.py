@@ -11,6 +11,8 @@
     "author": " Akretion",
     "license": "AGPL-3",
     "depends": [
+        "sale_cart",
+        "sale_discount_display_amount",
         "shopinvader_schema_address",
     ],
     "external_dependencies": {

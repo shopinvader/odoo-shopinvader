@@ -13,7 +13,6 @@ from .shipping import ShippingInfo
 
 
 class Sale(StrictExtendableBaseModel):
-    uuid: str | None = None
     id: int
     state: str
     name: str
@@ -32,7 +31,6 @@ class Sale(StrictExtendableBaseModel):
     @classmethod
     def from_sale_order(cls, odoo_rec):
         return cls.model_construct(
-            uuid=odoo_rec.uuid or None,
             id=odoo_rec.id,
             state=odoo_rec.state,
             name=odoo_rec.name,
