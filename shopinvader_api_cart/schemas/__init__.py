@@ -5,3 +5,4 @@ from .cart import (
     ShippingUpdateInfo,
     InvoicingUpdateInfo,
 )
+from .sale import Sale

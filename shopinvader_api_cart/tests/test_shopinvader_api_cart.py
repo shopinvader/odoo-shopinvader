@@ -104,7 +104,9 @@ class TestSaleCart(FastAPITransactionCase):
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.get(f"/{so.uuid}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["id"], so.id)
+        info = response.json()
+        self.assertEqual(info["id"], so.id)
+        self.assertEqual(info["uuid"], so.uuid)
 
     def test_get_authenticated_cart_uuid_no_rights(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
