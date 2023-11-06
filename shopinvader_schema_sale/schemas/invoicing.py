@@ -4,14 +4,14 @@
 
 
 from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
-from odoo.addons.shopinvader_schema_address.schemas import BillingAddress
+from odoo.addons.shopinvader_schema_address.schemas import InvoicingAddress
 
 
 class InvoicingInfo(StrictExtendableBaseModel):
-    address: BillingAddress | None = None
+    address: InvoicingAddress | None = None
 
     @classmethod
     def from_sale_order(cls, odoo_rec):
         return cls.model_construct(
-            address=(BillingAddress.from_res_partner(odoo_rec.partner_invoice_id))
+            address=(InvoicingAddress.from_res_partner(odoo_rec.partner_invoice_id))
         )

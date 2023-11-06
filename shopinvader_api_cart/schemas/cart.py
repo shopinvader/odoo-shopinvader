@@ -16,7 +16,7 @@ class CartSyncInput(StrictExtendableBaseModel):
     transactions: List[CartTransaction]
 
 
-class ShippingUpdateInfo(StrictExtendableBaseModel):
+class DeliveryUpdateInfo(StrictExtendableBaseModel):
     address_id: int
 
 
@@ -26,7 +26,7 @@ class InvoicingUpdateInfo(StrictExtendableBaseModel):
 
 class CartUpdateInput(StrictExtendableBaseModel):
     client_order_ref: str | None = None
-    delivery: ShippingUpdateInfo | None = None
+    delivery: DeliveryUpdateInfo | None = None
     invoicing: InvoicingUpdateInfo | None = None
     note: str | None = None
 

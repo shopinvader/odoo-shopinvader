@@ -2,7 +2,7 @@ from .cart import (
     CartTransaction,
     CartSyncInput,
     CartUpdateInput,
-    ShippingUpdateInfo,
+    DeliveryUpdateInfo,
     InvoicingUpdateInfo,
 )
 from .sale import Sale

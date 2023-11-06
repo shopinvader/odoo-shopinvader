@@ -427,7 +427,7 @@ class TestSaleCart(FastAPITransactionCase):
         partner = self.default_fastapi_authenticated_partner
         address = self.env["res.partner"].create(
             {
-                "name": "Shipping",
+                "name": "Delivery",
                 "parent_id": partner.id,
                 "type": "delivery",
             }

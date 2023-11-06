@@ -4,14 +4,14 @@
 
 
 from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
-from odoo.addons.shopinvader_schema_address.schemas import ShippingAddress
+from odoo.addons.shopinvader_schema_address.schemas import DeliveryAddress
 
 
-class ShippingInfo(StrictExtendableBaseModel):
-    address: ShippingAddress | None = None
+class DeliveryInfo(StrictExtendableBaseModel):
+    address: DeliveryAddress | None = None
 
     @classmethod
     def from_sale_order(cls, odoo_rec):
         return cls.model_construct(
-            address=(ShippingAddress.from_res_partner(odoo_rec.partner_shipping_id))
+            address=(DeliveryAddress.from_res_partner(odoo_rec.partner_shipping_id))
         )
