@@ -2,10 +2,9 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-
 {
-    "name": "Shopinvader API Sale",
-    "summary": "Sale FastApi for exposing sale order",
+    "name": "Shopinvader Api Security Sale",
+    "summary": "Add security rule to expose sale order",
     "version": "16.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
@@ -17,9 +16,15 @@
         "bin": [],
     },
     "depends": [
-        "shopinvader_schema_sale",
-        "shopinvader_api_security_sale",
+        "sale",
     ],
-    "data": [],
+    "data": [
+        "security/groups.xml",
+        "security/acl_product_product.xml",
+        "security/acl_product_template.xml",
+        "security/acl_uom_uom.xml",
+        "security/rule+acl_sale_order.xml",
+        "security/rule+acl_sale_order_line.xml",
+    ],
     "demo": [],
 }
