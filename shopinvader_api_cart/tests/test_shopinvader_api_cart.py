@@ -40,7 +40,7 @@ class TestSaleCart(FastAPITransactionCase):
                         0,
                         [
                             cls.env.ref(
-                                "shopinvader_api_cart.shopinvader_cart_user_group"
+                                "shopinvader_api_security_sale.shopinvader_sale_user_group"
                             ).id,
                         ],
                     )

@@ -21,15 +21,10 @@
         "shopinvader_sale_cart",
         "shopinvader_schema_address",
         "shopinvader_schema_sale",
+        "shopinvader_api_security_sale",
     ],
     "data": [
-        "security/groups.xml",
         "security/acl_ir_sequence.xml",
-        "security/acl_product_product.xml",
-        "security/acl_product_template.xml",
-        "security/acl_uom_uom.xml",
-        "security/rule+acl_sale_order.xml",
-        "security/rule+acl_sale_order_line.xml",
     ],
     "demo": [],
     "external_dependencies": {

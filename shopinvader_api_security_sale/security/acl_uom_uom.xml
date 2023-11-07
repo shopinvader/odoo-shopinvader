@@ -6,7 +6,7 @@
     <record model="ir.model.access" id="shopinvader_uom_uom_access_view">
         <field name="name">uom.uom shopinvader user read access</field>
         <field name="model_id" ref="uom.model_uom_uom" />
-        <field name="group_id" ref="shopinvader_api_cart.shopinvader_cart_user_group" />
+        <field name="group_id" ref="shopinvader_sale_user_group" />
         <field name="perm_read" eval="1" />
         <field name="perm_create" eval="0" />
         <field name="perm_unlink" eval="0" />

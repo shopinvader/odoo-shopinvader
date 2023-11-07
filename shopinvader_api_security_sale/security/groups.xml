@@ -2,7 +2,7 @@
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-  <record id="shopinvader_cart_user_group" model="res.groups">
+  <record id="shopinvader_sale_user_group" model="res.groups">
     <field name="name">Sale Cart user</field>
       <field
             name="implied_ids"
