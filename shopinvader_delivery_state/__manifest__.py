@@ -6,12 +6,12 @@
     "Summary": """
         Integrate `sale_delivery_state` with Shopinvader
     """,
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "Camptocamp SA",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": ["shopinvader", "sale_delivery_state"],
+    "depends": ["shopinvader_sale_state", "sale_delivery_state"],
     "auto_install": True,
     "post_init_hook": "post_init_hook",
-    "installable": False,
+    "installable": True,
 }

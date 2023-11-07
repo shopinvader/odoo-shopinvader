@@ -54,15 +54,6 @@
                 <field name="shopinvader_backend_id" optional="hide" />
                 <field name="typology" optional="hide" />
             </field>
-            <field name="invoice_status" position="after">
-                <field
-                    name="shopinvader_state"
-                    optional="hide"
-                    decoration-info="shopinvader_state in ['pending', 'processing']"
-                    decoration-success="shopinvader_state == 'shipped'"
-                    widget="badge"
-                />
-            </field>
         </field>
     </record>
 
@@ -73,15 +64,6 @@
             <field name="state" position="before">
                 <field name="shopinvader_backend_id" optional="hide" />
                 <field name="typology" optional="hide" />
-            </field>
-            <field name="state" position="after">
-                <field
-                    name="shopinvader_state"
-                    optional="hide"
-                    decoration-info="shopinvader_state in ['pending', 'processing']"
-                    decoration-success="shopinvader_state == 'shipped'"
-                    widget="badge"
-                />
             </field>
         </field>
     </record>

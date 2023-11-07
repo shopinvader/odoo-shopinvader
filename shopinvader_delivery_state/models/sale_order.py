@@ -10,16 +10,17 @@ class SaleOrder(models.Model):
 
     shopinvader_state = fields.Selection(
         selection_add=[
-            ("shipping_unprocessed", "No shipping yet"),
-            ("shipping_partially", "Partially shipped"),
-            ("shipping_done", "Fully shipped"),
+            ("delivery_pending", "Not Delivered"),
+            ("delivery_partial", "Partially Delivered"),
+            ("delivery_full", "Fully Delivered"),
         ]
     )
 
     def _compute_shopinvader_state_depends(self):
-        return super()._compute_shopinvader_state_depends() + ("delivery_state",)
+        return super()._compute_shopinvader_state_depends() + ("delivery_status",)
 
     def _get_shopinvader_state(self):
-        if self.delivery_state == "no":
+        if not self.delivery_status:
             return super()._get_shopinvader_state()
-        return "shipping_" + self.delivery_state
+        else:
+            return "delivery_" + self.delivery_status

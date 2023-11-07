@@ -34,7 +34,7 @@ class Sale(StrictExtendableBaseModel):
     def from_sale_order(cls, odoo_rec):
         return cls.model_construct(
             id=odoo_rec.id,
-            state=odoo_rec.state,
+            state=odoo_rec.shopinvader_state,
             name=odoo_rec.name,
             typology=odoo_rec.typology,
             client_order_ref=odoo_rec.client_order_ref or None,
