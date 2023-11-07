@@ -1,5 +1,5 @@
 from .delivery import DeliveryInfo
 from .invoicing import InvoicingInfo
-from .sale_order_line import SaleOrderLine
+from .sale_line import SaleLine
 from .amount import SaleAmount
-from .sale_order import Sale, SaleSearch
+from .sale import Sale, SaleSearch

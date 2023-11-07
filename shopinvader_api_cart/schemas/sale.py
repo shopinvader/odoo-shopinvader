@@ -2,10 +2,10 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo.addons.shopinvader_schema_sale.schemas import sale_order
+from odoo.addons.shopinvader_schema_sale.schemas import sale
 
 
-class Sale(sale_order.Sale, extends=True):
+class Sale(sale.Sale, extends=True):
     uuid: str | None = None
 
     @classmethod
