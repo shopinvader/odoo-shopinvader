@@ -40,5 +40,5 @@ class CartUpdateInput(StrictExtendableBaseModel):
         if (data.get("delivery") or {}).get("address_id"):
             vals["partner_shipping_id"] = self.delivery.address_id
         if (data.get("invoicing") or {}).get("address_id"):
-            vals["partner_invoicing_id"] = self.invoicing.address_id
+            vals["partner_invoice_id"] = self.invoicing.address_id
         return vals
