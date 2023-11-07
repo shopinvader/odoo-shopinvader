@@ -17,7 +17,7 @@ from odoo.addons.fastapi.dependencies import (
     paging,
 )
 from odoo.addons.fastapi.schemas import Paging
-from odoo.addons.fastapi.utils import FilteredDomainAdapter
+from odoo.addons.shopinvader_filtered_model.utils import FilteredModelAdapter
 from odoo.addons.shopinvader_schema_sale.schemas import Sale, SaleSearch
 
 sale_router = APIRouter(tags=["sales"])
@@ -73,7 +73,7 @@ class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
 
     @property
     def model_adapter(self):
-        return FilteredDomainAdapter(self.env["sale.order"], self._get_domain_adapter())
+        return FilteredModelAdapter(self.env["sale.order"], self._get_domain_adapter())
 
     def _get(self, record_id):
         return self.model_adapter.get(record_id)
