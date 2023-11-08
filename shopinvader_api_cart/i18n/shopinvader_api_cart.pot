@@ -19,16 +19,11 @@ msgid "Applied Cart Api Transaction Uuids"
 msgstr ""
 
 #. module: shopinvader_api_cart
-#: model:res.groups,name:shopinvader_api_cart.shopinvader_cart_user_group
-msgid "Sale Cart user"
-msgstr ""
-
-#. module: shopinvader_api_cart
 #: model:ir.model,name:shopinvader_api_cart.model_sale_order
 msgid "Sales Order"
 msgstr ""
 
 #. module: shopinvader_api_cart
-#: model:ir.model,name:shopinvader_api_cart.model_shopinvader_api_cart_service_helper
-msgid "ShopInvader API Cart Service Helper"
+#: model:ir.model,name:shopinvader_api_cart.model_shopinvader_api_cart_cart_router_helper
+msgid "ShopInvader API Cart Router Helper"
 msgstr ""
