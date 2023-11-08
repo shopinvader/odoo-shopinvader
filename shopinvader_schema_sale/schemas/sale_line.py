@@ -6,7 +6,7 @@ from extendable_pydantic import StrictExtendableBaseModel
 from .amount import SaleLineAmount
 
 
-class SaleOrderLine(StrictExtendableBaseModel):
+class SaleLine(StrictExtendableBaseModel):
     id: int
     product_id: int
     name: str

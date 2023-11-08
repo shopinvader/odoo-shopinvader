@@ -40,7 +40,7 @@ class TestSaleCart(FastAPITransactionCase):
                         0,
                         [
                             cls.env.ref(
-                                "shopinvader_api_cart.shopinvader_cart_user_group"
+                                "shopinvader_api_security_sale.shopinvader_sale_user_group"
                             ).id,
                         ],
                     )
@@ -104,7 +104,9 @@ class TestSaleCart(FastAPITransactionCase):
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.get(f"/{so.uuid}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["id"], so.id)
+        info = response.json()
+        self.assertEqual(info["id"], so.id)
+        self.assertEqual(info["uuid"], so.uuid)
 
     def test_get_authenticated_cart_uuid_no_rights(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -382,7 +384,7 @@ class TestSaleCart(FastAPITransactionCase):
             self.default_fastapi_authenticated_partner.id
         )
         create_line_vals = self.env[
-            "shopinvader_api_cart.service.helper"
+            "shopinvader_api_cart.cart_router.helper"
         ]._apply_transactions_creating_new_cart_line(
             so, [CartTransaction(uuid="uuid1", product_id=self.product_1.id, qty=1)]
         )
@@ -420,3 +422,24 @@ class TestSaleCart(FastAPITransactionCase):
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
         self.assertEqual(so.applied_cart_api_transaction_uuids, "uuid2,uuid3,uuid4")
+
+    def test_update(self) -> None:
+        partner = self.default_fastapi_authenticated_partner
+        address = self.env["res.partner"].create(
+            {
+                "name": "Delivery",
+                "parent_id": partner.id,
+                "type": "delivery",
+            }
+        )
+        so = self.env["sale.order"]._create_empty_cart(
+            self.default_fastapi_authenticated_partner.id
+        )
+        data = {"delivery": {"address_id": address.id}}
+        with self._create_test_client(router=cart_router) as test_client:
+            response: Response = test_client.post(
+                f"/update/{so.uuid}", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(so.partner_shipping_id, address)
+        self.assertEqual(so.partner_invoice_id, partner)

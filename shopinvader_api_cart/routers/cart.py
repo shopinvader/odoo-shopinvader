@@ -16,8 +16,9 @@ from odoo.addons.fastapi.dependencies import (
 )
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale.models.sale_order_line import SaleOrderLine
+from odoo.addons.shopinvader_schema_sale.schemas import Sale
 
-from ..schemas import CartResponse, CartSyncInput, CartTransaction
+from ..schemas import CartSyncInput, CartTransaction, CartUpdateInput
 
 cart_router = APIRouter(tags=["carts"])
 
@@ -28,12 +29,12 @@ def get(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: str | None = None,
-) -> CartResponse | None:
+) -> Sale | None:
     """
     Return an empty dict if no cart was found
     """
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
-    return CartResponse.from_cart(cart) if cart else None
+    return Sale.from_sale_order(cart) if cart else None
 
 
 @cart_router.post("/sync", status_code=201)
@@ -43,17 +44,30 @@ def sync(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: str | None = None,
-) -> CartResponse | None:
+) -> Sale | None:
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
-    cart = env["shopinvader_api_cart.service.helper"]._sync_cart(
+    cart = env["shopinvader_api_cart.cart_router.helper"]._sync_cart(
         partner, cart, uuid, data.transactions
     )
-    return CartResponse.from_cart(cart) if cart else None
+    return Sale.from_sale_order(cart) if cart else None
 
 
-class ShopinvaderApiCartServiceHelper(models.AbstractModel):
-    _name = "shopinvader_api_cart.service.helper"
-    _description = "ShopInvader API Cart Service Helper"
+@cart_router.post("/update")
+@cart_router.post("/update/{uuid}")
+def update(
+    data: CartUpdateInput,
+    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
+    partner: Annotated["ResPartner", Depends(authenticated_partner)],
+    uuid: str | None = None,
+) -> Sale:
+    cart = env["shopinvader_api_cart.cart_router.helper"]._update(partner, data, uuid)
+
+    return Sale.from_sale_order(cart)
+
+
+class ShopinvaderApiCartRouterHelper(models.AbstractModel):
+    _name = "shopinvader_api_cart.cart_router.helper"
+    _description = "ShopInvader API Cart Router Helper"
 
     @api.model
     def _check_transactions(self, transactions: list[CartTransaction]):
@@ -209,4 +223,11 @@ class ShopinvaderApiCartServiceHelper(models.AbstractModel):
             # * no cart_uuid -> new cart
             # * cart_uuid = cart.uuid: Existing cart and transaction for this cart
             self._apply_transactions(cart, transactions)
+        return cart
+
+    def _update(self, partner, data, uuid):
+        cart = self.env["sale.order"]._find_open_cart(partner.id, uuid)
+        if not cart:
+            cart = self.env["sale.order"]._create_empty_cart()
+        cart.write(data.convert_to_sale_write())
         return cart

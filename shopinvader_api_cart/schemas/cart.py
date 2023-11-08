@@ -1,18 +1,9 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from datetime import datetime
 from typing import List
 
 from extendable_pydantic import StrictExtendableBaseModel
-
-from odoo.addons.shopinvader_schema_address.schemas import (
-    DeliveryAddress,
-    InvoicingAddress,
-)
-
-from .amount import SaleAmount
-from .sale_order_line import SaleOrderLine
 
 
 class CartTransaction(StrictExtendableBaseModel):
@@ -25,39 +16,29 @@ class CartSyncInput(StrictExtendableBaseModel):
     transactions: List[CartTransaction]
 
 
-class CartResponse(StrictExtendableBaseModel):
-    uuid: str | None = None
-    id: int
-    state: str
-    name: str
-    date_order: datetime
-    lines: List[SaleOrderLine]
-    amount: SaleAmount | None = None
-    delivery: DeliveryAddress | None = None
-    invoicing: InvoicingAddress | None = None
+class DeliveryUpdateInfo(StrictExtendableBaseModel):
+    address_id: int
+
+
+class InvoicingUpdateInfo(StrictExtendableBaseModel):
+    address_id: int
+
+
+class CartUpdateInput(StrictExtendableBaseModel):
+    client_order_ref: str | None = None
+    delivery: DeliveryUpdateInfo | None = None
+    invoicing: InvoicingUpdateInfo | None = None
     note: str | None = None
 
-    @classmethod
-    def from_cart(cls, odoo_rec):
-        return cls.model_construct(
-            uuid=odoo_rec.uuid or None,
-            id=odoo_rec.id,
-            state=odoo_rec.state,
-            name=odoo_rec.name,
-            date_order=odoo_rec.date_order,
-            lines=[
-                SaleOrderLine.from_sale_order_line(line) for line in odoo_rec.order_line
-            ],
-            amount=SaleAmount.from_sale_order(odoo_rec),
-            delivery=(
-                DeliveryAddress.from_res_partner(odoo_rec.partner_shipping_id)
-                if odoo_rec.partner_shipping_id
-                else None
-            ),
-            invoicing=(
-                InvoicingAddress.from_res_partner(odoo_rec.partner_invoice_id)
-                if odoo_rec.partner_invoice_id
-                else None
-            ),
-            note=odoo_rec.note or None,
-        )
+    def convert_to_sale_write(self):
+        vals = {}
+        data = self.model_dump(exclude_unset=True)
+        if "client_order_ref" in data:
+            vals["client_order_ref"] = self.client_order_ref
+        if "note" in data:
+            vals["note"] = self.note
+        if (data.get("delivery") or {}).get("address_id"):
+            vals["partner_shipping_id"] = self.delivery.address_id
+        if (data.get("invoicing") or {}).get("address_id"):
+            vals["partner_invoice_id"] = self.invoicing.address_id
+        return vals
