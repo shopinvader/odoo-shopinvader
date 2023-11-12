@@ -19,6 +19,8 @@
     "depends": [
         "shopinvader_schema_sale",
         "shopinvader_api_security_sale",
+        "shopinvader_filtered_model",
+        "extendable_fastapi",
     ],
     "data": [],
     "demo": [],
