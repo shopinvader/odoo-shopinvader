@@ -17,6 +17,7 @@
     },
     "depends": [
         "sale",
+        "fastapi",
     ],
     "data": [
         "security/groups.xml",
