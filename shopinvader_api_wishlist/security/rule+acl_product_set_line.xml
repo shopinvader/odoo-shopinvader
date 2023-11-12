@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.model.access" id="shopinvader_product_set_line_access">
+        <field name="name">product.set.line shopinvader user full access</field>
+        <field name="model_id" ref="product_set.model_product_set_line" />
+        <field name="group_id" ref="shopinvader_wishlist_user_group" />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+        <field name="perm_write" eval="1" />
+  </record>
+  <record model="ir.rule" id="shopinvader_user_access_own_product_set_line_rule">
+    <field
+            name="name"
+        >shopinvader user can only access its own product set lines</field>
+    <field name="model_id" ref="product_set.model_product_set_line" />
+    <field name="domain_force">[
+      ('product_set_id.partner_id', '=', authenticated_partner_id)
+        ]
+    </field>
+    <field name="groups" eval="[(6, 0, [ref('shopinvader_wishlist_user_group')])]" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="1" />
+    <field name="perm_write" eval="1" />
+    <field name="perm_unlink" eval="0" />
+  </record>
+</odoo>
