@@ -1,6 +1,6 @@
 Expose product attribute sets in your ShopInvader website.
 
-This module adds export fields on shopinvader variants:
+This module adds to product variants:
 - structured attributes
 - attributes
 - name of attribute set

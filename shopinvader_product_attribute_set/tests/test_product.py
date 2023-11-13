@@ -2,26 +2,25 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo.addons.shopinvader.tests.common import ProductCommonCase
+from odoo.tests.common import TransactionCase
+
+from ..schemas.product import ProductProduct
 
 
-class ProductCase(ProductCommonCase):
-    def setUp(self):
-        super(ProductCase, self).setUp()
-        self.attr_set = self.env.ref("product_attribute_set.computer_attribute_set")
-        self.processor = self.env.ref(
+class ProductCase(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.attr_set = cls.env.ref("product_attribute_set.computer_attribute_set")
+        cls.processor = cls.env.ref(
             "product_attribute_set.computer_processor_attribute_option_1"
         )
-        self.product = self.env.ref("product.product_product_8")
-        self.shopinvader_variant = self.product.shopinvader_bind_ids
-        self.product_filter = self.env.ref(
-            "shopinvader_product_attribute_set.filter_compatible_linux"
-        )
-        attributes = self.attr_set.attribute_ids.filtered(
+        cls.product = cls.env.ref("product.product_product_8")
+        attributes = cls.attr_set.attribute_ids.filtered(
             lambda s: s.name
             in ["x_linux_compatible", "x_processor", "x_technical_description"]
         )
-        self.attr_set.attribute_ids = attributes
+        cls.attr_set.attribute_ids = attributes
 
     def test_product_attributes(self):
         self.product.write(
@@ -34,7 +33,7 @@ class ProductCase(ProductCommonCase):
         )
 
         self.assertEqual(
-            self.shopinvader_variant.attributes,
+            self.product.attributes,
             {
                 "linux_compatible": True,
                 "processor": "Intel i5",
@@ -42,7 +41,7 @@ class ProductCase(ProductCommonCase):
             },
         )
         self.assertListEqual(
-            self.shopinvader_variant.structured_attributes,
+            self.product.structured_attributes,
             [
                 {
                     "group_name": "Technical",
@@ -72,23 +71,13 @@ class ProductCase(ProductCommonCase):
             ],
         )
 
-    def test_filter(self):
-        self.assertEqual(
-            self.product_filter.display_name, "attributes.linux_compatible"
-        )
-
     def test_product_attributes_empty_select(self):
-        self.product.write(
-            {
-                "attribute_set_id": self.attr_set.id,
-                "x_processor": False,
-            }
-        )
+        self.product.write({"attribute_set_id": self.attr_set.id, "x_processor": False})
 
-        self.assertEqual(self.shopinvader_variant.attributes["processor"], "")
+        self.assertEqual(self.product.attributes["processor"], "")
 
         processor_field = {}
-        for field in self.shopinvader_variant.structured_attributes[0]["fields"]:
+        for field in self.product.structured_attributes[0]["fields"]:
             if field["key"] == "processor":
                 processor_field = field
         self.assertEqual(
@@ -100,3 +89,55 @@ class ProductCase(ProductCommonCase):
                 "type": "select",
             },
         )
+
+    def test_product_data(self):
+        self.product.write(
+            {
+                "attribute_set_id": self.attr_set.id,
+                "x_linux_compatible": True,
+                "x_processor": self.processor.id,
+                "x_technical_description": "foo",
+            }
+        )
+        res = ProductProduct.from_product_product(self.product).model_dump()
+        self.assertEqual(
+            res.get("attributes"),
+            {
+                "linux_compatible": True,
+                "processor": "Intel i5",
+                "technical_description": "foo",
+            },
+        )
+        self.assertListEqual(
+            res.get("structured_attributes"),
+            [
+                {
+                    "group_name": "Technical",
+                    "fields": [
+                        {
+                            "value": "true",
+                            "name": "X Linux Compatible",
+                            "key": "linux_compatible",
+                            "type": "boolean",
+                        },
+                        {
+                            "value": "Intel i5",
+                            "name": "Processor",
+                            "key": "processor",
+                            "type": "select",
+                        },
+                        {
+                            "value": "foo",
+                            "name": "Technical Description",
+                            "key": "technical_description",
+                            "type": "text",
+                        },
+                    ],
+                }
+            ],
+        )
+
+    def test_product_data_no_attribute_set(self):
+        res = ProductProduct.from_product_product(self.product).model_dump()
+        self.assertEqual(res.get("attributes"), {})
+        self.assertEqual(res.get("structured_attributes"), [{}])

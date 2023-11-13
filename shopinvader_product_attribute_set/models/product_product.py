@@ -1,21 +1,19 @@
-# Copyright 2017 Akretion (http://www.akretion.com).
-# @author Sébastien BEAU <sebastien.beau@akretion.com>
-# @author Raphaël Reverdy <raphael.reverdy@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-
+# Copyright 2023 ACSONE SA/NV
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import fields, models
 
 
-class ShopinvaderVariant(models.Model):
-    _inherit = "shopinvader.variant"
+class ProductProduct(models.Model):
 
-    attributes = fields.Serialized(
+    _inherit = "product.product"
+
+    attributes = fields.Json(
         compute="_compute_attributes", string="Shopinvader attributes Fields"
     )
-    structured_attributes = fields.Serialized(
+    structured_attributes = fields.Json(
         compute="_compute_structured_attributes",
-        string="Shopinvader attributes Fields",
+        string="Shopinvader structured attributes Fields",
     )
 
     def _get_attribute_value(self, fieldname, one=False, name_key=None):
