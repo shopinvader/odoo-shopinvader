@@ -6,6 +6,12 @@ from .common import TestSeMultiImageThumbnailCase
 
 
 class TestShopinvaderSearchEngineImage(TestSeMultiImageThumbnailCase):
+    def test_index_no_thumbnail_sizes(self):
+        self.backend.image_field_thumbnail_size_ids = None
+        product = self.product_binding._contextualize(self.product_binding)
+        data = self.product_index.model_serializer.serialize(product.record)
+        self.assertEqual(data["images"], [])
+
     def test_product_image(self):
         self.backend.image_data_url_strategy = "odoo"
         product = self.product_binding._contextualize(self.product_binding)

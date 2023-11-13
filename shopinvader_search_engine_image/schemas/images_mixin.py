@@ -4,6 +4,8 @@
 from extendable_pydantic import StrictExtendableBaseModel
 from pydantic import fields
 
+from odoo.exceptions import UserError
+
 from odoo.addons.search_engine_image_thumbnail.models.se_indexable_record import (
     SeIndexableRecord,
 )
@@ -56,12 +58,16 @@ class ImageMixin(StrictExtendableBaseModel):
         """Fill the images field from a FsImageRelationMixin field."""
         index = record.env["se.index"].browse(record.env.context["index_id"])
         backend: SeBackend = index.backend_id
-        size_and_thumbnails_by_image = (
-            record._get_or_create_thumbnails_for_multi_images(
-                index=index, field_name=field_name
-            )
-        )
         self.images = []
+        try:
+            size_and_thumbnails_by_image = (
+                record._get_or_create_thumbnails_for_multi_images(
+                    index=index, field_name=field_name
+                )
+            )
+        except UserError:
+            # No thumbnail sizes defined on backend
+            return
         cpt = 0
         for (
             image_relation,
