@@ -26,8 +26,8 @@ addon | version | maintainers | summary
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.0.1 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.2.0 |  | Adds a service to manage shopinvader invoicing and delivery address
 [shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.2.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
-[shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.1.0 |  | Sale FastApi for exposing sale order
-[shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.0 |  | Add security rule to expose sale order
+[shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.1.1 |  | Sale FastApi for exposing sale order
+[shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.2 |  | keep history of url for products & categories
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.0 |  | Helper for exposing model easily

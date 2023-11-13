@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Api Security Sale",
     "summary": "Add security rule to expose sale order",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
