@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+  <record id="shopinvader_loyalty_user_group" model="res.groups">
+    <field name="name">Sale Loyalty user</field>
+      <field
+            name="implied_ids"
+            eval="[
+      (4, ref('fastapi.group_fastapi_endpoint_runner')),
+            ]"
+        />
+  </record>
+
+    <record
+        id="shopinvader_api_security_sale.shopinvader_sale_user_group"
+        model="res.groups"
+    >
+        <field
+            name="implied_ids"
+            eval="[
+            (4, ref('shopinvader_api_sale_loyalty.shopinvader_loyalty_user_group'))
+      ]"
+        />
+    </record>
+
+</odoo>
