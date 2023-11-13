@@ -20,6 +20,10 @@ class TestProductBinding(TestBindingIndexBase):
         cls.product_binding = cls.product._add_to_index(cls.index)
 
     def test_binding_price(self):
+        serializer = self.index._get_serializer()
+        serializer.serialize(self.product)
+        self.product.with_context(index_id=self.index.id)._compute_shopinvader_price()
+        self.assertEqual(self.product_binding.error, "ABC")
         self.product_binding.recompute_json()
         data = self.product_binding.data
         self.assertEqual(

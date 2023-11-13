@@ -12,7 +12,7 @@
     "author": "Akretion,ACSONE SA/NV,Camptocamp",
     "license": "AGPL-3",
     "installable": True,
-    "depends": ["stock", "shopinvader_search_engine"],
+    "depends": ["stock", "shopinvader_search_engine", "base_sparse_field"],
     "data": [
         "views/se_backend.xml",
         "views/se_index.xml",
