@@ -211,7 +211,7 @@ class ResPartner(models.Model):
         """ % (select_query, from_query, where_query)
         self.env.cr.execute(query)
         duplicate_emails_dict = dict()
-        for backend_id, email in self.env.cr.fetchall():
+        for email, backend_id in self.env.cr.fetchall():
             if not duplicate_emails_dict.get(backend_id):
                 duplicate_emails_dict.setdefault(backend_id, [email])
             else:
