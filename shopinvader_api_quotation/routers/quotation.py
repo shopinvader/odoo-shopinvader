@@ -28,7 +28,7 @@ def get(
     quotation_id: int | None = None,
 ) -> Sale | None:
     return Sale.from_sale_order(
-        env["shopinvader_api_sale.sales_router.helper"]
+        env["shopinvader_api_quotation.quotations_router.helper"]
         .new({"partner": partner})
         ._get(quotation_id)
     )
@@ -41,7 +41,7 @@ def confirm_quotation(
     quotation_id: int | None = None,
 ) -> None:
     order = (
-        env["shopinvader_api_sale.sales_router.helper"]
+        env["shopinvader_api_quotation.quotations_router.helper"]
         .new({"partner": partner})
         ._confirm(quotation_id)
     )
@@ -56,7 +56,7 @@ def search_quotation(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> PagedCollection[Sale]:
     count, orders = (
-        env["shopinvader_api_sale.sales_router.helper"]
+        env["shopinvader_api_quotation.quotations_router.helper"]
         .new({"partner": partner})
         ._search(paging, params)
     )
@@ -74,17 +74,15 @@ def update_quotation(
     quotation_id: int,
 ) -> Sale:
     order = (
-        env["shopinvader_api_sale.sales_router.helper"]
+        env["shopinvader_api_quotation.quotations_router.helper"]
         .new({"partner": partner})
-        ._get(quotation_id)
+        ._update(quotation_id, data)
     )
-
-    vals = data.to_sale_order_vals()
-    order.write(vals)
     return Sale.from_sale_order(order)
 
 
 class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
+    _name = "shopinvader_api_quotation.quotations_router.helper"
     _inherit = "shopinvader_api_sale.sales_router.helper"
 
     def _get_domain_adapter(self):
@@ -96,4 +94,9 @@ class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
     def _confirm(self, quotation):
         order = self._get(quotation)
         order.action_confirm()
+        return order
+
+    def _update(self, quotation, data):
+        order = self._get(quotation)
+        order.write(data.to_sale_order_vals())
         return order
