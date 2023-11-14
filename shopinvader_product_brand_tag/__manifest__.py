@@ -5,7 +5,7 @@
 {
     "name": "Shopvinvader Product Brand Tag",
     "summary": "Index Product Brand Tags in Shopinvader",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "e-Commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp,ACSONE SA/NV",

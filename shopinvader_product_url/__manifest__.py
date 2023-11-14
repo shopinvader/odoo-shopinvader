@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader product url",
     "summary": "Generate url for product and category",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "development_status": "Alpha",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
