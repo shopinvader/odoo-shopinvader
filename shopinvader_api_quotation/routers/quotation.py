@@ -13,8 +13,9 @@ from odoo.addons.fastapi.dependencies import (
     paging,
 )
 from odoo.addons.fastapi.schemas import Paging
-from odoo.addons.fastapi.utils import FilteredDomainAdapter
-from odoo.addons.shopinvader_schema_sale.schemas.sale_order import Sale, SaleSearch
+from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale, SaleSearch
+
+from ..schemas.sale import QuotationUpdateInput
 
 # create a router
 quotation_router = APIRouter(tags=["quotations"])
@@ -27,7 +28,9 @@ def get(
     quotation_id: int | None = None,
 ) -> Sale | None:
     return Sale.from_sale_order(
-        env["shopinvader_api_quotation.quotations_router.helper"]._get(quotation_id)
+        env["shopinvader_api_sale.sales_router.helper"]
+        .new({"partner": partner})
+        ._get(quotation_id)
     )
 
 
@@ -37,11 +40,11 @@ def confirm_quotation(
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     quotation_id: int | None = None,
 ) -> None:
-    order = env["shopinvader_api_quotation.quotations_router.helper"]._confirm(
-        quotation_id
+    order = (
+        env["shopinvader_api_sale.sales_router.helper"]
+        .new({"partner": partner})
+        ._confirm(quotation_id)
     )
-    # env["sale.order"]._confirm(order)
-    # order.action_confirm()
     return Sale.from_sale_order(order)
 
 
@@ -52,8 +55,10 @@ def search_quotation(
     env: Annotated[Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
 ) -> PagedCollection[Sale]:
-    count, orders = env["shopinvader_api_quotation.quotations_router.helper"]._search(
-        paging, params
+    count, orders = (
+        env["shopinvader_api_sale.sales_router.helper"]
+        .new({"partner": partner})
+        ._search(paging, params)
     )
     return PagedCollection[Sale](
         count=count,
@@ -61,25 +66,32 @@ def search_quotation(
     )
 
 
-class ShopinvaderApiQuotationquotationsRouterHelper(models.AbstractModel):
-    _name = "shopinvader_api_quotation.quotations_router.helper"
-    _description = "Shopinvader Api Quotation Service Helper"
+@quotation_router.post("/quotations/{quotation_id}")
+def update_quotation(
+    data: QuotationUpdateInput,
+    env: Annotated[Environment, Depends(authenticated_partner_env)],
+    partner: Annotated["ResPartner", Depends(authenticated_partner)],
+    quotation_id: int,
+) -> Sale:
+    order = (
+        env["shopinvader_api_sale.sales_router.helper"]
+        .new({"partner": partner})
+        ._get(quotation_id)
+    )
 
-    @property
-    def adapter(self):
-        return FilteredDomainAdapter(
-            self.env["sale.order"], [("typology", "=", "quotation")]
-        )
+    vals = data.to_sale_order_vals()
+    order.write(vals)
+    return Sale.from_sale_order(order)
 
-    def _get(self, record_id):
-        return self.adapter.get(record_id)
 
-    def _search(self, paging, params):
-        return self.adapter.search_with_count(
-            params.to_odoo_domain(),
-            limit=paging.limit,
-            offset=paging.offset,
-        )
+class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
+    _inherit = "shopinvader_api_sale.sales_router.helper"
+
+    def _get_domain_adapter(self):
+        return [
+            ("partner_id", "=", self.partner.id),
+            ("typology", "=", "quotation"),
+        ]
 
     def _confirm(self, quotation):
         order = self._get(quotation)

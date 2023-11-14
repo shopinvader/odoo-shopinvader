@@ -6,7 +6,15 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
-    "depends": ["crm", "fastapi", "shopinvader_schema_sale", "shopinvader_api_cart"],
+    "depends": [
+        "crm",
+        "fastapi",
+        "shopinvader_schema_sale",
+        "shopinvader_api_security_sale",
+        "shopinvader_api_cart",
+        "shopinvader_api_sale",
+        "sale_cart",
+    ],
     "external_dependencies": {
         "python": [
             "fastapi",
