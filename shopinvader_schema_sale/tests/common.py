@@ -11,7 +11,7 @@ class SchemaSaleCase(TransactionCase, ExtendableMixin):
     def setUpClass(cls):
         super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
-        super().init_extendable_registry()
+        cls.init_extendable_registry()
         cls.addClassCleanup(cls.reset_extendable_registry)
 
         cls.partner = cls.env["res.partner"].create(

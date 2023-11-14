@@ -3,13 +3,18 @@
 
 from odoo.tests import TransactionCase
 
+from odoo.addons.extendable.tests.common import ExtendableMixin
+
 from ..schemas.category import ProductCategory
 
 
-class TestShopinvaderCategoryBase(TransactionCase):
+class TestShopinvaderCategoryBase(TransactionCase, ExtendableMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.init_extendable_registry()
+        cls.addClassCleanup(cls.reset_extendable_registry)
+
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cat_obj = cls.env["product.category"]
 

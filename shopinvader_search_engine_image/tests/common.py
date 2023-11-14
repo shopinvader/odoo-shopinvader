@@ -15,8 +15,10 @@ class TestSeMultiImageThumbnailCase(TestSeBackendCaseBase, ExtendableMixin):
     def setUpClass(cls):
         super().setUpClass()
         cls.init_extendable_registry()
+        cls.addClassCleanup(cls.reset_extendable_registry)
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
+        cls.addClassCleanup(cls.loader.restore_registry)
         from odoo.addons.connector_search_engine.tests.models import SeBackend, SeIndex
 
         cls.loader.update_registry(
@@ -169,12 +171,6 @@ class TestSeMultiImageThumbnailCase(TestSeBackendCaseBase, ExtendableMixin):
             }
         )
         # fmt: on
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        cls.reset_extendable_registry()
-        super().tearDownClass()
 
     @classmethod
     def _create_image(cls, width, height, color="#4169E1", img_format="PNG"):

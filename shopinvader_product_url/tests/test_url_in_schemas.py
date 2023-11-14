@@ -13,6 +13,7 @@ class TestUrlInSchemas(TransactionCase, ExtendableMixin):
     def setUpClass(cls):
         super().setUpClass()
         cls.init_extendable_registry()
+        cls.addClassCleanup(cls.reset_extendable_registry)
 
         cls.parent_category = cls.env["product.category"].create(
             {
@@ -37,11 +38,6 @@ class TestUrlInSchemas(TransactionCase, ExtendableMixin):
                 "categ_id": cls.child_child_category.id,
             }
         )
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.reset_extendable_registry()
-        super().tearDownClass()
 
     def test_product_product(self):
         product = ProductProduct.from_product_product(self.product)
