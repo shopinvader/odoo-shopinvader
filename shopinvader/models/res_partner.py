@@ -189,6 +189,7 @@ class ResPartner(models.Model):
                 JOIN
                     shopinvader_partner sp ON sp.record_id = rp.id
                 WHERE email IS NOT NULL
+                    AND sp.active = TRUE
                     AND rp.active = TRUE
                     AND rp.has_shopinvader_user_active = TRUE
             ) dups
