@@ -4,13 +4,17 @@
 
 from odoo.tests.common import TransactionCase
 
-from ..schemas.product import ProductProduct
+from odoo.addons.extendable.tests.common import ExtendableMixin
+from odoo.addons.shopinvader_product.schemas import ProductProduct
 
 
-class ProductCase(TransactionCase):
+class ProductCase(TransactionCase, ExtendableMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.init_extendable_registry()
+        cls.addClassCleanup(cls.reset_extendable_registry)
+
         cls.attr_set = cls.env.ref("product_attribute_set.computer_attribute_set")
         cls.processor = cls.env.ref(
             "product_attribute_set.computer_processor_attribute_option_1"
