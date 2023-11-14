@@ -14,6 +14,7 @@ class TestBindingIndexBase(TestSeBackendCaseBase, FakeModelLoader, ExtendableMix
         # Load fake models ->/
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
+        cls.addClassCleanup(cls.loader.restore_registry)
         from odoo.addons.connector_search_engine.tests.models import (
             FakeSeAdapter,
             SeBackend,
@@ -30,12 +31,7 @@ class TestBindingIndexBase(TestSeBackendCaseBase, FakeModelLoader, ExtendableMix
         cls.se_adapter = FakeSeAdapter
 
         cls.init_extendable_registry()
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.loader.restore_registry()
-        cls.reset_extendable_registry()
-        super().tearDownClass()
+        cls.addClassCleanup(cls.reset_extendable_registry)
 
 
 class TestCategoryBindingBase(TestBindingIndexBase):

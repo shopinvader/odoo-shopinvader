@@ -13,10 +13,7 @@ class TestUrlInSchemas(TransactionCase, ExtendableMixin):
     def setUpClass(cls):
         super().setUpClass()
         cls.init_extendable_registry()
-
-        @cls.addClassCleanup
-        def cleanup():
-            ExtendableMixin.reset_extendable_registry()
+        cls.addClassCleanup(cls.reset_extendable_registry)
 
         cls.parent_category = cls.env["product.category"].create(
             {
