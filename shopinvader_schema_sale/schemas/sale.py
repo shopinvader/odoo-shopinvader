@@ -48,7 +48,7 @@ class Sale(StrictExtendableBaseModel):
         )
 
 
-class SaleSearch(StrictExtendableBaseModel):
+class SaleSearch(StrictExtendableBaseModel, extra="ignore"):
     name: Annotated[
         str | None,
         Field(
