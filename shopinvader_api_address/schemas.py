@@ -4,7 +4,7 @@
 from extendable_pydantic import StrictExtendableBaseModel
 
 
-class AddressCreate(StrictExtendableBaseModel):
+class AddressCreate(StrictExtendableBaseModel, extra="ignore"):
     """
     used to create new address (res.partner)
     state and country can be name or code
@@ -36,7 +36,7 @@ class AddressCreate(StrictExtendableBaseModel):
         return vals
 
 
-class AddressUpdate(StrictExtendableBaseModel):
+class AddressUpdate(StrictExtendableBaseModel, extra="ignore"):
     """
     used to update address (res.partner)
     state and country can be name or code

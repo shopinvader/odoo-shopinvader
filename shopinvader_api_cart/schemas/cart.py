@@ -12,19 +12,19 @@ class CartTransaction(StrictExtendableBaseModel):
     product_id: int
 
 
-class CartSyncInput(StrictExtendableBaseModel):
+class CartSyncInput(StrictExtendableBaseModel, extra="ignore"):
     transactions: List[CartTransaction]
 
 
-class DeliveryUpdateInfo(StrictExtendableBaseModel):
+class DeliveryUpdateInfo(StrictExtendableBaseModel, extra="ignore"):
     address_id: int
 
 
-class InvoicingUpdateInfo(StrictExtendableBaseModel):
+class InvoicingUpdateInfo(StrictExtendableBaseModel, extra="ignore"):
     address_id: int
 
 
-class CartUpdateInput(StrictExtendableBaseModel):
+class CartUpdateInput(StrictExtendableBaseModel, extra="ignore"):
     client_order_ref: str | None = None
     delivery: DeliveryUpdateInfo | None = None
     invoicing: InvoicingUpdateInfo | None = None
