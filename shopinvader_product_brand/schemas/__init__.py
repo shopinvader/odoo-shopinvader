@@ -1,2 +1,2 @@
 from .brand import ProductBrand
-from .product import ProductTemplate
+from .product import ProductProduct
