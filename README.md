@@ -40,7 +40,7 @@ addon | version | maintainers | summary
 [shopinvader_restapi](shopinvader_restapi/) | 16.0.1.1.0 |  | Shopinvader
 [shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
-[shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.1 |  | ShopInvader logic for sale carts.
+[shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.2 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.2.0 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.2 |  | Add schema sale
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.3 |  | Shopinvader Catalog Search Engine Connector
