@@ -12,5 +12,5 @@ class ProductProduct(BaseProduct, extends=True):
     @classmethod
     def from_product_product(cls, odoo_rec):
         obj = super().from_product_product(odoo_rec)
-        obj.stock = odoo_rec.stock_data
+        obj.stock = odoo_rec.stock_data if odoo_rec.stock_data else {}
         return obj
