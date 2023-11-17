@@ -7,10 +7,10 @@ from . import MediaData
 
 
 class ProductProduct(BaseProductProduct, extends=True):
-    media: list[MediaData] = []
+    medias: list[MediaData] = []
 
     @classmethod
     def from_product_product(cls, odoo_rec):
         obj = super().from_product_product(odoo_rec)
-        obj.media = [MediaData.from_media_data(m) for m in odoo_rec.variant_media_ids]
+        obj.medias = [MediaData.from_media_data(m) for m in odoo_rec.variant_media_ids]
         return obj
