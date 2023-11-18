@@ -47,7 +47,7 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.2 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
-[shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.1 |  | Index storage media data into search engine
+[shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.2 |  | Index storage media data into search engine
 [shopinvader_search_engine_product_seo](shopinvader_search_engine_product_seo/) | 16.0.1.0.0 |  | This module allows to configure a seo title suffix on se backends
 [shopinvader_search_engine_product_stock](shopinvader_search_engine_product_stock/) | 16.0.1.0.2 |  | This module is used to export stock data to search engine
 [shopinvader_search_engine_product_stock_state](shopinvader_search_engine_product_stock_state/) | 16.0.1.0.0 |  | This module is used to choose a stock state during theexport t search engine
