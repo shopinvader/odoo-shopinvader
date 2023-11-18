@@ -8,8 +8,8 @@ class TestShopinvaderSearchEngineMedia(ProductMediaCase):
         self.backend.media_data_url_strategy = "odoo"
         product = self.product_binding._contextualize(self.product_binding)
         data = self.product_index.model_serializer.serialize(product.record)
-        self.assertIn("media", data)
-        self.assertEqual(data["media"], [])
+        self.assertIn("medias", data)
+        self.assertEqual(data["medias"], [])
         media_c = self.env["fs.product.media"].create(
             {
                 "product_tmpl_id": self.product_a.product_tmpl_id.id,
@@ -19,8 +19,8 @@ class TestShopinvaderSearchEngineMedia(ProductMediaCase):
             }
         )
         data = self.product_index.model_serializer.serialize(product.record)
-        self.assertEqual(len(data["media"]), 1)
-        media = data["media"][0]
+        self.assertEqual(len(data["medias"]), 1)
+        media = data["medias"][0]
         default_expected = self._default_media(media_c)
         media_subset = {
             key: item for key, item in media.items() if key in default_expected.keys()
