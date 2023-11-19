@@ -14,12 +14,16 @@ class MediaData(StrictExtendableBaseModel):
 
     @classmethod
     def from_media_data(cls, odoo_rec):
-        index = odoo_rec.env["se.index"].browse(odoo_rec.env.context["index_id"])
-        backend = index.backend_id
+        if odoo_rec.env.context.get("index_id"):
+            index = odoo_rec.env["se.index"].browse(odoo_rec.env.context["index_id"])
+            backend = index.backend_id
+            url = backend._get_url_for_media(odoo_rec.file)
+        else:
+            url = ""
         return cls.model_construct(
             sequence=odoo_rec.sequence or None,
             name=odoo_rec.name,
-            url=backend._get_url_for_media(odoo_rec.file),
+            url=url,
             type=MediaType.from_media_type(odoo_rec.media_type_id)
             if odoo_rec.media_type_id
             else None,
