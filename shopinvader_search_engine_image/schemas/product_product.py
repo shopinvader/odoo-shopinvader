@@ -10,5 +10,6 @@ class ProductProduct(BaseProduct, ImageMixin, extends=True):
     @classmethod
     def from_product_product(cls, odoo_rec):
         obj = super().from_product_product(odoo_rec)
-        obj._fill_image_from_image_relation_mixin(odoo_rec, "variant_image_ids")
+        if odoo_rec.variant_image_ids:
+            obj._fill_image_from_image_relation_mixin(odoo_rec, "variant_image_ids")
         return obj

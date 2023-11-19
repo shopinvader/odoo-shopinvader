@@ -10,7 +10,7 @@ from ..schemas.brand import ProductBrand
 from ..schemas.product import ProductProduct
 
 
-class TestProductExpiryInSchema(TransactionCase, ExtendableMixin):
+class TestProductSchema(TransactionCase, ExtendableMixin):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
