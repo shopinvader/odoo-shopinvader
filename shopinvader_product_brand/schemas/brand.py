@@ -14,7 +14,7 @@ class ProductBrand(StrictExtendableBaseModel):
     meta_keywords: str | None = None
     seo_title: str | None = None
     url_key: str | None = None
-    redirect_url_key: str | None = None
+    redirect_url_key: list[str] | None = None
 
     @classmethod
     def from_product_brand(cls, odoo_rec):

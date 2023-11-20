@@ -54,6 +54,8 @@ class ImageMixin(StrictExtendableBaseModel):
         self, record: SeIndexableRecord, field_name: str
     ):
         """Fill the images field from a FsImageRelationMixin field."""
+        if not record.env.context.get("index_id"):
+            return
         index = record.env["se.index"].browse(record.env.context["index_id"])
         backend: SeBackend = index.backend_id
         size_and_thumbnails_by_image = (
