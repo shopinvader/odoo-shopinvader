@@ -85,3 +85,12 @@ class TestSale(FastAPITransactionCase):
             response: Response = test_client.get(f"/sales/{sale.id}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["name"], sale.name)
+
+    def test_download(self):
+        sale = self.env["sale.order"].create(
+            {"partner_id": self.default_fastapi_authenticated_partner.id}
+        )
+        with self._create_test_client(router=sale_router) as test_client:
+            response: Response = test_client.get(f"/sales/{sale.id}/download")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.headers["Content-Type"], "application/pdf")
