@@ -7,9 +7,9 @@ from extendable_pydantic import StrictExtendableBaseModel
 
 class SaleLineOption(StrictExtendableBaseModel):
     @classmethod
-    def _prepare_from_sale_line(cls, line):
+    def _prepare_from_sale_order_line(cls, line):
         return {}
 
     @classmethod
-    def from_sale_line(cls, line):
-        return cls.model_validate(cls._prepare_from_sale_line(line))
+    def from_sale_order_line(cls, line):
+        return cls.model_validate(cls._prepare_from_sale_order_line(line))

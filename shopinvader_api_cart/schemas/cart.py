@@ -5,24 +5,14 @@ from typing import List
 
 from extendable_pydantic import StrictExtendableBaseModel
 
-
-class CartTransactionOption(StrictExtendableBaseModel):
-    """Optionnal information for transaction"""
-
-    @classmethod
-    def _prepare_from_sale_line(cls, line):
-        return {}
-
-    @classmethod
-    def from_sale_line(cls, line):
-        return cls.model_validate(cls._prepare_from_line(line))
+from odoo.addons.shopinvader_schema_sale.schemas.sale_line_option import SaleLineOption
 
 
 class CartTransaction(StrictExtendableBaseModel):
     uuid: str | None = None
     qty: float
     product_id: int
-    options: CartTransactionOption | None = None
+    options: SaleLineOption | None = None
 
 
 class CartSyncInput(StrictExtendableBaseModel, extra="ignore"):

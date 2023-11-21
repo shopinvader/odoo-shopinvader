@@ -4,6 +4,7 @@
 from extendable_pydantic import StrictExtendableBaseModel
 
 from .amount import SaleLineAmount
+from .sale_line_option import SaleLineOption
 
 
 class SaleLine(StrictExtendableBaseModel):
@@ -12,6 +13,7 @@ class SaleLine(StrictExtendableBaseModel):
     name: str
     amount: SaleLineAmount | None = None
     qty: float
+    options: SaleLineOption | None = None
 
     @classmethod
     def from_sale_order_line(cls, odoo_rec):
@@ -21,4 +23,5 @@ class SaleLine(StrictExtendableBaseModel):
             name=odoo_rec.name,
             amount=SaleLineAmount.from_sale_order_line(odoo_rec),
             qty=odoo_rec.product_uom_qty,
+            options=SaleLineOption.from_sale_order_line(odoo_rec),
         )
