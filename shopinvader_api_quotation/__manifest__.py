@@ -17,7 +17,7 @@
     ],
     "data": [
         "views/product_view.xml",
-        "views/sale_view.xml",
+        # " views/sale_view.xml",
     ],
     "external_dependencies": {
         "python": [

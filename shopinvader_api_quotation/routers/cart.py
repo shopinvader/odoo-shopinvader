@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import Depends
 
 from odoo import api
 
@@ -9,9 +9,8 @@ from odoo.addons.fastapi.dependencies import (
     authenticated_partner,
     authenticated_partner_env,
 )
+from odoo.addons.shopinvader_api_cart.routers import cart_router
 from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale
-
-cart_router = APIRouter(tags=["carts"])
 
 
 @cart_router.post("/{uuid}/request_quotation")
