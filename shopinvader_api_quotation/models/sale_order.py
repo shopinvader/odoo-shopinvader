@@ -39,3 +39,7 @@ class SaleOrder(models.Model):
             record.shop_only_quotation = any(
                 record.order_line.product_id.mapped("shop_only_quotation")
             )
+
+    def action_confirm_quotation(self):
+        self.typology = "sale"
+        return self.action_confirm()

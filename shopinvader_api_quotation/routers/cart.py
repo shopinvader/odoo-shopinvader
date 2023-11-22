@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import Depends
 
-from odoo import api
+from odoo import api, models
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.fastapi.dependencies import (
@@ -19,7 +19,16 @@ def request_quotation(
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: str | None = None,
 ) -> Sale:
-    sale = env["sale.order"]._find_open_cart(partner.id, uuid)
-    sale.action_request_quotation()
-
+    sale = env["shopinvader_api_cart.cart_router.helper"]._request_quotation(
+        partner, uuid
+    )
     return Sale.from_sale_order(sale)
+
+
+class ShopinvaderApiCartRouterHelper(models.AbstractModel):
+    _inherit = "shopinvader_api_cart.cart_router.helper"
+
+    def _request_quotation(self, partner, uuid):
+        sale = self.env["sale.order"]._find_open_cart(partner.id, uuid)
+        sale.action_request_quotation()
+        return sale

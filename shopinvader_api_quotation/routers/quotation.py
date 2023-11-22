@@ -25,7 +25,7 @@ quotation_router = APIRouter(tags=["quotations"])
 def get(
     env: Annotated[Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    quotation_id: int | None = None,
+    quotation_id: int,
 ) -> Sale | None:
     return Sale.from_sale_order(
         env["shopinvader_api_quotation.quotations_router.helper"]
@@ -34,11 +34,11 @@ def get(
     )
 
 
-@quotation_router.get("/quotations/{quotation_id}/confirm", status_code=200)
+@quotation_router.post("/quotations/{quotation_id}/confirm", status_code=200)
 def confirm_quotation(
     env: Annotated[Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    quotation_id: int | None = None,
+    quotation_id: int,
 ) -> None:
     order = (
         env["shopinvader_api_quotation.quotations_router.helper"]
@@ -93,7 +93,7 @@ class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
 
     def _confirm(self, quotation):
         order = self._get(quotation)
-        order.action_confirm()
+        order.action_confirm_quotation()
         return order
 
     def _update(self, quotation, data):
