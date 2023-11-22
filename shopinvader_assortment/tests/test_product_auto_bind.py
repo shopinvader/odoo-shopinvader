@@ -1,6 +1,8 @@
 # Copyright 2018 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.exceptions import ValidationError
+
 from odoo.addons.connector_search_engine.tests.test_all import TestBindingIndexBaseFake
 
 
@@ -46,3 +48,12 @@ class TestProductAutoBind(TestBindingIndexBaseFake):
 
         self.backend.autobind_product_from_assortment()
         self.assertEqual(excluded_product.se_binding_ids.state, "to_recompute")
+
+    def test_check_product_assortment(self):
+        with self.assertRaises(
+            ValidationError, msg="Product Assortment is required for automatic binding"
+        ):
+            self.backend.product_manual_binding = False
+            self.backend.product_assortment_id = False
+        self.backend.product_manual_binding = True
+        self.backend.product_assortment_id = False
