@@ -12,11 +12,9 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
-    "depends": ["shopinvader"],
+    "depends": ["sale_quotation", "shopinvader"],
     "demo": ["demo/email_demo.xml", "demo/notification_demo.xml"],
     "data": [
-        "views/product_view.xml",
-        "views/sale_view.xml",
         "data/ir_export_product.xml",
     ],
     "installable": False,
