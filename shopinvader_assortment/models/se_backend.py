@@ -28,13 +28,16 @@ class SeBackend(models.Model):
                 _("Product Assortment is required for automatic binding")
             )
 
-    def _autobind_product_from_assortment(self):
+    def _autobind_product_from_assortment(self, domain_product=None):
         self.ensure_one()
         if not self.product_assortment_id:
             return
+        if domain_product is None:
+            domain_product = []
+        domain_assortment = self.product_assortment_id._get_eval_domain()
+        domain = expression.AND([domain_assortment, domain_product])
         product_obj = self.env["product.product"]
-        assortment_domain = self.product_assortment_id._get_eval_domain()
-        assortment_products = product_obj.search(assortment_domain)
+        assortment_products = product_obj.search(domain)
         product_indexes = self.index_ids.filtered(
             lambda i: i.model_id.model == "product.product"
         )
@@ -48,7 +51,7 @@ class SeBackend(models.Model):
         products_to_unbind._remove_from_index(product_indexes)
 
     @api.model
-    def autobind_product_from_assortment(self, domain=None):
+    def autobind_product_from_assortment(self, domain=None, domain_product=None):
         if domain is None:
             domain = []
         domain = expression.AND(
@@ -61,4 +64,4 @@ class SeBackend(models.Model):
             ]
         )
         for backend in self.search(domain):
-            backend._autobind_product_from_assortment()
+            backend._autobind_product_from_assortment(domain_product=domain_product)
