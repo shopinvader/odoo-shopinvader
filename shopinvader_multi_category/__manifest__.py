@@ -5,12 +5,11 @@
 {
     "name": "Shopinvader Many Categories",
     "summary": "Shopinvader Many Categories",
-    "version": "14.0.1.0.0",
+    "version": "16.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
-    "depends": ["shopinvader", "product_multi_category"],
-    "installable": False,
+    "depends": ["shopinvader_product", "product_multi_category"],
     "auto_install": True,
 }

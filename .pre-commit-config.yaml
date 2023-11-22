@@ -39,7 +39,6 @@ exclude: |
   ^shopinvader_locomotive_wishlist/|
   ^shopinvader_membership/|
   ^shopinvader_multi_cart/|
-  ^shopinvader_multi_category/|
   ^shopinvader_notification_default/|
   ^shopinvader_partner_firstname/|
   ^shopinvader_partner_vat/|

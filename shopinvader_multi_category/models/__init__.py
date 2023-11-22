@@ -1,1 +1,1 @@
-from . import shopinvader_product
+from . import product_template
