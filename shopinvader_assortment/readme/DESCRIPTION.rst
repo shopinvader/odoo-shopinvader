@@ -1,3 +1,2 @@
-This addon allows to assign an assortment to a ShopInvader
-backend and get products auto-bound while exported
-to search engine
+This addon allows you to assign an assortment to a SearchEngine backend and use
+it to automatically bind matching products.

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2018 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="se_backend_form_view">
+        <field name="model">se.backend</field>
+        <field name="inherit_id" ref="connector_search_engine.se_backend_form_view" />
+        <field name="arch" type="xml">
+            <group name="se" position="after">
+                <group name="product_assortment" string="Assortment">
+                    <field name="product_manual_binding" />
+                    <field
+                        name="product_assortment_id"
+                        attrs="{
+                            'invisible': [('product_manual_binding', '=', True)],
+                            'required': [('product_manual_binding', '!=', True)],
+                        }"
+                        context="{
+                            'form_view_ref': 'product_assortment.product_assortment_view_form',
+                            'product_assortment': True,
+                            'default_is_assortment': 1,
+                        }"
+                    />
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>

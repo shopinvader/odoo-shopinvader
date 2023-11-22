@@ -10,5 +10,5 @@ class SeIndex(models.Model):
 
     @api.model
     def recompute_all_index(self, domain=None):
-        self.env["shopinvader.backend"].autobind_product_from_assortment()
+        self.env["se.backend"].autobind_product_from_assortment()
         return super().recompute_all_index(domain=domain)
