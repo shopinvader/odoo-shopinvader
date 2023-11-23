@@ -24,9 +24,13 @@ class CartService(Component):
             raise MissingError(_("Partner {} is not a user".format(self.partner.email)))
         old_partner = self.work.partner
         self.work.partner = partner
-        rv = self._to_json(
-            self._create_empty_cart(user_id=seller.id, created_by_seller=True)
+        params.update(
+            {
+                "user_id": seller.id,
+                "created_by_seller": True,
+            }
         )
+        rv = self._to_json(self._create_empty_cart(**params))
         self.work.partner = old_partner
         return rv
 
@@ -36,7 +40,14 @@ class CartService(Component):
                 "coerce": to_int,
                 "required": True,
                 "type": "integer",
-            }
+            },
+            # this should not be here, but there is no easy way
+            # to validate this upstream
+            "pricelist_id": {
+                "coerce": to_int,
+                "required": False,
+                "type": "integer",
+            },
         }
 
     def _get_cart_domain(self, filter_partner=False):

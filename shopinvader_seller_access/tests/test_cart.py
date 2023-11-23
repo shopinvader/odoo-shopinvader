@@ -1,5 +1,8 @@
+from psycopg2 import IntegrityError
+
 from odoo import fields
-from odoo.exceptions import AccessDenied, MissingError
+from odoo.exceptions import AccessDenied, MissingError, UserError
+from odoo.tools import mute_logger
 
 from odoo.addons.shopinvader.tests.test_cart import CommonConnectedCartCase
 
@@ -259,3 +262,61 @@ class TestCart(SellerGroupBackendMixin, CommonConnectedCartCase):
         self.assertNotIn(
             cart_from_customer_with_seller_as_salesperson["id"], available_cart_ids
         )
+
+    # this should not be here, but there is no easy way
+    # to validate the pricelist_id upstream so we keep the tests
+    # here as we validate this value
+
+    def test_get_cart_with_pricelist_id(self):
+        pricelist = self.env["product.pricelist"].create(
+            {
+                "name": "test_pricelist",
+            }
+        )
+        # test as seller
+        with self.seller_group():
+            cart = self.service_as_seller.dispatch(
+                "create_for",
+                params={
+                    "customer_id": self.partner.id,
+                    "pricelist_id": pricelist.id,
+                },
+            )["data"]
+        sale = self.env["sale.order"].browse(cart["id"])
+        self.assertEqual(sale.pricelist_id.id, pricelist.id)
+
+    def test_get_cart_with_no_pricelist_id(self):
+        # test as seller
+        with self.seller_group():
+            cart = self.service_as_seller.dispatch(
+                "create_for",
+                params={
+                    "customer_id": self.partner.id,
+                },
+            )["data"]
+        sale = self.env["sale.order"].browse(cart["id"])
+        self.assertEqual(sale.pricelist_id.id, self.backend.pricelist_id.id)
+
+    def test_get_cart_with_inexistent_pricelist_id(self):
+        # test as seller
+        with self.assertRaises(IntegrityError), mute_logger("odoo.sql_db"):
+            with self.seller_group():
+                self.service_as_seller.dispatch(
+                    "create_for",
+                    params={
+                        "customer_id": self.partner.id,
+                        "pricelist_id": 0,
+                    },
+                )
+
+    def test_get_cart_with_wrong_type_pricelist_id(self):
+        # test as seller
+        with self.assertRaises(UserError):
+            with self.seller_group():
+                self.service_as_seller.dispatch(
+                    "create_for",
+                    params={
+                        "customer_id": self.partner.id,
+                        "pricelist_id": "a",
+                    },
+                )
