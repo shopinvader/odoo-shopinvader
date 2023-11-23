@@ -58,9 +58,7 @@ class ShopinvaderUrlPurge(models.Model):
     def purge_url(self):
         for backend in self.backend_id:
             s = requests.Session()
-            s.headers.update(
-                {"X-force-cache-refresh": self.backend_id.cache_refresh_secret}
-            )
+            s.headers.update({"X-force-cache-refresh": backend.cache_refresh_secret})
             for record in self:
                 if record.backend_id == backend:
                     url = f"{record.backend_id.location}/{record.url}"
