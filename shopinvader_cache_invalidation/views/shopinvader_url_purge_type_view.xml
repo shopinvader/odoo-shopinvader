@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<record id="shopinvader_url_purge_type_view_tree" model="ir.ui.view">
+    <field name="model">shopinvader.url.purge.type</field>
+    <field name="arch" type="xml">
+        <tree string="Purge Type" editable="bottom">
+            <field name="name" />
+            <field name="code" />
+        </tree>
+    </field>
+</record>
+
+<record id="shopinvader_url_purge_type_view_search" model="ir.ui.view">
+    <field name="model">shopinvader.url.purge.type</field>
+    <field name="arch" type="xml">
+        <search string="Purge Type">
+            <field name="name" />
+            <field name="code" />
+        </search>
+    </field>
+</record>
+
+<record model="ir.actions.act_window" id="shopinvader_url_purge_type_action">
+    <field name="name">Purge Type</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">shopinvader.url.purge.type</field>
+    <field name="view_mode">tree</field>
+    <field name="search_view_id" ref="shopinvader_url_purge_type_view_search" />
+    <field name="domain">[]</field>
+    <field name="context">{}</field>
+</record>
+
+<menuitem
+        id="shopinvader_url_purge_type_menu"
+        parent="shopinvader.menu_shopinvader_config"
+        sequence="20"
+        action="shopinvader_url_purge_type_action"
+    />
+
+</odoo>

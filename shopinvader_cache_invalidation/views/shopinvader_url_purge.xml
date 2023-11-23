@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_view_url_purge" model="ir.actions.act_window">
+        <field name="type">ir.actions.act_window</field>
+        <field name="name">Liste des URL</field>
+        <field name="res_model">shopinvader.url.purge</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[('backend_id', '=', active_id)]</field>
+    </record>
+
+
+    <record model="ir.ui.view" id="shopinvader_url_purge_tree_view">
+        <field name="model">shopinvader.url.purge</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="url" />
+                <field name="purge_type_id" />
+                <field name="backend_id" />
+                <field name="state" />
+                <field name="date_last_purge" />
+                <field name="manual" />
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="shopinvader_url_purge_form_view">
+        <field name="model">shopinvader.url.purge</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="purge_url" type="object" string="Purge" />
+                </header>
+                <group>
+                    <field name="url" attrs="{'readonly': [('manual', '=', False)]}" />
+                    <field
+                        name="purge_type_id"
+                        attrs="{'readonly': [('manual', '=', False)]}"
+                    />
+                    <field
+                        name="backend_id"
+                        attrs="{'readonly': [('manual', '=', False)]}"
+                    />
+                    <field name="state" />
+                    <field name="date_last_purge" />
+                    <field name="manual" />
+                    <field
+                        name="error"
+                        attrs="{'invisible': [('error', '=', False)]}"
+                    />
+                </group>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="shopinvader_url_purge_act_window">
+        <field name="res_model">shopinvader.url.purge</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <record model="ir.actions.server" id="action_purge">
+        <field name="name">Set to purge</field>
+        <field name="model_id" ref="model_shopinvader_url_purge" />
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">
+            records.write({"state": "to_purge"})
+        </field>
+            <field name="groups_id" eval="[(4, ref('base.group_user'))]" />
+    </record>
+
+    <menuitem
+        id="shopinvader_url_purge_root_menu"
+        parent="shopinvader.menu_shopinvader_root"
+        name="Url Purge List"
+        sequence="90"
+        action="shopinvader_url_purge_act_window"
+    />
+
+
+
+</odoo>
