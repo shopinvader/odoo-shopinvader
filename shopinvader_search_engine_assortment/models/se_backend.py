@@ -36,18 +36,12 @@ class SeBackend(models.Model):
             domain_product = []
         domain_assortment = self.product_assortment_id._get_eval_domain()
         domain = expression.AND([domain_assortment, domain_product])
-        product_obj = self.env["product.product"]
-        assortment_products = product_obj.search(domain)
+        products_to_bind = self._get_product_to_bind(domain)
+        products_to_unbind = self._get_product_to_unbind(domain)
         product_indexes = self.index_ids.filtered(
             lambda i: i.model_id.model == "product.product"
         )
-        products_bound = (
-            product_indexes.binding_ids.record
-            if product_indexes.binding_ids
-            else product_obj
-        )
-        products_to_unbind = products_bound - assortment_products
-        assortment_products._add_to_index(product_indexes)
+        products_to_bind._add_to_index(product_indexes)
         products_to_unbind._remove_from_index(product_indexes)
 
     @api.model
@@ -65,3 +59,23 @@ class SeBackend(models.Model):
         )
         for backend in self.search(domain):
             backend._autobind_product_from_assortment(domain_product=domain_product)
+
+    def _get_product_bound(self, domain):
+        query = self.env["product.product"]._where_calc(domain)
+        self.env["product.product"]._apply_ir_rules(query, "read")
+        query.left_join(
+            lhs_alias="product_product",
+            lhs_column="id",
+            rhs_table="se_binding",
+            rhs_column="res_id",
+            link="se_binding",
+            extra="product_product__se_binding.res_model='product.product'",
+        )
+        return self.env["product.product"].browse(query)
+
+    def _get_product_to_bind(self, domain):
+        return self._get_product_bound(domain)
+
+    def _get_product_to_unbind(self, domain):
+        domain = expression.distribute_not(["!"] + domain)
+        return self._get_product_bound(domain)

@@ -13,7 +13,7 @@ class TestProductAutoBind(TestBindingIndexBaseFake):
 
         cls.product_obj = cls.env["product.product"]
         cls.backend.product_assortment_id = cls.env.ref(
-            "shopinvader_assortment.shopinvader_assortment1"
+            "shopinvader_search_engine_assortment.shopinvader_assortment1"
         )
         cls.backend.product_manual_binding = False
         cls.backend.product_assortment_id.domain = "[('sale_ok', '=', True)]"
