@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+  <record id="res_partner_view_form" model="ir.ui.view">
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="shopinvader.res_partner_view_form" />
+    <field name="arch" type="xml">
+      <page name="shopinvader" position="inside">
+        <group name="container_row_2">
+          <group string="Shopinvader seller" name="sale" priority="1">
+            <field
+                            name="seller_available_customer_domain"
+                            widget="domain"
+                            options="{'model': 'res.partner', 'in_dialog': true}"
+                        />
+          </group>
+        </group>
+      </page>
+    </field>
+  </record>
+</odoo>
