@@ -13,7 +13,7 @@ class SaleOrder(models.Model):
             ("cancel", "Cancel"),
             ("pending", "Pending"),
             ("processing", "Processing"),
-            ("shipped", "Shipped"),
+            ("delivery_full", "Fully Delivered"),
         ],
         compute="_compute_shopinvader_state",
         store=True,
@@ -24,8 +24,8 @@ class SaleOrder(models.Model):
         if self.state == "cancel":
             return "cancel"
         elif self.state == "done":
-            return "shipped"
-        elif self.state == "draft":
+            return "delivery_full"
+        elif self.state in ("draft", "sent"):
             return "pending"
         else:
             return "processing"

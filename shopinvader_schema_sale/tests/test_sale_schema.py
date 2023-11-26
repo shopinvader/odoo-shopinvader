@@ -9,7 +9,7 @@ class TestSaleSchema(SchemaSaleCase):
     def test_sale_from_sale_order(self):
         sale = Sale.from_sale_order(self.sale_order)
         self.assertEqual(sale.id, self.sale_order.id)
-        self.assertEqual(sale.state, self.sale_order.state)
+        self.assertEqual(sale.state, self.sale_order.shopinvader_state)
         self.assertEqual(sale.name, self.sale_order.name)
         self.assertEqual(sale.client_order_ref, "client ref")
         self.assertEqual(sale.date_order, self.sale_order.date_order)
