@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader filtered model",
     "summary": "Helper for exposing model easily",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/shopinvader/odoo-shopinvader",

@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader API Sale",
     "summary": "Sale FastApi for exposing sale order",
-    "version": "16.0.1.1.1",
+    "version": "16.0.1.1.2",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
