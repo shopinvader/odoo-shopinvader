@@ -21,11 +21,11 @@ class TestProduct(SavepointCase):
 
     def test_simple_product(self):
         # Back and forth flow, setting and reading on template and single variant
-        self.assertFalse(self.product_template.shop_only_quotation)
-        self.product_template.shop_only_quotation = True
+        self.assertEqual(self.product_template.shop_only_quotation, "never")
+        self.product_template.shop_only_quotation = "all_variant"
         self.assertTrue(self.product_template.product_variant_ids.shop_only_quotation)
         self.product_template.product_variant_ids.shop_only_quotation = False
-        self.assertFalse(self.product_template.shop_only_quotation)
+        self.assertEqual(self.product_template.shop_only_quotation, "never")
 
     def test_multi_product(self):
         # Configure product with multiple variants
@@ -44,22 +44,15 @@ class TestProduct(SavepointCase):
         product_1 = self.product_template.product_variant_ids[0]
         product_2 = self.product_template.product_variant_ids[1]
         # Set on the template should set all variants
-        template.shop_only_quotation = True
+        template.shop_only_quotation = "all_variant"
         self.assertTrue(product_1.shop_only_quotation)
         self.assertTrue(product_2.shop_only_quotation)
         # Set a variant to false should set the template to false
         # It's only true if it's true for all variants
         product_1.shop_only_quotation = False
-        self.assertFalse(template.shop_only_quotation)
+        self.assertEqual(template.shop_only_quotation, "manually_on_variant")
         self.assertTrue(product_2.shop_only_quotation, "Other variant shouldn't change")
         # Set false on template should set all variants to false
-        template.shop_only_quotation = False
+        template.shop_only_quotation = "never"
         self.assertFalse(product_1.shop_only_quotation)
         self.assertFalse(product_2.shop_only_quotation)
-        # Create a new variant combination should copy the value from template
-        template.shop_only_quotation = True
-        value_3 = self.value_2.copy({"name": "Another color"})
-        template.attribute_line_ids.value_ids = [(4, value_3.id)]
-        self.assertEqual(len(self.product_template.product_variant_ids), 3)
-        product_3 = self.product_template.product_variant_ids - (product_1 | product_2)
-        self.assertTrue(product_3.shop_only_quotation)

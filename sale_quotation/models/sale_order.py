@@ -3,6 +3,7 @@
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
@@ -14,27 +15,8 @@ class SaleOrder(models.Model):
         selection_add=[("quotation", "Quotation")],
         ondelete={"quotation": "cascade"},
     )
-    shopinvader_state = fields.Selection(
-        selection_add=[
-            ("estimating", "Estimating Quotation"),
-            ("estimated", "Estimated Quotation"),
-        ],
-        ondelete={
-            "estimating": "cascade",
-            "estimated": "cascade",
-        },
-    )
-
-    def _compute_shopinvader_state_depends(self):
-        return super()._compute_shopinvader_state_depends() + ("typology",)
-
-    def _get_shopinvader_state(self):
-        self.ensure_one()
-        if self.typology == "quotation" and self.state == "draft":
-            return "estimating"
-        if self.typology == "quotation" and self.state == "sent":
-            return "estimated"
-        return super()._get_shopinvader_state()
+    available_for_quotation = fields.Boolean(compute="_compute_available_for_quotation")
+    shop_only_quotation = fields.Boolean(compute="_compute_shop_only_quotation")
 
     def action_request_quotation(self):
         if any(rec.state != "draft" or rec.typology != "cart" for rec in self):
@@ -46,15 +28,18 @@ class SaleOrder(models.Model):
             )
         for rec in self:
             rec.typology = "quotation"
-            if rec.shopinvader_backend_id:
-                rec.shopinvader_backend_id._send_notification("quotation_request", rec)
-        return True
+        return self
 
-    def write(self, vals):
-        # Set the typology to "quotation" when the quotation is sent.
-        # Normally there are two cases where this happens:
-        # * When the :meth:`action_quotation_sent` is called.
-        # * When a message is posted with context `mark_so_as_sent=True`.
-        if vals.get("state") == "sent":
-            vals["typology"] = "quotation"
-        return super().write(vals)
+    def _compute_available_for_quotation(self):
+        for record in self:
+            record.available_for_quotation = True
+
+    def _compute_shop_only_quotation(self):
+        for record in self:
+            record.shop_only_quotation = any(
+                record.order_line.product_id.mapped("shop_only_quotation")
+            )
+
+    def action_confirm_quotation(self):
+        self.typology = "sale"
+        return self.action_confirm()
