@@ -57,9 +57,13 @@ class StockMove(models.Model):
 
     def _action_done(self, cancel_backorder=False):
         """
-
         :return: bool
         """
         result = super()._action_done(cancel_backorder=cancel_backorder)
         result._jobify_product_stock_update()
+        return result
+
+    def _action_assign(self):
+        result = super()._action_assign()
+        self._jobify_product_stock_update()
         return result
