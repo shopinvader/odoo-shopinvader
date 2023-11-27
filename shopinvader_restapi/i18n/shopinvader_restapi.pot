@@ -49,6 +49,11 @@ msgid " Your profile has been modified"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__wishlists_count
+msgid "# Wishlists"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__type
 msgid ""
 "- Contact: Use this to organize the contact details of employees of a given company (e.g. CEO, CFO, ...).\n"
