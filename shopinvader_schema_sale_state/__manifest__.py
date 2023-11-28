@@ -3,21 +3,22 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Shopinvader Schema Sale",
-    "summary": "Add schema sale",
-    "version": "16.0.1.1.2",
+    "name": "shopinvader_schema_sale_state",
+    "summary": "Shopinvader Schema Sale State",
+    "version": "16.0.1.0.0",
     "development_status": "Alpha",
+    "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
-    "depends": [
-        "sale_cart",
-        "sale_discount_display_amount",
-        "shopinvader_schema_address",
-    ],
     "external_dependencies": {
-        "python": ["extendable_pydantic>=1.2.0", "pydantic>=2.0.0"]
+        "python": [],
+        "bin": [],
     },
+    "depends": [
+        "shopinvader_schema_sale",
+        "shopinvader_sale_state",
+    ],
     "data": [],
     "demo": [],
 }
