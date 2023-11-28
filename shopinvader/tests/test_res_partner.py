@@ -19,7 +19,7 @@ class TestResPartner(SavepointComponentCase):
 
     def test_unique_email_partner(self):
         self.assertFalse(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
+            self.env["shopinvader.backend"]._is_partner_duplicate_prevented()
         )
         partner_1 = self.env["res.partner"].create(
             {
@@ -52,7 +52,7 @@ class TestResPartner(SavepointComponentCase):
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
         self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
+            self.env["shopinvader.backend"]._is_partner_duplicate_prevented()
         )
 
         # once you've changed the config to disable duplicate partner

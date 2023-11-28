@@ -44,7 +44,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
         :return:
         """
         self.assertFalse(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
+            self.env["shopinvader.backend"]._is_partner_duplicate_prevented()
         )
         # we create a first binding
         binding = self.env["shopinvader.partner"].create(
@@ -88,7 +88,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
         self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
+            self.env["shopinvader.backend"]._is_partner_duplicate_prevented()
         )
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...
@@ -118,7 +118,7 @@ class TestShopinvaderPartner(SavepointComponentCase):
             {"key": "shopinvader.no_partner_duplicate", "value": "True"}
         )
         self.assertTrue(
-            self.env["res.partner"]._is_partner_duplicate_prevented()
+            self.env["shopinvader.backend"]._is_partner_duplicate_prevented()
         )
         vals = {"email": self.unique_email, "name": "test partner"}
         # create a partner...

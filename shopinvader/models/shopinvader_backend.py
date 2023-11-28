@@ -244,6 +244,7 @@ class ShopinvaderBackend(models.Model):
     customer_default_role = fields.Char(
         compute="_compute_customer_default_role",
     )
+    no_partner_duplicate = fields.Boolean(default=False)
 
     _sql_constraints = [
         (
@@ -285,6 +286,16 @@ class ShopinvaderBackend(models.Model):
                 self.env.ref("account.model_account_move").id,
             )
         ]
+
+    @api.model
+    def _is_partner_duplicate_prevented(self):
+        get_param_method = self.env["ir.config_parameter"].sudo().get_param
+        npd_strategy_param = get_param_method("shopinvader.no_partner_duplicate_strategy")
+        if npd_strategy_param == "global":
+            return get_param_method("shopinvader.no_partner_duplicate")
+        elif npd_strategy_param == "specific":
+            self.ensure_one()
+            return self.no_partner_duplicate
 
     @api.model
     def _to_compute_nbr_content(self):

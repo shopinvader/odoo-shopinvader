@@ -97,10 +97,14 @@ class ShopinvaderPartner(models.Model):
 
     @api.model
     def _get_or_create_partner(self, vals):
-        partner = self.env["res.partner"].browse()
-        if partner._is_partner_duplicate_prevented():
+        ShopinvaderBackend = self.env["shopinvader.backend"]
+        ResPartner = self.env["res.partner"]
+        backend_id = vals.get("backend_id", 0)
+        backend = ShopinvaderBackend.browse(backend_id)
+        partner = ResPartner.browse()
+        if backend._is_partner_duplicate_prevented():
             domain = self._get_unique_partner_domain(vals)
-            partner = partner.search(domain, limit=1)
+            partner = ResPartner.search(domain, limit=1)
         if partner:
             # here we check if one of the given value is different than those
             # on partner. If true, we create a child partner to keep the

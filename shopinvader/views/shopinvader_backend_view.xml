@@ -153,6 +153,17 @@
                         </page>
                         <page name="developer" string="Developer">
                             <group name="developer" colspan="4">
+                                <group name="settings" string="Settings">
+                                    <field name="no_partner_duplicate" />
+                                    <div
+                                        name="info_alert"
+                                        class="alert alert-info"
+                                        role="alert"
+                                    >
+                                        Notice that this will only be considered if the No Partner Duplicate strategy
+                                        specified in the Settings is <b>Specific</b>.
+                                    </div>
+                                </group>
                                 <group name="product" string="Product" col="10" colspan="4">
                                     <field name="nbr_product"/>
                                     <button

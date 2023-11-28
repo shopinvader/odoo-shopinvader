@@ -9,8 +9,12 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = "res.config.settings"
 
+    shopinvader_no_partner_duplicate_strategy = fields.Selection(
+        selection=[("global", "Global"), ("specific", "Backend Specific")], string="No Partner Duplicate Strategy", config_parameter="shopinvader.no_partner_duplicate_strategy", default="global"
+    )
+
     shopinvader_no_partner_duplicate = fields.Boolean(
-        string="No partner duplicate",
+        string="No Partner Duplicate",
         config_parameter="shopinvader.no_partner_duplicate",
         help="If checked, when a binding is created for a backend, we first "
         "try to find a partner with the same email and if found we link "

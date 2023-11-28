@@ -22,6 +22,21 @@
                     <h2>Shopinvader</h2>
                     <div class="row mt16 o_settings_container">
                         <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="shopinvader_no_partner_duplicate_strategy" />
+                                <div class="text-muted">
+                                    If strategy set as Global, the No Partner Duplicate indicated
+                                    will be applicated to all Shopinvader Backends. Otherwise, specific to each Backend.
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="shopinvader_no_partner_duplicate_strategy" class="o_light_label"
+                                            widget="selection" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
                             <div class="o_setting_left_pane">
                                 <field name="shopinvader_no_partner_duplicate" />
                             </div>
