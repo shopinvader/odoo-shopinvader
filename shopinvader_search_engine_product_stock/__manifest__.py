@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Search Engine Product Stock",
     "summary": "This module is used to export stock data to search engine",
-    "version": "16.0.1.0.2",
+    "version": "16.0.1.0.3",
     "development_status": "Alpha",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",

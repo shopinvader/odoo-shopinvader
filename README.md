@@ -29,7 +29,7 @@ addon | version | maintainers | summary
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.1.2 |  | Sale FastApi for exposing sale order
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.0 |  | Handle shop wishlist
-[shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.2 |  | keep history of url for products & categories
+[shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.3 |  | keep history of url for products & categories
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.1 |  | Adds shopinvader product fields and schemas
@@ -50,7 +50,7 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
 [shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.3 |  | Index storage media data into search engine
 [shopinvader_search_engine_product_seo](shopinvader_search_engine_product_seo/) | 16.0.1.0.0 |  | This module allows to configure a seo title suffix on se backends
-[shopinvader_search_engine_product_stock](shopinvader_search_engine_product_stock/) | 16.0.1.0.2 |  | This module is used to export stock data to search engine
+[shopinvader_search_engine_product_stock](shopinvader_search_engine_product_stock/) | 16.0.1.0.3 |  | This module is used to export stock data to search engine
 [shopinvader_search_engine_product_stock_state](shopinvader_search_engine_product_stock_state/) | 16.0.1.0.0 |  | This module is used to choose a stock state during theexport t search engine
 [shopinvader_search_engine_update](shopinvader_search_engine_update/) | 16.0.1.0.0 |  | Shopinvader: Mark product binding to export on product update
 [shopinvader_search_engine_update_image](shopinvader_search_engine_update_image/) | 16.0.1.0.0 |  | Shopinvader: Mark products linked to an image to be updated when the image change
