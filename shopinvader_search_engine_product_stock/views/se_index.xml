@@ -11,11 +11,31 @@
         <field name="inherit_id" ref="connector_search_engine.se_index_form_view" />
         <field name="arch" type="xml">
             <group name="config" position="after">
-                <group name="stock" string="Stock" colspan="4">
-                    <field name="product_stock_field_id" widget="selection" />
-                    <field name="synchronize_stock" widget="selection" />
-                    <field name="warehouse_ids" widget="many2many_tags" />
-                    <field name="stock_level_config" />
+                <group
+                    name="stock"
+                    string="Stock"
+                    colspan="4"
+                    attrs="{'invisible': [('serializer_type', '!=', 'shopinvader_product_exports')]}"
+                >
+                    <field
+                        name="product_stock_field_id"
+                        widget="selection"
+                        attrs="{'required': [('serializer_type', '=', 'shopinvader_product_exports')]}"
+                    />
+                    <field
+                        name="synchronize_stock"
+                        widget="selection"
+                        attrs="{'required': [('serializer_type', '=', 'shopinvader_product_exports')]}"
+                    />
+                    <field
+                        name="warehouse_ids"
+                        widget="many2many_tags"
+                        attrs="{'required': [('serializer_type', '=', 'shopinvader_product_exports')]}"
+                    />
+                    <field
+                        name="stock_level_config"
+                        attrs="{'required': [('serializer_type', '=', 'shopinvader_product_exports')]}"
+                    />
                 </group>
             </group>
         </field>
