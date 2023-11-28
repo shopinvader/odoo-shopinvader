@@ -74,11 +74,6 @@ class ResPartner(models.Model):
         compute_sudo=True,
     )
 
-    @api.model
-    def _is_partner_duplicate_prevented(self):
-        get_param = self.env["ir.config_parameter"].sudo().get_param
-        return str2bool(get_param("shopinvader.no_partner_duplicate"))
-
     @api.depends("is_blacklisted")
     def _compute_opt_in(self):
         for record in self:
@@ -174,38 +169,51 @@ class ResPartner(models.Model):
 
     @api.constrains("email", "has_shopinvader_user_active")
     def _check_unique_email(self):
-        if not self._is_partner_duplicate_prevented():
+        ShopinvaderBackend = self.env["shopinvader.backend"]
+        npd_strategy = self.env["ir.config_parameter"].sudo().get_param("shopinvader.no_partner_duplicate_strategy")
+        if npd_strategy == "global" and not ShopinvaderBackend._is_partner_duplicate_prevented():
             return True
         self.env["res.partner"].flush(["email", "has_shopinvader_user_active"])
-        self.env.cr.execute(
-            """
+        query = """
             SELECT
+                backend_id,
                 email
             FROM (
                 SELECT
-                    id,
-                    email,
-                    ROW_NUMBER() OVER (PARTITION BY email) AS Row
+                    rp.email,
+                    sp.backend_id,
+                    COUNT(*) OVER (PARTITION BY rp.email, sp.backend_id) AS email_backend_count
                 FROM
-                    res_partner
-                WHERE email is not null
-                    and active = True
-                    and has_shopinvader_user_active = True
-                ) dups
-            WHERE dups.Row > 1;
+                    res_partner rp
+                JOIN
+                    shopinvader_partner sp ON sp.record_id = rp.id
+                WHERE email IS NOT NULL
+                    AND sp.active = TRUE
+                    AND rp.active = TRUE
+                    AND rp.has_shopinvader_user_active = TRUE
+            ) dups
+            WHERE dups.email_backend_count > 1;
         """
-        )
-        duplicate_emails = {r[0] for r in self.env.cr.fetchall()}
-        invalid_emails = [
-            e for e in self.mapped("email") if e in duplicate_emails
-        ]
-        if invalid_emails:
+        self.env.cr.execute(query)
+        duplicate_emails_dict = dict()
+        for backend_id, email in self.env.cr.fetchall():
+            if not duplicate_emails_dict.get(backend_id):
+                duplicate_emails_dict.setdefault(backend_id, [email])
+            else:
+                duplicate_emails_dict[backend_id].append(email)
+        for backend_id, emails in duplicate_emails_dict.items():
+            backend = self.env["shopinvader.backend"].browse(backend_id)
+            if npd_strategy == "specific" and backend.no_partner_duplicate:
+                continue
+            invalid_emails = [
+                e for e in self.mapped("email") if e in emails
+            ]
             raise ValidationError(
                 _(
-                    "Email must be unique: The following "
-                    "mails are not unique: %s"
+                    "Email must be unique within the same Website: For the %s, the following "
+                    "emails are not unique: %s"
                 )
-                % ", ".join(invalid_emails)
+                % (backend.name, ", ".join(invalid_emails))
             )
 
     def write(self, vals):
