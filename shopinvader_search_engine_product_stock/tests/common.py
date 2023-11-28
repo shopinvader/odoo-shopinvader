@@ -17,7 +17,7 @@ class StockCommonCase(TestBindingIndexBase, JobMixin):
             context=dict(
                 cls.env.context,
                 tracking_disable=True,  # speed up tests
-                test_queue_job_no_delay=False,  # we want the jobs
+                queue_job__no_delay=False,  # we want the jobs
             )
         )
         ref = cls.env.ref
