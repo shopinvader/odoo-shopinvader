@@ -46,7 +46,9 @@ class ProductProduct(StrictExtendableBaseModel):
             variant_count=odoo_rec.product_variant_count,
             categories=[
                 ShortProductCategory.from_product_category(shopinvader_category)
-                for shopinvader_category in odoo_rec.shopinvader_categ_ids
+                for shopinvader_category in odoo_rec.shopinvader_categ_ids.sorted(
+                    "level"
+                )
             ],
             sku=odoo_rec.default_code or None,
             variant_attributes=odoo_rec.variant_attributes,
