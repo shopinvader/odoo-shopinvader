@@ -44,9 +44,9 @@ addon | version | maintainers | summary
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.2 |  | ShopInvader logic for sale carts.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.2.1 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.2 |  | Add schema sale
-[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.3 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.4 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.3 |  | Add the export of Image for Shopinvader
-[shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.0 |  | Shopinvader Search Engine Product Brand
+[shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.1 |  | Shopinvader Search Engine Product Brand
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
 [shopinvader_search_engine_product_media](shopinvader_search_engine_product_media/) | 16.0.1.0.3 |  | Index storage media data into search engine
 [shopinvader_search_engine_product_seo](shopinvader_search_engine_product_seo/) | 16.0.1.0.0 |  | This module allows to configure a seo title suffix on se backends

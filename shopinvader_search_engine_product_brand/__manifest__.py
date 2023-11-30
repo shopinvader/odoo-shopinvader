@@ -6,7 +6,7 @@
 {
     "name": "Shopinvader Search Engine Product Brand",
     "summary": "Shopinvader Search Engine Product Brand",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " ACSONE SA/NV",
