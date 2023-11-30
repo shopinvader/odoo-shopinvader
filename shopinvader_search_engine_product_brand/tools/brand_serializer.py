@@ -11,4 +11,4 @@ class ProductBrandShopinvaderSerializer(PydanticModelSerializer):
         return ProductBrand
 
     def serialize(self, record):
-        return self.get_model_class().from_product_brand(record).model_dump()
+        return self.get_model_class().from_product_brand(record).model_dump(mode="json")
