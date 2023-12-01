@@ -30,6 +30,7 @@ addon | version | maintainers | summary
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.0 |  | Handle shop wishlist
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.3 |  | keep history of url for products & categories
+[shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.1 |  | Adds shopinvader product fields and schemas
@@ -38,12 +39,14 @@ addon | version | maintainers | summary
 [shopinvader_product_description](shopinvader_product_description/) | 16.0.1.0.0 |  | Description fields for Shopinvader
 [shopinvader_product_seo](shopinvader_product_seo/) | 16.0.1.0.0 |  | SEO fields for Shopinvader
 [shopinvader_product_url](shopinvader_product_url/) | 16.0.1.0.1 |  | Generate url for product and category
-[shopinvader_restapi](shopinvader_restapi/) | 16.0.1.1.0 |  | Shopinvader
+[shopinvader_restapi](shopinvader_restapi/) | 16.0.1.1.1 |  | Shopinvader
 [shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.2 |  | ShopInvader logic for sale carts.
+[shopinvader_sale_state](shopinvader_sale_state/) | 16.0.1.0.1 |  | Basic module to implement state for sale order
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.2.1 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.2 |  | Add schema sale
+[shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 16.0.1.0.1 |  | Shopinvader Schema Sale State
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.4 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.3 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.1 |  | Shopinvader Search Engine Product Brand
@@ -86,7 +89,6 @@ addon | version | maintainers | summary
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.3.0 (unported) |  | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_carrier](shopinvader_delivery_carrier/) | 14.0.2.3.0 (unported) |  | Carrier integration for Shopinvader
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 14.0.1.0.2 (unported) |  | Shopinvader addons to let user define delivery instructions
-[shopinvader_delivery_state](shopinvader_delivery_state/) | 14.0.1.0.0 (unported) |  | Shopinvader delivery state
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) |  | Shopinvader Demo App
 [shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easily manage Shopinvader bindings for your company backend.
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.3.0.1 (unported) |  | Shopinvader Elasticsearch Connector
