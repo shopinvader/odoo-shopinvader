@@ -308,7 +308,6 @@ msgid "Can not delete the partner account"
 msgstr ""
 
 #. module: shopinvader_restapi
-#: model:ir.model.fields.selection,name:shopinvader_restapi.selection__sale_order__shopinvader_state__cancel
 #: model:ir.model.fields.selection,name:shopinvader_restapi.selection__shopinvader_backend__clear_cart_options__cancel
 #: model_terms:ir.ui.view,arch_db:shopinvader_restapi.shopinvader_partner_binding_form_view
 msgid "Cancel"
@@ -1342,11 +1341,6 @@ msgid "Payment Tokens"
 msgstr ""
 
 #. module: shopinvader_restapi
-#: model:ir.model.fields.selection,name:shopinvader_restapi.selection__sale_order__shopinvader_state__pending
-msgid "Pending"
-msgstr ""
-
-#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__phone
 msgid "Phone"
 msgstr ""
@@ -1355,11 +1349,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_backend__pricelist_id
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__property_product_pricelist
 msgid "Pricelist"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields.selection,name:shopinvader_restapi.selection__sale_order__shopinvader_state__processing
-msgid "Processing"
 msgstr ""
 
 #. module: shopinvader_restapi
@@ -1552,11 +1541,6 @@ msgid "Share Partner"
 msgstr ""
 
 #. module: shopinvader_restapi
-#: model:ir.model.fields.selection,name:shopinvader_restapi.selection__sale_order__shopinvader_state__shipped
-msgid "Shipped"
-msgstr ""
-
-#. module: shopinvader_restapi
 #: model:mail.activity.type,name:shopinvader_restapi.mail_activity_review_customer
 msgid "Shop - Validate customer"
 msgstr ""
@@ -1629,11 +1613,6 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.actions.act_window,name:shopinvader_restapi.shopinvader_partner_binding_act_window
 msgid "Shopinvader Partner Binding Wizard"
-msgstr ""
-
-#. module: shopinvader_restapi
-#: model:ir.model.fields,field_description:shopinvader_restapi.field_sale_order__shopinvader_state
-msgid "Shopinvader State"
 msgstr ""
 
 #. module: shopinvader_restapi
