@@ -15,7 +15,7 @@ class TestProductBinding(BaseTestProductBinding):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.product = cls.product.with_context(index_id=cls.se_index.id)
+        cls.product = cls.product.with_context(index_id=cls.se_product_index.id)
 
     def test_suffix_empty(self):
         """
