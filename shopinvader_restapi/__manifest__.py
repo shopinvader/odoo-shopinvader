@@ -21,6 +21,7 @@
         "component_event",
         "sale",
         "sale_cart",
+        "shopinvader_sale_state",
         "sale_discount_display_amount",
         "server_environment",
         "onchange_helper",
