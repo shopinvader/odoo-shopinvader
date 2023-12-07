@@ -1,9 +1,11 @@
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
+from fastapi.responses import FileResponse, StreamingResponse
 
 from odoo import models
 from odoo.api import Environment
+from odoo.http import content_disposition
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
@@ -15,7 +17,7 @@ from odoo.addons.fastapi.dependencies import (
 from odoo.addons.fastapi.schemas import Paging
 from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale, SaleSearch
 
-from ..schemas.sale import QuotationUpdateInput
+from ..schemas.sale import QuotationConfirmInput, QuotationUpdateInput
 
 # create a router
 quotation_router = APIRouter(tags=["quotations"])
@@ -39,11 +41,12 @@ def confirm_quotation(
     env: Annotated[Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
     quotation_id: int,
+    data: QuotationConfirmInput | None = None,
 ) -> None:
     order = (
         env["shopinvader_api_quotation.quotations_router.helper"]
         .new({"partner": partner})
-        ._confirm(quotation_id)
+        ._confirm(quotation_id, data)
     )
     return Sale.from_sale_order(order)
 
@@ -81,6 +84,32 @@ def update_quotation(
     return Sale.from_sale_order(order)
 
 
+@quotation_router.get("/quotations/{quotation_id}/download")
+def download(
+    quotation_id: int,
+    env: Annotated[Environment, Depends(authenticated_partner_env)],
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+) -> FileResponse:
+    """Download document."""
+    filename, pdf = (
+        env["shopinvader_api_quotation.quotations_router.helper"]
+        .new({"partner": partner})
+        ._get_pdf(quotation_id)
+    )
+    if not filename.lower().endswith(".pdf"):
+        filename += ".pdf"
+    header = {
+        "Content-Disposition": content_disposition(filename),
+    }
+
+    def pseudo_stream():
+        yield pdf
+
+    return StreamingResponse(
+        pseudo_stream(), headers=header, media_type="application/pdf"
+    )
+
+
 class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
     _name = "shopinvader_api_quotation.quotations_router.helper"
     _inherit = "shopinvader_api_sale.sales_router.helper"
@@ -91,12 +120,18 @@ class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
             ("typology", "=", "quotation"),
         ]
 
-    def _confirm(self, quotation_id):
-        order = self._get(quotation_id)
-        order.action_confirm_quotation()
-        return order
+    def _process_confirm_quotation(self, quotation, data):
+        """Process the quotation confirmation
+        Can be inherited if you expect specific params
+        for confirming a quotation"""
+        return quotation.action_confirm_quotation()
+
+    def _confirm(self, quotation_id, data):
+        quotation = self._get(quotation_id)
+        self._process_confirm_quotation(quotation, data)
+        return quotation
 
     def _update(self, quotation_id, data):
-        order = self._get(quotation_id)
-        order.write(data.to_sale_order_vals())
-        return order
+        quotation = self._get(quotation_id)
+        quotation.write(data.to_sale_order_vals())
+        return quotation

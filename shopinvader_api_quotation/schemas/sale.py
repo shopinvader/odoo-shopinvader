@@ -25,3 +25,7 @@ class QuotationUpdateInput(StrictExtendableBaseModel):
 
     def to_sale_order_vals(self) -> dict:
         return {"client_order_ref": self.customer_ref}
+
+
+class QuotationConfirmInput(StrictExtendableBaseModel):
+    """Extend it if you need params for the confirmation"""
