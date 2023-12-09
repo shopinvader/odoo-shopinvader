@@ -70,7 +70,7 @@ class TestQuotation(FastAPITransactionCase):
         self.env["sale.order"].create(
             {
                 "partner_id": self.default_fastapi_authenticated_partner.id,
-                "typology": "quotation",
+                "quotation_state": "waiting_acceptation",
             }
         )
         with self._create_test_client(router=quotation_router) as test_client:
@@ -82,7 +82,7 @@ class TestQuotation(FastAPITransactionCase):
         sale = self.env["sale.order"].create(
             {
                 "partner_id": self.default_fastapi_authenticated_partner.id,
-                "typology": "quotation",
+                "quotation_state": "waiting_acceptation",
             }
         )
         with self._create_test_client(router=quotation_router) as test_client:
@@ -94,7 +94,7 @@ class TestQuotation(FastAPITransactionCase):
         quotation = self.env["sale.order"].create(
             {
                 "partner_id": self.default_fastapi_authenticated_partner.id,
-                "typology": "quotation",
+                "quotation_state": "waiting_acceptation",
             }
         )
         with self._create_test_client(router=quotation_router) as test_client:
@@ -110,14 +110,14 @@ class TestQuotation(FastAPITransactionCase):
             response: Response = test_client.post(f"/{cart.uuid}/request_quotation")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["uuid"], cart.uuid)
-        self.assertEqual(response.json()["typology"], "quotation")
+        self.assertEqual(response.json()["typology"], "sale")
 
     def test_update_quotation(self):
         data = {"customer_ref": "PO_123123"}
         quotation = self.env["sale.order"].create(
             {
                 "partner_id": self.default_fastapi_authenticated_partner.id,
-                "typology": "quotation",
+                "quotation_state": "waiting_acceptation",
             }
         )
         with self._create_test_client(router=quotation_router) as test_client:

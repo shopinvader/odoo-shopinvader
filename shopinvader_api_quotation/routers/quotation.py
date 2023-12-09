@@ -117,7 +117,7 @@ class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
     def _get_domain_adapter(self):
         return [
             ("partner_id", "=", self.partner.id),
-            ("typology", "=", "quotation"),
+            ("quotation_state", "in", ("customer_request", "waiting_acceptation")),
         ]
 
     def _process_confirm_quotation(self, quotation, data):

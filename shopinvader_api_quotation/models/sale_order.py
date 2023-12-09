@@ -22,12 +22,12 @@ class SaleOrder(models.Model):
     )
 
     def _compute_shopinvader_state_depends(self):
-        return super()._compute_shopinvader_state_depends() + ("typology",)
+        return super()._compute_shopinvader_state_depends() + ("quotation_state",)
 
     def _get_shopinvader_state(self):
         self.ensure_one()
-        if self.typology == "quotation" and self.state == "draft":
+        if self.quotation_state == "customer_request":
             return "estimating"
-        if self.typology == "quotation" and self.state == "sent":
+        if self.quotation_state == "waiting_acceptation":
             return "estimated"
         return super()._get_shopinvader_state()
