@@ -31,7 +31,7 @@ addon | version | maintainers | summary
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.0 |  | Handle shop wishlist
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.3 |  | keep history of url for products & categories
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
-[shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.1 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
+[shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.2 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.1 |  | Adds shopinvader product fields and schemas
 [shopinvader_product_brand](shopinvader_product_brand/) | 16.0.1.0.1 |  | Shopinvader product Brand
