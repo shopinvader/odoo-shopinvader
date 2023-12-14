@@ -30,8 +30,10 @@ from ..schemas import (
 wishlist_router = APIRouter(tags=["wishlists"])
 
 
-@wishlist_router.get("/wishlists/")
-@wishlist_router.get("/wishlists/search/")
+@wishlist_router.get("/wishlists")
+@wishlist_router.get("/wishlists/search")
+@wishlist_router.get("/wishlists/", deprecated=True)
+@wishlist_router.get("/wishlists/search/", deprecated=True)
 def search(
     wishlist_router_helper: Annotated[
         ShopinvaderApiWishlistRouterHelper, Depends(wishlist_router_helper)
@@ -58,8 +60,10 @@ def get_info(
     return Wishlist.from_product_set(product_set)
 
 
-@wishlist_router.post("/wishlists/create/", status_code=201)
-@wishlist_router.post("/wishlists/", status_code=201)
+@wishlist_router.post("/wishlists/create", status_code=201)
+@wishlist_router.post("/wishlists", status_code=201)
+@wishlist_router.post("/wishlists/create/", status_code=201, deprecated=True)
+@wishlist_router.post("/wishlists/", status_code=201, deprecated=True)
 def create(
     wishlist_router_helper: Annotated[
         ShopinvaderApiWishlistRouterHelper, Depends(wishlist_router_helper)
@@ -254,7 +258,8 @@ def move_items(
     return Wishlist.from_product_set(product_set)
 
 
-@wishlist_router.post("/wishlists/{_id}/replace_item/")
+@wishlist_router.post("/wishlists/{_id}/replace_item")
+@wishlist_router.post("/wishlists/{_id}/replace_item/", deprecated=True)
 def replace_item(
     wishlist_router_helper: Annotated[
         ShopinvaderApiWishlistRouterHelper, Depends(wishlist_router_helper)
@@ -268,7 +273,8 @@ def replace_item(
     return Wishlist.from_product_set(product_set)
 
 
-@wishlist_router.post("/wishlists/{_id}/replace_items/")
+@wishlist_router.post("/wishlists/{_id}/replace_items")
+@wishlist_router.post("/wishlists/{_id}/replace_items/", deprecated=True)
 def replace_items(
     wishlist_router_helper: Annotated[
         ShopinvaderApiWishlistRouterHelper, Depends(wishlist_router_helper)
