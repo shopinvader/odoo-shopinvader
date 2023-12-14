@@ -7,7 +7,7 @@ This module provide the following FastAPI dependencies:
   found, look for the ``shopinvader_anonymous_partner`` cookie in the request and return
   the corresponding partner.
 
-  If not partner is found, raise a 401 (unauthorized).
+  If no partner is found, raise a 401 (unauthorized).
 
 ``def auth_jwt_authenticated_or_anonymous_partner_auto_create() -> Partner``
 
@@ -20,7 +20,7 @@ This module provide the following FastAPI dependencies:
   return the newly created partner.
 
 The record sets returned from these functions are bound either to the Odoo user defined
-on the JWT validaator (if authenticated), or to the Odoo user defined on the FastAPI
+on the JWT validator (if authenticated), or to the Odoo user defined on the FastAPI
 endpoint.
 
 These dependencies are suitable and intended to override the
