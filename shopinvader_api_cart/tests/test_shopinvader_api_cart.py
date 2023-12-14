@@ -76,8 +76,7 @@ class TestSaleCart(FastAPITransactionCase):
     def test_get_authenticated_no_cart_no_uuid(self) -> None:
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.get("/")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json(), None)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_get_authenticated_no_cart_no_uuid_no_rights(self) -> None:
         with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
@@ -88,8 +87,7 @@ class TestSaleCart(FastAPITransactionCase):
     def test_get_authenticated_no_cart_uuid(self) -> None:
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.get("/1234")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json(), None)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_get_authenticated_no_cart_uuid_no_rights(self) -> None:
         with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
@@ -218,6 +216,12 @@ class TestSaleCart(FastAPITransactionCase):
         self.assertEqual(0, len(response_json["lines"]))
         self.assertEqual(so.id, response_json["id"])
         self.assertFalse(so.applied_cart_api_transaction_uuids)
+
+    def test_sync_no_content_no_cart(self):
+        data = {"transactions": []}
+        with self._create_test_client(router=cart_router) as test_client:
+            response: Response = test_client.post("/sync", content=json.dumps(data))
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_transaction_product_not_existing(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
