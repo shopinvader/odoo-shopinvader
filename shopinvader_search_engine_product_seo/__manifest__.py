@@ -5,7 +5,7 @@
     "name": "Shopinvader Search Engine Product Seo",
     "summary": """
         This module allows to configure a seo title suffix on se backends""",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "ACSONE SA/NV",
