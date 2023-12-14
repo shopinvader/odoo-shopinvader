@@ -57,10 +57,12 @@ class TestCategoryBindingBase(TestBindingIndexBase):
     def setup_records(cls, backend=None):
         backend = backend or cls.backend
         # create an index for category model
-        cls.se_index = cls.se_index_model.create(cls._prepare_index_values(backend))
+        cls.se_categ_index = cls.se_index_model.create(
+            cls._prepare_index_values(backend)
+        )
         # create a binding + category alltogether
         cls.category = cls.env["product.category"].create({"name": "Test category"})
-        cls.category_binding = cls.category._add_to_index(cls.se_index)
+        cls.category_binding = cls.category._add_to_index(cls.se_categ_index)
 
 
 class TestProductBindingMixin:
@@ -81,14 +83,16 @@ class TestProductBindingMixin:
     def setup_records(cls, tst_cls, backend=None):
         backend = backend or tst_cls.backend
         # create an index for product model
-        tst_cls.se_index = tst_cls.env["se.index"].create(
+        tst_cls.se_product_index = tst_cls.env["se.index"].create(
             cls._prepare_index_values(tst_cls, backend)
         )
         # create a binding + product alltogether
         tst_cls.product = tst_cls.env.ref(
             "shopinvader_product.product_product_chair_vortex_white"
         )
-        tst_cls.product_binding = tst_cls.product._add_to_index(tst_cls.se_index)
+        tst_cls.product_binding = tst_cls.product._add_to_index(
+            tst_cls.se_product_index
+        )
         tst_cls.product_expected = {
             "id": tst_cls.product.id,
             "name": tst_cls.product.name,

@@ -10,13 +10,13 @@ class ProductTemplate(models.Model):
     def _get_categories(self):
         self.ensure_one()
         categories = super()._get_categories()
-        categories = categories._filter_by_index()
+        categories = categories._filter_by_bound_in_same_lang()
         return categories
 
     @api.model
     def _get_parent_categories(self, categ_ids):
         categories = super()._get_parent_categories(categ_ids)
-        categories = categories._filter_by_index()
+        categories = categories._filter_by_bound_in_same_lang()
         return categories
 
     @api.depends_context("index_id")
