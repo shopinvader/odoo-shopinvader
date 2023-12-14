@@ -296,6 +296,10 @@ class ShopinvaderVariant(models.Model):
     def _compute_main_product(self):
         # Respect same order.
         order_by = [x.strip() for x in self.env["product.product"]._order.split(",")]
+        # Problem : after previous line , list can contain element like 'product_id desc'
+        # Solution : resplit each element and keep only first part
+        # Test made with order_by = [] and [''] -> still works
+        order_by = [r.split(" ")[0] for r in order_by]
         backends = self.mapped("backend_id")
         fields_to_read = ["shopinvader_product_id", "backend_id", "lang_id"] + order_by
         product_ids = self.mapped("shopinvader_product_id").ids
