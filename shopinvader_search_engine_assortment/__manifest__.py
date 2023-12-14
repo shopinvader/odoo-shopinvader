@@ -3,7 +3,7 @@
 
 {
     "name": "Shopinvader Search Engine Assortment",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",

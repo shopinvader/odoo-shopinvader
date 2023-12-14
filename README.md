@@ -49,6 +49,7 @@ addon | version | maintainers | summary
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.2 |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 16.0.1.0.1 |  | Shopinvader Schema Sale State
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.4 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine_assortment](shopinvader_search_engine_assortment/) | 16.0.1.0.1 |  | Shopinvader Search Engine Assortment
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.3 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.1 |  | Shopinvader Search Engine Product Brand
 [shopinvader_search_engine_product_brand_image](shopinvader_search_engine_product_brand_image/) | 16.0.1.0.0 |  | Shopinvader Search Engine product Brand Image
@@ -72,7 +73,6 @@ addon | version | maintainers | summary
 [product_online_category](product_online_category/) | 10.0.1.0.0 (unported) |  | Product categories dedicated to online shop
 [shopinvader](shopinvader/) | 14.0.5.24.2 (unported) |  | Shopinvader
 [shopinvader_algolia](shopinvader_algolia/) | 14.0.2.0.0 (unported) |  | Shopinvader Algolia Connector
-[shopinvader_assortment](shopinvader_assortment/) | 14.0.1.2.0 (unported) |  | Shopinvader Assortment
 [shopinvader_auth_api_key](shopinvader_auth_api_key/) | 14.0.1.1.1 (unported) |  | Shopinvader API_KEY Authentication
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.2 (unported) |  | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 (unported) |  | Shopinvader module to manage an expiry delay on cart
