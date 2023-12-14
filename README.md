@@ -33,6 +33,7 @@ addon | version | maintainers | summary
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.2 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
+[shopinvader_multi_category](shopinvader_multi_category/) | 16.0.1.0.1 |  | Shopinvader Many Categories
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.1 |  | Adds shopinvader product fields and schemas
 [shopinvader_product_brand](shopinvader_product_brand/) | 16.0.1.0.1 |  | Shopinvader product Brand
 [shopinvader_product_brand_tag](shopinvader_product_brand_tag/) | 16.0.1.0.1 |  | Index Product Brand Tags in Shopinvader
@@ -105,7 +106,6 @@ addon | version | maintainers | summary
 [shopinvader_locomotive_wishlist](shopinvader_locomotive_wishlist/) | 14.0.1.0.2 (unported) |  | Synchronize wishlist details to Locomotive users record.
 [shopinvader_membership](shopinvader_membership/) | 14.0.1.0.1 (unported) |  | Shopinvader Membership module
 [shopinvader_multi_cart](shopinvader_multi_cart/) | 14.0.1.1.1 (unported) |  | Manage multiple carts in Shopinvader
-[shopinvader_multi_category](shopinvader_multi_category/) | 14.0.1.0.0 (unported) |  | Shopinvader Many Categories
 [shopinvader_notification_default](shopinvader_notification_default/) | 14.0.1.0.1 (unported) |  | Provide default notification templates for Shopinvader suite.
 [shopinvader_partner_firstname](shopinvader_partner_firstname/) | 14.0.1.0.0 (unported) |  | Shopinvader Customer firstname/lastname
 [shopinvader_partner_vat](shopinvader_partner_vat/) | 14.0.1.0.2 (unported) |  | Shopinvader Check VAT with invader environnement
