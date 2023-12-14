@@ -3,7 +3,7 @@
 from collections import OrderedDict
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 
 from odoo import _, api, models
 from odoo.exceptions import MissingError
@@ -34,7 +34,7 @@ def get(
     Return an empty dict if no cart was found
     """
     cart = env["sale.order"]._find_open_cart(partner.id, uuid)
-    return Sale.from_sale_order(cart) if cart else None
+    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
 
 
 @cart_router.post("/sync", status_code=201)
@@ -49,7 +49,7 @@ def sync(
     cart = env["shopinvader_api_cart.cart_router.helper"]._sync_cart(
         partner, cart, uuid, data.transactions
     )
-    return Sale.from_sale_order(cart) if cart else None
+    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
 
 
 @cart_router.post("/update")
