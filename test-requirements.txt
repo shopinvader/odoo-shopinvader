@@ -8,3 +8,5 @@ vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
 httpx  # For FastAPI tests
+
+odoo-addon-fastapi-auth-partner @ git+https://github.com/OCA/rest-framework@refs/pull/404/head#subdirectory=setup/fastapi_auth_partner
