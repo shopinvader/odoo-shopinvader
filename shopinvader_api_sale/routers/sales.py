@@ -10,7 +10,6 @@ from fastapi.responses import FileResponse, StreamingResponse
 
 from odoo import api, fields, models
 from odoo.http import content_disposition
-from odoo.tools.safe_eval import safe_eval
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
@@ -75,8 +74,6 @@ def download(
         .new({"partner": partner})
         ._get_pdf(sale_id)
     )
-    if not filename.lower().endswith(".pdf"):
-        filename += ".pdf"
     header = {
         "Content-Disposition": content_disposition(filename),
     }
@@ -117,13 +114,4 @@ class ShopinvaderApiSaleSalesRouterHelper(models.AbstractModel):
 
     def _get_pdf(self, record_id) -> tuple[str, bytes]:
         record = self._get(record_id)
-        report = self.env["ir.actions.report"]._get_report(
-            "sale.action_report_saleorder"
-        )
-        filename = safe_eval(report.print_report_name, {"object": record})
-        content = (
-            self.env["ir.actions.report"]
-            .sudo()
-            ._render_qweb_pdf("sale.action_report_saleorder", [record.id])[0]
-        )
-        return filename, content
+        return record.get_report("sale.action_report_saleorder")

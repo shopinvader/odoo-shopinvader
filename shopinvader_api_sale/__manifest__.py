@@ -21,6 +21,7 @@
         "shopinvader_api_security_sale",
         "shopinvader_filtered_model",
         "extendable_fastapi",
+        "report_generate_helper",
     ],
     "data": [],
     "demo": [],
