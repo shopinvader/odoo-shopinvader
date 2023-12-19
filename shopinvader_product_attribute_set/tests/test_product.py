@@ -64,7 +64,6 @@ class ProductCase(TransactionCase, ExtendableMixin):
                 "technical_description": "foo",
             },
         )
-        self.maxDiff = None
         self.assertListEqual(
             res.get("structured_attributes"),
             [
@@ -133,7 +132,6 @@ class ProductCase(TransactionCase, ExtendableMixin):
                 "technical_description": "foo",
             },
         )
-        self.maxDiff = None
         self.assertListEqual(
             res.get("structured_attributes"),
             [
@@ -204,7 +202,6 @@ class ProductCase(TransactionCase, ExtendableMixin):
             res.get("attributes"),
             {"select": "Value 1", "multiselect": ["Value 1", "Value 2"]},
         )
-        self.maxDiff = None
         self.assertListEqual(
             res.get("structured_attributes"),
             [
