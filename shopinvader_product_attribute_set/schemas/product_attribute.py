@@ -20,6 +20,7 @@ class ProductAttributeType(Enum):
     multiselect = "multiselect"
     boolean = "boolean"
     integer = "integer"
+    float = "float"
     date = "date"
     datetime = "datetime"
     binary = "binary"
