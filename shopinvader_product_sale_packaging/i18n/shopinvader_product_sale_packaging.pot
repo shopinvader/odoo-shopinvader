@@ -1,0 +1,41 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_product_sale_packaging
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_product_sale_packaging
+#: model:ir.model.fields,field_description:shopinvader_product_sale_packaging.field_product_packaging__can_be_sold
+msgid "Can be sold"
+msgstr ""
+
+#. module: shopinvader_product_sale_packaging
+#: model:ir.model.fields,help:shopinvader_product_sale_packaging.field_product_packaging__shopinvader_display
+#: model:ir.model.fields,help:shopinvader_product_sale_packaging.field_product_packaging_level__shopinvader_display
+msgid "Include this packaging into Shopinvader product metadata."
+msgstr ""
+
+#. module: shopinvader_product_sale_packaging
+#: model:ir.model,name:shopinvader_product_sale_packaging.model_product_packaging_level
+msgid "Level management for product.packaging"
+msgstr ""
+
+#. module: shopinvader_product_sale_packaging
+#: model:ir.model,name:shopinvader_product_sale_packaging.model_product_packaging
+msgid "Product Packaging"
+msgstr ""
+
+#. module: shopinvader_product_sale_packaging
+#: model:ir.model.fields,field_description:shopinvader_product_sale_packaging.field_product_packaging__shopinvader_display
+#: model:ir.model.fields,field_description:shopinvader_product_sale_packaging.field_product_packaging_level__shopinvader_display
+msgid "Shopinvader Display"
+msgstr ""
