@@ -35,6 +35,7 @@ addon | version | maintainers | summary
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
 [shopinvader_multi_category](shopinvader_multi_category/) | 16.0.1.0.1 |  | Shopinvader Many Categories
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.2 |  | Adds shopinvader product fields and schemas
+[shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 16.0.1.0.1 |  | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_brand](shopinvader_product_brand/) | 16.0.1.0.1 |  | Shopinvader product Brand
 [shopinvader_product_brand_tag](shopinvader_product_brand_tag/) | 16.0.1.0.1 |  | Index Product Brand Tags in Shopinvader
 [shopinvader_product_description](shopinvader_product_description/) | 16.0.1.0.0 |  | Description fields for Shopinvader
@@ -114,7 +115,6 @@ addon | version | maintainers | summary
 [shopinvader_portal_mode](shopinvader_portal_mode/) | 14.0.1.1.0 (unported) |  | Shopinvader portal mode
 [shopinvader_pos](shopinvader_pos/) | 14.0.2.2.0 (unported) |  | Shopinvader for PoS
 [shopinvader_price_per_qty](shopinvader_price_per_qty/) | 14.0.1.0.1 (unported) |  | Shopinvader price per quantity
-[shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 14.0.1.0.0 (unported) |  | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_manufactured_for](shopinvader_product_manufactured_for/) | 14.0.1.0.0 (unported) |  | Manage Product Made Specially For Some Customers
 [shopinvader_product_new](shopinvader_product_new/) | 14.0.1.0.1 (unported) |  | Shopinvader product new
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.1.0 (unported) |  | Manage product display order on Shopinvader
