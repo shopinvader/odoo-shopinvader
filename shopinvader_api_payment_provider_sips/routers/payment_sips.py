@@ -18,6 +18,9 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.addons.shopinvader_api_payment.routers import payment_router
+from odoo.addons.shopinvader_api_payment.routers.utils import (
+    tx_state_to_redirect_status,
+)
 
 _logger = logging.getLogger(__name__)
 
@@ -63,9 +66,7 @@ async def sips_return(
 
     try:
         tx_sudo._handle_notification_data("sips", data)
-        status = odoo_env[
-            "shopinvader_api_payment_provider_sips.payment_sips_router.helper"
-        ]._tx_state_to_redirect_status(tx_sudo.state)
+        status = tx_state_to_redirect_status(tx_sudo.state)
     except Exception:
         _logger.exception("unable to handle sips notification data", exc_info=True)
         status = "error"
@@ -118,12 +119,3 @@ class ShopinvaderApiPaymentProviderSipsRouterHelper(models.AbstractModel):
         if not hmac.compare_digest(data.get("Seal", ""), expected_signature):
             _logger.warning("received sips notification with invalid signature")
             raise ValidationError()
-
-    def _tx_state_to_redirect_status(self, tx_state):
-        """Map a transaction state to a redirect status."""
-        if tx_state == "done":
-            return "success"
-        elif tx_state == "cancel":
-            return "cancelled"
-        else:
-            return "unknown"

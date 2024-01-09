@@ -4,10 +4,10 @@
 
 from typing import Literal
 
-from pydantic import BaseModel
+from extendable_pydantic import StrictExtendableBaseModel
 
 
-class TransactionProcessingValues(BaseModel):
+class TransactionProcessingValues(StrictExtendableBaseModel):
     flow: Literal["redirect"]
     provider_id: int
     provider_code: str
