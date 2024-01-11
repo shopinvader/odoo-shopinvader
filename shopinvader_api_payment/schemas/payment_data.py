@@ -17,5 +17,5 @@ class PaymentData(BaseModel):
     access_token: str
 
 
-class PaymentDataWithProviders(PaymentData):
+class PaymentDataWithMethods(PaymentData):
     providers: list[PaymentProvider]

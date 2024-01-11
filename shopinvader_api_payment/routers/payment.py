@@ -16,7 +16,7 @@ from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment.models.payment_provider import PaymentProvider
 
 from ..schemas import (
-    PaymentDataWithProviders,
+    PaymentDataWithMethods,
     PaymentProvider as PaymentProviderSchema,
     TransactionCreate,
     TransactionProcessingValues,
@@ -27,7 +27,7 @@ _logger = logging.getLogger(__name__)
 payment_router = APIRouter(tags=["payment"])
 
 
-@payment_router.get("/payment/providers")
+@payment_router.get("/payment/methods")
 def pay(
     payable: str,  # model,id
     payable_reference: str,
@@ -64,7 +64,7 @@ def pay(
             company_id, partner_id, amount, currency_id=currency_id
         )
     )
-    return PaymentDataWithProviders(
+    return PaymentDataWithMethods(
         payable=payable,
         payable_reference=payable_reference,
         amount=amount,
