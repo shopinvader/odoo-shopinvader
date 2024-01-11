@@ -18,6 +18,7 @@ from odoo.addons.payment_stripe.controllers.main import (
 )
 from odoo.addons.shopinvader_api_payment.routers import payment_router
 from odoo.addons.shopinvader_api_payment.routers.utils import (
+    add_query_params_in_url,
     tx_state_to_redirect_status,
 )
 
@@ -63,6 +64,8 @@ def stripe_return_from_checkout(
     tx_reference = data.get("reference", "")
     redirect_url = data.get("redirect_url", "")
     return RedirectResponse(
-        url=f"{redirect_url}?status={status}&reference={quote_plus(tx_reference)}",
+        url=add_query_params_in_url(
+            redirect_url, {"status": status, "reference": quote_plus(tx_reference)}
+        ),
         status_code=303,
     )

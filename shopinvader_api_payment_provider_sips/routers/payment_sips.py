@@ -19,6 +19,7 @@ from odoo.exceptions import ValidationError
 from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.addons.shopinvader_api_payment.routers import payment_router
 from odoo.addons.shopinvader_api_payment.routers.utils import (
+    add_query_params_in_url,
     tx_state_to_redirect_status,
 )
 
@@ -71,7 +72,10 @@ async def sips_return(
         _logger.exception("unable to handle sips notification data", exc_info=True)
         status = "error"
     return RedirectResponse(
-        url=f"{frontend_redirect_url}?status={status}&reference={quote_plus(reference)}",
+        url=add_query_params_in_url(
+            frontend_redirect_url,
+            {"status": status, "reference": quote_plus(reference)},
+        ),
         status_code=303,
     )
 
