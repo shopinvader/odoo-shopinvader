@@ -37,7 +37,7 @@ class SaleOrder(models.Model):
             # maybe a current cart exists with another uuid
             domain = self._get_open_cart_domain(partner_id, uuid=None)
             cart = self.search(domain, limit=1)
-        return cart
+        return cart.sudo()
 
     @api.model
     def _get_default_pricelist_id(self):
@@ -73,7 +73,7 @@ class SaleOrder(models.Model):
     def _create_empty_cart(self, partner_id):
         """Create a new empty cart for a given partner"""
         vals = self._prepare_cart(partner_id)
-        return self.create(vals)
+        return self.sudo().create(vals)
 
     def _get_cart_line(self, product_id):
         """
