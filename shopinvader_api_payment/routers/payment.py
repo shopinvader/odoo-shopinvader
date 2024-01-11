@@ -3,6 +3,7 @@
 # @author Stéphane Bidoul <stephane.bidoul@acsone.eu>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import json
 import logging
 from typing import Annotated
 from urllib.parse import urljoin
@@ -21,6 +22,7 @@ from ..schemas import (
     TransactionCreate,
     TransactionProcessingValues,
 )
+from .utils import Payable
 
 _logger = logging.getLogger(__name__)
 
@@ -29,12 +31,7 @@ payment_router = APIRouter(tags=["payment"])
 
 @payment_router.get("/payment/methods")
 def pay(
-    payable: str,  # model,id
-    payable_reference: str,
-    amount: float,
-    currency_id: int,
-    partner_id: int,
-    company_id: int,
+    payable: str,
     access_token: str,
     odoo_env: Annotated[api.Environment, Depends(odoo_env)],
 ):
@@ -44,33 +41,29 @@ def pay(
     parameters are obtained securely by another mean. An authenticated use can
     obtain the parameters with the /payment/payable route.
     """
+    if not payment_utils.check_access_token(
+        access_token,
+        payable,
+    ):
+        _logger.info("Invalid access token")
+        raise HTTPException(403)
+    payable_obj = Payable.model_validate(json.loads(payable))
     # This method is similar to Odoo's PaymentPortal.payment_pay
-    if partner_id:
-        if not payment_utils.check_access_token(
-            access_token,
-            payable,
-            payable_reference,
-            amount,
-            currency_id,
-            partner_id,
-            company_id,
-        ):
-            _logger.info("Invalid access token for partner %s", partner_id)
-            raise HTTPException(403)
     providers_sudo = (
         odoo_env["payment.provider"]
         .sudo()
         ._get_compatible_providers(
-            company_id, partner_id, amount, currency_id=currency_id
+            payable_obj.company_id,
+            payable_obj.partner_id,
+            payable_obj.amount,
+            currency_id=payable_obj.currency_id,
         )
     )
     return PaymentDataWithMethods(
         payable=payable,
-        payable_reference=payable_reference,
-        amount=amount,
-        currency_id=currency_id,
-        partner_id=partner_id,
-        company_id=company_id,
+        payable_reference=payable_obj.payable_reference,
+        amount=payable_obj.amount,
+        currency_code=odoo_env["res.currency"].browse(payable_obj.currency_id).name,
         access_token=access_token,
         providers=[
             PaymentProviderSchema.from_payment_provider(provider)
@@ -90,33 +83,30 @@ def transaction(
     Input is data obtained from /payment/providers, with the provider selected by the
     user. This route is public, so it is possible to pay anonymously.
     """
+    if not payment_utils.check_access_token(
+        data.access_token,
+        data.payable,
+    ):
+        _logger.info("Invalid access token")
+        raise HTTPException(403)
+    payable_obj = Payable.model_validate(json.loads(data.payable))
     # similar to Odoo's /payment/transaction route
-    if data.partner_id:
-        if not payment_utils.check_access_token(
-            data.access_token,
-            data.payable,
-            data.payable_reference,
-            data.amount,
-            data.currency_id,
-            data.partner_id,
-            data.company_id,
-        ):
-            _logger.info("Invalid access token for partner %s", data.partner_id)
-            raise HTTPException(403)
     if data.flow == "redirect":
         providers_sudo = (
             odoo_env["payment.provider"]
             .sudo()
             ._get_compatible_providers(
-                data.company_id,
-                data.partner_id,
-                data.amount,
-                currency_id=data.currency_id,
+                payable_obj.company_id,
+                payable_obj.partner_id,
+                payable_obj.amount,
+                currency_id=payable_obj.currency_id,
             )
         )
         if not data.provider_id or data.provider_id not in providers_sudo.ids:
             _logger.info(
-                "Invalid provider %s for partner %s", data.provider_id, data.partner_id
+                "Invalid provider %s for partner %s",
+                data.provider_id,
+                payable_obj.partner_id,
             )
             raise HTTPException(403)
         provider_sudo = odoo_env["payment.provider"].sudo().browse(data.provider_id)
@@ -149,10 +139,6 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
     _name = "shopinvader_api_payment.payment_router.helper"
     _description = "ShopInvader API Payment Router Helper"
 
-    def _get_payable_info(self, payable):
-        payable_model, payable_id = payable.split(",")
-        return payable_model, payable_id
-
     def _get_additional_transaction_create_values(
         self, data: TransactionCreate
     ) -> dict:
@@ -166,6 +152,7 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
         provider_sudo: PaymentProvider,
         odoo_env: Annotated[api.Environment, Depends(odoo_env)],
     ) -> dict:
+        payable_obj = Payable.model_validate(json.loads(data.payable))
         additional_transaction_create_values = (
             self._get_additional_transaction_create_values(data)
         )
@@ -177,7 +164,7 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
             .sudo()
             ._compute_reference(
                 provider_code=provider_sudo.code,
-                prefix=data.payable_reference,
+                prefix=payable_obj.payable_reference,
                 # TODO are custom_create_values and kwargs really needed
                 # **(custom_create_values or {}),
                 # **kwargs
@@ -187,9 +174,9 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
         return {
             "provider_id": data.provider_id,
             "reference": tx_reference,
-            "amount": data.amount,
-            "currency_id": data.currency_id,
-            "partner_id": data.partner_id,
+            "amount": payable_obj.amount,
+            "currency_id": payable_obj.currency_id,
+            "partner_id": payable_obj.partner_id,
             # 'token_id': token_id,
             "operation": f"online_{data.flow}" if not is_validation else "validation",
             "tokenize": False,

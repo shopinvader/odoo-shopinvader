@@ -5,6 +5,18 @@
 
 from urllib.parse import urlparse, urlunparse
 
+from pydantic import BaseModel
+
+
+class Payable(BaseModel):
+    payable_id: int
+    payable_model: str
+    payable_reference: str
+    amount: float
+    currency_id: int
+    partner_id: int
+    company_id: int
+
 
 def add_query_params_in_url(base_url, params):
     """

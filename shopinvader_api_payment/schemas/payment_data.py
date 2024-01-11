@@ -7,14 +7,15 @@ from pydantic import BaseModel
 from .payment_provider import PaymentProvider
 
 
-class PaymentData(BaseModel):
+class PaymentInput(BaseModel):
     payable: str
+    access_token: str
+
+
+class PaymentData(PaymentInput):
     payable_reference: str
     amount: float
-    currency_id: int
-    partner_id: int
-    company_id: int
-    access_token: str
+    currency_code: str
 
 
 class PaymentDataWithMethods(PaymentData):

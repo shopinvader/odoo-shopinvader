@@ -3,9 +3,12 @@
 # @author Stéphane Bidoul <stephane.bidoul@acsone.eu>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+import json
+
 from odoo import models
 from odoo.fields import Command
 
+from odoo.addons.shopinvader_api_payment.routers.utils import Payable
 from odoo.addons.shopinvader_api_payment.schemas import TransactionCreate
 
 
@@ -19,9 +22,9 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
         additional_transaction_create_values = (
             super()._get_additional_transaction_create_values(data)
         )
-        payable_model, payable_id = self._get_payable_info(data.payable)
-        if payable_model == "sale.order":
+        payable_obj = Payable.model_validate(json.loads(data.payable))
+        if payable_obj.payable_model == "sale.order":
             additional_transaction_create_values["sale_order_ids"] = [
-                Command.set([int(payable_id)])
+                Command.set([payable_obj.payable_id])
             ]
         return additional_transaction_create_values

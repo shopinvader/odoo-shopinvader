@@ -10,6 +10,7 @@ from odoo import api
 from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.shopinvader_api_cart.routers import cart_router
+from odoo.addons.shopinvader_api_payment.routers.utils import Payable
 from odoo.addons.shopinvader_api_payment.schemas import PaymentData
 
 
@@ -32,14 +33,20 @@ def init(
         raise HTTPException(status_code=404)
     sale_order_sudo = env["sale.order"].sudo().browse(cart_sudo.id)
     payment_data = {
-        "payable": f"sale.order,{cart_sudo.id}",
+        "payable": Payable(
+            payable_id=cart_sudo.id,
+            payable_model="sale.order",
+            payable_reference=sale_order_sudo.name,
+            amount=sale_order_sudo.amount_total,
+            currency_id=sale_order_sudo.currency_id.id,
+            partner_id=sale_order_sudo.partner_id.id,
+            company_id=sale_order_sudo.company_id.id,
+        ).model_dump_json(),
         "payable_reference": sale_order_sudo.name,
         "amount": sale_order_sudo.amount_total,
-        "currency_id": sale_order_sudo.currency_id.id,
-        "partner_id": sale_order_sudo.partner_id.id,
-        "company_id": sale_order_sudo.company_id.id,
+        "currency_code": sale_order_sudo.currency_id.name,
     }
     payment_data["access_token"] = payment_utils.generate_access_token(
-        *payment_data.values()  # ordering matters
+        payment_data["payable"]
     )
     return PaymentData(**payment_data)

@@ -6,10 +6,10 @@ from typing import Annotated, Literal
 
 from pydantic import Field
 
-from .payment_data import PaymentData
+from .payment_data import PaymentInput
 
 
-class TransactionCreate(PaymentData):
+class TransactionCreate(PaymentInput):
     flow: Literal["redirect"]  # future: redirect|token
     provider_id: int
     # payment_token_id: int (future)
