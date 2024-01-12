@@ -7,7 +7,11 @@ from fastapi import Depends, HTTPException
 
 from odoo import api
 
-from odoo.addons.fastapi.dependencies import odoo_env
+from odoo.addons.base.models.res_partner import Partner as ResPartner
+from odoo.addons.fastapi.dependencies import (
+    authenticated_partner,
+    authenticated_partner_env,
+)
 from odoo.addons.payment import utils as payment_utils
 from odoo.addons.shopinvader_api_cart.routers import cart_router
 from odoo.addons.shopinvader_api_payment.routers.utils import Payable
@@ -16,9 +20,8 @@ from odoo.addons.shopinvader_api_payment.schemas import PaymentData
 
 @cart_router.get("/payable")
 def init(
-    # env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    env: Annotated[api.Environment, Depends(odoo_env)],
-    # partner: Annotated["ResPartner", Depends(authenticated_partner)],
+    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
+    partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: str | None = None,
 ) -> PaymentData | None:
     """Prepare payment data for the current cart.
@@ -26,25 +29,23 @@ def init(
     This route is authenticated, so we can verify the cart
     is accessible by the authenticated partner.
     """
-    # TODO: authenticated env and partner. Remove sudo
-    partner_id = 26  # Brandon Freeman
-    cart_sudo = env["sale.order"].sudo()._find_open_cart(partner_id, uuid)
-    if not cart_sudo:
+    cart = env["sale.order"]._find_open_cart(partner.id, uuid)
+    if not cart:
         raise HTTPException(status_code=404)
-    sale_order_sudo = env["sale.order"].sudo().browse(cart_sudo.id)
+    sale_order = env["sale.order"].browse(cart.id)
     payment_data = {
         "payable": Payable(
-            payable_id=cart_sudo.id,
+            payable_id=cart.id,
             payable_model="sale.order",
-            payable_reference=sale_order_sudo.name,
-            amount=sale_order_sudo.amount_total,
-            currency_id=sale_order_sudo.currency_id.id,
-            partner_id=sale_order_sudo.partner_id.id,
-            company_id=sale_order_sudo.company_id.id,
+            payable_reference=sale_order.name,
+            amount=sale_order.amount_total,
+            currency_id=sale_order.currency_id.id,
+            partner_id=sale_order.partner_id.id,
+            company_id=sale_order.company_id.id,
         ).model_dump_json(),
-        "payable_reference": sale_order_sudo.name,
-        "amount": sale_order_sudo.amount_total,
-        "currency_code": sale_order_sudo.currency_id.name,
+        "payable_reference": sale_order.name,
+        "amount": sale_order.amount_total,
+        "currency_code": sale_order.currency_id.name,
     }
     payment_data["access_token"] = payment_utils.generate_access_token(
         payment_data["payable"]
