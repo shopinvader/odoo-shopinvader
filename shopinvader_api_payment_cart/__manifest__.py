@@ -10,8 +10,11 @@
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
+        # Odoo
         "account_payment",
+        # Shopinvader
         "fastapi",
+        "sale_cart",
         "shopinvader_api_payment",
         "shopinvader_api_cart",
     ],
