@@ -25,7 +25,7 @@ addon | version | maintainers | summary
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.0 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.0.2 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.2.1 |  | Adds a service to manage shopinvader invoicing and delivery address
-[shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.2.3 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
+[shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.3.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.1.3 |  | Sale FastApi for exposing sale order
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.1 |  | Handle shop wishlist
