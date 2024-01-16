@@ -3,6 +3,7 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import json
+import uuid
 
 from requests import Response
 
@@ -35,6 +36,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         cls.cart = cls.env["sale.order"]._create_empty_cart(
             cls.default_fastapi_authenticated_partner.id
         )
+        cls.dummy_uuid = str(uuid.uuid4())
 
     def _create_promotion_program_A_B(self):
         # Configure a new promotion program: when 1A and 1B are in the cart,
@@ -95,7 +97,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -116,7 +118,11 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": -1}
+                    {
+                        "uuid": self.dummy_uuid,
+                        "product_id": self.product_A.id,
+                        "qty": -1,
+                    }
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -143,7 +149,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -166,7 +172,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_B.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_B.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -190,7 +196,11 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": -1}
+                    {
+                        "uuid": self.dummy_uuid,
+                        "product_id": self.product_A.id,
+                        "qty": -1,
+                    }
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -216,7 +226,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_C.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_C.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -279,7 +289,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -347,7 +357,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_B.id, "qty": 2}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_B.id, "qty": 2}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -366,7 +376,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             test_client.post("/sync", content=json.dumps(data))
@@ -399,7 +409,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -435,7 +445,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -486,7 +496,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
@@ -538,7 +548,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             test_client.post("/sync", content=json.dumps(data))
@@ -590,7 +600,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         with self._create_test_client(router=cart_router) as test_client:
             data = {
                 "transactions": [
-                    {"uuid": "uuid1", "product_id": self.product_A.id, "qty": 1}
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
             response: Response = test_client.post("/sync", content=json.dumps(data))
