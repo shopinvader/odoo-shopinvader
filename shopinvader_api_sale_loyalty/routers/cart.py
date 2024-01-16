@@ -21,14 +21,14 @@ from ..schemas import LoyaltyCardInput, LoyaltyRewardInput, Sale
 
 
 @cart_router.post("/apply_coupon", deprecated=True)
-@cart_router.post("/apply_coupon/{cart_uuid}", deprecated=True)
+@cart_router.post("/apply_coupon/{uuid}", deprecated=True)
 @cart_router.post("/coupon")
-@cart_router.post("/{cart_uuid}/coupon")
+@cart_router.post("/{uuid}/coupon")
 def apply_coupon(
     data: LoyaltyCardInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    cart_uuid: UUID | None = None,
+    uuid: UUID | None = None,
 ) -> Sale | None:
     """
     Apply a coupon on a specific cart.
@@ -38,23 +38,21 @@ def apply_coupon(
     If some info is missing to uniquely determine which reward to apply,
     raise an error.
     """
-    cart = env["sale.order"]._find_open_cart(
-        partner.id, str(cart_uuid) if cart_uuid else None
-    )
+    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
     if cart:
         env["shopinvader_api_cart.cart_router.helper"]._apply_coupon(cart, data)
     return Sale.from_sale_order(cart) if cart else None
 
 
 @cart_router.post("/apply_reward", deprecated=True)
-@cart_router.post("/apply_reward/{cart_uuid}", deprecated=True)
+@cart_router.post("/apply_reward/{uuid}", deprecated=True)
 @cart_router.post("/reward")
-@cart_router.post("/{cart_uuid}/reward")
+@cart_router.post("/{uuid}/reward")
 def apply_reward(
     data: LoyaltyRewardInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    cart_uuid: UUID | None = None,
+    uuid: UUID | None = None,
 ) -> Sale | None:
     """
     Apply claimable rewards on a specific cart.
@@ -62,9 +60,7 @@ def apply_reward(
     One can specify in LoyaltyReardInput which free product to choose.
     If this piece of info is needed and missing, raise an error.
     """
-    cart = env["sale.order"]._find_open_cart(
-        partner.id, str(cart_uuid) if cart_uuid else None
-    )
+    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
     if cart:
         env["shopinvader_api_cart.cart_router.helper"]._apply_reward(cart, data)
     return Sale.from_sale_order(cart) if cart else None
