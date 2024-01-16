@@ -1983,6 +1983,11 @@ msgid "Track external update"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__translated_display_name
+msgid "Translated Display Name"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr ""
