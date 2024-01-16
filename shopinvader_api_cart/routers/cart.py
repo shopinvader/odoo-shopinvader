@@ -2,6 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from collections import OrderedDict
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import APIRouter, Depends, Response
 
@@ -28,12 +29,12 @@ cart_router = APIRouter(tags=["carts"])
 def get(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: str | None = None,
+    uuid: UUID | None = None,
 ) -> Sale | None:
     """
     Return an empty dict if no cart was found
     """
-    cart = env["sale.order"]._find_open_cart(partner.id, uuid)
+    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
     return Sale.from_sale_order(cart) if cart else Response(status_code=204)
 
 
@@ -43,11 +44,11 @@ def sync(
     data: CartSyncInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: str | None = None,
+    uuid: UUID | None = None,
 ) -> Sale | None:
-    cart = env["sale.order"]._find_open_cart(partner.id, uuid)
+    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
     cart = env["shopinvader_api_cart.cart_router.helper"]._sync_cart(
-        partner, cart, uuid, data.transactions
+        partner, cart, str(uuid) if uuid else None, data.transactions
     )
     return Sale.from_sale_order(cart) if cart else Response(status_code=204)
 
@@ -58,9 +59,11 @@ def update(
     data: CartUpdateInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: str | None = None,
+    uuid: UUID | None = None,
 ) -> Sale:
-    cart = env["shopinvader_api_cart.cart_router.helper"]._update(partner, data, uuid)
+    cart = env["shopinvader_api_cart.cart_router.helper"]._update(
+        partner, data, str(uuid) if uuid else None
+    )
 
     return Sale.from_sale_order(cart)
 
@@ -195,7 +198,7 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
                 if cmd:
                     update_cmds.append(cmd)
         all_transaction_uuids = transaction_uuids = [
-            t.uuid for t in transactions if t.uuid
+            str(t.uuid) for t in transactions if t.uuid
         ]
         if cart.applied_cart_api_transaction_uuids:
             all_transaction_uuids = [

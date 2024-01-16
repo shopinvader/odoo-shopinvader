@@ -27,14 +27,14 @@ class TestSaleCart(CommonSaleCart):
 
     def test_get_authenticated_no_cart_uuid(self) -> None:
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.get("/1234")
+            response: Response = test_client.get(f"/{self.dummy_uuid}")
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_get_authenticated_no_cart_uuid_no_rights(self) -> None:
         with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
             AccessError
         ):
-            test_client.get("/1234")
+            test_client.get(f"/{self.dummy_uuid}")
 
     def test_get_authenticated_cart_uuid(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -65,7 +65,7 @@ class TestSaleCart(CommonSaleCart):
             self.default_fastapi_authenticated_partner.id
         )
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.get("/1234")
+            response: Response = test_client.get(f"/{self.dummy_uuid}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["id"], so.id)
 
@@ -89,7 +89,7 @@ class TestSaleCart(CommonSaleCart):
         """
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1}
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -99,12 +99,12 @@ class TestSaleCart(CommonSaleCart):
         self.assertTrue(response_json)
         self.assertEqual(1, len(response_json["lines"]))
         so = self.env["sale.order"].browse(response_json["id"])
-        self.assertEqual("uuid1", so.applied_cart_api_transaction_uuids)
+        self.assertEqual(self.trans_uuid_1, so.applied_cart_api_transaction_uuids)
 
     def test_sync_authenticated_no_rights(self) -> None:
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1}
             ]
         }
         with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
@@ -122,7 +122,7 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1}
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -132,7 +132,7 @@ class TestSaleCart(CommonSaleCart):
         self.assertTrue(response_json)
         self.assertEqual(1, len(response_json["lines"]))
         self.assertEqual(so.id, response_json["id"])
-        self.assertEqual("uuid1", so.applied_cart_api_transaction_uuids)
+        self.assertEqual(self.trans_uuid_1, so.applied_cart_api_transaction_uuids)
 
     def test_sync_authenticated_wrong_uuid_one_transactions_cart_exists(self) -> None:
         """
@@ -144,12 +144,12 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1}
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.post(
-                "/sync/1234", content=json.dumps(data)
+                f"/sync/{self.dummy_uuid}", content=json.dumps(data)
             )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         response_json = response.json()
@@ -179,7 +179,11 @@ class TestSaleCart(CommonSaleCart):
         product_to_remove.unlink()
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": not_existing_product_id, "qty": 1}
+                {
+                    "uuid": self.trans_uuid_1,
+                    "product_id": not_existing_product_id,
+                    "qty": 1,
+                }
             ]
         }
         with self._create_test_client(
@@ -193,7 +197,7 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1}
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1}
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -206,7 +210,7 @@ class TestSaleCart(CommonSaleCart):
         # Add 3 items to product
         data = {
             "transactions": [
-                {"uuid": "uuid2", "product_id": self.product_1.id, "qty": 3}
+                {"uuid": self.trans_uuid_2, "product_id": self.product_1.id, "qty": 3}
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -219,7 +223,7 @@ class TestSaleCart(CommonSaleCart):
         # New sync to remove the line
         data = {
             "transactions": [
-                {"uuid": "uuid3", "product_id": self.product_1.id, "qty": -5}
+                {"uuid": self.trans_uuid_3, "product_id": self.product_1.id, "qty": -5}
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -233,10 +237,10 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1},
-                {"uuid": "uuid2", "product_id": self.product_1.id, "qty": 3},
-                {"uuid": "uuid3", "product_id": self.product_1.id, "qty": -1},
-                {"uuid": "uuid4", "product_id": self.product_1.id, "qty": -1},
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
+                {"uuid": self.trans_uuid_2, "product_id": self.product_1.id, "qty": 3},
+                {"uuid": self.trans_uuid_3, "product_id": self.product_1.id, "qty": -1},
+                {"uuid": self.trans_uuid_4, "product_id": self.product_1.id, "qty": -1},
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -246,7 +250,8 @@ class TestSaleCart(CommonSaleCart):
         self.assertEqual(self.product_1, line.product_id)
         self.assertEqual(2, line.product_uom_qty)
         self.assertEqual(
-            so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
+            so.applied_cart_api_transaction_uuids,
+            f"{self.trans_uuid_1},{self.trans_uuid_2},{self.trans_uuid_3},{self.trans_uuid_4}",
         )
 
     def test_multi_transactions_same_product1(self) -> None:
@@ -256,10 +261,10 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1},
-                {"uuid": "uuid2", "product_id": self.product_1.id, "qty": 3},
-                {"uuid": "uuid3", "product_id": self.product_1.id, "qty": -1},
-                {"uuid": "uuid4", "product_id": self.product_1.id, "qty": -5},
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
+                {"uuid": self.trans_uuid_2, "product_id": self.product_1.id, "qty": 3},
+                {"uuid": self.trans_uuid_3, "product_id": self.product_1.id, "qty": -1},
+                {"uuid": self.trans_uuid_4, "product_id": self.product_1.id, "qty": -5},
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -267,7 +272,8 @@ class TestSaleCart(CommonSaleCart):
         line = so.order_line
         self.assertEqual(0, len(line))
         self.assertEqual(
-            so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
+            so.applied_cart_api_transaction_uuids,
+            f"{self.trans_uuid_1},{self.trans_uuid_2},{self.trans_uuid_3},{self.trans_uuid_4}",
         )
 
     def test_multi_transactions_update_same_product(self) -> None:
@@ -277,7 +283,7 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1},
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -286,15 +292,22 @@ class TestSaleCart(CommonSaleCart):
         self.assertEqual(1, len(line))
         data = {
             "transactions": [
-                {"uuid": "uuid2", "product_id": self.product_1.id, "qty": 3},
-                {"uuid": "uuid3", "product_id": self.product_1.id, "qty": -100},
+                {"uuid": self.trans_uuid_2, "product_id": self.product_1.id, "qty": 3},
+                {
+                    "uuid": self.trans_uuid_3,
+                    "product_id": self.product_1.id,
+                    "qty": -100,
+                },
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
             test_client.post(f"/sync/{so.uuid}", content=json.dumps(data))
         line = so.order_line
         self.assertEqual(0, len(line))
-        self.assertEqual(so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3")
+        self.assertEqual(
+            so.applied_cart_api_transaction_uuids,
+            f"{self.trans_uuid_1},{self.trans_uuid_2},{self.trans_uuid_3}",
+        )
 
     def test_multi_transactions_multi_products_all_create(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -302,10 +315,10 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {
             "transactions": [
-                {"uuid": "uuid1", "product_id": self.product_1.id, "qty": 1},
-                {"uuid": "uuid2", "product_id": self.product_2.id, "qty": 3},
-                {"uuid": "uuid3", "product_id": self.product_1.id, "qty": 3},
-                {"uuid": "uuid4", "product_id": self.product_2.id, "qty": -1},
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
+                {"uuid": self.trans_uuid_2, "product_id": self.product_2.id, "qty": 3},
+                {"uuid": self.trans_uuid_3, "product_id": self.product_1.id, "qty": 3},
+                {"uuid": self.trans_uuid_4, "product_id": self.product_2.id, "qty": -1},
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
@@ -321,7 +334,8 @@ class TestSaleCart(CommonSaleCart):
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
         self.assertEqual(
-            so.applied_cart_api_transaction_uuids, "uuid1,uuid2,uuid3,uuid4"
+            so.applied_cart_api_transaction_uuids,
+            f"{self.trans_uuid_1},{self.trans_uuid_2},{self.trans_uuid_3},{self.trans_uuid_4}",
         )
 
     def test_multi_transactions_multi_products_mix_create_update(self) -> None:
@@ -331,24 +345,29 @@ class TestSaleCart(CommonSaleCart):
         create_line_vals = self.env[
             "shopinvader_api_cart.cart_router.helper"
         ]._apply_transactions_creating_new_cart_line(
-            so, [CartTransaction(uuid="uuid1", product_id=self.product_1.id, qty=1)]
+            so,
+            [
+                CartTransaction(
+                    uuid=self.trans_uuid_1, product_id=self.product_1.id, qty=1
+                )
+            ],
         )
         so.write({"order_line": [create_line_vals]})
 
         data = {
             "transactions": [
                 {
-                    "uuid": "uuid2",
+                    "uuid": self.trans_uuid_2,
                     "product_id": self.product_2.id,
                     "qty": 3,
                 },
                 {
-                    "uuid": "uuid3",
+                    "uuid": self.trans_uuid_3,
                     "product_id": self.product_1.id,
                     "qty": 3,
                 },
                 {
-                    "uuid": "uuid4",
+                    "uuid": self.trans_uuid_4,
                     "product_id": self.product_2.id,
                     "qty": -1,
                 },
@@ -366,7 +385,10 @@ class TestSaleCart(CommonSaleCart):
             lambda l, product=self.product_2: l.product_id == product
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
-        self.assertEqual(so.applied_cart_api_transaction_uuids, "uuid2,uuid3,uuid4")
+        self.assertEqual(
+            so.applied_cart_api_transaction_uuids,
+            f"{self.trans_uuid_2},{self.trans_uuid_3},{self.trans_uuid_4}",
+        )
 
     def test_update(self) -> None:
         partner = self.default_fastapi_authenticated_partner
