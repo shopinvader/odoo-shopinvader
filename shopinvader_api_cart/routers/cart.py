@@ -39,7 +39,8 @@ def get(
 
 
 @cart_router.post("/sync", status_code=201)
-@cart_router.post("/sync/{uuid}", status_code=201)
+@cart_router.post("/{uuid}/sync", status_code=201)
+@cart_router.post("/sync/{uuid}", status_code=201, deprecated=True)
 def sync(
     data: CartSyncInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
@@ -54,7 +55,8 @@ def sync(
 
 
 @cart_router.post("/update")
-@cart_router.post("/update/{uuid}")
+@cart_router.post("/{uuid}/update")
+@cart_router.post("/update/{uuid}", deprecated=True)
 def update(
     data: CartUpdateInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
