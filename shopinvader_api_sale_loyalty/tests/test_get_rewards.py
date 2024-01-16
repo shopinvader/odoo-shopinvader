@@ -14,6 +14,15 @@ from .common import TestShopinvaderSaleLoyaltyCommon
 class TestLoyaltyReward(TestShopinvaderSaleLoyaltyCommon):
     def test_reward_wrong_code(self) -> None:
         with self._create_test_client(router=loyalty_router) as test_client:
+            response: Response = test_client.get("/loyalty/wrongcode")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json(), [])
+
+    def test_deprecated_route_rewards(self) -> None:
+        """
+        Check that deprecated route /rewards/{code} is still reachable.
+        """
+        with self._create_test_client(router=loyalty_router) as test_client:
             response: Response = test_client.get("/rewards/wrongcode")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json(), [])
@@ -25,7 +34,7 @@ class TestLoyaltyReward(TestShopinvaderSaleLoyaltyCommon):
         """
         coupon = self._generate_coupons(self.code_promotion_program)
         with self._create_test_client(router=loyalty_router) as test_client:
-            response: Response = test_client.get(f"/rewards/{coupon.code}")
+            response: Response = test_client.get(f"/loyalty/{coupon.code}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         res = response.json()
         self.assertEqual(len(res), 1)
@@ -37,7 +46,7 @@ class TestLoyaltyReward(TestShopinvaderSaleLoyaltyCommon):
         program = self._create_program_choice_reward_with_code(self.product_A)
         coupon = self._generate_coupons(program)
         with self._create_test_client(router=loyalty_router) as test_client:
-            response: Response = test_client.get(f"/rewards/{coupon.code}")
+            response: Response = test_client.get(f"/loyalty/{coupon.code}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         res = response.json()
         self.assertEqual(len(res), 2)
@@ -60,7 +69,7 @@ class TestLoyaltyReward(TestShopinvaderSaleLoyaltyCommon):
         )
         coupon = self._generate_coupons(program)
         with self._create_test_client(router=loyalty_router) as test_client:
-            response: Response = test_client.get(f"/rewards/{coupon.code}")
+            response: Response = test_client.get(f"/loyalty/{coupon.code}")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         res = response.json()
         self.assertEqual(len(res), 1)
@@ -74,7 +83,7 @@ class TestLoyaltyReward(TestShopinvaderSaleLoyaltyCommon):
     def test_code_on_rule(self):
         self._create_discount_code_program()
         with self._create_test_client(router=loyalty_router) as test_client:
-            response: Response = test_client.get("/rewards/PROMOTION")
+            response: Response = test_client.get("/loyalty/PROMOTION")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         res = response.json()
         self.assertEqual(len(res), 1)

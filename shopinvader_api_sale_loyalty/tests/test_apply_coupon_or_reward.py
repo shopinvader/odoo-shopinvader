@@ -241,11 +241,11 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             UserError, r"This code is invalid \(fakecode\)\."
         ):
             data = {"code": "fakecode"}
-            test_client.post("/apply_coupon", content=json.dumps(data))
+            test_client.post("/coupon", content=json.dumps(data))
         # Enter code
         with self._create_test_client(router=cart_router) as test_client:
             data = {"code": promo_code}
-            response = test_client.post("/apply_coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", content=json.dumps(data))
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -258,6 +258,20 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             self.code_promotion_program_with_discount.id,
             "The promo should've been applied",
         )
+
+    def test_deprecated_route_apply_coupon(self):
+        """
+        Test that the deprecated route /apply_coupon is still reachable.
+        :return:
+        """
+        # Enter an invalid code
+        with self._create_test_client(
+            router=cart_router
+        ) as test_client, self.assertRaisesRegex(
+            UserError, r"This code is invalid \(fakecode\)\."
+        ):
+            data = {"code": "fakecode"}
+            test_client.post("/apply_coupon", content=json.dumps(data))
 
     def test_code_promotion_program_coupons(self):
         coupon = self._generate_coupons(self.code_promotion_program)
@@ -278,7 +292,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         # Enter code
         with self._create_test_client(router=cart_router) as test_client:
             data = {"code": coupon.code}
-            response = test_client.post("/apply_coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", content=json.dumps(data))
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -294,7 +308,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             UserError, "This program is already applied to this order."
         ):
             data = {"code": coupon.code}
-            test_client.post("/apply_coupon", content=json.dumps(data))
+            test_client.post("/coupon", content=json.dumps(data))
 
     def test_promotion_on_next_order(self):
         program = self.env["loyalty.program"].create(
@@ -358,9 +372,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             test_client.post("/sync", content=json.dumps(data))
         with self._create_test_client(router=cart_router) as test_client:
             data = {"code": "PROMOTION"}
-            response: Response = test_client.post(
-                "/apply_coupon", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/coupon", content=json.dumps(data))
         self.assertEqual(response.status_code, 200)
         cart = response.json()
         self.assertAlmostEqual(
@@ -434,7 +446,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             UserError, "Several rewards available. Please specify one."
         ):
             data = {"code": coupon.code}
-            test_client.post("/apply_coupon", content=json.dumps(data))
+            test_client.post("/coupon", content=json.dumps(data))
         allowed_rewards = program.reward_ids
         wrong_reward = self.env["loyalty.reward"].search(
             [("id", "not in", allowed_rewards.ids)], limit=1
@@ -445,11 +457,11 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             UserError, "Reward not allowed for this code."
         ):
             data = {"code": coupon.code, "reward_id": wrong_reward.id}
-            test_client.post("/apply_coupon", content=json.dumps(data))
+            test_client.post("/coupon", content=json.dumps(data))
 
         with self._create_test_client(router=cart_router) as test_client:
             data = {"code": coupon.code, "reward_id": program.reward_ids[0].id}
-            response = test_client.post("/apply_coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", content=json.dumps(data))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(self.cart.order_line), 2, "The reward should've been applied"
@@ -467,7 +479,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         as there are several rewards linked to the program.
         But the rewards are in the Sale Pydantic model, under claimable_rewards
 
-        Then calling /apply_reward applies the reward and removes the rewards
+        Then calling /reward applies the reward and removes the rewards
         from the Sale Pydantic model
         """
         program = self._create_program_choice_reward_auto(self.product_A)
@@ -497,9 +509,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         # Apply the reward
         with self._create_test_client(router=cart_router) as test_client:
             data = {"reward_id": claimable_rewards[0]["id"]}
-            response: Response = test_client.post(
-                "/apply_reward", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/reward", content=json.dumps(data))
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -538,7 +548,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             UserError, "Several free products available. Please specify one."
         ):
             data = {"code": coupon.code}
-            test_client.post("/apply_coupon", content=json.dumps(data))
+            test_client.post("/coupon", content=json.dumps(data))
         allowed_products = program.reward_ids[0].reward_product_ids
         wrong_product = self.env["product.product"].search(
             [("id", "not in", allowed_products.ids)], limit=1
@@ -550,11 +560,11 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             UserError, "Free product not allowed for this reward."
         ):
             data = {"code": coupon.code, "free_product_id": wrong_product.id}
-            test_client.post("/apply_coupon", content=json.dumps(data))
+            test_client.post("/coupon", content=json.dumps(data))
 
         with self._create_test_client(router=cart_router) as test_client:
             data = {"code": coupon.code, "free_product_id": allowed_products[0].id}
-            response = test_client.post("/apply_coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", content=json.dumps(data))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(self.cart.order_line), 2, "The reward should've been applied"
@@ -569,7 +579,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         -> when updating the cart, the reward is not automatically applied
         as there is a choice to make.
 
-        When calling /apply_reward without specified product, the service fails.
+        When calling /reward without specified product, the service fails.
         When specifying the product, the reward is added.
         """
         self.product_B.product_tag_ids = [(4, self.gift_product_tag.id)]
@@ -609,7 +619,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             UserError, "Several free products available. Please specify one."
         ):
             data = {"reward_id": claimable_rewards[0]["id"]}
-            test_client.post("/apply_reward", content=json.dumps(data))
+            test_client.post("/reward", content=json.dumps(data))
 
         # Apply the reward specifying the product
         with self._create_test_client(router=cart_router) as test_client:
@@ -617,7 +627,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                 "reward_id": claimable_rewards[0]["id"],
                 "free_product_id": self.product_C.id,
             }
-            response = test_client.post("/apply_reward", content=json.dumps(data))
+            response = test_client.post("/reward", content=json.dumps(data))
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -626,3 +636,37 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             "The promotion should have been applied",
         )
         self.assertEqual(res["claimable_rewards"], [])
+
+    def test_deprecated_route_apply_reward(self):
+        """
+        Check that deprecated route /apply_reward is still reachable.
+        """
+        program = self._create_program_choice_reward_auto(self.product_A)
+        with self._create_test_client(router=cart_router) as test_client:
+            data = {
+                "transactions": [
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
+                ]
+            }
+            response: Response = test_client.post("/sync", content=json.dumps(data))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(
+            len(self.cart.order_line),
+            1,
+            "The promotion shouldn't be applied as there is a reward choice",
+        )
+        res = response.json()
+        claimable_rewards = res["claimable_rewards"]
+        self.assertEqual(
+            len(claimable_rewards), 2, "The two possible rewards should be claimable."
+        )
+        self.assertEqual(
+            {claimable_rewards[0]["id"], claimable_rewards[1]["id"]},
+            set(program.reward_ids.ids),
+        )
+        with self._create_test_client(router=cart_router) as test_client:
+            data = {"reward_id": claimable_rewards[0]["id"]}
+            response: Response = test_client.post(
+                "/apply_reward", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, 200)

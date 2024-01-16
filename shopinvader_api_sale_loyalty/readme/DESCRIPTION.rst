@@ -8,6 +8,6 @@ to the core `sale_loyalty` module.
 
 Available services:
 
-* ``/rewards/{code}`` under the ``loyalty`` router, to get all rewards claimable with a given coupon code
-* ``/apply_coupon`` under the ``cart`` router, to apply a given coupon to the cart. Allows to specify which reward and/or which free product to offer.
-* ``/apply_reward`` under the ``cart`` router, to apply a given reward (automatic promotion). Note that automatic promotions are applied automatically at cart update, when possible (if no choice must be done). This service allows to apply an automatic promotion for which the reward/free product choice is mandatory.
+* ``/loyalty/{code}`` under the ``loyalty`` router, to get all rewards claimable with a given coupon code
+* ``/coupon`` under the ``cart`` router, to apply a given coupon to the cart. Allows to specify which reward and/or which free product to offer.
+* ``/reward`` under the ``cart`` router, to apply a given reward (automatic promotion). Note that automatic promotions are applied automatically at cart update, when possible (if no choice must be done). This service allows to apply an automatic promotion for which the reward/free product choice is mandatory.

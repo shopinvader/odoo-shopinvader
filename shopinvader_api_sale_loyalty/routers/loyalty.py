@@ -13,7 +13,8 @@ from ..schemas import LoyaltyRewardResponse
 loyalty_router = APIRouter(tags=["loyalties"])
 
 
-@loyalty_router.get("/rewards/{code}")
+@loyalty_router.get("/rewards/{code}", deprecated=True)
+@loyalty_router.get("/loyalty/{code}")
 def get_rewards(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     code: str,
