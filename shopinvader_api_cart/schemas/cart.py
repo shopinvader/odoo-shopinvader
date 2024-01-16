@@ -2,12 +2,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from typing import List
+from uuid import UUID
 
 from extendable_pydantic import StrictExtendableBaseModel
 
 
 class CartTransaction(StrictExtendableBaseModel):
-    uuid: str | None = None
+    uuid: UUID | None = None
     qty: float
     product_id: int
 

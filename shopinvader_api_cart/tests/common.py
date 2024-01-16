@@ -1,3 +1,5 @@
+import uuid
+
 from odoo.tests.common import tagged
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
@@ -57,6 +59,11 @@ class CommonSaleCart(FastAPITransactionCase):
                 "uom_id": cls.env.ref("uom.product_uom_unit").id,
             }
         )
+        cls.dummy_uuid = str(uuid.uuid4())
+        cls.trans_uuid_1 = str(uuid.uuid4())
+        cls.trans_uuid_2 = str(uuid.uuid4())
+        cls.trans_uuid_3 = str(uuid.uuid4())
+        cls.trans_uuid_4 = str(uuid.uuid4())
 
     def _create_unauthenticated_user_client(self):
         return self._create_test_client(
