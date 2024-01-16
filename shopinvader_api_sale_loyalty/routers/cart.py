@@ -201,6 +201,7 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         # Try to auto apply rewards.
         # Only rewards that are the only reward of the program and not
         # with a multi product reward
-        cart._update_programs_and_rewards()
-        self._apply_automatic_rewards(cart)
+        if cart:
+            cart._update_programs_and_rewards()
+            self._apply_automatic_rewards(cart)
         return cart
