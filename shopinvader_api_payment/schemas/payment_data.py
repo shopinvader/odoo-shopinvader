@@ -15,6 +15,7 @@ class PaymentInput(BaseModel):
 class PaymentData(PaymentInput):
     payable_reference: str
     amount: float
+    amount_formatted: str
     currency_code: str
 
 

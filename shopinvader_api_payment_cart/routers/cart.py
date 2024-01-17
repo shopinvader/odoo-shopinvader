@@ -39,12 +39,14 @@ def init(
             payable_model="sale.order",
             payable_reference=sale_order.name,
             amount=sale_order.amount_total,
+            amount_formatted=sale_order.currency_id.format(sale_order.amount_total),
             currency_id=sale_order.currency_id.id,
             partner_id=sale_order.partner_id.id,
             company_id=sale_order.company_id.id,
         ).model_dump_json(),
         "payable_reference": sale_order.name,
         "amount": sale_order.amount_total,
+        "amount_formatted": sale_order.currency_id.format(sale_order.amount_total),
         "currency_code": sale_order.currency_id.name,
     }
     payment_data["access_token"] = payment_utils.generate_access_token(
