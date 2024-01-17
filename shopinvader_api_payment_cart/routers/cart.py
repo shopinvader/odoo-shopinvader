@@ -2,6 +2,7 @@
 # @author Stéphane Bidoul <stephane.bidoul@acsone.eu>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import Depends, HTTPException
 
@@ -18,18 +19,19 @@ from odoo.addons.shopinvader_api_payment.routers.utils import Payable
 from odoo.addons.shopinvader_api_payment.schemas import PaymentData
 
 
-@cart_router.get("/payable")
+@cart_router.get("/{uuid}/payable")
+@cart_router.get("/current/payable")
 def init(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: str | None = None,
+    uuid: UUID | None = None,
 ) -> PaymentData | None:
     """Prepare payment data for the current cart.
 
     This route is authenticated, so we can verify the cart
     is accessible by the authenticated partner.
     """
-    cart = env["sale.order"]._find_open_cart(partner.id, uuid)
+    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
     if not cart:
         raise HTTPException(status_code=404)
     sale_order = env["sale.order"].browse(cart.id)
