@@ -24,8 +24,9 @@ from ..schemas import CartSyncInput, CartTransaction, CartUpdateInput
 cart_router = APIRouter(tags=["carts"])
 
 
-@cart_router.get("/")
 @cart_router.get("/{uuid}")
+@cart_router.get("/current")
+@cart_router.get("/")
 def get(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
@@ -38,9 +39,10 @@ def get(
     return Sale.from_sale_order(cart) if cart else Response(status_code=204)
 
 
-@cart_router.post("/sync", status_code=201)
-@cart_router.post("/{uuid}/sync", status_code=201)
 @cart_router.post("/sync/{uuid}", status_code=201, deprecated=True)
+@cart_router.post("/{uuid}/sync", status_code=201)
+@cart_router.post("/current/sync", status_code=201)
+@cart_router.post("/sync", status_code=201)
 def sync(
     data: CartSyncInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
@@ -54,9 +56,10 @@ def sync(
     return Sale.from_sale_order(cart) if cart else Response(status_code=204)
 
 
-@cart_router.post("/update")
-@cart_router.post("/{uuid}/update")
 @cart_router.post("/update/{uuid}", deprecated=True)
+@cart_router.post("/{uuid}/update")
+@cart_router.post("/current/update")
+@cart_router.post("/update")
 def update(
     data: CartUpdateInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
