@@ -269,6 +269,45 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             "The promo should've been applied",
         )
 
+    def test_route_current_coupon(self):
+        """
+        Test that the route /current/coupon is reachable
+        """
+        # Buy 1 C + Enter code, 10% discount on C
+        with self._create_test_client(router=cart_router) as test_client:
+            data = {
+                "transactions": [
+                    {
+                        "uuid": self.dummy_uuid,
+                        "product_id": self.product_C.id,
+                        "qty": 1,
+                    }
+                ]
+            }
+            response: Response = test_client.post("/sync", content=json.dumps(data))
+        self.assertEqual(response.status_code, 201)
+        res = response.json()
+        self.assertEqual(
+            len(self.cart.order_line),
+            1,
+            "The promo offer shouldn't have been applied as the code hasn't "
+            "been entered yet",
+        )
+        self.assertEqual(
+            res["programs"],
+            [],
+            "The promo offer shouldn't have been applied as the code hasn't "
+            "been entered yet",
+        )
+        # Enter an invalid code
+        with self._create_test_client(
+            router=cart_router
+        ) as test_client, self.assertRaisesRegex(
+            UserError, r"This code is invalid \(fakecode\)\."
+        ):
+            data = {"code": "fakecode"}
+            test_client.post("/current/coupon", content=json.dumps(data))
+
     def test_deprecated_route_apply_coupon(self):
         """
         Test that the deprecated route /apply_coupon is still reachable.
@@ -646,6 +685,40 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             "The promotion should have been applied",
         )
         self.assertEqual(res["claimable_rewards"], [])
+
+    def test_route_current_reward(self):
+        """
+        Check that route /current/reward is reachable.
+        """
+        program = self._create_program_choice_reward_auto(self.product_A)
+        with self._create_test_client(router=cart_router) as test_client:
+            data = {
+                "transactions": [
+                    {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
+                ]
+            }
+            response: Response = test_client.post("/sync", content=json.dumps(data))
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(
+            len(self.cart.order_line),
+            1,
+            "The promotion shouldn't be applied as there is a reward choice",
+        )
+        res = response.json()
+        claimable_rewards = res["claimable_rewards"]
+        self.assertEqual(
+            len(claimable_rewards), 2, "The two possible rewards should be claimable."
+        )
+        self.assertEqual(
+            {claimable_rewards[0]["id"], claimable_rewards[1]["id"]},
+            set(program.reward_ids.ids),
+        )
+        with self._create_test_client(router=cart_router) as test_client:
+            data = {"reward_id": claimable_rewards[0]["id"]}
+            response: Response = test_client.post(
+                "/current/reward", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, 200)
 
     def test_deprecated_route_apply_reward(self):
         """

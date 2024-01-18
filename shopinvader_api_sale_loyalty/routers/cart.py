@@ -20,10 +20,11 @@ from odoo.addons.shopinvader_api_cart.schemas import CartTransaction
 from ..schemas import LoyaltyCardInput, LoyaltyRewardInput, Sale
 
 
-@cart_router.post("/apply_coupon", deprecated=True)
 @cart_router.post("/apply_coupon/{uuid}", deprecated=True)
-@cart_router.post("/coupon")
+@cart_router.post("/apply_coupon", deprecated=True)
 @cart_router.post("/{uuid}/coupon")
+@cart_router.post("/current/coupon")
+@cart_router.post("/coupon")
 def apply_coupon(
     data: LoyaltyCardInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
@@ -44,10 +45,11 @@ def apply_coupon(
     return Sale.from_sale_order(cart) if cart else None
 
 
-@cart_router.post("/apply_reward", deprecated=True)
 @cart_router.post("/apply_reward/{uuid}", deprecated=True)
-@cart_router.post("/reward")
+@cart_router.post("/apply_reward", deprecated=True)
 @cart_router.post("/{uuid}/reward")
+@cart_router.post("/current/reward")
+@cart_router.post("/reward")
 def apply_reward(
     data: LoyaltyRewardInput,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
