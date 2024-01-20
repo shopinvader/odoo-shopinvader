@@ -14,7 +14,6 @@ class TestPayable(TransactionCase):
             payable_model="account.move",
             payable_reference="INV/2020/001",
             amount=1000.0,
-            amount_formatted="1\xa0000.00\xa0€",
             currency_id=1,
             partner_id=1,
             company_id=1,

@@ -15,7 +15,6 @@ class Payable(BaseModel):
     payable_model: str
     payable_reference: str
     amount: float
-    amount_formatted: str
     currency_id: int
     partner_id: int
     company_id: int
