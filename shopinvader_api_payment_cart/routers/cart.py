@@ -13,7 +13,6 @@ from odoo.addons.fastapi.dependencies import (
     authenticated_partner,
     authenticated_partner_env,
 )
-from odoo.addons.payment import utils as payment_utils
 from odoo.addons.shopinvader_api_cart.routers import cart_router
 from odoo.addons.shopinvader_api_payment.routers.utils import Payable
 from odoo.addons.shopinvader_api_payment.schemas import PaymentData
@@ -45,13 +44,10 @@ def init(
             currency_id=sale_order.currency_id.id,
             partner_id=sale_order.partner_id.id,
             company_id=sale_order.company_id.id,
-        ).model_dump_json(),
+        ).encode(env),
         "payable_reference": sale_order.name,
         "amount": sale_order.amount_total,
         "amount_formatted": sale_order.currency_id.format(sale_order.amount_total),
         "currency_code": sale_order.currency_id.name,
     }
-    payment_data["access_token"] = payment_utils.generate_access_token(
-        payment_data["payable"]
-    )
     return PaymentData(**payment_data)

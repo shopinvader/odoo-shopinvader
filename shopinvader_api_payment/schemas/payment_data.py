@@ -9,7 +9,6 @@ from .payment_provider import PaymentProvider
 
 class PaymentInput(BaseModel):
     payable: str
-    access_token: str
 
 
 class PaymentData(PaymentInput):

@@ -3,7 +3,6 @@
 # @author Stéphane Bidoul <stephane.bidoul@acsone.eu>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import json
 import logging
 from typing import Annotated
 from urllib.parse import urljoin
@@ -13,7 +12,6 @@ from fastapi import APIRouter, Depends, HTTPException, Request
 from odoo import api, models
 
 from odoo.addons.fastapi.dependencies import odoo_env
-from odoo.addons.payment import utils as payment_utils
 from odoo.addons.payment.models.payment_provider import PaymentProvider
 
 from ..schemas import (
@@ -32,7 +30,6 @@ payment_router = APIRouter(tags=["payment"])
 @payment_router.get("/payment/methods")
 def pay(
     payable: str,
-    access_token: str,
     odoo_env: Annotated[api.Environment, Depends(odoo_env)],
 ):
     """Available payment providers.
@@ -41,13 +38,11 @@ def pay(
     parameters are obtained securely by another mean. An authenticated use can
     obtain the parameters with the /payment/payable route.
     """
-    if not payment_utils.check_access_token(
-        access_token,
-        payable,
-    ):
-        _logger.info("Invalid access token")
-        raise HTTPException(403)
-    payable_obj = Payable.model_validate(json.loads(payable))
+    try:
+        payable_obj = Payable.decode(payable)
+    except Exception as e:
+        _logger.info("Could not decode payable")
+        raise HTTPException(403) from e
     # This method is similar to Odoo's PaymentPortal.payment_pay
     providers_sudo = (
         odoo_env["payment.provider"]
@@ -64,7 +59,6 @@ def pay(
         payable_reference=payable_obj.payable_reference,
         amount=payable_obj.amount,
         currency_code=odoo_env["res.currency"].browse(payable_obj.currency_id).name,
-        access_token=access_token,
         providers=[
             PaymentProviderSchema.from_payment_provider(provider)
             for provider in providers_sudo
@@ -83,13 +77,11 @@ def transaction(
     Input is data obtained from /payment/providers, with the provider selected by the
     user. This route is public, so it is possible to pay anonymously.
     """
-    if not payment_utils.check_access_token(
-        data.access_token,
-        data.payable,
-    ):
-        _logger.info("Invalid access token")
-        raise HTTPException(403)
-    payable_obj = Payable.model_validate(json.loads(data.payable))
+    try:
+        payable_obj = Payable.decode(data.payable)
+    except Exception as e:
+        _logger.info("Could not decode payable")
+        raise HTTPException(403) from e
     # similar to Odoo's /payment/transaction route
     if data.flow == "redirect":
         providers_sudo = (
@@ -152,7 +144,11 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
         provider_sudo: PaymentProvider,
         odoo_env: Annotated[api.Environment, Depends(odoo_env)],
     ) -> dict:
-        payable_obj = Payable.model_validate(json.loads(data.payable))
+        try:
+            payable_obj = Payable.decode(data.payable)
+        except Exception as e:
+            _logger.info("Could not decode payable")
+            raise HTTPException(403) from e
         additional_transaction_create_values = (
             self._get_additional_transaction_create_values(data)
         )
