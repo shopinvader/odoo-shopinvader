@@ -6,6 +6,7 @@ extendable_pydantic>=1.2.0
 fastapi
 openupgradelib
 pydantic>=2.0.0
+pyjwt
 python-slugify
 slugify
 unidecode
