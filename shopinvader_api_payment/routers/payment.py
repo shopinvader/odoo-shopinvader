@@ -59,6 +59,10 @@ def pay(
         payable_reference=payable_obj.payable_reference,
         amount=payable_obj.amount,
         currency_code=odoo_env["res.currency"].browse(payable_obj.currency_id).name,
+        amount_formatted=odoo_env["sale.order"]
+        .sudo()
+        .browse(payable_obj.payable_id)
+        .currency_id.format(payable_obj.amount),
         providers=[
             PaymentProviderSchema.from_payment_provider(provider)
             for provider in providers_sudo
