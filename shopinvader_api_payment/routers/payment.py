@@ -32,11 +32,12 @@ def pay(
     payable: str,
     odoo_env: Annotated[api.Environment, Depends(odoo_env)],
 ) -> PaymentDataWithMethods:
-    """Available payment providers.
+    """Available payment providers for the given encoded payment data.
 
     This route is public, so it is possible to pay anonymously provided that the
-    parameters are obtained securely by another mean. An authenticated use can
-    obtain the parameters with the /payment/payable route.
+    parameters are obtained securely by another mean. An authenticated user can
+    obtain the parameters with corresponding routes on the related payable
+    objects (/cart/current/payable for e.g.).
     """
     try:
         payable_obj = Payable.decode(odoo_env, payable)
@@ -80,6 +81,9 @@ def transaction(
 
     Input is data obtained from /payment/providers, with the provider selected by the
     user. This route is public, so it is possible to pay anonymously.
+
+    This route will automatically redirect to the return route linked to
+    the specified provider. The user will finally land on data.frontend_redirect_url
     """
     try:
         payable_obj = Payable.decode(odoo_env, data.payable)
