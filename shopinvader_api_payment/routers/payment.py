@@ -31,7 +31,7 @@ payment_router = APIRouter(tags=["payment"])
 def pay(
     payable: str,
     odoo_env: Annotated[api.Environment, Depends(odoo_env)],
-):
+) -> PaymentDataWithMethods:
     """Available payment providers.
 
     This route is public, so it is possible to pay anonymously provided that the

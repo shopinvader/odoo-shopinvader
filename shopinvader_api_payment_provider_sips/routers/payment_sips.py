@@ -30,7 +30,7 @@ _logger = logging.getLogger(__name__)
 async def sips_return(
     request: Request,
     odoo_env: Annotated[api.Environment, Depends(odoo_env)],
-):
+) -> RedirectResponse:
     """Handle SIPS return.
 
     After the payment, the user is redirected with a POST to this endpoint. We handle

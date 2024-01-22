@@ -24,7 +24,7 @@ def init(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated["ResPartner", Depends(authenticated_partner)],
     uuid: UUID | None = None,
-) -> PaymentData | None:
+) -> PaymentData:
     """Prepare payment data for the current cart.
 
     This route is authenticated, so we can verify the cart

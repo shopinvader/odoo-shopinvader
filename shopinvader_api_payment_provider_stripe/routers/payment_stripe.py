@@ -29,7 +29,7 @@ _logger = logging.getLogger(__name__)
 def stripe_return_from_checkout(
     request: Request,
     odoo_env: Annotated[api.Environment, Depends(odoo_env)],
-):
+) -> RedirectResponse:
     """Process the notification data sent by Stripe after redirection from checkout.
 
     From Odoo payment_stripe /payment/stripe/checkout_return route.
