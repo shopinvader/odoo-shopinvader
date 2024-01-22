@@ -39,7 +39,7 @@ def pay(
     obtain the parameters with the /payment/payable route.
     """
     try:
-        payable_obj = Payable.decode(payable)
+        payable_obj = Payable.decode(odoo_env, payable)
     except Exception as e:
         _logger.info("Could not decode payable")
         raise HTTPException(403) from e
@@ -78,7 +78,7 @@ def transaction(
     user. This route is public, so it is possible to pay anonymously.
     """
     try:
-        payable_obj = Payable.decode(data.payable)
+        payable_obj = Payable.decode(odoo_env, data.payable)
     except Exception as e:
         _logger.info("Could not decode payable")
         raise HTTPException(403) from e
