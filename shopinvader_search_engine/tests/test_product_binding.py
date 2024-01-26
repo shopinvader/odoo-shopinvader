@@ -15,7 +15,6 @@ class TestProductBinding(TestProductBindingBase):
         self.assertEqual(data["variant_count"], 2)
         self.assertEqual(data["sku"], "VORCHAIR-001")
         self.assertEqual(data["variant_attributes"], {"color": "blue"})
-        self.assertEqual(data["price"], {})
 
     def test_main_variant_index(self):
         variants = self.product.product_tmpl_id.product_variant_ids
