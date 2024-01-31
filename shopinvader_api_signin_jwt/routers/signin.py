@@ -1,7 +1,8 @@
 # Copyright 2023 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
-from typing import Annotated
+import logging
+from typing import Annotated, Union
 
 from fastapi import APIRouter, Depends, Response, status
 
@@ -12,8 +13,11 @@ from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.addons.fastapi_auth_jwt.dependencies import (
     Payload,
     auth_jwt_authenticated_payload,
+    auth_jwt_default_validator_name,
     auth_jwt_optionally_authenticated_partner,
 )
+
+_logger = logging.getLogger(__name__)
 
 signin_router = APIRouter(tags=["signin"])
 
@@ -35,6 +39,34 @@ def signin(
             "shopinvader_api_signin_jwt.signin_router.helper"
         ]._create_partner_from_payload(payload)
         response.status_code = status.HTTP_201_CREATED
+
+
+@signin_router.post("/signout")
+def signout(
+    env: Annotated[api.Environment, Depends(odoo_env)],
+    default_validator_name: Annotated[
+        Union[str, None], Depends(auth_jwt_default_validator_name)
+    ],
+    response: Response,
+) -> None:
+    """
+    Remove the session cookie.
+    """
+    validator = (
+        env["auth.jwt.validator"].sudo()._get_validator_by_name(default_validator_name)
+    )
+    if not validator:
+        _logger.info("No validator found with name '%s'", default_validator_name)
+        return
+    if not validator.cookie_name:
+        _logger.info("Cookie name not set for validator %s", validator.name)
+        return
+    response.delete_cookie(
+        key=validator.cookie_name,
+        path=validator.cookie_path or "/",
+        secure=validator.cookie_secure,
+        httponly=True,
+    )
 
 
 class ShopinvaderApSigninJwtRouterHelper(models.AbstractModel):

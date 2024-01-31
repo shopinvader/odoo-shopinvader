@@ -78,3 +78,15 @@ class SigninCase(FastAPITransactionCase):
         with self._create_test_client() as client:
             res = client.post("/signin", headers={"Authorization": token})
         self.assertEqual(res.status_code, 200)
+
+    def test_signout(self):
+        self.validator.write({"cookie_enabled": True, "cookie_name": "test_cookie"})
+        token = self._get_token()
+        with self._create_test_client() as client:
+            res = client.post("/signin", headers={"Authorization": token})
+        cookie = res.cookies.get("test_cookie")
+        self.assertTrue(cookie)
+        with self._create_test_client() as client:
+            res = client.post("/signout")
+        cookie = res.cookies.get("test_cookie")
+        self.assertFalse(cookie)
