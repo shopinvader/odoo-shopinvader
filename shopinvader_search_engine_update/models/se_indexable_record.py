@@ -12,4 +12,4 @@ class SeIndexableRecord(models.AbstractModel):
         linked to this record to be updated in the search engine.
 
         """
-        self.sudo()._se_mark_to_update()
+        self.sudo().filtered("active")._se_mark_to_update()
