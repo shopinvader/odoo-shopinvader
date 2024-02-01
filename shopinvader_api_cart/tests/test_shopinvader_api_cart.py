@@ -82,6 +82,18 @@ class TestSaleCart(CommonSaleCart):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["id"], so.id)
 
+    def test_get_current(self) -> None:
+        """
+        Check that route GET /current is reachable
+        """
+        so = self.env["sale.order"]._create_empty_cart(
+            self.default_fastapi_authenticated_partner.id
+        )
+        with self._create_test_client(router=cart_router) as test_client:
+            response: Response = test_client.get("/current")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["id"], so.id)
+
     def test_sync_authenticated_no_uuid_one_transactions_no_cart_exists(self) -> None:
         """
         Provide no uuid but at least one transaction. Since no cart exists,
@@ -100,6 +112,21 @@ class TestSaleCart(CommonSaleCart):
         self.assertEqual(1, len(response_json["lines"]))
         so = self.env["sale.order"].browse(response_json["id"])
         self.assertEqual(self.trans_uuid_1, so.applied_cart_api_transaction_uuids)
+
+    def test_sync_current_cart(self) -> None:
+        """
+        Check that the route /current/sync is reachable.
+        """
+        data = {
+            "transactions": [
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1}
+            ]
+        }
+        with self._create_test_client(router=cart_router) as test_client:
+            response: Response = test_client.post(
+                "/current/sync", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_sync_authenticated_no_rights(self) -> None:
         data = {
@@ -430,7 +457,29 @@ class TestSaleCart(CommonSaleCart):
         self.assertEqual(so.partner_shipping_id, address)
         self.assertEqual(so.partner_invoice_id, partner)
 
-    def test_deprecated_route_update_uuidq(self) -> None:
+    def test_route_update_current(self) -> None:
+        """
+        Check that the route /current/update is reachable.
+        """
+        partner = self.default_fastapi_authenticated_partner
+        address = self.env["res.partner"].create(
+            {
+                "name": "Delivery",
+                "parent_id": partner.id,
+                "type": "delivery",
+            }
+        )
+        self.env["sale.order"]._create_empty_cart(
+            self.default_fastapi_authenticated_partner.id
+        )
+        data = {"delivery": {"address_id": address.id}}
+        with self._create_test_client(router=cart_router) as test_client:
+            response: Response = test_client.post(
+                "/current/update", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_deprecated_route_update_uuid(self) -> None:
         """
         Check that the deprecated /update/{uuid} route is still callable.
         """
