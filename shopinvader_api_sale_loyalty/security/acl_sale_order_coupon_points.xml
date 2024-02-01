@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record
+        model="ir.model.access"
+        id="shopinvader_sale_order_coupon_points_access_view"
+    >
+        <field name="name">sale.order.coupon.points shopinvader user read access</field>
+        <field name="model_id" ref="sale_loyalty.model_sale_order_coupon_points" />
+        <field
+            name="group_id"
+            ref="shopinvader_api_security_sale.shopinvader_sale_user_group"
+        />
+        <field name="perm_read" eval="1" />
+        <field name="perm_create" eval="1" />
+        <field name="perm_unlink" eval="1" />
+        <field name="perm_write" eval="1" />
+  </record>
+
+</odoo>
