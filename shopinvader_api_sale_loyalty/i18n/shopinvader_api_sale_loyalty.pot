@@ -1,0 +1,71 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_api_sale_loyalty
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_api_sale_loyalty
+#. odoo-python
+#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
+#, python-format
+msgid "Free product not allowed for this reward."
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#. odoo-python
+#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
+#, python-format
+msgid "No free products available."
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#. odoo-python
+#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
+#, python-format
+msgid "No reward available for this code."
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#. odoo-python
+#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
+#, python-format
+msgid "Reward not allowed for this code."
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#: model:res.groups,name:shopinvader_api_sale_loyalty.shopinvader_loyalty_user_group
+msgid "Sale Loyalty user"
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#. odoo-python
+#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
+#, python-format
+msgid "Several free products available. Please specify one."
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#. odoo-python
+#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
+#, python-format
+msgid "Several rewards available. Please specify one."
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#: model:ir.model,name:shopinvader_api_sale_loyalty.model_shopinvader_api_cart_cart_router_helper
+msgid "ShopInvader API Cart Router Helper"
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#: model:ir.model,name:shopinvader_api_sale_loyalty.model_shopinvader_api_loyalty_loyalty_router_helper
+msgid "ShopInvader API Loyalty Router Helper"
+msgstr ""
