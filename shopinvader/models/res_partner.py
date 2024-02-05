@@ -31,7 +31,11 @@ class ResPartner(models.Model):
         store=True,
     )
     # In europe we use more the opt_in
-    opt_in = fields.Boolean(compute="_compute_opt_in", inverse="_inverse_opt_in")
+    opt_in = fields.Boolean(
+        compute="_compute_opt_in",
+        inverse="_inverse_opt_in",
+        search="_search_opt_in",
+    )
     is_shopinvader_active = fields.Boolean(
         string="Shop enabled",
         help="This address is enabled to be used for Shopinvader.",
@@ -61,12 +65,17 @@ class ResPartner(models.Model):
             record.opt_in = not record.is_blacklisted
 
     def _inverse_opt_in(self):
-        blacklist_model = self.env["mail.blacklist"]
+        blacklist_model = self.env["mail.blacklist"].sudo()
         for record in self:
             if record.opt_in:
                 blacklist_model._remove(record.email)
             else:
                 blacklist_model._add(record.email)
+
+    @api.model
+    def _search_opt_in(self, operator, value):
+        domain = [("is_blacklisted", operator, not value)]
+        return domain
 
     @api.depends("shopinvader_bind_ids")
     def _compute_has_shopinvader_user(self):
