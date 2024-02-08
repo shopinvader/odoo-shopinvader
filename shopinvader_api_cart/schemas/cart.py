@@ -1,6 +1,7 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from datetime import datetime
 from typing import List
 from uuid import UUID
 
@@ -27,6 +28,7 @@ class InvoicingUpdateInfo(StrictExtendableBaseModel, extra="ignore"):
 
 class CartUpdateInput(StrictExtendableBaseModel, extra="ignore"):
     client_order_ref: str | None = None
+    date_commitment: datetime | None = None
     delivery: DeliveryUpdateInfo | None = None
     invoicing: InvoicingUpdateInfo | None = None
     note: str | None = None
@@ -36,6 +38,8 @@ class CartUpdateInput(StrictExtendableBaseModel, extra="ignore"):
         data = self.model_dump(exclude_unset=True)
         if "client_order_ref" in data:
             vals["client_order_ref"] = self.client_order_ref
+        if "date_commitment" in data:
+            vals["commitment_date"] = self.date_commitment
         if "note" in data:
             vals["note"] = self.note
         if (data.get("delivery") or {}).get("address_id"):
