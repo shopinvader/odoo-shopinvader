@@ -3,11 +3,14 @@
 # @author Stéphane Bidoul <stephane.bidoul@acsone.eu>
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import json
+from typing import Annotated
 
-from odoo import models
+from fastapi import Depends
+
+from odoo import api, models
 from odoo.fields import Command
 
+from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.addons.shopinvader_api_payment.routers.utils import Payable
 from odoo.addons.shopinvader_api_payment.schemas import TransactionCreate
 
@@ -16,13 +19,15 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
     _inherit = "shopinvader_api_payment.payment_router.helper"
 
     def _get_additional_transaction_create_values(
-        self, data: TransactionCreate
+        self,
+        data: TransactionCreate,
+        odoo_env: Annotated[api.Environment, Depends(odoo_env)],
     ) -> dict:
         # Intended to be extended for invoices, carts...
         additional_transaction_create_values = (
-            super()._get_additional_transaction_create_values(data)
+            super()._get_additional_transaction_create_values(data, odoo_env)
         )
-        payable_obj = Payable.model_validate(json.loads(data.payable))
+        payable_obj = Payable.decode(odoo_env, data.payable)
         if payable_obj.payable_model == "sale.order":
             sale_order_model = (
                 self.env["ir.model"].sudo().search([("model", "=", "sale.order")])

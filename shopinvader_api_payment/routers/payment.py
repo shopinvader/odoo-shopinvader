@@ -140,7 +140,9 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
     _description = "ShopInvader API Payment Router Helper"
 
     def _get_additional_transaction_create_values(
-        self, data: TransactionCreate
+        self,
+        data: TransactionCreate,
+        odoo_env: Annotated[api.Environment, Depends(odoo_env)],
     ) -> dict:
         # Intended to be extended for invoices, carts...
         additional_transaction_create_values = {}
@@ -153,12 +155,12 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
         odoo_env: Annotated[api.Environment, Depends(odoo_env)],
     ) -> dict:
         try:
-            payable_obj = Payable.decode(data.payable)
+            payable_obj = Payable.decode(odoo_env, data.payable)
         except Exception as e:
             _logger.info("Could not decode payable")
             raise HTTPException(403) from e
         additional_transaction_create_values = (
-            self._get_additional_transaction_create_values(data)
+            self._get_additional_transaction_create_values(data, odoo_env)
         )
 
         is_validation = False  # future
