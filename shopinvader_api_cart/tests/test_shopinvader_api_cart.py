@@ -500,3 +500,20 @@ class TestSaleCart(CommonSaleCart):
                 f"/update/{so.uuid}", content=json.dumps(data)
             )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_new_cart(self) -> None:
+        """Test that an empty cart is created when no cart exists."""
+        partner = self.default_fastapi_authenticated_partner
+        address = self.env["res.partner"].create(
+            {
+                "name": "Delivery",
+                "parent_id": partner.id,
+                "type": "delivery",
+            }
+        )
+        data = {"delivery": {"address_id": address.id}}
+        with self._create_test_client(router=cart_router) as test_client:
+            response: Response = test_client.post("/update", content=json.dumps(data))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        info = response.json()
+        self.assertTrue(self.env["sale.order"].browse(info["id"]).exists())
