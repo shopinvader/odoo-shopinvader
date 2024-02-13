@@ -6,7 +6,7 @@
     "summary": """
         Cart FastAPI designed to work with the shopinvader-js-cart library
         see (https://github.com/shopinvader/shopinvader-js-cart)""",
-    "version": "16.0.1.3.2",
+    "version": "16.0.1.3.3",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
