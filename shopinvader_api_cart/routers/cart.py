@@ -188,20 +188,19 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             transactions=transactions
         )
         update_cmds = []
-        with self.env.norecompute():
-            # prefetch all products
-            self.env["product.product"].browse(transactions_by_product_id.keys())
-            # here we avoid that each on change on a line trigger all the
-            # recompute methods on the SO. These methods will be triggered
-            # by the orm into the 'write' process
-            for product_id, trxs in transactions_by_product_id.items():
-                line = cart._get_cart_line(product_id)
-                if line:
-                    cmd = self._apply_transactions_on_existing_cart_line(line, trxs)
-                else:
-                    cmd = self._apply_transactions_creating_new_cart_line(cart, trxs)
-                if cmd:
-                    update_cmds.append(cmd)
+        # prefetch all products
+        self.env["product.product"].browse(transactions_by_product_id.keys())
+        # here we avoid that each on change on a line trigger all the
+        # recompute methods on the SO. These methods will be triggered
+        # by the orm into the 'write' process
+        for product_id, trxs in transactions_by_product_id.items():
+            line = cart._get_cart_line(product_id)
+            if line:
+                cmd = self._apply_transactions_on_existing_cart_line(line, trxs)
+            else:
+                cmd = self._apply_transactions_creating_new_cart_line(cart, trxs)
+            if cmd:
+                update_cmds.append(cmd)
         all_transaction_uuids = transaction_uuids = [
             str(t.uuid) for t in transactions if t.uuid
         ]
