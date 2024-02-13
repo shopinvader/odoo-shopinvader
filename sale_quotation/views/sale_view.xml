@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    Copyright 2021 Camptocamp (https://www.camptocamp.com).
+    @author Iván Todorovich <ivan.todorovich@camptocamp.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field
+                    name="quotation_state"
+                    widget="statusbar"
+                    statusbar_visible="draft,waiting_acceptation,accepted"
+                    attrs="{'invisible': [('state', 'in', ('sale', 'done'))]}"
+                />
+            </field>
+            <field name="state" position="attributes">
+                <attribute
+                    name="attrs"
+                >{"invisible": [("state", "in", ("draft", "sent", "cancel"))]}</attribute>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="view_quotation_tree" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_quotation_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </field>
+            <field name="state" position="before">
+                <field name="quotation_state" string="State" />
+            </field>
+        </field>
+    </record>
+
+    <record id="sale_order_view_search_inherit_quotation" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation" />
+        <field name="arch" type="xml">
+            <filter name="draft" position="after">
+                <filter
+                    string="Draft"
+                    name="draft_quotation"
+                    domain="[('quotation_state', '=', 'draft')]"
+                />
+                <filter
+                    string="Customer request"
+                    name="customer_request"
+                    domain="[('quotation_state', '=', 'customer_request')]"
+                />
+                <filter
+                    string="Waiting Acceptation"
+                    name="waiting_acceptation"
+                    domain="[('quotation_state', '=', 'waiting_acceptation')]"
+                />
+                <filter
+                    string="Accepted"
+                    name="accepted"
+                    domain="[('quotation_state', '=', 'accepted')]"
+                />
+                <filter
+                    string="Cancel"
+                    name="cancel"
+                    domain="[('quotation_state', '=', 'cancel')]"
+                />
+
+            </filter>
+            <filter name="draft" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </filter>
+            <filter name="sales" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </filter>
+
+            <filter name="draft" position="before">
+                <filter
+                    name="quotation_state"
+                    string="State"
+                    domain="[]"
+                    context="{'group_by': 'quotation_state'}"
+                />
+            </filter>
+
+        </field>
+    </record>
+
+</odoo>
