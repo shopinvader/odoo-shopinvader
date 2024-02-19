@@ -14,7 +14,7 @@
         "search_engine_serializer_pydantic",
         "shopinvader_product",
     ],
-    "data": [],
+    "data": ["views/se_backend.xml"],
     "installable": True,
     "application": True,
     "development_status": "Alpha",

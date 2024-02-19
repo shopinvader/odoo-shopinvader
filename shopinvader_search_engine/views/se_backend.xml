@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="se_backend_form_view">
+        <field name="name">se.backend.form (in shopinvader_search_engine)</field>
+        <field name="model">se.backend</field>
+        <field name="inherit_id" ref="connector_search_engine.se_backend_form_view" />
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='se']/group[@name='se-main']" postion="inside">
+                <field
+                    name="company_id"
+                    widget="selection"
+                    groups="base.group_multi_company"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

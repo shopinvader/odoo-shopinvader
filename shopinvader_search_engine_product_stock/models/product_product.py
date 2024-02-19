@@ -7,11 +7,13 @@ from collections import defaultdict
 
 from odoo import api, fields, models
 
+from odoo.addons.base_sparse_field.models.fields import Serialized
+
 
 class ProductProduct(models.Model):
     _inherit = "product.product"
 
-    stock_data = fields.Json(compute="_compute_stock_data")
+    stock_data = Serialized(compute="_compute_stock_data")
 
     def _prepare_stock_data(self):
         self.ensure_one()

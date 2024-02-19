@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+    <record model="ir.ui.view" id="se_backend_form_view">
+        <field
+            name="name"
+        >se.backend.form (in shopinvader_search_engine_sale_profile)</field>
+        <field name="model">se.backend</field>
+        <field name="inherit_id" ref="connector_search_engine.se_backend_form_view" />
+        <field name="arch" type="xml">
+            <group name="index" position="after">
+                <group name="sale_profile" string="Sale Profiles" colspan="4">
+                    <field name="sale_profile_ids" nolabel="1" colspan="2">
+                        <tree editable="bottom">
+                            <field name="fiscal_position_ids" widget="many2many_tags" />
+                            <field name="pricelist_id" />
+                            <field name="code" />
+                            <field name="default" />
+                        </tree>
+                    </field>
+                </group>
+            </group>
+        </field>
+    </record>
+
+</odoo>
