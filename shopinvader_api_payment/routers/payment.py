@@ -4,7 +4,7 @@
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
-from typing import Annotated
+from typing import Annotated, Any
 from urllib.parse import urljoin
 
 from fastapi import APIRouter, Depends, HTTPException, Request
@@ -13,6 +13,7 @@ from odoo import api, models
 
 from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.addons.payment.models.payment_provider import PaymentProvider
+from odoo.addons.payment.models.payment_transaction import PaymentTransaction
 
 from ..schemas import (
     PaymentDataWithMethods,
@@ -112,25 +113,19 @@ def transaction(
         provider_sudo = odoo_env["payment.provider"].sudo().browse(data.provider_id)
 
         # Create the transaction
-        transaction_values = odoo_env[
+        tx_sudo = odoo_env[
             "shopinvader_api_payment.payment_router.helper"
-        ]._get_tx_create_values(data, provider_sudo, odoo_env)
-        tx_sudo = (
-            odoo_env["payment.transaction"]
-            .sudo()
-            .with_context(
-                shopinvader_api_payment=True,
-                shopinvader_api_payment_frontend_redirect_url=data.frontend_redirect_url,
-                shopinvader_api_payment_base_url=urljoin(
-                    str(request.url), "providers/"
-                ),
-            )
-            .create(transaction_values)
-        )
+        ]._create_transaction(data, provider_sudo, request, odoo_env)
         tx_sudo._log_sent_message()
-        return TransactionProcessingValues(
-            flow="redirect", **tx_sudo._get_processing_values()
+
+        transaction_processing_values = odoo_env[
+            "shopinvader_api_payment.payment_router.helper"
+        ]._get_tx_processing_values(
+            tx_sudo,
+            payable=data.payable,
+            frontend_redirect_url=data.frontend_redirect_url,
         )
+        return transaction_processing_values
     else:
         raise NotImplementedError("Only redirect flow is supported")
 
@@ -188,3 +183,37 @@ class ShopinvaderApiPaymentRouterHelper(models.AbstractModel):
             "tokenize": False,
             **additional_transaction_create_values,
         }
+
+    def _create_transaction(
+        self,
+        data: TransactionCreate,
+        provider_sudo: PaymentProvider,
+        request: Request,
+        odoo_env: Annotated[api.Environment, Depends(odoo_env)],
+    ) -> dict:
+        transaction_values = odoo_env[
+            "shopinvader_api_payment.payment_router.helper"
+        ]._get_tx_create_values(data, provider_sudo, odoo_env)
+        tx_sudo = (
+            odoo_env["payment.transaction"]
+            .sudo()
+            .with_context(
+                shopinvader_api_payment=True,
+                shopinvader_api_payment_frontend_redirect_url=data.frontend_redirect_url,
+                shopinvader_api_payment_base_url=urljoin(
+                    str(request.url), "providers/"
+                ),
+            )
+            .create(transaction_values)
+        )
+        return tx_sudo
+
+    def _get_tx_processing_values(
+        self, tx_sudo: PaymentTransaction, **kwargs: Any
+    ) -> TransactionProcessingValues:
+        """
+        Extract the creation of the response to allow to extend it.
+        """
+        return TransactionProcessingValues(
+            flow="redirect", **tx_sudo._get_processing_values()
+        )

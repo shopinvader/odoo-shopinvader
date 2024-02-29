@@ -18,6 +18,7 @@ class Payable(BaseModel):
     currency_id: int
     partner_id: int
     company_id: int
+    transaction_id: int | None = None
 
     @classmethod
     def _get_secret(cls, env: Environment) -> str:

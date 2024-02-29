@@ -2,23 +2,18 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Shopinvader Api Payment Cart",
+    "name": "Shopinvader Api Payment Provider Custom",
     "summary": """
-        Adds logic to be able to pay current cart""",
+        Specific routes for custom payments (wire transfers...) from Shopinvader""",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
-        # Odoo
-        "account_payment",
-        # Shopinvader
         "fastapi",
-        "sale_cart",
         "shopinvader_api_payment",
-        "shopinvader_api_cart",
+        "payment_custom",
     ],
-    "data": [
-        "views/payment_provider.xml",
-    ],
+    "data": [],
+    "demo": [],
 }
