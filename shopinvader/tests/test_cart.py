@@ -458,6 +458,32 @@ class ConnectedCartCase(CommonConnectedCartCase, CartClearTest):
         self.assertIn("note", res["data"])
         self.assertEqual("FOO", res["data"]["note"])
 
+    def test_cart_get_from_any_partner(self):
+        anon_cart = self.env.ref("shopinvader.sale_order_1")
+        with self.work_on_services(
+            partner=self.partner,
+            shopinvader_session={"cart_id": anon_cart.id},
+        ) as work:
+            self.service = work.component(usage="cart")
+            cart = self.service.dispatch("search")["data"]
+
+        self.assertEqual(anon_cart.id, cart["id"])
+        self.assertNotEqual(anon_cart.partner_id, self.partner)
+
+    def test_cart_get_restrict_cart_to_partner(self):
+        self.backend.restrict_cart_to_partner = True
+        anon_cart = self.env.ref("shopinvader.sale_order_1")
+        with self.work_on_services(
+            partner=self.partner,
+            shopinvader_session={"cart_id": anon_cart.id},
+        ) as work:
+            self.service = work.component(usage="cart")
+            cart = self.service.dispatch("search")["data"]
+
+        # Is it necessary to create a cart in this case?
+        # This is done for backward compatibility for now
+        self.assertNotEqual(anon_cart.id, cart["id"])
+
 
 class ConnectedCartNoTaxCase(CartCase):
     def setUp(self, *args, **kwargs):
