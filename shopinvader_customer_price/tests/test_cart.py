@@ -11,6 +11,7 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
     def setUpClass(cls):
         super().setUpClass()
         cls._setup_products()
+        cls.cart = cls.env.ref("shopinvader.sale_order_2")
         cls.partner = cls.env.ref("shopinvader.partner_1")
         cls.custom_pricelist = cls.env["product.pricelist"].create(
             {"name": "Test Pricelist"}
@@ -26,11 +27,15 @@ class ConnectedItemCase(ItemCaseMixin, CommonCase):
             self.service = work.component(usage="cart")
 
     def test_default_pricelist(self):
+        self.cart.unlink()
         self.assertFalse(self.backend.cart_pricelist_partner_field_id)
         cart = self.service._get()
-        self.assertEqual(cart.pricelist_id, self.partner.property_product_pricelist)
+
+        self.assertEqual(cart.pricelist_id, self.backend.pricelist_id)
 
     def test_custom_pricelist(self):
+        self.cart.unlink()
         self.backend.cart_pricelist_partner_field_id = self.pricelist_field
         cart = self.service._get()
+
         self.assertEqual(cart.pricelist_id, self.custom_pricelist)

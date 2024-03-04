@@ -40,7 +40,7 @@ class ShopinvaderBackend(models.Model):
 
     def _get_partner_pricelist(self, partner):
         pricelist = super()._get_partner_pricelist(partner)
-        if pricelist is None:
+        if pricelist is None and self.cart_pricelist_partner_field_id:
             pricelist = partner.property_product_pricelist
         return pricelist
 
