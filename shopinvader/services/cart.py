@@ -32,9 +32,10 @@ class CartService(Component):
 
     def search(self):
         """Retrieve cart from session or existing cart for current customer."""
-        if not self.cart_id:
+        cart = self._get(create_if_not_found=self.cart_id)
+        if not cart:
             return {}
-        return self._to_json(self._get(create_if_not_found=False))
+        return self._to_json(cart)
 
     def update(self, **params):
         cart = self._get()
@@ -424,25 +425,62 @@ class CartService(Component):
             "store_cache": {"cart": res},
         }
 
-    def _get(self, create_if_not_found=True):
-        """Get the session's cart
-
-        Here we take advantage of the cache. If the cart has been already loaded,
-        no SQL query will be issued.
-
-        :return: sale.order recordset (cart)
+    def _get_cart_domain(self, filter_partner=False):
+        """Returns the domain used to get the cart. If filter_partner is True,
+        the domain must take the logged in partner as cart owner.
         """
         domain = [
             ("shopinvader_backend_id", "=", self.shopinvader_backend.id),
             ("typology", "=", "cart"),
-            ("state", "=", "draft"),
         ]
-        cart = (
-            self.env["sale.order"].browse(self.cart_id).exists().filtered_domain(domain)
-        )
-        if not cart and create_if_not_found:
-            cart = self._create_empty_cart()
-        return cart
+        if self.shopinvader_backend.restrict_cart_to_partner or filter_partner:
+            domain.append(("partner_id", "=", self.partner.id))
+        return domain
+
+    def _get_active_cart_order(self):
+        """Return the active cart search order. It can be overriden to change
+        the active cart search behavior."""
+        return "date_order desc"
+
+    def _get(self, create_if_not_found=True):
+        """Get the session cart if session cart id is provided or if a partner
+        is logged in get the current partner active cart which is by default
+        the last cart if it is in draft.
+
+        :return: sale.order recordset (cart)
+        """
+
+        # If a session cart id is provided, get the corresponding cart and check
+        # if it match cart domain
+        if self.cart_id:
+            # Here we take advantage of the cache. If the cart has been already loaded,
+            # no SQL query will be issued.
+            cart = (
+                self.env["sale.order"]
+                .browse(self.cart_id)
+                .exists()
+                .filtered_domain(self._get_cart_domain())
+            )
+
+        # Without session cart id, get the active cart for the partner in case
+        # a partner is logged in.
+        elif self._is_logged_in():
+            cart = self.env["sale.order"].search(
+                self._get_cart_domain(True),
+                order=self._get_active_cart_order(),
+                limit=1,
+            )
+        else:
+            cart = self.env["sale.order"].browse()
+
+        # The cart should always be in draft state
+        if cart and cart.state == "draft":
+            return cart
+
+        if create_if_not_found:
+            return self._create_empty_cart()
+
+        return self.env["sale.order"].browse()
 
     def _create_empty_cart(self, **cart_params):
         vals = self._prepare_cart(**cart_params)

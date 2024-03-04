@@ -172,7 +172,7 @@ class WishlistCase(CommonWishlistCase):
 
         with self.work_on_services(partner=self.partner) as work:
             cart_service = work.component(usage="cart")
-        cart = cart_service._get()
+        cart = cart_service._create_empty_cart()
         # no line yet
         self.assertFalse(cart.order_line)
 
@@ -195,6 +195,8 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(len(self.prod_set.set_line_ids), 3)
         with self.work_on_services(partner=self.partner) as work:
             cart_service = work.component(usage="cart")
+        # Start with an empty cart
+        cart_service._create_empty_cart()
         cart = cart_service._get()
         # no line yet
         self.assertFalse(cart.order_line)

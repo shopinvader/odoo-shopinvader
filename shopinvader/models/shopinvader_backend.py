@@ -219,6 +219,12 @@ class ShopinvaderBackend(models.Model):
         "provides a fallback mechanism in such a case.",
         default=lambda self: self._default_website_unique_key(),
     )
+
+    restrict_cart_to_partner = fields.Boolean(
+        "Restrict access of cart to corresponding logged in partner",
+        default=False,
+    )
+
     currency_ids = fields.Many2many(comodel_name="res.currency", string="Currency")
 
     frontend_data_source = fields.Selection(

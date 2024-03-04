@@ -104,6 +104,7 @@
                                 <field name="clear_cart_options" />
                                 <field name="cart_checkout_address_policy" />
                                 <field name="pricelist_id" required="1" />
+                                <field name="restrict_cart_to_partner" />
                             </group>
                             <group name="sale_conf" string="Sale configuration">
                                 <field
