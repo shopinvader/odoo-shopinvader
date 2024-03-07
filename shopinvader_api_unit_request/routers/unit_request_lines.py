@@ -16,7 +16,6 @@ from odoo.addons.fastapi.dependencies import (
     paging,
 )
 from odoo.addons.fastapi.schemas import Paging
-
 from odoo.addons.sale.models.sale_order_line import SaleOrderLine
 from odoo.addons.shopinvader_api_unit_member.routers.unit_members import (
     authenticated_manager,
