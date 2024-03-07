@@ -24,7 +24,6 @@
                 >
           <field name="order_line_all_requested_ids">
             <tree
-                            string="Requested Lines"
                             editable="bottom"
                             decoration-success="request_accepted"
                             decoration-danger="request_rejected"
