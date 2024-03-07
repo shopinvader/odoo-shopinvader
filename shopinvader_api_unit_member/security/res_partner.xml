@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2024 Akretion (http://www.akretion.com).
+  @author Florian Mounier <florian.mounier@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="shopinvader_unit_management_res_partner_rule" model="ir.rule">
+        <field
+            name="name"
+        >Shopinvader Unit Management Endpoint rule: res partner</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field
+            name="groups"
+            eval="[(4, ref('shopinvader_api_unit_member.shopinvader_unit_management_user_group'))]"
+        />
+        <field name="domain_force">[('parent_id','=',authenticated_partner_id)]</field>
+
+    </record>
+
+    <record id="shopinvader_unit_management_res_partner_access" model="ir.model.access">
+        <field
+            name="name"
+        >Shopinvader Unit Management: user read/write/create partners</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="group_id" ref="shopinvader_unit_management_user_group" />
+        <field name="perm_read" eval="True" />
+        <field name="perm_write" eval="True" />
+        <field name="perm_create" eval="True" />
+        <field name="perm_unlink" eval="False" />
+    </record>
+
+</odoo>
