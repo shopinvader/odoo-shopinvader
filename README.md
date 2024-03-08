@@ -35,7 +35,7 @@ addon | version | maintainers | summary
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.2 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
 [shopinvader_multi_category](shopinvader_multi_category/) | 16.0.1.0.1 |  | Shopinvader Many Categories
-[shopinvader_product](shopinvader_product/) | 16.0.1.0.2 |  | Adds shopinvader product fields and schemas
+[shopinvader_product](shopinvader_product/) | 16.0.1.0.3 |  | Adds shopinvader product fields and schemas
 [shopinvader_product_attribute_set](shopinvader_product_attribute_set/) | 16.0.1.0.1 |  | Expose all PIM' Attribute sets with Shopinvader
 [shopinvader_product_brand](shopinvader_product_brand/) | 16.0.1.0.1 |  | Shopinvader product Brand
 [shopinvader_product_brand_tag](shopinvader_product_brand_tag/) | 16.0.1.0.1 |  | Index Product Brand Tags in Shopinvader
@@ -51,7 +51,7 @@ addon | version | maintainers | summary
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.2.1 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.2 |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 16.0.1.0.1 |  | Shopinvader Schema Sale State
-[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.5 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.6 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_assortment](shopinvader_search_engine_assortment/) | 16.0.1.0.1 |  | Shopinvader Search Engine Assortment
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.3 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.1 |  | Shopinvader Search Engine Product Brand
