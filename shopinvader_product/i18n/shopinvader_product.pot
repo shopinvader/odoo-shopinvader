@@ -191,11 +191,6 @@ msgid "Shopinvader Categories"
 msgstr ""
 
 #. module: shopinvader_product
-#: model:ir.model.fields,field_description:shopinvader_product.field_product_product__price
-msgid "Shopinvader Price"
-msgstr ""
-
-#. module: shopinvader_product
 #: model:ir.model.fields,field_description:shopinvader_product.field_product_product__short_name
 msgid "Short Name"
 msgstr ""
