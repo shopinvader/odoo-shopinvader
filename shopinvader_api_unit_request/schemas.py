@@ -17,12 +17,14 @@ class RejectRequest(StrictExtendableBaseModel, extra="ignore"):
 
 
 class RequestedSaleLine(SaleLineWithSale):
+    partner_id: int
     request_rejected: bool
     request_rejection_reason: str | None = None
 
     @classmethod
     def from_sale_order_line(cls, odoo_rec):
         res = super().from_sale_order_line(odoo_rec)
+        res.partner_id = odoo_rec.request_partner_id.id
         res.request_rejected = odoo_rec.request_rejected
         res.request_rejection_reason = odoo_rec.request_rejection_reason or None
         return res
