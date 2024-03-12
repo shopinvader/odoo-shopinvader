@@ -133,7 +133,7 @@ class ShopinvaderApiUnitCartSaleLineRouterHelper(models.AbstractModel):
             (
                 "request_partner_id",
                 "in",
-                self.partner._get_unit()._get_unit_collaborators().ids,
+                self.partner.unit_id.collaborator_ids.ids,
             ),
             ("request_order_id", "=", False),
         ]

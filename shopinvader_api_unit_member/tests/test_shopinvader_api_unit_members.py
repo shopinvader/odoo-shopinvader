@@ -166,13 +166,13 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
             response: Response = test_client.get(f"/unit/members/{self.unit_1.id}")
             self.assertEqual(
                 response.status_code,
-                status.HTTP_403_FORBIDDEN,
+                status.HTTP_404_NOT_FOUND,
             )
         with self._rollback_called_test_client() as test_client:
             response: Response = test_client.get(f"/unit/members/{self.unit_2.id}")
             self.assertEqual(
                 response.status_code,
-                status.HTTP_403_FORBIDDEN,
+                status.HTTP_404_NOT_FOUND,
             )
 
     def test_create_unit_member(self):
@@ -180,7 +180,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         Test to create a new unit member
         """
         self.assertEqual(
-            self.unit_1._get_unit_members(),
+            self.unit_1.member_ids,
             self.manager_1_1
             | self.collaborator_1_1
             | self.collaborator_1_2
@@ -206,10 +206,10 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         member = response.json()
         new_member = self.env["res.partner"].browse(member["id"])
         self.assertEqual(member["name"], "New Unit Member")
-        self.assertEqual(new_member._get_unit(), self.unit_1)
+        self.assertEqual(new_member.unit_id, self.unit_1)
         self.assertEqual(new_member.unit_profile, "collaborator")
         self.assertEqual(
-            self.unit_1._get_unit_members(),
+            self.unit_1.member_ids,
             self.manager_1_1
             | self.collaborator_1_1
             | self.collaborator_1_2
@@ -221,7 +221,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
 
     def test_create_unit_manager(self):
         self.assertEqual(
-            self.unit_1._get_unit_members(),
+            self.unit_1.member_ids,
             self.manager_1_1
             | self.collaborator_1_1
             | self.collaborator_1_2
@@ -243,10 +243,10 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         member = response.json()
         new_member = self.env["res.partner"].browse(member["id"])
         self.assertEqual(member["name"], "New Unit Manager")
-        self.assertEqual(new_member._get_unit(), self.unit_1)
+        self.assertEqual(new_member.unit_id, self.unit_1)
         self.assertEqual(new_member.unit_profile, "manager")
         self.assertEqual(
-            self.unit_1._get_unit_members(),
+            self.unit_1.member_ids,
             self.manager_1_1
             | self.collaborator_1_1
             | self.collaborator_1_2
@@ -294,7 +294,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         Test to update a specific unit member
         """
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Manager 1.1",
                 "Collaborator 1.1",
@@ -326,7 +326,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         self.assertEqual(updated_member.name, "Updated Unit Member")
 
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Manager 1.1",
                 "Collaborator 1.1",
@@ -342,7 +342,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         Test to update a specific unit manager
         """
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Manager 1.1",
                 "Collaborator 1.1",
@@ -374,7 +374,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         self.assertEqual(updated_member.name, "Updated Unit Manager")
 
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Updated Unit Manager",
                 "Collaborator 1.1",
@@ -402,7 +402,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         Test to delete a specific unit member
         """
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Manager 1.1",
                 "Collaborator 1.1",
@@ -424,7 +424,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         )
         self.assertFalse(self.collaborator_1_4.active)
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Manager 1.1",
                 "Collaborator 1.1",
@@ -439,7 +439,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         Test to delete a specific unit manager
         """
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Manager 1.1",
                 "Collaborator 1.1",
@@ -462,7 +462,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
 
         self.assertFalse(self.manager_1_1.active)
         self.assertEqual(
-            set(self.unit_1._get_unit_members().mapped("name")),
+            set(self.unit_1.member_ids.mapped("name")),
             {
                 "Collaborator 1.1",
                 "Collaborator 1.2",
