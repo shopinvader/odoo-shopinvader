@@ -19,54 +19,19 @@ class ResPartner(models.Model):
         required=False,
     )
 
-    @api.constrains("unit_profile", "parent_id")
-    def _check_unit_profile(self):
-        if self.unit_profile:
-            if self.unit_profile == "unit" and self.parent_id:
-                raise ValidationError(_("A unit can't have a parent."))
-            if self.unit_profile in ["manager", "collaborator"] and not self.parent_id:
-                raise ValidationError(
-                    _("A manager or a collaborator must have a parent unit.")
-                )
+    unit_id = fields.Many2one("res.partner", related="parent_id", string="Unit")
 
-    @api.model
-    def _get_unit_members(self):
-        self.ensure_one()
-        if self.unit_profile != "unit":
-            raise AccessError(_("This method is only available for units."))
-        return self.search(
-            [
-                ("parent_id", "=", self.id),
-                ("unit_profile", "in", ["manager", "collaborator"]),
-            ]
-        )
-
-    @api.model
-    def _get_unit_managers(self):
-        self.ensure_one()
-        if self.unit_profile != "unit":
-            raise AccessError(_("This method is only available for units."))
-        return self.search(
-            [("parent_id", "=", self.id), ("unit_profile", "=", "manager")]
-        )
-
-    @api.model
-    def _get_unit_collaborators(self):
-        self.ensure_one()
-        if self.unit_profile != "unit":
-            raise AccessError(_("This method is only available for units."))
-        return self.search(
-            [("parent_id", "=", self.id), ("unit_profile", "=", "collaborator")]
-        )
-
-    @api.model
-    def _get_unit(self):
-        self.ensure_one()
-        if self.unit_profile not in ["manager", "collaborator"]:
-            raise AccessError(
-                _("This method is only available for managers and collaborators.")
-            )
-        return self.parent_id
+    manager_ids = fields.One2many(
+        "res.partner", "unit_id", domain=[("unit_profile", "=", "manager")]
+    )
+    collaborator_ids = fields.One2many(
+        "res.partner", "unit_id", domain=[("unit_profile", "=", "collaborator")]
+    )
+    member_ids = fields.One2many(
+        "res.partner",
+        "unit_id",
+        domain=[("unit_profile", "in", ["manager", "collaborator"])],
+    )
 
     def _ensure_manager(self):
         """Ensure the partner is a manager."""
@@ -75,14 +40,13 @@ class ResPartner(models.Model):
 
     def _ensure_same_unit(self, member):
         """Ensure the member is in the same unit."""
-        if not member or member._get_unit() != self._get_unit():
+        if not member or member.unit_id != self.unit_id:
             raise MissingError(_("Member not found"))
 
     @api.model
     def _get_shopinvader_unit_members(self):
         self._ensure_manager()
-        unit = self._get_unit()
-        return unit._get_unit_members()
+        return self.unit_id.member_ids
 
     @api.model
     def _get_shopinvader_unit_member(self, id):
@@ -94,7 +58,9 @@ class ResPartner(models.Model):
     @api.model
     def _create_shopinvader_unit_member(self, vals):
         self._ensure_manager()
-        vals["parent_id"] = self._get_unit().id
+        # FIXME:
+        vals[self._fields["unit_id"].related[0]] = self.unit_id.id
+
         if "unit_profile" not in vals:
             vals["unit_profile"] = "collaborator"
         if vals["unit_profile"] not in dict(self._fields["unit_profile"].selection):

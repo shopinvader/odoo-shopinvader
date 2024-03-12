@@ -14,7 +14,9 @@
             name="groups"
             eval="[(4, ref('shopinvader_api_unit_member.shopinvader_unit_management_user_group'))]"
         />
-        <field name="domain_force">[('parent_id','=',authenticated_partner_id)]</field>
+        <field
+            name="domain_force"
+        >['|', ('unit_id.manager_ids','=',authenticated_partner_id), ('manager_ids','=',authenticated_partner_id)]</field>
 
     </record>
 
