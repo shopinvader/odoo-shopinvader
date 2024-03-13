@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from typing import Annotated
+from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
@@ -37,11 +38,8 @@ async def get_request_lines(
     """
     Get list of requested sale lines
     """
-    count, sols = (
-        env["shopinvader_api_unit_request.lines.helper"]
-        .new({"partner": partner})
-        ._search(paging, params)
-    )
+    helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
+    count, sols = helper._search(paging, params)
     return PagedCollection[RequestedSaleLine](
         count=count,
         items=[RequestedSaleLine.from_sale_order_line(sol) for sol in sols],
@@ -57,48 +55,43 @@ async def get_requested_sale_line(
     """
     Get a specific requested sale line
     """
-    return RequestedSaleLine.from_sale_order_line(
-        env["shopinvader_api_unit_request.lines.helper"]
-        .new({"partner": partner})
-        ._get(id)
-    )
+    helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
+    return RequestedSaleLine.from_sale_order_line(helper._get(id))
 
 
 @unit_request_line_router.post("/unit/request_lines/{id}/accept")
+@unit_request_line_router.post("/unit/request_lines/{id}/accept/{uuid}")
 async def accept_requested_sale_line(
     id: int,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
+    uuid: UUID | None = None,
 ) -> RequestedSaleLine:
     """
     Accept a specific requested sale line
     """
-    sale_line = (
-        env["shopinvader_api_unit_request.lines.helper"]
-        .new({"partner": partner})
-        ._get(id)
-    )
-    cart = env["sale.order"]._find_open_cart(partner.id)
+    helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
+    sale_line = helper._get(id)
+    cart = helper._get_cart(uuid)
     sale_line._action_accept_request(cart)
     return RequestedSaleLine.from_sale_order_line(sale_line)
 
 
 @unit_request_line_router.post("/unit/request_lines/{id}/reject")
+@unit_request_line_router.post("/unit/request_lines/{id}/reject/{uuid}")
 async def reject_requested_sale_line(
     id: int,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     data: RejectRequest,
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
+    uuid: UUID | None = None,
 ) -> RequestedSaleLine:
     """
     Reject a specific requested sale line
     """
-    sale_line = (
-        env["shopinvader_api_unit_request.lines.helper"]
-        .new({"partner": partner})
-        ._get(id)
-    )
-    cart = env["sale.order"]._find_open_cart(partner.id)
+    helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
+    sale_line = helper._get(id)
+    cart = helper._get_cart(uuid)
     sale_line._action_reject_request(cart, data.reason)
     return RequestedSaleLine.from_sale_order_line(sale_line)
 
@@ -112,11 +105,8 @@ async def reset_requested_sale_line(
     """
     Reset a specific requested sale line
     """
-    sale_line = (
-        env["shopinvader_api_unit_request.lines.helper"]
-        .new({"partner": partner})
-        ._get(id)
-    )
+    helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
+    sale_line = helper._get(id)
     sale_line._action_reset_request()
     return RequestedSaleLine.from_sale_order_line(sale_line)
 
@@ -151,3 +141,9 @@ class ShopinvaderApiUnitCartSaleLineRouterHelper(models.AbstractModel):
             limit=paging.limit,
             offset=paging.offset,
         )
+
+    def _get_cart(self, uuid):
+        cart = self.env["sale.order"]._find_open_cart(self.partner.id, uuid)
+        if not cart:
+            cart = self.env["sale.order"]._create_empty_cart(self.partner.id)
+        return cart
