@@ -29,16 +29,13 @@ class SaleOrderLine(models.Model):
         help="The order that rejected this line.",
     )
     request_rejected = fields.Boolean(
-        string="Request Rejected",
         help="The request has been rejected.",
         default=False,
     )
     request_rejection_reason = fields.Text(
-        string="Request Rejection Reason",
         help="The reason of the rejection.",
     )
     request_accepted = fields.Boolean(
-        string="Request Accepted",
         help="The request has been accepted.",
         compute="_compute_request_accepted",
     )
