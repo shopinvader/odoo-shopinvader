@@ -37,15 +37,15 @@ async def get_unit_members(
     return [UnitMember.from_res_partner(rec) for rec in members]
 
 
-@unit_member_router.get("/unit/members/{id}")
+@unit_member_router.get("/unit/members/{member_id}")
 async def get_unit_member(
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
-    id: int,
+    member_id: int,
 ) -> UnitMember:
     """
     Get a specific unit member
     """
-    member = partner._get_shopinvader_unit_member(id)
+    member = partner._get_shopinvader_unit_member(member_id)
     return UnitMember.from_res_partner(member)
 
 
@@ -62,27 +62,27 @@ async def create_unit_member(
     return UnitMember.from_res_partner(member)
 
 
-@unit_member_router.post("/unit/members/{id}")
+@unit_member_router.post("/unit/members/{member_id}")
 async def update_unit_member(
     data: UnitMemberUpdate,
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
-    id: int,
+    member_id: int,
 ) -> UnitMember:
     """
     Update a specific unit member (manager or collaborator) as manager
     """
     vals = data.to_res_partner_vals()
-    member = partner._update_shopinvader_unit_member(id, vals)
+    member = partner._update_shopinvader_unit_member(member_id, vals)
     return UnitMember.from_res_partner(member)
 
 
-@unit_member_router.delete("/unit/members/{id}")
+@unit_member_router.delete("/unit/members/{member_id}")
 async def delete_unit_member(
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
-    id: int,
+    member_id: int,
 ) -> UnitMember:
     """
     Delete a specific unit member (manager or collaborator) as manager
     """
-    member = partner._delete_shopinvader_unit_member(id)
+    member = partner._delete_shopinvader_unit_member(member_id)
     return UnitMember.from_res_partner(member)

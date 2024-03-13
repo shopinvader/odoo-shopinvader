@@ -46,9 +46,9 @@ async def get_request_lines(
     )
 
 
-@unit_request_line_router.get("/unit/request_lines/{id}")
+@unit_request_line_router.get("/unit/request_lines/{sol_id}")
 async def get_requested_sale_line(
-    id: int,
+    sol_id: int,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
 ) -> RequestedSaleLine:
@@ -56,13 +56,13 @@ async def get_requested_sale_line(
     Get a specific requested sale line
     """
     helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
-    return RequestedSaleLine.from_sale_order_line(helper._get(id))
+    return RequestedSaleLine.from_sale_order_line(helper._get(sol_id))
 
 
-@unit_request_line_router.post("/unit/request_lines/{id}/accept")
-@unit_request_line_router.post("/unit/request_lines/{id}/accept/{uuid}")
+@unit_request_line_router.post("/unit/request_lines/{sol_id}/accept")
+@unit_request_line_router.post("/unit/request_lines/{sol_id}/accept/{uuid}")
 async def accept_requested_sale_line(
-    id: int,
+    sol_id: int,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
     uuid: UUID | None = None,
@@ -71,16 +71,16 @@ async def accept_requested_sale_line(
     Accept a specific requested sale line
     """
     helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
-    sale_line = helper._get(id)
+    sale_line = helper._get(sol_id)
     cart = helper._get_cart(uuid)
     sale_line._action_accept_request(cart)
     return RequestedSaleLine.from_sale_order_line(sale_line)
 
 
-@unit_request_line_router.post("/unit/request_lines/{id}/reject")
-@unit_request_line_router.post("/unit/request_lines/{id}/reject/{uuid}")
+@unit_request_line_router.post("/unit/request_lines/{sol_id}/reject")
+@unit_request_line_router.post("/unit/request_lines/{sol_id}/reject/{uuid}")
 async def reject_requested_sale_line(
-    id: int,
+    sol_id: int,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     data: RejectRequest,
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
@@ -90,15 +90,15 @@ async def reject_requested_sale_line(
     Reject a specific requested sale line
     """
     helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
-    sale_line = helper._get(id)
+    sale_line = helper._get(sol_id)
     cart = helper._get_cart(uuid)
     sale_line._action_reject_request(cart, data.reason)
     return RequestedSaleLine.from_sale_order_line(sale_line)
 
 
-@unit_request_line_router.post("/unit/request_lines/{id}/reset")
+@unit_request_line_router.post("/unit/request_lines/{sol_id}/reset")
 async def reset_requested_sale_line(
-    id: int,
+    sol_id: int,
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_manager)],
 ) -> RequestedSaleLine:
@@ -106,7 +106,7 @@ async def reset_requested_sale_line(
     Reset a specific requested sale line
     """
     helper = env["shopinvader_api_unit_request.lines.helper"].new({"partner": partner})
-    sale_line = helper._get(id)
+    sale_line = helper._get(sol_id)
     sale_line._action_reset_request()
     return RequestedSaleLine.from_sale_order_line(sale_line)
 

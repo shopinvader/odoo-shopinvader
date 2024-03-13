@@ -48,9 +48,9 @@ class ResPartner(models.Model):
         return self.unit_id.member_ids
 
     @api.model
-    def _get_shopinvader_unit_member(self, id):
+    def _get_shopinvader_unit_member(self, member_id):
         self._ensure_manager()
-        member = self.browse(id)
+        member = self.browse(member_id)
         self._ensure_same_unit(member)
         return member
 
@@ -69,9 +69,9 @@ class ResPartner(models.Model):
         return self.sudo().create(vals)
 
     @api.model
-    def _update_shopinvader_unit_member(self, id, vals):
+    def _update_shopinvader_unit_member(self, member_id, vals):
         self._ensure_manager()
-        member = self.browse(id)
+        member = self.browse(member_id)
         self._ensure_same_unit(member)
         if member.unit_profile not in ["collaborator", "manager"]:
             raise AccessError(_("Cannot perform this action on this member"))
@@ -79,9 +79,9 @@ class ResPartner(models.Model):
         return member
 
     @api.model
-    def _delete_shopinvader_unit_member(self, id):
+    def _delete_shopinvader_unit_member(self, member_id):
         self._ensure_manager()
-        member = self.browse(id)
+        member = self.browse(member_id)
         self._ensure_same_unit(member)
         if member.unit_profile not in ["collaborator", "manager"]:
             raise AccessError(_("Cannot perform this action on this member"))
