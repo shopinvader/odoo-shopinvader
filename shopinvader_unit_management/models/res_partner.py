@@ -15,7 +15,6 @@ class ResPartner(models.Model):
             ("manager", "Unit Manager"),
             ("collaborator", "Unit Collaborator"),
         ],
-        string="Unit Profile",
         required=False,
     )
 

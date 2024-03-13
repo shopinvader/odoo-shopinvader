@@ -4,7 +4,7 @@
 
 {
     "name": "Shopinvader Unit Management",
-    "summary": "This module introduce the concept of unit management. "
+    "summary": "This module introduces the concept of unit management. "
     "The unit is a group of partners with managers and collaborators. "
     "This module provides a simple implementation of the unit management "
     "concept.",
