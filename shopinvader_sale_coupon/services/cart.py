@@ -5,6 +5,7 @@
 from odoo import _
 from odoo.exceptions import UserError
 
+from odoo.addons.base_rest.components.service import to_bool
 from odoo.addons.component.core import Component
 
 
@@ -121,6 +122,7 @@ class CartService(Component):
             "skip_coupon_recompute": {
                 "type": "boolean",
                 "required": False,
+                "coerce": to_bool,
             }
         }
 
