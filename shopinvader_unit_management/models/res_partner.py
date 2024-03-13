@@ -67,7 +67,7 @@ class ResPartner(models.Model):
             raise ValidationError(_("Invalid member type"))
         if vals["unit_profile"] not in ["collaborator", "manager"]:
             raise AccessError(_("Only collaborators and managers can be created"))
-        return self.create(vals)
+        return self.sudo().create(vals)
 
     @api.model
     def _update_shopinvader_unit_member(self, id, vals):
@@ -76,7 +76,7 @@ class ResPartner(models.Model):
         self._ensure_same_unit(member)
         if member.unit_profile not in ["collaborator", "manager"]:
             raise AccessError(_("Cannot perform this action on this member"))
-        member.write(vals)
+        member.sudo().write(vals)
         return member
 
     @api.model
