@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- pylint:disable=duplicate-xml-record-id -->
+<!-- oca-disable=duplicate-xml-record-id -->
 <odoo noupdate="1">
+
+
+    <!--
+        FORCE ONLY ONE ITEM ON THE PRICE LIST
+        When a price list is created, odoo assign a default price list item/
+        To be sure that only our new item is assigned to the price list
+        we reassign the item_ids....
+    -->
 
     <record id="pricelist_1" model="product.pricelist">
         <field name="name">Business Pricelist</field>
         <field name="currency_id" ref="base.USD" />
+        <field name="item_ids" eval="[(6, 0, [ref('shopinvader.item_1')])]" />
     </record>
 
     <record id="item_1" model="product.pricelist.item">
@@ -15,15 +24,6 @@
         <field name="compute_price">percentage</field>
     </record>
 
-    <!--
-        FORCE ONLY ONE ITEM ON THE PRICE LIST
-        When a price list is created, odoo assign a default price list item/
-        To be sure that only our new item is assigned to the price list
-        we reassign the item_ids....
-    -->
-    <record id="pricelist_1" model="product.pricelist">
-        <field name="item_ids" eval="[(6, 0, [ref('shopinvader.item_1')])]" />
-    </record>
 
 
 </odoo>
