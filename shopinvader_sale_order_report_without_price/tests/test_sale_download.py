@@ -5,14 +5,14 @@ from odoo.addons.shopinvader.tests.test_sale import CommonSaleCase
 
 
 class SaleCase(CommonSaleCase):
-    def download(self, id, **params):
+    def download(self, sale_id, **params):
         with mock.patch(
             "odoo.addons.shopinvader.services." "abstract_download.content_disposition"
         ) as mocked_cd:
             request = mock.MagicMock()
             abstract_download.request = request
             mocked_cd.return_value = "attachment; filename=test"
-            self.service.download(id, **params)
+            self.service.download(sale_id, **params)
             self.assertEqual(1, request.make_response.call_count)
             content, headers = request.make_response.call_args[0]
             self.assertTrue(content)
