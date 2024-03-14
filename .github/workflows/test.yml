@@ -19,10 +19,10 @@ jobs:
       matrix:
         include:
           - container: ghcr.io/oca/oca-ci/py3.8-odoo14.0:latest
-            makepot: "true"
             name: test with Odoo
           - container: ghcr.io/oca/oca-ci/py3.8-ocb14.0:latest
             name: test with OCB
+            makepot: "true"
     services:
       postgres:
         image: postgres:9.6
@@ -36,7 +36,7 @@ jobs:
       PIP_EXTRA_INDEX_URL: "https://wheelhouse.shopinvader.com/simple/"
       REST_API_METHOD_FIX_DECORATOR_DEPRECATE_LOG_DISABLE: 1
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           persist-credentials: false
       - name: Install addons and dependencies
