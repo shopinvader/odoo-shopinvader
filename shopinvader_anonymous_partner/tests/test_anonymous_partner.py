@@ -34,6 +34,14 @@ class TestController(Controller):
             return str(partner.id)
         return ""
 
+    @route("/test/anonymous_partner_delete", type="http", auth="none")
+    def anonymous_partner_delete(self):
+        request.env["res.partner"].with_user(
+            SUPERUSER_ID
+        )._delete_anonymous_partner__cookie(
+            request.httprequest.cookies, request.future_response
+        )
+
 
 class TestShopinvaderAnonymousPartner(TransactionCase):
     def test_create(self):
@@ -69,9 +77,19 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
         )
         self.assertEqual(len(partner2), 0)
 
+    def test_delete(self):
+        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
+            mock.MagicMock()
+        )
+        self.assertTrue(partner.exists())
+        self.env["res.partner"]._delete_anonymous_partner__cookie(
+            cookies={COOKIE_NAME: partner.anonymous_token}, response=mock.MagicMock()
+        )
+        self.assertFalse(partner.exists())
+
 
 class TestShopinvaderAnonymousPartnerEndToEnd(HttpCase):
-    def test_create_and_get(self):
+    def test_create_and_get_and_delete(self):
         resp = self.url_open("/test/anonymous_partner_create")
         resp.raise_for_status()
         token = resp.cookies.get(COOKIE_NAME)
@@ -89,3 +107,7 @@ class TestShopinvaderAnonymousPartnerEndToEnd(HttpCase):
         )
         resp.raise_for_status()
         self.assertEqual(int(resp.text), partner_id)
+        # delete cookie
+        resp = self.url_open("/test/anonymous_partner_delete")
+        resp.raise_for_status()
+        self.assertFalse(resp.cookies.get(COOKIE_NAME))
