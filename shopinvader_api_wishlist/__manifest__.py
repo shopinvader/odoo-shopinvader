@@ -22,7 +22,7 @@
     "demo": [],
     "data": [
         "security/groups.xml",
-        "security/acl_product_set_add.xml",
+        "security/acl_sale_product_set_wizard.xml",
         "security/rule+acl_product_set.xml",
         "security/rule+acl_product_set_line.xml",
     ],

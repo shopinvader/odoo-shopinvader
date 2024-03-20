@@ -92,7 +92,7 @@ class ShopinvaderApiWishlistRouterHelper(models.AbstractModel):
         uuid = rqst.uuid if rqst else None
         cart = self.env["sale.order"]._find_open_cart(self.partner.id, uuid)
         product_set = self._get(record_id)
-        wizard = self.env["product.set.add"].create(
+        wizard = self.env["sale.product.set.wizard"].create(
             {
                 "order_id": cart.id,
                 "product_set_id": product_set.id,
@@ -111,7 +111,7 @@ class ShopinvaderApiWishlistRouterHelper(models.AbstractModel):
         lines = product_set.set_line_ids.filtered(
             lambda l, product_ids=product_ids: l.product_id.id in product_ids
         )
-        wizard = self.env["product.set.add"].create(
+        wizard = self.env["sale.product.set.wizard"].create(
             {
                 "order_id": cart.id,
                 "product_set_id": product_set.id,

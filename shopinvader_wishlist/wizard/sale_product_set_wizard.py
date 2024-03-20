@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class ProductSetAdd(models.TransientModel):
-    _inherit = "product.set.add"
+    _inherit = "sale.product.set.wizard"
 
     shopinvader_backend_id = fields.Many2one(
         related="product_set_id.shopinvader_backend_id"

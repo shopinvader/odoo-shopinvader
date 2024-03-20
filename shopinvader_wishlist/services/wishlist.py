@@ -314,7 +314,7 @@ class WishlistService(Component):
         return self._default_domain_for_partner_records()
 
     def _get_add_to_cart_wizard(self, record, cart):
-        return self.env["product.set.add"].create(
+        return self.env["sale.product.set.wizard"].create(
             {
                 "order_id": cart.id,
                 "product_set_id": record.id,
