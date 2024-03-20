@@ -21,6 +21,7 @@ class TestInvoice(CommonCase, CommonTestDownload):
         cls.bank_journal_euro = cls.journal_obj.create(
             {"name": "Bank", "type": "bank", "code": "BNK627"}
         )
+        cls.payment_method_line_manual_in.journal_id = cls.bank_journal_euro
         cls.invoice_obj = cls.env["account.move"]
         cls.invoice = cls._confirm_and_invoice_sale(cls, cls.sale)
         cls.non_sale_invoice = cls.invoice.copy()

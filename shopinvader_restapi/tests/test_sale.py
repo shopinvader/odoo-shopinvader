@@ -26,6 +26,7 @@ class CommonSaleCase(CommonCase):
         cls.bank_journal_euro = cls.journal_obj.create(
             {"name": "Bank", "type": "bank", "code": "BNK6278"}
         )
+        cls.payment_method_line_manual_in.journal_id = cls.bank_journal_euro
 
     def setUp(self, *args, **kwargs):
         super().setUp(*args, **kwargs)
