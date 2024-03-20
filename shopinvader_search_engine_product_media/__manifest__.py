@@ -16,5 +16,8 @@
         "shopinvader_search_engine",
         "fs_product_multi_media",
     ],
+    "data": [
+        "views/se_backend.xml",
+    ],
     "development_status": "Alpha",
 }
