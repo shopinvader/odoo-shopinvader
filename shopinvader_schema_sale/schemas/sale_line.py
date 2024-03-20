@@ -3,6 +3,8 @@
 
 from extendable_pydantic import StrictExtendableBaseModel
 
+from odoo.tools.float_utils import float_round
+
 from .amount import SaleLineAmount
 
 
@@ -20,5 +22,8 @@ class SaleLine(StrictExtendableBaseModel):
             product_id=odoo_rec.product_id.id,
             name=odoo_rec.name,
             amount=SaleLineAmount.from_sale_order_line(odoo_rec),
-            qty=odoo_rec.product_uom_qty,
+            qty=float_round(
+                odoo_rec.product_uom_qty,
+                precision_rounding=odoo_rec.product_uom.rounding,
+            ),
         )
