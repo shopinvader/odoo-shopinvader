@@ -29,6 +29,6 @@ msgid "Shopinvader Wishlist user"
 msgstr ""
 
 #. module: shopinvader_api_wishlist
-#: model:ir.model,name:shopinvader_api_wishlist.model_product_set_add
+#: model:ir.model,name:shopinvader_api_wishlist.model_sale_product_set_wizard
 msgid "Wizard model to add product set into a quotation"
 msgstr ""
