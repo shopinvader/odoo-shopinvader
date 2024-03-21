@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Search Engine Product Media",
     "summary": "Index storage media data into search engine",
-    "version": "16.0.1.0.3",
+    "version": "16.0.1.0.4",
     "category": "Shopinvader",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,ACSONE SA/NV",
