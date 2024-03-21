@@ -1,0 +1,3 @@
+Allows to configure the strategy to apply to generate the url for a given media
+from the search engine backend form view. The field was declared on the model
+but not displayed on the form. This change adds the field to the form view.
