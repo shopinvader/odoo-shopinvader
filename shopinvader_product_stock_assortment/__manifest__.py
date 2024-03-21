@@ -11,6 +11,6 @@
     "author": "ACSONE SA/NV",
     "license": "AGPL-3",
     "installable": False,
-    "depends": ["shopinvader_product_stock", "shopinvader_assortment"],
-    "auto_install": True,
+    # "depends": ["shopinvader_product_stock", "shopinvader_assortment"],  no more exists
+    # "auto_install": True,
 }

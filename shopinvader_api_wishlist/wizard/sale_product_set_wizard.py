@@ -3,8 +3,8 @@
 from odoo import models
 
 
-class ProductSetAdd(models.TransientModel):
-    _inherit = "product.set.add"
+class SaleProductSetWizard(models.TransientModel):
+    _inherit = "sale.product.set.wizard"
 
     def prepare_sale_order_line_data(self, set_line, max_sequence=0):
         # check if user is in the group of shopinvader_wishlist_user_group
@@ -14,6 +14,6 @@ class ProductSetAdd(models.TransientModel):
             "shopinvader_api_wishlist.shopinvader_wishlist_user_group"
         ):
             self_super = self.sudo()
-        return super(ProductSetAdd, self_super).prepare_sale_order_line_data(
+        return super(SaleProductSetWizard, self_super).prepare_sale_order_line_data(
             set_line, max_sequence
         )

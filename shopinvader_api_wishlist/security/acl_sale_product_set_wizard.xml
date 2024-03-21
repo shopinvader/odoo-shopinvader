@@ -3,9 +3,9 @@
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
 
-    <record model="ir.model.access" id="shopinvader_product_set_add_access">
-        <field name="name">product.set.add shopinvader user read access</field>
-        <field name="model_id" ref="sale_product_set.model_product_set_add" />
+    <record model="ir.model.access" id="shopinvader_sale_product_set_wizard_access">
+        <field name="name">sale.product.set.wizard shopinvader user read access</field>
+        <field name="model_id" ref="sale_product_set.model_sale_product_set_wizard" />
         <field name="group_id" ref="shopinvader_wishlist_user_group" />
         <field name="perm_read" eval="1" />
         <field name="perm_create" eval="1" />
