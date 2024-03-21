@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+
+    <record model="ir.ui.view" id="fastapi_endpoint_shopinvader_v2_app_demo_form_view">
+        <field name="model">fastapi.endpoint</field>
+        <field name="inherit_id" ref="fastapi.fastapi_endpoint_form_view" />
+        <field name="arch" type="xml">
+                <span name="configuration" position="after">
+                    <group
+                    name="shopinvader_configuration"
+                    title="Configuration"
+                    attrs="{'invisible': [('app', '!=', 'shopinvader_demo')]}"
+                >
+                        <field
+                        name="auth_jwt_validator_id"
+                        attrs="{'required': [('app', '=', 'shopinvader_demo')]}"
+                    />
+                    </group>
+                </span>
+        </field>
+    </record>
+
+</odoo>

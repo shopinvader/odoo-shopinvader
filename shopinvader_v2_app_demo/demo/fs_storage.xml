@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2019 ACSONE SA/NV
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="1">
+    <record id="fs_storage_shopinvader_demo" model="fs.storage">
+        <field name="name">Shopinvader Demo File Storage</field>
+        <field name="protocol">s3</field>
+        <field name="code">fsshop</field>
+        <field name="directory_path">images</field>
+        <field
+            name="model_xmlids"
+        >search_engine_image_thumbnail.model_se_thumbnail</field>
+        <field name="use_filename_obfuscation" eval="True" />
+        <field name="autovacuum_gc" eval="False" />
+        <field name="base_url">https://media.demo16.shopinvader.com/images</field>
+        <field name="force_db_for_default_attachment_rules">{}</field>
+        <field
+            name="options"
+        >{"key": "admin", "secret": "CHANGEME",  "client_kwargs":{"endpoint_url": "http://minio:9000"}, "s3_additional_kwargs": {"CacheControl": "max-age=31536000, public"}}</field>
+    </record>
+</odoo>

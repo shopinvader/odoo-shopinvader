@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+  <record
+        id="shopinvader_app_demo_user"
+        model="res.users"
+        context="{'no_reset_password': True, 'no_reset_password': True}"
+    >
+    <field name="name">Shopinvader App Demo User</field>
+    <field name="login">shopinvader_app_demo_user</field>
+    <field name="groups_id" eval="[(6, 0, [])]" />
+  </record>
+</odoo>

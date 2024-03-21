@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2023 ACSONE SA/NV
+     License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL). -->
+<odoo>
+    <record model="fastapi.endpoint" id="shopinvader_demo_endpoint">
+        <field name="name">Shopinvader Demo Endpoint</field>
+        <field name="description"><![CDATA[
+# A Dummy Shopinvader Demo
+]]></field>
+        <field name="app">shopinvader_demo</field>
+        <field name="root_path">/shopinvader_demo</field>
+        <field name="user_id" ref="shopinvader_app_demo_user" />
+        <field name="auth_jwt_validator_id" ref="shopinvader_demo_jwt_validator" />
+    </record>
+</odoo>
