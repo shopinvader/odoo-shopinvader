@@ -29,7 +29,7 @@ addon | version | maintainers | summary
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.1.3 |  | Sale FastApi for exposing sale order
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.0.1 |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
-[shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.1 |  | Handle shop wishlist
+[shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.2 |  | Handle shop wishlist
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.3 |  | keep history of url for products & categories
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.2 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
@@ -43,7 +43,7 @@ addon | version | maintainers | summary
 [shopinvader_product_sale_packaging](shopinvader_product_sale_packaging/) | 16.0.1.0.1 |  | Shopinvader Product Sale Packaging
 [shopinvader_product_seo](shopinvader_product_seo/) | 16.0.1.0.0 |  | SEO fields for Shopinvader
 [shopinvader_product_url](shopinvader_product_url/) | 16.0.1.0.1 |  | Generate url for product and category
-[shopinvader_restapi](shopinvader_restapi/) | 16.0.1.1.1 |  | Shopinvader
+[shopinvader_restapi](shopinvader_restapi/) | 16.0.1.1.2 |  | Shopinvader
 [shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.2 |  | ShopInvader logic for sale carts.
