@@ -104,6 +104,13 @@ class TestProductPackagingData(ExtendableMixin, CommonPackagingCase, TestCommon)
         default_packaging = self._default_packaging()
         self.assertEqual(res.packaging, default_packaging)
 
+    def test_product_schema_no_barcode(self):
+        self.pkg_pallet.barcode = False
+        res = ProductProduct.from_product_product(self.product_a)
+        self.assertEqual(len(res.packaging), 4)
+        default_packaging = self._default_packaging()
+        self.assertEqual(res.packaging, default_packaging)
+
     def test_shopinvader_display(self):
         self.pkg_big_box.shopinvader_display = False
         res = ProductProduct.from_product_product(self.product_a)
