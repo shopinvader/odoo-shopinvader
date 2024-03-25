@@ -1,0 +1,1 @@
+Provides a way to track checkout steps on sale orders of typology "cart".

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+
+    <record id="cart_step_address" model="sale.order.cart.step">
+        <field name="name">Address</field>
+        <field name="code">address</field>
+    </record>
+
+    <record id="cart_step_checkout" model="sale.order.cart.step">
+        <field name="name">Checkout</field>
+        <field name="code">checkout</field>
+    </record>
+
+    <record id="cart_step_last" model="sale.order.cart.step">
+        <field name="name">Last</field>
+        <field name="code">last</field>
+    </record>
+
+</odoo>
