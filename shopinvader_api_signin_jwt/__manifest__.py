@@ -8,7 +8,11 @@
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": ["fastapi_auth_jwt"],
+    "depends": [
+        "fastapi_auth_jwt",
+        "shopinvader_anonymous_partner",
+        "shopinvader_sale_cart",
+    ],
     "data": [
         "security/res_groups.xml",
         "security/acl_res_partner.xml",

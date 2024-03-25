@@ -4,7 +4,7 @@
 import logging
 from typing import Annotated, Union
 
-from fastapi import APIRouter, Depends, Response, status
+from fastapi import APIRouter, Depends, Request, Response, status
 
 from odoo import api, models
 
@@ -28,6 +28,7 @@ def signin(
     partner: Annotated[Partner, Depends(auth_jwt_optionally_authenticated_partner)],
     payload: Annotated[Payload, Depends(auth_jwt_authenticated_payload)],
     response: Response,
+    request: Request,
 ) -> None:
     """
     Authenticate the partner based on a JWT token or a session cookie.
@@ -35,10 +36,18 @@ def signin(
     Return HTTP code 201 if res.partner created (case of the first signin).
     """
     if not partner:
-        env[
+        partner = env[
             "shopinvader_api_signin_jwt.signin_router.helper"
         ]._create_partner_from_payload(payload)
         response.status_code = status.HTTP_201_CREATED
+    anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
+        request.cookies
+    )
+    if anonymous_partner:
+        anonymous_cart = env["sale.order"].sudo()._find_open_cart(anonymous_partner.id)
+        if anonymous_cart:
+            anonymous_cart._transfer_cart(partner.id)
+        env["res.partner"]._delete_anonymous_partner__cookie(request.cookies, response)
 
 
 @signin_router.post("/signout")
