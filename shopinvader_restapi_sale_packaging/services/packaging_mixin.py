@@ -1,4 +1,5 @@
 # Copyright 2020 Camptocamp (http://www.camptocamp.com).
+# Copyright 2023 Acsone (http://www.acsone.eu).
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -39,7 +40,7 @@ class PackagingServiceMixin(AbstractComponent):
         if "packaging_id" in params and "packaging_qty" in params:
             return {
                 # Make sure packaging_id is wiped if we pass 0
-                "product_packaging": params.pop("packaging_id") or False,
+                "product_packaging_id": params.pop("packaging_id") or False,
                 "product_packaging_qty": params.pop("packaging_qty"),
             }
         return {}
@@ -49,8 +50,8 @@ class PackagingServiceMixin(AbstractComponent):
             return None
         return {
             "id": packaging.id,
-            # Use packaging type name because it's translated
-            "name": packaging.packaging_type_id.name,
-            "code": packaging.packaging_type_id.code,
+            # Use packaging level name because it's translated
+            "name": packaging.packaging_level_id.name,
+            "code": packaging.packaging_level_id.code,
             "barcode": packaging.barcode,
         }
