@@ -3,6 +3,7 @@
 
 import secrets
 import typing
+from datetime import datetime
 
 from odoo import _, api, fields, models
 
@@ -16,6 +17,7 @@ class Response(typing.Protocol):
         key: str,
         value: str,
         max_age: int,
+        expires: datetime | str | int,
         secure: bool,
         httponly: bool,
         samesite: typing.Literal["lax", "strict", "none"],
@@ -71,6 +73,15 @@ class ResPartner(models.Model):
             httponly=True,
         )
         return partner
+
+    @api.model
+    def _delete_anonymous_partner__cookie(self, cookies: Cookies, response: Response):
+        self._get_anonymous_partner__cookie(cookies).unlink()
+        response.set_cookie(
+            key=COOKIE_NAME,
+            max_age=0,
+            expires=0,
+        )
 
     @api.model
     def _get_anonymous_partner__token(self, token: str):

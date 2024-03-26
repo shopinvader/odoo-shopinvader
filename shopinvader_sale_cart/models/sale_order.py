@@ -83,3 +83,36 @@ class SaleOrder(models.Model):
         return self.order_line.filtered(
             lambda l, product_id=product_id: l.product_id.id == product_id
         )[:1]
+
+    def _update_cart_lines_from_cart(self, cart):
+        self.ensure_one()
+        update_cmds = []
+        for cart_line in cart.order_line:
+            line = self._get_cart_line(cart_line.product_id.id)
+            if line:
+                new_qty = line.product_uom_qty + cart_line.product_uom_qty
+                vals = {"product_uom_qty": new_qty}
+                vals.update(line._play_onchanges_cart_line(vals))
+                cmd = (1, line.id, vals)
+            else:
+                vals = {
+                    "order_id": self.id,
+                    "product_id": cart_line.product_id.id,
+                    "product_uom_qty": cart_line.product_uom_qty,
+                }
+                vals.update(self.env["sale.order.line"]._play_onchanges_cart_line(vals))
+                cmd = (0, None, vals)
+            update_cmds.append(cmd)
+        self.write({"order_line": update_cmds})
+
+    def _transfer_cart(self, partner_id):
+        """
+        Transfer the current cart to a given partner
+        """
+        self.ensure_one()
+        cart = self._find_open_cart(partner_id)
+        if not cart:
+            cart = self._create_empty_cart(partner_id)
+        cart._update_cart_lines_from_cart(self)
+        self.unlink()
+        return cart
