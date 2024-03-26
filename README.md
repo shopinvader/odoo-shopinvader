@@ -46,6 +46,7 @@ addon | version | maintainers | summary
 [shopinvader_restapi](shopinvader_restapi/) | 16.0.1.1.2 |  | Shopinvader
 [shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 |  | Find shopinvader backend and partner from JWT token
 [shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
+[shopinvader_restapi_sale_packaging](shopinvader_restapi_sale_packaging/) | 16.0.1.1.0 |  | Shopinvader Restapi Sale Packaging
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.0.2 |  | ShopInvader logic for sale carts.
 [shopinvader_sale_state](shopinvader_sale_state/) | 16.0.1.0.1 |  | Basic module to implement state for sale order
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.2.1 |  | Adds shchema address: address invoicing_address delivery_address
@@ -135,7 +136,6 @@ addon | version | maintainers | summary
 [shopinvader_sale_automatic_workflow](shopinvader_sale_automatic_workflow/) | 14.0.1.1.0 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Use sale automatic workflows for Shopinvader orders
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) |  | This module adds information fields for customers and vendors.
 [shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.2.0 (unported) |  | Manage Promotion and Coupon programs in Shopinvader
-[shopinvader_sale_packaging](shopinvader_sale_packaging/) | 14.0.1.1.0 (unported) |  | Shopinvader Sale Packaging
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 (unported) |  | Add packaging information to wishlists
 [shopinvader_sale_profile](shopinvader_sale_profile/) | 14.0.1.3.0 (unported) |  | ShopInvader - Sale profile
 [shopinvader_sale_report](shopinvader_sale_report/) | 10.0.1.0.0 (unported) |  | Shopinvader addons to extend sale report with backend

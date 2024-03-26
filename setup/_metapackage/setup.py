@@ -33,6 +33,7 @@ setuptools.setup(
         'odoo-addon-shopinvader_restapi>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_restapi_auth_jwt>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_restapi_invoice>=16.0dev,<16.1dev',
+        'odoo-addon-shopinvader_restapi_sale_packaging>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_sale_cart>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_sale_state>=16.0dev,<16.1dev',
         'odoo-addon-shopinvader_schema_address>=16.0dev,<16.1dev',
