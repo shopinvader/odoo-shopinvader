@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Camptocamp SA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<odoo>
+
+  <record model="ir.model.access" id="shopinvader_account_move_line_access_view">
+    <field name="name">account order line shopinvader user access</field>
+    <field name="model_id" ref="account.model_account_move_line" />
+    <field name="group_id" ref="shopinvader_accounting_user_group" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="1" />
+    <field name="perm_write" eval="1" />
+    <field name="perm_unlink" eval="1" />
+  </record>
+
+
+  <record model="ir.rule" id="shopinvader_user_access_own_account_lines_rule">
+    <field
+            name="name"
+        >shopinvader user can only access lines of its own invoices</field>
+    <field name="model_id" ref="account.model_account_move_line" />
+    <field name="domain_force">[
+      ('partner_id', '=', authenticated_partner_id)
+        ]
+    </field>
+    <field name="groups" eval="[(6, 0, [ref('shopinvader_accounting_user_group')])]" />
+    <field name="perm_read" eval="1" />
+    <field name="perm_create" eval="1" />
+    <field name="perm_write" eval="1" />
+    <field name="perm_unlink" eval="1" />
+  </record>
+
+</odoo>
