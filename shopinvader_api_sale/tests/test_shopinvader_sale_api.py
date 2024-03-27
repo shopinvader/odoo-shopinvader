@@ -8,7 +8,7 @@ from odoo.tests.common import tagged
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
-from ..routers import sale_router
+from ..routers import sale_line_router, sale_router
 
 
 @tagged("post_install", "-at_install")
@@ -94,3 +94,33 @@ class TestSale(FastAPITransactionCase):
             response: Response = test_client.get(f"/sales/{sale.id}/download")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.headers["Content-Type"], "application/pdf")
+
+    def test_search_sale_lines(self):
+        so1 = self.env["sale.order"].create(
+            {"partner_id": self.default_fastapi_authenticated_partner.id}
+        )
+        so1.write(
+            {
+                "order_line": [
+                    (0, 0, {"product_id": self.product_1.id, "product_uom_qty": 2}),
+                    (0, 0, {"product_id": self.product_2.id, "product_uom_qty": 6}),
+                ]
+            }
+        )
+        so2 = self.env["sale.order"].create(
+            {"partner_id": self.default_fastapi_authenticated_partner.id}
+        )
+        so2.write(
+            {
+                "order_line": [
+                    (0, 0, {"product_id": self.product_1.id, "product_uom_qty": 1}),
+                    (0, 0, {"product_id": self.product_2.id, "product_uom_qty": 3}),
+                    (0, 0, {"product_id": self.product_1.id, "product_uom_qty": 4}),
+                ]
+            }
+        )
+
+        with self._create_test_client(router=sale_line_router) as test_client:
+            response: Response = test_client.get("/sale_lines")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["count"], 5)
