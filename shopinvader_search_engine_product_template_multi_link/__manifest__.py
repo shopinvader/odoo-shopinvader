@@ -7,13 +7,16 @@
 {
     "name": "Shopinvader Product Link",
     "summary": "Shopinvader Product Link",
-    "version": "14.0.1.1.0",
+    "version": "16.0.1.0.0",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "author": "Akretion,GRAP,Camptocamp",
+    "author": "Akretion,GRAP,Camptocamp,ACSONE SA/NV",
     "license": "AGPL-3",
-    "installable": False,
+    "installable": True,
     "auto_install": True,
-    "depends": ["shopinvader", "product_template_multi_link"],
-    "data": ["data/ir_exports_line.xml"],
+    "depends": [
+        "shopinvader_search_engine",
+        "product_template_multi_link",
+        "base_sparse_field",
+    ],
 }
