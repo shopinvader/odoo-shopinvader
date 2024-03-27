@@ -1,6 +1,8 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from typing import Any
+
 from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 from odoo.addons.stock_packaging_calculator.models.product import Packaging
 
@@ -12,6 +14,12 @@ class SimpleProductPackaging(StrictExtendableBaseModel):
     barcode: str | None = None
     is_unit: bool
     can_be_sold: bool
+
+    def __init__(self, /, **data: Any) -> None:  # type: ignore
+        # Ensure `barcode` is set to None when empty, no matter if we use `from_packaging`.
+        if "barcode" in data and not data["barcode"]:
+            data["barcode"] = None
+        super().__init__(**data)
 
     @classmethod
     def from_packaging(cls, odoo_product, packaging, packaging_contained_mapping=None):
@@ -50,7 +58,7 @@ class ProductPackaging(SimpleProductPackaging):
                             pkg["id"],
                             pkg["name"],
                             pkg["qty"],
-                            pkg["barcode"] or None,
+                            pkg["barcode"],
                             pkg["is_unit"],
                         ),
                     )
