@@ -1,0 +1,1 @@
+from .customer_price import customer_price_router
