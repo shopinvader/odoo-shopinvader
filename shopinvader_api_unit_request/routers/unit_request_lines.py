@@ -11,11 +11,7 @@ from odoo import api, fields, models
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
-from odoo.addons.fastapi.dependencies import (
-    authenticated_partner,
-    authenticated_partner_env,
-    paging,
-)
+from odoo.addons.fastapi.dependencies import authenticated_partner_env, paging
 from odoo.addons.fastapi.schemas import Paging
 from odoo.addons.sale.models.sale_order_line import SaleOrderLine
 from odoo.addons.shopinvader_api_unit_member.routers.unit_members import (
@@ -33,7 +29,7 @@ async def get_request_lines(
     params: Annotated[RequestedSaleLineSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    partner: Annotated[ResPartner, Depends(authenticated_manager)],
 ) -> PagedCollection[RequestedSaleLine]:
     """
     Get list of requested sale lines

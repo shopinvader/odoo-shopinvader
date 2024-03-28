@@ -18,6 +18,7 @@
     ],
     "data": [
         "views/sale_order_views.xml",
+        "security/sale_management_security.xml",
     ],
     "installable": True,
 }
