@@ -29,6 +29,7 @@ addon | version | maintainers | summary
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.1.3 |  | Sale FastApi for exposing sale order
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.0.1 |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
+[shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.1.0.1 |  | This module adds a signin service with jwt token.
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.2 |  | Handle shop wishlist
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.3 |  | keep history of url for products & categories
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
