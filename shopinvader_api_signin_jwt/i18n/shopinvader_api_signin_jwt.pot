@@ -1,0 +1,24 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_api_signin_jwt
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_api_signin_jwt
+#: model:ir.model,name:shopinvader_api_signin_jwt.model_shopinvader_api_signin_jwt_signin_router_helper
+msgid "ShopInvader API Signin Jwt Router Helper"
+msgstr ""
+
+#. module: shopinvader_api_signin_jwt
+#: model:res.groups,name:shopinvader_api_signin_jwt.shopinvader_signin_user_group
+msgid "Shopinvader Signin user"
+msgstr ""
