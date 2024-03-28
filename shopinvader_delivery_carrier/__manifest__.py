@@ -1,30 +1,16 @@
-# Copyright 2017 Akretion (http://www.akretion.com)
-# Sébastien BEAU <sebastien.beau@akretion.com>
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2023 ACSONE SA/NV
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    "name": "Shopinvader Carrier",
-    "summary": "Carrier integration for Shopinvader",
-    "version": "14.0.2.3.0",
-    "category": "e-commerce",
-    "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "author": "Akretion",
+    "name": "Shopinvader Delivery Carrier",
+    "summary": """
+        ShopInvader logic for delivery carriers.""",
+    "version": "16.0.1.0.0",
     "license": "AGPL-3",
-    "application": True,
-    "installable": False,
-    "external_dependencies": {"python": [], "bin": []},
+    "author": "ACSONE SA/NV,Odoo Community Association (OCA)",
+    "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
         "delivery",
-        "queue_job",
-        "shopinvader",
-        "sale_shipping_info_helper",
-        "delivery_carrier_info",
     ],
-    "data": ["views/backend_view.xml", "data/cart_step.xml"],
-    "demo": [
-        "demo/backend_demo.xml",
-        "demo/mail_template.xml",
-        "demo/shopinvader_notification.xml",
-    ],
-    "qweb": [],
+    "data": [],
 }

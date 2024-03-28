@@ -1,1 +1,1 @@
-Add the configuration and the logic to manage the carrier on your ShopInvader site
+Adds a specific shopinvader_available_carrier_ids field on sale orders.

@@ -20,7 +20,6 @@ exclude: |
   ^shopinvader_customer_price/|
   ^shopinvader_customer_price_wishlist/|
   ^shopinvader_customer_validate/|
-  ^shopinvader_delivery_carrier/|
   ^shopinvader_delivery_instruction/|
   ^shopinvader_demo_app/|
   ^shopinvader_easy_binding/|
