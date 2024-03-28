@@ -12,6 +12,7 @@ class Address(StrictExtendableBaseModel):
     zip: str | None = None
     city: str | None = None
     phone: str | None = None
+    mobile: str | None = None
     email: str | None = None
     state_id: int | None = None
     country_id: int | None = None
@@ -26,6 +27,7 @@ class Address(StrictExtendableBaseModel):
             zip=odoo_rec.zip or None,
             city=odoo_rec.city or None,
             phone=odoo_rec.phone or None,
+            mobile=odoo_rec.mobile or None,
             email=odoo_rec.email or None,
             state_id=odoo_rec.state_id.id or None,
             country_id=odoo_rec.country_id.id or None,

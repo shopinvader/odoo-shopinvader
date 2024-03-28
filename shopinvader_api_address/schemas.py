@@ -16,6 +16,7 @@ class AddressCreate(StrictExtendableBaseModel, extra="ignore"):
     zip: str | None = None
     city: str | None = None
     phone: str | None = None
+    mobile: str | None = None
     email: str | None = None
     state_id: int | None = None
     country_id: int | None = None
@@ -28,6 +29,7 @@ class AddressCreate(StrictExtendableBaseModel, extra="ignore"):
             "zip": self.zip,
             "city": self.city,
             "phone": self.phone,
+            "mobile": self.mobile,
             "email": self.email,
             "state_id": self.state_id,
             "country_id": self.country_id,
@@ -48,6 +50,7 @@ class AddressUpdate(StrictExtendableBaseModel, extra="ignore"):
     zip: str | None = None
     city: str | None = None
     phone: str | None = None
+    mobile: str | None = None
     email: str | None = None
     state_id: int | None = None
     country_id: int | None = None
@@ -60,6 +63,7 @@ class AddressUpdate(StrictExtendableBaseModel, extra="ignore"):
             "zip",
             "city",
             "phone",
+            "mobile",
             "email",
             "state_id",
             "country_id",
