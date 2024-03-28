@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="ir_exp_shopinvader_variant_record_name" model="ir.exports.line">
+        <field name="name">name</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+<!-- 
+display name ?
+    <record id="ir_exp_shopinvader_variant_model_name" model="ir.exports.line">
+        <field name="name">shopinvader_product_id/shopinvader_display_name</field>
+        <field
+            name="target"
+        >shopinvader_product_id:model/shopinvader_display_name:name</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+-->
+
+<!--
+    <record id="ir_exp_shopinvader_variant_url_key" model="ir.exports.line">
+        <field name="name">url_key</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_redirect_url_key" model="ir.exports.line">
+        <field name="name">redirect_url_key</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+-->
+<!-- a faire
+    <record id="ir_exp_shopinvader_variant_main" model="ir.exports.line">
+        <field name="name">main</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+-->
+
+    <record id="ir_exp_shopinvader_short_description" model="ir.exports.line">
+        <field name="name">description_sale_short</field>
+        <field name="target">description_sale_short:short_description</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_description" model="ir.exports.line">
+        <field name="name">description_sale_long</field>
+        <field name="target">description_sale_long:description</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+<!--
+    <record id="ir_exp_shopinvader_name" model="ir.exports.line">
+        <field name="name">full_name</field>
+        <field name="target">full_name:name</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_short_name" model="ir.exports.line">
+        <field name="name">short_name</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+-->
+
+<!--
+    <record id="ir_exp_shopinvader_variant_seo_title" model="ir.exports.line">
+        <field name="name">seo_title</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_meta_keywords" model="ir.exports.line">
+        <field name="name">meta_keywords</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_meta_description" model="ir.exports.line">
+        <field name="name">meta_description</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_variant_count" model="ir.exports.line">
+        <field name="name">variant_count</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+-->
+    <record id="ir_exp_shopinvader_variant_categs_id" model="ir.exports.line">
+        <field name="name">channel_categ_ids/id</field>
+        <field name="target">channel_categ_ids:categories/id</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_categs_name" model="ir.exports.line">
+        <field name="name">channel_categ_ids/name</field>
+        <field name="target">channel_categ_ids:categories/name</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_categs_parent_id" model="ir.exports.line">
+        <field name="name">channel_categ_ids/level</field>
+        <field name="target">channel_categ_ids:categories/level</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+    <record id="ir_exp_shopinvader_variant_default_code" model="ir.exports.line">
+        <field name="name">default_code</field>
+        <field name="target">default_code:sku</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+
+<!--
+    to be done in another module ?
+    <record id="ir_exp_shopinvader_variant_attributes" model="ir.exports.line">
+        <field name="name">variant_attributes</field>
+        <field name="export_id" ref="shopinvader.ir_exp_shopinvader_variant" />
+    </record>
+-->
+<!--
+    <record id="ir_exp_shopinvader_variant_categs_url_key" model="ir.exports.line">
+        <field name="name">shopinvader_categ_ids/url_key</field>
+        <field name="target">shopinvader_categ_ids:categories/url_key</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+
+-->
+    <!--
+    <record id="ir_exp_shopinvader_variant_quantity_available" model="ir.exports.line">
+        <field name="name">quantity_available</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant"/>
+    </record>
+    -->
+<!--
+    <record id="ir_exp_shopinvader_variant_price" model="ir.exports.line">
+        <field name="name">price</field>
+        <field name="export_id" ref="ir_exp_shopinvader_variant" />
+    </record>
+-->
+</odoo>
