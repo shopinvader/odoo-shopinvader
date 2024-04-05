@@ -20,6 +20,9 @@ class ProductTemplate(models.Model):
         return categories
 
     @api.depends_context("index_id")
-    @api.depends("categ_id", "categ_id.parent_id")
+    @api.depends(lambda self: self._compute_shopinvader_category_depends())
     def _compute_shopinvader_category(self):
         return super()._compute_shopinvader_category()
+
+    def _compute_shopinvader_category_depends(self):
+        return ("categ_id", "categ_id.parent_id")
