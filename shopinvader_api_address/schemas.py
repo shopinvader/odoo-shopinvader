@@ -3,6 +3,10 @@
 
 from extendable_pydantic import StrictExtendableBaseModel
 
+from odoo.api import Environment
+
+from odoo.addons.base.models.res_partner import Partner as ResPartner
+
 
 class AddressCreate(StrictExtendableBaseModel, extra="ignore"):
     """
@@ -21,7 +25,7 @@ class AddressCreate(StrictExtendableBaseModel, extra="ignore"):
     state_id: int | None = None
     country_id: int | None = None
 
-    def to_res_partner_vals(self) -> dict:
+    def to_res_partner_vals(self, env: Environment) -> dict:
         vals = {
             "name": self.name,
             "street": self.street,
@@ -55,7 +59,7 @@ class AddressUpdate(StrictExtendableBaseModel, extra="ignore"):
     state_id: int | None = None
     country_id: int | None = None
 
-    def to_res_partner_vals(self) -> dict:
+    def to_res_partner_vals(self, rec: ResPartner, address_id: int) -> dict:
         fields = [
             "name",
             "street",
@@ -84,8 +88,8 @@ class InvoicingAddressCreate(AddressCreate):
 
     vat: str | None = None
 
-    def to_res_partner_vals(self) -> dict:
-        vals = super().to_res_partner_vals()
+    def to_res_partner_vals(self, env: Environment) -> dict:
+        vals = super().to_res_partner_vals(env)
 
         vals["vat"] = self.vat
 
@@ -99,8 +103,8 @@ class InvoicingAddressUpdate(AddressUpdate):
 
     vat: str | None = None
 
-    def to_res_partner_vals(self) -> dict:
-        vals = super().to_res_partner_vals()
+    def to_res_partner_vals(self, rec: ResPartner, address_id: int) -> dict:
+        vals = super().to_res_partner_vals(rec, address_id)
 
         vals["vat"] = self.vat
 

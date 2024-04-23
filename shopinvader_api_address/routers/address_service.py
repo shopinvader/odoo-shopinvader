@@ -60,7 +60,7 @@ def create_invoicing_address(
     Create invoicing address
     Raise error since invoicing address is the authenticated partner
     """
-    vals = data.to_res_partner_vals()
+    vals = data.to_res_partner_vals(partner.env)
     address = partner._create_shopinvader_invoicing_address(vals)
     return InvoicingAddress.from_res_partner(address)
 
@@ -77,7 +77,7 @@ def update_invoicing_address(
     Update invoicing address of authenticated user
     invoicing address corresponds to authenticated partner
     """
-    vals = data.to_res_partner_vals()
+    vals = data.to_res_partner_vals(partner, address_id)
     # sudo() is needed because some addons override the write
     # function of res.partner to do some checks before writing.
     # These checks need more rights than what we are giving to
@@ -125,7 +125,7 @@ def create_delivery_address(
     """
     Create delivery address of authenticated user
     """
-    vals = data.to_res_partner_vals()
+    vals = data.to_res_partner_vals(partner.env)
     address = partner._create_shopinvader_delivery_address(vals)
 
     return DeliveryAddress.from_res_partner(address)
@@ -140,7 +140,7 @@ def update_delivery_address(
     """
     Update delivery address of authenticated user
     """
-    vals = data.to_res_partner_vals()
+    vals = data.to_res_partner_vals(partner, address_id)
     # sudo() is needed because some addons override the write
     # function of res.partner to do some checks before writing.
     # These checks need more rights than what we are giving to
