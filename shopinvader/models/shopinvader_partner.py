@@ -36,6 +36,7 @@ class ShopinvaderPartner(models.Model):
     # Having the same field on both models allows to use simple conditions to check.
     # The compute methods offers a hook to modify the behavior.
     is_shopinvader_active = fields.Boolean(compute="_compute_is_shopinvader_active")
+    last_login_time = fields.Datetime(readonly=True)
 
     def _compute_is_shopinvader_active_depends(self):
         return ()

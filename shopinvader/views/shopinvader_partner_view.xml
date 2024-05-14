@@ -20,6 +20,7 @@
                                 groups="base.group_multi_company"
                             />
                             <field name="create_date" readonly="1" />
+                            <field name="last_login_time" />
                             <field name="sync_date" />
                         </group>
                         <group name="record">
@@ -50,6 +51,7 @@
                 <field name="backend_id" />
                 <field name="external_id" />
                 <field name="create_date" readonly="1" />
+                <field name="last_login_time" />
                 <field
                     name="company_id"
                     widget="selection"
@@ -82,6 +84,18 @@
                         string="Parent"
                         domain="[]"
                         context="{'group_by':'parent_id'}"
+                    />
+                </group>
+                <group string="Login time">
+                    <filter
+                        name="filter_login_never"
+                        string="Never logged-in"
+                        domain="[('last_login_time', '=', False)]"
+                    />
+                    <filter
+                        name="filter_login_last_month"
+                        string="No login in a month"
+                        domain="[('last_login_time', '&lt;=', (context_today() + relativedelta(months=-1)).strftime('%Y-%m-%d'))]"
                     />
                 </group>
             </search>
