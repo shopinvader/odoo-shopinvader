@@ -990,6 +990,31 @@ class ProductCase(ProductCommonCase):
         for shopinvader_variant in prod.shopinvader_bind_ids:
             self.assertTrue(shopinvader_variant.main)
 
+    def test_translation_update_url(self):
+        lang_fr = self._install_lang("base.lang_fr")
+        lang_en = self.env.ref("base.lang_en")
+        self.backend.lang_ids |= lang_fr
+        product = self.env.ref("product.product_product_4")
+        product.name = "customizable desk"
+        product.with_context(lang=lang_fr.code).name = "bureau modifiable"
+        binding_fr = product.shopinvader_bind_ids.filtered(
+            lambda bind: bind.lang_id == lang_fr
+        )
+        binding_en = product.shopinvader_bind_ids.filtered(
+            lambda bind: bind.lang_id == lang_en
+        )
+        self.assertEqual(binding_en.url_key, "customizable-desk")
+        self.assertEqual(binding_fr.url_key, "bureau-modifiable")
+        translation_name_fr = self.env["ir.translation"].search(
+            [("name", "=", "product.template,name"), ("lang", "=", lang_fr.code)]
+        )
+        self.assertEqual(translation_name_fr.value, "bureau modifiable")
+        product.with_context(lang=lang_fr.code).name = "bureau customisable"
+        binding_fr.invalidate_cache()
+        product.invalidate_cache()
+        self.assertEqual(binding_en.url_key, "customizable-desk")
+        self.assertEqual(binding_fr.url_key, "bureau-customisable")
+
     def test_create_shopinvader_category_from_product_category(self):
         categ = self.env["product.category"].search([])[0]
         lang = self.env["res.lang"]._lang_get(self.env.user.lang)
