@@ -14,7 +14,7 @@ from odoo.addons.fastapi.dependencies import (
     authenticated_partner,
     authenticated_partner_env,
 )
-from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.sale.models.sale import SaleOrder
 from odoo.addons.shopinvader_api_cart.routers import cart_router
 from odoo.addons.shopinvader_api_cart.schemas import CartTransaction
 from odoo.addons.shopinvader_schema_sale.schemas import Sale

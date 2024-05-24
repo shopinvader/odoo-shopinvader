@@ -21,19 +21,19 @@ class TestSetCarrier(TestShopinvaderDeliveryCarrierCommon):
         info = response.json()
         expected = [
             {
-                "description": self.free_carrier.carrier_description or None,
+                # "description": self.free_carrier.carrier_description or None,
                 "id": self.free_carrier.id,
                 "name": self.free_carrier.name,
                 "code": self.free_carrier.code or None,
             },
             {
-                "description": self.poste_carrier.carrier_description or None,
+                # "description": self.poste_carrier.carrier_description or None,
                 "id": self.poste_carrier.id,
                 "name": self.poste_carrier.name,
                 "code": self.poste_carrier.code or None,
             },
             {
-                "description": self.local_carrier.carrier_description or None,
+                # "description": self.local_carrier.carrier_description or None,
                 "id": self.local_carrier.id,
                 "name": self.local_carrier.name,
                 "code": self.local_carrier.code or None,
@@ -56,21 +56,21 @@ class TestSetCarrier(TestShopinvaderDeliveryCarrierCommon):
         expected = [
             {
                 "price_applied_to_cart": 0.0,
-                "description": self.free_carrier.carrier_description or None,
+                # "description": self.free_carrier.carrier_description or None,
                 "id": self.free_carrier.id,
                 "name": self.free_carrier.name,
                 "code": self.free_carrier.code or None,
             },
             {
                 "price_applied_to_cart": 0.0,
-                "description": self.local_carrier.carrier_description or None,
+                # "description": self.local_carrier.carrier_description or None,
                 "id": self.local_carrier.id,
                 "name": self.local_carrier.name,
                 "code": self.local_carrier.code or None,
             },
             {
                 "price_applied_to_cart": 20.0,
-                "description": self.poste_carrier.carrier_description or None,
+                # "description": self.poste_carrier.carrier_description or None,
                 "id": self.poste_carrier.id,
                 "name": self.poste_carrier.name,
                 "code": self.poste_carrier.code or None,
@@ -94,21 +94,21 @@ class TestSetCarrier(TestShopinvaderDeliveryCarrierCommon):
         expected = [
             {
                 "price_applied_to_cart": 0.0,
-                "description": self.free_carrier.carrier_description or None,
+                # "description": self.free_carrier.carrier_description or None,
                 "id": self.free_carrier.id,
                 "name": self.free_carrier.name,
                 "code": self.free_carrier.code or None,
             },
             {
                 "price_applied_to_cart": 0.0,
-                "description": self.local_carrier.carrier_description or None,
+                # "description": self.local_carrier.carrier_description or None,
                 "id": self.local_carrier.id,
                 "name": self.local_carrier.name,
                 "code": self.local_carrier.code or None,
             },
             {
                 "price_applied_to_cart": 20.0,
-                "description": self.poste_carrier.carrier_description or None,
+                # "description": self.poste_carrier.carrier_description or None,
                 "id": self.poste_carrier.id,
                 "name": self.poste_carrier.name,
                 "code": self.poste_carrier.code or None,
@@ -142,7 +142,7 @@ class TestSetCarrier(TestShopinvaderDeliveryCarrierCommon):
         expected = [
             {
                 "price_applied_to_cart": 0.0,
-                "description": self.free_carrier.carrier_description or None,
+                # "description": self.free_carrier.carrier_description or None,
                 "id": self.free_carrier.id,
                 "name": self.free_carrier.name,
                 "code": self.free_carrier.code or None,
@@ -160,7 +160,9 @@ class TestSetCarrier(TestShopinvaderDeliveryCarrierCommon):
         self.free_carrier.country_ids = self.env.ref("base.be")
         self.local_carrier.country_ids = self.env.ref("base.be")
         self.poste_carrier.country_ids = self.env.ref("base.fr")
-        self.poste_carrier.zip_prefix_ids = [(0, 0, {"name": "750"})]
+        # self.poste_carrier.zip_prefix_ids = [(0, 0, {"name": "750"})]
+        self.poste_carrier.zip_from = "750"
+        self.poste_carrier.zip_to = "750"
         with self._create_test_client(router=delivery_carrier_router) as test_client:
             data = {
                 "zipcode": "75100",
@@ -185,11 +187,13 @@ class TestSetCarrier(TestShopinvaderDeliveryCarrierCommon):
         self.poste_carrier.country_ids = self.env.ref("base.fr")
 
         # Change carrier zips
-        self.poste_carrier.zip_prefix_ids = [
-            (0, 0, {"name": "750"}),
-            (0, 0, {"name": "751"}),
-            (0, 0, {"name": "752"}),
-        ]
+        # self.poste_carrier.zip_prefix_ids = [
+        #     (0, 0, {"name": "750"}),
+        #     (0, 0, {"name": "751"}),
+        #     (0, 0, {"name": "752"}),
+        # ]
+        self.poste_carrier.zip_from = "750"
+        self.poste_carrier.zip_to = "752"
 
         with self._create_test_client(router=delivery_carrier_router) as test_client:
             data = {
@@ -203,7 +207,7 @@ class TestSetCarrier(TestShopinvaderDeliveryCarrierCommon):
         info = response.json()
         expected = [
             {
-                "description": self.poste_carrier.carrier_description or None,
+                # "description": self.poste_carrier.carrier_description or None,
                 "id": self.poste_carrier.id,
                 "name": self.poste_carrier.name,
                 "code": self.poste_carrier.code or None,

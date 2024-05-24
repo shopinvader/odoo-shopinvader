@@ -91,7 +91,7 @@ class ShopinvaderApiDeliveryRouterHelper(models.AbstractModel):
         available_carriers = cart.shopinvader_available_carrier_ids.browse()
         for carrier in cart.shopinvader_available_carrier_ids:
             result = carrier.rate_shipment(cart)
-            if result.get("success"):
+            if result and result.get("success"):
                 available_carriers |= carrier
                 sort_key.update({carrier: result.get("price", 0.0)})
         # Sort on the price

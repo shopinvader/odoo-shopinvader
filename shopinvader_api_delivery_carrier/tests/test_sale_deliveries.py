@@ -27,7 +27,7 @@ class TestSaleDeliveries(TestShopinvaderDeliveryCarrierCommon):
         picking = self.cart.picking_ids
         picking.action_confirm()
         picking.action_assign()
-        picking.move_ids._action_done()
+        picking.move_lines._action_done()
 
     def test_read_sale(self):
         self.cart.action_confirm_cart()

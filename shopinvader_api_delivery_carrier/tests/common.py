@@ -37,11 +37,32 @@ class TestShopinvaderDeliveryCarrierCommon(FastAPITransactionCase):
 
         cls.free_carrier = cls.env.ref("delivery.free_delivery_carrier")
         cls.poste_carrier = cls.env.ref("delivery.delivery_carrier")
-        cls.local_carrier = cls.env.ref("delivery.delivery_local_delivery")
+        cls.env.ref("delivery.normal_delivery_carrier").active = False
+        cls.local_carrier_product = cls.env["product.product"].create(
+            {
+                "name": "Local Carrier Product",
+                "type": "service",
+                "taxes_id": [(6, 0, [cls.tax_20.id])],
+                "list_price": 10.0,
+                "invoice_policy": "order",
+                "purchase_ok": False,
+                "sale_ok": False,
+                "categ_id": cls.env.ref("delivery.product_category_deliveries").id,
+            }
+        )
+        cls.local_carrier = cls.env["delivery.carrier"].create(
+            {
+                "name": "Local Carrier",
+                "delivery_type": "fixed",
+                "fixed_price": 5.0,
+                "product_id": cls.local_carrier_product.id,
+                "free_over": True,
+            }
+        )
         cls.free_carrier.code = "FREE"
-        cls.free_carrier.carrier_description = "delivery in 5 days"
+        # cls.free_carrier.carrier_description = "delivery in 5 days"
         cls.poste_carrier.code = "POSTE"
-        cls.poste_carrier.carrier_description = "delivery in 2 days"
+        # cls.poste_carrier.carrier_description = "delivery in 2 days"
         cls.poste_carrier.product_id.taxes_id = [(6, 0, [cls.tax_20.id])]
         cls.product_1 = cls.env.ref("product.product_product_4b")
         cls.precision = 2

@@ -17,7 +17,7 @@ class DeliveryCarrier(StrictExtendableBaseModel):
     id: int
     name: str
     code: str | None = None
-    description: str | None = None
+    # description: str | None = None Not in v14
 
     @classmethod
     def from_delivery_carrier(cls, odoo_rec):
@@ -25,7 +25,7 @@ class DeliveryCarrier(StrictExtendableBaseModel):
             id=odoo_rec.id,
             name=odoo_rec.name,
             code=odoo_rec.code or None,
-            description=odoo_rec.carrier_description or None,
+            # description=odoo_rec.carrier_description or None,
         )
 
 
