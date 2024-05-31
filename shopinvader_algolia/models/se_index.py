@@ -4,6 +4,8 @@
 
 from odoo import models
 
+from odoo.addons.connector_algolia.utils import data_merge
+
 
 class SeIndex(models.Model):
     _inherit = "se.index"
@@ -18,5 +20,5 @@ class SeIndex(models.Model):
                 self.backend_id, self.lang_id
             )
         if facetting_values:
-            data.update({"attributesForFaceting": facetting_values})
+            data = data_merge(data, {"attributesForFaceting": facetting_values})
         return data
