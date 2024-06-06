@@ -27,6 +27,6 @@ class SaleLine(StrictExtendableBaseModel):
             qty=json_float_round(
                 odoo_rec.product_uom_qty,
                 precision_digits=len(str(odoo_rec.product_uom.rounding).split(".")[1]),
-                options=SaleLineOption.from_sale_order_line(odoo_rec),
             ),
+            options=SaleLineOption.from_sale_order_line(odoo_rec),
         )

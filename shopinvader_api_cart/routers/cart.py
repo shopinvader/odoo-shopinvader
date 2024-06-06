@@ -121,6 +121,7 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         transactions_by_product_and_option = OrderedDict()
         for trans in transactions:
             product_id = trans.product_id
+            # TODO test to remove json
             options = (
                 json.dumps(trans.options.model_dump(exclude_unset=True), sort_keys=True)
                 if trans.options
