@@ -90,8 +90,9 @@ class ShopinvaderImageMixin(models.AbstractModel):
             self._resize_scales().mapped(lambda r: (r.key, r.size_x, r.size_y))
         )
         timestamp = self._get_images_store_hash_timestamp()
+        alt_names = tuple([x.alt_name for x in images])
         # TODO: any other bit to consider here?
-        return resize_scales + public_urls + (timestamp,)
+        return resize_scales + public_urls + alt_names + (timestamp,)
 
     def _get_image_url_key(self, image_relation):
         # You can inherit this method to change the name of the image of
@@ -135,7 +136,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
         return res
 
     def _get_image_alt(self, image):
-        return self.name
+        return image.alt_name or self.name
 
     def _get_image_url(self, image):
         fname = "url" if self.backend_id.image_data_include_cdn_url else "url_path"
