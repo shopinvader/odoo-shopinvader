@@ -37,7 +37,6 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
                         )
                     )
                 )
-                self.assertIn("tag", img)
 
     def test_basic_images_compute_no_cdn_url(self):
         storage_backend = self.shopinvader_variant.image_ids.image_id.backend_id
@@ -60,7 +59,6 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
                         "/customizable-desk-config_{0.size_x}_{0.size_y}".format(scale)
                     )
                 )
-                self.assertIn("tag", img)
 
     def test_image_metadata(self):
         self.shopinvader_variant.invalidate_cache(["images"])
@@ -69,10 +67,12 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
         for scale in self.backend.shopinvader_variant_resize_ids:
             img = images[0][scale.key]
             self.assertEqual(img["alt"], "Test Alt Name")
+            self.assertNotIn("tag", img)
         for scale in self.backend.shopinvader_variant_resize_ids:
             img = images[1][scale.key]
             # Fallback to product name
             self.assertEqual(img["alt"], self.shopinvader_variant.name)
+            self.assertNotIn("tag", img)
         # allow empty alt
         self.shopinvader_variant.backend_id.image_data_empty_alt_name_allowed = True
         self.shopinvader_variant.invalidate_cache(["images"])
@@ -81,6 +81,22 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
             img = images[1][scale.key]
             # NO Fallback to product name
             self.assertNotIn("alt", img)
+        self.shopinvader_variant.invalidate_cache(["images"])
+        # value tags
+        with mock.patch.object(
+            type(self.shopinvader_variant), "_get_image_tag"
+        ) as mocked:
+            mocked.return_value = "Test Tag"
+            # enforce compute to get the tag
+            # because the field is not there and the hash won't change
+            self.shopinvader_variant._compute_images_stored()
+            self.shopinvader_variant.invalidate_cache(["images"])
+            images = self.shopinvader_variant.images
+            for scale in self.backend.shopinvader_variant_resize_ids:
+                img = images[0][scale.key]
+                self.assertEqual(img["tag"], "Test Tag")
+                img = images[1][scale.key]
+                self.assertEqual(img["tag"], "Test Tag")
 
     def test_hash_and_compute_flag(self):
         variant = self.shopinvader_variant

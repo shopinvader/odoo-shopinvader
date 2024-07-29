@@ -137,8 +137,9 @@ class ShopinvaderImageMixin(models.AbstractModel):
         alt_name = self._get_image_alt(image_relation.image_id)
         if alt_name:
             res["alt"] = alt_name
-        if "tag_id" in image_relation._fields:
-            res["tag"] = self._get_image_tag(image_relation)
+        tag = self._get_image_tag(image_relation)
+        if tag:
+            res["tag"] = tag
         return res
 
     def _get_image_alt(self, image):
@@ -155,4 +156,7 @@ class ShopinvaderImageMixin(models.AbstractModel):
         return image[fname]
 
     def _get_image_tag(self, image_relation):
-        return image_relation.tag_id.name or ""
+        if "tag_id" not in image_relation._fields:
+            return None
+        if image_relation.tag_id:
+            return image_relation.tag_id.name
