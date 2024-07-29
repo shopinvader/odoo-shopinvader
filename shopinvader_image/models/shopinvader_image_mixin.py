@@ -126,11 +126,20 @@ class ShopinvaderImageMixin(models.AbstractModel):
         :return: dict
         """
         self.ensure_one()
-        res = {"src": self._get_image_url(thumbnail), "alt": self.name}
+        res = {
+            "src": self._get_image_url(thumbnail),
+            "alt": self._get_image_alt(image_relation.image_id),
+        }
         if "tag_id" in image_relation._fields:
-            res["tag"] = image_relation.tag_id.name or ""
+            res["tag"] = self._get_image_tag(image_relation)
         return res
+
+    def _get_image_alt(self, image):
+        return self.name
 
     def _get_image_url(self, image):
         fname = "url" if self.backend_id.image_data_include_cdn_url else "url_path"
         return image[fname]
+
+    def _get_image_tag(self, image_relation):
+        return image_relation.tag_id.name or ""
