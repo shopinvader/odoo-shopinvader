@@ -63,6 +63,7 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
                 self.assertIn("tag", img)
 
     def test_image_metadata(self):
+        self.shopinvader_variant.invalidate_cache(["images"])
         self.shopinvader_variant[0].image_ids[0].image_id.alt_name = "Test Alt Name"
         images = self.shopinvader_variant.images
         for scale in self.backend.shopinvader_variant_resize_ids:
@@ -70,7 +71,16 @@ class TestShopinvaderImage(TestShopinvaderImageCase):
             self.assertEqual(img["alt"], "Test Alt Name")
         for scale in self.backend.shopinvader_variant_resize_ids:
             img = images[1][scale.key]
+            # Fallback to product name
             self.assertEqual(img["alt"], self.shopinvader_variant.name)
+        # allow empty alt
+        self.shopinvader_variant.backend_id.image_data_empty_alt_name_allowed = True
+        self.shopinvader_variant.invalidate_cache(["images"])
+        images = self.shopinvader_variant.images
+        for scale in self.backend.shopinvader_variant_resize_ids:
+            img = images[1][scale.key]
+            # NO Fallback to product name
+            self.assertNotIn("alt", img)
 
     def test_hash_and_compute_flag(self):
         variant = self.shopinvader_variant

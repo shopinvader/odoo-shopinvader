@@ -24,6 +24,16 @@ take care of adding the CDN URL on your frontend
 to all images' relative path.
 """
 
+ALT_HELP_TEXT = """
+The alt name of an image is used to provide a meaningful description.
+The alt name can be configured by image, but it can also be empty.
+When it's empty, the product name will be used as a fallback.
+When this flag is enabled, the alt name will be empty.
+You can then choose on your shop how to populate it.
+This helps reducing the amount of data stored in the database
+when the alt name is always equal to the product name.
+"""
+
 
 class ShopinvaderBackend(models.Model):
     _inherit = "shopinvader.backend"
@@ -43,4 +53,9 @@ class ShopinvaderBackend(models.Model):
         string="Image URLs w/ CDN",
         help=CDN_HELP_TEXT,
         default=True,
+    )
+    image_data_empty_alt_name_allowed = fields.Boolean(
+        string="Image ALT name can be empty",
+        help=ALT_HELP_TEXT,
+        default=False,
     )
