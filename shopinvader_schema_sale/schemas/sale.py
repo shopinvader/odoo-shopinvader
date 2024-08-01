@@ -40,7 +40,11 @@ class Sale(StrictExtendableBaseModel):
             client_order_ref=odoo_rec.client_order_ref or None,
             date_order=odoo_rec.date_order,
             date_commitment=odoo_rec.commitment_date or None,
-            lines=[SaleLine.from_sale_order_line(line) for line in odoo_rec.order_line],
+            lines=[
+                SaleLine.from_sale_order_line(line)
+                for line in odoo_rec.order_line
+                if line.visible_in_shopinvader_api
+            ],
             amount=SaleAmount.from_sale_order(odoo_rec),
             delivery=DeliveryInfo.from_sale_order(odoo_rec),
             invoicing=InvoicingInfo.from_sale_order(odoo_rec),
