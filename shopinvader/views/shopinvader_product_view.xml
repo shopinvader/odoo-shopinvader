@@ -147,6 +147,13 @@
                                         <field name="url_key" string="Redirect Url" />
                                     </tree>
                                 </field>
+                              <button
+                                    name="action_view_redirect_url"
+                                    type="object"
+                                    string="Manage redirects"
+                                    class="oe_inline"
+                                />
+
                             </group>
                         </page>
                         <page name="variant" string="Variant">
