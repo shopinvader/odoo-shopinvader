@@ -131,11 +131,14 @@ class AbstractUrl(models.AbstractModel):
         self.flush()
         for record in self:
             record.redirect_url_url_ids = record.env["url.url"].search(
-                [
-                    ("model_id", "=", get_model_ref(record)),
-                    ("redirect", "=", True),
-                ]
+                record._redirect_url_domain()
             )
+
+    def _redirect_url_domain(self):
+        return [
+            ("model_id", "=", get_model_ref(self)),
+            ("redirect", "=", True),
+        ]
 
     @api.depends("url_key")
     def _compute_url_url_ids(self):
@@ -228,3 +231,16 @@ class AbstractUrl(models.AbstractModel):
             urls.unlink()
         self.flush()
         return super(AbstractUrl, self).unlink()
+
+    def action_view_redirect_url(self):
+        self.ensure_one()
+        action = self.env["ir.actions.actions"]._for_xml_id(
+            "base_url.base_url_action_view"
+        )
+        action["name"] = action["display_name"] = _("Redirects")
+        action["domain"] = self._redirect_url_domain()
+        action["context"] = {
+            "default_model_id": get_model_ref(self),
+            "default_redirect": True,
+        }
+        return action
