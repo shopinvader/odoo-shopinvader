@@ -34,22 +34,12 @@ def signin(
     Authenticate the partner based on a JWT token or a session cookie.
     Set the session cookie if allowed.
     Return HTTP code 201 if res.partner created (case of the first signin).
-    Transfer anonymous cart and delete anonymous partner if any.
     """
     if not partner:
         partner = env[
             "shopinvader_api_signin_jwt.signin_router.helper"
         ]._create_partner_from_payload(payload)
         response.status_code = status.HTTP_201_CREATED
-    anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
-        request.cookies
-    )
-    if anonymous_partner:
-        anonymous_cart = env["sale.order"].sudo()._find_open_cart(anonymous_partner.id)
-        if anonymous_cart:
-            anonymous_cart._transfer_cart(partner.id)
-            anonymous_cart.unlink()
-        env["res.partner"]._delete_anonymous_partner__cookie(request.cookies, response)
 
 
 @signin_router.post("/signout")

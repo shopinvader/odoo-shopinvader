@@ -11,7 +11,6 @@
     "depends": [
         "fastapi_auth_jwt",
         "shopinvader_anonymous_partner",
-        "shopinvader_sale_cart",
     ],
     "data": [
         "security/res_groups.xml",
