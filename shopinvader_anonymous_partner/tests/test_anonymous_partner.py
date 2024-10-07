@@ -87,6 +87,27 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
         )
         self.assertFalse(partner.exists())
 
+    def test_promote(self):
+        anonymous_partner = self.env["res.partner"]._create_anonymous_partner__cookie(
+            mock.MagicMock()
+        )
+        self.assertTrue(anonymous_partner.exists())
+
+        partner = self.env["res.partner"].create(
+            {"name": "Test promotion partner", "email": "test+promotion@example.com"}
+        )
+        with mock.patch.object(
+            type(self.env["res.partner"]), "_promote_from_anonymous_partner"
+        ) as mock_promote:
+            self.env["res.partner"]._promote_anonymous_partner(
+                partner,
+                cookies={COOKIE_NAME: anonymous_partner.anonymous_token},
+                response=mock.MagicMock(),
+            )
+            mock_promote.assert_called_with(anonymous_partner)
+
+        self.assertFalse(anonymous_partner.exists())
+
 
 class TestShopinvaderAnonymousPartnerEndToEnd(HttpCase):
     def test_create_and_get_and_delete(self):

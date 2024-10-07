@@ -7,6 +7,8 @@ from datetime import datetime
 
 from odoo import _, api, fields, models
 
+from odoo.addons.base.models.res_partner import Partner as ResPartner
+
 COOKIE_NAME = "shopinvader-anonymous-partner"
 COOKIE_MAX_AGE = 86400 * 365
 
@@ -31,7 +33,6 @@ class Cookies(typing.Protocol):
 
 
 class ResPartner(models.Model):
-
     _inherit = "res.partner"
 
     anonymous_token = fields.Char(
@@ -101,3 +102,31 @@ class ResPartner(models.Model):
         if not token:
             return self.env["res.partner"].sudo().browse()
         return self._get_anonymous_partner__token(token)
+
+    def _promote_from_anonymous_partner(self, anonymous_partner: ResPartner):
+        """
+        Promote an anonymous partner to an authenticated partner.
+
+        This method should be overridden by other modules to implement
+        the partner resolution logic, merging the anonymous partner cart
+        for instance.
+
+        This method can return False to prevent the anonymous partner cookie
+        from being deleted.
+        """
+        return True
+
+    @api.model
+    def _promote_anonymous_partner(
+        self, partner: ResPartner, cookies: Cookies, response: Response
+    ):
+        """
+        Promote the current anonymous partner to the given authenticated partner.
+
+        This method calls the partner promotion and removes the anonymous partner cookie.
+        """
+        anonymous_partner = self._get_anonymous_partner__cookie(cookies)
+        if partner._promote_from_anonymous_partner(
+            anonymous_partner,
+        ):
+            self._delete_anonymous_partner__cookie(cookies, response)
