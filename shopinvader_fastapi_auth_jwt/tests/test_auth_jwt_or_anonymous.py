@@ -25,7 +25,7 @@ def shopinvader_auth_jwt_or_anonymous(
     partner: Annotated[
         Partner,
         Depends(auth_jwt_authenticated_or_anonymous_partner),
-    ]
+    ],
 ):
     return {"partner_id": partner.id}
 
@@ -35,7 +35,7 @@ def shopinvader_auth_jwt_or_anonymous_autocreate(
     partner: Annotated[
         Partner,
         Depends(auth_jwt_authenticated_or_anonymous_partner_autocreate),
-    ]
+    ],
 ):
     return {"partner_id": partner.id}
 
@@ -195,6 +195,29 @@ class TestAuthJwtOrAnonymous(TestBase):
             },
         )
         self.assertEqual(resp.status_code, status.HTTP_401_UNAUTHORIZED, resp.text)
+
+    def test_valid_jwt_valid_cookie_partner_promote_anonymous(self) -> None:
+        token = self.jwt_validator._encode(
+            {"email": self.test_partner.email},
+            secret=self.jwt_validator.secret_key,
+            expire=60,
+        )
+        with mock.patch.object(
+            type(self.env["res.partner"]), "_promote_from_anonymous_partner"
+        ) as mock_promote:
+            resp = self.client.get(
+                "/test/shopinvader_auth_jwt_or_anonymous",
+                headers={
+                    "Authorization": f"Bearer {token}",
+                    "Cookie": "shopinvader-anonymous-partner="
+                    + self.test_anonymous_partner.anonymous_token,
+                },
+            )
+            mock_promote.assert_called_with(self.test_anonymous_partner)
+        self.assertFalse(self.test_anonymous_partner.exists())
+
+        resp.raise_for_status()
+        self.assertEqual(resp.json()["partner_id"], self.test_partner.id, resp.text)
 
 
 class TestAuthJwtOrAnonymousAutocreate(TestBase):
