@@ -31,18 +31,26 @@ def auth_partner_authenticated_or_anonymous_partner(
     ],
     env: Annotated[Environment, Depends(odoo_env)],
     request: Request,
+    response: Response,
 ) -> Partner:
-    if partner:
-        return partner
     anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
         request.cookies
     )
-    if anonymous_partner:
-        return env["res.partner"].browse(anonymous_partner.id)
-    _logger.info(
-        "Partner auth authentication failed and no anonymous partner cookie found."
-    )
-    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+    if anonymous_partner and partner:
+        env["res.partner"]._promote_anonymous_partner(
+            partner, request.cookies, response
+        )
+
+    if partner:
+        return partner
+
+    if not anonymous_partner:
+        _logger.info(
+            "Partner auth authentication failed and no anonymous partner cookie found."
+        )
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
+
+    return env["res.partner"].browse(anonymous_partner.id)
 
 
 def auth_partner_authenticated_or_anonymous_partner_autocreate(
@@ -54,13 +62,21 @@ def auth_partner_authenticated_or_anonymous_partner_autocreate(
     request: Request,
     response: Response,
 ) -> Partner:
-    if partner:
-        return partner
     anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
         request.cookies
     )
-    if not anonymous_partner:
+
+    if not partner and not anonymous_partner:
         anonymous_partner = env["res.partner"]._create_anonymous_partner__cookie(
             response
         )
+
+    if anonymous_partner and partner:
+        env["res.partner"]._promote_anonymous_partner(
+            partner, request.cookies, response
+        )
+
+    if partner:
+        return partner
+
     return env["res.partner"].browse(anonymous_partner.id)

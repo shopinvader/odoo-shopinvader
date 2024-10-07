@@ -30,7 +30,7 @@ def shopinvader_auth_partner_or_anonymous(
     partner: Annotated[
         Partner,
         Depends(auth_partner_authenticated_or_anonymous_partner),
-    ]
+    ],
 ):
     return {"partner_id": partner.id}
 
@@ -40,7 +40,7 @@ def shopinvader_auth_partner_or_anonymous_autocreate(
     partner: Annotated[
         Partner,
         Depends(auth_partner_authenticated_or_anonymous_partner_autocreate),
-    ]
+    ],
 ):
     return {"partner_id": partner.id}
 
@@ -151,6 +151,20 @@ class TestAuthPartnerOrAnonymous(TestBase):
             self._add_anonymous_cookie(client, "invalid_cookie")
             resp = client.get("/test/shopinvader_auth_partner_or_anonymous")
         self.assertEqual(resp.status_code, status.HTTP_401_UNAUTHORIZED, resp.text)
+
+    def test_valid_partner_valid_cookie_partner_promote_anonymous(self) -> None:
+        """Auth partner has priority over the anonymous partner cookie."""
+        with self._create_test_client() as client:
+            self._login(client)
+            self._add_anonymous_cookie(client)
+            with mock.patch.object(
+                type(self.env["res.partner"]), "_promote_from_anonymous_partner"
+            ) as mock_promote:
+                resp = client.get("/test/shopinvader_auth_partner_or_anonymous")
+                mock_promote.assert_called_with(self.test_anonymous_partner)
+
+        resp.raise_for_status()
+        self.assertEqual(resp.json()["partner_id"], self.test_partner.id, resp.text)
 
 
 @tests.tagged("post_install", "-at_install")
