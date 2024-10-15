@@ -69,28 +69,43 @@ class SaleOrder(models.Model):
                     ] |= line
 
         for partner, lines in request_lines_by_partner.items():
-            message = ""
-            if lines["accepted"]:
-                message += _("Your following requests have been accepted:\n")
-                for line in lines["accepted"]:
-                    message += f"{line.product_id.name} - {line.product_uom_qty}\n"
-
-            if lines["rejected"]:
-                message += _("Your following requests have been rejected:\n")
-                for line in lines["rejected"]:
-                    message += f"{line.product_id.name} - {line.product_uom_qty}"
-                    if line.request_rejection_reason:
-                        message += f": {line.request_rejection_reason}"
-                    message += "\n"
-            if not message:
+            if not lines["accepted"] and not lines["rejected"]:
                 continue
-            partner.message_post(
-                body=message,
-                subject=_("Request feedback for order %s") % record.name,
-                subtype_id=self.env.ref("mail.mt_comment").id,
+            self._notify_partner_on_request_feedback(
+                partner, lines["accepted"], lines["rejected"]
             )
 
         return res
+
+    def _notify_partner_on_request_feedback(
+        self, partner, accepted_lines, rejected_lines
+    ):
+        """Override this method to customize the notification message.
+        Sending a mail template for example.
+
+        :param partner: res.partner record Concerned partner
+        :param accepted_lines: sale.order.line recordset Accepted lines
+        :param rejected_lines: sale.order.line recordset Rejected lines
+        """
+        message = ""
+        if accepted_lines:
+            message += _("Your following requests have been accepted:\n")
+            for line in accepted_lines:
+                message += f"{line.product_id.name} - {line.product_uom_qty}\n"
+
+        if rejected_lines:
+            message += _("Your following requests have been rejected:\n")
+            for line in rejected_lines:
+                message += f"{line.product_id.name} - {line.product_uom_qty}"
+                if line.request_rejection_reason:
+                    message += f": {line.request_rejection_reason}"
+                message += "\n"
+
+        partner.message_post(
+            body=message,
+            subject=_("Request feedback"),
+            subtype_id=self.env.ref("mail.mt_comment").id,
+        )
 
     def action_request_cart(self):
         for record in self:

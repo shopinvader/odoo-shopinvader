@@ -85,5 +85,5 @@ class ResPartner(models.Model):
         self._ensure_same_unit(member)
         if member.unit_profile not in ["collaborator", "manager"]:
             raise AccessError(_("Cannot perform this action on this member"))
-        member.active = False
+        member.sudo().active = False
         return member
