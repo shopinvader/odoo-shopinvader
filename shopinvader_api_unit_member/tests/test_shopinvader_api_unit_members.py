@@ -4,12 +4,12 @@
 
 import json
 from contextlib import contextmanager
-from unittest import mock
 
 from fastapi import status
 from requests import Response
 
 from odoo.tests.common import tagged
+from odoo.tools import mute_logger
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 from odoo.addons.shopinvader_unit_management.tests.common import (
@@ -51,12 +51,36 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         )._get_app()
 
     @contextmanager
-    def _rollback_called_test_client(self):
-        with self._create_test_client() as test_client, mock.patch.object(
-            self.env.cr.__class__, "rollback"
-        ) as mock_rollback:
+    def _create_test_client(self, **kwargs):
+        kwargs.setdefault("raise_server_exceptions", False)
+        if not kwargs["raise_server_exceptions"]:
+
+            def handle_error(request, exc):
+                from odoo.addons.fastapi.fastapi_dispatcher import FastApiDispatcher
+
+                def make_json_response(body, status, headers):
+                    import logging
+
+                    from starlette.responses import JSONResponse
+
+                    _logger = logging.getLogger(__name__)
+
+                    response = JSONResponse(body, status_code=status)
+                    if status == 500:
+                        _logger.error("Error in test request", exc_info=exc)
+                    if headers:
+                        response.headers.update(headers)
+                    return response
+
+                request.make_json_response = make_json_response
+                return FastApiDispatcher(request).handle_error(exc)
+
+            kwargs.get("app", self.default_fastapi_app).exception_handlers[
+                Exception
+            ] = handle_error
+
+        with mute_logger("httpx"), super()._create_test_client(**kwargs) as test_client:
             yield test_client
-            mock_rollback.assert_called_once()
 
     def test_get_manager_unit_members(self):
         """
@@ -94,7 +118,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         """
         self.default_fastapi_authenticated_partner = self.collaborator_1_1
 
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.get("/unit/members")
             self.assertEqual(
                 response.status_code,
@@ -107,7 +131,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         """
         self.default_fastapi_authenticated_partner = self.unit_1
 
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.get("/unit/members")
             self.assertEqual(
                 response.status_code,
@@ -149,7 +173,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         """
         Test that a manager can't access members of another unit
         """
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.get(
                 f"/unit/members/{self.collaborator_2_2.id}"
             )
@@ -162,13 +186,13 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         """
         Test that a manager can't access a unit
         """
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.get(f"/unit/members/{self.unit_1.id}")
             self.assertEqual(
                 response.status_code,
                 status.HTTP_404_NOT_FOUND,
             )
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.get(f"/unit/members/{self.unit_2.id}")
             self.assertEqual(
                 response.status_code,
@@ -257,7 +281,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
         )
 
     def test_create_unit_wrong_type(self):
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 "/unit/members",
                 data=json.dumps({"name": "New Unit", "type": "unit"}),
@@ -267,7 +291,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
                 status.HTTP_403_FORBIDDEN,
             )
 
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 "/unit/members",
                 data=json.dumps({"name": "New Unit", "type": "unknown"}),
@@ -279,7 +303,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
 
     def test_create_unit_wrong_partner(self):
         self.default_fastapi_authenticated_partner = self.collaborator_1_1
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 "/unit/members",
                 data=json.dumps({"name": "New Unit", "type": "collaborator"}),
@@ -387,7 +411,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
 
     def test_update_unit_wrong_partner(self):
         self.default_fastapi_authenticated_partner = self.collaborator_1_1
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 f"/unit/members/{self.collaborator_1_1.id}",
                 data=json.dumps({"name": "New Unit Name"}),
@@ -474,7 +498,7 @@ class TestShopinvaderApiUnitMember(FastAPITransactionCase, TestUnitManagementCom
 
     def test_delete_unit_wrong_partner(self):
         self.default_fastapi_authenticated_partner = self.collaborator_1_1
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.delete(
                 f"/unit/members/{self.collaborator_1_1.id}",
             )

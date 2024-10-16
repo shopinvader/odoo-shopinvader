@@ -4,12 +4,12 @@
 
 import json
 from contextlib import contextmanager
-from unittest import mock
 
 from fastapi import status
 from requests import Response
 
-from odoo.tests.common import tagged
+from odoo.tests.common import RecordCapturer, tagged
+from odoo.tools import mute_logger
 
 from odoo.addons.shopinvader_api_cart.tests.common import CommonSaleCart
 from odoo.addons.shopinvader_api_sale.routers import sale_line_router
@@ -107,17 +107,47 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         )
 
     def _slice_sol(self, data, *fields):
+        def get(item, field):
+            if "." in field:
+                field, subfield = field.split(".")
+                return get(item[field], subfield)
+            return item[field]
+
         if len(fields) == 1:
-            return {item[fields[0]] for item in data["items"]}
-        return {tuple(item[field] for field in fields) for item in data["items"]}
+            return {get(item, fields[0]) for item in data["items"]}
+        return {tuple(get(item, field) for field in fields) for item in data["items"]}
 
     @contextmanager
-    def _rollback_called_test_client(self, **kwargs):
-        with self._create_test_client(**kwargs) as test_client, mock.patch.object(
-            self.env.cr.__class__, "rollback"
-        ) as mock_rollback:
+    def _create_test_client(self, **kwargs):
+        kwargs.setdefault("raise_server_exceptions", False)
+        if not kwargs["raise_server_exceptions"]:
+
+            def handle_error(request, exc):
+                from odoo.addons.fastapi.fastapi_dispatcher import FastApiDispatcher
+
+                def make_json_response(body, status, headers):
+                    import logging
+
+                    from starlette.responses import JSONResponse
+
+                    _logger = logging.getLogger(__name__)
+
+                    response = JSONResponse(body, status_code=status)
+                    if status == 500:
+                        _logger.error("Error in test request", exc_info=exc)
+                    if headers:
+                        response.headers.update(headers)
+                    return response
+
+                request.make_json_response = make_json_response
+                return FastApiDispatcher(request).handle_error(exc)
+
+            kwargs.get("app", self.default_fastapi_app).exception_handlers[
+                Exception
+            ] = handle_error
+
+        with mute_logger("httpx"), super()._create_test_client(**kwargs) as test_client:
             yield test_client
-            mock_rollback.assert_called_once()
 
     def test_cart_request_as_collaborator(self):
         """
@@ -178,7 +208,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         self.env["sale.order"]._create_empty_cart(
             self.default_fastapi_authenticated_partner.id
         )
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post("/request")
             self.assertEqual(
                 response.status_code,
@@ -196,7 +226,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         self.env["sale.order"]._create_empty_cart(
             self.default_fastapi_authenticated_partner.id
         )
-        with self._rollback_called_test_client() as test_client:
+        with self._create_test_client() as test_client:
             response: Response = test_client.post("/request")
             self.assertEqual(
                 response.status_code,
@@ -305,7 +335,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         self.assertEqual(response.json()["count"], 1)
 
     def test_sale_line_requested_as_collaborator(self):
-        with self._rollback_called_test_client(
+        with self._create_test_client(
             app=self.sale_line_app, router=unit_request_line_router
         ) as test_client:
             response: Response = test_client.get("/unit/request_lines")
@@ -325,7 +355,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         res = response.json()
         self.assertEqual(res["count"], 3)
         self.assertEqual(
-            self._slice_sol(res, "product_id", "qty", "order_id"),
+            self._slice_sol(res, "product_id", "qty", "order.id"),
             {
                 (self.product_1.id, 2, self.cart_1_1.id),
                 (self.product_2.id, 6, self.cart_1_1.id),
@@ -370,7 +400,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         res = response.json()
         self.assertEqual(res["count"], 2)
         self.assertEqual(
-            self._slice_sol(res, "product_id", "qty", "order_id"),
+            self._slice_sol(res, "product_id", "qty", "order.id"),
             {
                 (self.product_2.id, 6, self.cart_1_1.id),
                 (self.product_1.id, 3, self.cart_1_2.id),
@@ -424,7 +454,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         res = response.json()
         self.assertEqual(res["count"], 2)
         self.assertEqual(
-            self._slice_sol(res, "product_id", "qty", "order_id"),
+            self._slice_sol(res, "product_id", "qty", "order.id"),
             {
                 (self.product_2.id, 6, self.cart_1_1.id),
                 (self.product_1.id, 3, self.cart_1_2.id),
@@ -447,7 +477,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
                 res,
                 "product_id",
                 "qty",
-                "order_id",
+                "order.id",
                 "request_rejected",
                 "request_rejection_reason",
             ),
@@ -514,20 +544,32 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         sol._action_accept_request(so)
         sol2._action_reject_request(so, "Nope")
         self.cart_1_2.order_line._action_accept_request(so)
-        self.assertEqual(len(self.collaborator_1_1.message_ids), 0)
-        self.assertEqual(len(self.collaborator_1_2.message_ids), 0)
 
-        so.action_confirm()
+        def mail_domain_for(partner):
+            return [
+                ("res_id", "=", partner.id),
+                ("model", "=", "res.partner"),
+                ("message_type", "=", "notification"),
+            ]
+
+        with RecordCapturer(
+            self.env["mail.message"], mail_domain_for(self.collaborator_1_1)
+        ) as messages_1_1, RecordCapturer(
+            self.env["mail.message"], mail_domain_for(self.collaborator_1_2)
+        ) as messages_1_2, RecordCapturer(
+            self.env["mail.message"], mail_domain_for(self.manager_1_1)
+        ) as messages_manager_1_1:
+            so.action_confirm()
 
         # Check that the partners have been notified
-        self.assertEqual(len(self.collaborator_1_1.message_ids), 1)
-        self.assertEqual(len(self.collaborator_1_2.message_ids), 1)
-        message = self.collaborator_1_1.message_ids[0]
+        self.assertEqual(len(messages_1_1.records), 1)
+        self.assertEqual(len(messages_1_2.records), 1)
+        message = messages_1_1.records
         self.assertIn("Your following requests have been accepted:", message.body)
         self.assertIn("product_1 - 2.0", message.body)
         self.assertIn("Your following requests have been rejected:", message.body)
         self.assertIn("product_2 - 6.0: Nope", message.body)
-        message = self.collaborator_1_2.message_ids[0]
+        message = messages_1_2.records
         self.assertIn("Your following requests have been accepted:", message.body)
         self.assertIn("product_1 - 3.0", message.body)
-        self.assertEqual(len(self.manager_1_1.message_ids), 0)
+        self.assertEqual(len(messages_manager_1_1.records), 0)

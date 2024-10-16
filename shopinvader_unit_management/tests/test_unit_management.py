@@ -2,6 +2,7 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+from odoo.exceptions import AccessError, MissingError
 
 from .common import TestUnitManagementCommon
 
@@ -95,3 +96,215 @@ class TestUnitManagement(TestUnitManagementCommon):
         self.assertFalse(self.collaborator_3_3.member_ids)
         self.assertFalse(self.collaborator_3_3.manager_ids)
         self.assertFalse(self.collaborator_3_3.collaborator_ids)
+
+    def test_unit_invoicing_addresses(self):
+        self.assertEqual(
+            self.collaborator_1_1._get_shopinvader_invoicing_addresses(),
+            self.unit_1,
+        )
+
+    def test_unit_delivery_addresses_partner(self):
+        self.assertFalse(
+            self.collaborator_1_1._get_shopinvader_delivery_addresses(),
+        )
+
+        # Create a delivery address for the collaborator
+        self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.collaborator_1_1.id,
+            }
+        )
+        self.assertEqual(
+            self.unit_1.member_ids,
+            self.manager_1_1
+            | self.collaborator_1_1
+            | self.collaborator_1_2
+            | self.collaborator_1_3
+            | self.collaborator_1_4
+            | self.collaborator_1_5,
+        )
+        self.assertFalse(
+            self.collaborator_1_1._get_shopinvader_delivery_addresses(),
+        )
+
+    def test_unit_update_invoicing_address(self):
+        with self.assertRaises(AccessError):
+            self.collaborator_1_1._update_shopinvader_invoicing_address(
+                {"name": "New Name"}, self.collaborator_1_1.id
+            )
+        with self.assertRaises(AccessError):
+            self.collaborator_1_1._update_shopinvader_invoicing_address(
+                {"name": "New Name"}, self.unit_1.id
+            )
+
+    def test_unit_update_invoicing_address_manager(self):
+        with self.assertRaises(AccessError):
+            self.collaborator_1_1._update_shopinvader_invoicing_address(
+                {"name": "New Name"}, self.manager_1_1.id
+            )
+        with self.assertRaises(AccessError):
+            self.collaborator_1_1._update_shopinvader_invoicing_address(
+                {"name": "New Name"}, self.unit_1.id
+            )
+
+    def test_unit_delivery_addresses_unit(self):
+        self.assertFalse(
+            self.collaborator_1_1._get_shopinvader_delivery_addresses(),
+        )
+
+        # Create a delivery address for the collaborator
+        address_unit = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.unit_1.id,
+            }
+        )
+        self.assertEqual(
+            self.unit_1.member_ids,
+            self.manager_1_1
+            | self.collaborator_1_1
+            | self.collaborator_1_2
+            | self.collaborator_1_3
+            | self.collaborator_1_4
+            | self.collaborator_1_5,
+        )
+        self.assertEqual(
+            self.collaborator_1_1._get_shopinvader_delivery_addresses(),
+            address_unit,
+        )
+
+    def test_unit_delivery_addresses_both(self):
+        self.assertFalse(
+            self.collaborator_1_1._get_shopinvader_delivery_addresses(),
+        )
+
+        # Create a delivery address for both the collaborator and the unit
+        self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.collaborator_1_1.id,
+            }
+        )
+        address_unit = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.unit_1.id,
+            }
+        )
+        self.assertEqual(
+            self.unit_1.member_ids,
+            self.manager_1_1
+            | self.collaborator_1_1
+            | self.collaborator_1_2
+            | self.collaborator_1_3
+            | self.collaborator_1_4
+            | self.collaborator_1_5,
+        )
+        self.assertEqual(
+            self.collaborator_1_1._get_shopinvader_delivery_addresses(),
+            address_unit,
+        )
+
+    def test_unit_update_delivery_address(self):
+        # Create a delivery address for both the collaborator and the unit
+        address = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.collaborator_1_1.id,
+            }
+        )
+        address_unit = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.unit_1.id,
+            }
+        )
+
+        with self.assertRaises(MissingError):
+            self.collaborator_1_1._update_shopinvader_delivery_address(
+                {"name": "New Name"}, address.id
+            )
+
+        with self.assertRaises(AccessError):
+            self.collaborator_1_1._update_shopinvader_delivery_address(
+                {"name": "New Name"}, address_unit.id
+            )
+
+    def test_unit_update_delivery_address_manager(self):
+        # Create a delivery address for both the collaborator and the unit
+        address = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.manager_1_1.id,
+            }
+        )
+        address_unit = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.unit_1.id,
+            }
+        )
+
+        with self.assertRaises(MissingError):
+            self.manager_1_1._update_shopinvader_delivery_address(
+                {"name": "New Name"}, address.id
+            )
+
+        self.manager_1_1._update_shopinvader_delivery_address(
+            {"name": "New Name"}, address_unit.id
+        )
+        self.assertEqual(address_unit.name, "New Name")
+
+    def test_unit_delete_delivery_address(self):
+        # Create a delivery address for both the collaborator and the unit
+        address = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.collaborator_1_1.id,
+            }
+        )
+        address_unit = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.unit_1.id,
+            }
+        )
+
+        with self.assertRaises(MissingError):
+            self.collaborator_1_1._delete_shopinvader_delivery_address(address.id)
+        with self.assertRaises(AccessError):
+            self.collaborator_1_1._delete_shopinvader_delivery_address(address_unit.id)
+
+    def test_unit_delete_delivery_address_manager(self):
+        # Create a delivery address for both the collaborator and the unit
+        address = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.manager_1_1.id,
+            }
+        )
+        address_unit = self.env["res.partner"].create(
+            {
+                "name": "Delivery Address",
+                "type": "delivery",
+                "parent_id": self.unit_1.id,
+            }
+        )
+
+        with self.assertRaises(MissingError):
+            self.manager_1_1._delete_shopinvader_delivery_address(address.id)
+
+        self.manager_1_1._delete_shopinvader_delivery_address(address_unit.id)
+        self.assertFalse(address_unit.active)

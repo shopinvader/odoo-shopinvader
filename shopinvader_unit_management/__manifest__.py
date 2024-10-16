@@ -12,7 +12,7 @@
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": [],
+    "depends": ["shopinvader_address"],
     "demo": [
         "demo/res_partner_demo.xml",
     ],

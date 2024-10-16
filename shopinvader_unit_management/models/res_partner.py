@@ -57,8 +57,15 @@ class ResPartner(models.Model):
     @api.model
     def _create_shopinvader_unit_member(self, vals):
         self._ensure_manager()
-        # FIXME:
-        vals[self._fields["unit_id"].related[0]] = self.unit_id.id
+
+        # FIXME: The related field can be overriden
+        def get_related(field):
+            related = self._fields[field].related
+            if isinstance(related, str):
+                return related
+            return ".".join(related)
+
+        vals[get_related("unit_id")] = self.unit_id.id
 
         if "unit_profile" not in vals:
             vals["unit_profile"] = "collaborator"
@@ -87,3 +94,29 @@ class ResPartner(models.Model):
             raise AccessError(_("Cannot perform this action on this member"))
         member.sudo().active = False
         return member
+
+    # Address overrides
+    def _get_shopinvader_invoicing_addresses(self) -> "ResPartner":
+        # A unit member invoice on unit
+        if self.unit_id:
+            return self.unit_id._get_shopinvader_invoicing_addresses()
+        return super()._get_shopinvader_invoicing_addresses()
+
+    def _get_shopinvader_delivery_addresses(self) -> "ResPartner":
+        # A unit member deliver at unit
+        if self.unit_id:
+            return self.unit_id._get_shopinvader_delivery_addresses()
+        return super()._get_shopinvader_delivery_addresses()
+
+    def _get_shopinvader_invoicing_address(self, address_id: int) -> "ResPartner":
+        if self.unit_id:
+            raise AccessError(_("Cannot alter a unit invoicing address"))
+        return super()._get_shopinvader_invoicing_address(address_id)
+
+    def _get_shopinvader_delivery_address(self, address_id: int) -> "ResPartner":
+        if self.unit_id:
+            address = self.unit_id._get_shopinvader_delivery_address(address_id)
+            if address:
+                self._ensure_manager()
+            return address
+        return super()._get_shopinvader_delivery_address(address_id)
