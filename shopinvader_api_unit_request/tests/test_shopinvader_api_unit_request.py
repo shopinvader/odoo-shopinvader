@@ -120,32 +120,6 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
     @contextmanager
     def _create_test_client(self, **kwargs):
         kwargs.setdefault("raise_server_exceptions", False)
-        if not kwargs["raise_server_exceptions"]:
-
-            def handle_error(request, exc):
-                from odoo.addons.fastapi.fastapi_dispatcher import FastApiDispatcher
-
-                def make_json_response(body, status, headers):
-                    import logging
-
-                    from starlette.responses import JSONResponse
-
-                    _logger = logging.getLogger(__name__)
-
-                    response = JSONResponse(body, status_code=status)
-                    if status == 500:
-                        _logger.error("Error in test request", exc_info=exc)
-                    if headers:
-                        response.headers.update(headers)
-                    return response
-
-                request.make_json_response = make_json_response
-                return FastApiDispatcher(request).handle_error(exc)
-
-            kwargs.get("app", self.default_fastapi_app).exception_handlers[
-                Exception
-            ] = handle_error
-
         with mute_logger("httpx"), super()._create_test_client(**kwargs) as test_client:
             yield test_client
 
