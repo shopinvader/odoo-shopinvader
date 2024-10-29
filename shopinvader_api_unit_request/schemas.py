@@ -9,11 +9,27 @@ from pydantic import Field
 
 from odoo import api
 
-from odoo.addons.shopinvader_api_sale.schemas import SaleLineWithSale
+from odoo.addons.shopinvader_api_sale import schemas
 
 
 class RejectRequest(StrictExtendableBaseModel, extra="ignore"):
     reason: str | None = None
+
+
+class SaleLineWithSale(schemas.SaleLineWithSale, extends=True):
+    request_order_id: int | None
+    request_partner_id: int | None
+
+    @classmethod
+    def from_sale_order_line(cls, odoo_rec):
+        res = super().from_sale_order_line(odoo_rec)
+        res.request_order_id = (
+            odoo_rec.request_order_id.id if odoo_rec.request_order_id else None
+        )
+        res.request_partner_id = (
+            odoo_rec.request_partner_id.id if odoo_rec.request_partner_id else None
+        )
+        return res
 
 
 class RequestedSaleLine(SaleLineWithSale):

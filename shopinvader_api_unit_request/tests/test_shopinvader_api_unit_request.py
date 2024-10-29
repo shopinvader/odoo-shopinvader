@@ -287,8 +287,8 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
             response: Response = test_client.get("/unit/request_lines")
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.json())
         self.assertEqual(response.json()["count"], 3)
-
-        so2.order_line[:2]._action_accept_request(so)
+        accepted_sols = so2.order_line[:2]
+        accepted_sols._action_accept_request(so)
 
         with self._create_test_client(
             app=self.sale_line_app,
@@ -297,7 +297,12 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
         ) as test_client:
             response: Response = test_client.get("/sale_lines")
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.json())
-        self.assertEqual(response.json()["count"], 5)
+        data = response.json()
+        self.assertEqual(data["count"], 5)
+        for sol in accepted_sols:
+            item = next(item for item in data["items"] if item["id"] == sol.id)
+            self.assertEqual(item["request_order_id"], so2.id)
+            self.assertEqual(item["request_partner_id"], self.collaborator_2_1.id)
 
         with self._create_test_client(
             app=self.sale_line_app,
