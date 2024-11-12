@@ -317,8 +317,8 @@ class ShopinvaderVariant(models.Model):
         return sorted(variants, key=lambda var: [get_value(var, x) for x in order_by])
 
     @api.model
-    def _pick_main_variant(cls, variants):
-        ordered = cls._get_main_product_sorted_variants(variants)
+    def _pick_main_variant(self, variants):
+        ordered = self._get_main_product_sorted_variants(variants)
         return ordered[0].get("id") if ordered else None
 
     def _compute_main_product(self):
