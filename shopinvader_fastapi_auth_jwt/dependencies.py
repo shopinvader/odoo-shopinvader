@@ -26,25 +26,16 @@ def auth_jwt_authenticated_or_anonymous_partner(
     ],
     env: Annotated[Environment, Depends(odoo_env)],
     request: Request,
-    response: Response,
 ) -> Partner:
+    if auth_jwt_partner:
+        return auth_jwt_partner
     anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
         request.cookies
     )
-
-    if anonymous_partner and auth_jwt_partner:
-        env["res.partner"]._promote_anonymous_partner(
-            auth_jwt_partner, request.cookies, response
-        )
-
-    if auth_jwt_partner:
-        return auth_jwt_partner
-
-    if not anonymous_partner:
-        _logger.info("JWT authentication failed and no anonymous partner cookie found.")
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
-
-    return env["res.partner"].browse(anonymous_partner.id)
+    if anonymous_partner:
+        return env["res.partner"].browse(anonymous_partner.id)
+    _logger.info("JWT authentication failed and no anonymous partner cookie found.")
+    raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
 
 def auth_jwt_authenticated_or_anonymous_partner_autocreate(
@@ -60,11 +51,12 @@ def auth_jwt_authenticated_or_anonymous_partner_autocreate(
     request: Request,
     response: Response,
 ) -> Partner:
+    if auth_jwt_partner:
+        return auth_jwt_partner
     anonymous_partner = env["res.partner"]._get_anonymous_partner__cookie(
         request.cookies
     )
-
-    if not auth_jwt_partner and not anonymous_partner:
+    if not anonymous_partner:
         if payload:
             _logger.info(
                 "JWT authentication succeeded but no partner was found. "
@@ -74,13 +66,4 @@ def auth_jwt_authenticated_or_anonymous_partner_autocreate(
         anonymous_partner = env["res.partner"]._create_anonymous_partner__cookie(
             response
         )
-
-    if anonymous_partner and auth_jwt_partner:
-        env["res.partner"]._promote_anonymous_partner(
-            auth_jwt_partner, request.cookies, response
-        )
-
-    if auth_jwt_partner:
-        return auth_jwt_partner
-
     return env["res.partner"].browse(anonymous_partner.id)
