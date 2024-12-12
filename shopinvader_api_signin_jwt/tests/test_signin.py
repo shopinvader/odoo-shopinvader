@@ -7,6 +7,7 @@ import jwt
 
 from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 from odoo.addons.fastapi_auth_jwt.dependencies import auth_jwt_default_validator_name
+from odoo.addons.shopinvader_anonymous_partner.models.res_partner import COOKIE_NAME
 
 from ..routers import signin_router
 
@@ -78,6 +79,38 @@ class SigninCase(FastAPITransactionCase):
         with self._create_test_client() as client:
             res = client.post("/signin", headers={"Authorization": token})
         self.assertEqual(res.status_code, 200)
+
+    def test_signin_anonymous_cart(self):
+        anonymous_partner = self.env["res.partner"].create(
+            {"name": "Test anonymous", "anonymous_token": "1234", "active": False}
+        )
+        product = self.env["product.product"].create(
+            {"name": "product", "uom_id": self.env.ref("uom.product_uom_unit").id}
+        )
+        anonymous_cart = self.env["sale.order"].create(
+            {
+                "partner_id": anonymous_partner.id,
+                "order_line": [
+                    (0, 0, {"product_id": product.id, "product_uom_qty": 1}),
+                ],
+                "typology": "cart",
+            }
+        )
+
+        token = self._get_token()
+        with self._create_test_client() as client:
+            res = client.post(
+                "/signin",
+                headers={"Authorization": token},
+                cookies={COOKIE_NAME: "1234"},
+            )
+        self.assertFalse(res.cookies.get(COOKIE_NAME))
+        self.assertFalse(anonymous_partner.exists())
+        self.assertFalse(anonymous_cart.exists())
+        partner = self.env["res.partner"].search([("email", "=", "test@mail.com")])
+        cart = self.env["sale.order"].search([("partner_id", "=", partner.id)])
+        self.assertEqual(len(cart.order_line), 1)
+        self.assertEqual(cart.order_line[0].product_id, product)
 
     def test_signout(self):
         self.validator.write({"cookie_enabled": True, "cookie_name": "test_cookie"})

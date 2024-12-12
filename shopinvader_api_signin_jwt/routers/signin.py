@@ -34,12 +34,15 @@ def signin(
     Authenticate the partner based on a JWT token or a session cookie.
     Set the session cookie if allowed.
     Return HTTP code 201 if res.partner created (case of the first signin).
+    Promote anonymous partner and delete it if any.
     """
     if not partner:
         partner = env[
             "shopinvader_api_signin_jwt.signin_router.helper"
         ]._create_partner_from_payload(payload)
         response.status_code = status.HTTP_201_CREATED
+
+    env["res.partner"]._promote_anonymous_partner(partner, request.cookies, response)
 
 
 @signin_router.post("/signout")
