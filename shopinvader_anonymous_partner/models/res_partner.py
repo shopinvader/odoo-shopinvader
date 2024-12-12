@@ -122,5 +122,6 @@ class ResPartner(models.Model):
         This method calls the partner promotion and removes the anonymous partner cookie.
         """
         anonymous_partner = self._get_anonymous_partner__cookie(cookies)
-        partner._promote_from_anonymous_partner(anonymous_partner)
-        self._delete_anonymous_partner__cookie(cookies, response)
+        if anonymous_partner:
+            partner._promote_from_anonymous_partner(anonymous_partner)
+            self._delete_anonymous_partner__cookie(cookies, response)
