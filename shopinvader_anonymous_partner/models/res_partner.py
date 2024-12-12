@@ -110,11 +110,7 @@ class ResPartner(models.Model):
         This method should be overridden by other modules to implement
         the partner resolution logic, merging the anonymous partner cart
         for instance.
-
-        This method can return False to prevent the anonymous partner cookie
-        from being deleted.
         """
-        return True
 
     @api.model
     def _promote_anonymous_partner(
@@ -126,7 +122,5 @@ class ResPartner(models.Model):
         This method calls the partner promotion and removes the anonymous partner cookie.
         """
         anonymous_partner = self._get_anonymous_partner__cookie(cookies)
-        if partner._promote_from_anonymous_partner(
-            anonymous_partner,
-        ):
-            self._delete_anonymous_partner__cookie(cookies, response)
+        partner._promote_from_anonymous_partner(anonymous_partner)
+        self._delete_anonymous_partner__cookie(cookies, response)
