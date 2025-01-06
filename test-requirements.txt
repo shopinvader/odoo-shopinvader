@@ -6,5 +6,5 @@ unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
 httpx  # For FastAPI tests
 
-odoo-addon-shopinvader_api_customer @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1551/head#subdirectory=setup/shopinvader_api_customer
-odoo-addon-shopinvader_api_settings @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1555/head#subdirectory=setup/shopinvader_api_settings
+odoo-addon-shopinvader_sale_cart @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1575/head#subdirectory=setup/shopinvader_sale_cart
+odoo-addon-shopinvader_api_cart @ git+https://github.com/shopinvader/odoo-shopinvader@refs/pull/1575/head#subdirectory=setup/shopinvader_api_cart
