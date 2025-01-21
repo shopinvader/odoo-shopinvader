@@ -4,6 +4,7 @@
 import logging
 
 import requests
+from urllib.parse import urljoin
 
 from odoo import fields, models
 
@@ -61,7 +62,7 @@ class ShopinvaderUrlPurge(models.Model):
             s.headers.update({"X-force-cache-refresh": backend.cache_refresh_secret})
             for record in self:
                 if record.backend_id == backend:
-                    url = f"{record.backend_id.location}/{record.url}"
+                    url = urljoin(record.backend_id.location, record.url)
                     try:
                         response = s.get(url)
                         if response.status_code != 200:
