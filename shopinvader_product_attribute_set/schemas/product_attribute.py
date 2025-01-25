@@ -63,5 +63,5 @@ class ProductAttribute(StrictExtendableBaseModel):
             name=attribute.field_description,
             key=attribute.export_name,
             value=cls._get_value_for_attribute(product, attribute, string_mode=True),
-            type=ProductAttributeType(attribute.attribute_type),
+            type=ProductAttributeType(attribute.attribute_type or attribute.ttype),
         )
