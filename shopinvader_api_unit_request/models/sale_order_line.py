@@ -22,6 +22,7 @@ class SaleOrderLine(models.Model):
         "sale.order",
         string="Request Order",
         help="The order that requested this line.",
+        index=True,
     )
     reject_order_id = fields.Many2one(
         "sale.order",
