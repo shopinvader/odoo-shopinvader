@@ -17,6 +17,7 @@ class SaleOrderLine(models.Model):
         "res.partner",
         string="Request Partner",
         help="The partner who requested this line.",
+        index=True,
     )
     request_order_id = fields.Many2one(
         "sale.order",
@@ -28,6 +29,7 @@ class SaleOrderLine(models.Model):
         "sale.order",
         string="Reject Order",
         help="The order that rejected this line.",
+        index=True,
     )
     request_rejected = fields.Boolean(
         help="The request has been rejected.",
