@@ -19,6 +19,6 @@ class ResPartner(models.Model):
         )
         if anonymous_cart:
             anonymous_cart._transfer_cart(self.id)
-            anonymous_cart.unlink()
+            anonymous_cart.with_delay().unlink()
 
         return rv

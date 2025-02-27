@@ -10,7 +10,7 @@
     "author": "ACSONE SA/NV",
     "maintainers": [],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": [],
+    "depends": ["queue_job"],
     "data": [],
     "demo": [],
 }
