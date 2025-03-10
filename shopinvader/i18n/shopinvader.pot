@@ -216,11 +216,6 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__additional_info
-msgid "Additional info"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields.selection,name:shopinvader.selection__res_partner__address_type__address
 msgid "Address"
 msgstr ""
@@ -446,16 +441,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__is_blacklisted
 msgid "Blacklist"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__mobile_blacklisted
-msgid "Blacklisted Phone Is Mobile"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__phone_blacklisted
-msgid "Blacklisted Phone is Phone"
 msgstr ""
 
 #. module: shopinvader
@@ -774,11 +759,6 @@ msgstr ""
 #. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__company_type
 msgid "Company Type"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__partner_gid
-msgid "Company database ID"
 msgstr ""
 
 #. module: shopinvader
@@ -1339,13 +1319,6 @@ msgid "Field"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__phone_sanitized
-msgid ""
-"Field used to store sanitized phone number. Helps speeding up searches and "
-"comparisons."
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_product_category__filter_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_backend__filter_ids
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_category__filter_ids
@@ -1582,11 +1555,8 @@ msgstr ""
 
 #. module: shopinvader
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__message_has_error
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__message_has_sms_error
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_product__message_has_error
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_product__message_has_sms_error
 #: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__message_has_error
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_variant__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -1628,13 +1598,6 @@ msgstr ""
 msgid ""
 "If the email address is on the blacklist, the contact won't receive mass "
 "mailing anymore, from any list"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__phone_sanitized_blacklisted
-msgid ""
-"If the sanitized phone number is on the blacklist, the contact won't receive"
-" mass mailing sms anymore, from any list"
 msgstr ""
 
 #. module: shopinvader
@@ -1723,22 +1686,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__incoming_qty
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__incoming_qty
 msgid "Incoming"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__mobile_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a mobile number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,help:shopinvader.field_shopinvader_partner__phone_blacklisted
-msgid ""
-"Indicates if a blacklisted sanitized phone number is a phone number. Helps "
-"distinguish which number is blacklisted             when there is both a "
-"mobile and phone field in a model."
 msgstr ""
 
 #. module: shopinvader
@@ -1863,6 +1810,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_is_follower
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_is_follower
 msgid "Is Follower"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__is_pricelist_cache_available
+msgid "Is Pricelist Cache Available"
 msgstr ""
 
 #. module: shopinvader
@@ -2764,11 +2716,6 @@ msgid "Phone"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__phone_sanitized_blacklisted
-msgid "Phone Blacklisted"
-msgstr ""
-
-#. module: shopinvader
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__pos_categ_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__pos_categ_id
 msgid "Point of Sale Category"
@@ -2810,6 +2757,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__pricelist_id
 #: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__pricelist_id
 msgid "Pricelist"
+msgstr ""
+
+#. module: shopinvader
+#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__pricelist_cache_product_filter_id
+msgid "Pricelist Cache Product Filter"
 msgstr ""
 
 #. module: shopinvader
@@ -3174,13 +3126,6 @@ msgid "SEO Title Mixin"
 msgstr ""
 
 #. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__message_has_sms_error
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_product__message_has_sms_error
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_variant__message_has_sms_error
-msgid "SMS Delivery error"
-msgstr ""
-
-#. module: shopinvader
 #: model:product.product,name:shopinvader.product_product_tv_stand_wood_and_glass_white
 #: model:product.template,name:shopinvader.product_template_tv_stand_wood_and_glass
 msgid "ST-160B Wood and Glass TV Stand with Hidden Wheels for Sizes up to 70\""
@@ -3287,11 +3232,6 @@ msgstr ""
 #. module: shopinvader
 #: model:product.category,name:shopinvader.product_category_22
 msgid "Salon"
-msgstr ""
-
-#. module: shopinvader
-#: model:ir.model.fields,field_description:shopinvader.field_shopinvader_partner__phone_sanitized
-msgid "Sanitized Number"
 msgstr ""
 
 #. module: shopinvader
