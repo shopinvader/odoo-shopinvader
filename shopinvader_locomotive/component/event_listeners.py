@@ -16,8 +16,17 @@ class ShopinvaderBindingListener(Component):
     def on_record_create(self, record, fields=None):
         record.with_delay().export_record(_fields=fields)
 
+    def _get_export_not_triggered_fields(self):
+        return ["external_id", "last_login_time"]
+
     @skip_if(lambda self, record, **kwargs: self.no_connector_export(record))
     def on_record_write(self, record, fields=None):
+        if not fields:
+            return
+        # skip export if updating only fields that are not relevant
+        filtered_fields = self._get_export_not_triggered_fields()
+        if filtered_fields and set(fields).issubset(filtered_fields):
+            return
         record.with_delay().export_record(_fields=fields)
 
     def on_record_unlink(self, record):

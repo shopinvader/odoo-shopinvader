@@ -3,6 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 import logging
+from unittest.mock import patch
 
 from odoo import fields
 from odoo.exceptions import AccessError
@@ -104,6 +105,55 @@ class TestShopinvaderPartner(CommonShopinvaderPartner):
         partner.write({"city": "TEST"})
         # As we did not updated a field to export, no job should be created
         self._check_nbr_job_created(0)
+
+    def test_no_update_on_shopinvader_partner_external_id(self):
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, "5a953d6aae1c744cfcfb3cd3"
+        )
+        self._init_job_counter()
+        shop_partner.write({"external_id": "TEST"})
+        # should not create export job
+        self._check_nbr_job_created(0)
+
+    def test_update_on_shopinvader_partner_with_mixed_fields(self):
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, "5a953d6aae1c744cfcfb3cd3"
+        )
+        self._init_job_counter()
+        shop_partner.write(
+            {
+                "partner_email": "TEST",
+                "external_id": "TEST",
+            }
+        )
+        # should create export job as it contains non-filtered partner field
+        self._check_nbr_job_created(1)
+
+    def test_update_on_shopinvader_partner_without_fields_set(self):
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, "5a953d6aae1c744cfcfb3cd3"
+        )
+        self._init_job_counter()
+        shop_partner.write({})
+        # no jobs should be created
+        self._check_nbr_job_created(0)
+
+    def test_get_export_not_triggered_fields_override(self):
+        def mock_get_export_not_triggered_fields(self):
+            return False
+
+        shop_partner, params = self._create_shopinvader_partner(
+            self.data, "5a953d6aae1c744cfcfb3cd3"
+        )
+        self._init_job_counter()
+        with patch(
+            "odoo.addons.shopinvader_locomotive.component.event_listeners."
+            "ShopinvaderBindingListener._get_export_not_triggered_fields",
+            mock_get_export_not_triggered_fields,
+        ):
+            shop_partner.write({"external_id": "TEST"})
+        # job should be created normally
+        self._check_nbr_job_created(1)
 
     def test_binding_access_rights(self):
         shop_partner, params = self._create_shopinvader_partner(
