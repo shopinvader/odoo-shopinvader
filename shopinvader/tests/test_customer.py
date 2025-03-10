@@ -110,8 +110,10 @@ class TestCustomer(TestCustomerCommon):
         SaleOrder.search(sale_domain).unlink()
 
         invader_partner = partner._get_invader_partner(self.backend)
+        self.assertFalse(invader_partner.last_login_time)
         self.service._load_partner_work_context(invader_partner)
         self.service.sign_in()
+        self.assertTrue(invader_partner.last_login_time)
         self.assertFalse(SaleOrder.search(sale_domain))
 
     def test_update_customer(self):

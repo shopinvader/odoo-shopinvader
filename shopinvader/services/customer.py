@@ -4,7 +4,7 @@
 # Simone Orsi <simone.orsi@camptocamp.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 # pylint: disable=consider-merging-classes-inherited,method-required-super
-from odoo import _
+from odoo import _, fields
 from odoo.exceptions import UserError
 
 from odoo.addons.component.core import Component
@@ -56,6 +56,7 @@ class CustomerService(Component):
         return self.get()
 
     def sign_in(self, **params):
+        self.invader_partner.last_login_time = fields.Datetime.now()
         return self._assign_cart_and_get_store_cache()
 
     # The following method are 'private' and should be never never NEVER call
