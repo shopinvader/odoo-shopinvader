@@ -21,11 +21,28 @@
     <record id="url_view_tree" model="ir.ui.view">
         <field name="model">url.url</field>
         <field name="arch" type="xml">
-        <tree string="">
-            <field name="url_key" />
-            <field name="model_id" />
-            <field name="redirect" />
-        </tree>
+          <tree string="">
+              <field name="url_key" />
+              <field name="model_id" />
+              <field name="redirect" />
+          </tree>
+        </field>
+    </record>
+
+    <record id="url_view_search" model="ir.ui.view">
+        <field name="model">url.url</field>
+        <field name="arch" type="xml">
+          <search string="">
+              <field name="url_key" />
+              <field name="model_id" />
+              <group expand="0" string="Group By">
+                  <filter
+                        string="Record"
+                        name="groupby_model_id"
+                        context="{'group_by': 'model_id'}"
+                    />
+              </group>
+          </search>
         </field>
     </record>
 

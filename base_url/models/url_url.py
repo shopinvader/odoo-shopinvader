@@ -21,7 +21,7 @@ class UrlUrl(models.Model):
         selection="_selection_target_model",
         help="The id of content linked to the url.",
         readonly=True,
-        string="Model",
+        string="Record",
         required=True,
         index=True,
     )

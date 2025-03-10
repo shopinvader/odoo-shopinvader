@@ -166,4 +166,18 @@
         <field name="sequence" eval="20" />
     </record>
 
+    <record id="shopinvader_urls_act_window" model="ir.actions.act_window">
+      <field name="name">URLs</field>
+      <field name="res_model">url.url</field>
+      <field name="view_mode">tree,form</field>
+      <field name="domain">[('model_id', 'like', 'shopinvader.%')]</field>
+    </record>
+
+    <record model="ir.ui.menu" id="menu_shopinvader_urls">
+        <field name="name">URLs</field>
+        <field name="parent_id" ref="menu_shopinvader_products" />
+        <field name="action" ref="shopinvader_urls_act_window" />
+        <field name="sequence" eval="999" />
+    </record>
+
 </odoo>
