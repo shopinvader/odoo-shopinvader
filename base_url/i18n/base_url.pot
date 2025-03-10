@@ -68,6 +68,11 @@ msgid "Display Name"
 msgstr ""
 
 #. module: base_url
+#: model_terms:ir.ui.view,arch_db:base_url.url_view_search
+msgid "Group By"
+msgstr ""
+
+#. module: base_url
 #: model:ir.model.fields,field_description:base_url.field_abstract_url__id
 #: model:ir.model.fields,field_description:base_url.field_url_url__id
 msgid "ID"
@@ -121,7 +126,8 @@ msgstr ""
 
 #. module: base_url
 #: model:ir.model.fields,field_description:base_url.field_url_url__model_id
-msgid "Model"
+#: model_terms:ir.ui.view,arch_db:base_url.url_view_search
+msgid "Record"
 msgstr ""
 
 #. module: base_url
@@ -132,6 +138,12 @@ msgstr ""
 #. module: base_url
 #: model:ir.model.fields,field_description:base_url.field_abstract_url__redirect_url_url_ids
 msgid "Redirect Url Url"
+msgstr ""
+
+#. module: base_url
+#: code:addons/base_url/models/abstract_url.py:0
+#, python-format
+msgid "Redirects"
 msgstr ""
 
 #. module: base_url
