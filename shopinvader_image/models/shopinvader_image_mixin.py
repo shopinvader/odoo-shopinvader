@@ -90,8 +90,13 @@ class ShopinvaderImageMixin(models.AbstractModel):
             self._resize_scales().mapped(lambda r: (r.key, r.size_x, r.size_y))
         )
         timestamp = self._get_images_store_hash_timestamp()
+        alt_names = tuple([x.alt_name for x in images])
+        backend_flags = (
+            self.backend_id.image_data_include_cdn_url,
+            self.backend_id.image_data_empty_alt_name_allowed,
+        )
         # TODO: any other bit to consider here?
-        return resize_scales + public_urls + (timestamp,)
+        return resize_scales + public_urls + alt_names + backend_flags + (timestamp,)
 
     def _get_image_url_key(self, image_relation):
         # You can inherit this method to change the name of the image of
@@ -126,11 +131,32 @@ class ShopinvaderImageMixin(models.AbstractModel):
         :return: dict
         """
         self.ensure_one()
-        res = {"src": self._get_image_url(thumbnail), "alt": self.name}
-        if "tag_id" in image_relation._fields:
-            res["tag"] = image_relation.tag_id.name or ""
+        res = {
+            "src": self._get_image_url(thumbnail),
+        }
+        alt_name = self._get_image_alt(image_relation.image_id)
+        if alt_name:
+            res["alt"] = alt_name
+        tag = self._get_image_tag(image_relation)
+        if tag:
+            res["tag"] = tag
         return res
+
+    def _get_image_alt(self, image):
+        alt_name = image.alt_name
+        # Makes no sense to store the filename as alt as we already have the URL
+        if alt_name and alt_name != image.name:
+            return alt_name
+        if self.backend_id.image_data_empty_alt_name_allowed:
+            return ""
+        return self.name
 
     def _get_image_url(self, image):
         fname = "url" if self.backend_id.image_data_include_cdn_url else "url_path"
         return image[fname]
+
+    def _get_image_tag(self, image_relation):
+        if "tag_id" not in image_relation._fields:
+            return None
+        if image_relation.tag_id:
+            return image_relation.tag_id.name
