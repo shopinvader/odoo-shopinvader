@@ -35,6 +35,19 @@ msgid ""
 msgstr ""
 
 #. module: shopinvader_image
+#: model:ir.model.fields,help:shopinvader_image.field_shopinvader_backend__image_data_empty_alt_name_allowed
+msgid ""
+"\n"
+"The alt name of an image is used to provide a meaningful description.\n"
+"The alt name can be configured by image, but it can also be empty.\n"
+"When it's empty, the product name will be used as a fallback.\n"
+"When this flag is enabled, the alt name will be empty.\n"
+"You can then choose on your shop how to populate it.\n"
+"This helps reducing the amount of data stored in the database\n"
+"when the alt name is always equal to the product name.\n"
+msgstr ""
+
+#. module: shopinvader_image
 #: model:ir.model.fields,field_description:shopinvader_image.field_shopinvader_backend__shopinvader_category_resize_ids
 msgid "Category Image Size"
 msgstr ""
@@ -65,6 +78,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:shopinvader_image.field_shopinvader_image_resize__id
 #: model:ir.model.fields,field_description:shopinvader_image.field_shopinvader_variant__id
 msgid "ID"
+msgstr ""
+
+#. module: shopinvader_image
+#: model:ir.model.fields,field_description:shopinvader_image.field_shopinvader_backend__image_data_empty_alt_name_allowed
+msgid "Image ALT name can be empty"
 msgstr ""
 
 #. module: shopinvader_image
