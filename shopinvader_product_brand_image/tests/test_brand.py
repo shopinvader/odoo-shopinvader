@@ -10,8 +10,21 @@ from odoo.addons.storage_image_product.tests.common import ProductImageCommonCas
 class ProductBrandCase(ProductBrandCommonCase, ProductImageCommonCase):
     def test_basic_images_compute(self):
         image_obj = self.env["product.brand.image.relation"]
-        image_obj.create({"brand_id": self.brand.id, "image_id": self.logo_image.id})
-        image_obj.create({"brand_id": self.brand.id, "image_id": self.black_image.id})
+        tag = self.env["image.tag"].create({"name": "tag1"})
+        image_obj.create(
+            {
+                "brand_id": self.brand.id,
+                "image_id": self.logo_image.id,
+                "tag_id": tag.id,
+            }
+        )
+        image_obj.create(
+            {
+                "brand_id": self.brand.id,
+                "image_id": self.black_image.id,
+                "tag_id": tag.id,
+            }
+        )
         images = self.binding.images
 
         self.assertEqual(len(images), 2)
@@ -23,4 +36,4 @@ class ProductBrandCase(ProductBrandCommonCase, ProductImageCommonCase):
                     "foo-brand_{0.size_x}_{0.size_y}".format(scale),
                     img["src"],
                 )
-                self.assertIn("tag", img)
+                self.assertEqual(img["tag"], "tag1")
