@@ -45,6 +45,13 @@ class SaleOrder(models.Model):
 
         res = super().action_confirm()
 
+        # Glue for sale_exception compatibility
+        # Be carefull sale_exception will return a pop up
+        # and do not validate the sale, in this case we should not
+        # send the email as the sale is not confirmed
+        if res is not True:
+            return res
+
         # Notify partners of accepted and refused requests
         # Group accepted and refused by partners
         request_lines_by_partner = defaultdict(
