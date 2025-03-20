@@ -26,6 +26,7 @@ setuptools.setup(
         'odoo14-addon-shopinvader_customer_multi_user_validate',
         'odoo14-addon-shopinvader_customer_multi_user_wishlist',
         'odoo14-addon-shopinvader_customer_price',
+        'odoo14-addon-shopinvader_customer_price_pricelist_cache',
         'odoo14-addon-shopinvader_customer_price_wishlist',
         'odoo14-addon-shopinvader_customer_validate',
         'odoo14-addon-shopinvader_delivery_carrier',
