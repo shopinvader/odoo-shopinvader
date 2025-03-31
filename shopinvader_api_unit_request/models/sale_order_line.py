@@ -49,32 +49,32 @@ class SaleOrderLine(models.Model):
             record.request_accepted = record.request_order_id
 
     def _action_request(self):
-        for record in self:
+        for record in self.sudo():
             record.qty_requested = record.product_uom_qty
             record.request_partner_id = record.order_id.partner_id
 
     def _action_accept_request(self, target_order):
-        for record in self:
+        for record in self.sudo():
             record.request_order_id = record.order_id
             record.order_id = target_order
         return True
 
     def _action_reject_request(self, target_order, reason):
-        for record in self:
+        for record in self.sudo():
             record.request_rejected = True
             record.reject_order_id = target_order
             record.request_rejection_reason = reason
         return True
 
     def _action_reset_request(self):
-        for record in self:
+        for record in self.sudo():
             record.request_rejected = False
             record.reject_order_id = False
             record.request_rejection_reason = False
         return True
 
     def unlink(self):
-        for record in self:
+        for record in self.sudo():
             if record.request_partner_id and record.request_order_id:
                 record.order_id = record.request_order_id
                 record.request_order_id = False
