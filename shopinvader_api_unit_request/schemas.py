@@ -19,6 +19,8 @@ class RejectRequest(StrictExtendableBaseModel, extra="ignore"):
 class SaleLineWithSale(schemas.SaleLineWithSale, extends=True):
     request_order_id: int | None
     request_partner_id: int | None
+    request_rejected: bool
+    request_rejection_reason: str | None = None
 
     @classmethod
     def from_sale_order_line(cls, odoo_rec):
@@ -29,20 +31,18 @@ class SaleLineWithSale(schemas.SaleLineWithSale, extends=True):
         res.request_partner_id = (
             odoo_rec.request_partner_id.id if odoo_rec.request_partner_id else None
         )
+        res.request_rejected = odoo_rec.request_rejected
+        res.request_rejection_reason = odoo_rec.request_rejection_reason or None
         return res
 
 
 class RequestedSaleLine(SaleLineWithSale):
     partner_id: int
-    request_rejected: bool
-    request_rejection_reason: str | None = None
 
     @classmethod
     def from_sale_order_line(cls, odoo_rec):
         res = super().from_sale_order_line(odoo_rec)
         res.partner_id = odoo_rec.request_partner_id.id
-        res.request_rejected = odoo_rec.request_rejected
-        res.request_rejection_reason = odoo_rec.request_rejection_reason or None
         return res
 
 
