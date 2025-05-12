@@ -4,21 +4,26 @@ from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
 
 from odoo import api
+from odoo.http import content_disposition
 
-from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
-from odoo.addons.fastapi.dependencies import (
-    authenticated_partner,
-    authenticated_partner_env,
-    paging,
-)
+from odoo.addons.fastapi.dependencies import paging
 from odoo.addons.fastapi.schemas import Paging
 from odoo.addons.shopinvader_router_helper import VirtualModel
 from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale, SaleSearch
 
-from ..schemas.sale import QuotationConfirmInput, QuotationUpdateInput
+from ..dependencies import ShopinvaderApiQuotationRouterHelper, quotation_router_helper
+from ..schemas import (
+    QuotationAddLineRequest,
+    QuotationConfirmInput,
+    QuotationCreateRequest,
+    QuotationDeleteLineRequest,
+    QuotationLines,
+    QuotationSearch,
+    QuotationUpdateInput,
+    QuotationUpdateLineRequest,
+)
 
-# create a router
 quotation_router = APIRouter(tags=["quotations"])
 
 
@@ -56,6 +61,15 @@ def quotation_helper(
     return env["shopinvader_api_quotation.quotations_router.helper"].new(
         {"partner": partner}
     )
+@quotation_router.post("/quotations/create", status_code=201)
+def create_quotation(
+    quotation_router_helper: Annotated[
+        ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
+    ],
+    rqst: QuotationCreateRequest,
+) -> Sale:
+    quotation = quotation_router_helper._create(rqst)
+    return Sale.from_sale_order(quotation)
 
 
 @quotation_router.get("/quotations/{quotation_id}")
@@ -65,19 +79,9 @@ def get(
 ) -> Sale | None:
     return Sale.from_sale_order(helper.get(quotation_id))
 
-
-@quotation_router.post("/quotations/{quotation_id}/confirm", status_code=200)
-def confirm_quotation(
-    quotation_id: int,
-    helper: Annotated[QuotationHelper, Depends(quotation_helper)],
-    data: QuotationConfirmInput | None = None,
-) -> None:
-    return Sale.from_sale_order(helper._confirm(quotation_id, data))
-
-
 @quotation_router.get("/quotations", status_code=200)
 def search_quotation(
-    params: Annotated[SaleSearch, Depends()],
+    params: Annotated[QuotationSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
     helper: Annotated[QuotationHelper, Depends(quotation_helper)],
 ) -> PagedCollection[Sale]:
