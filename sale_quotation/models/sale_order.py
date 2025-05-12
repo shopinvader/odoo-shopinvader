@@ -1,5 +1,6 @@
 # Copyright 2017-2018 Akretion (http://www.akretion.com).
 # Copyright 2021 Camptocamp (http://www.camptocamp.com)
+# Copyright 2025 ACSONE SA/NV
 # @author Benoît GUILLOT <benoit.guillot@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
@@ -24,7 +25,6 @@ class SaleOrder(models.Model):
         readonly=False,
         copy=False,
     )
-    shop_only_quotation = fields.Boolean(compute="_compute_shop_only_quotation")
 
     @api.depends("state")
     def _compute_quotation_state(self):
@@ -52,12 +52,6 @@ class SaleOrder(models.Model):
             )
         self.write({"quotation_state": "customer_request", "typology": "sale"})
         return True
-
-    def _compute_shop_only_quotation(self):
-        for record in self:
-            record.shop_only_quotation = any(
-                record.order_line.product_id.mapped("shop_only_quotation")
-            )
 
     def action_confirm_quotation(self):
         if any(rec.quotation_state != "waiting_acceptation" for rec in self):
