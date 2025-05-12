@@ -2,8 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 
 {
-    "name": "Sale Quotation",
-    "summary": "Sale Quotation",
+    "name": "Sale Quotation State",
+    "summary": "Sale Quotation State",
     "version": "16.0.0.1.0",
     "category": "e-commerce",
     "development_status": "Production/Stable",
@@ -12,8 +12,8 @@
     "license": "AGPL-3",
     "depends": ["sale_cart"],
     "data": [
-        "views/product_view.xml",
         "views/sale_view.xml",
     ],
+    "pre_init_hook": "pre_init_hook",
     "installable": True,
 }
