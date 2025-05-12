@@ -4,11 +4,14 @@
 from fastapi import status
 from requests import Response
 
+from odoo import Command
+from odoo.exceptions import MissingError
 from odoo.tests.common import tagged
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
-from ..routers import quotation_cart_router, quotation_router
+from ..routers import quotation_router
+from ..schemas import QuotationState
 
 
 @tagged("post_install", "-at_install")
@@ -17,13 +20,25 @@ class TestQuotation(FastAPITransactionCase):
     def setUpClass(cls) -> None:
         super().setUpClass()
 
-        partner = cls.env["res.partner"].create({"name": "FastAPI Cart Demo"})
+        cls.salesman_user = cls.env["res.users"].create(
+            {
+                "name": "Test Salesman",
+                "login": "salesman",
+            }
+        )
+
+        partner = cls.env["res.partner"].create(
+            {
+                "name": "FastAPI Cart Demo",
+                "user_id": cls.salesman_user.id,
+            }
+        )
 
         cls.user_no_rights = cls.env["res.users"].create(
             {
                 "name": "Test User Without Rights",
                 "login": "user_no_rights",
-                "groups_id": [(6, 0, [])],
+                "groups_id": [Command.set([])],
             }
         )
         user_with_rights = cls.env["res.users"].create(
@@ -32,13 +47,13 @@ class TestQuotation(FastAPITransactionCase):
                 "login": "user_with_rights",
                 "groups_id": [
                     (
-                        6,
-                        0,
-                        [
-                            cls.env.ref(
-                                "shopinvader_api_security_sale.shopinvader_sale_user_group"
-                            ).id,
-                        ],
+                        Command.set(
+                            [
+                                cls.env.ref(
+                                    "shopinvader_api_security_sale.shopinvader_sale_user_group"
+                                ).id,
+                            ]
+                        )
                     )
                 ],
             }
@@ -64,11 +79,36 @@ class TestQuotation(FastAPITransactionCase):
             }
         )
 
+        cls.quotation = cls.env["sale.order"].create(
+            {
+                "partner_id": cls.default_fastapi_authenticated_partner.id,
+                "use_customer_quotation_workflow": True,
+                "quotation_state": "draft",
+                "order_line": [
+                    Command.create(
+                        {
+                            "product_id": cls.product_1.id,
+                            "product_uom_qty": 1.0,
+                        }
+                    ),
+                    Command.create(
+                        {
+                            "product_id": cls.product_2.id,
+                            "product_uom_qty": 2.0,
+                        }
+                    ),
+                ],
+            }
+        )
+
+    def test_default_typology(self):
+        self.assertEqual(self.quotation.typology, "quote")
+
     def test_search_quotations(self):
+        # This one should not be returned as this is a "sale" and not a "quote"
         self.env["sale.order"].create(
             {
                 "partner_id": self.default_fastapi_authenticated_partner.id,
-                "quotation_state": "waiting_acceptation",
             }
         )
         with self._create_test_client() as test_client:
@@ -76,49 +116,51 @@ class TestQuotation(FastAPITransactionCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["count"], 1)
 
-    def test_get_quotation(self):
-        sale = self.env["sale.order"].create(
-            {
-                "partner_id": self.default_fastapi_authenticated_partner.id,
-                "quotation_state": "waiting_acceptation",
-            }
-        )
         with self._create_test_client() as test_client:
-            response: Response = test_client.get(f"/quotations/{sale.id}")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["name"], sale.name)
-
-    def test_confirm_quotation(self):
-        quotation = self.env["sale.order"].create(
-            {
-                "partner_id": self.default_fastapi_authenticated_partner.id,
-                "quotation_state": "waiting_acceptation",
-            }
-        )
-        with self._create_test_client() as test_client:
-            response: Response = test_client.post(f"/quotations/{quotation.id}/confirm")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["id"], quotation.id)
-
-    def test_request_quotation(self):
-        cart = self.env["sale.order"]._create_empty_cart(
-            self.default_fastapi_authenticated_partner.id
-        )
-        with self._create_test_client(router=quotation_cart_router) as test_client:
-            response: Response = test_client.post(f"/{cart.uuid}/request_quotation")
+            response: Response = test_client.get(
+                "/quotations", params={"quotation_state": QuotationState.draft.value}
+            )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_json = response.json()
-        self.assertEqual(response_json["uuid"], cart.uuid)
-        self.assertEqual(response_json["typology"], "sale")
+        self.assertEqual(response_json["count"], 1)
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(
+                "/quotations", params={"quotation_state": QuotationState.accepted.value}
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["count"], 0)
+
+    def test_get_quotation(self):
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(f"/quotations/{self.quotation.id}")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["name"], self.quotation.name)
 
     def test_update_quotation(self):
-        data = {"client_order_ref": "PO_123123"}
-        quotation = self.env["sale.order"].create(
-            {
-                "partner_id": self.default_fastapi_authenticated_partner.id,
-                "quotation_state": "waiting_acceptation",
-            }
-        )
+        quotation = self.quotation
+        data = {
+            "client_order_ref": "PO_123123",
+            "note": "This is a test note",
+            "lines": [
+                {
+                    "line_id": quotation.order_line[0].id,
+                    "sequence": 42,
+                    "product_id": self.product_2.id,
+                    "quantity": 123,
+                },
+                {
+                    "sequence": 314,
+                    "product_id": self.product_2.id,
+                    "quantity": 200,
+                },
+                {
+                    "product_id": self.product_1.id,
+                    "quantity": 200,
+                },
+            ],
+        }
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 f"/quotations/{quotation.id}", json=data
@@ -130,4 +172,452 @@ class TestQuotation(FastAPITransactionCase):
         )
         response_json = response.json()
         self.assertEqual(response_json["id"], quotation.id)
-        self.assertEqual(response_json["client_order_ref"], "PO_123123")
+        self.assertEqual(quotation.client_order_ref, "PO_123123")
+        self.assertEqual(quotation.note, "<p>This is a test note</p>")
+        self.assertEqual(quotation.order_line[0].product_id, self.product_2)
+        self.assertEqual(quotation.order_line[0].product_uom_qty, 123)
+        self.assertEqual(quotation.order_line[0].sequence, 42)
+        self.assertEqual(len(quotation.order_line), 3)
+
+    def test_partial_update_quotation(self):
+        quotation = self.quotation
+        self.assertEqual(len(quotation.order_line), 2)
+        data = {
+            "client_order_ref": "PO_123124",
+            "note": "This is a test note bis",
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}", json=data
+            )
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+        self.assertEqual(quotation.client_order_ref, "PO_123124")
+        self.assertEqual(quotation.note, "<p>This is a test note bis</p>")
+        self.assertEqual(len(quotation.order_line), 2)
+
+        data = {
+            "lines": [],
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}", json=data
+            )
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+        self.assertEqual(len(quotation.order_line), 0)
+
+    def test_create_quotation(self):
+        data = {
+            "client_order_ref": "PO_12345",
+            "note": "This is a test note",
+            "lines": [
+                {
+                    "product_id": self.product_1.id,
+                    "quantity": 1.0,
+                },
+                {
+                    "product_id": self.product_2.id,
+                    "quantity": 2.0,
+                },
+            ],
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post("/quotations/create", json=data)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+        response_json = response.json()
+        self.assertIn("id", response_json)
+        self.assertEqual(response_json["typology"], "quote")
+        self.assertEqual(response_json["client_order_ref"], "PO_12345")
+        self.assertEqual(response_json["note"], "<p>This is a test note</p>")
+
+        created_quotation = self.env["sale.order"].browse(response_json["id"])
+        self.assertTrue(created_quotation.exists())
+        self.assertEqual(
+            created_quotation.partner_id.id,
+            self.default_fastapi_authenticated_partner.id,
+        )
+        self.assertEqual(len(created_quotation.order_line), 2)
+        self.assertEqual(
+            created_quotation.order_line[0].product_id.id, self.product_1.id
+        )
+        self.assertEqual(created_quotation.order_line[0].product_uom_qty, 1.0)
+        self.assertEqual(
+            created_quotation.order_line[1].product_id.id, self.product_2.id
+        )
+        self.assertEqual(created_quotation.order_line[1].product_uom_qty, 2.0)
+
+        self.assertEqual(created_quotation.user_id, self.salesman_user)
+        self.assertIn(
+            self.salesman_user.partner_id.id,
+            created_quotation.message_follower_ids.partner_id.ids,
+        )
+
+    def test_download_quotation_pdf(self):
+        quotation = self.quotation
+
+        # in draft state, cannot download
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(f"/quotations/{quotation.id}/download")
+
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        quotation.action_customer_request_quotation()
+
+        # in customer_request state, cannot download
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(f"/quotations/{quotation.id}/download")
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        quotation.action_quotation_sent()
+
+        # in waiting_acceptation state, can download
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(f"/quotations/{quotation.id}/download")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.headers["Content-Type"], "application/pdf")
+        self.assertTrue(
+            response.headers["Content-Disposition"].startswith("attachment;")
+        )
+        self.assertTrue(response.headers["Content-Disposition"].endswith(".pdf"))
+        self.assertGreater(len(response.content), 0)
+
+    def test_add_quotation_line(self):
+        quotation = self.quotation
+
+        data = {
+            "product_id": self.product_1.id,
+            "quantity": 3.0,
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/add_line", json=data
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+
+        self.assertEqual(len(quotation.order_line), 3)
+        self.assertEqual(quotation.order_line[-1].product_id.id, self.product_1.id)
+        self.assertEqual(quotation.order_line[-1].product_uom_qty, 3.0)
+
+    def test_add_quotation_lines(self):
+        quotation = self.quotation
+
+        data = {
+            "lines": [
+                {
+                    "product_id": self.product_1.id,
+                    "quantity": 3.0,
+                },
+                {
+                    "product_id": self.product_2.id,
+                    "quantity": 4.0,
+                },
+            ]
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/add_lines", json=data
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+
+        self.assertEqual(len(quotation.order_line), 4)
+        self.assertEqual(quotation.order_line[-2].product_id.id, self.product_1.id)
+        self.assertEqual(quotation.order_line[-2].product_uom_qty, 3.0)
+        self.assertEqual(quotation.order_line[-1].product_id.id, self.product_2.id)
+        self.assertEqual(quotation.order_line[-1].product_uom_qty, 4.0)
+
+    def test_update_quotation_line(self):
+        quotation = self.quotation
+        line_id = quotation.order_line[0].id
+        data = {
+            "line_id": line_id,
+            "quantity": 42.0,
+            "product_id": self.product_2.id,
+            "sequence": 42,
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.put(
+                f"/quotations/{quotation.id}/update_line", json=data
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+
+        self.assertEqual(len(quotation.order_line), 2)
+        self.assertEqual(quotation.order_line[0].id, line_id)
+        self.assertEqual(quotation.order_line[0].product_uom_qty, 42)
+        self.assertEqual(quotation.order_line[0].product_id.id, self.product_2.id)
+        self.assertEqual(quotation.order_line[0].sequence, 42)
+
+        # test invalid line_id
+        data["line_id"] = max(line.id for line in self.quotation.order_line) + 1
+        with self._create_test_client() as test_client:
+            with self.assertRaises(MissingError):
+                response: Response = test_client.put(
+                    f"/quotations/{quotation.id}/update_line", json=data
+                )
+
+    def test_update_quotation_lines(self):
+        quotation = self.quotation
+        data = {
+            "lines": [
+                {
+                    "line_id": quotation.order_line[0].id,
+                    "quantity": 10,
+                    "product_id": self.product_2.id,
+                    "sequence": 10,
+                },
+                {
+                    "line_id": quotation.order_line[1].id,
+                    "quantity": 20,
+                    "product_id": self.product_1.id,
+                    "sequence": 20,
+                },
+            ]
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.put(
+                f"/quotations/{quotation.id}/update_lines", json=data
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+
+        self.assertEqual(len(quotation.order_line), 2)
+
+        self.assertEqual(quotation.order_line[0].id, data["lines"][0]["line_id"])
+        self.assertEqual(quotation.order_line[0].product_uom_qty, 10)
+        self.assertEqual(quotation.order_line[0].product_id.id, self.product_2.id)
+        self.assertEqual(quotation.order_line[0].sequence, 10)
+
+        self.assertEqual(quotation.order_line[1].id, data["lines"][1]["line_id"])
+        self.assertEqual(quotation.order_line[1].product_uom_qty, 20)
+        self.assertEqual(quotation.order_line[1].product_id.id, self.product_1.id)
+        self.assertEqual(quotation.order_line[1].sequence, 20)
+
+    def test_delete_quotation_line(self):
+        quotation = self.quotation
+        line_id = quotation.order_line[0].id
+        data = {
+            "line_id": line_id,
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/delete_line", json=data
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+
+        self.assertEqual(len(quotation.order_line), 1)
+
+        # test invalid line_id
+        data["line_id"] = max(line.id for line in self.quotation.order_line) + 1
+        with self._create_test_client() as test_client:
+            with self.assertRaises(MissingError):
+                response: Response = test_client.post(
+                    f"/quotations/{quotation.id}/delete_line", json=data
+                )
+
+    def test_delete_quotation_lines(self):
+        quotation = self.quotation
+        data = {
+            "lines": [
+                {
+                    "line_id": quotation.order_line[0].id,
+                },
+                {
+                    "line_id": quotation.order_line[1].id,
+                },
+            ]
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/delete_lines", json=data
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+
+        self.assertEqual(len(quotation.order_line), 0)
+
+    def test_request_quotation(self):
+        quotation = self.quotation
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/request_quotation"
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+        self.assertEqual(quotation.quotation_state, "customer_request")
+        # an other call to request_quotation should raise an error
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/request_quotation"
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+    def test_accept_quotation(self):
+        # in draft state, cannot reset to draft
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/accept"
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+        self.quotation.action_customer_request_quotation()
+        self.quotation.action_quotation_sent()
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/accept"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["id"], self.quotation.id)
+        self.quotation.typology = "sale"
+
+    def test_reset_to_draft(self):
+        # in draft state, cannot reset to draft
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/reset_to_draft"
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+        self.quotation.action_customer_request_quotation()
+        self.quotation.action_quotation_sent()
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/reset_to_draft"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], self.quotation.id)
+        self.assertEqual(self.quotation.quotation_state, "draft")
+        self.assertEqual(self.quotation.typology, "quote")
+
+    def test_cancel_quotation(self):
+        # in draft state, cannot canel
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/cancel"
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+        self.quotation.action_customer_request_quotation()
+        self.quotation.action_quotation_sent()
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/cancel"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], self.quotation.id)
+        self.assertEqual(self.quotation.quotation_state, "cancel")
+        self.assertEqual(self.quotation.typology, "quote")
+        self.assertEqual(self.quotation.state, "cancel")
+
+    def test_update_not_allowed(self):
+        # once the quotation is no longer in draft state, it cannot be updated
+        self.quotation.action_customer_request_quotation()
+        # test that the user without rights cannot update a quotation
+
+        # global update
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}",
+                json={"client_order_ref": "PO_123123"},
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # add lines
+        data = {
+            "lines": [
+                {
+                    "product_id": self.product_1.id,
+                    "quantity": 3.0,
+                },
+                {
+                    "product_id": self.product_2.id,
+                    "quantity": 4.0,
+                },
+            ]
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/add_lines", json=data
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # add single line
+        data = {
+            "product_id": self.product_1.id,
+            "quantity": 3.0,
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/add_line", json=data
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # update line
+        data = {
+            "line_id": self.quotation.order_line[0].id,
+            "quantity": 42.0,
+            "product_id": self.product_2.id,
+            "sequence": 42,
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.put(
+                f"/quotations/{self.quotation.id}/update_line", json=data
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # delete line
+        data = {
+            "lines": [
+                {
+                    "line_id": self.quotation.order_line[0].id,
+                },
+                {
+                    "line_id": self.quotation.order_line[1].id,
+                },
+            ]
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/delete_lines",
+                json=data,
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
