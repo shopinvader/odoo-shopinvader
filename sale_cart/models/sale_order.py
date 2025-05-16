@@ -7,7 +7,7 @@ from odoo import fields, models
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    typology = fields.Selection([("sale", "Sale"), ("cart", "Cart")], default="sale")
+    typology = fields.Selection(selection_add=[("cart", "Cart")])
 
     def _confirm_cart(self):
         self.ensure_one()
