@@ -44,17 +44,6 @@ class SaleOrder(models.Model):
             elif record.state == "sale":
                 record.quotation_state = "accepted"
 
-    def action_request_quotation(self):
-        if any(rec.state != "draft" or rec.typology != "cart" for rec in self):
-            raise UserError(
-                _(
-                    "Only orders of cart typology in draft state "
-                    "can be converted to quotation"
-                )
-            )
-        self.write({"quotation_state": "customer_request", "typology": "sale"})
-        return True
-
     def action_confirm_quotation(self):
         if any(rec.quotation_state != "waiting_acceptation" for rec in self):
             raise UserError(
