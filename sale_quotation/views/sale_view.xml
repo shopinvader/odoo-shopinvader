@@ -70,6 +70,14 @@
                     domain="[('quotation_state', '=', 'cancel')]"
                 />
 
+                <filter
+                    string="Quote"
+                    name="quote"
+                    domain="[('typology', '=', 'quote')]"
+                    invisible="1"
+                />
+
+
             </filter>
             <filter name="draft" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -88,6 +96,14 @@
             </filter>
 
         </field>
+    </record>
+
+    <record id="sale.action_quotations" model="ir.actions.act_window">
+        <field name="domain">[('typology', '=', 'quote')]</field>
+    </record>
+
+    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
+        <field name="domain">[('typology', '=', 'quote')]</field>
     </record>
 
 </odoo>

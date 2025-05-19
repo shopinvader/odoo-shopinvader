@@ -26,6 +26,8 @@ class SaleOrder(models.Model):
         copy=False,
     )
 
+    typology = fields.Selection(selection_add=[("quote", "Quote")], default="quote")
+
     @api.depends("state")
     def _compute_quotation_state(self):
         for record in self:
@@ -62,3 +64,13 @@ class SaleOrder(models.Model):
                 )
             )
         self.quotation_state = "accepted"
+        self.typology = "sale"
+
+    def action_confirm(self):
+        if self.typology == "quote":
+            self.action_confirm_quotation()
+        return super().action_confirm()
+
+    def action_draft(self):
+        self.typology = "quote"
+        return super().action_draft()
