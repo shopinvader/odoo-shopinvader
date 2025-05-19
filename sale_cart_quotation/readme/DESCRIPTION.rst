@@ -1,0 +1,1 @@
+Glue module between sale_quotation and sale_cart
