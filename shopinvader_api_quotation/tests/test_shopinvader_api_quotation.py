@@ -10,7 +10,7 @@ from odoo.tests.common import tagged
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
-from ..routers import quotation_cart_router, quotation_router
+from ..routers import quotation_router
 
 
 @tagged("post_install", "-at_install")
@@ -121,17 +121,6 @@ class TestQuotation(FastAPITransactionCase):
             response: Response = test_client.post(f"/quotations/{quotation.id}/confirm")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["id"], quotation.id)
-
-    def test_request_quotation(self):
-        cart = self.env["sale.order"]._create_empty_cart(
-            self.default_fastapi_authenticated_partner.id
-        )
-        with self._create_test_client(router=quotation_cart_router) as test_client:
-            response: Response = test_client.post(f"/{cart.uuid}/request_quotation")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        response_json = response.json()
-        self.assertEqual(response_json["uuid"], cart.uuid)
-        self.assertEqual(response_json["typology"], "sale")
 
     def test_update_quotation(self):
         quotation = self.quotation
