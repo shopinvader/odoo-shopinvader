@@ -13,8 +13,6 @@
     "depends": [
         "shopinvader_product_order_mode_on_request",
     ],
-    "data": [
-        "views/sale_view.xml",
-    ],
+    "data": ["views/sale_view.xml", "data/mail_templates.xml"],
     "installable": True,
 }

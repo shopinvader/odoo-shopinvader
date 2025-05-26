@@ -24,7 +24,7 @@ Sale Quotation
 
 This module is used in the context of e-commerce project (like shopinvader)
 
-On Odoo Backoffice this module imporves the menu quotation by adding a new state (quotation_state).
+On Odoo Backoffice this module improves the menu quotation by adding a new state (quotation_state).
 Then, you can easily process and follow the quotation request from your external system.
 
 .. image:: https://raw.githubusercontent.com/shopinvader/odoo-shopinvader/16.0/sale_quotation/static/description/quotation.png
