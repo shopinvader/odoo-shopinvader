@@ -9,8 +9,6 @@
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["sale_quotation", "sale_cart"],
-    "data": [
-        "views/sale_order.xml",
-    ],
+    "data": ["views/sale_order.xml", "data/mail_templates.xml"],
     "demo": [],
 }

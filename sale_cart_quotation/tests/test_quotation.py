@@ -1,10 +1,10 @@
 # Copyright 2025 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo.tests.common import SavepointCase
+from odoo.tests.common import TransactionCase
 
 
-class TestQuotation(SavepointCase):
+class TestQuotation(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
