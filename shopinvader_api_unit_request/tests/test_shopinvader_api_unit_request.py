@@ -275,7 +275,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
             router=sale_line_router,
             partner=self.collaborator_2_1,
         ) as test_client:
-            response: Response = test_client.get("/sale_lines")
+            response: Response = test_client.get("/sales/lines")
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.json())
         self.assertEqual(response.json()["count"], 5)
 
@@ -295,7 +295,7 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
             router=sale_line_router,
             partner=self.collaborator_2_1,
         ) as test_client:
-            response: Response = test_client.get("/sale_lines")
+            response: Response = test_client.get("/sales/lines")
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.json())
         data = response.json()
         self.assertEqual(data["count"], 5)
@@ -531,13 +531,17 @@ class TestShopinvaderUnitCartApi(TestUnitManagementCommon, CommonSaleCart):
                 ("message_type", "=", "notification"),
             ]
 
-        with RecordCapturer(
-            self.env["mail.message"], mail_domain_for(self.collaborator_1_1)
-        ) as messages_1_1, RecordCapturer(
-            self.env["mail.message"], mail_domain_for(self.collaborator_1_2)
-        ) as messages_1_2, RecordCapturer(
-            self.env["mail.message"], mail_domain_for(self.manager_1_1)
-        ) as messages_manager_1_1:
+        with (
+            RecordCapturer(
+                self.env["mail.message"], mail_domain_for(self.collaborator_1_1)
+            ) as messages_1_1,
+            RecordCapturer(
+                self.env["mail.message"], mail_domain_for(self.collaborator_1_2)
+            ) as messages_1_2,
+            RecordCapturer(
+                self.env["mail.message"], mail_domain_for(self.manager_1_1)
+            ) as messages_manager_1_1,
+        ):
             so.action_confirm()
 
         # Check that the partners have been notified

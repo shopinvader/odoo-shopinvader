@@ -23,7 +23,7 @@ Shopinvader Unit Request Api
 |badge1| |badge2| |badge3|
 
 This module adds the possibility to make a request from a cart as
-a collaborator of a unit to be later reviewed, merged and converted into a 
+a collaborator of a unit to be later reviewed, merged and converted into a
 sale order by a unit manager.
 
 The `cart_router` has been extended to allow the creation of a request:
@@ -32,7 +32,7 @@ The `cart_router` has been extended to allow the creation of a request:
 - `POST /api/cart/current/request` to create a request from the current cart.
 - `POST /api/cart/:uuid/request` to create a request from a specific cart.
 
-The `sale_router` has been extended to allow the /api/sale_lines to also list the requested sale lines.
+The `sale_router` has been extended to allow the /api/sales/lines to also list the requested sale lines.
 
 A new `unit_request_line_router` has been added to manage the requests:
 
