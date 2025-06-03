@@ -1,0 +1,1 @@
+Disables the use of onchange_helper in shopinvader_sale_cart
