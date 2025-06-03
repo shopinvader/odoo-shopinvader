@@ -26,7 +26,13 @@ class SaleOrder(models.Model):
         copy=False,
     )
 
-    typology = fields.Selection(selection_add=[("quote", "Quote")], default="quote")
+    typology = fields.Selection(
+        selection_add=[("quote", "Quote")],
+        default="quote",
+        ondelete={
+            "quote": "set default",
+        },
+    )
 
     @api.depends("state")
     def _compute_quotation_state(self):
