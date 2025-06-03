@@ -24,13 +24,16 @@ class ProductProduct(models.Model):
         readonly=True,
     )
 
-    @api.depends("product_tmpl_id.shop_order_mode")
+    @api.depends(
+        "product_tmpl_id.shop_order_mode",
+        "product_tmpl_id.is_shop_order_mode_unabled_on_variant",
+    )
     def _compute_shop_order_mode(self):
         for product in self:
-            if product.product_tmpl_id:
-                product.shop_order_mode = product.product_tmpl_id.shop_order_mode
-            else:
+            if not product.product_tmpl_id:
                 product.shop_order_mode = False
+            elif not product.product_tmpl_id.is_shop_order_mode_unabled_on_variant:
+                product.shop_order_mode = product.product_tmpl_id.shop_order_mode
 
     def _inverse_shop_order_mode(self):
         for product in self:
