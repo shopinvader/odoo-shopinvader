@@ -6,7 +6,7 @@
     "summary": """
         Disables the use of onchange_helper in shopinvader_sale_cart
     """,
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "AGPL-3",
     "author": "CamptoCamp, Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",

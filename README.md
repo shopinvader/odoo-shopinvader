@@ -62,6 +62,7 @@ addon | version | maintainers | summary
 [shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
 [shopinvader_restapi_sale_packaging](shopinvader_restapi_sale_packaging/) | 16.0.1.1.0 |  | Shopinvader Restapi Sale Packaging
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.2.0 |  | ShopInvader logic for sale carts.
+[shopinvader_sale_cart_no_onchange_helper](shopinvader_sale_cart_no_onchange_helper/) | 16.0.1.0.1 |  | Disables the use of onchange_helper in shopinvader_sale_cart
 [shopinvader_sale_state](shopinvader_sale_state/) | 16.0.1.0.1 |  | Basic module to implement state for sale order
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.3.2 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_invoice](shopinvader_schema_invoice/) | 16.0.1.0.1 |  | Add schema for invoices
