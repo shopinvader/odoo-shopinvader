@@ -22,7 +22,7 @@ Sale Cart Quotation
 
 |badge1| |badge2| |badge3|
 
-Glue module between sale_quotation and sale_cart
+Glue module between sale_quotation and sale_cart, allowing users to request a quotation directly from a cart.
 
 **Table of contents**
 

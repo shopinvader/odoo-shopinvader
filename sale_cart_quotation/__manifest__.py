@@ -3,7 +3,8 @@
 
 {
     "name": "Sale Cart Quotation",
-    "summary": """Glue module between sale_quotation and sale_cart""",
+    "summary": """Glue module between sale_quotation and sale_cart,
+                    allowing users to request a quotation directly from a cart.""",
     "version": "16.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
