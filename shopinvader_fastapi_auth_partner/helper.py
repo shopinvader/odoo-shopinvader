@@ -9,7 +9,7 @@ class AuthService(models.AbstractModel):
     _inherit = "fastapi.auth.service"
 
     def _set_auth_cookie(self, auth_partner, request, response):
-        rv = super(AuthService, self)._set_auth_cookie(auth_partner, request, response)
+        rv = super()._set_auth_cookie(auth_partner, request, response)
         # Handle anonymous partner
         self.env["res.partner"]._promote_anonymous_partner(
             auth_partner.partner_id, request.cookies, response
