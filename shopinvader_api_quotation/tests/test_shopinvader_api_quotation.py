@@ -5,6 +5,7 @@ from fastapi import status
 from requests import Response
 
 from odoo import Command
+from odoo.exceptions import MissingError
 from odoo.tests.common import tagged
 
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
@@ -131,7 +132,16 @@ class TestQuotation(FastAPITransactionCase):
                     "sequence": 42,
                     "product_id": self.product_2.id,
                     "quantity": 123,
-                }
+                },
+                {
+                    "sequence": 314,
+                    "product_id": self.product_2.id,
+                    "quantity": 200,
+                },
+                {
+                    "product_id": self.product_1.id,
+                    "quantity": 200,
+                },
             ],
         }
         with self._create_test_client() as test_client:
@@ -149,11 +159,11 @@ class TestQuotation(FastAPITransactionCase):
         self.assertEqual(quotation.order_line[0].product_id, self.product_2)
         self.assertEqual(quotation.order_line[0].product_uom_qty, 123)
         self.assertEqual(quotation.order_line[0].sequence, 42)
+        self.assertEqual(len(quotation.order_line), 3)
 
     def test_create_quotation(self):
         data = {
             "name": "Test Quotation",
-            "typology": "quote",
             "client_order_ref": "PO_12345",
             "lines": [
                 {
@@ -274,6 +284,14 @@ class TestQuotation(FastAPITransactionCase):
         self.assertEqual(quotation.order_line[0].product_id.id, self.product_2.id)
         self.assertEqual(quotation.order_line[0].sequence, 42)
 
+        # test invalid line_id
+        data["line_id"] = max(line.id for line in self.quotation.order_line) + 1
+        with self._create_test_client() as test_client:
+            with self.assertRaises(MissingError):
+                response: Response = test_client.put(
+                    f"/quotations/{quotation.id}/update_line", content=json.dumps(data)
+                )
+
     def test_update_quotation_lines(self):
         quotation = self.quotation
         data = {
@@ -331,6 +349,14 @@ class TestQuotation(FastAPITransactionCase):
         self.assertEqual(response_json["id"], quotation.id)
 
         self.assertEqual(len(quotation.order_line), 1)
+
+        # test invalid line_id
+        data["line_id"] = max(line.id for line in self.quotation.order_line) + 1
+        with self._create_test_client() as test_client:
+            with self.assertRaises(MissingError):
+                response: Response = test_client.post(
+                    f"/quotations/{quotation.id}/delete_line", content=json.dumps(data)
+                )
 
     def test_delete_quotation_lines(self):
         quotation = self.quotation

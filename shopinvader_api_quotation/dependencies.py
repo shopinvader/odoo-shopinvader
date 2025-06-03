@@ -20,6 +20,7 @@ from .schemas.sale import (
     QuotationCreateRequest,
     QuotationDeleteLineRequest,
     QuotationLines,
+    QuotationUpdateInput,
     QuotationUpdateLineRequest,
 )
 
@@ -41,19 +42,35 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
         for confirming a quotation"""
         return quotation.action_confirm_quotation()
 
-    def _confirm(self, quotation_id, data):
+    def _confirm(self, quotation_id, data) -> SaleOrder:
         quotation = self._get(quotation_id)
         self._process_confirm_quotation(quotation, data)
         return quotation
 
-    def _update(self, quotation_id, data):
+    def _update(self, quotation_id, data: QuotationUpdateInput) -> SaleOrder:
         quotation = self._get(quotation_id)
-        quotation.write(data.to_sale_order_vals())
+        vals = {"client_order_ref": data.client_order_ref}
+        vals = self._modify_lines_vals(quotation, data.lines, vals)
+
+        # remove any line that is in the quotation but does not appear in the request data
+        request_line_ids = {
+            line.line_id for line in data.lines if getattr(line, "line_id", None)
+        }
+        lines_to_remove_ids = [
+            line.id for line in quotation.order_line if line.id not in request_line_ids
+        ]
+        for line_id in lines_to_remove_ids:
+            vals["order_line"].append(Command.unlink(line_id))
+
+        quotation.write(vals)
         return quotation
 
     def _create(self, rqst: QuotationCreateRequest) -> SaleOrder:
         vals = rqst.model_dump()
         vals["partner_id"] = self.partner.id
+
+        # Enforce quote typology, correcting changes from other addons.
+        vals["typology"] = "quote"
 
         if "lines" in vals:
             vals["order_line"] = [
@@ -72,47 +89,64 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
 
         return quotation
 
+    def _modify_lines_vals(
+        self,
+        quotation: SaleOrder,
+        lines: QuotationLines[QuotationAddLineRequest | QuotationUpdateLineRequest],
+        vals: dict,
+    ):
+        """
+        Prepares 'order_line' commands for sale order updates.
+
+        Modifies the `vals` dictionary in-place to include `order_line` commands.
+        """
+        vals["order_line"] = []
+        existing_lines_ids = {line.id for line in quotation.order_line}
+
+        # If given a line_id, update this line, otherwiser, create a new line.
+        for line in lines:
+            if getattr(line, "line_id", None):
+                if line.line_id not in existing_lines_ids:
+                    raise MissingError(
+                        f"Line with ID {line.line_id} "
+                        f"not found inside quotation {quotation.id}"
+                    )
+                vals["order_line"].append(
+                    Command.update(
+                        line.line_id,
+                        {
+                            "product_id": line.product_id,
+                            "product_uom_qty": line.quantity,
+                            "sequence": line.sequence,
+                        },
+                    )
+                )
+            else:
+                vals["order_line"].append(
+                    Command.create(
+                        {
+                            "product_id": line.product_id,
+                            "product_uom_qty": line.quantity,
+                            "sequence": line.sequence,
+                        },
+                    )
+                )
+
+        return vals
+
     def _add_lines(
         self, quotation_id: int, rqst: QuotationLines[QuotationAddLineRequest]
     ) -> SaleOrder:
         quotation = self._get(quotation_id)
-        for line in rqst.lines:
-            quotation.write(
-                {
-                    "order_line": [
-                        Command.create(
-                            {
-                                "product_id": line.product_id,
-                                "product_uom_qty": line.quantity,
-                            }
-                        )
-                    ]
-                }
-            )
+        vals = self._modify_lines_vals(quotation, rqst.lines, {})
+        quotation.write(vals)
         return quotation
 
     def _update_lines(
         self, quotation_id: int, rqst: QuotationLines[QuotationUpdateLineRequest]
     ) -> SaleOrder:
         quotation = self._get(quotation_id)
-        existing_lines_ids = {line.id for line in quotation.order_line}
-        vals = {"order_line": []}
-        for update_line_rqst in rqst.lines:
-            if update_line_rqst.line_id not in existing_lines_ids:
-                raise MissingError(
-                    f"Line with ID {update_line_rqst.line_id} "
-                    f"not found in quotation {quotation_id}"
-                )
-            vals["order_line"].append(
-                Command.update(
-                    update_line_rqst.line_id,
-                    {
-                        "product_id": update_line_rqst.product_id,
-                        "product_uom_qty": update_line_rqst.quantity,
-                        "sequence": update_line_rqst.sequence,
-                    },
-                )
-            )
+        vals = self._modify_lines_vals(quotation, rqst.lines, {})
         quotation.write(vals)
         return quotation
 
@@ -126,7 +160,7 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
             if delete_line_rqst.line_id not in existing_lines_ids:
                 raise MissingError(
                     f"Line with ID {delete_line_rqst.line_id} "
-                    f"not found in quotation {quotation_id}"
+                    f"not found inside quotation {quotation_id}"
                 )
             vals["order_line"].append(Command.delete(delete_line_rqst.line_id))
         quotation.write(vals)

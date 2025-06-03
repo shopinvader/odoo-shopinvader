@@ -2,8 +2,6 @@ from typing import Generic, TypeVar
 
 from extendable_pydantic import StrictExtendableBaseModel
 
-from odoo import Command
-
 from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale
 
 
@@ -31,7 +29,6 @@ class QuotationCreateRequest(StrictExtendableBaseModel, extra="ignore"):
     name: str
     lines: list[QuotationLineCreateRequest] | None = None
     client_order_ref: str | None = None
-    typology: str
 
 
 class QuotationAddLineRequest(StrictExtendableBaseModel, extra="ignore"):
@@ -60,20 +57,4 @@ class QuotationLines(StrictExtendableBaseModel, Generic[T]):
 
 class QuotationUpdateInput(StrictExtendableBaseModel, extra="ignore"):
     client_order_ref: str | None = None
-    lines: list[QuotationUpdateLineRequest] | None = None
-
-    def to_sale_order_vals(self) -> dict:
-        return {
-            "client_order_ref": self.client_order_ref,
-            "order_line": [
-                Command.update(
-                    line.line_id,
-                    {
-                        "product_id": line.product_id,
-                        "product_uom_qty": line.quantity,
-                        "sequence": line.sequence,
-                    },
-                )
-                for line in self.lines
-            ],
-        }
+    lines: list[QuotationUpdateLineRequest | QuotationAddLineRequest] | None = None
