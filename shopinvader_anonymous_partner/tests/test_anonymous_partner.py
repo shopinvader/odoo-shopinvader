@@ -5,30 +5,27 @@ from unittest import mock
 
 import psycopg2
 
-from odoo import SUPERUSER_ID
 from odoo.http import Controller, request, route
 from odoo.tests.common import HttpCase, TransactionCase
 from odoo.tools import mute_logger
 
-from odoo.addons.shopinvader_anonymous_partner.models.res_partner import COOKIE_NAME
+from odoo.addons.shopinvader_anonymous_partner.models.cookie_helper import COOKIE_NAME
 
 
 class TestController(Controller):
     @route("/test/anonymous_partner_create", type="http", auth="none")
     def anonymous_partner_create(self):
-        partner = (
-            request.env["res.partner"]
-            .with_user(SUPERUSER_ID)
-            ._create_anonymous_partner__cookie(request.future_response)
+        cookie_helper = request.env["shopinvader_anonymous_partner.cookie.helper"]
+        partner = cookie_helper._create_anonymous_partner__cookie(
+            request.future_response
         )
         return str(partner.id)
 
     @route("/test/anonymous_partner_get", type="http", auth="none")
     def anonymous_partner_get(self):
-        partner = (
-            request.env["res.partner"]
-            .with_user(SUPERUSER_ID)
-            ._get_anonymous_partner__cookie(request.httprequest.cookies)
+        cookie_helper = request.env["shopinvader_anonymous_partner.cookie.helper"]
+        partner = cookie_helper._get_anonymous_partner__cookie(
+            request.httprequest.cookies
         )
         if partner:
             return str(partner.id)
@@ -36,26 +33,23 @@ class TestController(Controller):
 
     @route("/test/anonymous_partner_delete", type="http", auth="none")
     def anonymous_partner_delete(self):
-        request.env["res.partner"].with_user(
-            SUPERUSER_ID
-        )._delete_anonymous_partner__cookie(
+        cookie_helper = request.env["shopinvader_anonymous_partner.cookie.helper"]
+        cookie_helper._delete_anonymous_partner__cookie(
             request.httprequest.cookies, request.future_response
         )
 
 
 class TestShopinvaderAnonymousPartner(TransactionCase):
     def test_create(self):
-        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
-            mock.MagicMock()
-        )
+        cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
+        partner = cookie_helper._create_anonymous_partner__cookie(mock.MagicMock())
         self.assertEqual(len(partner), 1)
         self.assertTrue(partner.anonymous_token)
 
     @mute_logger("odoo.sql_db")
     def test_create_duplicate_token(self):
-        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
-            mock.MagicMock()
-        )
+        cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
+        partner = cookie_helper._create_anonymous_partner__cookie(mock.MagicMock())
         with self.assertRaises(psycopg2.errors.UniqueViolation):
             self.env["res.partner"].create(
                 {
@@ -65,30 +59,29 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
             )
 
     def test_get(self):
-        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
-            mock.MagicMock()
-        )
-        partner2 = self.env["res.partner"]._get_anonymous_partner__cookie(
+        cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
+        partner = cookie_helper._create_anonymous_partner__cookie(mock.MagicMock())
+        partner2 = cookie_helper._get_anonymous_partner__cookie(
             cookies={COOKIE_NAME: partner.anonymous_token}
         )
         self.assertEqual(partner, partner2)
-        partner2 = self.env["res.partner"]._get_anonymous_partner__cookie(
+        partner2 = cookie_helper._get_anonymous_partner__cookie(
             cookies={COOKIE_NAME: None}
         )
         self.assertEqual(len(partner2), 0)
 
     def test_delete(self):
-        partner = self.env["res.partner"]._create_anonymous_partner__cookie(
-            mock.MagicMock()
-        )
+        cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
+        partner = cookie_helper._create_anonymous_partner__cookie(mock.MagicMock())
         self.assertTrue(partner.exists())
-        self.env["res.partner"]._delete_anonymous_partner__cookie(
+        cookie_helper._delete_anonymous_partner__cookie(
             cookies={COOKIE_NAME: partner.anonymous_token}, response=mock.MagicMock()
         )
         self.assertFalse(partner.exists())
 
     def test_promote(self):
-        anonymous_partner = self.env["res.partner"]._create_anonymous_partner__cookie(
+        cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
+        anonymous_partner = cookie_helper._create_anonymous_partner__cookie(
             mock.MagicMock()
         )
         self.assertTrue(anonymous_partner.exists())
@@ -99,7 +92,8 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
         with mock.patch.object(
             type(self.env["res.partner"]), "_promote_from_anonymous_partner"
         ) as mock_promote:
-            self.env["res.partner"]._promote_anonymous_partner(
+            cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
+            cookie_helper._promote_anonymous_partner_and_delete_cookie(
                 partner,
                 cookies={COOKIE_NAME: anonymous_partner.anonymous_token},
                 response=mock.MagicMock(),

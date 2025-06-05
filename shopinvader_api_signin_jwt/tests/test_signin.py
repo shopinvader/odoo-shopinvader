@@ -7,7 +7,7 @@ import jwt
 
 from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 from odoo.addons.fastapi_auth_jwt.dependencies import auth_jwt_default_validator_name
-from odoo.addons.shopinvader_anonymous_partner.models.res_partner import COOKIE_NAME
+from odoo.addons.shopinvader_anonymous_partner.models.cookie_helper import COOKIE_NAME
 
 from ..routers import signin_router
 

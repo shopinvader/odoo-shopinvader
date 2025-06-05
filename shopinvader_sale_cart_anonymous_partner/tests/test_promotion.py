@@ -4,14 +4,14 @@
 
 from unittest import mock
 
-from odoo.tests.common import TransactionCase
+from odoo.addons.base.tests.common import BaseCommon
+from odoo.addons.shopinvader_anonymous_partner.models.cookie_helper import COOKIE_NAME
 
-from odoo.addons.shopinvader_anonymous_partner.models.res_partner import COOKIE_NAME
 
-
-class PartnerPromotionCase(TransactionCase):
+class PartnerPromotionCase(BaseCommon):
     def test_cart_transfer_at_promotion(self):
-        anonymous_partner = self.env["res.partner"]._create_anonymous_partner__cookie(
+        cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
+        anonymous_partner = cookie_helper._create_anonymous_partner__cookie(
             mock.MagicMock()
         )
         product = self.env["product.product"].create(
@@ -31,7 +31,7 @@ class PartnerPromotionCase(TransactionCase):
             {"name": "Test promotion partner", "email": "test+promotion@example.com"}
         )
 
-        self.env["res.partner"]._promote_anonymous_partner(
+        cookie_helper._promote_anonymous_partner_and_delete_cookie(
             partner,
             cookies={COOKIE_NAME: anonymous_partner.anonymous_token},
             response=mock.MagicMock(),

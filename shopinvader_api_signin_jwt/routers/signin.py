@@ -42,7 +42,10 @@ def signin(
         ]._create_partner_from_payload(payload)
         response.status_code = status.HTTP_201_CREATED
 
-    env["res.partner"]._promote_anonymous_partner(partner, request.cookies, response)
+    cookie_helper = env["shopinvader_anonymous_partner.cookie.helper"]
+    cookie_helper._promote_anonymous_partner_and_delete_cookie(
+        partner, request.cookies, response
+    )
 
 
 @signin_router.post("/signout")
