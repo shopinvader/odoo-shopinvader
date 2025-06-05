@@ -49,9 +49,10 @@ class TestBase(CommonTestAuth):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
-        cls.test_anonymous_partner = cls.env[
-            "res.partner"
-        ]._create_anonymous_partner__cookie(response=mock.MagicMock())
+        cookie_helper = cls.env["shopinvader_anonymous_partner.cookie.helper"]
+        cls.test_anonymous_partner = cookie_helper._create_anonymous_partner__cookie(
+            response=mock.MagicMock()
+        )
         cls.default_fastapi_app = app
         cls.test_partner = cls.env["res.partner"].create(
             {
