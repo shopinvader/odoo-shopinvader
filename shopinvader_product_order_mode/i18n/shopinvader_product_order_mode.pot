@@ -31,9 +31,9 @@ msgid "Direct Sale Only"
 msgstr ""
 
 #. module: shopinvader_product_order_mode
-#: model:ir.model.fields,help:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_unabled
-#: model:ir.model.fields,help:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_unabled_on_variant
-#: model:ir.model.fields,help:shopinvader_product_order_mode.field_product_template__is_shop_order_mode_unabled_on_variant
+#: model:ir.model.fields,help:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_enabled
+#: model:ir.model.fields,help:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_enabled_on_variant
+#: model:ir.model.fields,help:shopinvader_product_order_mode.field_product_template__is_shop_order_mode_enabled_on_variant
 msgid ""
 "If True, unables product variants to have a different value for "
 "'shop_order_mode' than this product template."
@@ -61,13 +61,13 @@ msgid "Shopinvader Order Mode"
 msgstr ""
 
 #. module: shopinvader_product_order_mode
-#: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_unabled_on_variant
-#: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_template__is_shop_order_mode_unabled_on_variant
+#: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_enabled_on_variant
+#: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_template__is_shop_order_mode_enabled_on_variant
 msgid "Shopinvader Order Mode Unabled on Variant"
 msgstr ""
 
 #. module: shopinvader_product_order_mode
-#: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_unabled
+#: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_enabled
 msgid "Template Shop Order Mode Disabled"
 msgstr ""
 

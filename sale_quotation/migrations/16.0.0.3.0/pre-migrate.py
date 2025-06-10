@@ -29,7 +29,7 @@ def migrate(cr, version):
         cr,
         """
         UPDATE product_template
-        SET is_shop_order_mode_unabled_on_variant = TRUE
+        SET is_shop_order_mode_enabled_on_variant = TRUE
         WHERE shop_only_quotation = 'manually_on_variant';
         """,
     )
@@ -41,7 +41,7 @@ def migrate(cr, version):
         SET shop_order_mode = 'quotation_only'
         FROM product_template AS pt
         WHERE product_product.product_tmpl_id = pt.id
-        AND pt.is_shop_order_mode_unabled_on_variant = TRUE
+        AND pt.is_shop_order_mode_enabled_on_variant = TRUE
         AND product_product.shop_only_quotation = TRUE;
         """,
     )

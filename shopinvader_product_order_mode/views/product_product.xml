@@ -13,9 +13,9 @@
             >
                 <field
                     name="shop_order_mode"
-                    attrs="{'readonly': [('is_shop_order_mode_unabled', '=', False)] }"
+                    attrs="{'readonly': [('is_shop_order_mode_enabled', '=', False)] }"
                 />
-                <field name="is_shop_order_mode_unabled" invisible="1" />
+                <field name="is_shop_order_mode_enabled" invisible="1" />
             </xpath>
         </field>
     </record>

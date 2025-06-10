@@ -17,27 +17,27 @@ class ProductProduct(models.Model):
         inverse="_inverse_shop_order_mode",
         help="Order mode for the product in Shopinvader.",
     )
-    is_shop_order_mode_unabled = fields.Boolean(
+    is_shop_order_mode_enabled = fields.Boolean(
         string="Template Shop Order Mode Disabled",
-        related="product_tmpl_id.is_shop_order_mode_unabled_on_variant",
+        related="product_tmpl_id.is_shop_order_mode_enabled_on_variant",
         store=True,
         readonly=True,
     )
 
     @api.depends(
         "product_tmpl_id.shop_order_mode",
-        "product_tmpl_id.is_shop_order_mode_unabled_on_variant",
+        "product_tmpl_id.is_shop_order_mode_enabled_on_variant",
     )
     def _compute_shop_order_mode(self):
         for product in self:
             if not product.product_tmpl_id:
                 product.shop_order_mode = False
-            elif not product.product_tmpl_id.is_shop_order_mode_unabled_on_variant:
+            elif not product.product_tmpl_id.is_shop_order_mode_enabled_on_variant:
                 product.shop_order_mode = product.product_tmpl_id.shop_order_mode
 
     def _inverse_shop_order_mode(self):
         for product in self:
-            if not product.is_shop_order_mode_unabled and not self.env.context.get(
+            if not product.is_shop_order_mode_enabled and not self.env.context.get(
                 "skip_shop_order_mode_validation"
             ):
                 raise ValidationError(
