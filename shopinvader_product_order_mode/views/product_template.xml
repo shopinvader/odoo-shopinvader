@@ -12,7 +12,7 @@
                 position="inside"
             >
                 <field name="shop_order_mode" />
-                <field name="is_shop_order_mode_unabled_on_variant" />
+                <field name="is_shop_order_mode_enabled_on_variant" />
             </xpath>
         </field>
     </record>

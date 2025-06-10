@@ -38,7 +38,7 @@ class TestShopOrderMode(TransactionCase):
                     )
                 ],
                 "shop_order_mode": "direct_sale_only",
-                "is_shop_order_mode_unabled_on_variant": False,
+                "is_shop_order_mode_enabled_on_variant": False,
             }
         )
 
@@ -54,13 +54,13 @@ class TestShopOrderMode(TransactionCase):
     def test_product_shop_order_mode_constraint(self):
         """
         Test that the shop_order_mode field on product.product is not editable
-        when is_shop_order_mode_unabled_on_variant is False on product.template.
+        when is_shop_order_mode_enabled_on_variant is False on product.template.
         """
 
         with self.assertRaises(ValidationError):
             self.product.shop_order_mode = None
 
-        self.template.is_shop_order_mode_unabled_on_variant = True
+        self.template.is_shop_order_mode_enabled_on_variant = True
 
         self.product.shop_order_mode = None
         self.assertNotEqual(self.product.shop_order_mode, "direct_sale_only")
@@ -69,9 +69,9 @@ class TestShopOrderMode(TransactionCase):
     def test_shop_order_mode_reset(self):
         """
         Test that the `shop_order_mode` field on product.product is reset to the
-        value of the product.template when `is_shop_order_mode_unabled_on_variant` is True.
+        value of the product.template when `is_shop_order_mode_enabled_on_variant` is True.
         """
-        self.template.is_shop_order_mode_unabled_on_variant = True
+        self.template.is_shop_order_mode_enabled_on_variant = True
         self.product.shop_order_mode = None
-        self.template.is_shop_order_mode_unabled_on_variant = False
+        self.template.is_shop_order_mode_enabled_on_variant = False
         self.assertEqual(self.product.shop_order_mode, self.template.shop_order_mode)
