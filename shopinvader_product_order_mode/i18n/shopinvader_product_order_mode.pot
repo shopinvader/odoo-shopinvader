@@ -63,7 +63,7 @@ msgstr ""
 #. module: shopinvader_product_order_mode
 #: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_product__is_shop_order_mode_enabled_on_variant
 #: model:ir.model.fields,field_description:shopinvader_product_order_mode.field_product_template__is_shop_order_mode_enabled_on_variant
-msgid "Shopinvader Order Mode Unabled on Variant"
+msgid "Shopinvader Order Mode Enabled on Variant"
 msgstr ""
 
 #. module: shopinvader_product_order_mode

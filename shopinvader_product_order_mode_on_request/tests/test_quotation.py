@@ -10,7 +10,7 @@ class TestQuotation(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        # as the shop_order_mode is readonly by default except if unabled in the template
+        # as the shop_order_mode is readonly by default except if enabled in the template
         # we need to create the product template first and then get the product variant
         cls.product_quotation_only = (
             cls.env["product.template"]

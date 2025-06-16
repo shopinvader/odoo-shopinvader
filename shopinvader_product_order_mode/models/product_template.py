@@ -15,7 +15,7 @@ class ProductTemplate(models.Model):
     )
 
     is_shop_order_mode_enabled_on_variant = fields.Boolean(
-        string="Shopinvader Order Mode Unabled on Variant",
+        string="Shopinvader Order Mode Enabled on Variant",
         help="If True, unables product variants to have a different value for"
         " 'shop_order_mode' than this product template.",
         default=False,
