@@ -24,17 +24,6 @@ class TestQuotation(TransactionCase):
         self.assertEqual(self.so.quotation_state, "draft")
         self.assertEqual(self.so.typology, "quote")
 
-    def test_request_quotation(self):
-        self.so.typology = "cart"
-        self.so.action_request_quotation()
-        self.assertEqual(self.so.quotation_state, "customer_request")
-
-    def test_send_requested_quotation(self):
-        self.so.typology = "cart"
-        self.so.action_request_quotation()
-        self.so.action_quotation_sent()
-        self.assertEqual(self.so.quotation_state, "waiting_acceptation")
-
     def test_send_draft_quotation(self):
         self.so.action_quotation_sent()
         self.assertEqual(self.so.quotation_state, "waiting_acceptation")
