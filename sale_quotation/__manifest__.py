@@ -12,9 +12,12 @@
     "license": "AGPL-3",
     "depends": [
         "shopinvader_product_order_mode_on_request",
+        "base_view_inheritance_extension",
     ],
     "data": [
         "views/sale_view.xml",
+        "wizards/sale_order_wizard_views.xml",
+        "security/ir.model.access.csv",
     ],
     "installable": True,
 }

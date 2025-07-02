@@ -34,6 +34,8 @@ class SaleOrder(models.Model):
         },
     )
 
+    use_customer_quotation_workflow = fields.Boolean(default=False)
+
     @api.depends("state")
     def _compute_quotation_state(self):
         for record in self:
@@ -51,21 +53,46 @@ class SaleOrder(models.Model):
                 record.quotation_state = "accepted"
 
     def action_confirm_quotation(self):
-        if any(rec.quotation_state != "waiting_acceptation" for rec in self):
-            raise UserError(
-                _(
-                    "Only quotation with the state 'waiting_acceptation' can be "
-                    "Confirmed."
-                )
-            )
         self.quotation_state = "accepted"
         self.typology = "sale"
 
     def action_confirm(self):
-        if self.typology == "quote":
+        if (
+            self.use_customer_quotation_workflow
+            and self.env.context.get("use_quotation_confirm_wizard")
+            and self.typology == "quote"
+            and any(rec.quotation_state != "waiting_acceptation" for rec in self)
+        ):
+            return {
+                "name": _("Confirm Sale Order"),
+                "type": "ir.actions.act_window",
+                "res_model": "sale.order.confirm.warning.wizard",
+                "views": [[False, "form"]],
+                "target": "new",
+                "context": {
+                    "default_sale_order_ids": self.ids,
+                    "default_message": _(
+                        "The selected quotation(s) are not in 'Waiting Acceptation' "
+                        "state. Are you sure you want to confirm them?"
+                    ),
+                },
+            }
+        else:
             self.action_confirm_quotation()
-        return super().action_confirm()
+            return super(SaleOrder, self).action_confirm()
 
     def action_draft(self):
         self.typology = "quote"
         return super().action_draft()
+
+    def action_toggle_customer_quotation_workflow(self):
+        for order in self:
+            if order.state != "draft":
+                raise UserError(
+                    _(
+                        "Only sale orders in 'draft' state can toggle the quotation workflow."
+                    )
+                )
+            order.use_customer_quotation_workflow = (
+                not order.use_customer_quotation_workflow
+            )
