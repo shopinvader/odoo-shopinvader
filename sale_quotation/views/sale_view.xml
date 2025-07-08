@@ -9,15 +9,46 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <field name="state" position="before">
-                <field
-                    name="quotation_state"
-                    widget="statusbar"
-                    statusbar_visible="draft,waiting_acceptation,accepted"
-                    attrs="{'invisible': [('state', 'in', ('sale', 'done'))]}"
+            <xpath expr="//form" position="inside">
+                <field name="quotation_state" invisible="1" />
+                <field name="use_customer_quotation_workflow" invisible="1" />
+                <field name="typology" invisible="1" />
+                <field name="state" invisible="1" />
+                <field name="name" invisible="1" />
+            </xpath>
+
+            <xpath
+                expr="//form/sheet/div[hasclass('oe_title')]/h1/field[@name='name']"
+                position="attributes"
+            >
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//form/sheet/div[hasclass('oe_title')]/h1" position="inside">
+                <span>
+                    <field name="name" readonly="1" class="oe_inline" />
+                    <span
+                        attrs="{'invisible': [('use_customer_quotation_workflow', '=', False)]}"
+                    >
+                        (<field name="quotation_state" readonly="1" />)
+                    </span>
+                </span>
+            </xpath>
+
+            <button id="action_confirm" position="after">
+                <button
+                    name="action_confirm_quotation"
+                    string="Confirm Quotation"
+                    type="object"
+                    class="oe_highlight"
+                    attrs="{'invisible': ['|', ('use_customer_quotation_workflow', '=', False), ('quotation_state', '!=', 'waiting_acceptation')]}"
                 />
-                <div name="customer_quotation_workflow_status" class="oe_button_box">
-                    <field name="use_customer_quotation_workflow" invisible="1" />
+            </button>
+            <xpath expr="//header" position="inside">
+                <div
+                    name="customer_quotation_workflow_status"
+                    class="oe_button_box"
+                    style="margin-right: 5px;"
+                >
                     <button
                         name="action_toggle_customer_quotation_workflow"
                         type="object"
@@ -38,12 +69,7 @@
                         Standard Workflow
                     </span>
                 </div>
-            </field>
-            <field name="state" position="attributes">
-                <attribute
-                    name="attrs"
-                >{"invisible": [("state", "in", ("draft", "sent", "cancel"))]}</attribute>
-            </field>
+            </xpath>
             <xpath
                 expr="//header/button[@name='action_confirm' and @id='action_confirm']"
                 position="attributes"
