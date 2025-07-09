@@ -52,7 +52,7 @@ class SaleOrder(models.Model):
             elif record.state == "sale":
                 record.quotation_state = "accepted"
 
-    def action_confirm_quotation(self):
+    def action_accept_quotation(self):
         self.quotation_state = "accepted"
         self.typology = "sale"
 
@@ -78,7 +78,7 @@ class SaleOrder(models.Model):
                 },
             }
         else:
-            self.action_confirm_quotation()
+            self.action_accept_quotation()
             return super(SaleOrder, self).action_confirm()
 
     def action_draft(self):

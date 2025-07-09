@@ -36,15 +36,15 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
             ("typology", "=", "quote"),
         ]
 
-    def _process_confirm_quotation(self, quotation, data):
-        """Process the quotation confirmation
+    def _process_accept_quotation(self, quotation, data):
+        """Process the quotation acceptation
         Can be inherited if you expect specific params
         for confirming a quotation"""
-        return quotation.action_confirm_quotation()
+        return quotation.action_accept_quotation()
 
     def _confirm(self, quotation_id, data) -> SaleOrder:
         quotation = self._get(quotation_id)
-        self._process_confirm_quotation(quotation, data)
+        self._process_accept_quotation(quotation, data)
         return quotation
 
     def _update(self, quotation_id, data: QuotationUpdateInput) -> SaleOrder:

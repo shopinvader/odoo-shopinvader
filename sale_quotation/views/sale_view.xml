@@ -36,8 +36,8 @@
 
             <button id="action_confirm" position="after">
                 <button
-                    name="action_confirm_quotation"
-                    string="Confirm Quotation"
+                    name="action_accept_quotation"
+                    string="Accept Quotation"
                     type="object"
                     class="oe_highlight"
                     attrs="{'invisible': ['|', ('use_customer_quotation_workflow', '=', False), ('quotation_state', '!=', 'waiting_acceptation')]}"

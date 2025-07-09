@@ -32,7 +32,7 @@ class TestQuotation(TransactionCase):
 
     def test_confirm_quotation(self):
         self.so.action_quotation_sent()
-        self.so.action_confirm_quotation()
+        self.so.action_accept_quotation()
         self.assertEqual(self.so.quotation_state, "accepted")
         self.assertEqual(self.so.typology, "sale")
 
