@@ -34,5 +34,5 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
 
     def _request_quotation(self, partner: ResPartner, uuid: UUID | None = None):
         sale = self.env["sale.order"]._find_open_cart(partner.id, uuid)
-        sale.action_request_quotation()
+        sale.action_cart_request_quotation()
         return sale
