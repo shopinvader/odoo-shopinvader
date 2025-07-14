@@ -2,13 +2,6 @@
 <!-- Copyright 2025 ACSONE SA/NV
      License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
-    <record id="sale.action_quotations" model="ir.actions.act_window">
-        <field name="domain">[('typology', '=', 'quote')]</field>
-    </record>
-
-    <record id="sale.action_quotations_with_onboarding" model="ir.actions.act_window">
-        <field name="domain">[('typology', '=', 'quote')]</field>
-    </record>
 
     <record id="sale_cart_quotation_view_order_form" model="ir.ui.view">
         <field name="name">sale.cart.quotation.sale.order.form</field>

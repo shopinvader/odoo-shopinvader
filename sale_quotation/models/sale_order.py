@@ -24,11 +24,11 @@ class SaleOrder(models.Model):
         store=True,
         readonly=False,
         copy=False,
+        tracking=True,
     )
 
     typology = fields.Selection(
         selection_add=[("quote", "Quote")],
-        default="quote",
         ondelete={
             "quote": "set default",
         },
