@@ -22,11 +22,28 @@ class TestQuotation(TransactionCase):
 
     def test_request_quotation(self):
         self.so.typology = "cart"
-        self.so.action_request_quotation()
-        self.assertEqual(self.so.quotation_state, "customer_request")
+        self.so.action_cart_request_quotation()
+        self.assertRecordValues(
+            self.so,
+            [
+                {
+                    "quotation_state": "customer_request",
+                    "typology": "quote",
+                }
+            ],
+        )
 
     def test_send_requested_quotation(self):
         self.so.typology = "cart"
-        self.so.action_request_quotation()
+        self.so.action_cart_request_quotation()
         self.so.action_quotation_sent()
+        self.assertRecordValues(
+            self.so,
+            [
+                {
+                    "quotation_state": "waiting_acceptation",
+                    "typology": "quote",
+                }
+            ],
+        )
         self.assertEqual(self.so.quotation_state, "waiting_acceptation")

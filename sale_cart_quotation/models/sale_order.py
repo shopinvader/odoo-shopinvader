@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
-    def action_request_quotation(self):
+    def action_cart_request_quotation(self):
         if any(rec.state != "draft" or rec.typology != "cart" for rec in self):
             raise UserError(
                 _(
@@ -17,4 +17,5 @@ class SaleOrder(models.Model):
                 )
             )
         self.write({"use_customer_quotation_workflow": True})
+        self.action_customer_request_quotation()
         return True

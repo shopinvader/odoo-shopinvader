@@ -10,7 +10,7 @@
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
                 <button
-                    name="action_request_quotation"
+                    name="action_cart_request_quotation"
                     type="object"
                     string="Request Quotation"
                     class="oe_highlight"
