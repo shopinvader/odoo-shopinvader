@@ -70,7 +70,7 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
         vals["partner_id"] = self.partner.id
 
         # Enforce quote typology, correcting changes from other addons.
-        vals["typology"] = "quote"
+        vals["use_customer_quotation_workflow"] = True
 
         if "lines" in vals:
             vals["order_line"] = [

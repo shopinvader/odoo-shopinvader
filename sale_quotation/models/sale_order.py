@@ -8,6 +8,8 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
+from odoo.addons.sale.models.sale_order import READONLY_FIELD_STATES
+
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
@@ -34,7 +36,21 @@ class SaleOrder(models.Model):
         },
     )
 
-    use_customer_quotation_workflow = fields.Boolean(default=False)
+    use_customer_quotation_workflow = fields.Boolean(
+        inverse="_inverse_use_customer_quotation_workflow",
+        default=False,
+        states=READONLY_FIELD_STATES,
+    )
+
+    def _inverse_use_customer_quotation_workflow(self):
+        """Set the typology to 'quote' when enabling the customer quotation workflow."""
+        for order in self:
+            if order.use_customer_quotation_workflow and order.typology != "quote":
+                order.typology = "quote"
+            elif (
+                not order.use_customer_quotation_workflow and order.typology == "quote"
+            ):
+                order.typology = "sale"
 
     @api.depends("state")
     def _compute_quotation_state(self):

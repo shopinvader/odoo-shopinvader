@@ -16,5 +16,5 @@ class SaleOrder(models.Model):
                     "can be converted to quotation"
                 )
             )
-        self.write({"quotation_state": "customer_request", "typology": "sale"})
+        self.write({"use_customer_quotation_workflow": True})
         return True

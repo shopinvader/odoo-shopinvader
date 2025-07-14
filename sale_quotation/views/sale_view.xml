@@ -43,33 +43,14 @@
                     attrs="{'invisible': ['|', ('use_customer_quotation_workflow', '=', False), ('quotation_state', '!=', 'waiting_acceptation')]}"
                 />
             </button>
-            <xpath expr="//header" position="inside">
-                <div
-                    name="customer_quotation_workflow_status"
-                    class="oe_button_box"
-                    style="margin-right: 5px;"
-                >
-                    <button
-                        name="action_toggle_customer_quotation_workflow"
-                        type="object"
-                        string="Toggle Customer Quotation Workflow"
-                        class="btn-secondary"
-                        attrs="{'invisible': [('state', '!=', 'draft')]}"
-                    />
-                    <span
-                        attrs="{'invisible': [('use_customer_quotation_workflow', '=', False)]}"
-                        style="color: #007bff; font-weight: bold;"
-                    >
-                        Customer Quotation Workflow Enabled
-                    </span>
-                    <span
-                        attrs="{'invisible': [('use_customer_quotation_workflow', '=', True)]}"
-                        style="color: #888;"
-                    >
-                        Standard Workflow
-                    </span>
-                </div>
-            </xpath>
+            <field name="partner_id" position="before">
+                <field
+                    name="use_customer_quotation_workflow"
+                    widget="boolean_toggle"
+                    options="{'autosave': False, 'terminology': 'Use Customer Quotation Workflow'}"
+                    class="oe_inline"
+                />
+            </field>
             <xpath
                 expr="//header/button[@name='action_confirm' and @id='action_confirm']"
                 position="attributes"

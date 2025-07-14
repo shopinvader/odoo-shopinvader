@@ -56,4 +56,4 @@ class TestCartQuotation(FastAPITransactionCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         response_json = response.json()
         self.assertEqual(response_json["uuid"], cart.uuid)
-        self.assertEqual(response_json["typology"], "sale")
+        self.assertEqual(response_json["typology"], "quote")

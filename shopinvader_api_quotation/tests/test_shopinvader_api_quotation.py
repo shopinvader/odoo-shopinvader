@@ -69,7 +69,8 @@ class TestQuotation(FastAPITransactionCase):
         cls.quotation = cls.env["sale.order"].create(
             {
                 "partner_id": cls.default_fastapi_authenticated_partner.id,
-                "quotation_state": "waiting_acceptation",
+                "use_customer_quotation_workflow": True,
+                "quotation_state": "draft",
                 "order_line": [
                     Command.create(
                         {
@@ -95,8 +96,6 @@ class TestQuotation(FastAPITransactionCase):
         self.env["sale.order"].create(
             {
                 "partner_id": self.default_fastapi_authenticated_partner.id,
-                "quotation_state": "waiting_acceptation",
-                "typology": "sale",
             }
         )
         with self._create_test_client() as test_client:
