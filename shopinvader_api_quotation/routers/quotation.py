@@ -46,18 +46,6 @@ def get(
     return Sale.from_sale_order(quotation)
 
 
-@quotation_router.post("/quotations/{quotation_id}/confirm", status_code=200)
-def confirm_quotation(
-    quotation_router_helper: Annotated[
-        ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
-    ],
-    quotation_id: int,
-    data: QuotationConfirmInput | None = None,
-) -> None:
-    order = quotation_router_helper._confirm(quotation_id, data)
-    return Sale.from_sale_order(order)
-
-
 @quotation_router.get("/quotations", status_code=200)
 def search_quotation(
     params: Annotated[SaleSearch, Depends()],
@@ -183,4 +171,68 @@ def delete_lines(
     rqst: QuotationLines[QuotationDeleteLineRequest],
 ) -> Sale:
     quotation = quotation_router_helper._delete_lines(quotation_id, rqst)
+    return Sale.from_sale_order(quotation)
+
+
+@quotation_router.delete("/quotations/{quotation_id}", status_code=200)
+def delete_quotation(
+    quotation_router_helper: Annotated[
+        ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
+    ],
+    quotation_id: int,
+) -> None:
+    """Delete a quotation."""
+    quotation_router_helper._delete(quotation_id)
+    return None
+
+
+# Workflow related methods
+
+
+@quotation_router.post("/quotations/{quotation_id}/request_quotation", status_code=200)
+def request_quotation(
+    quotation_router_helper: Annotated[
+        ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
+    ],
+    quotation_id: int,
+) -> Sale:
+    """Request a quotation by the Saler."""
+    quotation = quotation_router_helper._request_quotation(quotation_id)
+    return Sale.from_sale_order(quotation)
+
+
+@quotation_router.post("/quotations/{quotation_id}/reset_to_draft", status_code=200)
+def reset_to_draft(
+    quotation_router_helper: Annotated[
+        ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
+    ],
+    quotation_id: int,
+) -> Sale:
+    """Reset a quotation to draft state."""
+    quotation = quotation_router_helper._reset_to_draft(quotation_id)
+    return Sale.from_sale_order(quotation)
+
+
+@quotation_router.post("/quotations/{quotation_id}/accept", status_code=200)
+def accept_quotation(
+    quotation_router_helper: Annotated[
+        ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
+    ],
+    quotation_id: int,
+    data: QuotationConfirmInput | None = None,
+) -> Sale:
+    """Accept a quotation."""
+    order = quotation_router_helper._accept(quotation_id, data)
+    return Sale.from_sale_order(order)
+
+
+@quotation_router.post("/quotations/{quotation_id}/cancel", status_code=200)
+def cancel_quotation(
+    quotation_router_helper: Annotated[
+        ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
+    ],
+    quotation_id: int,
+) -> Sale:
+    """Cancel a quotation."""
+    quotation = quotation_router_helper._cancel(quotation_id)
     return Sale.from_sale_order(quotation)

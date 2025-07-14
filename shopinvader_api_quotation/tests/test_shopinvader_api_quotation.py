@@ -109,18 +109,6 @@ class TestQuotation(FastAPITransactionCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["name"], self.quotation.name)
 
-    def test_confirm_quotation(self):
-        quotation = self.env["sale.order"].create(
-            {
-                "partner_id": self.default_fastapi_authenticated_partner.id,
-                "quotation_state": "waiting_acceptation",
-            }
-        )
-        with self._create_test_client() as test_client:
-            response: Response = test_client.post(f"/quotations/{quotation.id}/confirm")
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()["id"], quotation.id)
-
     def test_update_quotation(self):
         quotation = self.quotation
         data = {
@@ -380,3 +368,156 @@ class TestQuotation(FastAPITransactionCase):
         self.assertEqual(response_json["id"], quotation.id)
 
         self.assertEqual(len(quotation.order_line), 0)
+
+    def test_request_quotation(self):
+        quotation = self.quotation
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/request_quotation"
+            )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+        self.assertEqual(quotation.quotation_state, "customer_request")
+        # an other call to request_quotation should raise an error
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}/request_quotation"
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+    def test_accept_quotation(self):
+        # in draft state, cannot reset to draft
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/accept"
+            )
+        self.quotation.action_customer_request_quotation()
+        self.quotation.action_quotation_sent()
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/accept"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()["id"], self.quotation.id)
+        self.quotation.typology = "sale"
+
+    def test_reset_to_draft(self):
+        # in draft state, cannot reset to draft
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/reset_to_draft"
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+        self.quotation.action_customer_request_quotation()
+        self.quotation.action_quotation_sent()
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/reset_to_draft"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], self.quotation.id)
+        self.assertEqual(self.quotation.quotation_state, "draft")
+        self.assertEqual(self.quotation.typology, "quote")
+
+    def test_cancel_quotation(self):
+        # in draft state, cannot canel
+        with self._create_test_client() as test_client:
+            # any invalid state for requested action should return a 409 Conflict
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/cancel"
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+        self.quotation.action_customer_request_quotation()
+        self.quotation.action_quotation_sent()
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/cancel"
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["id"], self.quotation.id)
+        self.assertEqual(self.quotation.quotation_state, "cancel")
+        self.assertEqual(self.quotation.typology, "quote")
+        self.assertEqual(self.quotation.state, "cancel")
+
+    def test_update_not_allowed(self):
+        # once the quotation is no longer in draft state, it cannot be updated
+        self.quotation.action_customer_request_quotation()
+        # test that the user without rights cannot update a quotation
+
+        # global update
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}",
+                content=json.dumps({"client_order_ref": "PO_123123"}),
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # add lines
+        data = {
+            "lines": [
+                {
+                    "product_id": self.product_1.id,
+                    "quantity": 3.0,
+                },
+                {
+                    "product_id": self.product_2.id,
+                    "quantity": 4.0,
+                },
+            ]
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/add_lines", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # add single line
+        data = {
+            "product_id": self.product_1.id,
+            "quantity": 3.0,
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/add_line", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # update line
+        data = {
+            "line_id": self.quotation.order_line[0].id,
+            "quantity": 42.0,
+            "product_id": self.product_2.id,
+            "sequence": 42,
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.put(
+                f"/quotations/{self.quotation.id}/update_line", content=json.dumps(data)
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        # delete line
+        data = {
+            "lines": [
+                {
+                    "line_id": self.quotation.order_line[0].id,
+                },
+                {
+                    "line_id": self.quotation.order_line[1].id,
+                },
+            ]
+        }
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{self.quotation.id}/delete_lines",
+                content=json.dumps(data),
+            )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
