@@ -10,6 +10,8 @@ from odoo.exceptions import UserError
 
 from odoo.addons.sale.models.sale_order import READONLY_FIELD_STATES
 
+from ..exceptions import InvalidQuotationStateError
+
 
 class SaleOrder(models.Model):
     _inherit = "sale.order"
@@ -42,6 +44,20 @@ class SaleOrder(models.Model):
         states=READONLY_FIELD_STATES,
     )
 
+    is_action_customer_request_quotation_allowed = fields.Boolean(
+        compute="_compute_is_action_customer_request_quotation_allowed"
+    )
+
+    is_action_customer_accept_quotation_allowed = fields.Boolean(
+        compute="_compute_is_action_customer_accept_quotation_allowed"
+    )
+    is_action_customer_reset_quotation_to_draft_allowed = fields.Boolean(
+        compute="_compute_is_action_customer_reset_quotation_to_draft_allowed"
+    )
+    is_action_customer_cancel_quotation_allowed = fields.Boolean(
+        compute="_compute_is_action_customer_cancel_quotation_allowed"
+    )
+
     def _inverse_use_customer_quotation_workflow(self):
         """Set the typology to 'quote' when enabling the customer quotation workflow."""
         for order in self:
@@ -68,47 +84,164 @@ class SaleOrder(models.Model):
             elif record.state == "sale":
                 record.quotation_state = "accepted"
 
-    def action_accept_quotation(self):
+    @api.depends("use_customer_quotation_workflow", "quotation_state")
+    def _compute_is_action_customer_request_quotation_allowed(self):
+        for order in self:
+            order.is_action_customer_request_quotation_allowed = (
+                order._check_customer_action_allowed(
+                    "request_quotation", raise_exception=False
+                )
+            )
+
+    @api.depends("use_customer_quotation_workflow", "quotation_state")
+    def _compute_is_action_customer_accept_quotation_allowed(self):
+        for order in self:
+            order.is_action_customer_accept_quotation_allowed = (
+                order._check_customer_action_allowed(
+                    "accept_quotation", raise_exception=False
+                )
+            )
+
+    @api.depends("use_customer_quotation_workflow", "quotation_state")
+    def _compute_is_action_customer_reset_quotation_to_draft_allowed(self):
+        for order in self:
+            order.is_action_customer_reset_quotation_to_draft_allowed = (
+                order._check_customer_action_allowed(
+                    "reset_to_draft", raise_exception=False
+                )
+            )
+
+    @api.depends("use_customer_quotation_workflow", "quotation_state")
+    def _compute_is_action_customer_cancel_quotation_allowed(self):
+        for order in self:
+            order.is_action_customer_cancel_quotation_allowed = (
+                order._check_customer_action_allowed(
+                    "cancel_quotation", raise_exception=False
+                )
+            )
+
+    @property
+    def _customer_actions_by_quotation_state(self):
+        """Customer actions available for each state of the quotation workflow."""
+        return {
+            "draft": ["request_quotation"],
+            "customer_request": [
+                "reset_to_draft",
+                "cancel_quotation",
+                "quotation_sent",
+            ],
+            "waiting_acceptation": [
+                "reset_to_draft",
+                "cancel_quotation",
+                "accept_quotation",
+            ],
+            "cancel": ["reset_to_draft"],
+            "accepted": [],
+        }
+
+    def _check_customer_action_allowed(self, action, raise_exception=True):
+        """Check if the action is allowed for the current quotation state."""
+        for rec in self:
+            exception = None
+            if not rec.use_customer_quotation_workflow:
+                exception = UserError(
+                    _("Customer quotation workflow is not enabled for this order.")
+                )
+            elif action not in self._customer_actions_by_quotation_state.get(
+                rec.quotation_state, []
+            ):
+                expected_states = []
+                for (
+                    quotation_sate,
+                    actions,
+                ) in self._customer_actions_by_quotation_state.items():
+                    if action in actions:
+                        expected_states.append(quotation_sate)
+                exception = InvalidQuotationStateError(
+                    self.env,
+                    action=action,
+                    expected_states=expected_states,
+                    current_state=self.quotation_state,
+                )
+            if exception:
+                if raise_exception:
+                    raise exception
+                return False
+        return True
+
+    def action_customer_request_quotation(self):
+        self._check_customer_action_allowed("request_quotation")
+        self.quotation_state = "customer_request"
+        return True
+
+    def action_customer_accept_quotation(self):
+        self._check_customer_action_allowed("accept_quotation")
         self.quotation_state = "accepted"
         self.typology = "sale"
+        return self.with_context(
+            bypass_customer_quotation=True,
+        ).action_confirm()
+
+    def action_customer_reset_quotation_to_draft(self):
+        self._check_customer_action_allowed("reset_to_draft")
+        self.quotation_state = "draft"
+        self.state = "draft"
+        self.filtered(lambda so: so.typology != "quote").typology = "quote"
+        return self.with_context(
+            bypass_customer_quotation=True,
+        ).action_draft()
+
+    def action_customer_cancel_quotation(self):
+        self._check_customer_action_allowed("cancel_quotation")
+        self.quotation_state = "cancel"
+        return self.with_context(
+            disable_cancel_warning=True,
+        ).action_cancel()
 
     def action_confirm(self):
-        if (
-            self.use_customer_quotation_workflow
-            and self.env.context.get("use_quotation_confirm_wizard")
-            and self.typology == "quote"
-            and any(rec.quotation_state != "waiting_acceptation" for rec in self)
-        ):
-            return {
-                "name": _("Confirm Sale Order"),
-                "type": "ir.actions.act_window",
-                "res_model": "sale.order.confirm.warning.wizard",
-                "views": [[False, "form"]],
-                "target": "new",
-                "context": {
-                    "default_sale_order_ids": self.ids,
-                    "default_message": _(
-                        "The selected quotation(s) are not in 'Waiting Acceptation' "
-                        "state. Are you sure you want to confirm them?"
-                    ),
-                },
-            }
-        else:
-            self.action_accept_quotation()
-            return super(SaleOrder, self).action_confirm()
+        other_quotations = self
+        if not self.env.context.get("bypass_customer_quotation", False):
+            customer_quotations = self.filtered("use_customer_quotation_workflow")
+            if (
+                customer_quotations
+                and self.env.context.get("use_quotation_confirm_wizard")
+                and any(rec.quotation_state != "waiting_acceptation" for rec in self)
+            ):
+                return {
+                    "name": _("Confirm Sale Order"),
+                    "type": "ir.actions.act_window",
+                    "res_model": "sale.order.confirm.warning.wizard",
+                    "views": [[False, "form"]],
+                    "target": "new",
+                    "context": {
+                        "default_sale_order_ids": self.ids,
+                        "default_message": _(
+                            "The selected quotation(s) are not in 'Waiting Acceptation' "
+                            "state. Are you sure you want to confirm them?"
+                        ),
+                    },
+                }
+            else:
+                customer_quotations.action_customer_accept_quotation()
+        return super(SaleOrder, other_quotations).action_confirm()
 
     def action_draft(self):
-        self.typology = "quote"
-        return super().action_draft()
+        other_quotations = self
+        if not self.env.context.get("bypass_customer_quotation", False):
+            customer_quotations = self.filtered("use_customer_quotation_workflow")
+            if customer_quotations:
+                self.action_customer_reset_quotation_to_draft()
+        return super(SaleOrder, other_quotations).action_draft()
 
-    def action_toggle_customer_quotation_workflow(self):
-        for order in self:
-            if order.state != "draft":
-                raise UserError(
-                    _(
-                        "Only sale orders in 'draft' state can toggle the quotation workflow."
-                    )
-                )
-            order.use_customer_quotation_workflow = (
-                not order.use_customer_quotation_workflow
-            )
+    def action_cancel(self):
+        self.filtered(
+            lambda so: so.state in ("sale", "sent")
+            and so.use_customer_quotation_workflow
+        ).quotation_state = "cancel"
+        return super().action_cancel()
+
+    def action_quotation_sent(self):
+        customer_quotations = self.filtered("use_customer_quotation_workflow")
+        if customer_quotations:
+            self._check_customer_action_allowed("quotation_sent")
+        return super().action_quotation_sent()

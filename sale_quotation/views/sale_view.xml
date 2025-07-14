@@ -35,12 +35,49 @@
             </xpath>
 
             <button id="action_confirm" position="after">
+                <field
+                    name="is_action_customer_request_quotation_allowed"
+                    invisible="1"
+                />
+                <field
+                    name="is_action_customer_accept_quotation_allowed"
+                    invisible="1"
+                />
+                <field
+                    name="is_action_customer_cancel_quotation_allowed"
+                    invisible="1"
+                />
+                <field
+                    name="is_action_customer_reset_quotation_to_draft_allowed"
+                    invisible="1"
+                />
                 <button
-                    name="action_accept_quotation"
-                    string="Accept Quotation"
+                    name="action_customer_request_quotation"
+                    string="Customer Request Quotation"
                     type="object"
                     class="oe_highlight"
-                    attrs="{'invisible': ['|', ('use_customer_quotation_workflow', '=', False), ('quotation_state', '!=', 'waiting_acceptation')]}"
+                    attrs="{'invisible': [('is_action_customer_request_quotation_allowed', '=', False)]}"
+                />
+                <button
+                    name="action_customer_accept_quotation"
+                    string="Customer Accept Quotation"
+                    type="object"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('is_action_customer_accept_quotation_allowed', '=', False)]}"
+                />
+                <button
+                    name="action_customer_cancel_quotation"
+                    string="Customer Cancel Quotation"
+                    type="object"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('is_action_customer_cancel_quotation_allowed', '=', False)]}"
+                />
+                <button
+                    name="action_customer_reset_quotation_to_draft"
+                    string="Customer Reset Quotation to Draft"
+                    type="object"
+                    class="oe_highlight"
+                    attrs="{'invisible': [('is_action_customer_reset_quotation_to_draft_allowed', '=', False)]}"
                 />
             </button>
             <field name="partner_id" position="before">
