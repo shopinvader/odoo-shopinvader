@@ -63,19 +63,6 @@
 
                 </header>
             </xpath>
-            <xpath expr="//form" position="inside">
-                <field name="use_customer_quotation_workflow" invisible="1" />
-                <field name="typology" invisible="1" />
-                <field name="state" invisible="1" />
-                <field name="name" invisible="1" />
-            </xpath>
-
-            <xpath
-                expr="//form/sheet/div[hasclass('oe_title')]/h1/field[@name='name']"
-                position="attributes"
-            >
-                <attribute name="invisible">1</attribute>
-            </xpath>
 
             <field name="partner_id" position="before">
                 <field
