@@ -1,0 +1,219 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_quotation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-16 09:10+0000\n"
+"PO-Revision-Date: 2025-07-16 09:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_quotation
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__accepted
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+msgid "Accepted"
+msgstr "Accepté"
+
+#. module: sale_quotation
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__cancel
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_confirm_warning_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+msgid "Cancel"
+msgstr "Annuler"
+
+#. module: sale_quotation
+#. odoo-python
+#: code:addons/sale_quotation/exceptions.py:0
+#, python-format
+msgid ""
+"Cannot perform '%(action)s' on quotation in state '%(current_state)s'. "
+"Expected states: '%(expected_states)s'."
+msgstr ""
+"Impossible d'effectuer '%(action)s' sur le devis dans l'état '%(current_state)s'. "
+"États attendus : '%(expected_states)s'."
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_confirm_warning_wizard_form_view
+msgid "Confirm Anyway"
+msgstr "Confirmer quand même"
+
+#. module: sale_quotation
+#. odoo-python
+#: code:addons/sale_quotation/models/sale_order.py:0
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_confirm_warning_wizard_form_view
+#, python-format
+msgid "Confirm Sale Order"
+msgstr "Confirmer la commande"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__create_uid
+msgid "Created by"
+msgstr "Créé par"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__create_date
+msgid "Created on"
+msgstr "Créé le"
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Accept Quotation"
+msgstr "Client accepte le devis"
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Cancel Quotation"
+msgstr "Client annule le devis"
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+msgid "Customer Quotation"
+msgstr "Devis client"
+
+#. module: sale_quotation
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__customer_request
+msgid "Customer Request"
+msgstr "Demande client"
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Request Quotation"
+msgstr "Client demande un devis"
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Reset Quotation to Draft"
+msgstr "Client remet le devis à l'état brouillon"
+
+#. module: sale_quotation
+#. odoo-python
+#: code:addons/sale_quotation/models/sale_order.py:0
+#, python-format
+msgid "Customer quotation workflow is not enabled for this order."
+msgstr "Le flux de travail de devis client n'est pas activé pour cette commande."
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+msgid "Customer request"
+msgstr "Demande client"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__display_name
+msgid "Display Name"
+msgstr "Intitulé"
+
+#. module: sale_quotation
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__draft
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+msgid "Draft"
+msgstr "Brouillon"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__id
+msgid "ID"
+msgstr "ID"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_accept_quotation_allowed
+msgid "Is Action Customer Accept Quotation Allowed"
+msgstr "Autoriser l'action Client Accepter le Devis"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_cancel_quotation_allowed
+msgid "Is Action Customer Cancel Quotation Allowed"
+msgstr "Autoriser l'action Client Annuler le Devis"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_request_quotation_allowed
+msgid "Is Action Customer Request Quotation Allowed"
+msgstr "Autoriser l'action Client Demander un Devis"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_reset_quotation_to_draft_allowed
+msgid "Is Action Customer Reset Quotation To Draft Allowed"
+msgstr "Autoriser l'action Client Remettre le Devis à l'État Brouillon"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__write_uid
+msgid "Last Updated by"
+msgstr "Dernière mise à jour par"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__write_date
+msgid "Last Updated on"
+msgstr "Dernière mise à jour le"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__message
+msgid "Message"
+msgstr "Message"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__quotation_state
+msgid "Quotation State"
+msgstr "État du devis"
+
+#. module: sale_quotation
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__typology__quote
+msgid "Quote"
+msgstr "Devis"
+
+#. module: sale_quotation
+#: model:ir.model,name:sale_quotation.model_sale_order_confirm_warning_wizard
+msgid "Sale Order Confirmation Warning Wizard"
+msgstr "Confirmation de commande"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__sale_order_ids
+msgid "Sale Orders"
+msgstr "Bons de commande"
+
+#. module: sale_quotation
+#: model:ir.model,name:sale_quotation.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_quotation_tree
+msgid "State"
+msgstr "État"
+
+#. module: sale_quotation
+#. odoo-python
+#: code:addons/sale_quotation/models/sale_order.py:0
+#, python-format
+msgid ""
+"The selected quotation(s) are not in 'Waiting Acceptation' state. Are you "
+"sure you want to confirm them?"
+msgstr ""
+"Le(s) devis sélectionné(s) ne sont pas dans l'état 'En attente d'acceptation'. "
+"Êtes-vous sûr de vouloir les confirmer ?"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__typology
+msgid "Typology"
+msgstr "Typologie"
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__use_customer_quotation_workflow
+msgid "Use Customer Quotation Workflow"
+msgstr "Utiliser le flux de travail de devis client"
+
+#. module: sale_quotation
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__waiting_acceptation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+msgid "Waiting Acceptation"
+msgstr "En attente d'acceptation"
