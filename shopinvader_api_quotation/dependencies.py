@@ -248,6 +248,19 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
         quotation.write(vals)
         return quotation
 
+    def _get_pdf(self, record_id) -> tuple[str, bytes]:
+        quotation = self._get(record_id)
+        if quotation.quotation_state not in (
+            "cancel",
+            "waiting_acceptation",
+            "accepted",
+        ):
+            raise HTTPException(
+                status_code=status.HTTP_409_CONFLICT,
+                detail="Quotation cannot be downloaded before it is confirmed.",
+            )
+        return super()._get_pdf(record_id)
+
 
 def quotation_router_helper(
     env: Annotated[Environment, Depends(authenticated_partner_env)],

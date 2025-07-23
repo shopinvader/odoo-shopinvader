@@ -194,6 +194,35 @@ class TestQuotation(FastAPITransactionCase):
         )
         self.assertEqual(created_quotation.order_line[1].product_uom_qty, 2.0)
 
+    def test_download_quotation_pdf(self):
+        quotation = self.quotation
+
+        # in draft state, cannot download
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(f"/quotations/{quotation.id}/download")
+
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        quotation.action_customer_request_quotation()
+
+        # in customer_request state, cannot download
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(f"/quotations/{quotation.id}/download")
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
+
+        quotation.action_quotation_sent()
+
+        # in waiting_acceptation state, can download
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(f"/quotations/{quotation.id}/download")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.headers["Content-Type"], "application/pdf")
+        self.assertTrue(
+            response.headers["Content-Disposition"].startswith("attachment;")
+        )
+        self.assertTrue(response.headers["Content-Disposition"].endswith(".pdf"))
+        self.assertGreater(len(response.content), 0)
+
     def test_add_quotation_line(self):
         quotation = self.quotation
 
