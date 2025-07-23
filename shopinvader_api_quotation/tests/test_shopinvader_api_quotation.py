@@ -130,6 +130,7 @@ class TestQuotation(FastAPITransactionCase):
         quotation = self.quotation
         data = {
             "client_order_ref": "PO_123123",
+            "note": "This is a test note",
             "lines": [
                 {
                     "line_id": quotation.order_line[0].id,
@@ -160,14 +161,52 @@ class TestQuotation(FastAPITransactionCase):
         response_json = response.json()
         self.assertEqual(response_json["id"], quotation.id)
         self.assertEqual(quotation.client_order_ref, "PO_123123")
+        self.assertEqual(quotation.note, "<p>This is a test note</p>")
         self.assertEqual(quotation.order_line[0].product_id, self.product_2)
         self.assertEqual(quotation.order_line[0].product_uom_qty, 123)
         self.assertEqual(quotation.order_line[0].sequence, 42)
         self.assertEqual(len(quotation.order_line), 3)
 
+    def test_partial_update_quotation(self):
+        quotation = self.quotation
+        self.assertEqual(len(quotation.order_line), 2)
+        data = {
+            "client_order_ref": "PO_123124",
+            "note": "This is a test note bis",
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}", content=json.dumps(data)
+            )
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+        response_json = response.json()
+        self.assertEqual(response_json["id"], quotation.id)
+        self.assertEqual(quotation.client_order_ref, "PO_123124")
+        self.assertEqual(quotation.note, "<p>This is a test note bis</p>")
+        self.assertEqual(len(quotation.order_line), 2)
+
+        data = {
+            "lines": [],
+        }
+        with self._create_test_client() as test_client:
+            response: Response = test_client.post(
+                f"/quotations/{quotation.id}", content=json.dumps(data)
+            )
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_200_OK,
+            msg=f"error message: {response.text}",
+        )
+        self.assertEqual(len(quotation.order_line), 0)
+
     def test_create_quotation(self):
         data = {
             "client_order_ref": "PO_12345",
+            "note": "This is a test note",
             "lines": [
                 {
                     "product_id": self.product_1.id,
@@ -191,6 +230,7 @@ class TestQuotation(FastAPITransactionCase):
         self.assertIn("id", response_json)
         self.assertEqual(response_json["typology"], "quote")
         self.assertEqual(response_json["client_order_ref"], "PO_12345")
+        self.assertEqual(response_json["note"], "<p>This is a test note</p>")
 
         created_quotation = self.env["sale.order"].browse(response_json["id"])
         self.assertTrue(created_quotation.exists())

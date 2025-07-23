@@ -49,8 +49,9 @@ class QuotationLineCreateRequest(StrictExtendableBaseModel, extra="ignore"):
 
 
 class QuotationCreateRequest(StrictExtendableBaseModel, extra="ignore"):
-    lines: list[QuotationLineCreateRequest] | None = None
     client_order_ref: str | None = None
+    note: str | None = None
+    lines: list[QuotationLineCreateRequest] | None = None
 
 
 class QuotationAddLineRequest(StrictExtendableBaseModel, extra="ignore"):
@@ -79,4 +80,5 @@ class QuotationLines(StrictExtendableBaseModel, Generic[T]):
 
 class QuotationUpdateInput(StrictExtendableBaseModel, extra="ignore"):
     client_order_ref: str | None = None
+    note: str | None = None
     lines: list[QuotationUpdateLineRequest | QuotationAddLineRequest] | None = None

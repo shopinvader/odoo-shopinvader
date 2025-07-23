@@ -128,45 +128,60 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
     def _update(self, quotation_id, data: QuotationUpdateInput) -> SaleOrder:
         quotation = self._get(quotation_id)
         self._ensure_can_update(quotation)
-        vals = {"client_order_ref": data.client_order_ref}
-        vals = self._modify_lines_vals(quotation, data.lines, vals)
-
-        # remove any line that is in the quotation but does not appear in the request data
-        request_line_ids = {
-            line.line_id for line in data.lines if getattr(line, "line_id", None)
-        }
-        lines_to_remove_ids = [
-            line.id for line in quotation.order_line if line.id not in request_line_ids
-        ]
-        for line_id in lines_to_remove_ids:
-            vals["order_line"].append(Command.unlink(line_id))
-
-        quotation.write(vals)
+        vals = self._quotation_update_to_vals(quotation, data)
+        if vals:
+            quotation.write(vals)
         return quotation
 
     def _create(self, rqst: QuotationCreateRequest) -> SaleOrder:
-        vals = rqst.model_dump()
-        vals["partner_id"] = self.partner.id
+        vals = self._quotation_create_to_vals(rqst)
+        quotation = self.env["sale.order"].create(vals)
+        return quotation
 
-        # Enforce quote typology, correcting changes from other addons.
-        vals["use_customer_quotation_workflow"] = True
-
-        if "lines" in vals:
+    def _quotation_create_to_vals(self, data: QuotationCreateRequest) -> dict:
+        vals = {"use_customer_quotation_workflow": True, "partner_id": self.partner.id}
+        values = data.model_dump(exclude_unset=True)
+        if "client_order_ref" in values:
+            vals["client_order_ref"] = data.client_order_ref
+        if "note" in values:
+            vals["note"] = data.note
+        if "lines" in values:
             vals["order_line"] = [
                 Command.create(
                     {
-                        "product_id": line["product_id"],
-                        "product_uom_qty": line["quantity"],
+                        "product_id": line.product_id,
+                        "product_uom_qty": line.quantity,
                     }
                 )
-                # use "pop" so that "lines" does not stay in "vals"
-                # preventing an error in the "create" below
-                for line in vals.pop("lines")
+                for line in data.lines
             ]
+        return vals
 
-        quotation = self.env["sale.order"].create(vals)
+    def _quotation_update_to_vals(
+        self, quotation: SaleOrder, data: QuotationUpdateInput
+    ) -> dict:
+        vals = {}
+        values = data.model_dump(exclude_unset=True)
+        if "client_order_ref" in values:
+            vals["client_order_ref"] = data.client_order_ref
+        if "note" in values:
+            vals["note"] = data.note
 
-        return quotation
+        if "lines" in values:
+            vals = self._modify_lines_vals(quotation, data.lines, vals)
+
+            # remove any line that is in the quotation but does not appear in the request data
+            request_line_ids = {
+                line.line_id for line in data.lines if getattr(line, "line_id", None)
+            }
+            lines_to_remove_ids = [
+                line.id
+                for line in quotation.order_line
+                if line.id not in request_line_ids
+            ]
+            for line_id in lines_to_remove_ids:
+                vals["order_line"].append(Command.unlink(line_id))
+        return vals
 
     def _modify_lines_vals(
         self,
