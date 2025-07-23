@@ -26,7 +26,6 @@ class QuotationLineCreateRequest(StrictExtendableBaseModel, extra="ignore"):
 
 
 class QuotationCreateRequest(StrictExtendableBaseModel, extra="ignore"):
-    name: str
     lines: list[QuotationLineCreateRequest] | None = None
     client_order_ref: str | None = None
 

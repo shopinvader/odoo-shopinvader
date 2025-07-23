@@ -150,7 +150,6 @@ class TestQuotation(FastAPITransactionCase):
 
     def test_create_quotation(self):
         data = {
-            "name": "Test Quotation",
             "client_order_ref": "PO_12345",
             "lines": [
                 {
@@ -173,13 +172,11 @@ class TestQuotation(FastAPITransactionCase):
 
         response_json = response.json()
         self.assertIn("id", response_json)
-        self.assertEqual(response_json["name"], "Test Quotation")
         self.assertEqual(response_json["typology"], "quote")
         self.assertEqual(response_json["client_order_ref"], "PO_12345")
 
         created_quotation = self.env["sale.order"].browse(response_json["id"])
         self.assertTrue(created_quotation.exists())
-        self.assertEqual(created_quotation.name, "Test Quotation")
         self.assertEqual(
             created_quotation.partner_id.id,
             self.default_fastapi_authenticated_partner.id,
