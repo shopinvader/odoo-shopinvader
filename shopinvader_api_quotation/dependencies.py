@@ -16,7 +16,7 @@ from odoo.addons.fastapi.dependencies import (
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale_quotation.exceptions import InvalidQuotationStateError
 
-from .schemas.sale import (
+from .schemas import (
     QuotationAddLineRequest,
     QuotationCreateRequest,
     QuotationDeleteLineRequest,

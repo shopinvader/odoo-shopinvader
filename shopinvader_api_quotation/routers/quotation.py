@@ -8,15 +8,16 @@ from odoo.http import content_disposition
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
 from odoo.addons.fastapi.dependencies import paging
 from odoo.addons.fastapi.schemas import Paging
-from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale, SaleSearch
+from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale
 
 from ..dependencies import ShopinvaderApiQuotationRouterHelper, quotation_router_helper
-from ..schemas.sale import (
+from ..schemas import (
     QuotationAddLineRequest,
     QuotationConfirmInput,
     QuotationCreateRequest,
     QuotationDeleteLineRequest,
     QuotationLines,
+    QuotationSearch,
     QuotationUpdateInput,
     QuotationUpdateLineRequest,
 )
@@ -48,7 +49,7 @@ def get(
 
 @quotation_router.get("/quotations", status_code=200)
 def search_quotation(
-    params: Annotated[SaleSearch, Depends()],
+    params: Annotated[QuotationSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
     quotation_router_helper: Annotated[
         ShopinvaderApiQuotationRouterHelper, Depends(quotation_router_helper)
