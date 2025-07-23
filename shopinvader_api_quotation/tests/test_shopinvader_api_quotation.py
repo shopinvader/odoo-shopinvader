@@ -11,6 +11,7 @@ from odoo.tests.common import tagged
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
 from ..routers import quotation_router
+from ..schemas import QuotationState
 
 
 @tagged("post_install", "-at_install")
@@ -102,6 +103,22 @@ class TestQuotation(FastAPITransactionCase):
             response: Response = test_client.get("/quotations")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()["count"], 1)
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(
+                "/quotations", params={"quotation_state": QuotationState.draft.value}
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["count"], 1)
+
+        with self._create_test_client() as test_client:
+            response: Response = test_client.get(
+                "/quotations", params={"quotation_state": QuotationState.accepted.value}
+            )
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        response_json = response.json()
+        self.assertEqual(response_json["count"], 0)
 
     def test_get_quotation(self):
         with self._create_test_client() as test_client:
