@@ -14,8 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_api_sale
+#: model:ir.model.fields,field_description:shopinvader_api_sale.field_shopinvader_api_sale_sale_line_router_helper__partner
 #: model:ir.model.fields,field_description:shopinvader_api_sale.field_shopinvader_api_sale_sales_router_helper__partner
 msgid "Partner"
+msgstr ""
+
+#. module: shopinvader_api_sale
+#: model:ir.model,name:shopinvader_api_sale.model_shopinvader_api_sale_sale_line_router_helper
+msgid "Shopinvader Api Sale Line Service Helper"
 msgstr ""
 
 #. module: shopinvader_api_sale
