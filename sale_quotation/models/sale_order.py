@@ -202,6 +202,7 @@ class SaleOrder(models.Model):
         other_quotations = self
         if not self.env.context.get("bypass_customer_quotation", False):
             customer_quotations = self.filtered("use_customer_quotation_workflow")
+            other_quotations = self - customer_quotations
             if (
                 customer_quotations
                 and self.env.context.get("use_quotation_confirm_wizard")
@@ -229,8 +230,9 @@ class SaleOrder(models.Model):
         other_quotations = self
         if not self.env.context.get("bypass_customer_quotation", False):
             customer_quotations = self.filtered("use_customer_quotation_workflow")
+            other_quotations = self - customer_quotations
             if customer_quotations:
-                self.action_customer_reset_quotation_to_draft()
+                customer_quotations.action_customer_reset_quotation_to_draft()
         return super(SaleOrder, other_quotations).action_draft()
 
     def action_cancel(self):
@@ -243,5 +245,5 @@ class SaleOrder(models.Model):
     def action_quotation_sent(self):
         customer_quotations = self.filtered("use_customer_quotation_workflow")
         if customer_quotations:
-            self._check_customer_action_allowed("quotation_sent")
+            customer_quotations._check_customer_action_allowed("quotation_sent")
         return super().action_quotation_sent()
