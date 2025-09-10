@@ -25,7 +25,7 @@ def shopinvader_auth_jwt_or_anonymous(
     partner: Annotated[
         Partner,
         Depends(auth_jwt_authenticated_or_anonymous_partner),
-    ]
+    ],
 ):
     return {"partner_id": partner.id}
 
@@ -35,7 +35,7 @@ def shopinvader_auth_jwt_or_anonymous_autocreate(
     partner: Annotated[
         Partner,
         Depends(auth_jwt_authenticated_or_anonymous_partner_autocreate),
-    ]
+    ],
 ):
     return {"partner_id": partner.id}
 
@@ -51,9 +51,10 @@ class TestBase(tests.common.TransactionCase):
                 "email": "auth_jwt_or_anonymous@shopinvader.com",
             }
         )
-        cls.test_anonymous_partner = cls.env[
-            "res.partner"
-        ]._create_anonymous_partner__cookie(response=mock.MagicMock())
+        cookie_helper = cls.env["shopinvader_anonymous_partner.cookie.helper"]
+        cls.test_anonymous_partner = cookie_helper._create_anonymous_partner__cookie(
+            response=mock.MagicMock()
+        )
         cls.jwt_validator = cls.env["auth.jwt.validator"].create(
             {
                 "name": "test_shopinvader_fastapi_auth_jwt",

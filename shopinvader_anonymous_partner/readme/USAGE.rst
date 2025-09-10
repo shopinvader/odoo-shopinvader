@@ -1,4 +1,4 @@
-The following model methods are added to ``res.partner``:
+The following model methods are added in a helper model:
 
 ``_create_anonymous_partner__cookie(response)``
 
