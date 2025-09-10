@@ -4,7 +4,7 @@
 {
     "name": "Shopinvader Api Signin JWT",
     "summary": """This module adds a signin service with jwt token.""",
-    "version": "16.0.1.1.1",
+    "version": "16.0.1.1.2",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",

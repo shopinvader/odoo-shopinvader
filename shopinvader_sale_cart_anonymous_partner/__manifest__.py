@@ -8,7 +8,7 @@
     "summary": "Glue module between shopinvader_sale_cart and "
     "shopinvader_anonymous_partner. This module solves cart conflicts "
     "when an anonymous user sign in.",
-    "version": "16.0.1.0.0",
+    "version": "16.0.1.0.1",
     "license": "AGPL-3",
     "author": "Akretion",
     "website": "https://github.com/shopinvader/odoo-shopinvader",

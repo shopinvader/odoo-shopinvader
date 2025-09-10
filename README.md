@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [sale_quotation](sale_quotation/) | 16.0.0.2.0 |  | Sale Quotation
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.1 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_address_shipping_note](shopinvader_address_shipping_note/) | 16.0.1.0.0 |  | Adds a field shipping note on res.partner
-[shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.0 |  | Manage anonymous partners with a cookie.
+[shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.1 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.3.2 |  | Adds a service to manage shopinvader invoicing and delivery address
 [shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 16.0.1.0.0 |  | Adds a shipping note on schemas of services to manage Shipping Addresses
 [shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.5.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
@@ -42,12 +42,12 @@ addon | version | maintainers | summary
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 16.0.1.0.1 |  | Add security rule to expose invoices
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 16.0.1.0.1 |  | Adds a service to get commont settings
-[shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.1.1.1 |  | This module adds a signin service with jwt token.
+[shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.1.1.2 |  | This module adds a signin service with jwt token.
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.2 |  | Handle shop wishlist
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.3 |  | keep history of url for products & categories
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
 [shopinvader_es_product_categ](shopinvader_es_product_categ/) | 16.0.1.0.0 |  | Add the hierarchicalCategories field in the product index required for faceting
-[shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.2 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
+[shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.3 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
 [shopinvader_multi_category](shopinvader_multi_category/) | 16.0.1.0.1 |  | Shopinvader Many Categories
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.5 |  | Adds shopinvader product fields and schemas
@@ -63,6 +63,7 @@ addon | version | maintainers | summary
 [shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 |  | Shopinvader Restapi Invoice module
 [shopinvader_restapi_sale_packaging](shopinvader_restapi_sale_packaging/) | 16.0.1.1.0 |  | Shopinvader Restapi Sale Packaging
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.2.0 |  | ShopInvader logic for sale carts.
+[shopinvader_sale_cart_anonymous_partner](shopinvader_sale_cart_anonymous_partner/) | 16.0.1.0.1 |  | Glue module between shopinvader_sale_cart and shopinvader_anonymous_partner. This module solves cart conflicts when an anonymous user sign in.
 [shopinvader_sale_cart_no_onchange_helper](shopinvader_sale_cart_no_onchange_helper/) | 16.0.1.0.1 |  | Disables the use of onchange_helper in shopinvader_sale_cart
 [shopinvader_sale_state](shopinvader_sale_state/) | 16.0.1.0.1 |  | Basic module to implement state for sale order
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.3.2 |  | Adds shchema address: address invoicing_address delivery_address
