@@ -48,6 +48,7 @@ addon | version | maintainers | summary
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
 [shopinvader_es_product_categ](shopinvader_es_product_categ/) | 16.0.1.0.0 |  | Add the hierarchicalCategories field in the product index required for faceting
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.3 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
+[shopinvader_fastapi_auth_partner](shopinvader_fastapi_auth_partner/) | 16.0.1.0.0 |  | Provide Partner and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_filtered_model](shopinvader_filtered_model/) | 16.0.1.1.1 |  | Helper for exposing model easily
 [shopinvader_multi_category](shopinvader_multi_category/) | 16.0.1.0.1 |  | Shopinvader Many Categories
 [shopinvader_product](shopinvader_product/) | 16.0.1.0.5 |  | Adds shopinvader product fields and schemas
