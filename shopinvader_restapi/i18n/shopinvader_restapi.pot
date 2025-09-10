@@ -238,6 +238,11 @@ msgid "Attachment Count"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__auth_partner_count
+msgid "Auth Partner Count"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_backend__partner_industry_ids
 msgid "Available partner industries"
 msgstr ""
@@ -1357,6 +1362,11 @@ msgstr ""
 #: code:addons/shopinvader_restapi/services/customer.py:0
 #, python-format
 msgid "Partner %s is not a customer"
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__auth_partner_ids
+msgid "Partner Auth"
 msgstr ""
 
 #. module: shopinvader_restapi
