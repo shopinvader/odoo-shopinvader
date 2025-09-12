@@ -49,8 +49,6 @@ class FastapiEndpoint(models.Model):
 
     @api.model
     def _get_shopinvader_demo_fastapi_routers(self) -> List[APIRouter]:
-        if "address" not in address_router.tags:
-            address_router.tags.append("address")
         return [
             address_router,
             customer_router,
