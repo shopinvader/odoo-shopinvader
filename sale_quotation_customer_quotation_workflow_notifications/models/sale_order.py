@@ -13,11 +13,13 @@ class SaleOrder(models.Model):
             so.message_post(
                 subject=_("Customer Quotation Request"),
                 body=_(
-                    'The quotation "%(quotation_name)s" has been requested by the client "%(client)s".',
+                    'The quotation "%(quotation_name)s" has been requested '
+                    'by the client "%(client)s".',
                     quotation_name=self.name,
                     client=self.partner_id.name,
                 ),
-                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications.mt_quotation_request",
+                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications"
+                ".mt_quotation_request",
             )
             self.env["mail.thread"].message_notify(
                 partner_ids=self.partner_id.ids,
@@ -43,7 +45,8 @@ class SaleOrder(models.Model):
                     name=self.name,
                     client=self.partner_id.name,
                 ),
-                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications.mt_customer_accept_quotation",
+                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications"
+                ".mt_customer_accept_quotation",
             )
         return res
 
@@ -53,11 +56,13 @@ class SaleOrder(models.Model):
             so.message_post(
                 subject=_("Customer Quotation Reset to Draft"),
                 body=_(
-                    'The quotation "%(name)s" has been reset to draft by the client "%(client)s".',
+                    'The quotation "%(name)s" has been reset to draft by the '
+                    'client "%(client)s".',
                     name=self.name,
                     client=self.partner_id.name,
                 ),
-                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications.mt_customer_reset_quotation_to_draft",
+                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications"
+                ".mt_customer_reset_quotation_to_draft",
             )
         return res
 
@@ -71,7 +76,8 @@ class SaleOrder(models.Model):
                     name=self.name,
                     client=self.partner_id.name,
                 ),
-                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications.mt_customer_cancel_quotation",
+                subtype_xmlid="sale_quotation_customer_quotation_workflow_notifications"
+                ".mt_customer_cancel_quotation",
             )
         return res
 
@@ -83,7 +89,8 @@ class SaleOrder(models.Model):
         self.ensure_one()
 
         custom_quotation_subtype = self.env.ref(
-            "sale_quotation_customer_quotation_workflow_notifications.mt_customer_quotation",
+            "sale_quotation_customer_quotation_workflow_notifications"
+            ".mt_customer_quotation",
         )
         if self.use_customer_quotation_workflow:
             return (
