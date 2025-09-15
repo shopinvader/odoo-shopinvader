@@ -71,7 +71,7 @@ addon | version | maintainers | summary
 [shopinvader_schema_invoice](shopinvader_schema_invoice/) | 16.0.1.0.1 |  | Add schema for invoices
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.3 |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 16.0.1.0.1 |  | Shopinvader Schema Sale State
-[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.6 |  | Shopinvader Catalog Search Engine Connector
+[shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.7 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_assortment](shopinvader_search_engine_assortment/) | 16.0.1.0.1 |  | Shopinvader Search Engine Assortment
 [shopinvader_search_engine_image](shopinvader_search_engine_image/) | 16.0.1.0.3 |  | Add the export of Image for Shopinvader
 [shopinvader_search_engine_product_brand](shopinvader_search_engine_product_brand/) | 16.0.1.0.1 |  | Shopinvader Search Engine Product Brand
