@@ -124,17 +124,10 @@ class SaleOrder(models.Model):
             if not follower_partner_ids:
                 continue
 
-            if so.use_customer_quotation_workflow:
-                so.message_subscribe(
-                    partner_ids=follower_partner_ids,
-                    subtype_ids=so._get_default_and_custom_subtype_ids(),
-                )
-
-            else:
-                so.message_subscribe(
-                    partner_ids=follower_partner_ids,
-                    subtype_ids=so._get_default_and_custom_subtype_ids(),
-                )
+            so.message_subscribe(
+                partner_ids=follower_partner_ids,
+                subtype_ids=so._get_default_and_custom_subtype_ids(),
+            )
 
     @api.model_create_multi
     def create(self, vals_list):
