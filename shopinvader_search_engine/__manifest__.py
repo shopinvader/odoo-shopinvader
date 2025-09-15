@@ -16,6 +16,6 @@
     ],
     "data": [],
     "installable": True,
-    "application": True,
+    "application": False,
     "development_status": "Alpha",
 }
