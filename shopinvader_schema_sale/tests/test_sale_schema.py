@@ -1,6 +1,8 @@
 # Copyright 2023 ACSONE SA/NV (https://acsone.eu).
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
+from odoo import Command
+
 from ..schemas import Sale, SaleSearch
 from .common import SchemaSaleCase
 
@@ -19,8 +21,31 @@ class TestSaleSchema(SchemaSaleCase):
         self.assertEqual(len(sale.lines), 1)
         self.assertEqual(sale.lines[0].id, self.sale_order.order_line[0].id)
         self.assertEqual(sale.lines[0].qty, 1)
+        self.assertEqual(sale.lines[0].type, "product")
 
     def test_domain_from_sale_search(self):
         search = SaleSearch(name="test")
         domain = search.to_odoo_domain(self.env)
         self.assertIn(("name", "ilike", "test"), domain)
+
+    def test_sale_line_types(self):
+        self.sale_order.order_line = [
+            Command.create(
+                {
+                    "display_type": "line_section",
+                    "name": "Section",
+                },
+            ),
+            Command.create(
+                {
+                    "display_type": "line_note",
+                    "name": "Note",
+                },
+            ),
+        ]
+
+        sale = Sale.from_sale_order(self.sale_order)
+        self.assertEqual(len(sale.lines), 3)
+        self.assertEqual(sale.lines[0].type, "product")
+        self.assertEqual(sale.lines[1].type, "section")
+        self.assertEqual(sale.lines[2].type, "note")

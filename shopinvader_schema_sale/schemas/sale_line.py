@@ -14,6 +14,7 @@ class SaleLine(StrictExtendableBaseModel):
     name: str
     amount: SaleLineAmount | None = None
     qty: float
+    type: str
 
     @classmethod
     def from_sale_order_line(cls, odoo_rec):
@@ -26,4 +27,5 @@ class SaleLine(StrictExtendableBaseModel):
                 odoo_rec.product_uom_qty,
                 precision_digits=len(str(odoo_rec.product_uom.rounding).split(".")[1]),
             ),
+            type=odoo_rec.api_type,
         )
