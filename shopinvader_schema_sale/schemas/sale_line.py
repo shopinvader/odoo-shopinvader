@@ -27,5 +27,13 @@ class SaleLine(StrictExtendableBaseModel):
                 odoo_rec.product_uom_qty,
                 precision_digits=len(str(odoo_rec.product_uom.rounding).split(".")[1]),
             ),
-            type=odoo_rec.api_type,
+            type=cls._get_sale_line_type(odoo_rec),
         )
+
+    @classmethod
+    def _get_sale_line_type(cls, odoo_rec) -> str:
+        if odoo_rec.display_type == "line_section":
+            return "section"
+        if odoo_rec.display_type == "line_note":
+            return "note"
+        return "product"
