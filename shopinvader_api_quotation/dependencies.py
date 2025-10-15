@@ -136,6 +136,13 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
     def _create(self, rqst: QuotationCreateRequest) -> SaleOrder:
         vals = self._quotation_create_to_vals(rqst)
         quotation = self.env["sale.order"].create(vals)
+
+        # We need to add the `user_id` as follower manually because of
+        # the way `MailThread._message_auto_subscribe_followers` works.
+        # This function only assigns the `user_id` as a follower if given
+        # explicitly inside the create dict (most likely a bug)
+        quotation.message_subscribe(partner_ids=quotation.user_id.sudo().partner_id.ids)
+
         return quotation
 
     def _quotation_create_to_vals(self, data: QuotationCreateRequest) -> dict:

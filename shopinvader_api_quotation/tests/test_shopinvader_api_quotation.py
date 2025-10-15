@@ -20,7 +20,19 @@ class TestQuotation(FastAPITransactionCase):
     def setUpClass(cls) -> None:
         super().setUpClass()
 
-        partner = cls.env["res.partner"].create({"name": "FastAPI Cart Demo"})
+        cls.salesman_user = cls.env["res.users"].create(
+            {
+                "name": "Test Salesman",
+                "login": "salesman",
+            }
+        )
+
+        partner = cls.env["res.partner"].create(
+            {
+                "name": "FastAPI Cart Demo",
+                "user_id": cls.salesman_user.id,
+            }
+        )
 
         cls.user_no_rights = cls.env["res.users"].create(
             {
@@ -247,6 +259,12 @@ class TestQuotation(FastAPITransactionCase):
             created_quotation.order_line[1].product_id.id, self.product_2.id
         )
         self.assertEqual(created_quotation.order_line[1].product_uom_qty, 2.0)
+
+        self.assertEqual(created_quotation.user_id, self.salesman_user)
+        self.assertIn(
+            self.salesman_user.partner_id.id,
+            created_quotation.message_follower_ids.partner_id.ids,
+        )
 
     def test_download_quotation_pdf(self):
         quotation = self.quotation
