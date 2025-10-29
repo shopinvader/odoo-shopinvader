@@ -71,17 +71,8 @@ class ImageMixin(StrictExtendableBaseModel):
         ) in size_and_thumbnails_by_image.items():
             thumbs = {}
             for size, thumbnail in size_and_thumbnails:
-                tag = ""
-                if "tag_id" in image_relation._fields:
-                    tag = image_relation.tag_id.name or ""
-                sequence = cpt
-                if "sequence" in image_relation._fields:
-                    sequence = image_relation.sequence
-                thumbs[size.key] = ImageData(
-                    sequence=sequence,
-                    src=backend._get_image_url_for_image(thumbnail.image),
-                    alt=record.name,
-                    tag=tag,
+                thumbs[size.key] = ImageData.from_image_relation_mixin(
+                    record, image_relation, cpt, backend, thumbnail
                 )
             if thumbs:
                 self.images.append(thumbs)
