@@ -26,6 +26,11 @@ msgid "Confirm Cart"
 msgstr ""
 
 #. module: sale_cart
+#: model:ir.model,name:sale_cart.model_payment_transaction
+msgid "Payment Transaction"
+msgstr ""
+
+#. module: sale_cart
 #: model:ir.model.fields.selection,name:sale_cart.selection__sale_order__typology__sale
 msgid "Sale"
 msgstr ""
