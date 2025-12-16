@@ -740,6 +740,11 @@ msgid "Frontend Data Source"
 msgstr ""
 
 #. module: shopinvader_restapi
+#: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__global_location_number
+msgid "GLN"
+msgstr ""
+
+#. module: shopinvader_restapi
 #: model:ir.model.fields,field_description:shopinvader_restapi.field_shopinvader_partner__partner_latitude
 msgid "Geo Latitude"
 msgstr ""
@@ -752,6 +757,11 @@ msgstr ""
 #. module: shopinvader_restapi
 #: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_backend__invoice_access_open
 msgid "Give customer access to open invoices as well as the paid ones."
+msgstr ""
+
+#. module: shopinvader_restapi
+#: model:ir.model.fields,help:shopinvader_restapi.field_shopinvader_partner__global_location_number
+msgid "Global Location Number"
 msgstr ""
 
 #. module: shopinvader_restapi
