@@ -1,0 +1,1 @@
+from . import test_shopinvader_api_warehouse_sale_channel_search_engine_product_stock
