@@ -40,6 +40,17 @@ class TestController(Controller):
 
 
 class TestShopinvaderAnonymousPartner(TransactionCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                tracking_disable=True,
+                queue_job__no_delay=True,
+            )
+        )
+
     def test_create(self):
         cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
         partner = cookie_helper._create_anonymous_partner__cookie(mock.MagicMock())
@@ -104,6 +115,17 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
 
 
 class TestShopinvaderAnonymousPartnerEndToEnd(HttpCase):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                tracking_disable=True,
+                queue_job__no_delay=True,
+            )
+        )
+
     def test_create_and_get_and_delete(self):
         resp = self.url_open("/test/anonymous_partner_create")
         resp.raise_for_status()

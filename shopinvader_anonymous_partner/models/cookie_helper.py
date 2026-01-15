@@ -54,7 +54,11 @@ class ShopinvaderAnonymousCookieHelper(models.AbstractModel):
         Delete anonymous partner and cookie
         """
         self._get_anonymous_partner__cookie(cookies).with_delay().unlink()
-        response.delete_cookie(key=COOKIE_NAME)
+        response.set_cookie(
+            key=COOKIE_NAME,
+            max_age=0,
+            expires=0,
+        )
 
     @api.model
     def _get_anonymous_partner__cookie(self, cookies: Cookies):

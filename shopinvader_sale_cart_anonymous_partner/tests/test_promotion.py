@@ -9,6 +9,17 @@ from odoo.addons.shopinvader_anonymous_partner.models.cookie_helper import COOKI
 
 
 class PartnerPromotionCase(BaseCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                tracking_disable=True,
+                queue_job__no_delay=True,
+            )
+        )
+
     def test_cart_transfer_at_promotion(self):
         cookie_helper = self.env["shopinvader_anonymous_partner.cookie.helper"]
         anonymous_partner = cookie_helper._create_anonymous_partner__cookie(
