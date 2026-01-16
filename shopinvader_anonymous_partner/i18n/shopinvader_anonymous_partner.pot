@@ -32,6 +32,11 @@ msgid "Contact"
 msgstr ""
 
 #. module: shopinvader_anonymous_partner
+#: model:ir.model,name:shopinvader_anonymous_partner.model_shopinvader_anonymous_partner_cookie_helper
+msgid "Shopinvader Anonymous Partner Cookie Helper"
+msgstr ""
+
+#. module: shopinvader_anonymous_partner
 #: model:ir.model.constraint,message:shopinvader_anonymous_partner.constraint_res_partner_anonymous_token_unique
 msgid "This token is already used!"
 msgstr ""
@@ -40,9 +45,4 @@ msgstr ""
 #: model:ir.model.fields,help:shopinvader_anonymous_partner.field_res_partner__anonymous_token
 #: model:ir.model.fields,help:shopinvader_anonymous_partner.field_res_users__anonymous_token
 msgid "Token used to uniquely and securely identify anonymous partners."
-msgstr ""
-
-#. module: shopinvader_anonymous_partner
-#: model:ir.model,name:shopinvader_anonymous_partner.model_shopinvader_anonymous_partner_cookie_helper
-msgid "shopinvader_anonymous_partner.cookie.helper"
 msgstr ""
