@@ -231,14 +231,17 @@ class ShopinvaderApiAddressRouterHelper(models.AbstractModel):
         # the enspoint's user
         # (e.g. snailmail/models/res_partner.py)
         partner_sudo = self.partner.sudo()
+        address.check_access_rights("write")
+        address.check_access_rule("write")
+        address_sudo = address.sudo()
         updated_address = False
         if address_type == "invoicing":
             updated_address = partner_sudo._update_shopinvader_invoicing_address(
-                vals, address
+                vals, address_sudo
             )
         elif address_type == "delivery":
             updated_address = partner_sudo._update_shopinvader_delivery_address(
-                vals, address
+                vals, address_sudo
             )
         else:
             raise ValueError(f"Unknown address type: {address_type}")
