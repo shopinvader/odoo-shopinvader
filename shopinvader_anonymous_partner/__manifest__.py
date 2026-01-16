@@ -5,7 +5,7 @@
     "name": "Shopinvader Anonymous Partner",
     "summary": """
         Manage anonymous partners with a cookie.""",
-    "version": "16.0.1.1.2",
+    "version": "16.0.2.0.0",
     "license": "LGPL-3",
     "author": "ACSONE SA/NV",
     "maintainers": [],
