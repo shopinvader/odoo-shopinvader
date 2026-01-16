@@ -16,6 +16,14 @@ class SigninCase(FastAPITransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.default_fastapi_odoo_env = cls.env(
+            context=dict(
+                cls.env.context,
+                tracking_disable=True,
+                queue_job__no_delay=True,
+            )
+        )
+
         api_signin_jwt_group = cls.env.ref(
             "shopinvader_api_signin_jwt.shopinvader_signin_user_group"
         )
