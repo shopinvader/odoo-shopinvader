@@ -26,7 +26,7 @@ addon | version | maintainers | summary
 [sale_quotation](sale_quotation/) | 16.0.0.2.0 |  | Sale Quotation
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.1 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_address_shipping_note](shopinvader_address_shipping_note/) | 16.0.1.0.0 |  | Adds a field shipping note on res.partner
-[shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.1 |  | Manage anonymous partners with a cookie.
+[shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.1.1.2 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.3.2 |  | Adds a service to manage shopinvader invoicing and delivery address
 [shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 16.0.1.0.0 |  | Adds a shipping note on schemas of services to manage Shipping Addresses
 [shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.5.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
@@ -106,9 +106,9 @@ addon | version | maintainers | summary
 [shopinvader_backend_image_proxy](shopinvader_backend_image_proxy/) | 14.0.1.0.2 (unported) |  | Add possibility to replace the image URL by the proxy url set on the SE backend
 [shopinvader_cart_expiry](shopinvader_cart_expiry/) | 14.0.1.0.0 (unported) |  | Shopinvader module to manage an expiry delay on cart
 [shopinvader_category_image_for_product](shopinvader_category_image_for_product/) | 14.0.1.0.1 (unported) |  | Shopinvader Display category image for product
-[shopinvader_contact_address_default](shopinvader_contact_address_default/) | 14.0.1.0.0 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates `partner_contact_address_default` with Shopinvader
+[shopinvader_contact_address_default](shopinvader_contact_address_default/) | 14.0.1.0.0 (unported) | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Integrates `partner_contact_address_default` with Shopinvader
 [shopinvader_contact_company](shopinvader_contact_company/) | 10.0.1.0.0 (unported) |  | Make available the field company in the address form
-[shopinvader_customer_activity](shopinvader_customer_activity/) | 14.0.1.0.1 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Log the customer's shop activity
+[shopinvader_customer_activity](shopinvader_customer_activity/) | 14.0.1.0.1 (unported) | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Log the customer's shop activity
 [shopinvader_customer_invoicing_mode](shopinvader_customer_invoicing_mode/) | 14.0.1.0.0 (unported) |  | Glue module to expose the invoicing_mode field to shopinvader
 [shopinvader_customer_multi_user](shopinvader_customer_multi_user/) | 14.0.1.5.0 (unported) |  | Enable registration of multiple users per each company customer.
 [shopinvader_customer_multi_user_company_group](shopinvader_customer_multi_user_company_group/) | 14.0.1.0.0 (unported) |  | Share shopinvader records within the Company Group
@@ -119,7 +119,7 @@ addon | version | maintainers | summary
 [shopinvader_customer_validate](shopinvader_customer_validate/) | 14.0.1.3.0 (unported) |  | Provide configuration and machinery to validate customers.
 [shopinvader_delivery_instruction](shopinvader_delivery_instruction/) | 14.0.1.0.2 (unported) |  | Shopinvader addons to let user define delivery instructions
 [shopinvader_demo_app](shopinvader_demo_app/) | 12.0.2.0.4 (unported) |  | Shopinvader Demo App
-[shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Easily manage Shopinvader bindings for your company backend.
+[shopinvader_easy_binding](shopinvader_easy_binding/) | 14.0.1.0.1 (unported) | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Easily manage Shopinvader bindings for your company backend.
 [shopinvader_elasticsearch](shopinvader_elasticsearch/) | 14.0.3.0.1 (unported) |  | Shopinvader Elasticsearch Connector
 [shopinvader_guest_mode](shopinvader_guest_mode/) | 14.0.1.1.0 (unported) |  | Guest mode for Shopinvader
 [shopinvader_import_image](shopinvader_import_image/) | 14.0.1.1.1 (unported) |  | Import product images
@@ -146,8 +146,8 @@ addon | version | maintainers | summary
 [shopinvader_product_order](shopinvader_product_order/) | 14.0.1.1.0 (unported) |  | Manage product display order on Shopinvader
 [shopinvader_product_price_tax](shopinvader_product_price_tax/) | 14.0.1.2.0 (unported) |  | Exposes product prices with and without taxes
 [shopinvader_product_stock_assortment](shopinvader_product_stock_assortment/) | 14.0.1.0.2 (unported) |  | This module is used to let the Shopinvader product assortment use the stock context in Shopinvader product stock.
-[shopinvader_product_stock_forecast](shopinvader_product_stock_forecast/) | 14.0.1.0.0 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Export Stock Forecast data along with product stocks.
-[shopinvader_product_stock_forecast_expiry](shopinvader_product_stock_forecast_expiry/) | 14.0.1.0.0 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Integrates product lot expiration into the forecast
+[shopinvader_product_stock_forecast](shopinvader_product_stock_forecast/) | 14.0.1.0.0 (unported) | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Export Stock Forecast data along with product stocks.
+[shopinvader_product_stock_forecast_expiry](shopinvader_product_stock_forecast_expiry/) | 14.0.1.0.0 (unported) | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Integrates product lot expiration into the forecast
 [shopinvader_product_template_multi_link_date_span](shopinvader_product_template_multi_link_date_span/) | 14.0.1.0.0 (unported) |  | Integrate `product_template_multi_link_date_span` in Shopinvader
 [shopinvader_product_template_tags](shopinvader_product_template_tags/) | 14.0.1.0.0 (unported) |  | Index Product Template Tags in Shopinvader
 [shopinvader_product_variant_multi_link](shopinvader_product_variant_multi_link/) | 14.0.1.0.0 (unported) |  | Integrate product_variant_multi_link with Shopinvader
@@ -156,7 +156,7 @@ addon | version | maintainers | summary
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) |  | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.2.3.1 (unported) |  | Shopinvader Quotation
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 (unported) |  | Expose the amount by tax to shopinvader
-[shopinvader_sale_automatic_workflow](shopinvader_sale_automatic_workflow/) | 14.0.1.1.0 (unported) | [![ivantodorovich](https://github.com/ivantodorovich.png?size=30px)](https://github.com/ivantodorovich) | Use sale automatic workflows for Shopinvader orders
+[shopinvader_sale_automatic_workflow](shopinvader_sale_automatic_workflow/) | 14.0.1.1.0 (unported) | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Use sale automatic workflows for Shopinvader orders
 [shopinvader_sale_communication](shopinvader_sale_communication/) | 10.0.1.0.0 (unported) |  | This module adds information fields for customers and vendors.
 [shopinvader_sale_coupon](shopinvader_sale_coupon/) | 14.0.1.2.0 (unported) |  | Manage Promotion and Coupon programs in Shopinvader
 [shopinvader_sale_packaging_wishlist](shopinvader_sale_packaging_wishlist/) | 14.0.1.0.0 (unported) |  | Add packaging information to wishlists
