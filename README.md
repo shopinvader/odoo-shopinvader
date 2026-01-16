@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[sale_cart](sale_cart/) | 16.0.1.0.0 |  | Uee Sale Orders as cart.
+[sale_cart](sale_cart/) | 16.0.1.1.0 |  | Uee Sale Orders as cart.
 [sale_cart_step](sale_cart_step/) | 16.0.1.0.0 |  | Track checkout steps on sale cart.
 [sale_quotation](sale_quotation/) | 16.0.0.2.0 |  | Sale Quotation
 [shopinvader_address](shopinvader_address/) | 16.0.1.1.1 |  | Shopinvader Address: Delivery,Invoicing
