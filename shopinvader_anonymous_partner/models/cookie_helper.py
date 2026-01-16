@@ -34,6 +34,7 @@ class Cookies(typing.Protocol):
 
 class ShopinvaderAnonymousCookieHelper(models.AbstractModel):
     _name = "shopinvader_anonymous_partner.cookie.helper"
+    _description = "Shopinvader Anonymous Partner Cookie Helper"
 
     @api.model
     def _create_anonymous_partner__cookie(self, response: Response):
