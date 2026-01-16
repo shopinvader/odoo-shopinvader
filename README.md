@@ -91,7 +91,7 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_update_product_brand_tag](shopinvader_search_engine_update_product_brand_tag/) | 16.0.1.0.0 |  | Mark brand and product bindings to export on product image tag update
 [shopinvader_search_engine_update_product_media](shopinvader_search_engine_update_product_media/) | 16.0.1.0.0 |  | Shopinvader: Mark products linked to a media to be updated when the media change
 [shopinvader_search_engine_update_product_template_multi_link](shopinvader_search_engine_update_product_template_multi_link/) | 16.0.1.0.0 |  | Mark bindings to recompute when a link is added, deleted or modified
-[shopinvader_v2_app_demo](shopinvader_v2_app_demo/) | 16.0.1.0.1 |  | Adds a demo application on fastapi endpoint for a demo shopinvader application that takes every router
+[shopinvader_v2_app_demo](shopinvader_v2_app_demo/) | 16.0.1.0.2 |  | Adds a demo application on fastapi endpoint for a demo shopinvader application that takes every router
 
 
 Unported addons

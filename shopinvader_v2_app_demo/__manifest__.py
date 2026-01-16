@@ -7,7 +7,7 @@
         Adds a demo application on fastapi endpoint for a
         demo shopinvader application that takes every router
         """,
-    "version": "16.0.1.0.1",
+    "version": "16.0.1.0.2",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
