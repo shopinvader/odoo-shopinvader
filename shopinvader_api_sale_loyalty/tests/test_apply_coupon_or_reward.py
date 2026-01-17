@@ -114,6 +114,12 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             1,
             "The promo offer should have been automatically applied",
         )
+        self.assertEqual(
+            res["lines"][0]["type"], "product", "First line should be product A"
+        )
+        self.assertEqual(
+            res["lines"][1]["type"], "reward", "Second line should be free product B"
+        )
         # # Test case 2 (- 1A): Assert that the reward is removed when the order
         # # is modified and doesn't match the rules anymore
         with self._create_test_client(router=cart_router) as test_client:
