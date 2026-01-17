@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Schema Sale",
     "summary": "Add schema sale",
-    "version": "16.0.1.1.3",
+    "version": "16.0.1.2.0",
     "development_status": "Alpha",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",

@@ -38,7 +38,7 @@ addon | version | maintainers | summary
 [shopinvader_api_lead](shopinvader_api_lead/) | 16.0.1.0.1 |  | Lead FastAPI adding a service for creating CRM leads.
 [shopinvader_api_quotation](shopinvader_api_quotation/) | 16.0.1.1.0 |  | Shopinvader Quotation
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.2.0 |  | Sale FastApi for exposing sale order
-[shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.1.2 |  | FastAPI services to add coupons and loyalties to carts.
+[shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.0 |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 16.0.1.0.1 |  | Add security rule to expose invoices
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 16.0.1.0.1 |  | Adds a service to get commont settings
@@ -69,7 +69,7 @@ addon | version | maintainers | summary
 [shopinvader_sale_state](shopinvader_sale_state/) | 16.0.1.0.1 |  | Basic module to implement state for sale order
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.3.2 |  | Adds shchema address: address invoicing_address delivery_address
 [shopinvader_schema_invoice](shopinvader_schema_invoice/) | 16.0.1.0.1 |  | Add schema for invoices
-[shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.1.3 |  | Add schema sale
+[shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.2.0 |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 16.0.1.0.1 |  | Shopinvader Schema Sale State
 [shopinvader_search_engine](shopinvader_search_engine/) | 16.0.1.0.7 |  | Shopinvader Catalog Search Engine Connector
 [shopinvader_search_engine_assortment](shopinvader_search_engine_assortment/) | 16.0.1.0.1 |  | Shopinvader Search Engine Assortment
