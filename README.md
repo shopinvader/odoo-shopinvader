@@ -31,7 +31,7 @@ addon | version | maintainers | summary
 [shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 16.0.1.0.0 |  | Adds a shipping note on schemas of services to manage Shipping Addresses
 [shopinvader_api_cart](shopinvader_api_cart/) | 16.0.1.5.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_api_cart_cancel](shopinvader_api_cart_cancel/) | 16.0.1.0.0 |  | Cancel cart via Fastapi
-[shopinvader_api_cart_options](shopinvader_api_cart_options/) | 16.0.1.0.1 |  | Add product options to the cart API
+[shopinvader_api_cart_options](shopinvader_api_cart_options/) | 16.0.1.0.2 |  | Add product options to the cart API
 [shopinvader_api_cart_step](shopinvader_api_cart_step/) | 16.0.1.0.1 |  | Track checkout steps on sale cart.
 [shopinvader_api_customer](shopinvader_api_customer/) | 16.0.1.1.0 |  | Adds service to manage shopinvader customer
 [shopinvader_api_invoice](shopinvader_api_invoice/) | 16.0.1.0.1 |  | Provides invoice web api via Fastapi
