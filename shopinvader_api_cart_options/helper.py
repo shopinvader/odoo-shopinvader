@@ -19,10 +19,21 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         """
         key = super()._get_transaction_key(transaction)
         options = tuple(SaleLineOptions._get_assembled_cls().model_fields.keys())
+
+        def freeze(value):
+            """Freeze the value to make it hashable"""
+            if isinstance(value, list):
+                return tuple(freeze(item) for item in value)
+            elif isinstance(value, dict):
+                return {k: freeze(v) for k, v in value.items()}
+            return value
+
         return namedtuple(key.__class__.__name__, key._fields + options)(
             *key,
             *tuple(
-                getattr(transaction.options, key) if transaction.options else None
+                freeze(getattr(transaction.options, key))
+                if transaction.options
+                else None
                 for key in options
             ),
         )
