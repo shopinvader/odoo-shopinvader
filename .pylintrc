@@ -10,7 +10,7 @@ manifest-required-authors=Shopinvader
 manifest-required-keys=license
 manifest-deprecated-keys=description,active
 license-allowed=AGPL-3,GPL-2,GPL-2 or any later version,GPL-3,GPL-3 or any later version,LGPL-3
-valid-odoo-versions=16.0
+valid-odoo-versions=18.0
 
 [MESSAGES CONTROL]
 disable=all
@@ -47,6 +47,7 @@ enable=anomalous-backslash-in-string,
     license-allowed,
     manifest-author-string,
     manifest-deprecated-key,
+    manifest-required-author,
     manifest-required-key,
     manifest-version-format,
     method-compute,
@@ -98,22 +99,22 @@ enable=anomalous-backslash-in-string,
     translation-positional-used,
     website-manifest-key-not-valid-uri,
     external-request-timeout,
-    # messages that do not cause the lint step to fail
-    consider-merging-classes-inherited,
+    missing-manifest-dependency,
+    too-complex,,
     create-user-wo-reset-password,
     dangerous-filter-wo-user,
-    deprecated-module,
     file-not-used,
-    invalid-commit,
-    missing-manifest-dependency,
     missing-newline-extrafiles,
-    missing-readme,
     no-utf8-coding-comment,
-    odoo-addons-relative-import,
     old-api7-method-defined,
-    redefined-builtin,
-    too-complex,
     unnecessary-utf8-coding-comment,
+    # messages that do not cause the lint step to fail
+    consider-merging-classes-inherited,
+    deprecated-module,
+    invalid-commit,
+    missing-readme,
+    odoo-addons-relative-import,
+    redefined-builtin,
     manifest-external-assets
 
 
