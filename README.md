@@ -116,10 +116,6 @@ addon | version | maintainers | summary
 [shopinvader_product_video_link](shopinvader_product_video_link/) | 14.0.1.0.2 (unported) |  | Add video on your Shopinvader website
 [shopinvader_promotion_rule](shopinvader_promotion_rule/) | 10.0.1.0.0 (unported) |  | Module to manage Promotion Rule with shopinvader
 [shopinvader_quotation](shopinvader_quotation/) | 14.0.2.3.1 (unported) |  | Shopinvader Quotation
-[shopinvader_restapi](shopinvader_restapi/) | 16.0.1.1.3 (unported) |  | Shopinvader
-[shopinvader_restapi_auth_jwt](shopinvader_restapi_auth_jwt/) | 16.0.1.2.0 (unported) |  | Find shopinvader backend and partner from JWT token
-[shopinvader_restapi_invoice](shopinvader_restapi_invoice/) | 16.0.1.0.0 (unported) |  | Shopinvader Restapi Invoice module
-[shopinvader_restapi_sale_packaging](shopinvader_restapi_sale_packaging/) | 16.0.1.1.0 (unported) |  | Shopinvader Restapi Sale Packaging
 [shopinvader_sale_amount_by_group](shopinvader_sale_amount_by_group/) | 14.0.1.0.0 (unported) |  | Expose the amount by tax to shopinvader
 [shopinvader_sale_automatic_workflow](shopinvader_sale_automatic_workflow/) | 14.0.1.1.0 (unported) | <a href='https://github.com/ivantodorovich'><img src='https://github.com/ivantodorovich.png' width='32' height='32' style='border-radius:50%;' alt='ivantodorovich'/></a> | Use sale automatic workflows for Shopinvader orders
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.2.0 (unported) |  | ShopInvader logic for sale carts.
@@ -155,7 +151,6 @@ addon | version | maintainers | summary
 [shopinvader_search_engine_update_product_brand_tag](shopinvader_search_engine_update_product_brand_tag/) | 16.0.1.0.0 (unported) |  | Mark brand and product bindings to export on product image tag update
 [shopinvader_search_engine_update_product_media](shopinvader_search_engine_update_product_media/) | 16.0.1.0.0 (unported) |  | Shopinvader: Mark products linked to a media to be updated when the media change
 [shopinvader_search_engine_update_product_template_multi_link](shopinvader_search_engine_update_product_template_multi_link/) | 16.0.1.0.0 (unported) |  | Mark bindings to recompute when a link is added, deleted or modified
-[shopinvader_v2_app_demo](shopinvader_v2_app_demo/) | 16.0.1.0.2 (unported) |  | Adds a demo application on fastapi endpoint for a demo shopinvader application that takes every router
 [shopinvader_wishlist](shopinvader_wishlist/) | 14.0.1.1.0 (unported) |  | Handle shop wishlist
 
 [//]: # (end addons)
