@@ -13,6 +13,9 @@
     "depends": ["sale", "sales_team"],
     "data": ["views/sale_order.xml"],
     "demo": [],
-    "external_dependencies": {"python": ["openupgradelib"]},
+    "external_dependencies": {"python": ["openupgradelib"],
+    'installable': False,
+},
     "pre_init_hook": "pre_init_hook",
+    'installable': False,
 }

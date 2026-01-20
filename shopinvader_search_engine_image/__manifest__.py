@@ -23,6 +23,6 @@
         "demo/se_thumbnail_size.xml",
         "demo/fs_product_image.xml",
     ],
-    "installable": True,
+    'installable': False,
     "development_status": "Alpha",
 }

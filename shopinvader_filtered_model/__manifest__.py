@@ -15,10 +15,12 @@
     "external_dependencies": {
         "python": [],
         "bin": [],
-    },
+    'installable': False,
+},
     "depends": [
         "base",
     ],
     "data": [],
     "demo": [],
+    'installable': False,
 }

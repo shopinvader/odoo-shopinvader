@@ -18,4 +18,5 @@
         "extendable_fastapi",
         "report_generate_helper",
     ],
+    'installable': False,
 }

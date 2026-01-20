@@ -16,4 +16,5 @@
     "data": [],
     "demo": [],
     "development_status": "Alpha",
+    'installable': False,
 }

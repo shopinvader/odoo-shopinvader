@@ -11,6 +11,6 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "data": [],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "license": "AGPL-3",
 }

@@ -17,5 +17,5 @@
         "security/acl_res_partner.xml",
     ],
     "demo": [],
-    "installable": True,
+    'installable': False,
 }

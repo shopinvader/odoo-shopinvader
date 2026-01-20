@@ -48,7 +48,9 @@
         "shopinvader_search_engine_update_product_template_multi_link",
         "shopinvader_search_engine",
     ],
-    "external_dependencies": {"python": ["fastapi"]},
+    "external_dependencies": {"python": ["fastapi"],
+    'installable': False,
+},
     "data": [
         "views/fastapi_endpoint.xml",
     ],
@@ -63,4 +65,5 @@
         "demo/se_image_field_thumbnail_size.xml",
         "demo/fs_storage.xml",
     ],
+    'installable': False,
 }

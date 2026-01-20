@@ -22,5 +22,5 @@
         "views/product_packaging.xml",
         "views/product_packaging_level.xml",
     ],
-    "installable": True,
+    'installable': False,
 }

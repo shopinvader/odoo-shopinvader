@@ -16,6 +16,8 @@
         "account",
     ],
     "external_dependencies": {
-        "python": ["extendable_pydantic>=1.2.0", "pydantic>=2.0.0"]
-    },
+        "python": ["extendable_pydantic>=1.2.0", "pydantic>=2.0.0"],
+    'installable': False,
+},
+    'installable': False,
 }

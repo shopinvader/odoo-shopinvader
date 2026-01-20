@@ -23,6 +23,6 @@
     "external_dependencies": {
         "python": ["extendable_pydantic>=1.2.0", "pydantic>=2.0.0", "unidecode"]
     },
-    "installable": True,
+    'installable': False,
     "development_status": "Alpha",
 }

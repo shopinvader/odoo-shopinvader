@@ -16,5 +16,5 @@
         "shopinvader_product_sale_packaging",
         "sale_stock",
     ],
-    "installable": True,
+    'installable': False,
 }

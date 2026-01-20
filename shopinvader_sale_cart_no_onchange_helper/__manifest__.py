@@ -14,4 +14,5 @@
         "shopinvader_sale_cart",
     ],
     "data": [],
+    'installable': False,
 }

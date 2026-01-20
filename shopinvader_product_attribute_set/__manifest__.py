@@ -15,5 +15,5 @@
     "depends": ["shopinvader_product", "product_attribute_set"],
     "data": [],
     "demo": [],
-    "installable": True,
+    'installable': False,
 }

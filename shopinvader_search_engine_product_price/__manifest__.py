@@ -13,6 +13,6 @@
     "depends": ["product_get_price_helper", "shopinvader_search_engine"],
     "data": ["views/se_backend.xml", "views/se_index.xml"],
     "demo": [],
-    "installable": True,
+    'installable': False,
     "development_status": "Alpha",
 }

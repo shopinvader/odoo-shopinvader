@@ -16,4 +16,5 @@
         "views/res_partner.xml",
     ],
     "demo": [],
+    'installable': False,
 }

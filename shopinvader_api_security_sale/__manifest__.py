@@ -14,7 +14,8 @@
     "external_dependencies": {
         "python": [],
         "bin": [],
-    },
+    'installable': False,
+},
     "depends": [
         "sale",
         "fastapi",
@@ -28,4 +29,5 @@
         "security/rule+acl_sale_order_line.xml",
     ],
     "demo": [],
+    'installable': False,
 }

@@ -12,4 +12,5 @@
     "data": ["views/product_category.xml"],
     "demo": [],
     "development_status": "Alpha",
+    'installable': False,
 }

@@ -15,7 +15,8 @@
     "external_dependencies": {
         "python": [],
         "bin": [],
-    },
+    'installable': False,
+},
     "depends": [
         "sale",
     ],
@@ -23,4 +24,5 @@
         "views/sale_view.xml",
     ],
     "demo": [],
+    'installable': False,
 }

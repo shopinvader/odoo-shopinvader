@@ -23,4 +23,5 @@
         "security/rule+acl_account_move.xml",
         "security/rule+acl_account_move_line.xml",
     ],
+    'installable': False,
 }

@@ -12,7 +12,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,GRAP,Camptocamp,ACSONE SA/NV",
     "license": "AGPL-3",
-    "installable": True,
+    'installable': False,
     "auto_install": True,
     "depends": [
         "shopinvader_search_engine",

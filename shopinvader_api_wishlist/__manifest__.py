@@ -26,5 +26,5 @@
         "security/rule+acl_product_set.xml",
         "security/rule+acl_product_set_line.xml",
     ],
-    "installable": True,
+    'installable': False,
 }

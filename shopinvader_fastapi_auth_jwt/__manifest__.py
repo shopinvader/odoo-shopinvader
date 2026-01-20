@@ -13,4 +13,5 @@
     "depends": ["fastapi_auth_jwt", "shopinvader_anonymous_partner"],
     "data": [],
     "demo": [],
+    'installable': False,
 }

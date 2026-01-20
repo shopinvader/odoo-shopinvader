@@ -17,4 +17,5 @@
         "views/sale_order.xml",
         "views/cart_step.xml",
     ],
+    'installable': False,
 }

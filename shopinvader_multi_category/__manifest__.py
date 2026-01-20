@@ -12,4 +12,5 @@
     "license": "AGPL-3",
     "depends": ["shopinvader_product", "product_multi_category"],
     "auto_install": True,
+    'installable': False,
 }

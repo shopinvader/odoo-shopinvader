@@ -12,6 +12,6 @@
     "license": "AGPL-3",
     "depends": ["shopinvader_product_seo", "shopinvader_search_engine"],
     "data": ["views/se_backend.xml"],
-    "installable": True,
+    'installable': False,
     "development_status": "Alpha",
 }

@@ -17,4 +17,5 @@
         "shopinvader_anonymous_partner",
     ],
     "auto_install": True,
+    'installable': False,
 }

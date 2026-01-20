@@ -15,4 +15,5 @@
     "depends": ["fastapi_auth_partner", "shopinvader_anonymous_partner"],
     "data": [],
     "demo": [],
+    'installable': False,
 }

@@ -16,8 +16,10 @@
         "shopinvader_schema_address",
     ],
     "external_dependencies": {
-        "python": ["extendable_pydantic>=1.2.0", "pydantic>=2.0.0"]
-    },
+        "python": ["extendable_pydantic>=1.2.0", "pydantic>=2.0.0"],
+    'installable': False,
+},
     "data": [],
     "demo": [],
+    'installable': False,
 }

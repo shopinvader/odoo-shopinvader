@@ -14,11 +14,13 @@
     "external_dependencies": {
         "python": [],
         "bin": [],
-    },
+    'installable': False,
+},
     "depends": [
         "shopinvader_schema_sale",
         "shopinvader_sale_state",
     ],
     "data": [],
     "demo": [],
+    'installable': False,
 }

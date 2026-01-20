@@ -24,5 +24,5 @@
             "extendable_pydantic>=1.0.0",
         ]
     },
-    "installable": True,
+    'installable': False,
 }

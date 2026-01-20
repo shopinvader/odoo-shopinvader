@@ -11,7 +11,7 @@
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion,ACSONE SA/NV,Camptocamp",
     "license": "AGPL-3",
-    "installable": True,
+    'installable': False,
     "depends": ["stock", "shopinvader_search_engine"],
     "data": [
         "views/se_backend.xml",

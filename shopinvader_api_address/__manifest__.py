@@ -23,5 +23,5 @@
     "external_dependencies": {
         "python": ["fastapi", "extendable_pydantic>=1.0.0", "pydantic>=2.0.0"]
     },
-    "installable": True,
+    'installable': False,
 }

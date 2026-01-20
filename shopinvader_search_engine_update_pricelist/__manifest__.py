@@ -11,4 +11,5 @@
     "depends": [
         "shopinvader_search_engine_update",
     ],
+    'installable': False,
 }

@@ -15,7 +15,7 @@
         "shopinvader_product",
     ],
     "data": [],
-    "installable": True,
+    'installable': False,
     "application": False,
     "development_status": "Alpha",
 }

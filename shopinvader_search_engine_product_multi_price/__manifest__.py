@@ -13,4 +13,5 @@
     "data": ["views/se_backend.xml", "views/se_index.xml"],
     "demo": [],
     "development_status": "Alpha",
+    'installable': False,
 }
