@@ -1,1 +1,0 @@
-from .brand import ProductBrand
