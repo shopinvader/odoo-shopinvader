@@ -74,7 +74,7 @@ jobs:
           name: Screenshots of failed JS tests - ${{ matrix.name }}${{ join(matrix.include) }}
           path: /tmp/odoo_tests/${{ env.PGDATABASE }}
           if-no-files-found: ignore
-      - uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
       - name: Update .pot files
