@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Akretion (http://www.akretion.com).
+    @author Florian Mounier <florian.mounier@akretion.com>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record id="sale_channel_view_form" model="ir.ui.view">
+        <field name="model">sale.channel</field>
+        <field name="inherit_id" ref="sale_channel.sale_channel_view_form" />
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="partner_pricelist_id" />
+            </field>
+        </field>
+    </record>
+</odoo>
