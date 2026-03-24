@@ -1,6 +1,5 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import json
 
 from fastapi import status
 from requests import Response
@@ -194,7 +193,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                f"/addresses/invoicing/{self.test_partner.id}", content=json.dumps(data)
+                f"/addresses/invoicing/{self.test_partner.id}", json=data
             )
 
         self.assertEqual(
@@ -225,7 +224,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                f"/addresses/invoicing/{self.test_partner.id}", content=json.dumps(data)
+                f"/addresses/invoicing/{self.test_partner.id}", json=data
             )
 
         self.assertEqual(
@@ -254,9 +253,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
         }
 
         with self._create_test_client(router=address_router) as test_client:
-            response: Response = test_client.post(
-                "/addresses/delivery", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/addresses/delivery", json=data)
 
         self.assertEqual(
             response.status_code,
@@ -329,7 +326,7 @@ class TestShopinvaderAddressApi(FastAPITransactionCase):
 
         with self._create_test_client(router=address_router) as test_client:
             response: Response = test_client.post(
-                f"/addresses/delivery/{new_address.id}", content=json.dumps(data)
+                f"/addresses/delivery/{new_address.id}", json=data
             )
 
         self.assertEqual(
