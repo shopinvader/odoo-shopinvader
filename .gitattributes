@@ -1,1 +1,2 @@
 test-requirements.txt merge=union
+.pre-commit-config.yaml merge=union
