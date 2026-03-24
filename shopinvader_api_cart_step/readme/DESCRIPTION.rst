@@ -1,1 +1,0 @@
-Plugs ``sale_cart_step`` within cart api.

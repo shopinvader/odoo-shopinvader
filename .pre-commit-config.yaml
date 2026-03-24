@@ -8,7 +8,6 @@ exclude: |
   ^shopinvader_api_cart/|
   ^shopinvader_api_cart_cancel/|
   ^shopinvader_api_cart_options/|
-  ^shopinvader_api_cart_step/|
   ^shopinvader_api_customer/|
   ^shopinvader_api_invoice/|
   ^shopinvader_api_lead/|
