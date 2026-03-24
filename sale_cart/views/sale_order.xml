@@ -1,8 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!-- Copyright 2022 ACSONE SA/NV
-     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+<?xml version='1.0' encoding='utf-8' ?>
 <odoo>
-
     <record model="ir.ui.view" id="sale_order_form_view">
         <field name="name">sale.order.form (in sale_cart)</field>
         <field name="model">sale.order</field>
@@ -14,7 +11,7 @@
                     string="Confirm Cart"
                     class="btn-primary o_sale_confirm"
                     type="object"
-                    attrs="{'invisible': [('typology', '!=', 'cart')]}"
+                    invisible="typology != 'cart'"
                 />
             </button>
             <field name="partner_id" position="after">
@@ -26,7 +23,7 @@
     <record model="ir.actions.act_window" id="sale_order_act_window">
         <field name="name">Cart</field>
         <field name="res_model">sale.order</field>
-        <field name="view_mode">tree,form,calendar,graph</field>
+        <field name="view_mode">list,form,calendar,graph</field>
         <field name="search_view_id" ref="sale.view_sales_order_filter" />
         <field name="context">{'default_typology': 'cart'}</field>
         <field name="domain">[('typology', '=', 'cart')]</field>
@@ -45,5 +42,4 @@
         sequence="4"
         groups="sales_team.group_sale_salesman,sales_team.group_sale_manager"
     />
-
 </odoo>

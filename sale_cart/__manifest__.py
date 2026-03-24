@@ -3,19 +3,13 @@
 
 {
     "name": "Sale Cart",
-    "summary": """
-        Uee Sale Orders as cart.
-        """,
-    "version": "16.0.1.1.0",
+    "summary": "Use Sale Orders as cart.",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["sale", "sales_team"],
     "data": ["views/sale_order.xml"],
     "demo": [],
-    "external_dependencies": {"python": ["openupgradelib"],
-    'installable': False,
-},
-    "pre_init_hook": "pre_init_hook",
-    'installable': False,
+    "installable": True,
 }

@@ -1,7 +1,6 @@
 exclude: |
   (?x)
   # NOT INSTALLABLE ADDONS
-  ^sale_cart/|
   ^sale_cart_step/|
   ^sale_quotation/|
   ^shopinvader_address/|
