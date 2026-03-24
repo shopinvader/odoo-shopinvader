@@ -3,14 +3,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from collections import namedtuple
 
-from odoo import models
-
 from odoo.addons.shopinvader_api_cart.schemas import CartTransaction
+from odoo.addons.shopinvader_router_helper import VirtualModel
 
-from .schemas import SaleLineOptions
+from ..schemas import SaleLineOptions
 
 
-class ShopinvaderApiCartRouterHelper(models.AbstractModel):
+class CartHelper(VirtualModel):
     _inherit = "shopinvader_api_cart.cart_router.helper"
 
     def _get_transaction_key(self, transaction: CartTransaction):
