@@ -2,14 +2,13 @@
 <!-- Copyright 2024 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-  <record id="shopinvader_lead_user_group" model="res.groups">
-    <field name="name">CRM Lead user</field>
-      <field
+    <record id="shopinvader_lead_user_group" model="res.groups">
+        <field name="name">CRM Lead user</field>
+        <field
             name="implied_ids"
             eval="[
-      (4, ref('fastapi.group_fastapi_endpoint_runner')),
-      ]"
+                (4, ref('fastapi.group_fastapi_endpoint_runner')),
+            ]"
         />
-  </record>
-
+    </record>
 </odoo>
