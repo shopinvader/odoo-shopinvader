@@ -2,13 +2,12 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 from datetime import datetime
-from typing import Annotated, List
+from typing import Annotated
 
+from extendable_pydantic import StrictExtendableBaseModel
 from pydantic import Field
 
 from odoo import api
-
-from odoo.addons.extendable_fastapi import StrictExtendableBaseModel
 
 from .amount import SaleAmount
 from .delivery import DeliveryInfo
@@ -23,7 +22,7 @@ class Sale(StrictExtendableBaseModel):
     client_order_ref: str | None = None
     date_order: datetime
     date_commitment: datetime | None = None
-    lines: List[SaleLine]
+    lines: list[SaleLine]
     amount: SaleAmount | None = None
     delivery: DeliveryInfo | None = None
     invoicing: InvoicingInfo | None = None
