@@ -6,25 +6,17 @@
 {
     "name": "Shopinvader API Sale",
     "summary": "Sale FastApi for exposing sale order",
-    "version": "16.0.1.2.0",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    'installable': False,
-},
     "depends": [
+        "shopinvader_router_helper",
         "shopinvader_schema_sale",
         "shopinvader_api_security_sale",
-        "shopinvader_filtered_model",
         "extendable_fastapi",
-        "report_generate_helper",
     ],
-    "data": [],
-    "demo": [],
-    'installable': False,
+    "installable": True,
 }

@@ -5,7 +5,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from odoo import api, fields, models
+from odoo import api, fields
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
@@ -15,12 +15,34 @@ from odoo.addons.fastapi.dependencies import (
     paging,
 )
 from odoo.addons.fastapi.schemas import Paging
-from odoo.addons.sale.models.sale_order_line import SaleOrderLine
-from odoo.addons.shopinvader_filtered_model.utils import FilteredModelAdapter
+from odoo.addons.shopinvader_router_helper import VirtualModel
 
 from ..schemas import SaleLineSearch, SaleLineWithSale
 
 sale_line_router = APIRouter(tags=["sales"])
+
+
+class SaleLineHelper(VirtualModel):
+    _inherit = "shopinvader.router.helper"
+    _name = "shopinvader_api_sale.sale_line_router.helper"
+    _description = "Shopinvader Api Sale Line Service Helper"
+
+    _model = "sale.order.line"
+
+    partner = fields.Many2one("res.partner")
+
+    def _domain(self):
+        return [
+            ("order_id.partner_id", "=", self.partner.id),
+            ("order_id.typology", "=", "sale"),
+        ]
+
+
+def sale_line_helper(
+    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+):
+    return env["shopinvader_api_sale.sale_line_router.helper"].new({"partner": partner})
 
 
 @sale_line_router.get("/sales/lines")
@@ -28,8 +50,7 @@ sale_line_router = APIRouter(tags=["sales"])
 def search(
     params: Annotated[SaleLineSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    helper: Annotated[SaleLineHelper, Depends(sale_line_helper)],
     sale_id: int | None = None,
 ) -> PagedCollection[SaleLineWithSale]:
     """Get / search sale order lines. The list contains only sale order lines from the
@@ -38,10 +59,10 @@ def search(
         # Shortcut to search by sale_id
         params.order_id = sale_id
 
-    count, sols = (
-        env["shopinvader_api_sale.sale_line_router.helper"]
-        .new({"partner": partner})
-        ._search(paging, params)
+    count, sols = helper.search_with_count(
+        params.to_odoo_domain(helper.env),
+        limit=paging.limit,
+        offset=paging.offset,
     )
     return PagedCollection[SaleLineWithSale](
         count=count,
@@ -52,41 +73,9 @@ def search(
 @sale_line_router.get("/sales/lines/{sale_line_id}")
 def get(
     sale_line_id: int,
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    helper: Annotated[SaleLineHelper, Depends(sale_line_helper)],
 ) -> SaleLineWithSale:
     """
     Get sale order of authenticated user with specific sale_id
     """
-    return SaleLineWithSale.from_sale_order_line(
-        env["shopinvader_api_sale.sale_line_router.helper"]
-        .new({"partner": partner})
-        ._get(sale_line_id)
-    )
-
-
-class ShopinvaderApiSaleSaleLineRouterHelper(models.AbstractModel):
-    _name = "shopinvader_api_sale.sale_line_router.helper"
-    _description = "Shopinvader Api Sale Line Service Helper"
-
-    partner = fields.Many2one("res.partner")
-
-    def _get_domain_adapter(self):
-        return [
-            ("order_id.partner_id", "=", self.partner.id),
-            ("order_id.typology", "=", "sale"),
-        ]
-
-    @property
-    def model_adapter(self) -> FilteredModelAdapter[SaleOrderLine]:
-        return FilteredModelAdapter[SaleOrderLine](self.env, self._get_domain_adapter())
-
-    def _get(self, record_id) -> SaleOrderLine:
-        return self.model_adapter.get(record_id)
-
-    def _search(self, paging, params) -> tuple[int, SaleOrderLine]:
-        return self.model_adapter.search_with_count(
-            params.to_odoo_domain(self.env),
-            limit=paging.limit,
-            offset=paging.offset,
-        )
+    return SaleLineWithSale.from_sale_order_line(helper.get(sale_line_id))
