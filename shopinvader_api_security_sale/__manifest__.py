@@ -5,17 +5,12 @@
 {
     "name": "Shopinvader Api Security Sale",
     "summary": "Add security rule to expose sale order",
-    "version": "16.0.1.1.1",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    'installable': False,
-},
     "depends": [
         "sale",
         "fastapi",
@@ -24,10 +19,10 @@
         "security/groups.xml",
         "security/acl_product_product.xml",
         "security/acl_product_template.xml",
+        "security/acl_res_currency.xml",
         "security/acl_uom_uom.xml",
         "security/rule+acl_sale_order.xml",
         "security/rule+acl_sale_order_line.xml",
     ],
-    "demo": [],
-    'installable': False,
+    "installable": True,
 }

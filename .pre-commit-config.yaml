@@ -17,7 +17,6 @@ exclude: |
   ^shopinvader_api_sale/|
   ^shopinvader_api_sale_loyalty/|
   ^shopinvader_api_security_invoice/|
-  ^shopinvader_api_security_sale/|
   ^shopinvader_api_settings/|
   ^shopinvader_api_signin_jwt/|
   ^shopinvader_api_wishlist/|
