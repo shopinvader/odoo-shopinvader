@@ -4,7 +4,6 @@ exclude: |
   ^shopinvader_api_address_shipping_note/|
   ^shopinvader_api_customer/|
   ^shopinvader_api_invoice/|
-  ^shopinvader_api_quotation/|
   ^shopinvader_api_sale_loyalty/|
   ^shopinvader_api_security_invoice/|
   ^shopinvader_api_signin_jwt/|

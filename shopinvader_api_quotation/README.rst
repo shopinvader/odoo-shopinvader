@@ -17,27 +17,29 @@ Shopinvader Api Quotation
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_quotation
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_quotation
     :alt: shopinvader/odoo-shopinvader
 
 |badge1| |badge2| |badge3|
 
-This module adds a REST API for shopinvader to manage quotations (see module: sale_quotation)
+This module adds a REST API for shopinvader to manage quotations (see
+module: sale_quotation)
 
+Initially, the quotation has the shopinvader_state "estimating". After
+updating the price manually when the button "sent" on Odoo backend is
+submitted, the quotation will be sent by email (native behaviour) and
+the shopinvader_state will switch to "estimated".
 
-Initially, the quotation has the `shopinvader_state` "estimating".
-After updating the price manually when the button "sent" on Odoo backend
-is submitted, the quotation will be sent by email (native behaviour) and the
-shopinvader_state will switch to "estimated".
-
-On Shopinvader site, the customer can see the state, the amount ... of quotation.
-
+On Shopinvader site, the customer can see the state, the amount ... of
+quotation.
 
 Why this module and how it can be used?
 
-If you have many different product without price, and these products can only be selled on demand (compute price, need a seller action).
-This module allow your customer to request quotation with products only on quotation (shop_only_quotation)
-Your customer can add to cart product without price and request a quotation for a cart.
+If you have many different product without price, and these products can
+only be selled on demand (compute price, need a seller action). This
+module allow your customer to request quotation with products only on
+quotation (shop_only_quotation) Your customer can add to cart product
+without price and request a quotation for a cart.
 
 **Table of contents**
 
@@ -47,17 +49,16 @@ Your customer can add to cart product without price and request a quotation for 
 Usage
 =====
 
-This addons provides 2 new routers: `quotation_router` and 
-`quotation_cart_router`. The `quotation_cart_router` is declared
-with the same tags as the one defined in the `shopinvader_api_cart`
-addon. As this one, no prefix is added to the router, to allow to mount
-it as a nested app. See the README of `shopinvader_api_cart` for
-more details on how to do it.
+This addons provides 2 new routers: quotation_router and
+quotation_cart_router. The quotation_cart_router is declared with the
+same tags as the one defined in the shopinvader_api_cart addon. As this
+one, no prefix is added to the router, to allow to mount it as a nested
+app. See the README of shopinvader_api_cart for more details on how to
+do it.
 
 As all api addons, installing this addon will not have any effect on the
 existing fastapi app. You must add the routers to the app by yourself by
 editing your fastapi.endpoint where you want to add the routes.
-
 
 Bug Tracker
 ===========
@@ -65,7 +66,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_quotation%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_quotation%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -73,31 +74,31 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Akretion
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Sebastien BEAU <sebastien.beau@akretion.com>
-* Benoît GUILLOT <benoit.guillot@akretion.com>
-* Iván Todorovich <ivan.todorovich@gmail.com>
-* Simone Orsi <simone.orsi@camptocamp.com>
-* Matthieu Saison <matthieu.saison@akretion.com>
-* Florian Mounier <florian.mounier@akretion.com>
+- Sebastien BEAU <sebastien.beau@akretion.com>
+- Benoît GUILLOT <benoit.guillot@akretion.com>
+- Iván Todorovich <ivan.todorovich@gmail.com>
+- Simone Orsi <simone.orsi@camptocamp.com>
+- Matthieu Saison <matthieu.saison@akretion.com>
+- Florian Mounier <florian.mounier@akretion.com>
 
 Other credits
-~~~~~~~~~~~~~
+-------------
 
 The development of this module has been financially supported by:
 
-* Akretion R&D
-* LaboAndCo
+- Akretion R&D
+- LaboAndCo
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
-This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_quotation>`_ project on GitHub.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_quotation>`_ project on GitHub.
 
 You are welcome to contribute.
