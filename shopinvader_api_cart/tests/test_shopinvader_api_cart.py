@@ -3,7 +3,6 @@
 # @author Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import json
 
 from fastapi import status
 from requests import Response
@@ -23,8 +22,9 @@ class TestSaleCart(CommonSaleCart):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_get_authenticated_no_cart_no_uuid_no_rights(self) -> None:
-        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
-            AccessError
+        with (
+            self._create_unauthenticated_user_client() as test_client,
+            self.assertRaises(AccessError),
         ):
             test_client.get("/")
 
@@ -34,8 +34,9 @@ class TestSaleCart(CommonSaleCart):
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_get_authenticated_no_cart_uuid_no_rights(self) -> None:
-        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
-            AccessError
+        with (
+            self._create_unauthenticated_user_client() as test_client,
+            self.assertRaises(AccessError),
         ):
             test_client.get(f"/{self.dummy_uuid}")
 
@@ -54,8 +55,9 @@ class TestSaleCart(CommonSaleCart):
         so = self.env["sale.order"]._create_empty_cart(
             self.default_fastapi_authenticated_partner.id
         )
-        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
-            AccessError
+        with (
+            self._create_unauthenticated_user_client() as test_client,
+            self.assertRaises(AccessError),
         ):
             test_client.get(f"/{so.uuid}")
 
@@ -108,7 +110,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         response_json = response.json()
         self.assertTrue(response_json)
@@ -126,9 +128,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                "/current/sync", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/current/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_sync_authenticated_no_rights(self) -> None:
@@ -137,10 +137,11 @@ class TestSaleCart(CommonSaleCart):
                 {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1}
             ]
         }
-        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
-            AccessError
+        with (
+            self._create_unauthenticated_user_client() as test_client,
+            self.assertRaises(AccessError),
         ):
-            test_client.post("/sync", content=json.dumps(data))
+            test_client.post("/sync", json=data)
 
     def test_sync_authenticated_no_uuid_one_transactions_cart_exists(self) -> None:
         """
@@ -156,7 +157,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         response_json = response.json()
         self.assertTrue(response_json)
@@ -178,9 +179,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                f"/{self.dummy_uuid}/sync", content=json.dumps(data)
-            )
+            response: Response = test_client.post(f"/{self.dummy_uuid}/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         response_json = response.json()
         self.assertTrue(response_json)
@@ -202,15 +201,13 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                f"/sync/{self.dummy_uuid}", content=json.dumps(data)
-            )
+            response: Response = test_client.post(f"/sync/{self.dummy_uuid}", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_sync_no_content_no_cart(self):
         data = {"transactions": []}
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_transaction_product_not_existing(self) -> None:
@@ -235,10 +232,11 @@ class TestSaleCart(CommonSaleCart):
                 }
             ]
         }
-        with self._create_test_client(
-            router=cart_router
-        ) as test_client, self.assertRaises(MissingError):
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+        with (
+            self._create_test_client(router=cart_router) as test_client,
+            self.assertRaises(MissingError),
+        ):
+            test_client.post(f"/{so.uuid}/sync", json=data)
 
     def test_transactions(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(
@@ -250,7 +248,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(1, len(line))
         self.assertEqual(self.product_1, line.product_id)
@@ -263,7 +261,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(1, len(line))
         self.assertEqual(self.product_1, line.product_id)
@@ -276,7 +274,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(0, len(line))
 
@@ -293,7 +291,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(1, len(line))
         self.assertEqual(self.product_1, line.product_id)
@@ -317,7 +315,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(0, len(line))
         self.assertEqual(
@@ -336,7 +334,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(1, len(line))
         data = {
@@ -350,7 +348,7 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(0, len(line))
         self.assertEqual(
@@ -371,15 +369,15 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         lines = so.order_line
         self.assertEqual(2, len(lines))
         line_product_1_id = lines.filtered(
-            lambda l, product=self.product_1: l.product_id == product
+            lambda sol, product=self.product_1: sol.product_id == product
         )
         self.assertEqual(4, line_product_1_id.product_uom_qty)
         line_product_2_id = lines.filtered(
-            lambda l, product=self.product_2: l.product_id == product
+            lambda sol, product=self.product_2: sol.product_id == product
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
         self.assertEqual(
@@ -423,15 +421,15 @@ class TestSaleCart(CommonSaleCart):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            test_client.post(f"/{so.uuid}/sync", content=json.dumps(data))
+            test_client.post(f"/{so.uuid}/sync", json=data)
         lines = so.order_line
         self.assertEqual(2, len(lines))
         line_product_1_id = lines.filtered(
-            lambda l, product=self.product_1: l.product_id == product
+            lambda sol, product=self.product_1: sol.product_id == product
         )
         self.assertEqual(4, line_product_1_id.product_uom_qty)
         line_product_2_id = lines.filtered(
-            lambda l, product=self.product_2: l.product_id == product
+            lambda sol, product=self.product_2: sol.product_id == product
         )
         self.assertEqual(2, line_product_2_id.product_uom_qty)
         self.assertEqual(
@@ -453,9 +451,7 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {"delivery": {"address_id": address.id}}
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                f"/{so.uuid}/update", content=json.dumps(data)
-            )
+            response: Response = test_client.post(f"/{so.uuid}/update", json=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(so.partner_shipping_id, address)
         self.assertEqual(so.partner_invoice_id, partner)
@@ -477,9 +473,7 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {"delivery": {"address_id": address.id}}
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                "/current/update", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/current/update", json=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_deprecated_route_update_uuid(self) -> None:
@@ -499,9 +493,7 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {"delivery": {"address_id": address.id}}
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                f"/update/{so.uuid}", content=json.dumps(data)
-            )
+            response: Response = test_client.post(f"/update/{so.uuid}", json=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_update_new_cart(self) -> None:
@@ -516,7 +508,7 @@ class TestSaleCart(CommonSaleCart):
         )
         data = {"delivery": {"address_id": address.id}}
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post("/update", content=json.dumps(data))
+            response: Response = test_client.post("/update", json=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         info = response.json()
         self.assertTrue(self.env["sale.order"].browse(info["id"]).exists())
@@ -538,9 +530,7 @@ class TestSaleCart(CommonSaleCart):
             for __ in range(1, 5):
                 # Get 4 new carts
                 with self._create_test_client(router=cart_router) as test_client:
-                    response: Response = test_client.post(
-                        "/new", content=json.dumps(data)
-                    )
+                    response: Response = test_client.post("/new", json=data)
                     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
                     self.assertTrue(capt.records[-1].id > so.id)
             self.assertEqual(len(capt.records), 4)
