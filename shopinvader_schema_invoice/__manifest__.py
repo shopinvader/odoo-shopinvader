@@ -4,20 +4,18 @@
 {
     "name": "Shopinvader schema invoice",
     "summary": "Add schema for invoices",
-    "version": "16.0.1.0.1",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Camptocamp",
     "license": "AGPL-3",
     "depends": [
-        "fastapi",
         "pydantic",
         "extendable",
         "account",
     ],
     "external_dependencies": {
         "python": ["extendable_pydantic>=1.2.0", "pydantic>=2.0.0"],
-    'installable': False,
-},
-    'installable': False,
+    },
+    "installable": True,
 }

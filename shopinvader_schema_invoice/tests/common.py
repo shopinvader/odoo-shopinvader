@@ -32,7 +32,6 @@ class InvoiceCaseMixin:
                 "name": "test receive",
                 "code": "testreceive",
                 "account_type": "asset_receivable",
-                "company_id": cls.env.company.id,
                 "reconcile": True,
             }
         )
