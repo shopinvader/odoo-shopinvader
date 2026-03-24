@@ -29,7 +29,6 @@ exclude: |
   ^shopinvader_fastapi_auth_partner/|
   ^shopinvader_sale_cart/|
   ^shopinvader_sale_cart_anonymous_partner/|
-  ^shopinvader_sale_state/|
   ^shopinvader_schema_address/|
   ^shopinvader_schema_invoice/|
   ^shopinvader_schema_sale/|
