@@ -17,13 +17,14 @@ Shopinvader Auth Partner authentication for FastAPI endpoints
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_fastapi_auth_partner
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_fastapi_auth_partner
     :alt: shopinvader/odoo-shopinvader
 
 |badge1| |badge2| |badge3|
 
-This module provides the ``auth_jwt_authenticated_or_anonymous_partner`` and
-``auth_jwt_authenticated_or_anonymous_partner_auto_create`` FastAPI dependencies.
+This module provides the ``auth_jwt_authenticated_or_anonymous_partner``
+and ``auth_jwt_authenticated_or_anonymous_partner_auto_create`` FastAPI
+dependencies.
 
 **Table of contents**
 
@@ -37,26 +38,28 @@ This module provide the following FastAPI dependencies:
 
 ``def auth_jwt_authenticated_or_anonymous_partner() -> Partner``
 
-  This dependency returns the authenticated partner from ``fast_api_auth_jwt``
-  ``auth_jwt_optionally_authenticated_partner``. If not authenticated or no partner is
-  found, look for the ``shopinvader_anonymous_partner`` cookie in the request and return
-  the corresponding partner.
+   This dependency returns the authenticated partner from
+   ``fast_api_auth_jwt`` ``auth_jwt_optionally_authenticated_partner``.
+   If not authenticated or no partner is found, look for the
+   ``shopinvader_anonymous_partner`` cookie in the request and return
+   the corresponding partner.
 
-  If not partner is found, raise a 401 (unauthorized).
+   If not partner is found, raise a 401 (unauthorized).
 
 ``def auth_jwt_authenticated_or_anonymous_partner_auto_create() -> Partner``
 
-  This dependency returns the authenticated partner from ``fast_api_auth_jwt``
-  ``auth_jwt_optionally_authenticated_partner``. If not authenticated or no partner is
-  found, look for the ``shopinvader_anonymous_partner`` cookie in the request and return
-  the corresponding partner.
+   This dependency returns the authenticated partner from
+   ``fast_api_auth_jwt`` ``auth_jwt_optionally_authenticated_partner``.
+   If not authenticated or no partner is found, look for the
+   ``shopinvader_anonymous_partner`` cookie in the request and return
+   the corresponding partner.
 
-  If no partner is found, create an anonymous partner, set the corresponding cookie and
-  return the newly created partner.
+   If no partner is found, create an anonymous partner, set the
+   corresponding cookie and return the newly created partner.
 
-The record sets returned from these functions are bound either to the Odoo user defined
-on the JWT validaator (if authenticated), or to the Odoo user defined on the FastAPI
-endpoint.
+The record sets returned from these functions are bound either to the
+Odoo user defined on the JWT validaator (if authenticated), or to the
+Odoo user defined on the FastAPI endpoint.
 
 These dependencies are suitable and intended to override the
 ``odoo.addon.fastapi.dependencies.authenticated_partner_impl``.
@@ -67,7 +70,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_fastapi_auth_partner%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_fastapi_auth_partner%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -75,13 +78,13 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Akretion
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
-This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_fastapi_auth_partner>`_ project on GitHub.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_fastapi_auth_partner>`_ project on GitHub.
 
 You are welcome to contribute.

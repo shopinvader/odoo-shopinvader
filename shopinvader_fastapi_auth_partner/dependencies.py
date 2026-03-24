@@ -4,7 +4,7 @@
 
 
 import logging
-import sys
+from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request, Response, status
 
@@ -15,11 +15,6 @@ from odoo.addons.fastapi.dependencies import odoo_env
 from odoo.addons.fastapi_auth_partner.dependencies import (
     auth_partner_optionally_authenticated_partner,
 )
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated
-else:
-    from typing_extensions import Annotated
 
 _logger = logging.getLogger(__name__)
 

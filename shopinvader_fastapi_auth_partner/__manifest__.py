@@ -6,14 +6,16 @@
 {
     "name": "Shopinvader Auth Partner authentication for FastAPI endpoints",
     "summary": """
-        Provide Partner and Anonymous Partner authentication to FastAPI routes.""",
-    "version": "16.0.1.0.0",
+        Provide Partner and Anonymous Partner authentication to FastAPI routes.
+    """,
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Akretion",
     "maintainers": [],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": ["fastapi_auth_partner", "shopinvader_anonymous_partner"],
-    "data": [],
-    "demo": [],
-    'installable': False,
+    "depends": [
+        "fastapi_auth_partner",
+        "shopinvader_anonymous_partner",
+    ],
+    "installable": True,
 }

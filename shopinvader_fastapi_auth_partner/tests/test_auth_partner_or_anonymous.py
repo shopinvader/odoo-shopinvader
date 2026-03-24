@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-import sys
+from typing import Annotated
 from unittest import mock
 
 from fastapi import Depends, FastAPI, status
@@ -16,11 +16,6 @@ from odoo.addons.shopinvader_fastapi_auth_partner.dependencies import (
     auth_partner_authenticated_or_anonymous_partner,
     auth_partner_authenticated_or_anonymous_partner_autocreate,
 )
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated
-else:
-    from typing_extensions import Annotated
 
 app = FastAPI()
 
@@ -78,7 +73,6 @@ class TestBase(CommonTestAuth):
         )
 
 
-@tests.tagged("post_install", "-at_install")
 class TestAuthPartnerOrAnonymous(TestBase):
     def test_unauthenticated(self) -> None:
         # unauthenticated returns 401
