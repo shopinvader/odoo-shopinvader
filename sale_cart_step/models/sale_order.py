@@ -2,11 +2,10 @@
 # @author: Simone Orsi <simahawk@gmail.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, exceptions, fields, models
+from odoo import exceptions, fields, models
 
 
 class SaleOrder(models.Model):
-
     _inherit = "sale.order"
 
     cart_step_id = fields.Many2one(
@@ -38,5 +37,5 @@ class SaleOrder(models.Model):
     def _cart_step_get_from_code(self, code):
         step = self.env["sale.order.cart.step"].search([("code", "=", code)], limit=1)
         if not step:
-            raise exceptions.UserError(_("Invalid step code %s") % code)
+            raise exceptions.UserError(self.env._("Invalid step code %s") % code)
         return step
