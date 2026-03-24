@@ -3,7 +3,7 @@
 
 import secrets
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 
@@ -31,7 +31,7 @@ class ResPartner(models.Model):
             .sudo()
             .create(
                 {
-                    "name": _("Anonymous (%s)") % (token[:8],),
+                    "name": self.env._("Anonymous (%s)") % (token[:8],),
                     "anonymous_token": token,
                     "active": False,
                 }

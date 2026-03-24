@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =============================
 Shopinvader Anonymous Partner
 =============================
@@ -17,17 +13,17 @@ Shopinvader Anonymous Partner
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-LGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_anonymous_partner
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_anonymous_partner
     :alt: shopinvader/odoo-shopinvader
 
 |badge1| |badge2| |badge3|
 
-This module allows the creation of temporary partners for anonymous visitors, and set
-a cookie to establish a session for these partners.
+This module allows the creation of temporary partners for anonymous
+visitors, and set a cookie to establish a session for these partners.
 
 **Table of contents**
 
@@ -41,23 +37,26 @@ The following model methods are added in a helper model:
 
 ``_create_anonymous_partner__cookie(response)``
 
-  Create a new anonymous partner and set the ``shopinvader-anonymous-partner`` cookie.
-  Return the newly created partner record.
+   Create a new anonymous partner and set the
+   ``shopinvader-anonymous-partner`` cookie. Return the newly created
+   partner record.
 
-  ``response`` is typically the http response, it must have a ``set_cookie()`` method.
-  It is known to work with ``odoo.http.request.future_response`` and FastAPI
-  ``Response`` objects.
+   ``response`` is typically the http response, it must have a
+   ``set_cookie()`` method. It is known to work with
+   ``odoo.http.request.future_response`` and FastAPI ``Response``
+   objects.
 
 ``_get_anonymous_partner__cookie(cookies)``
 
-  Return the partner record corresponding to the ``shopinvader-anonymous-partner``
-  cookie in the current request, if any. Returns an empty record set if the cookie is
-  not set or if the corresponding partner was not found.
+   Return the partner record corresponding to the
+   ``shopinvader-anonymous-partner`` cookie in the current request, if
+   any. Returns an empty record set if the cookie is not set or if the
+   corresponding partner was not found.
 
-  ``cookies`` is the cookies dictionary from the http request.
+   ``cookies`` is the cookies dictionary from the http request.
 
-Note the record sets returned by these methods are in a sudo'ed environment, so handle
-with care.
+Note the record sets returned by these methods are in a sudo'ed
+environment, so handle with care.
 
 Known issues / Roadmap
 ======================
@@ -70,7 +69,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_anonymous_partner%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_anonymous_partner%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -78,13 +77,13 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
-This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_anonymous_partner>`_ project on GitHub.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_anonymous_partner>`_ project on GitHub.
 
 You are welcome to contribute.

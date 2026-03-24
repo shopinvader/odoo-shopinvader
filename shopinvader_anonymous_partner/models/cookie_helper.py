@@ -23,13 +23,11 @@ class Response(typing.Protocol):
         secure: bool,
         httponly: bool,
         samesite: typing.Literal["lax", "strict", "none"],
-    ) -> None:
-        ...
+    ) -> None: ...
 
 
 class Cookies(typing.Protocol):
-    def get(self, key: str) -> typing.Optional[str]:
-        ...
+    def get(self, key: str) -> str | None: ...
 
 
 class ShopinvaderAnonymousCookieHelper(models.AbstractModel):

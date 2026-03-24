@@ -33,7 +33,11 @@ class TestController(Controller):
 
     @route("/test/anonymous_partner_delete", type="http", auth="none")
     def anonymous_partner_delete(self):
-        cookie_helper = request.env["shopinvader_anonymous_partner.cookie.helper"]
+        cookie_helper = request.env[
+            "shopinvader_anonymous_partner.cookie.helper"
+        ].with_context(
+            queue_job__no_delay=True,
+        )
         cookie_helper._delete_anonymous_partner__cookie(
             request.httprequest.cookies, request.future_response
         )
@@ -115,6 +119,8 @@ class TestShopinvaderAnonymousPartner(TransactionCase):
 
 
 class TestShopinvaderAnonymousPartnerEndToEnd(HttpCase):
+    readonly_enabled = False
+
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
