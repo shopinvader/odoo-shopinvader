@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import uuid
 
-from odoo import api, fields, models
+from odoo import Command, api, fields, models
 
 
 class SaleOrder(models.Model):
@@ -45,16 +45,10 @@ class SaleOrder(models.Model):
         """
         return (
             self.env.ref("base.public_user")
+            .sudo()
             .partner_id.with_context(active_test=False)
             .property_product_pricelist.id
         )
-
-    @api.model
-    def _play_onchanges_cart(self, vals):
-        """
-        Play all onchanges bypassing the rules
-        """
-        return self.sudo().play_onchanges(vals, vals.keys())
 
     @api.model
     def _prepare_cart(self, partner_id):
@@ -63,7 +57,6 @@ class SaleOrder(models.Model):
             "typology": "cart",
             "partner_id": partner_id,
         }
-        vals.update(self._play_onchanges_cart(vals))
         if not vals.get("pricelist_id"):
             vals["pricelist_id"] = self._get_default_pricelist_id()
         return vals
@@ -89,13 +82,11 @@ class SaleOrder(models.Model):
             if line:
                 new_qty = line.product_uom_qty + cart_line.product_uom_qty
                 vals = {"product_uom_qty": new_qty}
-                vals.update(line._play_onchanges_cart_line(vals))
-                cmd = (1, line.id, vals)
+                cmd = (Command.UPDATE, line.id, vals)
             else:
                 vals = cart_line._prepare_cart_line_transfer_values()
                 vals["order_id"] = self.id
-                vals.update(self.env["sale.order.line"]._play_onchanges_cart_line(vals))
-                cmd = (0, None, vals)
+                cmd = (Command.CREATE, None, vals)
             update_cmds.append(cmd)
         self.write({"order_line": update_cmds})
 

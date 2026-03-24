@@ -25,13 +25,13 @@ class TestSaleCart(TestSaleCartBase):
         self.assertEqual(len(merged_cart.order_line), 2)
         self.assertEqual(
             merged_cart.order_line.filtered(
-                lambda l, product=self.product: l.product_id.id == product.id
+                lambda sol, product=self.product: sol.product_id.id == product.id
             ).product_uom_qty,
             2,
         )
         self.assertEqual(
             merged_cart.order_line.filtered(
-                lambda l, product=product_2: l.product_id.id == product.id
+                lambda sol, product=product_2: sol.product_id.id == product.id
             ).product_uom_qty,
             1,
         )
