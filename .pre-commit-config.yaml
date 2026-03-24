@@ -27,10 +27,8 @@ exclude: |
   ^shopinvader_delivery_state/|
   ^shopinvader_fastapi_auth_jwt/|
   ^shopinvader_fastapi_auth_partner/|
-  ^shopinvader_filtered_model/|
   ^shopinvader_sale_cart/|
   ^shopinvader_sale_cart_anonymous_partner/|
-  ^shopinvader_sale_cart_no_onchange_helper/|
   ^shopinvader_sale_state/|
   ^shopinvader_schema_address/|
   ^shopinvader_schema_invoice/|
