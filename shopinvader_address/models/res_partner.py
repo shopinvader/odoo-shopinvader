@@ -1,7 +1,7 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import MissingError, UserError
 
 
@@ -26,7 +26,7 @@ class ResPartner(models.Model):
         )
         if len(sale_order) > 0:
             raise UserError(
-                _(
+                self.env._(
                     "Can not update invoicing addresses(%(address_id)d)"
                     "because it is already used on confirmed sale order",
                     address_id=self.id,
@@ -51,7 +51,7 @@ class ResPartner(models.Model):
         )
         if len(sale_order) > 0:
             raise UserError(
-                _(
+                self.env._(
                     "Can not delete Delivery address(%(address_id)d)"
                     "because it is already used on confirmed sale order",
                     address_id=self.id,
@@ -71,7 +71,7 @@ class ResPartner(models.Model):
         address = addresses.filtered(lambda rec: rec.id == address_id)
         if not address:
             raise MissingError(
-                _(
+                self.env._(
                     "Invoicing address not found, id: %(address_id)d",
                     address_id=address_id,
                 )
@@ -79,7 +79,7 @@ class ResPartner(models.Model):
         return address
 
     def _create_shopinvader_invoicing_address(self, vals: dict) -> "ResPartner":
-        raise UserError(_("Creation of invoicing addresses is not supported"))
+        raise UserError(self.env._("Creation of invoicing addresses is not supported"))
 
     def _update_shopinvader_invoicing_address(
         self, vals: dict, address: "ResPartner"
@@ -108,7 +108,7 @@ class ResPartner(models.Model):
         address = addresses.filtered(lambda rec: rec.id == address_id)
         if not address:
             raise MissingError(
-                _(
+                self.env._(
                     "Delivery address not found, id: %(address_id)d",
                     address_id=address_id,
                 )
@@ -126,7 +126,7 @@ class ResPartner(models.Model):
     ) -> "ResPartner":
         if any(key in vals for key in ("parent_id", "type")):
             raise UserError(
-                _(
+                self.env._(
                     "parent_id and type cannot be modified on"
                     " shopinvader delivery address, id: %(address_id)d",
                     address_id=address.id,
