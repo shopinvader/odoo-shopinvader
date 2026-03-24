@@ -2,11 +2,11 @@
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
 import logging
-from typing import Annotated, Union
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, Request, Response, status
 
-from odoo import api, models
+from odoo import api
 
 from odoo.addons.base.models.res_partner import Partner
 from odoo.addons.fastapi.dependencies import odoo_env
@@ -16,15 +16,41 @@ from odoo.addons.fastapi_auth_jwt.dependencies import (
     auth_jwt_default_validator_name,
     auth_jwt_optionally_authenticated_partner,
 )
+from odoo.addons.shopinvader_router_helper import VirtualModel
 
 _logger = logging.getLogger(__name__)
 
 signin_router = APIRouter(tags=["signin"])
 
 
+class SigninHelper(VirtualModel):
+    _inherit = "shopinvader.router.helper"
+    _name = "shopinvader_api_signin_jwt.signin_router.helper"
+    _description = "ShopInvader API Signin Jwt Router Helper"
+
+    @api.model
+    def _get_partner_create_vals(self, payload: Payload):
+        return {"name": payload.get("name"), "email": payload.get("email")}
+
+    @api.model
+    def _create_partner_from_payload(self, payload: Payload):
+        partner = (
+            self.env["res.partner"]
+            .sudo()
+            .create(self._get_partner_create_vals(payload))
+        )
+        return self.env["res.partner"].browse(partner.id)
+
+
+def signin_helper(
+    env: Annotated[api.Environment, Depends(odoo_env)],
+):
+    return env["shopinvader_api_signin_jwt.signin_router.helper"].new()
+
+
 @signin_router.post("/signin", status_code=200)
 def signin(
-    env: Annotated[api.Environment, Depends(odoo_env)],
+    signin_helper: Annotated[SigninHelper, Depends(signin_helper)],
     partner: Annotated[Partner, Depends(auth_jwt_optionally_authenticated_partner)],
     payload: Annotated[Payload, Depends(auth_jwt_authenticated_payload)],
     response: Response,
@@ -37,12 +63,10 @@ def signin(
     Promote anonymous partner and delete it if any.
     """
     if not partner:
-        partner = env[
-            "shopinvader_api_signin_jwt.signin_router.helper"
-        ]._create_partner_from_payload(payload)
+        partner = signin_helper._create_partner_from_payload(payload)
         response.status_code = status.HTTP_201_CREATED
 
-    cookie_helper = env["shopinvader_anonymous_partner.cookie.helper"]
+    cookie_helper = signin_helper.env["shopinvader_anonymous_partner.cookie.helper"]
     cookie_helper._promote_anonymous_partner_and_delete_cookie(
         partner, request.cookies, response
     )
@@ -52,7 +76,7 @@ def signin(
 def signout(
     env: Annotated[api.Environment, Depends(odoo_env)],
     default_validator_name: Annotated[
-        Union[str, None], Depends(auth_jwt_default_validator_name)
+        str | None, Depends(auth_jwt_default_validator_name)
     ],
     response: Response,
 ) -> None:
@@ -74,21 +98,3 @@ def signout(
         secure=validator.cookie_secure,
         httponly=True,
     )
-
-
-class ShopinvaderApSigninJwtRouterHelper(models.AbstractModel):
-    _name = "shopinvader_api_signin_jwt.signin_router.helper"
-    _description = "ShopInvader API Signin Jwt Router Helper"
-
-    @api.model
-    def _get_partner_create_vals(self, payload: Payload):
-        return {"name": payload.get("name"), "email": payload.get("email")}
-
-    @api.model
-    def _create_partner_from_payload(self, payload: Payload):
-        partner = (
-            self.env["res.partner"]
-            .sudo()
-            .create(self._get_partner_create_vals(payload))
-        )
-        return self.env["res.partner"].browse(partner.id)

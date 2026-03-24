@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==========================
 Shopinvader Api Signin JWT
 ==========================
@@ -17,22 +13,22 @@ Shopinvader Api Signin JWT
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_signin_jwt
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_signin_jwt
     :alt: shopinvader/odoo-shopinvader
 
 |badge1| |badge2| |badge3|
 
-This addon adds a web API to signin into the application and create a partner
-if the email in the jwt payload is unknown.
+This addon adds a web API to signin into the application and create a
+partner if the email in the jwt payload is unknown.
 
-This addon supports the "anonymous partner" feature, which allows to create
-carts for user that are not loggedin.
-When you login from an anonymous partner, your cart is transfered to your real
-partner, and your anonymous partner is deleted.
+This addon supports the "anonymous partner" feature, which allows to
+create carts for user that are not loggedin. When you login from an
+anonymous partner, your cart is transfered to your real partner, and
+your anonymous partner is deleted.
 
 **Table of contents**
 
@@ -42,26 +38,29 @@ partner, and your anonymous partner is deleted.
 Installation
 ============
 
-To enable anonymous carts, you'll need the module ``shopinvader_fastapi_auth_jwt``.
-And use it's dependency ``auth_jwt_authenticated_or_anonymous_partner_autocreate``
-when mounting your cart router, such as:
+To enable anonymous carts, you'll need the module
+``shopinvader_fastapi_auth_jwt``. And use it's dependency
+``auth_jwt_authenticated_or_anonymous_partner_autocreate`` when mounting
+your cart router, such as:
 
-.. code-block:: python
+.. code:: python
 
-    cart_app = FastAPI()
-    cart_app.include_router(cart_router)
-    cart_app.dependency_overrides.update(
-        {
-            authenticated_partner_impl: auth_jwt_authenticated_or_anonymous_partner_autocreate,
-        }
-    )
+   cart_app = FastAPI()
+   cart_app.include_router(cart_router)
+   cart_app.dependency_overrides.update(
+       {
+           authenticated_partner_impl: auth_jwt_authenticated_or_anonymous_partner_autocreate,
+       }
+   )
 
-Example of a full implementation with jwt signin and anonymous carts can be found in the demo module ``shopinvader_v2_app_demo``.
+Example of a full implementation with jwt signin and anonymous carts can
+be found in the demo module ``shopinvader_v2_app_demo``.
 
 Known issues / Roadmap
 ======================
 
-* Use ``fastapi_auth_jwt.auth_jwt_authenticated_odoo_env`` dependency for the env (see https://github.com/OCA/rest-framework/issues/406)
+- Use ``fastapi_auth_jwt.auth_jwt_authenticated_odoo_env`` dependency
+  for the env (see https://github.com/OCA/rest-framework/issues/406)
 
 Bug Tracker
 ===========
@@ -69,7 +68,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_signin_jwt%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_signin_jwt%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -77,18 +76,18 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Quentin Groulard <quentin.groulard@acsone.eu>
+- Quentin Groulard <quentin.groulard@acsone.eu>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
-This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_signin_jwt>`_ project on GitHub.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_signin_jwt>`_ project on GitHub.
 
 You are welcome to contribute.
