@@ -3,20 +3,19 @@
 
 {
     "name": "Shopinvader Api Customer",
-    "summary": """
-        Adds service to manage shopinvader customer""",
-    "version": "16.0.1.1.0",
+    "summary": "Adds service to manage shopinvader customer",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
-    "author": "ACSONE SA/NV,Odoo Community Association (OCA),Odoo Community Association (OCA)",
+    "author": "ACSONE SA/NV,Odoo Community Association (OCA),"
+    "Odoo Community Association (OCA)",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
+        "shopinvader_router_helper",
         "extendable_fastapi",
-        "fastapi",
         # Odoo
         "mail",
         "product",
     ],
     "data": [],
-    "demo": [],
-    'installable': False,
+    "installable": True,
 }
