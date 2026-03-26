@@ -1,7 +1,6 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import json
 
 from fastapi import status
 from requests import Response
@@ -26,7 +25,12 @@ class TestShopinvaderCustomerApi(FastAPITransactionCase):
         cls.lang_fr = cls.env.ref("base.lang_fr")
         cls.lang_fr.active = True
 
-        cls.pricelist = cls.env.ref("product.list0")
+        cls.pricelist = cls.env["product.pricelist"].create(
+            {
+                "name": "Test Pricelist",
+                "currency_id": cls.env.ref("base.EUR").id,
+            }
+        )
         cls.user = cls.env["res.users"].create(
             {
                 "name": "Test User",
@@ -78,7 +82,7 @@ class TestShopinvaderCustomerApi(FastAPITransactionCase):
         }
         customer = self._call_test_client(
             "customer",
-            content=json.dumps(data),
+            json=data,
             method="post",
         )
         self.assertEqual(customer.get("mobile"), data.get("mobile"))
@@ -92,11 +96,9 @@ class TestShopinvaderCustomerApi(FastAPITransactionCase):
             self.assertFalse(capture.records)
             customer = self._call_test_client(
                 "customer",
-                content=json.dumps(
-                    {
-                        "opt_in": False,
-                    }
-                ),
+                json={
+                    "opt_in": False,
+                },
                 method="post",
             )
             self.assertFalse(customer.get("opt_in"))
@@ -104,11 +106,9 @@ class TestShopinvaderCustomerApi(FastAPITransactionCase):
             self.assertTrue(capture.records)
             customer = self._call_test_client(
                 "customer",
-                content=json.dumps(
-                    {
-                        "opt_in": True,
-                    }
-                ),
+                json={
+                    "opt_in": True,
+                },
                 method="post",
             )
             self.assertTrue(customer.get("opt_in"))

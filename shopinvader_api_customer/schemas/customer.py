@@ -28,7 +28,7 @@ class Customer(StrictExtendableBaseModel):
             mobile=odoo_rec.mobile or None,
             opt_in=not odoo_rec.is_blacklisted,
             pricelist_id=odoo_rec.property_product_pricelist.id,
-            lang_id=env["res.lang"]._lang_get_id(odoo_rec.lang),
+            lang_id=env["res.lang"]._lang_get(odoo_rec.lang).id,
         )
 
 
