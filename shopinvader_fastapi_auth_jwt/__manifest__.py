@@ -3,15 +3,15 @@
 
 {
     "name": "Shopinvader Auth JWT authentication for FastAPI endpoints",
-    "summary": """
-        Provide JWT and Anonymous Partner authentication to FastAPI routes.""",
-    "version": "16.0.1.0.3",
+    "summary": "Provide JWT and Anonymous Partner authentication to FastAPI routes.",
+    "version": "18.0.1.0.0",
     "license": "LGPL-3",
     "author": "ACSONE SA/NV",
     "maintainers": [],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "depends": ["fastapi_auth_jwt", "shopinvader_anonymous_partner"],
-    "data": [],
-    "demo": [],
-    'installable': False,
+    "depends": [
+        "fastapi_auth_jwt",
+        "shopinvader_anonymous_partner",
+    ],
+    "installable": True,
 }
