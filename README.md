@@ -25,6 +25,7 @@ addon | version | maintainers | summary
 [sale_cart_step](sale_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_address](shopinvader_address/) | 18.0.1.0.0 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
+[shopinvader_router_helper](shopinvader_router_helper/) | 18.0.1.0.0 |  | Standard helper for shopinvader routers
 [shopinvader_sale_state](shopinvader_sale_state/) | 18.0.1.0.0 |  | Basic module to implement state for sale order
 
 
