@@ -6,13 +6,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, Response
 
-from odoo import api
-
-from odoo.addons.base.models.res_partner import Partner as ResPartner
-from odoo.addons.fastapi.dependencies import (
-    authenticated_partner,
-    authenticated_partner_env,
-)
+from odoo.addons.shopinvader_api_cart.routers.cart import CartHelper, cart_helper
 
 cart_cancel_router = APIRouter(tags=["carts"])
 
@@ -20,15 +14,14 @@ cart_cancel_router = APIRouter(tags=["carts"])
 @cart_cancel_router.post("/cancel/{uuid}")
 @cart_cancel_router.post("/cancel/current")
 def cancel_cart(
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated["ResPartner", Depends(authenticated_partner)],
+    helper: Annotated[CartHelper, Depends(cart_helper)],
     uuid: UUID | None = None,
 ):
     """Cancel cart.
 
     You can use this endpoint to cancel current cart or a specific cart
     """
-    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
+    cart = helper._get_cart(uuid)
     if not cart:
         return Response(status_code=404)
     else:

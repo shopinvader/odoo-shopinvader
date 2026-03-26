@@ -1,0 +1,2 @@
+This module provides an API endpoint to cancel carts in Shopinvader for
+Odoo.
