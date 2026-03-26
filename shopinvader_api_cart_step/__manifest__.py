@@ -3,13 +3,11 @@
 
 {
     "name": "Sale Cart steps cart API integration",
-    "summary": """
-    Track checkout steps on sale cart.
-    """,
-    "version": "16.0.1.0.1",
+    "summary": "Track checkout steps on sale cart.",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Camptocamp",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": ["sale_cart_step", "shopinvader_api_cart"],
-    'installable': False,
+    "installable": True,
 }

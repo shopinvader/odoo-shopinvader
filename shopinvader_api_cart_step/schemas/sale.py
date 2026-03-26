@@ -1,7 +1,6 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from typing import List, Optional
 
 from extendable_pydantic import StrictExtendableBaseModel
 
@@ -22,9 +21,8 @@ class CartStep(StrictExtendableBaseModel):
 
 
 class Sale(BaseSale, extends=True):
-
-    step: Optional[CartStep] = None
-    done_steps: Optional[List[CartStep]] = []
+    step: CartStep | None = None
+    done_steps: list[CartStep] | None = []
 
     @classmethod
     def from_sale_order(cls, odoo_rec):
