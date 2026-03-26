@@ -23,6 +23,7 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_cart](sale_cart/) | 18.0.1.0.0 |  | Use Sale Orders as cart.
 [sale_cart_step](sale_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
+[sale_quotation](sale_quotation/) | 18.0.1.0.0 |  | Sale Quotation
 [shopinvader_address](shopinvader_address/) | 18.0.1.0.0 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 18.0.1.0.0 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 18.0.1.0.0 |  | Adds a service to manage shopinvader invoicing and delivery address
@@ -44,7 +45,6 @@ Unported addons
 ---------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[sale_quotation](sale_quotation/) | 16.0.0.2.0 (unported) |  | Sale Quotation
 [shopinvader_address_shipping_note](shopinvader_address_shipping_note/) | 16.0.1.0.0 (unported) |  | Adds a field shipping note on res.partner
 [shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 16.0.1.0.0 (unported) |  | Adds a shipping note on schemas of services to manage Shipping Addresses
 [shopinvader_api_cart_cancel](shopinvader_api_cart_cancel/) | 16.0.1.0.0 (unported) |  | Cancel cart via Fastapi
