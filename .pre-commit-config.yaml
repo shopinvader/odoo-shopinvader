@@ -3,7 +3,6 @@ exclude: |
   # NOT INSTALLABLE ADDONS
   ^sale_quotation/|
   ^shopinvader_address_shipping_note/|
-  ^shopinvader_anonymous_partner/|
   ^shopinvader_api_address/|
   ^shopinvader_api_address_shipping_note/|
   ^shopinvader_api_cart/|
