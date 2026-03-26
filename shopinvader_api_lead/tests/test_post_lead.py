@@ -1,6 +1,5 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import json
 
 from fastapi import status
 from requests import Response
@@ -56,7 +55,7 @@ class TestShopinvaderAPILead(FastAPITransactionCase):
             "description": "<p>I would need more info. Can you email me?</p>",
         }
         with self._create_test_client(router=lead_router) as test_client:
-            response: Response = test_client.post("/leads", content=json.dumps(data))
+            response: Response = test_client.post("/leads", json=data)
         self.assertEqual(
             response.status_code,
             status.HTTP_201_CREATED,
@@ -74,7 +73,8 @@ class TestShopinvaderAPILead(FastAPITransactionCase):
             "subject": "Question about your site",
             "description": "<p>I would need more info. Can you email me?</p>",
         }
-        with self._create_unauthenticated_user_client() as test_client, self.assertRaises(
-            AccessError
+        with (
+            self._create_unauthenticated_user_client() as test_client,
+            self.assertRaises(AccessError),
         ):
-            test_client.post("/leads", content=json.dumps(data))
+            test_client.post("/leads", json=data)

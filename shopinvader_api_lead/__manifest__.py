@@ -3,13 +3,13 @@
 
 {
     "name": "Shopinvader API Lead",
-    "summary": """
-        Lead FastAPI adding a service for creating CRM leads.""",
-    "version": "16.0.1.0.1",
+    "summary": "Lead FastAPI adding a service for creating CRM leads.",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "depends": [
+        "shopinvader_router_helper",
         "crm",
         "extendable_fastapi",
     ],
@@ -21,9 +21,8 @@
         "python": [
             "fastapi",
             "pydantic>=2.0.0",
-            "extendable-pydantic>=1.2.0",
+            "extendable_pydantic>=1.2.0",
         ],
-    'installable': False,
-},
-    'installable': False,
+    },
+    "installable": True,
 }

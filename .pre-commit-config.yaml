@@ -6,7 +6,6 @@ exclude: |
   ^shopinvader_api_cart_cancel/|
   ^shopinvader_api_customer/|
   ^shopinvader_api_invoice/|
-  ^shopinvader_api_lead/|
   ^shopinvader_api_quotation/|
   ^shopinvader_api_sale_loyalty/|
   ^shopinvader_api_security_invoice/|
