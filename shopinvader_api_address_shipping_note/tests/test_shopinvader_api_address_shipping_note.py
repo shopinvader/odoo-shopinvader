@@ -1,19 +1,15 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import json
 
 from extendable import context
 from fastapi import status
 from requests import Response
-
-from odoo.tests.common import tagged
 
 from odoo.addons.extendable.registry import _extendable_registries_database
 from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 from odoo.addons.shopinvader_api_address.routers import address_router
 
 
-@tagged("post_install", "-at_install")
 class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -123,7 +119,7 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
             "/addresses/delivery",
             method="post",
             http_code=status.HTTP_201_CREATED,
-            content=json.dumps(data),
+            json=data,
         )
         self.assertTrue(response_json)
 
@@ -136,7 +132,7 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
         }
 
         address = self._call_test_client(
-            f"/addresses/delivery/{address_id}", method="post", content=json.dumps(data)
+            f"/addresses/delivery/{address_id}", method="post", json=data
         )
         self.assertEqual(address.get("shipping_note"), "new test note")
 
@@ -145,6 +141,6 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
         }
 
         address = self._call_test_client(
-            f"/addresses/delivery/{address_id}", method="post", content=json.dumps(data)
+            f"/addresses/delivery/{address_id}", method="post", json=data
         )
         self.assertEqual(address.get("shipping_note"), None)
