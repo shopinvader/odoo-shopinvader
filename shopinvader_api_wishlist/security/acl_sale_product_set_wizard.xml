@@ -2,7 +2,6 @@
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.model.access" id="shopinvader_sale_product_set_wizard_access">
         <field name="name">sale.product.set.wizard shopinvader user read access</field>
         <field name="model_id" ref="sale_product_set.model_sale_product_set_wizard" />
@@ -11,6 +10,5 @@
         <field name="perm_create" eval="1" />
         <field name="perm_unlink" eval="1" />
         <field name="perm_write" eval="1" />
-  </record>
-
+    </record>
 </odoo>

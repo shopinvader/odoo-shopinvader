@@ -70,7 +70,7 @@ class CommonWishlistCase(FastAPITransactionCase):
             self.assertEqual(rec_data[key], data[key])
         for dline in data_lines:
             list_line = rec_lines.filtered(
-                lambda x: x.product_id.id == dline["product_id"]
+                lambda x, dline=dline: x.product_id.id == dline["product_id"]
             )
             self.assertTrue(list_line)
             for key in ("quantity", "sequence"):

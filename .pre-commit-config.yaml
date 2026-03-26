@@ -8,7 +8,6 @@ exclude: |
   ^shopinvader_api_sale_loyalty/|
   ^shopinvader_api_security_invoice/|
   ^shopinvader_api_signin_jwt/|
-  ^shopinvader_api_wishlist/|
   ^shopinvader_fastapi_auth_jwt/|
   ^shopinvader_fastapi_auth_partner/|
   ^shopinvader_sale_cart_anonymous_partner/|

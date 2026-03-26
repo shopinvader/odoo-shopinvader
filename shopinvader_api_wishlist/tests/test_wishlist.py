@@ -8,7 +8,7 @@ from .common import CommonWishlistCase
 class WishlistCase(CommonWishlistCase):
     @classmethod
     def setUpClass(cls):
-        super(WishlistCase, cls).setUpClass()
+        super().setUpClass()
         cls.prod_set = cls.env["product.set"].create(
             {
                 "name": "Wishlist 1",
@@ -173,7 +173,8 @@ class WishlistCase(CommonWishlistCase):
     def test_delete(self):
         with self._create_test_client(partner=self.partner) as test_client:
             res = test_client.delete(f"/wishlists/{self.prod_set.id}")
-        self.assertEqual(res.status_code, 204)
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.json()["ref"], "WISH_1")
         self.assertFalse(self.prod_set.exists())
 
     def test_add_to_cart(self):
@@ -231,7 +232,7 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res.status_code, 200)
         for line in lines_data:
             set_line = self.prod_set.set_line_ids.filtered(
-                lambda x, l=line: x.product_id.id == l["product_id"]
+                lambda x, psl=line: x.product_id.id == psl["product_id"]
             )
             self.assertEqual(len(set_line), 1)
             self.assertEqual(set_line.quantity, line["quantity"])
@@ -262,7 +263,7 @@ class WishlistCase(CommonWishlistCase):
             )
             self.assertEqual(res.status_code, 200)
         line1 = self.prod_set.set_line_ids.filtered(
-            lambda l, _id=self.prod1.id: l.product_id.id == _id
+            lambda psl, _id=self.prod1.id: psl.product_id.id == _id
         )
         line1.sequence = 10
         # Add another line and change order
@@ -276,7 +277,7 @@ class WishlistCase(CommonWishlistCase):
         self.assertEqual(res.status_code, 200)
         before = res.json()
         line2 = self.prod_set.set_line_ids.filtered(
-            lambda l, _id=self.prod2.id: l.product_id.id == _id
+            lambda psl, _id=self.prod2.id: psl.product_id.id == _id
         )
         self.assertEqual(line1.sequence, 10)
         self.assertEqual(line2.sequence, 0)

@@ -21,9 +21,7 @@ class WishlistLine(StrictExtendableBaseModel):
     quantity: float
 
     @classmethod
-    def from_product_set_line(
-        cls, line: ProductSetLine
-    ) -> self:  # noqa: F821  pylint: disable=undefined-variable
+    def from_product_set_line(cls, line: ProductSetLine) -> self:  # noqa: F821  pylint: disable=undefined-variable
         return cls.model_construct(
             id=line.id,
             sequence=line.sequence,
@@ -37,9 +35,7 @@ class WhishlistPartnerRef(StrictExtendableBaseModel):
     name: str
 
     @classmethod
-    def from_res_partner(
-        cls, partner: Partner
-    ) -> self:  # noqa: F821  pylint: disable=undefined-variable
+    def from_res_partner(cls, partner: Partner) -> self:  # noqa: F821  pylint: disable=undefined-variable
         return cls.model_construct(
             id=partner.id,
             name=partner.name,
@@ -55,9 +51,7 @@ class Wishlist(StrictExtendableBaseModel):
     typology: str
 
     @classmethod
-    def from_product_set(
-        cls, odoo_rec: ProductSet
-    ) -> self:  # noqa: F821  pylint: disable=undefined-variable
+    def from_product_set(cls, odoo_rec: ProductSet) -> self:  # noqa: F821  pylint: disable=undefined-variable
         record = cls.model_construct(
             id=odoo_rec.id,
             name=odoo_rec.name,
@@ -137,8 +131,7 @@ class WishlistLineIdentifier(StrictExtendableBaseModel):
         return hash((type(self), self.product_id))
 
 
-class WishlistDeleteItemRequest(WishlistLineIdentifier, extra="ignore"):
-    ...
+class WishlistDeleteItemRequest(WishlistLineIdentifier, extra="ignore"): ...
 
 
 class WishlistdMoveItemRequest(WishlistLineIdentifier, extra="ignore"):
@@ -158,8 +151,7 @@ class WishlistAddItemRequest(WishlistLineIdentifier, extra="ignore"):
         return vals
 
 
-class WishlistUpdateItemRequest(WishlistAddItemRequest, extra="ignore"):
-    ...
+class WishlistUpdateItemRequest(WishlistAddItemRequest, extra="ignore"): ...
 
 
 class WishlistReplaceItemRequest(WishlistLineIdentifier, extra="ignore"):
