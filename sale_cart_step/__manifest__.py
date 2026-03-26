@@ -3,10 +3,8 @@
 
 {
     "name": "Sale Cart steps",
-    "summary": """
-    Track checkout steps on sale cart.
-    """,
-    "version": "16.0.1.0.0",
+    "summary": "Track checkout steps on sale cart.",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Camptocamp",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
@@ -17,5 +15,5 @@
         "views/sale_order.xml",
         "views/cart_step.xml",
     ],
-    'installable': False,
+    "installable": True,
 }

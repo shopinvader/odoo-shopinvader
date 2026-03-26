@@ -11,7 +11,7 @@ from odoo.tools import mute_logger
 class TestSaleCart(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestSaleCart, cls).setUpClass()
+        super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product = cls.env["product.product"].create(
             {
@@ -60,4 +60,5 @@ class TestSaleCart(TransactionCase):
         with self.assertRaises(psycopg2.errors.UniqueViolation):
             self.last_step.copy()
         self.last_step.active = False
+        self.last_step.flush_recordset()
         self.assertTrue(self.last_step.copy())

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <odoo noupdate="1">
-
     <record id="cart_step_address" model="sale.order.cart.step">
         <field name="name">Address</field>
         <field name="code">address</field>
@@ -15,5 +14,4 @@
         <field name="name">Last</field>
         <field name="code">last</field>
     </record>
-
 </odoo>
