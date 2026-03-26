@@ -33,6 +33,7 @@ addon | version | maintainers | summary
 [shopinvader_api_cart_options](shopinvader_api_cart_options/) | 18.0.1.0.0 |  | Add product options to the cart API
 [shopinvader_api_cart_step](shopinvader_api_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_api_customer](shopinvader_api_customer/) | 18.0.1.0.0 |  | Adds service to manage shopinvader customer
+[shopinvader_api_invoice](shopinvader_api_invoice/) | 18.0.1.0.0 |  | Provides invoice web api via Fastapi
 [shopinvader_api_lead](shopinvader_api_lead/) | 18.0.1.0.0 |  | Lead FastAPI adding a service for creating CRM leads.
 [shopinvader_api_quotation](shopinvader_api_quotation/) | 18.0.1.0.0 |  | Shopinvader Quotation
 [shopinvader_api_sale](shopinvader_api_sale/) | 18.0.1.0.0 |  | Sale FastApi for exposing sale order
@@ -56,7 +57,6 @@ Unported addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 16.0.1.0.0 (unported) |  | Adds a shipping note on schemas of services to manage Shipping Addresses
-[shopinvader_api_invoice](shopinvader_api_invoice/) | 16.0.1.0.1 (unported) |  | Provides invoice web api via Fastapi
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.0 (unported) |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.2.0.0 (unported) |  | This module adds a signin service with jwt token.
 [shopinvader_fastapi_auth_partner](shopinvader_fastapi_auth_partner/) | 16.0.1.0.0 (unported) |  | Provide Partner and Anonymous Partner authentication to FastAPI routes.
