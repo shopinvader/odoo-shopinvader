@@ -1,0 +1,2 @@
+- Florian Mounier <florian.mounier@akretion.com>
+- Sébastien BEAU <sebastien.beau@akretion.com>
