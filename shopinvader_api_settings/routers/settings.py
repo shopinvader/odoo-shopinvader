@@ -5,10 +5,11 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from odoo import api, fields, models
+from odoo import api, fields
 
 from odoo.addons.fastapi.dependencies import fastapi_endpoint, odoo_env
 from odoo.addons.fastapi.models import FastapiEndpoint
+from odoo.addons.shopinvader_router_helper import VirtualModel
 
 from ..schemas import Settings
 from ..schemas.country import Country
@@ -18,26 +19,8 @@ from ..schemas.partner_title import PartnerTitle
 settings_router = APIRouter(tags=["settings"])
 
 
-@settings_router.get("/settings", response_model=Settings)
-def get_settings(
-    env: Annotated[api.Environment, Depends(odoo_env)],
-    endpoint: Annotated[FastapiEndpoint, Depends(fastapi_endpoint)],
-) -> Settings:
-    """
-    Returns common settings
-    """
-    return (
-        env["shopinvader_api_settings.routers.helper"]
-        .new(
-            {
-                "fastapi_endpoint": endpoint,
-            }
-        )
-        ._get_settings()
-    )
-
-
-class ShopinvaderApiSettingsRouterHelper(models.AbstractModel):
+class SettingsHelper(VirtualModel):
+    _inherit = "shopinvader.router.helper"
     _name = "shopinvader_api_settings.routers.helper"
     _description = "Shopinvader API Settings Router Helper"
 
@@ -78,3 +61,22 @@ class ShopinvaderApiSettingsRouterHelper(models.AbstractModel):
             Lang.from_res_lang(lang)
             for lang in self.env["res.lang"].with_context(active_test=True).search([])
         ]
+
+
+def settings_helper(
+    env: Annotated[api.Environment, Depends(odoo_env)],
+    endpoint: Annotated[FastapiEndpoint, Depends(fastapi_endpoint)],
+):
+    return env["shopinvader_api_settings.routers.helper"].new(
+        {"fastapi_endpoint": endpoint}
+    )
+
+
+@settings_router.get("/settings", response_model=Settings)
+def get_settings(
+    helper: Annotated[SettingsHelper, Depends(settings_helper)],
+) -> Settings:
+    """
+    Returns common settings
+    """
+    return helper._get_settings()
