@@ -5,18 +5,17 @@
 {
     "name": "Shopinvader API Invoice",
     "summary": "Provides invoice web api via Fastapi",
-    "version": "16.0.1.0.1",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Camptocamp",
     "license": "AGPL-3",
     "depends": [
+        "shopinvader_router_helper",
         "shopinvader_schema_invoice",
         "shopinvader_api_security_invoice",
-        "shopinvader_filtered_model",
         "extendable_fastapi",
-        "report_generate_helper",
     ],
-    'installable': False,
+    "installable": True,
 }

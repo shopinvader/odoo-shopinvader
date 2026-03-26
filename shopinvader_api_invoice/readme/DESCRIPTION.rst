@@ -1,1 +1,0 @@
-This addon provides a web API for Odoo invoices (account.move).
