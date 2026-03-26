@@ -369,17 +369,21 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:693531566eb492a32fad8e4c9662384b369b26d9b986eeaeba6ff83bcd85c84c
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_quotation"><img alt="shopinvader/odoo-shopinvader" src="https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github" /></a></p>
-<p>This module adds a REST API for shopinvader to manage quotations (see module: sale_quotation)</p>
-<p>Initially, the quotation has the <cite>shopinvader_state</cite> “estimating”.
-After updating the price manually when the button “sent” on Odoo backend
-is submitted, the quotation will be sent by email (native behaviour) and the
-shopinvader_state will switch to “estimated”.</p>
-<p>On Shopinvader site, the customer can see the state, the amount … of quotation.</p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_quotation"><img alt="shopinvader/odoo-shopinvader" src="https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github" /></a></p>
+<p>This module adds a REST API for shopinvader to manage quotations (see
+module: sale_quotation)</p>
+<p>Initially, the quotation has the shopinvader_state “estimating”. After
+updating the price manually when the button “sent” on Odoo backend is
+submitted, the quotation will be sent by email (native behaviour) and
+the shopinvader_state will switch to “estimated”.</p>
+<p>On Shopinvader site, the customer can see the state, the amount … of
+quotation.</p>
 <p>Why this module and how it can be used?</p>
-<p>If you have many different product without price, and these products can only be selled on demand (compute price, need a seller action).
-This module allow your customer to request quotation with products only on quotation (shop_only_quotation)
-Your customer can add to cart product without price and request a quotation for a cart.</p>
+<p>If you have many different product without price, and these products can
+only be selled on demand (compute price, need a seller action). This
+module allow your customer to request quotation with products only on
+quotation (shop_only_quotation) Your customer can add to cart product
+without price and request a quotation for a cart.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
@@ -396,12 +400,12 @@ Your customer can add to cart product without price and request a quotation for 
 </div>
 <div class="section" id="usage">
 <h1><a class="toc-backref" href="#toc-entry-1">Usage</a></h1>
-<p>This addons provides 2 new routers: <cite>quotation_router</cite> and
-<cite>quotation_cart_router</cite>. The <cite>quotation_cart_router</cite> is declared
-with the same tags as the one defined in the <cite>shopinvader_api_cart</cite>
-addon. As this one, no prefix is added to the router, to allow to mount
-it as a nested app. See the README of <cite>shopinvader_api_cart</cite> for
-more details on how to do it.</p>
+<p>This addons provides 2 new routers: quotation_router and
+quotation_cart_router. The quotation_cart_router is declared with the
+same tags as the one defined in the shopinvader_api_cart addon. As this
+one, no prefix is added to the router, to allow to mount it as a nested
+app. See the README of shopinvader_api_cart for more details on how to
+do it.</p>
 <p>As all api addons, installing this addon will not have any effect on the
 existing fastapi app. You must add the routers to the app by yourself by
 editing your fastapi.endpoint where you want to add the routes.</p>
@@ -411,7 +415,7 @@ editing your fastapi.endpoint where you want to add the routes.</p>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_quotation%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_quotation%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -443,7 +447,7 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 </div>
 <div class="section" id="maintainers">
 <h2><a class="toc-backref" href="#toc-entry-7">Maintainers</a></h2>
-<p>This module is part of the <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_quotation">shopinvader/odoo-shopinvader</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_quotation">shopinvader/odoo-shopinvader</a> project on GitHub.</p>
 <p>You are welcome to contribute.</p>
 </div>
 </div>
