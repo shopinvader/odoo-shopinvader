@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -45,7 +45,7 @@ class SaleOrder(models.Model):
     def action_request_quotation(self):
         if any(rec.state != "draft" or rec.typology != "cart" for rec in self):
             raise UserError(
-                _(
+                self.env._(
                     "Only orders of cart typology in draft state "
                     "can be converted to quotation"
                 )
@@ -62,7 +62,7 @@ class SaleOrder(models.Model):
     def action_confirm_quotation(self):
         if any(rec.quotation_state != "waiting_acceptation" for rec in self):
             raise UserError(
-                _(
+                self.env._(
                     "Only quotation with the state 'waiting_acceptation' can be "
                     "Confirmed."
                 )
