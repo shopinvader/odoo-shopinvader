@@ -22,7 +22,6 @@ exclude: |
   ^shopinvader_api_wishlist/|
   ^shopinvader_fastapi_auth_jwt/|
   ^shopinvader_fastapi_auth_partner/|
-  ^shopinvader_sale_cart/|
   ^shopinvader_sale_cart_anonymous_partner/|
   ^shopinvader_schema_sale/|
   ^shopinvader_schema_sale_state/|
