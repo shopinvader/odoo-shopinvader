@@ -3,9 +3,8 @@
 
 {
     "name": "Shopinvader Address Shipping Note",
-    "summary": """
-        Adds a field shipping note on res.partner""",
-    "version": "16.0.1.0.0",
+    "summary": "Adds a field shipping note on res.partner",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
@@ -15,6 +14,5 @@
     "data": [
         "views/res_partner.xml",
     ],
-    "demo": [],
-    'installable': False,
+    "installable": True,
 }
