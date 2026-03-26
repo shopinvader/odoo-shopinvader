@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [sale_cart](sale_cart/) | 18.0.1.0.0 |  | Use Sale Orders as cart.
 [sale_cart_step](sale_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_address](shopinvader_address/) | 18.0.1.0.0 |  | Shopinvader Address: Delivery,Invoicing
+[shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_sale_state](shopinvader_sale_state/) | 18.0.1.0.0 |  | Basic module to implement state for sale order
 
 
@@ -51,7 +52,6 @@ addon | version | maintainers | summary
 [shopinvader_api_settings](shopinvader_api_settings/) | 16.0.1.0.1 (unported) |  | Adds a service to get commont settings
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.2.0.0 (unported) |  | This module adds a signin service with jwt token.
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.2 (unported) |  | Handle shop wishlist
-[shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 (unported) |  | Shopinvader delivery state
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.3 (unported) |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_fastapi_auth_partner](shopinvader_fastapi_auth_partner/) | 16.0.1.0.0 (unported) |  | Provide Partner and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.2.0 (unported) |  | ShopInvader logic for sale carts.
