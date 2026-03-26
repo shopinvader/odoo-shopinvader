@@ -7,7 +7,7 @@ from odoo.tests.common import TransactionCase
 class SaleCartCommon(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(SaleCartCommon, cls).setUpClass()
+        super().setUpClass()
         cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product = cls.env["product.product"].create(
             {
@@ -29,3 +29,4 @@ class SaleCartCommon(TransactionCase):
                 "typology": "cart",
             }
         )
+        cls.payment_method = cls.env.ref("payment.payment_method_ach_direct_debit")

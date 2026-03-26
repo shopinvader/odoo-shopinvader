@@ -27,7 +27,7 @@ class SaleOrder(models.Model):
             self.typology = "sale"
 
     def action_confirm(self):
-        res = super(SaleOrder, self).action_confirm()
+        res = super().action_confirm()
         for record in self:
             if record.state != "draft":
                 record._confirm_sale()
