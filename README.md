@@ -27,6 +27,7 @@ addon | version | maintainers | summary
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 18.0.1.0.0 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 18.0.1.0.0 |  | Adds a service to manage shopinvader invoicing and delivery address
 [shopinvader_api_cart](shopinvader_api_cart/) | 18.0.1.0.0 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
+[shopinvader_api_cart_step](shopinvader_api_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_api_sale](shopinvader_api_sale/) | 18.0.1.0.0 |  | Sale FastApi for exposing sale order
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.0.0 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 18.0.1.0.0 |  | Adds a service to get commont settings
@@ -48,7 +49,6 @@ addon | version | maintainers | summary
 [shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 16.0.1.0.0 (unported) |  | Adds a shipping note on schemas of services to manage Shipping Addresses
 [shopinvader_api_cart_cancel](shopinvader_api_cart_cancel/) | 16.0.1.0.0 (unported) |  | Cancel cart via Fastapi
 [shopinvader_api_cart_options](shopinvader_api_cart_options/) | 16.0.1.0.2 (unported) |  | Add product options to the cart API
-[shopinvader_api_cart_step](shopinvader_api_cart_step/) | 16.0.1.0.1 (unported) |  | Track checkout steps on sale cart.
 [shopinvader_api_customer](shopinvader_api_customer/) | 16.0.1.1.0 (unported) |  | Adds service to manage shopinvader customer
 [shopinvader_api_invoice](shopinvader_api_invoice/) | 16.0.1.0.1 (unported) |  | Provides invoice web api via Fastapi
 [shopinvader_api_lead](shopinvader_api_lead/) | 16.0.1.0.1 (unported) |  | Lead FastAPI adding a service for creating CRM leads.
