@@ -23,7 +23,7 @@ class TestInvoiceSchema(SchemaInvoiceCase):
         invoice = Invoice.from_account_move(invoice_rec)
         expected = {
             "id": invoice_rec.id,
-            "name": invoice_rec.name,
+            "name": invoice_rec.name or "",
             "state": invoice_rec.state,
             "date_invoice": invoice_rec.invoice_date,
             "date_due": invoice_rec.invoice_date_due or None,

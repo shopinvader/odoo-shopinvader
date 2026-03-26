@@ -26,7 +26,6 @@ exclude: |
   ^shopinvader_sale_cart/|
   ^shopinvader_sale_cart_anonymous_partner/|
   ^shopinvader_schema_address/|
-  ^shopinvader_schema_invoice/|
   ^shopinvader_schema_sale/|
   ^shopinvader_schema_sale_state/|
   # END NOT INSTALLABLE ADDONS

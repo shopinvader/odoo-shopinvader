@@ -43,7 +43,7 @@ class Invoice(StrictExtendableBaseModel):
     def from_account_move(cls, odoo_rec):
         return cls.model_construct(
             id=odoo_rec.id,
-            name=odoo_rec.name,
+            name=odoo_rec.name or "",
             date_invoice=odoo_rec.invoice_date,
             date_due=odoo_rec.invoice_date_due or None,
             state=InvoiceState(odoo_rec.state),
