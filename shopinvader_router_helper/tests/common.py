@@ -54,13 +54,14 @@ def setup_models(env, module):
     # Temporary add models to registry
     models = env.registry.load(
         env.cr,
-        type("_name_getter", (object,), {"name": "shopinvader_router_helper"}),
+        type("_name_getter", (object,), {"name": module}),
     )
     env.registry.setup_models(env.cr)
-    env.registry.init_models(env.cr, models, {"module": "shopinvader_router_helper"})
+    env.registry.init_models(env.cr, models, {"module": module})
 
 
 def unsetup_models(env, module):
     # Remove models from registry
     for model in models.MetaModel.module_to_models[module]:
-        del env.registry[model._name]
+        if "test" in model._name:
+            del env.registry[model._name]
