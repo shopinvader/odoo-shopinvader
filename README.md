@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_cart](sale_cart/) | 18.0.1.0.0 |  | Use Sale Orders as cart.
+[shopinvader_address](shopinvader_address/) | 18.0.1.0.0 |  | Shopinvader Address: Delivery,Invoicing
 
 
 Unported addons
@@ -30,7 +31,6 @@ addon | version | maintainers | summary
 --- | --- | --- | ---
 [sale_cart_step](sale_cart_step/) | 16.0.1.0.0 (unported) |  | Track checkout steps on sale cart.
 [sale_quotation](sale_quotation/) | 16.0.0.2.0 (unported) |  | Sale Quotation
-[shopinvader_address](shopinvader_address/) | 16.0.1.1.1 (unported) |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_address_shipping_note](shopinvader_address_shipping_note/) | 16.0.1.0.0 (unported) |  | Adds a field shipping note on res.partner
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 16.0.2.0.0 (unported) |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 16.0.1.3.3 (unported) |  | Adds a service to manage shopinvader invoicing and delivery address
