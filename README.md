@@ -27,6 +27,7 @@ addon | version | maintainers | summary
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_router_helper](shopinvader_router_helper/) | 18.0.1.0.0 |  | Standard helper for shopinvader routers
 [shopinvader_sale_state](shopinvader_sale_state/) | 18.0.1.0.0 |  | Basic module to implement state for sale order
+[shopinvader_schema_invoice](shopinvader_schema_invoice/) | 18.0.1.0.0 |  | Add schema for invoices
 
 
 Unported addons
@@ -58,7 +59,6 @@ addon | version | maintainers | summary
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 16.0.1.2.0 (unported) |  | ShopInvader logic for sale carts.
 [shopinvader_sale_cart_anonymous_partner](shopinvader_sale_cart_anonymous_partner/) | 16.0.2.0.0 (unported) |  | Glue module between shopinvader_sale_cart and shopinvader_anonymous_partner. This module solves cart conflicts when an anonymous user sign in.
 [shopinvader_schema_address](shopinvader_schema_address/) | 16.0.1.3.2 (unported) |  | Adds shchema address: address invoicing_address delivery_address
-[shopinvader_schema_invoice](shopinvader_schema_invoice/) | 16.0.1.0.1 (unported) |  | Add schema for invoices
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 16.0.1.2.0 (unported) |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 16.0.1.0.1 (unported) |  | Shopinvader Schema Sale State
 
