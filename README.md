@@ -24,6 +24,7 @@ addon | version | maintainers | summary
 [sale_cart](sale_cart/) | 18.0.1.0.0 |  | Use Sale Orders as cart.
 [sale_cart_step](sale_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_address](shopinvader_address/) | 18.0.1.0.0 |  | Shopinvader Address: Delivery,Invoicing
+[shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.0.0 |  | Add security rule to expose sale order
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_router_helper](shopinvader_router_helper/) | 18.0.1.0.0 |  | Standard helper for shopinvader routers
 [shopinvader_sale_state](shopinvader_sale_state/) | 18.0.1.0.0 |  | Basic module to implement state for sale order
@@ -51,7 +52,6 @@ addon | version | maintainers | summary
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.2.0 (unported) |  | Sale FastApi for exposing sale order
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.0 (unported) |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 16.0.1.0.1 (unported) |  | Add security rule to expose invoices
-[shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 (unported) |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 16.0.1.0.1 (unported) |  | Adds a service to get commont settings
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.2.0.0 (unported) |  | This module adds a signin service with jwt token.
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.2 (unported) |  | Handle shop wishlist
