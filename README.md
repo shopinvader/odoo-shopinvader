@@ -26,6 +26,7 @@ addon | version | maintainers | summary
 [shopinvader_address](shopinvader_address/) | 18.0.1.0.0 |  | Shopinvader Address: Delivery,Invoicing
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 18.0.1.0.0 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.0.0 |  | Add security rule to expose sale order
+[shopinvader_api_settings](shopinvader_api_settings/) | 18.0.1.0.0 |  | Adds a service to get commont settings
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_router_helper](shopinvader_router_helper/) | 18.0.1.0.0 |  | Standard helper for shopinvader routers
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 18.0.1.0.0 |  | ShopInvader logic for sale carts.
@@ -54,7 +55,6 @@ addon | version | maintainers | summary
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.2.0 (unported) |  | Sale FastApi for exposing sale order
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.0 (unported) |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 16.0.1.0.1 (unported) |  | Add security rule to expose invoices
-[shopinvader_api_settings](shopinvader_api_settings/) | 16.0.1.0.1 (unported) |  | Adds a service to get commont settings
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.2.0.0 (unported) |  | This module adds a signin service with jwt token.
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.2 (unported) |  | Handle shop wishlist
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.3 (unported) |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
