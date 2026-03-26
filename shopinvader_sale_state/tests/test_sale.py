@@ -19,5 +19,5 @@ class TestSaleState(CommonSaleState):
 
     def test_state_delivery_full(self):
         self.sale.action_confirm()
-        self.sale.action_done()
+        self.sale.action_lock()
         self.assertEqual(self.sale.shopinvader_state, "delivery_full")

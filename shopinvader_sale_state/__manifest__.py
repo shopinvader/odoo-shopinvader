@@ -6,23 +6,17 @@
 {
     "name": "Shopinvader Sale State",
     "summary": "Basic module to implement state for sale order",
-    "version": "16.0.1.0.1",
+    "version": "18.0.1.0.0",
     "development_status": "Alpha",
     "category": "Uncategorized",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",
     "license": "AGPL-3",
-    "external_dependencies": {
-        "python": [],
-        "bin": [],
-    'installable': False,
-},
     "depends": [
         "sale",
     ],
     "data": [
         "views/sale_view.xml",
     ],
-    "demo": [],
-    'installable': False,
+    "installable": True,
 }

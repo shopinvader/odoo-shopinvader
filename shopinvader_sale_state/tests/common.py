@@ -10,6 +10,7 @@ class CommonSaleState(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
         cls.product_A, cls.product_B = cls.env["product.product"].create(
             [
                 {

@@ -23,7 +23,7 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if self.state == "cancel":
             return "cancel"
-        elif self.state == "done":
+        elif self.locked:
             return "delivery_full"
         elif self.state in ("draft", "sent"):
             return "pending"
