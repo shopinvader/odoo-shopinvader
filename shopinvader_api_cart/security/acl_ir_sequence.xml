@@ -2,7 +2,6 @@
 <!-- Copyright 2023 ACSONE SA/NV
      License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
 <odoo>
-
     <record model="ir.model.access" id="shopinvader_ir_sequence_access_view">
         <field name="name">ir.sequence shopinvader user read access</field>
         <field name="model_id" ref="base.model_ir_sequence" />
@@ -14,6 +13,5 @@
         <field name="perm_create" eval="0" />
         <field name="perm_unlink" eval="0" />
         <field name="perm_write" eval="0" />
-  </record>
-
+    </record>
 </odoo>

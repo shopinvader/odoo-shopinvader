@@ -4,7 +4,6 @@ exclude: |
   ^sale_quotation/|
   ^shopinvader_address_shipping_note/|
   ^shopinvader_api_address_shipping_note/|
-  ^shopinvader_api_cart/|
   ^shopinvader_api_cart_cancel/|
   ^shopinvader_api_cart_options/|
   ^shopinvader_api_cart_step/|

@@ -8,7 +8,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, Response
 
-from odoo import _, api, models
+from odoo import api, fields
 from odoo.exceptions import MissingError
 from odoo.tools import float_compare
 
@@ -19,6 +19,7 @@ from odoo.addons.fastapi.dependencies import (
 )
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale.models.sale_order_line import SaleOrderLine
+from odoo.addons.shopinvader_router_helper import VirtualModel
 from odoo.addons.shopinvader_schema_sale.schemas import Sale
 
 from ..schemas import CartSyncInput, CartTransaction, CartUpdateInput
@@ -26,74 +27,25 @@ from ..schemas import CartSyncInput, CartTransaction, CartUpdateInput
 cart_router = APIRouter(tags=["carts"])
 
 
-@cart_router.get("/{uuid}")
-@cart_router.get("/current")
-@cart_router.get("/")
-def get(
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: UUID | None = None,
-) -> Sale | None:
-    """
-    Return an empty dict if no cart was found
-    """
-    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
-    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
-
-
-@cart_router.post("/sync/{uuid}", status_code=201, deprecated=True)
-@cart_router.post("/{uuid}/sync", status_code=201)
-@cart_router.post("/current/sync", status_code=201)
-@cart_router.post("/sync", status_code=201)
-def sync(
-    data: CartSyncInput,
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: UUID | None = None,
-) -> Sale | None:
-    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
-    cart = env["shopinvader_api_cart.cart_router.helper"]._sync_cart(
-        partner, cart, str(uuid) if uuid else None, data.transactions
-    )
-    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
-
-
-@cart_router.post("/new", status_code=201)
-def new(
-    data: CartSyncInput,
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated["ResPartner", Depends(authenticated_partner)],
-) -> Sale | None:
-    """Create a new cart on demand.
-
-    You can use this endpoint to create multiple carts for the same customer.
-    """
-    cart = env["shopinvader_api_cart.cart_router.helper"]._sync_cart(
-        partner, None, None, data.transactions
-    )
-    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
-
-
-@cart_router.post("/update/{uuid}", deprecated=True)
-@cart_router.post("/{uuid}/update")
-@cart_router.post("/current/update")
-@cart_router.post("/update")
-def update(
-    data: CartUpdateInput,
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated["ResPartner", Depends(authenticated_partner)],
-    uuid: UUID | None = None,
-) -> Sale:
-    cart = env["shopinvader_api_cart.cart_router.helper"]._update(
-        partner, data, str(uuid) if uuid else None
-    )
-
-    return Sale.from_sale_order(cart)
-
-
-class ShopinvaderApiCartRouterHelper(models.AbstractModel):
+class CartHelper(VirtualModel):
+    _inherit = "shopinvader.router.helper"
     _name = "shopinvader_api_cart.cart_router.helper"
     _description = "ShopInvader API Cart Router Helper"
+    _model = "sale.order"
+
+    partner = fields.Many2one("res.partner", required=True)
+
+    def _domain(self):
+        return [
+            ("partner_id", "=", self.partner.id),
+            ("typology", "=", "cart"),
+            ("state", "=", "draft"),
+        ]
+
+    def _get_cart(self, uuid: UUID | None):
+        return self.env["sale.order"]._find_open_cart(
+            self.partner.id, str(uuid) if uuid else None
+        )
 
     def _get_transaction_key(self, transaction: CartTransaction):
         """
@@ -129,7 +81,9 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         for transaction in transactions:
             if not self.env["product.product"].browse(transaction.product_id).exists():
                 raise MissingError(
-                    _(f"Product with id {transaction.product_id} not existing.")
+                    self.env._(
+                        f"Product with id {transaction.product_id} not existing."
+                    )
                 )
 
     @api.model
@@ -163,7 +117,6 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         vals = self._apply_transactions_on_existing_cart_line_prepare_vals(
             cart_line, transactions, vals
         )
-        vals.update(cart_line._play_onchanges_cart_line(vals))
         return (1, cart_line.id, vals)
 
     @api.model
@@ -193,7 +146,6 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             vals = self._apply_transactions_creating_new_cart_line_prepare_vals(
                 cart, transactions, vals
             )
-            vals.update(self.env["sale.order.line"]._play_onchanges_cart_line(vals))
             return (0, None, vals)
         return None
 
@@ -228,8 +180,6 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         partner = cart.partner_id
         vals = {
             # Order in this dict is important and must be kept.
-            # When creating the transaction we call play_onchanges().
-            # These onchanges will be played following the order defined here.
             # All computes depending on order_id must be triggered first,
             # to set the currency on the SOL for e.g.
             "order_id": cart.id,
@@ -284,16 +234,15 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
     @api.model
     def _sync_cart(
         self,
-        partner: ResPartner,
         cart: SaleOrder,
-        uuid: str,
+        uuid: UUID | None,
         transactions: list[CartTransaction],
     ):
         if not transactions:
             return cart
         if not cart:
-            cart = self.env["sale.order"]._create_empty_cart(partner.id)
-        if not uuid or cart.uuid == uuid:
+            cart = self.env["sale.order"]._create_empty_cart(self.partner.id)
+        if not uuid or cart.uuid == str(uuid):
             # only apply transaction to a cart if:
             # * no cart_uuid -> new cart
             # * cart_uuid = cart.uuid: Existing cart and transaction for this cart
@@ -303,12 +252,75 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
     def _prepare_update_cart_vals(self, data: CartUpdateInput, cart: SaleOrder) -> dict:
         return data._to_sale_order_vals()
 
-    def _update(self, partner, data, uuid):
-        cart = self.env["sale.order"]._find_open_cart(partner.id, uuid)
+    def _update(self, data: CartUpdateInput, uuid: UUID | None):
+        cart = self.env["sale.order"]._find_open_cart(
+            self.partner.id, str(uuid) if uuid else None
+        )
         if not cart:
-            cart = self.env["sale.order"]._create_empty_cart(partner.id)
+            cart = self.env["sale.order"]._create_empty_cart(self.partner.id)
 
         vals = self._prepare_update_cart_vals(data, cart)
         cart.write(vals)
 
         return cart
+
+
+def cart_helper(
+    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
+    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+):
+    return env["shopinvader_api_cart.cart_router.helper"].new({"partner": partner})
+
+
+@cart_router.get("/{uuid}")
+@cart_router.get("/current")
+@cart_router.get("/")
+def get(
+    helper: Annotated[CartHelper, Depends(cart_helper)],
+    uuid: UUID | None = None,
+) -> Sale | None:
+    """
+    Return an empty dict if no cart was found
+    """
+    cart = helper._get_cart(uuid)
+    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
+
+
+@cart_router.post("/sync/{uuid}", status_code=201, deprecated=True)
+@cart_router.post("/{uuid}/sync", status_code=201)
+@cart_router.post("/current/sync", status_code=201)
+@cart_router.post("/sync", status_code=201)
+def sync(
+    helper: Annotated[CartHelper, Depends(cart_helper)],
+    data: CartSyncInput,
+    uuid: UUID | None = None,
+) -> Sale | None:
+    cart = helper._get_cart(uuid)
+    cart = helper._sync_cart(cart, uuid, data.transactions)
+    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
+
+
+@cart_router.post("/new", status_code=201)
+def new(
+    helper: Annotated[CartHelper, Depends(cart_helper)],
+    data: CartSyncInput,
+) -> Sale | None:
+    """Create a new cart on demand.
+
+    You can use this endpoint to create multiple carts for the same customer.
+    """
+    cart = helper._sync_cart(None, None, data.transactions)
+    return Sale.from_sale_order(cart) if cart else Response(status_code=204)
+
+
+@cart_router.post("/update/{uuid}", deprecated=True)
+@cart_router.post("/{uuid}/update")
+@cart_router.post("/current/update")
+@cart_router.post("/update")
+def update(
+    helper: Annotated[CartHelper, Depends(cart_helper)],
+    data: CartUpdateInput,
+    uuid: UUID | None = None,
+) -> Sale:
+    cart = helper._update(data, uuid)
+    return Sale.from_sale_order(cart)
