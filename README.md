@@ -34,6 +34,7 @@ addon | version | maintainers | summary
 [shopinvader_api_cart_step](shopinvader_api_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
 [shopinvader_api_lead](shopinvader_api_lead/) | 18.0.1.0.0 |  | Lead FastAPI adding a service for creating CRM leads.
 [shopinvader_api_sale](shopinvader_api_sale/) | 18.0.1.0.0 |  | Sale FastApi for exposing sale order
+[shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 18.0.1.0.0 |  | Add security rule to expose invoices
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.0.0 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 18.0.1.0.0 |  | Adds a service to get commont settings
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 18.0.1.0.0 |  | Handle shop wishlist
@@ -56,7 +57,6 @@ addon | version | maintainers | summary
 [shopinvader_api_invoice](shopinvader_api_invoice/) | 16.0.1.0.1 (unported) |  | Provides invoice web api via Fastapi
 [shopinvader_api_quotation](shopinvader_api_quotation/) | 16.0.1.1.0 (unported) |  | Shopinvader Quotation
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.0 (unported) |  | FastAPI services to add coupons and loyalties to carts.
-[shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 16.0.1.0.1 (unported) |  | Add security rule to expose invoices
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.2.0.0 (unported) |  | This module adds a signin service with jwt token.
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 16.0.1.0.3 (unported) |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_fastapi_auth_partner](shopinvader_fastapi_auth_partner/) | 16.0.1.0.0 (unported) |  | Provide Partner and Anonymous Partner authentication to FastAPI routes.
