@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version='1.0' encoding='utf-8' ?>
 <!--
     Copyright 2021 Camptocamp (https://www.camptocamp.com).
     @author Iván Todorovich <ivan.todorovich@camptocamp.com>
@@ -14,17 +14,16 @@
                     name="quotation_state"
                     widget="statusbar"
                     statusbar_visible="draft,waiting_acceptation,accepted"
-                    attrs="{'invisible': [('state', 'in', ('sale', 'done'))]}"
+                    invisible="state in ('sale', 'done')"
                 />
             </field>
             <field name="state" position="attributes">
                 <attribute
-                    name="attrs"
-                >{"invisible": [("state", "in", ("draft", "sent", "cancel"))]}</attribute>
+                    name="invisible"
+                >state in ('draft', 'sent', 'cancel')</attribute>
             </field>
         </field>
     </record>
-
 
     <record id="view_quotation_tree" model="ir.ui.view">
         <field name="model">sale.order</field>
@@ -69,7 +68,6 @@
                     name="cancel"
                     domain="[('quotation_state', '=', 'cancel')]"
                 />
-
             </filter>
             <filter name="draft" position="attributes">
                 <attribute name="invisible">1</attribute>
@@ -86,8 +84,6 @@
                     context="{'group_by': 'quotation_state'}"
                 />
             </filter>
-
         </field>
     </record>
-
 </odoo>
