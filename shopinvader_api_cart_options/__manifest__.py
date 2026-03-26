@@ -4,13 +4,11 @@
 
 {
     "name": "Shopinvader API Cart Options",
-    "version": "16.0.1.0.2",
+    "version": "18.0.1.0.0",
     "author": "Akretion, Odoo Community Association (OCA)",
     "summary": "Add product options to the cart API",
     "depends": ["shopinvader_api_cart"],
     "website": "https://github.com/shopinvader/odoo-shopinvader",
-    "data": [],
-    "demo": [],
-    'installable': False,
+    "installable": True,
     "license": "AGPL-3",
 }

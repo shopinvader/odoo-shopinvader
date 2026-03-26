@@ -7,6 +7,7 @@ from odoo import api, fields, models
 
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.shopinvader_api_cart.schemas import CartTransaction
+from odoo.addons.shopinvader_router_helper import VirtualModel
 
 
 class SaleOrderLine(models.Model):
@@ -36,10 +37,8 @@ class SaleOrderLine(models.Model):
         return vals
 
 
-class ShopinvaderApiCartRouterHelper(
-    models.AbstractModel
-):  # pylint: disable=consider-merging-classes-inherited
-    _inherit = "shopinvader_api_cart.cart_router.helper"
+class CartHelper(VirtualModel):
+    _inherit = "shopinvader_api_cart.cart_router.helper"  # pylint: disable=consider-merging-classes-inherited
 
     @api.model
     def _apply_transactions_creating_new_cart_line_prepare_vals(
