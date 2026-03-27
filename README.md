@@ -45,6 +45,7 @@ addon | version | maintainers | summary
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 18.0.1.0.0 |  | Handle shop wishlist
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 18.0.1.0.0 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
+[shopinvader_fastapi_auth_partner](shopinvader_fastapi_auth_partner/) | 18.0.1.0.0 |  | Provide Partner and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_router_helper](shopinvader_router_helper/) | 18.0.1.0.0 |  | Standard helper for shopinvader routers
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 18.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_sale_cart_anonymous_partner](shopinvader_sale_cart_anonymous_partner/) | 18.0.1.0.0 |  | Glue module between shopinvader_sale_cart and shopinvader_anonymous_partner. This module solves cart conflicts when an anonymous user sign in.
@@ -60,7 +61,6 @@ Unported addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.0 (unported) |  | FastAPI services to add coupons and loyalties to carts.
-[shopinvader_fastapi_auth_partner](shopinvader_fastapi_auth_partner/) | 16.0.1.0.0 (unported) |  | Provide Partner and Anonymous Partner authentication to FastAPI routes.
 
 [//]: # (end addons)
 
