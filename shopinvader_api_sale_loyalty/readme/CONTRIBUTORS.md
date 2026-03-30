@@ -1,0 +1,4 @@
+- [Camptocamp](https://www.camptocamp.com)
+  - Iván Todorovich \<ivan.todorovich@gmail.com\>
+- [Acsone](https://www.acsone.eu)
+  - Marie Lejeune \<marie.lejeune@acsone.eu\>

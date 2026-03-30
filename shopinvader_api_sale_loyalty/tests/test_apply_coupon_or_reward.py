@@ -2,7 +2,6 @@
 # @author Iván Todorovich <ivan.todorovich@gmail.com>
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import json
 import uuid
 
 from requests import Response
@@ -101,7 +100,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         self.assertEqual(
@@ -132,7 +131,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     }
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         self.assertEqual(
@@ -159,7 +158,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         self.assertEqual(
@@ -182,7 +181,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_B.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         self.assertEqual(
@@ -210,7 +209,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     }
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         self.assertEqual(
@@ -236,7 +235,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_C.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         self.assertEqual(
@@ -252,17 +251,16 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             "been entered yet",
         )
         # Enter an invalid code
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, r"This code is invalid \(fakecode\)\."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(UserError, r"This code is invalid \(fakecode\)\."),
         ):
             data = {"code": "fakecode"}
-            test_client.post("/coupon", content=json.dumps(data))
+            test_client.post("/coupon", json=data)
         # Enter code
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"code": promo_code}
-            response = test_client.post("/coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", json=data)
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -291,7 +289,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     }
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         self.assertEqual(
@@ -307,13 +305,12 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
             "been entered yet",
         )
         # Enter an invalid code
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, r"This code is invalid \(fakecode\)\."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(UserError, r"This code is invalid \(fakecode\)\."),
         ):
             data = {"code": "fakecode"}
-            test_client.post("/current/coupon", content=json.dumps(data))
+            test_client.post("/current/coupon", json=data)
 
     def test_deprecated_route_apply_coupon(self):
         """
@@ -321,13 +318,12 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         :return:
         """
         # Enter an invalid code
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, r"This code is invalid \(fakecode\)\."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(UserError, r"This code is invalid \(fakecode\)\."),
         ):
             data = {"code": "fakecode"}
-            test_client.post("/apply_coupon", content=json.dumps(data))
+            test_client.post("/apply_coupon", json=data)
 
     def test_code_promotion_program_coupons(self):
         coupon = self._generate_coupons(self.code_promotion_program)
@@ -338,17 +334,18 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(
             len(self.cart.order_line),
             1,
-            "The coupon shouldn't have been applied as the code hasn't been entered yet",
+            "The coupon shouldn't have been applied "
+            "as the code hasn't been entered yet",
         )
         # Enter code
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"code": coupon.code}
-            response = test_client.post("/coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", json=data)
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -358,13 +355,14 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         )
         self.assertEqual(res["promo_codes"], [coupon.code])
         # Try to apply twice
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, "This program is already applied to this order."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(
+                UserError, "This program is already applied to this order."
+            ),
         ):
             data = {"code": coupon.code}
-            test_client.post("/coupon", content=json.dumps(data))
+            test_client.post("/coupon", json=data)
 
     def test_promotion_on_next_order(self):
         program = self.env["loyalty.program"].create(
@@ -406,7 +404,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_B.id, "qty": 2}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         res = response.json()
         generated_coupons = res["generated_coupons"]
@@ -425,10 +423,10 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            test_client.post("/sync", content=json.dumps(data))
+            test_client.post("/sync", json=data)
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"code": "PROMOTION"}
-            response: Response = test_client.post("/coupon", content=json.dumps(data))
+            response: Response = test_client.post("/coupon", json=data)
         self.assertEqual(response.status_code, 200)
         cart = response.json()
         self.assertAlmostEqual(
@@ -447,7 +445,8 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                 "total_included"
             ],
             2,
-            "Tax included reward amount should be 50% of tax included unit price of product A",
+            "Tax included reward amount should be 50% of "
+            "tax included unit price of product A",
         )
 
     def test_reward_amount_free_product(self):
@@ -458,7 +457,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         cart = response.json()
         self.assertAlmostEqual(
@@ -494,30 +493,30 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, "Several rewards available. Please specify one."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(
+                UserError, "Several rewards available. Please specify one."
+            ),
         ):
             data = {"code": coupon.code}
-            test_client.post("/coupon", content=json.dumps(data))
+            test_client.post("/coupon", json=data)
         allowed_rewards = program.reward_ids
         wrong_reward = self.env["loyalty.reward"].search(
             [("id", "not in", allowed_rewards.ids)], limit=1
         )
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, "Reward not allowed for this code."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(UserError, "Reward not allowed for this code."),
         ):
             data = {"code": coupon.code, "reward_id": wrong_reward.id}
-            test_client.post("/coupon", content=json.dumps(data))
+            test_client.post("/coupon", json=data)
 
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"code": coupon.code, "reward_id": program.reward_ids[0].id}
-            response = test_client.post("/coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", json=data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(self.cart.order_line), 2, "The reward should've been applied"
@@ -545,7 +544,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(
             len(self.cart.order_line),
@@ -565,7 +564,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         # Apply the reward
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"reward_id": claimable_rewards[0]["id"]}
-            response: Response = test_client.post("/reward", content=json.dumps(data))
+            response: Response = test_client.post("/reward", json=data)
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -597,30 +596,32 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            test_client.post("/sync", content=json.dumps(data))
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, "Several free products available. Please specify one."
+            test_client.post("/sync", json=data)
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(
+                UserError, "Several free products available. Please specify one."
+            ),
         ):
             data = {"code": coupon.code}
-            test_client.post("/coupon", content=json.dumps(data))
+            test_client.post("/coupon", json=data)
         allowed_products = program.reward_ids[0].reward_product_ids
         wrong_product = self.env["product.product"].search(
             [("id", "not in", allowed_products.ids)], limit=1
         )
 
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, "Free product not allowed for this reward."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(
+                UserError, "Free product not allowed for this reward."
+            ),
         ):
             data = {"code": coupon.code, "free_product_id": wrong_product.id}
-            test_client.post("/coupon", content=json.dumps(data))
+            test_client.post("/coupon", json=data)
 
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"code": coupon.code, "free_product_id": allowed_products[0].id}
-            response = test_client.post("/coupon", content=json.dumps(data))
+            response = test_client.post("/coupon", json=data)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
             len(self.cart.order_line), 2, "The reward should've been applied"
@@ -649,7 +650,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(
             len(self.cart.order_line),
@@ -669,13 +670,14 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         )
 
         # Try applying reward without specifying the product
-        with self._create_test_client(
-            router=sale_loyalty_cart_router
-        ) as test_client, self.assertRaisesRegex(
-            UserError, "Several free products available. Please specify one."
+        with (
+            self._create_test_client(router=sale_loyalty_cart_router) as test_client,
+            self.assertRaisesRegex(
+                UserError, "Several free products available. Please specify one."
+            ),
         ):
             data = {"reward_id": claimable_rewards[0]["id"]}
-            test_client.post("/reward", content=json.dumps(data))
+            test_client.post("/reward", json=data)
 
         # Apply the reward specifying the product
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
@@ -683,7 +685,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                 "reward_id": claimable_rewards[0]["id"],
                 "free_product_id": self.product_C.id,
             }
-            response = test_client.post("/reward", content=json.dumps(data))
+            response = test_client.post("/reward", json=data)
         self.assertEqual(response.status_code, 200)
         res = response.json()
         self.assertEqual(
@@ -704,7 +706,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(
             len(self.cart.order_line),
@@ -722,9 +724,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         )
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"reward_id": claimable_rewards[0]["id"]}
-            response: Response = test_client.post(
-                "/current/reward", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/current/reward", json=data)
         self.assertEqual(response.status_code, 200)
 
     def test_deprecated_route_apply_reward(self):
@@ -738,7 +738,7 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
                     {"uuid": self.dummy_uuid, "product_id": self.product_A.id, "qty": 1}
                 ]
             }
-            response: Response = test_client.post("/sync", content=json.dumps(data))
+            response: Response = test_client.post("/sync", json=data)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(
             len(self.cart.order_line),
@@ -756,7 +756,5 @@ class TestLoyaltyCard(TestShopinvaderSaleLoyaltyCommon):
         )
         with self._create_test_client(router=sale_loyalty_cart_router) as test_client:
             data = {"reward_id": claimable_rewards[0]["id"]}
-            response: Response = test_client.post(
-                "/apply_reward", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/apply_reward", json=data)
         self.assertEqual(response.status_code, 200)

@@ -4,29 +4,18 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends
 
-from odoo import api, models
+from odoo import api
 
 from odoo.addons.fastapi.dependencies import authenticated_partner_env
+from odoo.addons.shopinvader_router_helper import VirtualModel
 
 from ..schemas import LoyaltyRewardResponse
 
 loyalty_router = APIRouter(tags=["loyalties"])
 
 
-@loyalty_router.get("/rewards/{code}", deprecated=True)
-@loyalty_router.get("/loyalty/{code}")
-def get_rewards(
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    code: str,
-) -> list[LoyaltyRewardResponse]:
-    """
-    Return all claimable loyalty rewards for a given coupon code.
-    """
-    rewards = env["shopinvader_api_loyalty.loyalty_router.helper"]._get_rewards(code)
-    return [LoyaltyRewardResponse.from_loyalty_reward(reward) for reward in rewards]
-
-
-class ShopinvaderApiLoyaltyRouterHelper(models.AbstractModel):
+class LoyaltyHelper(VirtualModel):
+    _inherit = "shopinvader.router.helper"
     _name = "shopinvader_api_loyalty.loyalty_router.helper"
     _description = "ShopInvader API Loyalty Router Helper"
 
@@ -44,3 +33,16 @@ class ShopinvaderApiLoyaltyRouterHelper(models.AbstractModel):
         if program_id.active:
             return program_id.reward_ids
         return self.env["loyalty.reward"]
+
+
+@loyalty_router.get("/rewards/{code}", deprecated=True)
+@loyalty_router.get("/loyalty/{code}")
+def get_rewards(
+    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
+    code: str,
+) -> list[LoyaltyRewardResponse]:
+    """
+    Return all claimable loyalty rewards for a given coupon code.
+    """
+    rewards = env["shopinvader_api_loyalty.loyalty_router.helper"]._get_rewards(code)
+    return [LoyaltyRewardResponse.from_loyalty_reward(reward) for reward in rewards]
