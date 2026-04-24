@@ -136,6 +136,7 @@ class ShopinvaderApiUnitCartSaleLineRouterHelper(models.AbstractModel):
             params.to_odoo_domain(self.env),
             limit=paging.limit,
             offset=paging.offset,
+            order=params.to_odoo_order(),
         )
 
     def _get_cart(self, uuid):

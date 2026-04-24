@@ -12,6 +12,7 @@ class SaleOrderLine(models.Model):
         help="Quantity requested by the collaborator in case of a request.",
         default=0.0,
     )
+    date_order = fields.Datetime(related="order_id.date_order")
 
     request_partner_id = fields.Many2one(
         "res.partner",
@@ -19,6 +20,7 @@ class SaleOrderLine(models.Model):
         help="The partner who requested this line.",
         index=True,
     )
+    request_partner_name = fields.Char(related="request_partner_id.name")
     request_order_id = fields.Many2one(
         "sale.order",
         string="Request Order",

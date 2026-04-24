@@ -68,6 +68,14 @@ class RequestedSaleLineSearch(StrictExtendableBaseModel, extra="ignore"):
             "rejected sale order lines."  # noqa
         ),
     ] = None
+    request_partner_name: Annotated[
+        str | None,
+        Field(
+            description="When used, the search look for any sale order lines "  # noqa
+            "where the request partner name contains the given value case insensitively."  # noqa
+        ),
+    ] = None
+    sort_by: str | None = None
 
     def to_odoo_domain(self, env: api.Environment):
         domain = []
@@ -80,4 +88,39 @@ class RequestedSaleLineSearch(StrictExtendableBaseModel, extra="ignore"):
         if not self.rejected:
             domain.append(("request_rejected", "=", False))
 
+        if self.request_partner_name:
+            domain.append(
+                ("request_partner_id.name", "ilike", self.request_partner_name)
+            )
+
         return domain
+
+    @staticmethod
+    def _parse_sort_by(sort_by: str):
+        # Order are of the form 'date_order.desc,partner_name.asc,id'
+        sep = "."
+        return {
+            sort.split(sep)[0]: (
+                "desc"
+                if sep in sort and sort.split(sep)[1].lower() == "desc"
+                else "asc"
+            )
+            for sort in (sort_by or "").split(",")
+        }
+
+    def to_odoo_order(self):
+        if self.sort_by:
+            sorts = self._parse_sort_by(self.sort_by)
+
+            sort_fields = {
+                "request_partner_name": "request_partner_name",
+            }
+
+            return ",".join(
+                [
+                    sort_fields[field] + (f" {order}" if order == "desc" else "")
+                    for field, order in sorts.items()
+                    if field in sort_fields
+                ]
+            )
+        return "date_order desc"
