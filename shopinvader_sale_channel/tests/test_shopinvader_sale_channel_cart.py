@@ -2,7 +2,6 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import json
 from unittest import skipIf
 
 from fastapi import status
@@ -63,7 +62,7 @@ class TestShopinvaderSaleChannelCart(CommonSaleCart):
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.post(
                 "/current/sync",
-                content=json.dumps(data),
+                json=data,
                 headers={"api-key": "user_with_rights"},
             )
 

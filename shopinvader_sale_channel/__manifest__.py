@@ -4,7 +4,7 @@
 
 {
     "name": "Shopinvader Sale Channel",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Akretion, Odoo Community Association (OCA)",
     "summary": "Adds sale channel management to Shopinvader",
     "category": "Uncategorized",
@@ -17,7 +17,6 @@
         "views/fastapi_endpoint_views.xml",
     ],
     "maintainers": ["paradoxxxzero"],
-    "demo": [],
     "installable": True,
     "license": "AGPL-3",
 }
