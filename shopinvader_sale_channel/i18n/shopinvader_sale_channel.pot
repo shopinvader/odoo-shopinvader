@@ -1,0 +1,53 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_sale_channel
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_sale_channel
+#: model:ir.model.fields,help:shopinvader_sale_channel.field_sale_channel__channel_type
+msgid ""
+"Allows to use specific fields and actions for a specific channel's type"
+msgstr ""
+
+#. module: shopinvader_sale_channel
+#: model:ir.model.fields,field_description:shopinvader_sale_channel.field_sale_channel__channel_type
+msgid "Channel Type"
+msgstr ""
+
+#. module: shopinvader_sale_channel
+#: model:ir.model,name:shopinvader_sale_channel.model_fastapi_endpoint
+msgid "FastAPI Endpoint"
+msgstr ""
+
+#. module: shopinvader_sale_channel
+#: model:ir.model,name:shopinvader_sale_channel.model_sale_channel
+#: model:ir.model.fields,field_description:shopinvader_sale_channel.field_fastapi_endpoint__sale_channel_id
+#: model:ir.model.fields,field_description:shopinvader_sale_channel.field_sale_order__sale_channel_id
+#: model_terms:ir.ui.view,arch_db:shopinvader_sale_channel.fastapi_endpoint_form_view
+msgid "Sale Channel"
+msgstr ""
+
+#. module: shopinvader_sale_channel
+#: model:ir.model.fields,help:shopinvader_sale_channel.field_fastapi_endpoint__sale_channel_id
+msgid "Sale channel associated with this FastAPI endpoint."
+msgstr ""
+
+#. module: shopinvader_sale_channel
+#: model:ir.model,name:shopinvader_sale_channel.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: shopinvader_sale_channel
+#: model:ir.model.fields.selection,name:shopinvader_sale_channel.selection__sale_channel__channel_type__shopinvader
+msgid "Shopinvader"
+msgstr ""
