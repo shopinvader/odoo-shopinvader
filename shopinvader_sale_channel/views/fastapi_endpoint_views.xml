@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  Copyright 2025 Akretion (http://www.akretion.com).
+  @author Florian Mounier <florian.mounier@akretion.com>
+  License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="fastapi_endpoint_form_view">
+        <field name="model">fastapi.endpoint</field>
+        <field name="inherit_id" ref="fastapi.fastapi_endpoint_form_view" />
+        <field name="arch" type="xml">
+            <span name="configuration" position="after">
+                <group name="sale_channel_configuration" title="Sale Channel">
+                    <field name="sale_channel_id" />
+                </group>
+            </span>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="fastapi_endpoint_tree_view">
+        <field name="model">fastapi.endpoint</field>
+        <field name="inherit_id" ref="fastapi.fastapi_endpoint_tree_view" />
+        <field name="arch" type="xml">
+            <field name="root_path" position="after">
+                <field name="sale_channel_id" />
+            </field>
+        </field>
+    </record>
+</odoo>
