@@ -1,14 +1,11 @@
 # Copyright 2024 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import json
 
 from fastapi import status
-from requests import Response
-
-from odoo.tests.common import RecordCapturer, tagged
-
 from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
+from odoo.tests.common import RecordCapturer, tagged
+from requests import Response
 
 from ..routers import customer_router
 
@@ -78,7 +75,7 @@ class TestShopinvaderCustomerApi(FastAPITransactionCase):
         }
         customer = self._call_test_client(
             "customer",
-            content=json.dumps(data),
+            json=data,
             method="post",
         )
         self.assertEqual(customer.get("mobile"), data.get("mobile"))
@@ -92,11 +89,9 @@ class TestShopinvaderCustomerApi(FastAPITransactionCase):
             self.assertFalse(capture.records)
             customer = self._call_test_client(
                 "customer",
-                content=json.dumps(
-                    {
-                        "opt_in": False,
-                    }
-                ),
+                json={
+                    "opt_in": False,
+                },
                 method="post",
             )
             self.assertFalse(customer.get("opt_in"))
@@ -104,11 +99,9 @@ class TestShopinvaderCustomerApi(FastAPITransactionCase):
             self.assertTrue(capture.records)
             customer = self._call_test_client(
                 "customer",
-                content=json.dumps(
-                    {
-                        "opt_in": True,
-                    }
-                ),
+                json={
+                    "opt_in": True,
+                },
                 method="post",
             )
             self.assertTrue(customer.get("opt_in"))
