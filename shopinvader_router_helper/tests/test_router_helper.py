@@ -2,60 +2,12 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-
-from odoo import fields
 from odoo.exceptions import AccessDenied, MissingError
 
-from odoo.addons.base.tests.common import BaseCommon
-
-from ..virtual_model import VirtualModel
-from .common import setup_models, unsetup_models
+from .common import CommonFastAPIEndpointCase
 
 
-class RouterHelperTestBase(VirtualModel):
-    _inherit = "shopinvader.router.helper"
-    _name = "shopinvader.router.base_test.helper"
-
-    name = fields.Char()
-    type = fields.Selection(
-        selection=[("type_1", "Type 1"), ("type_2", "Type 2")],
-        default="type_1",
-    )
-
-
-class RouterHelperTestRelations(VirtualModel):
-    _inherit = "shopinvader.router.helper"
-    _name = "shopinvader.router.relations_test.helper"
-
-    name = fields.Char()
-    partner_id = fields.Many2one("res.partner")
-    partner_name = fields.Char(related="partner_id.name")
-
-
-class RouterHelperTestModelBoundNoDomain(VirtualModel):
-    _inherit = "shopinvader.router.helper"
-    _name = "shopinvader.router.no_domain_test.helper"
-
-    _model = "res.partner"
-
-
-class RouterHelperTestModelBound(VirtualModel):
-    _inherit = "shopinvader.router.helper"
-    _name = "shopinvader.router.model_bound_test.helper"
-
-    _model = "res.partner"
-
-    def _domain(self):
-        return [("category_id", "in", self.category_ids.ids)]
-
-    category_ids = fields.Many2many(
-        "res.partner.category",
-        required=True,
-        relation="shopinvader_router_model_bound_category_rel",
-    )
-
-
-class RouterHelperCase(BaseCommon):
+class RouterHelperCase(CommonFastAPIEndpointCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -87,14 +39,6 @@ class RouterHelperCase(BaseCommon):
                 "color": 3,
             }
         )
-
-    def setUp(self):
-        super().setUp()
-        setup_models(self.env, "shopinvader_router_helper")
-
-    def tearDown(self):
-        unsetup_models(self.env, "shopinvader_router_helper")
-        super().tearDown()
 
     def test_base_init(self):
         helper = self.env["shopinvader.router.base_test.helper"].new({})
