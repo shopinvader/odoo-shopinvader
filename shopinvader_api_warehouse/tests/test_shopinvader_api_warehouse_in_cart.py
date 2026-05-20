@@ -2,8 +2,6 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import json
-
 from fastapi import status
 from requests import Response
 
@@ -41,9 +39,7 @@ class ShopinvaderApiWarehouseInCartCase(CommonSaleCart, WarehouseCaseCommon):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                "/current/sync", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/current/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         cart_data = response.json()
         self.assertIn("warehouse", cart_data)
@@ -79,9 +75,7 @@ class ShopinvaderApiWarehouseInCartCase(CommonSaleCart, WarehouseCaseCommon):
             ]
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                "/current/sync", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/current/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         cart_data = response.json()
         self.assertIn("warehouse", cart_data)
@@ -91,7 +85,7 @@ class ShopinvaderApiWarehouseInCartCase(CommonSaleCart, WarehouseCaseCommon):
         data["warehouse_id"] = self.warehouse_2.id
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.post(
-                f"/{cart_data['uuid']}/update", content=json.dumps(data)
+                f"/{cart_data['uuid']}/update", json=data
             )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         cart_data = response.json()
@@ -130,9 +124,7 @@ class ShopinvaderApiWarehouseInCartCase(CommonSaleCart, WarehouseCaseCommon):
             ],
         }
         with self._create_test_client(router=cart_router) as test_client:
-            response: Response = test_client.post(
-                "/current/sync", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/current/sync", json=data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertFalse(partner.shopinvader_default_warehouse_id)
         cart_data = response.json()
@@ -140,7 +132,7 @@ class ShopinvaderApiWarehouseInCartCase(CommonSaleCart, WarehouseCaseCommon):
         with self._create_test_client(router=cart_router) as test_client:
             response: Response = test_client.post(
                 f"/{cart_data['uuid']}/update",
-                content=json.dumps({"warehouse_id": self.warehouse_2.id}),
+                json={"warehouse_id": self.warehouse_2.id},
             )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertFalse(partner.shopinvader_default_warehouse_id)

@@ -4,6 +4,8 @@
 
 from odoo.addons.shopinvader_api_customer.schemas.customer import (
     Customer as BaseCustomer,
+)
+from odoo.addons.shopinvader_api_customer.schemas.customer import (
     CustomerUpdate as BaseCustomerUpdate,
 )
 

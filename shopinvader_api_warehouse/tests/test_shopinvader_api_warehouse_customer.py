@@ -2,7 +2,6 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import json
 
 from fastapi import status
 from requests import Response
@@ -55,7 +54,7 @@ class ShopinvaderApiWarehouseCustomer(WarehouseCaseCommon):
             "default_warehouse_id": self.warehouse_1.id,
         }
         with self._create_test_client(router=customer_router) as test_client:
-            response: Response = test_client.post("/customer", content=json.dumps(data))
+            response: Response = test_client.post("/customer", json=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         customer_data = response.json()
 
@@ -106,7 +105,9 @@ class ShopinvaderApiWarehouseCustomer(WarehouseCaseCommon):
         self.assertEqual(default_warehouse_data["default"], False)
 
         default_warehouse_2_data = warehouses_data["items"][1]
-        default_warehouse_2 = self.env.ref("stock.stock_warehouse_shop0")
+        default_warehouse_2 = self.env["stock.warehouse"].search(
+            [("code", "=", "My Co")]
+        )
         self.assertEqual(default_warehouse_2_data["name"], default_warehouse_2.name)
         self.assertEqual(default_warehouse_2_data["code"], default_warehouse_2.code)
         self.assertEqual(default_warehouse_2_data["default"], False)

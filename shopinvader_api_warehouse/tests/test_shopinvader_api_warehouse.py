@@ -75,7 +75,6 @@ class ShopinvaderApiWarehouse(WarehouseCaseCommon):
         self.assertEqual(
             default_warehouse_data["phone"], default_warehouse.partner_id.phone
         )
-
         warehouse_1_data = warehouses_data["items"][1]
         self.assertEqual(warehouse_1_data["name"], self.warehouse_1.name)
         self.assertEqual(warehouse_1_data["code"], self.warehouse_1.code)

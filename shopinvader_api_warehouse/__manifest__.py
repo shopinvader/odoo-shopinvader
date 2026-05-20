@@ -4,7 +4,7 @@
 
 {
     "name": "Shopinvader API Warehouse",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Akretion, Odoo Community Association (OCA)",
     "summary": "Adds sales warehouse information to Shopinvader API",
     "category": "Uncategorized",
@@ -19,7 +19,6 @@
         "security/ir_model_access.xml",
     ],
     "maintainers": ["paradoxxxzero"],
-    "demo": [],
     "installable": True,
     "license": "AGPL-3",
 }
