@@ -5,7 +5,6 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
     <record model="ir.model.access" id="shopinvader_mailing_list_access_view">
         <field name="name">mailing.list shopinvader access</field>
         <field name="model_id" ref="mass_mailing.model_mailing_list" />
@@ -29,12 +28,11 @@
         id="shopinvader_mass_mailing_contact_subscription_access_view"
     >
         <field name="name">mailing.contact.subscription shopinvader access</field>
-        <field name="model_id" ref="mass_mailing.model_mailing_contact_subscription" />
+        <field name="model_id" ref="mass_mailing.model_mailing_subscription" />
         <field name="group_id" ref="shopinvader_mass_mailing_user_group" />
         <field name="perm_read" eval="True" />
         <field name="perm_create" eval="True" />
         <field name="perm_unlink" eval="True" />
         <field name="perm_write" eval="True" />
     </record>
-
 </odoo>

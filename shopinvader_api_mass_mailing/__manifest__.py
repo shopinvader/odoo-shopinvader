@@ -4,21 +4,15 @@
 
 {
     "name": "Shopinvader Api Mass Mailing",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Akretion, Odoo Community Association (OCA)",
     "summary": "Add a way to subscribe/unsubscribe to mass mailing list of an endpoint",
     "category": "Marketing",
     "depends": [
         "mass_mailing",
         "extendable_fastapi",
+        "shopinvader_router_helper",
     ],
-    "external_dependencies": {
-        "python": [
-            "fastapi",
-            "pydantic>=2.0.0",
-            "extendable-pydantic>=1.2.0",
-        ]
-    },
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "data": [
         "security/res_groups.xml",

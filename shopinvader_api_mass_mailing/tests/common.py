@@ -40,6 +40,8 @@ class CommonMassMailingCase(FastAPITransactionCase):
                 ],
             }
         )
+        user_with_rights.partner_id.email = "test@example.com"
+
         cls.default_fastapi_running_user = user_with_rights
         cls.default_fastapi_router = mass_mailing_router
         cls.ml = cls.env["mailing.list"].create(

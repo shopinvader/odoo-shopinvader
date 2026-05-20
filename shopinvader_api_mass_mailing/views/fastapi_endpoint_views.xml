@@ -5,7 +5,6 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
     <record model="ir.ui.view" id="fastapi_endpoint_form_view">
         <field name="model">fastapi.endpoint</field>
         <field name="inherit_id" ref="fastapi.fastapi_endpoint_form_view" />
@@ -15,15 +14,11 @@
                 <group
                     name="mass_mailing"
                     title="Mass Mailing"
-                    attrs="{'invisible': [('is_mass_mailing', '!=', True)]}"
+                    invisible="not is_mass_mailing"
                 >
-                    <field
-                        name="mailing_list_id"
-                        attrs="{'required': [('is_mass_mailing', '=', True)]}"
-                    />
+                    <field name="mailing_list_id" required="is_mass_mailing" />
                 </group>
             </span>
         </field>
     </record>
-
 </odoo>

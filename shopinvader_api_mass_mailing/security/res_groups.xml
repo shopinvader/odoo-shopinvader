@@ -5,7 +5,6 @@
     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 -->
 <odoo>
-
     <record id="shopinvader_mass_mailing_user_group" model="res.groups">
         <field name="name">Shopinvader Mass Mailing user</field>
         <field
