@@ -229,7 +229,7 @@ class CartHelper(VirtualModel):
         vals = {"applied_cart_api_transaction_uuids": ",".join(all_transaction_uuids)}
         if update_cmds:
             vals["order_line"] = update_cmds
-        cart.write(vals)
+        self.write(cart.id, vals)
 
     @api.model
     def _sync_cart(
@@ -260,7 +260,7 @@ class CartHelper(VirtualModel):
             cart = self.env["sale.order"]._create_empty_cart(self.partner.id)
 
         vals = self._prepare_update_cart_vals(data, cart)
-        cart.write(vals)
+        self.write(cart.id, vals)
 
         return cart
 
