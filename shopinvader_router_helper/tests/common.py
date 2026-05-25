@@ -1,7 +1,7 @@
 # Copyright 2026 Akretion (http://www.akretion.com).
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import models
+from odoo_test_helper import FakeModelLoader
 
 from odoo.addons.fastapi.tests.common import FastAPITransactionCase
 
@@ -49,19 +49,29 @@ class CommonFastAPIEndpointCase(FastAPITransactionCase):
             )
             cls.default_fastapi_authenticated_partner = cls.partner
 
+    def setUp(self):
+        super().setUp()
+        self.loader = FakeModelLoader(self.env, self.__module__)
+        self.loader.backup_registry()
 
-def setup_models(env, module):
-    # Temporary add models to registry
-    models = env.registry.load(
-        env.cr,
-        type("_name_getter", (object,), {"name": module}),
-    )
-    env.registry.setup_models(env.cr)
-    env.registry.init_models(env.cr, models, {"module": module})
+        from .models import (
+            RouterHelperTestBase,
+            RouterHelperTestContext,
+            RouterHelperTestModelBound,
+            RouterHelperTestModelBoundNoDomain,
+            RouterHelperTestRelations,
+        )
 
+        self.loader.update_registry(
+            (
+                RouterHelperTestBase,
+                RouterHelperTestContext,
+                RouterHelperTestModelBound,
+                RouterHelperTestModelBoundNoDomain,
+                RouterHelperTestRelations,
+            )
+        )
 
-def unsetup_models(env, module):
-    # Remove models from registry
-    for model in models.MetaModel.module_to_models[module]:
-        if "test" in model._name:
-            del env.registry[model._name]
+    def tearDown(self):
+        self.loader.restore_registry()
+        super().tearDown()

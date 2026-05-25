@@ -83,18 +83,14 @@ class ShopinvaderRouterHelper(VirtualModel):
 
     def search(self, domain: list = None) -> Record:
         domain = expression.AND([self.domain, domain or []])
-        self.model.check_access("read")
-        return self.model.sudo().search(domain).sudo(False)
+        return self.model.search(domain)
 
     def search_with_count(
         self, domain: list = None, limit=None, offset=None
     ) -> tuple[int, Record]:
         domain = expression.AND([self.domain, domain or []])
-        self.model.check_access("read")
         count = self.model.search_count(domain)
-        return count, self.model.sudo().search(domain, limit=limit, offset=offset).sudo(
-            False
-        )
+        return count, self.model.search(domain, limit=limit, offset=offset)
 
     def _prepare_values(self, values: Any) -> dict:
         return values
