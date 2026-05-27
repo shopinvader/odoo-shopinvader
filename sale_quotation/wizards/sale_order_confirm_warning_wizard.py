@@ -10,8 +10,6 @@ class SaleOrderConfirmWarningWizard(models.TransientModel):
     message = fields.Char(readonly=True)
 
     def confirm_and_proceed(self):
-        for order in self.sale_order_ids:
-            order.action_customer_accept_quotation()
         self.sale_order_ids.with_context(
             use_quotation_confirm_wizard=False
         ).action_confirm()

@@ -51,6 +51,13 @@ class TestQuotation(TransactionCase):
         self.assertIn(
             "not in 'Waiting Acceptation'", action["context"]["default_message"]
         )
+        self.env["sale.order.confirm.warning.wizard"].create(
+            {
+                "sale_order_ids": [Command.link(self.so.id)],
+            }
+        ).confirm_and_proceed()
+        self.assertEqual(self.so.quotation_state, "accepted")
+        self.assertEqual(self.so.typology, "sale")
 
     def test_convert_to_draft_resets_typology(self):
         self.so.action_customer_request_quotation()
@@ -136,7 +143,7 @@ class TestQuotation(TransactionCase):
         self.assertEqual(self.so.typology, "sale")
 
         # reset to waiting_acceptation state:
-        self.so.action_cancel()
+        self.so.with_context(disable_cancel_warning=True).action_cancel()
         self.so.action_customer_reset_quotation_to_draft()
         self.so.action_customer_request_quotation()
         self.so.action_quotation_sent()

@@ -176,71 +176,52 @@ class SaleOrder(models.Model):
 
     def action_customer_accept_quotation(self):
         self._check_customer_action_allowed("accept_quotation")
-        self.quotation_state = "accepted"
-        self.typology = "sale"
-        return self.with_context(
-            bypass_customer_quotation=True,
-        ).action_confirm()
+        return self.action_confirm()
 
     def action_customer_reset_quotation_to_draft(self):
         self._check_customer_action_allowed("reset_to_draft")
-        self.quotation_state = "draft"
-        self.state = "draft"
-        self.filtered(lambda so: so.typology != "quote").typology = "quote"
-        return self.with_context(
-            bypass_customer_quotation=True,
-        ).action_draft()
+        return self.action_draft()
 
     def action_customer_cancel_quotation(self):
         self._check_customer_action_allowed("cancel_quotation")
         self.quotation_state = "cancel"
-        return self.with_context(
-            disable_cancel_warning=True,
-        ).action_cancel()
+        return self.with_context(disable_cancel_warning=True).action_cancel()
 
     def action_confirm(self):
-        other_quotations = self
-        if not self.env.context.get("bypass_customer_quotation", False):
-            customer_quotations = self.filtered("use_customer_quotation_workflow")
-            other_quotations = self - customer_quotations
-            if (
-                customer_quotations
-                and self.env.context.get("use_quotation_confirm_wizard")
-                and any(rec.quotation_state != "waiting_acceptation" for rec in self)
-            ):
-                return {
-                    "name": _("Confirm Sale Order"),
-                    "type": "ir.actions.act_window",
-                    "res_model": "sale.order.confirm.warning.wizard",
-                    "views": [[False, "form"]],
-                    "target": "new",
-                    "context": {
-                        "default_sale_order_ids": self.ids,
-                        "default_message": _(
-                            "The selected quotation(s) are not in 'Waiting Acceptation' "
-                            "state. Are you sure you want to confirm them?"
-                        ),
-                    },
-                }
-            else:
-                customer_quotations.action_customer_accept_quotation()
-        return super(SaleOrder, other_quotations).action_confirm()
+        customer_quotations = self.filtered("use_customer_quotation_workflow")
+        if (
+            customer_quotations
+            and self.env.context.get("use_quotation_confirm_wizard")
+            and any(
+                rec.quotation_state not in ("waiting_acceptation", "accepted")
+                for rec in customer_quotations
+            )
+        ):
+            return {
+                "name": _("Confirm Sale Order"),
+                "type": "ir.actions.act_window",
+                "res_model": "sale.order.confirm.warning.wizard",
+                "views": [[False, "form"]],
+                "target": "new",
+                "context": {
+                    "default_sale_order_ids": self.ids,
+                    "default_message": _(
+                        "The selected quotation(s) are not in 'Waiting Acceptation' "
+                        "state. Are you sure you want to confirm them?"
+                    ),
+                },
+            }
+        customer_quotations.quotation_state = "accepted"
+        customer_quotations.typology = "sale"
+        return super().action_confirm()
 
     def action_draft(self):
-        other_quotations = self
-        if not self.env.context.get("bypass_customer_quotation", False):
-            customer_quotations = self.filtered("use_customer_quotation_workflow")
-            other_quotations = self - customer_quotations
-            if customer_quotations:
-                customer_quotations.action_customer_reset_quotation_to_draft()
-        return super(SaleOrder, other_quotations).action_draft()
-
-    def action_cancel(self):
-        self.filtered(
-            lambda so: so.state in ("sale", "sent")
-            and so.use_customer_quotation_workflow
-        ).quotation_state = "cancel"
-        return super().action_cancel()
+        customer_quotations = self.filtered("use_customer_quotation_workflow")
+        customer_quotations.quotation_state = "draft"
+        customer_quotations.filtered(
+            lambda so: so.typology != "quote"
+        ).typology = "quote"
+        return super().action_draft()
 
     def action_quotation_sent(self):
         customer_quotations = self.filtered("use_customer_quotation_workflow")
