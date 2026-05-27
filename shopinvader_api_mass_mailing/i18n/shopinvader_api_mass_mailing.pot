@@ -1,0 +1,72 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_api_mass_mailing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model.fields,field_description:shopinvader_api_mass_mailing.field_shopinvader_api_mass_mailing_routers_helper__app
+msgid "Current App"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model.fields,field_description:shopinvader_api_mass_mailing.field_shopinvader_api_mass_mailing_routers_helper__endpoint_id
+msgid "Current Endpoint"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model,name:shopinvader_api_mass_mailing.model_fastapi_endpoint
+msgid "FastAPI Endpoint"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model.fields,field_description:shopinvader_api_mass_mailing.field_shopinvader_api_mass_mailing_routers_helper__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model.fields,field_description:shopinvader_api_mass_mailing.field_fastapi_endpoint__is_mass_mailing
+msgid "Is Mass Mailing"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model_terms:ir.ui.view,arch_db:shopinvader_api_mass_mailing.fastapi_endpoint_form_view
+msgid "Mass Mailing"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model.fields,field_description:shopinvader_api_mass_mailing.field_fastapi_endpoint__mailing_list_id
+msgid "Mass Mailing List"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#. odoo-python
+#: code:addons/shopinvader_api_mass_mailing/routers/mass_mailing.py:0
+msgid "No mass mailing list configured for this endpoint"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model,name:shopinvader_api_mass_mailing.model_shopinvader_api_mass_mailing_routers_helper
+msgid "Shopinvader Mass Mailing Router Helper"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:res.groups,name:shopinvader_api_mass_mailing.shopinvader_mass_mailing_user_group
+msgid "Shopinvader Mass Mailing user"
+msgstr ""
+
+#. module: shopinvader_api_mass_mailing
+#: model:ir.model.fields,help:shopinvader_api_mass_mailing.field_fastapi_endpoint__mailing_list_id
+msgid ""
+"The mass mailing list to which the contacts created/updated by this endpoint"
+" will be added."
+msgstr ""
