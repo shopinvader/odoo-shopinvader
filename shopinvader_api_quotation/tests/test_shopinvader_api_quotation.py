@@ -1,6 +1,5 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-import json
 
 from fastapi import status
 from requests import Response
@@ -122,7 +121,7 @@ class TestQuotation(FastAPITransactionCase):
         )
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{quotation.id}", content=json.dumps(data)
+                f"/quotations/{quotation.id}", json=data
             )
         self.assertEqual(
             response.status_code,

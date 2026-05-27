@@ -1,6 +1,5 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
-import json
 
 from extendable import context
 from fastapi import status
@@ -123,7 +122,7 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
             "/addresses/delivery",
             method="post",
             http_code=status.HTTP_201_CREATED,
-            content=json.dumps(data),
+            json=data,
         )
         self.assertTrue(response_json)
 
@@ -136,7 +135,7 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
         }
 
         address = self._call_test_client(
-            f"/addresses/delivery/{address_id}", method="post", content=json.dumps(data)
+            f"/addresses/delivery/{address_id}", method="post", json=data
         )
         self.assertEqual(address.get("shipping_note"), "new test note")
 
@@ -145,6 +144,6 @@ class TestShopinvaderApiAddressShippingNote(FastAPITransactionCase):
         }
 
         address = self._call_test_client(
-            f"/addresses/delivery/{address_id}", method="post", content=json.dumps(data)
+            f"/addresses/delivery/{address_id}", method="post", json=data
         )
         self.assertEqual(address.get("shipping_note"), None)
