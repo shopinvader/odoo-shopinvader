@@ -36,6 +36,7 @@ addon | version | maintainers | summary
 [shopinvader_api_customer](shopinvader_api_customer/) | 16.0.1.1.1 |  | Adds service to manage shopinvader customer
 [shopinvader_api_invoice](shopinvader_api_invoice/) | 16.0.1.0.1 |  | Provides invoice web api via Fastapi
 [shopinvader_api_lead](shopinvader_api_lead/) | 16.0.1.0.2 |  | Lead FastAPI adding a service for creating CRM leads.
+[shopinvader_api_mass_mailing](shopinvader_api_mass_mailing/) | 16.0.1.0.0 | <a href='https://github.com/paradoxxxzero'><img src='https://github.com/paradoxxxzero.png' width='32' height='32' style='border-radius:50%;' alt='paradoxxxzero'/></a> | Add a way to subscribe/unsubscribe to mass mailing list of an endpoint
 [shopinvader_api_quotation](shopinvader_api_quotation/) | 16.0.1.1.1 |  | Shopinvader Quotation
 [shopinvader_api_sale](shopinvader_api_sale/) | 16.0.1.2.0 |  | Sale FastApi for exposing sale order
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.1 |  | FastAPI services to add coupons and loyalties to carts.
