@@ -16,6 +16,7 @@ msgstr ""
 #. module: shopinvader_filtered_model
 #. odoo-python
 #: code:addons/shopinvader_filtered_model/utils.py:0
+#: code:addons/shopinvader_filtered_model/utils.py:0
 #, python-format
 msgid "The record do not exist"
 msgstr ""
