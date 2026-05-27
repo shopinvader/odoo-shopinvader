@@ -42,6 +42,7 @@ addon | version | maintainers | summary
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.0.0 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 18.0.1.0.0 |  | Adds a service to get commont settings
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 18.0.1.0.0 |  | This module adds a signin service with jwt token.
+[shopinvader_api_warehouse](shopinvader_api_warehouse/) | 18.0.1.0.0 | <a href='https://github.com/paradoxxxzero'><img src='https://github.com/paradoxxxzero.png' width='32' height='32' style='border-radius:50%;' alt='paradoxxxzero'/></a> | Adds sales warehouse information to Shopinvader API
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 18.0.1.0.0 |  | Handle shop wishlist
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 18.0.1.0.0 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
