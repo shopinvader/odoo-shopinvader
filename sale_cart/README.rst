@@ -22,7 +22,7 @@ Sale Cart
 
 |badge1| |badge2| |badge3|
 
-This addon add a typology on sale.order to distinguish the sale orders that are
+This addon adds a "cart" typology on sale.order to distinguish the sale orders that are
 in the process of being written (cart) and those that are quotations
 ready to be confirmed.
 
@@ -56,6 +56,7 @@ Contributors
 ~~~~~~~~~~~~
 
 * Laurent Mignon <laurent.mignon@acsone.eu>
+* Nicolas DELBOVIER <nicolas.delbovier@acsone.eu>
 
 Maintainers
 ~~~~~~~~~~~

@@ -22,6 +22,7 @@ class TestQuotation(SavepointCase):
 
     def test_create_quotation(self):
         self.assertEqual(self.so.quotation_state, "draft")
+        self.assertEqual(self.so.typology, "quote")
 
     def test_request_quotation(self):
         self.so.typology = "cart"
@@ -42,8 +43,15 @@ class TestQuotation(SavepointCase):
         self.so.action_quotation_sent()
         self.so.action_confirm_quotation()
         self.assertEqual(self.so.quotation_state, "accepted")
+        self.assertEqual(self.so.typology, "sale")
 
     def test_not_allowed_confirm_quotation(self):
         with self.assertRaises(UserError) as cm:
             self.so.action_confirm_quotation()
         self.assertIn("Only quotation with the state", cm.exception.args[0])
+
+    def test_convert_to_draft_resets_typology(self):
+        self.so.action_quotation_sent()
+        self.so.action_confirm()
+        self.so.action_draft()
+        self.assertEqual(self.so.typology, "quote")

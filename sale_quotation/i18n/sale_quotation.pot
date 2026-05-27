@@ -1,120 +1,15 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_quotation
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-05-16 13:39+0000\n"
+"PO-Revision-Date: 2025-05-16 13:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__accepted
-#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
-msgid "Accepted"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__product_template__shop_only_quotation__all_variant
-msgid "All Variant"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__cancel
-#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
-msgid "Cancel"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__customer_request
-msgid "Customer Request"
-msgstr ""
-
-#. module: sale_quotation
-#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
-msgid "Customer request"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__draft
-#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
-msgid "Draft"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__product_template__shop_only_quotation__manually_on_variant
-msgid "Manually on Variant"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__product_template__shop_only_quotation__never
-msgid "Never"
-msgstr ""
-
-#. module: sale_quotation
-#: model_terms:ir.ui.view,arch_db:sale_quotation.product_template_form_view
-msgid "Only for Quotation"
-msgstr ""
-
-#. module: sale_quotation
-#. odoo-python
-#: code:addons/sale_quotation/models/sale_order.py:0
-#, python-format
-msgid ""
-"Only orders of cart typology in draft state can be converted to quotation"
-msgstr ""
-
-#. module: sale_quotation
-#. odoo-python
-#: code:addons/sale_quotation/models/sale_order.py:0
-#, python-format
-msgid "Only quotation with the state 'waiting_acceptation' can be Confirmed."
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model,name:sale_quotation.model_product_template
-msgid "Product"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model,name:sale_quotation.model_product_product
-msgid "Product Variant"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__quotation_state
-msgid "Quotation State"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model,name:sale_quotation.model_sale_order
-msgid "Sales Order"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__shop_only_quotation
-msgid "Shop Only Quotation"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields,field_description:sale_quotation.field_product_product__shop_only_quotation
-#: model:ir.model.fields,field_description:sale_quotation.field_product_template__shop_only_quotation
-msgid "Shopinvader: Only for Quotation"
-msgstr ""
-
-#. module: sale_quotation
-#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
-#: model_terms:ir.ui.view,arch_db:sale_quotation.view_quotation_tree
-msgid "State"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__waiting_acceptation
-#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
-msgid "Waiting Acceptation"
-msgstr ""

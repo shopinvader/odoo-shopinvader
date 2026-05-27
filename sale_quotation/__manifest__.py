@@ -4,16 +4,15 @@
 {
     "name": "Sale Quotation",
     "summary": "Sale Quotation",
-    "version": "16.0.0.2.0",
+    "version": "16.0.0.3.0",
     "category": "e-commerce",
     "development_status": "Production/Stable",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",
     "license": "AGPL-3",
-    "depends": ["sale_cart"],
-    "data": [
-        "views/product_view.xml",
-        "views/sale_view.xml",
+    "depends": [
+        "shopinvader_product_order_mode_on_request",
     ],
+    "data": ["views/sale_view.xml", "data/mail_templates.xml"],
     "installable": True,
 }

@@ -1,0 +1,31 @@
+<odoo>
+    <record id="mail_template_request_quotation" model="mail.template">
+        <field name="name">Quotation Request</field>
+        <field name="model_id" ref="sale.model_sale_order" />
+        <field
+            name="subject"
+        >{{ object.user_id.company_id.name }} Quotation Request (Ref {{ object.name }})</field>
+        <field name="email_from">{{ object.user_id.company_id.email_formatted }}</field>
+        <field
+            name="description"
+        >Used to notify the sales team when a client requests a quotation.</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Dear Sales Team,</p>
+                <p>
+                    A new quotation (<strong><t
+                            t-out="object.name"
+                        /></strong>) has been requested by
+                    the client <strong><t t-out="object.partner_id.name" /></strong>.
+                </p>
+                --
+                <p>
+                    <t t-out="object.user_id.company_id.name" />
+                </p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="True" />
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="partner_to" eval="False" />
+    </record>
+</odoo>
