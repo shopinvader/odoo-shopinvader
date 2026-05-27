@@ -3,9 +3,11 @@
 
 
 from fastapi import status
-from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
-from odoo.tests.common import RecordCapturer, tagged
 from requests import Response
+
+from odoo.tests.common import RecordCapturer, tagged
+
+from odoo.addons.extendable_fastapi.tests.common import FastAPITransactionCase
 
 from ..routers import customer_router
 
