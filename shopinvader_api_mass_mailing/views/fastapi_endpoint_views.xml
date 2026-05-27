@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Copyright 2026 Akretion (http://www.akretion.com).
+    @author Florian Mounier <florian.mounier@akretion.com>
+    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+-->
+<odoo>
+    <record model="ir.ui.view" id="fastapi_endpoint_form_view">
+        <field name="model">fastapi.endpoint</field>
+        <field name="inherit_id" ref="fastapi.fastapi_endpoint_form_view" />
+        <field name="arch" type="xml">
+            <span name="configuration" position="after">
+                <field name="is_mass_mailing" invisible="True" />
+                <group
+                    name="mass_mailing"
+                    title="Mass Mailing"
+                    invisible="not is_mass_mailing"
+                >
+                    <field name="mailing_list_id" required="is_mass_mailing" />
+                </group>
+            </span>
+        </field>
+    </record>
+</odoo>
