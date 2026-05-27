@@ -36,6 +36,7 @@ addon | version | maintainers | summary
 [shopinvader_api_customer](shopinvader_api_customer/) | 18.0.1.0.0 |  | Adds service to manage shopinvader customer
 [shopinvader_api_invoice](shopinvader_api_invoice/) | 18.0.1.0.0 |  | Provides invoice web api via Fastapi
 [shopinvader_api_lead](shopinvader_api_lead/) | 18.0.1.0.0 |  | Lead FastAPI adding a service for creating CRM leads.
+[shopinvader_api_mass_mailing](shopinvader_api_mass_mailing/) | 18.0.1.0.0 | <a href='https://github.com/paradoxxxzero'><img src='https://github.com/paradoxxxzero.png' width='32' height='32' style='border-radius:50%;' alt='paradoxxxzero'/></a> | Add a way to subscribe/unsubscribe to mass mailing list of an endpoint
 [shopinvader_api_quotation](shopinvader_api_quotation/) | 18.0.1.0.0 |  | Shopinvader Quotation
 [shopinvader_api_sale](shopinvader_api_sale/) | 18.0.1.0.0 |  | Sale FastApi for exposing sale order
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 18.0.1.0.0 |  | Add security rule to expose invoices
