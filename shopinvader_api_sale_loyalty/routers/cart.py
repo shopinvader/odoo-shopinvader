@@ -5,71 +5,20 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends
 
-from odoo import _, api, models
+from odoo import api
 from odoo.exceptions import UserError
 
-from odoo.addons.base.models.res_partner import Partner as ResPartner
-from odoo.addons.fastapi.dependencies import (
-    authenticated_partner,
-    authenticated_partner_env,
-)
 from odoo.addons.sale.models.sale_order import SaleOrder
+from odoo.addons.shopinvader_api_cart.routers.cart import cart_helper
 from odoo.addons.shopinvader_api_cart.schemas import CartTransaction
+from odoo.addons.shopinvader_router_helper import VirtualModel
 
 from ..schemas import LoyaltyCardInput, LoyaltyRewardInput, Sale
 
 sale_loyalty_cart_router = APIRouter(tags=["carts"])
 
 
-@sale_loyalty_cart_router.post("/apply_coupon/{uuid}", deprecated=True)
-@sale_loyalty_cart_router.post("/apply_coupon", deprecated=True)
-@sale_loyalty_cart_router.post("/{uuid}/coupon")
-@sale_loyalty_cart_router.post("/current/coupon")
-@sale_loyalty_cart_router.post("/coupon")
-def apply_coupon(
-    data: LoyaltyCardInput,
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    uuid: UUID | None = None,
-) -> Sale | None:
-    """
-    Apply a coupon on a specific cart.
-
-    One can specify in LoyaltyCartInput which reward to choose, and
-    which free product to choose.
-    If some info is missing to uniquely determine which reward to apply,
-    raise an error.
-    """
-    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
-    if cart:
-        env["shopinvader_api_cart.cart_router.helper"]._apply_coupon(cart, data)
-    return Sale.from_sale_order(cart) if cart else None
-
-
-@sale_loyalty_cart_router.post("/apply_reward/{uuid}", deprecated=True)
-@sale_loyalty_cart_router.post("/apply_reward", deprecated=True)
-@sale_loyalty_cart_router.post("/{uuid}/reward")
-@sale_loyalty_cart_router.post("/current/reward")
-@sale_loyalty_cart_router.post("/reward")
-def apply_reward(
-    data: LoyaltyRewardInput,
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated[ResPartner, Depends(authenticated_partner)],
-    uuid: UUID | None = None,
-) -> Sale | None:
-    """
-    Apply claimable rewards on a specific cart.
-
-    One can specify in LoyaltyReardInput which free product to choose.
-    If this piece of info is needed and missing, raise an error.
-    """
-    cart = env["sale.order"]._find_open_cart(partner.id, str(uuid) if uuid else None)
-    if cart:
-        env["shopinvader_api_cart.cart_router.helper"]._apply_reward(cart, data)
-    return Sale.from_sale_order(cart) if cart else None
-
-
-class ShopinvaderApiCartRouterHelper(models.AbstractModel):
+class CartHelper(VirtualModel):
     _inherit = "shopinvader_api_cart.cart_router.helper"
 
     # Apply coupon
@@ -91,11 +40,13 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             all_rewards |= rewards
 
         if not all_rewards:
-            raise UserError(_("No reward available for this code."))
+            raise UserError(self.env._("No reward available for this code."))
         if reward_id and reward_id not in all_rewards.ids:
-            raise UserError(_("Reward not allowed for this code."))
+            raise UserError(self.env._("Reward not allowed for this code."))
         if not reward_id and len(all_rewards) > 1:
-            raise UserError(_("Several rewards available. Please specify one."))
+            raise UserError(
+                self.env._("Several rewards available. Please specify one.")
+            )
 
         if reward_id:
             return self.env["loyalty.reward"].browse(reward_id)
@@ -115,11 +66,13 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         reward_products = reward.reward_product_ids
 
         if not reward_products:
-            raise UserError(_("No free products available."))
+            raise UserError(self.env._("No free products available."))
         if product_id and product_id not in reward_products.ids:
-            raise UserError(_("Free product not allowed for this reward."))
+            raise UserError(self.env._("Free product not allowed for this reward."))
         if not product_id and len(reward_products) > 1:
-            raise UserError(_("Several free products available. Please specify one."))
+            raise UserError(
+                self.env._("Several free products available. Please specify one.")
+            )
 
         if product_id:
             return product_id
@@ -191,12 +144,11 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
     @api.model
     def _sync_cart(
         self,
-        partner: ResPartner,
         cart: SaleOrder,
         uuid: str,
         transactions: list[CartTransaction],
     ):
-        cart = super()._sync_cart(partner, cart, uuid, transactions)
+        cart = super()._sync_cart(cart, uuid, transactions)
         # Try to auto apply rewards.
         # Only rewards that are the only reward of the program and not
         # with a multi product reward
@@ -204,3 +156,49 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             cart._update_programs_and_rewards()
             self._apply_automatic_rewards(cart)
         return cart
+
+
+@sale_loyalty_cart_router.post("/apply_coupon/{uuid}", deprecated=True)
+@sale_loyalty_cart_router.post("/apply_coupon", deprecated=True)
+@sale_loyalty_cart_router.post("/{uuid}/coupon")
+@sale_loyalty_cart_router.post("/current/coupon")
+@sale_loyalty_cart_router.post("/coupon")
+def apply_coupon(
+    data: LoyaltyCardInput,
+    helper: Annotated[CartHelper, Depends(cart_helper)],
+    uuid: UUID | None = None,
+) -> Sale | None:
+    """
+    Apply a coupon on a specific cart.
+
+    One can specify in LoyaltyCartInput which reward to choose, and
+    which free product to choose.
+    If some info is missing to uniquely determine which reward to apply,
+    raise an error.
+    """
+    cart = helper._get_cart(uuid)
+    if cart:
+        helper._apply_coupon(cart, data)
+    return Sale.from_sale_order(cart) if cart else None
+
+
+@sale_loyalty_cart_router.post("/apply_reward/{uuid}", deprecated=True)
+@sale_loyalty_cart_router.post("/apply_reward", deprecated=True)
+@sale_loyalty_cart_router.post("/{uuid}/reward")
+@sale_loyalty_cart_router.post("/current/reward")
+@sale_loyalty_cart_router.post("/reward")
+def apply_reward(
+    data: LoyaltyRewardInput,
+    helper: Annotated[CartHelper, Depends(cart_helper)],
+    uuid: UUID | None = None,
+) -> Sale | None:
+    """
+    Apply claimable rewards on a specific cart.
+
+    One can specify in LoyaltyReardInput which free product to choose.
+    If this piece of info is needed and missing, raise an error.
+    """
+    cart = helper._get_cart(uuid)
+    if cart:
+        helper._apply_reward(cart, data)
+    return Sale.from_sale_order(cart) if cart else None

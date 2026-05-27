@@ -55,7 +55,8 @@ class TestShopinvaderSaleLoyaltyCommon(FastAPITransactionCase, TestSaleCouponCom
     def _create_program_choice_reward_with_code(self, product):
         return self.env["loyalty.program"].create(
             {
-                "name": "With coupon: Buy 1 product, choose 10% on all or 25% on cheapest",
+                "name": "With coupon: Buy 1 product, "
+                "choose 10% on all or 25% on cheapest",
                 "program_type": "coupons",
                 "trigger": "with_code",
                 "applies_on": "current",
@@ -97,7 +98,8 @@ class TestShopinvaderSaleLoyaltyCommon(FastAPITransactionCase, TestSaleCouponCom
     def _create_program_choice_reward_auto(self, product):
         return self.env["loyalty.program"].create(
             {
-                "name": "Promotion: Buy 1 product, choose 10% on all or 25% on cheapest",
+                "name": "Promotion: Buy 1 product, "
+                "choose 10% on all or 25% on cheapest",
                 "program_type": "promotion",
                 "trigger": "auto",
                 "applies_on": "current",

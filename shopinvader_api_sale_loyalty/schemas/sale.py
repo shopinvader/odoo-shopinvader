@@ -8,6 +8,8 @@ from odoo.addons.shopinvader_schema_sale.schemas import Sale as BaseSale
 from ..schemas import (
     LoyaltyCard,
     LoyaltyProgram,
+)
+from ..schemas import (
     LoyaltyRewardResponse as LoyaltyReward,
 )
 

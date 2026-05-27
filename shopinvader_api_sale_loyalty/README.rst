@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============================
 Shopinvader API Sale Loyalty
 ============================
@@ -17,28 +13,35 @@ Shopinvader API Sale Loyalty
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
-    :target: https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_sale_loyalty
+    :target: https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_sale_loyalty
     :alt: shopinvader/odoo-shopinvader
 
 |badge1| |badge2| |badge3|
 
 This module extends the functionality of Shopinvader to support Coupons
-and Promotions from `sale_loyalty` core module.
-It is the new version providing FastAPI services.
+and Promotions from sale_loyalty core module. It is the new version
+providing FastAPI services.
 
-Not to be confused with `shopinvader_promotion_rule`, that implements
-promotion programs from OCA module `sale_promotion_rule`, an alternative
-to the core `sale_loyalty` module.
+Not to be confused with shopinvader_promotion_rule, that implements
+promotion programs from OCA module sale_promotion_rule, an alternative
+to the core sale_loyalty module.
 
 Available services:
 
-* ``/loyalty/{code}`` under the ``loyalty`` router, to get all rewards claimable with a given coupon code
-* ``/coupon`` under the ``cart`` router, to apply a given coupon to the cart. Allows to specify which reward and/or which free product to offer.
-* ``/reward`` under the ``cart`` router, to apply a given reward (automatic promotion). Note that automatic promotions are applied automatically at cart update, when possible (if no choice must be done). This service allows to apply an automatic promotion for which the reward/free product choice is mandatory.
+- ``/loyalty/{code}`` under the ``loyalty`` router, to get all rewards
+  claimable with a given coupon code
+- ``/coupon`` under the ``cart`` router, to apply a given coupon to the
+  cart. Allows to specify which reward and/or which free product to
+  offer.
+- ``/reward`` under the ``cart`` router, to apply a given reward
+  (automatic promotion). Note that automatic promotions are applied
+  automatically at cart update, when possible (if no choice must be
+  done). This service allows to apply an automatic promotion for which
+  the reward/free product choice is mandatory.
 
 **Table of contents**
 
@@ -48,17 +51,16 @@ Available services:
 Usage
 =====
 
-This addons provides 2 new routers: `loyalty_router` and 
-`sale_loyalty_cart_router`. The `sale_loyalty_cart_router` is declared
-with the same tags as the one defined in the `shopinvader_api_cart`
-addon. As this one, no prefix is added to the router, to allow to mount
-it as a nested app. See the README of `shopinvader_api_cart` for
-more details on how to do it.
+This addons provides 2 new routers: loyalty_router and
+sale_loyalty_cart_router. The sale_loyalty_cart_router is declared with
+the same tags as the one defined in the shopinvader_api_cart addon. As
+this one, no prefix is added to the router, to allow to mount it as a
+nested app. See the README of shopinvader_api_cart for more details on
+how to do it.
 
 As all api addons, installing this addon will not have any effect on the
 existing fastapi app. You must add the routers to the app by yourself by
 editing your fastapi.endpoint where you want to add the routes.
-
 
 Bug Tracker
 ===========
@@ -66,7 +68,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/shopinvader/odoo-shopinvader/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_sale_loyalty%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/shopinvader/odoo-shopinvader/issues/new?body=module:%20shopinvader_api_sale_loyalty%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -74,24 +76,24 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * ACSONE SA/NV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Camptocamp <https://www.camptocamp.com>`_
+- `Camptocamp <https://www.camptocamp.com>`__
 
-  * Iván Todorovich <ivan.todorovich@gmail.com>
+  - Iván Todorovich <ivan.todorovich@gmail.com>
 
-* `Acsone <https://www.acsone.eu>`_
+- `Acsone <https://www.acsone.eu>`__
 
-  * Marie Lejeune <marie.lejeune@acsone.eu>
+  - Marie Lejeune <marie.lejeune@acsone.eu>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
-This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/16.0/shopinvader_api_sale_loyalty>`_ project on GitHub.
+This module is part of the `shopinvader/odoo-shopinvader <https://github.com/shopinvader/odoo-shopinvader/tree/18.0/shopinvader_api_sale_loyalty>`_ project on GitHub.
 
 You are welcome to contribute.
