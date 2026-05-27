@@ -39,6 +39,7 @@ addon | version | maintainers | summary
 [shopinvader_api_mass_mailing](shopinvader_api_mass_mailing/) | 18.0.1.0.0 | <a href='https://github.com/paradoxxxzero'><img src='https://github.com/paradoxxxzero.png' width='32' height='32' style='border-radius:50%;' alt='paradoxxxzero'/></a> | Add a way to subscribe/unsubscribe to mass mailing list of an endpoint
 [shopinvader_api_quotation](shopinvader_api_quotation/) | 18.0.1.0.0 |  | Shopinvader Quotation
 [shopinvader_api_sale](shopinvader_api_sale/) | 18.0.1.0.0 |  | Sale FastApi for exposing sale order
+[shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 18.0.1.0.0 |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 18.0.1.0.0 |  | Add security rule to expose invoices
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.0.0 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 18.0.1.0.0 |  | Adds a service to get commont settings
@@ -57,13 +58,6 @@ addon | version | maintainers | summary
 [shopinvader_schema_invoice](shopinvader_schema_invoice/) | 18.0.1.0.0 |  | Add schema for invoices
 [shopinvader_schema_sale](shopinvader_schema_sale/) | 18.0.1.0.0 |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 18.0.1.0.0 |  | Shopinvader Schema Sale State
-
-
-Unported addons
----------------
-addon | version | maintainers | summary
---- | --- | --- | ---
-[shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 16.0.1.2.0 (unported) |  | FastAPI services to add coupons and loyalties to carts.
 
 [//]: # (end addons)
 
