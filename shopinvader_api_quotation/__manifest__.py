@@ -1,7 +1,7 @@
 {
     "name": "Shopinvader Api Quotation",
     "summary": "Shopinvader Quotation",
-    "version": "16.0.1.1.0",
+    "version": "16.0.1.1.1",
     "category": "e-commerce",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": "Akretion",

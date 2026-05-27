@@ -4,7 +4,7 @@
 {
     "name": "Sale Quotation",
     "summary": "Sale Quotation",
-    "version": "16.0.0.2.0",
+    "version": "16.0.0.2.1",
     "category": "e-commerce",
     "development_status": "Production/Stable",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
