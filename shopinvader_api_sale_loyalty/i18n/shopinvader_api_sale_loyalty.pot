@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,30 +14,41 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: shopinvader_api_sale_loyalty
-#. odoo-python
-#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
-#, python-format
-msgid "Free product not allowed for this reward."
+#: model:ir.model.fields,field_description:shopinvader_api_sale_loyalty.field_shopinvader_api_loyalty_loyalty_router_helper__app
+msgid "Current App"
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#: model:ir.model.fields,field_description:shopinvader_api_sale_loyalty.field_shopinvader_api_loyalty_loyalty_router_helper__endpoint_id
+msgid "Current Endpoint"
 msgstr ""
 
 #. module: shopinvader_api_sale_loyalty
 #. odoo-python
 #: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
-#, python-format
+msgid "Free product not allowed for this reward."
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#: model:ir.model.fields,field_description:shopinvader_api_sale_loyalty.field_shopinvader_api_loyalty_loyalty_router_helper__id
+msgid "ID"
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
+#. odoo-python
+#: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
 msgid "No free products available."
 msgstr ""
 
 #. module: shopinvader_api_sale_loyalty
 #. odoo-python
 #: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
-#, python-format
 msgid "No reward available for this code."
 msgstr ""
 
 #. module: shopinvader_api_sale_loyalty
 #. odoo-python
 #: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
-#, python-format
 msgid "Reward not allowed for this code."
 msgstr ""
 
@@ -47,16 +58,19 @@ msgid "Sale Loyalty user"
 msgstr ""
 
 #. module: shopinvader_api_sale_loyalty
+#: model:ir.model,name:shopinvader_api_sale_loyalty.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: shopinvader_api_sale_loyalty
 #. odoo-python
 #: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
-#, python-format
 msgid "Several free products available. Please specify one."
 msgstr ""
 
 #. module: shopinvader_api_sale_loyalty
 #. odoo-python
 #: code:addons/shopinvader_api_sale_loyalty/routers/cart.py:0
-#, python-format
 msgid "Several rewards available. Please specify one."
 msgstr ""
 
