@@ -3,8 +3,9 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 from odoo import Command
-from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 from odoo.tests.common import TransactionCase
+
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
 
 from ..exceptions import InvalidQuotationStateError
 
@@ -37,25 +38,6 @@ class TestQuotation(TransactionCase):
         self.so.action_customer_request_quotation()
         self.so.action_quotation_sent()
         self.so.action_customer_accept_quotation()
-        self.assertEqual(self.so.quotation_state, "accepted")
-        self.assertEqual(self.so.typology, "sale")
-
-    def test_not_allowed_confirm_quotation(self):
-        action = self.so.with_context(
-            use_quotation_confirm_wizard=True
-        ).action_confirm()
-        self.assertIsInstance(action, dict)
-        self.assertEqual(action.get("res_model"), "sale.order.confirm.warning.wizard")
-        self.assertEqual(action.get("type"), "ir.actions.act_window")
-        self.assertIn("default_message", action.get("context", {}))
-        self.assertIn(
-            "not in 'Waiting Acceptation'", action["context"]["default_message"]
-        )
-        self.env["sale.order.confirm.warning.wizard"].create(
-            {
-                "sale_order_ids": [Command.link(self.so.id)],
-            }
-        ).confirm_and_proceed()
         self.assertEqual(self.so.quotation_state, "accepted")
         self.assertEqual(self.so.typology, "sale")
 

@@ -72,25 +72,45 @@
                     class="oe_inline"
                 />
             </field>
+            <xpath expr="//header" position="inside">
+                <field name="show_quotation_confirm_warning" invisible="1" />
+            </xpath>
+
             <xpath
                 expr="//header/button[@name='action_confirm' and @id='action_confirm']"
                 position="attributes"
             >
-                <attribute name="context" operation="update">
-                    {
-                    "use_quotation_confirm_wizard": True,
-                    }
-                </attribute>
+                <attribute
+                    name="invisible"
+                    operation="or"
+                    eval="show_quotation_confirm_warning"
+                />
             </xpath>
+
             <xpath
                 expr="//header/button[@name='action_confirm' and not(@id)]"
                 position="attributes"
             >
-                <attribute name="context" operation="update">
-                    {
-                    "use_quotation_confirm_wizard": True,
-                    }
-                </attribute>
+                <attribute
+                    name="invisible"
+                    operation="or"
+                    eval="show_quotation_confirm_warning"
+                />
+            </xpath>
+
+            <xpath
+                expr="//header/button[@name='action_confirm' and @id='action_confirm']"
+                position="after"
+            >
+                <button
+                    name="action_confirm"
+                    id="action_confirm_sale_quotation"
+                    string="Confirm"
+                    type="object"
+                    data-hotkey="v"
+                    confirm="The selected quotation(s) are not in 'Waiting Acceptation' state. Are you sure you want to confirm them?"
+                    attrs="{'invisible': [('show_quotation_confirm_warning', '=', False)]}"
+                />
             </xpath>
 
         </field>

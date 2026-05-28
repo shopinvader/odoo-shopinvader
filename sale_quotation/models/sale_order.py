@@ -58,6 +58,18 @@ class SaleOrder(models.Model):
         compute="_compute_is_action_customer_cancel_quotation_allowed"
     )
 
+    show_quotation_confirm_warning = fields.Boolean(
+        compute="_compute_show_quotation_confirm_warning"
+    )
+
+    def _compute_show_quotation_confirm_warning(self):
+        for rec in self:
+            rec.show_quotation_confirm_warning = (
+                rec.state in ("draft", "sent")
+                and rec.use_customer_quotation_workflow
+                and rec.quotation_state not in ("waiting_acceptation", "accepted")
+            )
+
     def _inverse_use_customer_quotation_workflow(self):
         """Set the typology to 'quote' when enabling the customer quotation workflow."""
         for order in self:
@@ -189,30 +201,7 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         customer_quotations = self.filtered("use_customer_quotation_workflow")
-        if (
-            customer_quotations
-            and self.env.context.get("use_quotation_confirm_wizard")
-            and any(
-                rec.quotation_state not in ("waiting_acceptation", "accepted")
-                for rec in customer_quotations
-            )
-        ):
-            return {
-                "name": _("Confirm Sale Order"),
-                "type": "ir.actions.act_window",
-                "res_model": "sale.order.confirm.warning.wizard",
-                "views": [[False, "form"]],
-                "target": "new",
-                "context": {
-                    "default_sale_order_ids": self.ids,
-                    "default_message": _(
-                        "The selected quotation(s) are not in 'Waiting Acceptation' "
-                        "state. Are you sure you want to confirm them?"
-                    ),
-                },
-            }
-        customer_quotations.quotation_state = "accepted"
-        customer_quotations.typology = "sale"
+        customer_quotations.write({"quotation_state": "accepted", "typology": "sale"})
         return super().action_confirm()
 
     def action_draft(self):
