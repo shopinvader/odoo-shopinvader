@@ -495,6 +495,7 @@ class TestQuotation(FastAPITransactionCase):
             response: Response = test_client.post(
                 f"/quotations/{self.quotation.id}/accept"
             )
+        self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
         self.quotation.action_customer_request_quotation()
         self.quotation.action_quotation_sent()
         with self._create_test_client() as test_client:

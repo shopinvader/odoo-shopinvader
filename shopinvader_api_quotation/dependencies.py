@@ -62,7 +62,9 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
         """Process the quotation acceptation
         Can be inherited if you expect specific params
         for confirming a quotation"""
-        return quotation.action_customer_accept_quotation()
+        # Elevate context to sudo() so the background procurement generation
+        # triggered by sale_stock can bypass portal/public user ACL limits.
+        return quotation.sudo().action_customer_accept_quotation()
 
     def _proceess_request_quotation(self, quotation):
         """Process the quotation request
