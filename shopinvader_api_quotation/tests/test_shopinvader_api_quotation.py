@@ -1,8 +1,6 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-import json
-
 from fastapi import status
 from requests import Response
 
@@ -190,7 +188,7 @@ class TestQuotation(FastAPITransactionCase):
         }
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{quotation.id}", content=json.dumps(data)
+                f"/quotations/{quotation.id}", json=data
             )
         self.assertEqual(
             response.status_code,
@@ -208,7 +206,7 @@ class TestQuotation(FastAPITransactionCase):
         }
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{quotation.id}", content=json.dumps(data)
+                f"/quotations/{quotation.id}", json=data
             )
         self.assertEqual(
             response.status_code,
@@ -234,9 +232,7 @@ class TestQuotation(FastAPITransactionCase):
         }
 
         with self._create_test_client() as test_client:
-            response: Response = test_client.post(
-                "/quotations/create", content=json.dumps(data)
-            )
+            response: Response = test_client.post("/quotations/create", json=data)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
@@ -307,7 +303,7 @@ class TestQuotation(FastAPITransactionCase):
 
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{quotation.id}/add_line", content=json.dumps(data)
+                f"/quotations/{quotation.id}/add_line", json=data
             )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -336,7 +332,7 @@ class TestQuotation(FastAPITransactionCase):
 
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{quotation.id}/add_lines", content=json.dumps(data)
+                f"/quotations/{quotation.id}/add_lines", json=data
             )
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -361,7 +357,7 @@ class TestQuotation(FastAPITransactionCase):
 
         with self._create_test_client() as test_client:
             response: Response = test_client.put(
-                f"/quotations/{quotation.id}/update_line", content=json.dumps(data)
+                f"/quotations/{quotation.id}/update_line", json=data
             )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -379,7 +375,7 @@ class TestQuotation(FastAPITransactionCase):
         with self._create_test_client() as test_client:
             with self.assertRaises(MissingError):
                 response: Response = test_client.put(
-                    f"/quotations/{quotation.id}/update_line", content=json.dumps(data)
+                    f"/quotations/{quotation.id}/update_line", json=data
                 )
 
     def test_update_quotation_lines(self):
@@ -403,7 +399,7 @@ class TestQuotation(FastAPITransactionCase):
 
         with self._create_test_client() as test_client:
             response: Response = test_client.put(
-                f"/quotations/{quotation.id}/update_lines", content=json.dumps(data)
+                f"/quotations/{quotation.id}/update_lines", json=data
             )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -431,7 +427,7 @@ class TestQuotation(FastAPITransactionCase):
 
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{quotation.id}/delete_line", content=json.dumps(data)
+                f"/quotations/{quotation.id}/delete_line", json=data
             )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -445,7 +441,7 @@ class TestQuotation(FastAPITransactionCase):
         with self._create_test_client() as test_client:
             with self.assertRaises(MissingError):
                 response: Response = test_client.post(
-                    f"/quotations/{quotation.id}/delete_line", content=json.dumps(data)
+                    f"/quotations/{quotation.id}/delete_line", json=data
                 )
 
     def test_delete_quotation_lines(self):
@@ -463,7 +459,7 @@ class TestQuotation(FastAPITransactionCase):
 
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{quotation.id}/delete_lines", content=json.dumps(data)
+                f"/quotations/{quotation.id}/delete_lines", json=data
             )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -559,7 +555,7 @@ class TestQuotation(FastAPITransactionCase):
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 f"/quotations/{self.quotation.id}",
-                content=json.dumps({"client_order_ref": "PO_123123"}),
+                json={"client_order_ref": "PO_123123"},
             )
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
@@ -578,7 +574,7 @@ class TestQuotation(FastAPITransactionCase):
         }
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{self.quotation.id}/add_lines", content=json.dumps(data)
+                f"/quotations/{self.quotation.id}/add_lines", json=data
             )
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
@@ -589,7 +585,7 @@ class TestQuotation(FastAPITransactionCase):
         }
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
-                f"/quotations/{self.quotation.id}/add_line", content=json.dumps(data)
+                f"/quotations/{self.quotation.id}/add_line", json=data
             )
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
@@ -602,7 +598,7 @@ class TestQuotation(FastAPITransactionCase):
         }
         with self._create_test_client() as test_client:
             response: Response = test_client.put(
-                f"/quotations/{self.quotation.id}/update_line", content=json.dumps(data)
+                f"/quotations/{self.quotation.id}/update_line", json=data
             )
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
 
@@ -621,6 +617,6 @@ class TestQuotation(FastAPITransactionCase):
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 f"/quotations/{self.quotation.id}/delete_lines",
-                content=json.dumps(data),
+                json=data,
             )
         self.assertEqual(response.status_code, status.HTTP_409_CONFLICT)
