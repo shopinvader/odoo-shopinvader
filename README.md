@@ -44,6 +44,7 @@ addon | version | maintainers | summary
 [shopinvader_api_security_sale](shopinvader_api_security_sale/) | 16.0.1.1.1 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 16.0.1.0.1 |  | Adds a service to get commont settings
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 16.0.2.0.0 |  | This module adds a signin service with jwt token.
+[shopinvader_api_warehouse](shopinvader_api_warehouse/) | 16.0.1.0.0 | <a href='https://github.com/paradoxxxzero'><img src='https://github.com/paradoxxxzero.png' width='32' height='32' style='border-radius:50%;' alt='paradoxxxzero'/></a> | Adds sales warehouse information to Shopinvader API
 [shopinvader_api_wishlist](shopinvader_api_wishlist/) | 16.0.1.0.2 |  | Handle shop wishlist
 [shopinvader_base_url](shopinvader_base_url/) | 16.0.1.0.3 |  | keep history of url for products & categories
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 16.0.1.0.1 |  | Shopinvader delivery state
