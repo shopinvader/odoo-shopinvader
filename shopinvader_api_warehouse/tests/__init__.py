@@ -1,0 +1,3 @@
+from . import test_shopinvader_api_warehouse
+from . import test_shopinvader_api_warehouse_in_cart
+from . import test_shopinvader_api_warehouse_customer
