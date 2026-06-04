@@ -2,7 +2,6 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import json
 
 from fastapi import status
 from requests import Response
@@ -55,7 +54,7 @@ class ShopinvaderApiWarehouseCustomer(WarehouseCaseCommon):
             "default_warehouse_id": self.warehouse_1.id,
         }
         with self._create_test_client(router=customer_router) as test_client:
-            response: Response = test_client.post("/customer", content=json.dumps(data))
+            response: Response = test_client.post("/customer", json=data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         customer_data = response.json()
 

@@ -11,8 +11,8 @@ from odoo import api, fields, models
 from odoo.addons.base.models.res_partner import Partner as ResPartner
 from odoo.addons.extendable_fastapi.schemas import PagedCollection
 from odoo.addons.fastapi.dependencies import (
-    authenticated_partner,
-    authenticated_partner_env,
+    optionally_authenticated_partner,
+    optionally_authenticated_partner_env,
     paging,
 )
 from odoo.addons.fastapi.schemas import Paging
@@ -28,8 +28,8 @@ warehouse_router = APIRouter(tags=["warehouses"])
 def search(
     params: Annotated[WarehouseSearch, Depends()],
     paging: Annotated[Paging, Depends(paging)],
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    env: Annotated[api.Environment, Depends(optionally_authenticated_partner_env)],
+    partner: Annotated[ResPartner, Depends(optionally_authenticated_partner)],
 ) -> PagedCollection[Warehouse]:
     """Get / search warehouses. The list contains only warehouses accessible to
     the authenticated user"""
@@ -50,8 +50,8 @@ def search(
 @warehouse_router.get("/warehouses/{warehouse_id}")
 def get(
     warehouse_id: int,
-    env: Annotated[api.Environment, Depends(authenticated_partner_env)],
-    partner: Annotated[ResPartner, Depends(authenticated_partner)],
+    env: Annotated[api.Environment, Depends(optionally_authenticated_partner_env)],
+    partner: Annotated[ResPartner, Depends(optionally_authenticated_partner)],
 ) -> Warehouse:
     """
     Get warehouse details with specific warehouse_id
