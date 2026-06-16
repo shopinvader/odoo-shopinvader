@@ -5,3 +5,13 @@ vcrpy-unittest
 unittest2 # For shopinvader test_controller, which inherits component
 odoo-test-helper
 httpx  # For FastAPI tests
+
+# References PR: [16.0] refactor quotations rest api #1597
+odoo-addon-sale-cart @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/sale_cart
+odoo-addon-sale-cart-quotation @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/sale_cart_quotation
+odoo-addon-sale-quotation @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/sale_quotation
+odoo-addon-sale-typology @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/sale_typology
+odoo-addon-shopinvader-api-cart-quotation @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/shopinvader_api_cart_quotation
+odoo-addon-shopinvader-api-quotation @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/shopinvader_api_quotation
+odoo-addon-shopinvader-product-order-mode @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/shopinvader_product_order_mode
+odoo-addon-shopinvader-product-order-mode-on-request @ git+ssh://git@github.com/acsone/odoo-shopinvader.git@16.0-refactor-quotations-rest-api#subdirectory=setup/shopinvader_product_order_mode_on_request
