@@ -1,1 +1,0 @@
-* Nicolas DELBOVIER <nicolas.delbovier@acsone.eu>
