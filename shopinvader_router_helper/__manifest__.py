@@ -5,7 +5,7 @@
 {
     "name": "Shopinvader Router Helper",
     "summary": "Standard helper for shopinvader routers",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.2",
     "category": "Tools",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
     "author": " Akretion",

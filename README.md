@@ -49,7 +49,7 @@ addon | version | maintainers | summary
 [shopinvader_delivery_state](shopinvader_delivery_state/) | 18.0.1.0.0 |  | Shopinvader delivery state
 [shopinvader_fastapi_auth_jwt](shopinvader_fastapi_auth_jwt/) | 18.0.1.0.0 |  | Provide JWT and Anonymous Partner authentication to FastAPI routes.
 [shopinvader_fastapi_auth_partner](shopinvader_fastapi_auth_partner/) | 18.0.1.0.0 |  | Provide Partner and Anonymous Partner authentication to FastAPI routes.
-[shopinvader_router_helper](shopinvader_router_helper/) | 18.0.1.0.1 |  | Standard helper for shopinvader routers
+[shopinvader_router_helper](shopinvader_router_helper/) | 18.0.1.0.2 |  | Standard helper for shopinvader routers
 [shopinvader_sale_cart](shopinvader_sale_cart/) | 18.0.1.0.0 |  | ShopInvader logic for sale carts.
 [shopinvader_sale_cart_anonymous_partner](shopinvader_sale_cart_anonymous_partner/) | 18.0.1.0.0 |  | Glue module between shopinvader_sale_cart and shopinvader_anonymous_partner. This module solves cart conflicts when an anonymous user sign in.
 [shopinvader_sale_channel](shopinvader_sale_channel/) | 18.0.1.0.0 | <a href='https://github.com/paradoxxxzero'><img src='https://github.com/paradoxxxzero.png' width='32' height='32' style='border-radius:50%;' alt='paradoxxxzero'/></a> | Adds sale channel management to Shopinvader
