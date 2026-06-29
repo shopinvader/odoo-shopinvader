@@ -1,7 +1,7 @@
 # Copyright 2025 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, fields, models
+from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
@@ -9,8 +9,8 @@ class ProductTemplate(models.Model):
 
     shop_order_mode = fields.Selection(
         selection_add=[
-            ("quotation_only", _("Quotation Only")),
-            ("direct_sale_or_quotation", _("Direct Sale or Quotation")),
+            ("quotation_only", "Quotation Only"),
+            ("direct_sale_or_quotation", "Direct Sale or Quotation"),
         ],
         ondelete={
             "quotation_only": "set null",
