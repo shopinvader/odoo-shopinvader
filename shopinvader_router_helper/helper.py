@@ -112,13 +112,13 @@ class ShopinvaderRouterHelper(VirtualModel):
             )
         return record
 
-    def _prepare_write_values(self, values: Any) -> dict:
+    def _prepare_write_values(self, values: Any, record: Record) -> dict:
         return self._prepare_values(values)
 
     def write(self, record_id: int, values: dict) -> Record:  # pylint: disable=method-required-super
         self.model.check_access("write")
         record = self.get(record_id)
-        record.sudo().write(self._prepare_write_values(values))
+        record.sudo().write(self._prepare_write_values(values, record))
         if not self.get(record.id, False):
             raise AccessDenied(
                 self.env._(
