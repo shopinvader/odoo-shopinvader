@@ -8,8 +8,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
-from odoo.addons.sale.models.sale_order import READONLY_FIELD_STATES
-
 from ..exceptions import InvalidQuotationStateError
 
 
@@ -41,7 +39,6 @@ class SaleOrder(models.Model):
     use_customer_quotation_workflow = fields.Boolean(
         inverse="_inverse_use_customer_quotation_workflow",
         default=False,
-        states=READONLY_FIELD_STATES,
     )
 
     is_action_customer_request_quotation_allowed = fields.Boolean(
