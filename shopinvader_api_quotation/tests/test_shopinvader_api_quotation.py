@@ -156,6 +156,7 @@ class TestQuotation(FastAPITransactionCase):
                     "quantity": 200,
                 },
                 {
+                    "sequence": 500,
                     "product_id": self.product_1.id,
                     "quantity": 200,
                 },
@@ -290,7 +291,8 @@ class TestQuotation(FastAPITransactionCase):
         self.assertTrue(
             response.headers["Content-Disposition"].startswith("attachment;")
         )
-        self.assertTrue(response.headers["Content-Disposition"].endswith(".pdf"))
+        # In test mode report is generated as html
+        self.assertTrue(response.headers["Content-Disposition"].endswith(".html"))
         self.assertGreater(len(response.content), 0)
 
     def test_add_quotation_line(self):
