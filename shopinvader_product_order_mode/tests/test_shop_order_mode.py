@@ -12,7 +12,8 @@ class TestShopOrderMode(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        # Define different attributes to allow to have mulitple products for the same template
+        # Define different attributes to allow to have mulitple products for
+        # the same template
         cls.test_attribute = cls.env["product.attribute"].create(
             {"name": "Test attribute"}
         )
@@ -69,7 +70,8 @@ class TestShopOrderMode(TransactionCase):
     def test_shop_order_mode_reset(self):
         """
         Test that the `shop_order_mode` field on product.product is reset to the
-        value of the product.template when `is_shop_order_mode_enabled_on_variant` is True.
+        value of the product.template when `is_shop_order_mode_enabled_on_variant`
+        is True.
         """
         self.template.is_shop_order_mode_enabled_on_variant = True
         self.product.shop_order_mode = None
