@@ -150,7 +150,7 @@ class ShopinvaderRouterHelper(VirtualModel):
 
         return f"{report_name}.{ext}", content
 
-    def send_file(self, file, filename, mime_type):
+    def send_file(self, filename, file, mime_type):
         try:
             from fastapi.responses import StreamingResponse
         except ImportError as e:
