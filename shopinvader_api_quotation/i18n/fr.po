@@ -1,0 +1,46 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* shopinvader_api_quotation
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-16 09:17+0000\n"
+"PO-Revision-Date: 2025-07-16 09:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: shopinvader_api_quotation
+#: model:ir.model.fields.selection,name:shopinvader_api_quotation.selection__sale_order__shopinvader_state__estimated
+msgid "Estimated Quotation"
+msgstr "Devis estimé"
+
+#. module: shopinvader_api_quotation
+#: model:ir.model.fields.selection,name:shopinvader_api_quotation.selection__sale_order__shopinvader_state__estimating
+msgid "Estimating Quotation"
+msgstr "Devis en cours d'estimation"
+
+#. module: shopinvader_api_quotation
+#: model:ir.model.fields,field_description:shopinvader_api_quotation.field_shopinvader_api_quotation_router_helper__partner
+msgid "Partner"
+msgstr "Client
+
+#. module: shopinvader_api_quotation
+#: model:ir.model,name:shopinvader_api_quotation.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de commande"
+
+#. module: shopinvader_api_quotation
+#: model:ir.model.fields,field_description:shopinvader_api_quotation.field_sale_order__shopinvader_state
+msgid "Shopinvader State"
+msgstr "État Shopinvader"
+
+#. module: shopinvader_api_quotation
+#: model:ir.model,name:shopinvader_api_quotation.model_shopinvader_api_quotation_router_helper
+msgid "Shopinvader api quotations router helper"
+msgstr "Aide au routage des devis Shopinvader API"

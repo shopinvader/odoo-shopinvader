@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =========
 Sale Cart
 =========
@@ -17,7 +13,7 @@ Sale Cart
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
@@ -26,9 +22,9 @@ Sale Cart
 
 |badge1| |badge2| |badge3|
 
-This addon add a typology on sale.order to distinguish the sale orders
-that are in the process of being written (cart) and those that are
-quotations ready to be confirmed.
+This addon adds a "cart" typology on sale.order to distinguish the sale
+orders that are in the process of being written (cart) and those that
+are quotations ready to be confirmed.
 
 It also automatically converts the cart into a sale when the payment is
 authorized, set as pending, or done.
@@ -60,6 +56,7 @@ Contributors
 ------------
 
 - Laurent Mignon <laurent.mignon@acsone.eu>
+- Nicolas DELBOVIER <nicolas.delbovier@acsone.eu>
 
 Maintainers
 -----------

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record model="ir.ui.view" id="product_product_form_view">
+        <field name="model">product.product</field>
+        <field name="inherit_id" ref="product.product_normal_form_view" />
+        <field name="arch" type="xml">
+            <xpath
+                expr="//notebook/page[@name='general_information']/group/group[@name='group_standard_price']"
+                position="inside"
+            >
+                <field
+                    name="shop_order_mode"
+                    readonly="not is_shop_order_mode_enabled"
+                />
+                <field name="is_shop_order_mode_enabled" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>
