@@ -9,19 +9,110 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <field name="state" position="before">
+            <xpath expr="//header" position="after">
+                <header
+                    name="quotation_header"
+                    attrs="{'invisible': [('use_customer_quotation_workflow', '=', False)]}"
+                >
+                    <field
+                        name="is_action_customer_request_quotation_allowed"
+                        invisible="1"
+                    />
+                    <field
+                        name="is_action_customer_accept_quotation_allowed"
+                        invisible="1"
+                    />
+                    <field
+                        name="is_action_customer_cancel_quotation_allowed"
+                        invisible="1"
+                    />
+                    <field
+                        name="is_action_customer_reset_quotation_to_draft_allowed"
+                        invisible="1"
+                    />
+                    <button
+                        name="action_customer_request_quotation"
+                        string="Customer Request Quotation"
+                        type="object"
+                        attrs="{'invisible': [('is_action_customer_request_quotation_allowed', '=', False)]}"
+                    />
+                    <button
+                        name="action_customer_accept_quotation"
+                        string="Customer Accept Quotation"
+                        type="object"
+                        attrs="{'invisible': [('is_action_customer_accept_quotation_allowed', '=', False)]}"
+                    />
+                    <button
+                        name="action_customer_cancel_quotation"
+                        string="Customer Cancel Quotation"
+                        type="object"
+                        attrs="{'invisible': [('is_action_customer_cancel_quotation_allowed', '=', False)]}"
+                    />
+                    <button
+                        name="action_customer_reset_quotation_to_draft"
+                        string="Customer Reset Quotation to Draft"
+                        type="object"
+                        attrs="{'invisible': [('is_action_customer_reset_quotation_to_draft_allowed', '=', False)]}"
+                    />
+                    <field
+                        name="quotation_state"
+                        widget="statusbar"
+                        statusbar_visible="draft,customer_request,waiting_acceptation,accepted"
+                        attrs="{'invisible': [('use_customer_quotation_workflow', '!=', True)]}"
+                    />
+
+                </header>
+            </xpath>
+
+            <field name="partner_id" position="before">
                 <field
-                    name="quotation_state"
-                    widget="statusbar"
-                    statusbar_visible="draft,waiting_acceptation,accepted"
-                    attrs="{'invisible': [('state', 'in', ('sale', 'done'))]}"
+                    name="use_customer_quotation_workflow"
+                    widget="boolean_toggle"
+                    options="{'autosave': False, 'terminology': 'Use Customer Quotation Workflow'}"
+                    class="oe_inline"
                 />
             </field>
-            <field name="state" position="attributes">
+            <xpath expr="//header" position="inside">
+                <field name="show_quotation_confirm_warning" invisible="1" />
+            </xpath>
+
+            <xpath
+                expr="//header/button[@name='action_confirm' and @id='action_confirm']"
+                position="attributes"
+            >
                 <attribute
-                    name="attrs"
-                >{"invisible": [("state", "in", ("draft", "sent", "cancel"))]}</attribute>
-            </field>
+                    name="invisible"
+                    operation="or"
+                    eval="show_quotation_confirm_warning"
+                />
+            </xpath>
+
+            <xpath
+                expr="//header/button[@name='action_confirm' and not(@id)]"
+                position="attributes"
+            >
+                <attribute
+                    name="invisible"
+                    operation="or"
+                    eval="show_quotation_confirm_warning"
+                />
+            </xpath>
+
+            <xpath
+                expr="//header/button[@name='action_confirm' and @id='action_confirm']"
+                position="after"
+            >
+                <button
+                    name="action_confirm"
+                    id="action_confirm_sale_quotation"
+                    string="Confirm"
+                    type="object"
+                    data-hotkey="v"
+                    confirm="The selected quotation(s) are not in 'Waiting Acceptation' state. Are you sure you want to confirm them?"
+                    attrs="{'invisible': [('show_quotation_confirm_warning', '=', False)]}"
+                />
+            </xpath>
+
         </field>
     </record>
 
@@ -44,6 +135,11 @@
         <field name="inherit_id" ref="sale.sale_order_view_search_inherit_quotation" />
         <field name="arch" type="xml">
             <filter name="draft" position="after">
+                <filter
+                    string="Customer Quotation"
+                    name="customer_quotation"
+                    domain="[('typology', '=', 'quote')]"
+                />
                 <filter
                     string="Draft"
                     name="draft_quotation"

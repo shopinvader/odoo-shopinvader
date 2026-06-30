@@ -4,8 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-29 14:48+0000\n"
+"PO-Revision-Date: 2025-07-29 14:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,14 +22,57 @@ msgid "Accepted"
 msgstr ""
 
 #. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__product_template__shop_only_quotation__all_variant
-msgid "All Variant"
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__cancel
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_confirm_warning_wizard_form_view
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
+msgid "Cancel"
 msgstr ""
 
 #. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__quotation_state__cancel
+#. odoo-python
+#: code:addons/sale_quotation/exceptions.py:0
+#, python-format
+msgid ""
+"Cannot perform '%(action)s' on quotation in state '%(current_state)s'. "
+"Expected states: '%(expected_states)s'."
+msgstr ""
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_confirm_warning_wizard_form_view
+msgid "Confirm Anyway"
+msgstr ""
+
+#. module: sale_quotation
+#. odoo-python
+#: code:addons/sale_quotation/models/sale_order.py:0
+#: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_confirm_warning_wizard_form_view
+#, python-format
+msgid "Confirm Sale Order"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Accept Quotation"
+msgstr ""
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Cancel Quotation"
+msgstr ""
+
+#. module: sale_quotation
 #: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
-msgid "Cancel"
+msgid "Customer Quotation"
 msgstr ""
 
 #. module: sale_quotation
@@ -36,8 +81,30 @@ msgid "Customer Request"
 msgstr ""
 
 #. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Request Quotation"
+msgstr ""
+
+#. module: sale_quotation
+#: model_terms:ir.ui.view,arch_db:sale_quotation.view_order_form
+msgid "Customer Reset Quotation to Draft"
+msgstr ""
+
+#. module: sale_quotation
+#. odoo-python
+#: code:addons/sale_quotation/models/sale_order.py:0
+#, python-format
+msgid "Customer quotation workflow is not enabled for this order."
+msgstr ""
+
+#. module: sale_quotation
 #: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
 msgid "Customer request"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: sale_quotation
@@ -47,43 +114,48 @@ msgid "Draft"
 msgstr ""
 
 #. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__product_template__shop_only_quotation__manually_on_variant
-msgid "Manually on Variant"
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__id
+msgid "ID"
 msgstr ""
 
 #. module: sale_quotation
-#: model:ir.model.fields.selection,name:sale_quotation.selection__product_template__shop_only_quotation__never
-msgid "Never"
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_accept_quotation_allowed
+msgid "Is Action Customer Accept Quotation Allowed"
 msgstr ""
 
 #. module: sale_quotation
-#: model_terms:ir.ui.view,arch_db:sale_quotation.product_template_form_view
-msgid "Only for Quotation"
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_cancel_quotation_allowed
+msgid "Is Action Customer Cancel Quotation Allowed"
 msgstr ""
 
 #. module: sale_quotation
-#. odoo-python
-#: code:addons/sale_quotation/models/sale_order.py:0
-#, python-format
-msgid ""
-"Only orders of cart typology in draft state can be converted to quotation"
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_request_quotation_allowed
+msgid "Is Action Customer Request Quotation Allowed"
 msgstr ""
 
 #. module: sale_quotation
-#. odoo-python
-#: code:addons/sale_quotation/models/sale_order.py:0
-#, python-format
-msgid "Only quotation with the state 'waiting_acceptation' can be Confirmed."
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__is_action_customer_reset_quotation_to_draft_allowed
+msgid "Is Action Customer Reset Quotation To Draft Allowed"
 msgstr ""
 
 #. module: sale_quotation
-#: model:ir.model,name:sale_quotation.model_product_template
-msgid "Product"
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: sale_quotation
-#: model:ir.model,name:sale_quotation.model_product_product
-msgid "Product Variant"
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__message
+msgid "Message"
 msgstr ""
 
 #. module: sale_quotation
@@ -92,25 +164,48 @@ msgid "Quotation State"
 msgstr ""
 
 #. module: sale_quotation
+#: model:ir.model.fields.selection,name:sale_quotation.selection__sale_order__typology__quote
+msgid "Quote"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model,name:sale_quotation.model_sale_order_confirm_warning_wizard
+msgid "Sale Order Confirmation Warning Wizard"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order_confirm_warning_wizard__sale_order_ids
+msgid "Sale Orders"
+msgstr ""
+
+#. module: sale_quotation
 #: model:ir.model,name:sale_quotation.model_sale_order
 msgid "Sales Order"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__shop_only_quotation
-msgid "Shop Only Quotation"
-msgstr ""
-
-#. module: sale_quotation
-#: model:ir.model.fields,field_description:sale_quotation.field_product_product__shop_only_quotation
-#: model:ir.model.fields,field_description:sale_quotation.field_product_template__shop_only_quotation
-msgid "Shopinvader: Only for Quotation"
 msgstr ""
 
 #. module: sale_quotation
 #: model_terms:ir.ui.view,arch_db:sale_quotation.sale_order_view_search_inherit_quotation
 #: model_terms:ir.ui.view,arch_db:sale_quotation.view_quotation_tree
 msgid "State"
+msgstr ""
+
+#. module: sale_quotation
+#. odoo-python
+#: code:addons/sale_quotation/models/sale_order.py:0
+#, python-format
+msgid ""
+"The selected quotation(s) are not in 'Waiting Acceptation' state. Are you "
+"sure you want to confirm them?"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__typology
+msgid "Typology"
+msgstr ""
+
+#. module: sale_quotation
+#: model:ir.model.fields,field_description:sale_quotation.field_sale_order__use_customer_quotation_workflow
+msgid "Use Customer Quotation Workflow"
 msgstr ""
 
 #. module: sale_quotation
