@@ -66,7 +66,7 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
         # triggered by sale_stock can bypass portal/public user ACL limits.
         return quotation.sudo().action_customer_accept_quotation()
 
-    def _proceess_request_quotation(self, quotation):
+    def _process_request_quotation(self, quotation):
         """Process the quotation request
         Can be inherited if you expect specific params
         for requesting a quotation"""
@@ -103,7 +103,7 @@ class ShopinvaderApiQuotationRouterHelper(models.AbstractModel):
     @InvalidQuotationStateErrorWrapper
     def _request_quotation(self, quotation_id: int) -> SaleOrder:
         quotation = self._get(quotation_id)
-        self._proceess_request_quotation(quotation)
+        self._process_request_quotation(quotation)
         return quotation
 
     @InvalidQuotationStateErrorWrapper
