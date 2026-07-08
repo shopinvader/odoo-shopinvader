@@ -13,6 +13,7 @@ class SaleAmount(StrictExtendableBaseModel):
     total: float = Field(description="Total amount")
     discount_total: float
     total_without_discount: float
+    untaxed_without_discount: float
 
     @classmethod
     def from_sale_order(cls, sale_order):
@@ -21,6 +22,9 @@ class SaleAmount(StrictExtendableBaseModel):
             discount_total=float_round(sale_order.discount_total, precision),
             total_without_discount=float_round(
                 sale_order.price_total_no_discount, precision
+            ),
+            untaxed_without_discount=float_round(
+                sale_order.price_subtotal_no_discount, precision
             ),
             tax=float_round(sale_order.amount_tax, precision),
             untaxed=float_round(sale_order.amount_untaxed, precision),
@@ -34,6 +38,9 @@ class SaleAmount(StrictExtendableBaseModel):
             discount_total=float_round(order_line.discount_total, precision),
             total_without_discount=float_round(
                 order_line.price_total_no_discount, precision
+            ),
+            untaxed_without_discount=float_round(
+                order_line.price_subtotal_no_discount, precision
             ),
             tax=float_round(order_line.price_tax, precision),
             untaxed=float_round(order_line.price_subtotal, precision),
