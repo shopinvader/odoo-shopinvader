@@ -160,14 +160,6 @@ class CartHelper(VirtualModel):
         return values
 
     @api.model
-    def _get_sale_order_line_name(self, product_id):
-        product = self.env["product.product"].browse(product_id)
-        name = product.name_get()[0][1]
-        if product.description_sale:
-            name += "\n" + product.description_sale
-        return name
-
-    @api.model
     def _prepare_line_from_transactions(
         self, cart: SaleOrder, transactions: list[CartTransaction]
     ):
@@ -177,7 +169,6 @@ class CartHelper(VirtualModel):
         product_uom = self.env["product.product"].browse(product_id).uom_id
         if float_compare(delta_qty, 0, precision_rounding=product_uom.rounding) <= 0:
             return None
-        partner = cart.partner_id
         vals = {
             # Order in this dict is important and must be kept.
             # All computes depending on order_id must be triggered first,
@@ -186,10 +177,6 @@ class CartHelper(VirtualModel):
             "product_id": product_id,
             "product_uom_qty": delta_qty,
         }
-        ctx_lang = self.env.context.get("lang", partner.lang)
-        if partner.lang != ctx_lang:
-            product_id = vals["product_id"]
-            vals["name"] = self._get_sale_order_line_name(product_id)
         return vals
 
     @api.model
