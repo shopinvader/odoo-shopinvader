@@ -8,8 +8,26 @@ from odoo import models
 class PaymentTransaction(models.Model):
     _inherit = "payment.transaction"
 
-    def _get_related_carts(self):
-        """Add quotations related to this transaction."""
-        carts = super()._get_related_carts()
-        carts |= self.sale_order_ids.filtered(lambda so: so.typology == "quote")
-        return carts
+    def _get_related_quotations(self):
+        """Return the quotations related to this transaction."""
+        # We only consider sale orders with typology 'quote'
+        return self.sale_order_ids.filtered(lambda so: so.typology == "quote")
+
+    def _confirm_related_quotations(self):
+        """Confirm the quotations related to this transaction."""
+        self._get_related_quotations().action_customer_accept_quotation()
+
+    def _set_authorized(self, state_message=None):
+        """Override to set typology to sale when payment is authorized."""
+        self._confirm_related_quotations()
+        return super()._set_authorized(state_message=state_message)
+
+    def _set_pending(self, state_message=None):
+        """Override to set typology to cart when payment is pending."""
+        self._confirm_related_quotations()
+        return super()._set_pending(state_message=state_message)
+
+    def _set_done(self, state_message=None):
+        """Override to set typology to sale when payment is done."""
+        self._confirm_related_quotations()
+        return super()._set_done(state_message=state_message)
