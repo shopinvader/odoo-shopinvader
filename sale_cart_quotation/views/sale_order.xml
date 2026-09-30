@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2025 ACSONE SA/NV
+     License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo>
+    <record id="sale_cart_quotation_view_order_form" model="ir.ui.view">
+        <field name="name">sale.cart.quotation.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_cart_request_quotation"
+                    type="object"
+                    string="Request Quotation"
+                    class="oe_highlight"
+                    invisible="typology != 'cart'"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

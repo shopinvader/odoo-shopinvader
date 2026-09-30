@@ -1,3 +1,2 @@
-from . import product_product
-from . import product_template
+from . import payment_transaction
 from . import sale_order
