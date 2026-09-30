@@ -29,7 +29,7 @@ addon | version | maintainers | summary
 [shopinvader_anonymous_partner](shopinvader_anonymous_partner/) | 18.0.1.0.0 |  | Manage anonymous partners with a cookie.
 [shopinvader_api_address](shopinvader_api_address/) | 18.0.1.0.0 |  | Adds a service to manage shopinvader invoicing and delivery address
 [shopinvader_api_address_shipping_note](shopinvader_api_address_shipping_note/) | 18.0.1.0.0 |  | Adds a shipping note on schemas of services to manage Shipping Addresses
-[shopinvader_api_cart](shopinvader_api_cart/) | 18.0.1.0.1 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
+[shopinvader_api_cart](shopinvader_api_cart/) | 18.0.1.0.2 |  | Cart FastAPI designed to work with the shopinvader-js-cart library see (https://github.com/shopinvader/shopinvader-js-cart)
 [shopinvader_api_cart_cancel](shopinvader_api_cart_cancel/) | 18.0.1.0.0 |  | Cancel cart via Fastapi
 [shopinvader_api_cart_options](shopinvader_api_cart_options/) | 18.0.1.0.0 |  | Add product options to the cart API
 [shopinvader_api_cart_step](shopinvader_api_cart_step/) | 18.0.1.0.0 |  | Track checkout steps on sale cart.
