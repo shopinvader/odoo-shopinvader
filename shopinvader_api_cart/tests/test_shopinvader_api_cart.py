@@ -7,7 +7,7 @@
 from fastapi import status
 from requests import Response
 
-from odoo.exceptions import AccessError, MissingError
+from odoo.exceptions import AccessError, MissingError, UserError
 from odoo.tests.common import RecordCapturer
 
 from ..routers.cart import cart_router
@@ -277,6 +277,74 @@ class TestSaleCart(CommonSaleCart):
             test_client.post(f"/{so.uuid}/sync", json=data)
         line = so.order_line
         self.assertEqual(0, len(line))
+
+    def test_sync_retry_skips_already_applied_leading_transactions(self) -> None:
+        """
+        A client retrying a batch after a lost response may resend
+        transactions that were already applied, followed by new
+        ones. The already applied ones must be skipped, not re-applied.
+        """
+        so = self.env["sale.order"]._create_empty_cart(
+            self.default_fastapi_authenticated_partner.id
+        )
+        data = {
+            "transactions": [
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
+                {"uuid": self.trans_uuid_2, "product_id": self.product_1.id, "qty": 3},
+            ]
+        }
+        with self._create_test_client(router=cart_router) as test_client:
+            test_client.post(f"/{so.uuid}/sync", json=data)
+        line = so.order_line
+        self.assertEqual(4, line.product_uom_qty)
+
+        # Retry with the same 2 already applied transactions, plus one new
+        data = {
+            "transactions": [
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
+                {"uuid": self.trans_uuid_2, "product_id": self.product_1.id, "qty": 3},
+                {"uuid": self.trans_uuid_3, "product_id": self.product_1.id, "qty": 2},
+            ]
+        }
+        with self._create_test_client(router=cart_router) as test_client:
+            test_client.post(f"/{so.uuid}/sync", json=data)
+        line = so.order_line
+        # Only trans_uuid_3's delta (+2) should have been applied, not a
+        # second time trans_uuid_1/2's deltas (+1/+3).
+        self.assertEqual(6, line.product_uom_qty)
+        self.assertEqual(
+            so.applied_cart_api_transaction_uuids,
+            f"{self.trans_uuid_1},{self.trans_uuid_2},{self.trans_uuid_3}",
+        )
+
+    def test_sync_out_of_order_already_applied_transaction_raises(self) -> None:
+        """
+        An already applied transaction showing up after an unknown one in
+        the received list is an inconsistent replay: order matters, so we
+        must not silently skip or re-apply it.
+        """
+        so = self.env["sale.order"]._create_empty_cart(
+            self.default_fastapi_authenticated_partner.id
+        )
+        data = {
+            "transactions": [
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
+            ]
+        }
+        with self._create_test_client(router=cart_router) as test_client:
+            test_client.post(f"/{so.uuid}/sync", json=data)
+
+        data = {
+            "transactions": [
+                {"uuid": self.trans_uuid_2, "product_id": self.product_1.id, "qty": 3},
+                {"uuid": self.trans_uuid_1, "product_id": self.product_1.id, "qty": 1},
+            ]
+        }
+        with (
+            self._create_test_client(router=cart_router) as test_client,
+            self.assertRaises(UserError),
+        ):
+            test_client.post(f"/{so.uuid}/sync", json=data)
 
     def test_multi_transactions_same_product(self) -> None:
         so = self.env["sale.order"]._create_empty_cart(

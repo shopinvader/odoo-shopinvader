@@ -9,7 +9,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Response
 
 from odoo import _, api, models
-from odoo.exceptions import MissingError
+from odoo.exceptions import MissingError, UserError
 from odoo.tools import float_compare
 
 from odoo.addons.base.models.res_partner import Partner as ResPartner
@@ -243,11 +243,58 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
         return vals
 
     @api.model
+    def _get_applied_transaction_uuids(self, cart: SaleOrder) -> set:
+        """Return the set of transaction uuids already applied on the cart."""
+        if not cart.applied_cart_api_transaction_uuids:
+            return set()
+        return set(cart.applied_cart_api_transaction_uuids.split(","))
+
+    @api.model
+    def _filter_new_transactions(
+        self, cart: SaleOrder, transactions: list[CartTransaction]
+    ) -> list[CartTransaction]:
+        """Drop the transactions already applied on the cart and check that
+        the remaining ones were never applied either.
+
+        Transactions are expected in the order they occurred. A client may
+        resend a batch that overlaps with what was already synced (for
+        example after a lost response), so we skip the leading transactions
+        already known and keep everything from the first unknown one on. If
+        an already applied transaction appears after that point, the received
+        order is inconsistent with what the cart knows: applying it again
+        would add the same quantity delta a second time, so we raise a
+        UserError.
+        """
+        applied = self._get_applied_transaction_uuids(cart)
+        if not applied:
+            return transactions
+        boundary = 0
+        for index, transaction in enumerate(transactions):
+            if transaction.uuid and str(transaction.uuid) in applied:
+                boundary = index + 1
+            else:
+                break
+        residual = transactions[boundary:]
+        for transaction in residual:
+            if transaction.uuid and str(transaction.uuid) in applied:
+                raise UserError(
+                    _(
+                        "Transaction %(uuid)s was already applied to this "
+                        "cart but is received out of order."
+                    )
+                    % {"uuid": transaction.uuid}
+                )
+        return residual
+
+    @api.model
     def _apply_transactions(self, cart, transactions: list[CartTransaction]):
         """Apply transactions to the given cart."""
         if not transactions:
             return
         cart.ensure_one()
+        transactions = self._filter_new_transactions(cart, transactions)
+        if not transactions:
+            return
         self._check_transactions(transactions=transactions)
         # prefetch all products
         self.env["product.product"].browse({tx.product_id for tx in transactions})
@@ -269,13 +316,12 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
             if cmd:
                 update_cmds.append(cmd)
 
-        all_transaction_uuids = transaction_uuids = [
-            str(t.uuid) for t in transactions if t.uuid
-        ]
+        new_transaction_uuids = [str(t.uuid) for t in transactions if t.uuid]
+        all_transaction_uuids = new_transaction_uuids
         if cart.applied_cart_api_transaction_uuids:
             all_transaction_uuids = [
                 cart.applied_cart_api_transaction_uuids
-            ] + transaction_uuids
+            ] + new_transaction_uuids
         vals = {"applied_cart_api_transaction_uuids": ",".join(all_transaction_uuids)}
         if update_cmds:
             vals["order_line"] = update_cmds
