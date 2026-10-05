@@ -13,8 +13,6 @@ class ProductMediaCase(TestFsProductMultiMedia, TestSeBackendCaseBase, Extendabl
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.init_extendable_registry()
-        cls.addClassCleanup(cls.reset_extendable_registry)
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
         cls.addClassCleanup(cls.loader.restore_registry)
@@ -26,6 +24,12 @@ class ProductMediaCase(TestFsProductMultiMedia, TestSeBackendCaseBase, Extendabl
                 SeBackend,
             )
         )
+        # The extendable registry must be initialized after the update of the
+        # odoo registry. On a fully loaded registry (e.g. when tests are run
+        # with pytest-odoo), setup_models() calls the _register_hook of the
+        # extendable registry loader which rebuilds the extendable classes.
+        cls.init_extendable_registry()
+        cls.addClassCleanup(cls.reset_extendable_registry)
         cls.backend = cls.env["se.backend"].create(
             {"name": "Fake SE", "tech_name": "fake_se", "backend_type": "fake"}
         )
