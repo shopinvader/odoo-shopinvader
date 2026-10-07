@@ -14,6 +14,9 @@
         "extendable_fastapi",
     ],
     "data": [
+        "security/acl_res_country.xml",
+        "security/acl_res_lang.xml",
+        "security/acl_res_partner_title.xml",
         "security/res_groups.xml",
         "security/res_partner.xml",
     ],

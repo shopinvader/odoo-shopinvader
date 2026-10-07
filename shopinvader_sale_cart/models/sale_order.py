@@ -65,7 +65,8 @@ class SaleOrder(models.Model):
     def _create_empty_cart(self, partner_id):
         """Create a new empty cart for a given partner"""
         vals = self._prepare_cart(partner_id)
-        return self.create(vals)
+        self.check_access("create")
+        return self.sudo().create(vals)
 
     def _get_cart_line(self, **kwargs):
         """
