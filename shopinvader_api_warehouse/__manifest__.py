@@ -13,6 +13,7 @@
         "stock",
         "shopinvader_api_customer",
         "shopinvader_api_cart",
+        "shopinvader_api_security_base",
     ],
     "data": [
         "security/res_groups.xml",
