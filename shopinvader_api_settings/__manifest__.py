@@ -13,6 +13,7 @@
         "extendable",
         "extendable_fastapi",
         "fastapi",
+        "shopinvader_api_security_base",
     ],
     "data": [],
     "external_dependencies": {

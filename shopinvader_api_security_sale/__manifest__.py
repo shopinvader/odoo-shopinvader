@@ -14,13 +14,12 @@
     "depends": [
         "sale",
         "fastapi",
+        "shopinvader_api_security_base",
     ],
     "data": [
         "security/groups.xml",
         "security/acl_product_product.xml",
         "security/acl_product_template.xml",
-        "security/acl_res_currency.xml",
-        "security/acl_uom_uom.xml",
         "security/rule+acl_sale_order.xml",
         "security/rule+acl_sale_order_line.xml",
     ],
