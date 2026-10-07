@@ -65,7 +65,10 @@ class SaleOrder(models.Model):
     def _create_empty_cart(self, partner_id):
         """Create a new empty cart for a given partner"""
         vals = self._prepare_cart(partner_id)
-        return self.create(vals)
+        # No need to subscribe the (technical) user creating the cart
+        cart = self.with_context(mail_create_nosubscribe=True).create(vals)
+        # restore the context without mail_create_nosubscribe
+        return cart.with_env(self.env)
 
     def _get_cart_line(self, **kwargs):
         """
