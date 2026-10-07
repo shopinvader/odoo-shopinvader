@@ -7,7 +7,7 @@
         <field
             name="implied_ids"
             eval="[
-      (4, ref('fastapi.group_fastapi_endpoint_runner')),
+      (4, ref('shopinvader_api_security_base.shopinvader_base_user_group')),
       ]"
         />
     </record>
