@@ -12,6 +12,7 @@
         "shopinvader_router_helper",
         "shopinvader_schema_address",
         "extendable_fastapi",
+        "shopinvader_api_security_base",
     ],
     "data": [
         "security/res_groups.xml",
