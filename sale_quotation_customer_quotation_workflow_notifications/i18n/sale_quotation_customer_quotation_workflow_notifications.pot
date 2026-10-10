@@ -1,0 +1,147 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sale_quotation_customer_quotation_workflow_notifications
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-09-08 08:10+0000\n"
+"PO-Revision-Date: 2025-09-08 08:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#: model:mail.message.subtype,name:sale_quotation_customer_quotation_workflow_notifications.mt_customer_accept_quotation
+#, python-format
+msgid "Customer Quotation Accepted"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,name:sale_quotation_customer_quotation_workflow_notifications.mt_customer_cancel_quotation
+msgid "Customer Quotation Cancel"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid "Customer Quotation Cancelled"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#: model:mail.message.subtype,name:sale_quotation_customer_quotation_workflow_notifications.mt_quotation_request
+#, python-format
+msgid "Customer Quotation Request"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid "Customer Quotation Reset to Draft"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,name:sale_quotation_customer_quotation_workflow_notifications.mt_customer_quotation
+msgid "Customer Quotation Workflow"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,name:sale_quotation_customer_quotation_workflow_notifications.mt_customer_reset_quotation_to_draft
+msgid "Customer Quotation to Draft"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,description:sale_quotation_customer_quotation_workflow_notifications.mt_customer_quotation
+msgid ""
+"Parent notification type for \"Customer Quotation\" workflow actions "
+"associated to sale orders."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid "Quotation Request Confirmation"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:ir.model,name:sale_quotation_customer_quotation_workflow_notifications.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid "The quotation \"%(name)s\" has been accepted by the client \"%(client)s\"."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid "The quotation \"%(name)s\" has been cancelled by the client \"%(client)s\"."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid ""
+"The quotation \"%(name)s\" has been reset to draft by the client "
+"\"%(client)s\"."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid ""
+"The quotation \"%(quotation_name)s\" has been requested by the client "
+"\"%(client)s\"."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,description:sale_quotation_customer_quotation_workflow_notifications.mt_customer_accept_quotation
+msgid ""
+"Triggered when a customer accepts a quotation on a sale order using "
+"\"Customer Quotation\" workflow."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,description:sale_quotation_customer_quotation_workflow_notifications.mt_customer_cancel_quotation
+msgid ""
+"Triggered when a customer cancels a quotation on a sale order using "
+"\"Customer Quotation\" workflow."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,description:sale_quotation_customer_quotation_workflow_notifications.mt_quotation_request
+msgid ""
+"Triggered when a customer requests a quotation on a sale order using "
+"\"Customer Quotation\" workflow."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#: model:mail.message.subtype,description:sale_quotation_customer_quotation_workflow_notifications.mt_customer_reset_quotation_to_draft
+msgid ""
+"Triggered when a customer resets a quotation to draft on a sale order using "
+"\"Customer Quotation\" workflow."
+msgstr ""
+
+#. module: sale_quotation_customer_quotation_workflow_notifications
+#. odoo-python
+#: code:addons/sale_quotation_customer_quotation_workflow_notifications/models/sale_order.py:0
+#, python-format
+msgid "Your quote request \"%(quotation_name)s\" has been successfully submitted."
+msgstr ""

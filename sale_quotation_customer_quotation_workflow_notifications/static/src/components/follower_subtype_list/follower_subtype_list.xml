@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t
+        t-name="sale_quotation_customer_quotation_workflow_notifications.FilteredFollowerSubtypeList"
+        t-inherit="mail.FollowerSubtypeList"
+        owl="1"
+        t-inherit-mode="primary"
+    >
+
+        <xpath
+            expr="//t[@t-foreach='followerSubtypeList.followerSubtypeViews']"
+            position="replace"
+        >
+            <t
+                t-foreach="state.filteredSubtypeViews"
+                t-as="followerSubtypeView"
+                t-key="followerSubtypeView.localId"
+            >
+                <FollowerSubtype
+                    className="'o_FollowerSubtypeList_subtype'"
+                    record="followerSubtypeView"
+                />
+
+            </t>
+        </xpath>
+
+    </t>
+</templates>

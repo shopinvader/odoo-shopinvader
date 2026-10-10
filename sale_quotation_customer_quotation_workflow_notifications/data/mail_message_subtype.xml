@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="mt_customer_quotation" model="mail.message.subtype">
+        <field name="name">Customer Quotation Workflow</field>
+        <field name="res_model">sale.order</field>
+        <field name="hidden">1</field>
+        <field name="internal">1</field>
+        <field name="default">0</field>
+        <field
+            name="description"
+        >Parent notification type for "Customer Quotation" workflow actions associated to sale orders.</field>
+    </record>
+    <record id="mt_quotation_request" model="mail.message.subtype">
+        <field name="name">Customer Quotation Request</field>
+        <field name="res_model">sale.order</field>
+        <field name="parent_id" ref="mt_customer_quotation" />
+        <field name="hidden">0</field>
+        <field name="internal">1</field>
+        <field name="default">1</field>
+        <field
+            name="description"
+        >Triggered when a customer requests a quotation on a sale order using "Customer Quotation" workflow.</field>
+    </record>
+    <record id="mt_customer_accept_quotation" model="mail.message.subtype">
+        <field name="name">Customer Quotation Accepted</field>
+        <field name="res_model">sale.order</field>
+        <field name="parent_id" ref="mt_customer_quotation" />
+        <field name="hidden">0</field>
+        <field name="internal">1</field>
+        <field name="default">1</field>
+        <field
+            name="description"
+        >Triggered when a customer accepts a quotation on a sale order using "Customer Quotation" workflow.</field>
+    </record>
+    <record id="mt_customer_reset_quotation_to_draft" model="mail.message.subtype">
+        <field name="name">Customer Quotation to Draft</field>
+        <field name="res_model">sale.order</field>
+        <field name="parent_id" ref="mt_customer_quotation" />
+        <field name="hidden">0</field>
+        <field name="internal">1</field>
+        <field name="default">1</field>
+        <field
+            name="description"
+        >Triggered when a customer resets a quotation to draft on a sale order using "Customer Quotation" workflow.</field>
+    </record>
+    <record id="mt_customer_cancel_quotation" model="mail.message.subtype">
+        <field name="name">Customer Quotation Cancel</field>
+        <field name="res_model">sale.order</field>
+        <field name="parent_id" ref="mt_customer_quotation" />
+        <field name="hidden">0</field>
+        <field name="internal">1</field>
+        <field name="default">1</field>
+        <field
+            name="description"
+        >Triggered when a customer cancels a quotation on a sale order using "Customer Quotation" workflow.</field>
+    </record>
+</odoo>
