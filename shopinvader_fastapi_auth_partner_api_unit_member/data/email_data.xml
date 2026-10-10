@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="email_already_existing" model="mail.template">
+        <field name="name">Auth Directory: Email Already Existing</field>
+        <field name="email_from">noreply@example.org</field>
+        <field name="subject">Someone tried to invite you in an other team</field>
+        <field name="partner_to">{{object.partner_id.id}}</field>
+        <field name="model_id" ref="auth_partner.model_auth_partner" />
+        <field name="auto_delete" eval="True" />
+        <field name="lang">{{object.partner_id.lang}}</field>
+        <field name="body_html" type="html">
+            <div>
+            Hi <t t-out="object.partner_id.name or ''" />
+            <t t-set="member" t-value="object.env.context.get('member')" />
+            <t t-set="manager" t-value="object.env.context.get('manager')" />
+
+            <p>
+                <t t-esc="manager.name" /> tried to invite you in the team
+                <t t-esc="manager.unit_id.name" /> but you already have an
+                other account, please contact <t t-esc="manager.name" /> if
+                you want to change your team.
+            </p>
+            </div>
+        </field>
+    </record>
+
+</odoo>
