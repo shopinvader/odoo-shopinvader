@@ -12,12 +12,12 @@ from odoo.addons.fastapi.dependencies import (
 )
 from odoo.addons.shopinvader_schema_sale.schemas.sale import Sale
 
-quotation_cart_router = APIRouter(tags=["carts"])
+cart_quotation_router = APIRouter(tags=["carts"])
 
 
-@quotation_cart_router.post("/{uuid}/request_quotation")
-@quotation_cart_router.post("/current/request_quotation")
-@quotation_cart_router.post("/request_quotation")
+@cart_quotation_router.post("/{uuid}/request_quotation")
+@cart_quotation_router.post("/current/request_quotation")
+@cart_quotation_router.post("/request_quotation")
 def request_quotation(
     env: Annotated[api.Environment, Depends(authenticated_partner_env)],
     partner: Annotated[ResPartner, Depends(authenticated_partner)],
@@ -34,5 +34,5 @@ class ShopinvaderApiCartRouterHelper(models.AbstractModel):
 
     def _request_quotation(self, partner: ResPartner, uuid: UUID | None = None):
         sale = self.env["sale.order"]._find_open_cart(partner.id, uuid)
-        sale.action_request_quotation()
+        sale.action_cart_request_quotation()
         return sale

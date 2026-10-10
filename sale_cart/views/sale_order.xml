@@ -33,7 +33,7 @@
     </record>
 
     <record id="sale.action_quotations" model="ir.actions.act_window">
-        <field name="domain">[('typology', '=', 'sale'),
+        <field name="domain">[('typology', '!=', 'cart'),
             ('state','in',('draft','sent','cancel'))]
         </field>
     </record>

@@ -13,7 +13,7 @@
         "shopinvader_api_security_sale",
         "shopinvader_api_cart",
         "shopinvader_api_sale",
-        "sale_cart",
+        "shopinvader_sale_state",
         "sale_quotation",
     ],
     "data": [],
