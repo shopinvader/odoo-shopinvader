@@ -35,3 +35,14 @@ class TestSaleCart(TestSaleCartBase):
             ).product_uom_qty,
             1,
         )
+
+    def test_ensure_pricelist_of_partner(self):
+        # ensure the pricelist of the user is used on the new cart
+        cart = self.env["sale.order"]._create_empty_cart(self.partner.id)
+        self.assertEqual(cart.pricelist_id, self.partner.property_product_pricelist)
+
+        pricelist = self.env["product.pricelist"].create({"name": "new pricelist"})
+        self.partner.property_product_pricelist = pricelist
+        # create new cart
+        cart = self.env["sale.order"]._create_empty_cart(self.partner.id)
+        self.assertEqual(cart.pricelist_id, self.partner.property_product_pricelist)
