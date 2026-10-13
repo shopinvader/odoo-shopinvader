@@ -39,27 +39,12 @@ class SaleOrder(models.Model):
         return cart
 
     @api.model
-    def _get_default_pricelist_id(self):
-        """Return the pricelist to use if no one found on the partner
-        By default, we return the one defined on the public user (inactive by default).
-        """
-        return (
-            self.env.ref("base.public_user")
-            .sudo()
-            .partner_id.with_context(active_test=False)
-            .property_product_pricelist.id
-        )
-
-    @api.model
     def _prepare_cart(self, partner_id):
-        vals = {
+        return {
             "uuid": str(uuid.uuid4()),
             "typology": "cart",
             "partner_id": partner_id,
         }
-        if not vals.get("pricelist_id"):
-            vals["pricelist_id"] = self._get_default_pricelist_id()
-        return vals
 
     @api.model
     def _create_empty_cart(self, partner_id):
