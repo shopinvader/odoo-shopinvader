@@ -80,11 +80,19 @@ class AddressHelper(VirtualModel):
         data: InvoicingAddressCreate | DeliveryAddressCreate,
         address_type: AddressType,
     ):
+        # sudo() is needed because some addons override the write
+        # function of res.partner to do some checks before writing.
+        # These checks need more rights than what we are giving to
+        # the enspoint's user
+        # (e.g. snailmail/models/res_partner.py)
+        partner_sudo = self.partner.sudo()
         vals = self._prepare_create_address_vals(data, address_type)
+        created_address = False
         if address_type == "invoicing":
-            return self.partner._create_shopinvader_invoicing_address(vals)
+            created_address = partner_sudo._create_shopinvader_invoicing_address(vals)
         elif address_type == "delivery":
-            return self.partner._create_shopinvader_delivery_address(vals)
+            created_address = partner_sudo._create_shopinvader_delivery_address(vals)
+        return created_address.sudo(False)
 
     def _update_address(
         self,
