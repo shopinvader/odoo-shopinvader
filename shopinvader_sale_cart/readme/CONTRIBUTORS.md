@@ -1,1 +1,2 @@
 - Marie Lejeune \<marie.lejeune@acsone.eu\>
+- Raphaël Reverdy \<raphael.reverdy@akretion.com\>
