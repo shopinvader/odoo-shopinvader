@@ -41,7 +41,7 @@ addon | version | maintainers | summary
 [shopinvader_api_sale](shopinvader_api_sale/) | 18.0.1.0.0 |  | Sale FastApi for exposing sale order
 [shopinvader_api_sale_loyalty](shopinvader_api_sale_loyalty/) | 18.0.1.0.0 |  | FastAPI services to add coupons and loyalties to carts.
 [shopinvader_api_security_invoice](shopinvader_api_security_invoice/) | 18.0.1.0.0 |  | Add security rule to expose invoices
-[shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.0.0 |  | Add security rule to expose sale order
+[shopinvader_api_security_sale](shopinvader_api_security_sale/) | 18.0.1.1.0 |  | Add security rule to expose sale order
 [shopinvader_api_settings](shopinvader_api_settings/) | 18.0.1.0.0 |  | Adds a service to get commont settings
 [shopinvader_api_signin_jwt](shopinvader_api_signin_jwt/) | 18.0.1.0.0 |  | This module adds a signin service with jwt token.
 [shopinvader_api_warehouse](shopinvader_api_warehouse/) | 18.0.1.0.0 | <a href='https://github.com/paradoxxxzero'><img src='https://github.com/paradoxxxzero.png' width='32' height='32' style='border-radius:50%;' alt='paradoxxxzero'/></a> | Adds sales warehouse information to Shopinvader API
