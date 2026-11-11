@@ -21,6 +21,7 @@
         "security/acl_product_template.xml",
         "security/acl_res_currency.xml",
         "security/acl_uom_uom.xml",
+        "security/acl_mail_message_subtype.xml",
         "security/rule+acl_sale_order.xml",
         "security/rule+acl_sale_order_line.xml",
     ],
