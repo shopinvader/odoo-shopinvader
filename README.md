@@ -56,7 +56,7 @@ addon | version | maintainers | summary
 [shopinvader_sale_state](shopinvader_sale_state/) | 18.0.1.0.0 |  | Basic module to implement state for sale order
 [shopinvader_schema_address](shopinvader_schema_address/) | 18.0.1.0.0 |  | Adds schema address: address invoicing_address delivery_address
 [shopinvader_schema_invoice](shopinvader_schema_invoice/) | 18.0.1.0.0 |  | Add schema for invoices
-[shopinvader_schema_sale](shopinvader_schema_sale/) | 18.0.1.0.0 |  | Add schema sale
+[shopinvader_schema_sale](shopinvader_schema_sale/) | 18.0.1.1.0 |  | Add schema sale
 [shopinvader_schema_sale_state](shopinvader_schema_sale_state/) | 18.0.1.0.0 |  | Shopinvader Schema Sale State
 
 [//]: # (end addons)
