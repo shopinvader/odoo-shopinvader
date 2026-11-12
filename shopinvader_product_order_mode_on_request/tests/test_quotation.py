@@ -4,14 +4,18 @@
 from odoo import Command
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class TestQuotation(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
 
-        # as the shop_order_mode is readonly by default except if enabled in the template
-        # we need to create the product template first and then get the product variant
+        # as the shop_order_mode is readonly by default except if enabled in
+        # the template, we need to create the product template first and then
+        # get the product variant
         cls.product_quotation_only = (
             cls.env["product.template"]
             .create(
