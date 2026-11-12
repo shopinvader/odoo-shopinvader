@@ -11,7 +11,7 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "depends": [
-        "shopinvader_product_order_mode_on_request",
+        "sale_typology",
         "base_view_inheritance_extension",
     ],
     "data": [
