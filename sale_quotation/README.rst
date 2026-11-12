@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==============
 Sale Quotation
 ==============
@@ -17,7 +13,7 @@ Sale Quotation
 .. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
     :target: https://odoo-community.org/page/development-status
     :alt: Production/Stable
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-shopinvader%2Fodoo--shopinvader-lightgray.png?logo=github
@@ -29,27 +25,13 @@ Sale Quotation
 This module is used in the context of e-commerce project (like
 shopinvader)
 
-It allows to specify whether your product requires a quotation. This can
-be set per "product.template" or per "product.variant"
-
-For example, you have a product where the supplier price fluctuates a
-lot, you can not give a public price but your customer should be able to
-request a quotation.
+On Odoo Backoffice this module imporves the menu quotation by adding a
+new state (quotation_state). Then, you can easily process and follow the
+quotation request from your external system.
 
 |Widget in action|
 
-On your shopinvader website when a customer has added a product that
-requires a quotation, instead of validating the cart it will "request a
-quotation".
-
-On Odoo Backoffice the menu quotation has been improved and a new state
-(quotation_state) has been added. So you can easily process and follow
-the quotation request from your external system.
-
-|image1|
-
-.. |Widget in action| image:: https://raw.githubusercontent.com/shopinvader/odoo-shopinvader/18.0/sale_quotation/static/description/product.png
-.. |image1| image:: https://raw.githubusercontent.com/shopinvader/odoo-shopinvader/18.0/sale_quotation/static/description/quotation.png
+.. |Widget in action| image:: https://raw.githubusercontent.com/shopinvader/odoo-shopinvader/18.0/sale_quotation/static/description/quotation.png
 
 **Table of contents**
 
@@ -82,6 +64,7 @@ Contributors
 - Matthieu Saison <matthieu.saison@akretion.com>
 - Iván Todorovich <ivan.todorovich@gmail.com>
 - Simone Orsi <simone.orsi@camptocamp.com>
+- Nicolas DELBOVIER <nicolas.delbovier@acsone.eu>
 
 Maintainers
 -----------
