@@ -1,7 +1,7 @@
 # Copyright 2025 ACSONE SA/NV
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -9,8 +9,7 @@ class ProductProduct(models.Model):
     _inherit = "product.product"
 
     shop_order_mode = fields.Selection(
-        selection=[("direct_sale_only", _("Direct Sale Only"))],
-        string="Shopinvader Order Mode",
+        selection=[("direct_sale_only", "Direct Sale Only")],
         store=True,
         readonly=False,
         compute="_compute_shop_order_mode",
@@ -18,7 +17,6 @@ class ProductProduct(models.Model):
         help="Order mode for the product in Shopinvader.",
     )
     is_shop_order_mode_enabled = fields.Boolean(
-        string="Template Shop Order Mode Disabled",
         related="product_tmpl_id.is_shop_order_mode_enabled_on_variant",
         store=True,
         readonly=True,
@@ -41,13 +39,11 @@ class ProductProduct(models.Model):
                 "skip_shop_order_mode_validation"
             ):
                 raise ValidationError(
-                    _(
+                    self.env._(
                         "Unable to modify 'shop_order_mode' on the product "
                         "'%(product_name)s' as it is blocked by the template "
-                        "'%(template_name)s'."
+                        "'%(template_name)s'.",
+                        product_name=product.name,
+                        template_name=product.product_tmpl_id.name,
                     )
-                    % {
-                        "product_name": product.name,
-                        "template_name": product.product_tmpl_id.name,
-                    }
                 )
