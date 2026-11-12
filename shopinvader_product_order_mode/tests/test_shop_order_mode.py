@@ -6,13 +6,17 @@ from odoo import Command
 from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase
 
+from odoo.addons.base.tests.common import DISABLED_MAIL_CONTEXT
+
 
 class TestShopOrderMode(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env = cls.env(context=dict(cls.env.context, **DISABLED_MAIL_CONTEXT))
 
-        # Define different attributes to allow to have mulitple products for the same template
+        # Define different attributes to allow to have mulitple products for
+        # the same template
         cls.test_attribute = cls.env["product.attribute"].create(
             {"name": "Test attribute"}
         )
@@ -69,7 +73,8 @@ class TestShopOrderMode(TransactionCase):
     def test_shop_order_mode_reset(self):
         """
         Test that the `shop_order_mode` field on product.product is reset to the
-        value of the product.template when `is_shop_order_mode_enabled_on_variant` is True.
+        value of the product.template when `is_shop_order_mode_enabled_on_variant`
+        is True.
         """
         self.template.is_shop_order_mode_enabled_on_variant = True
         self.product.shop_order_mode = None
