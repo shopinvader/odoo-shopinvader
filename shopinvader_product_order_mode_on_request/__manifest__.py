@@ -3,8 +3,8 @@
 
 {
     "name": "Shopinvader Product Order Mode On Request",
-    "summary": """ Add new order modes on products.""",
-    "version": "16.0.1.0.0",
+    "summary": "Add new order modes on products.",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
@@ -13,5 +13,4 @@
         "sale_cart",
     ],
     "data": [],
-    "demo": [],
 }
