@@ -119,7 +119,8 @@ class ResPartner(models.Model):
     def _create_shopinvader_delivery_address(self, vals: dict) -> "ResPartner":
         self.ensure_one()
         vals = dict(vals, parent_id=self.id, type="delivery")
-        return self.env["res.partner"].create(vals)
+        self.env["res.partner"].check_access("create")
+        return self.env["res.partner"].sudo().create(vals)
 
     def _update_shopinvader_delivery_address(
         self, vals: dict, address: "ResPartner"
