@@ -82,7 +82,7 @@ class CartHelper(VirtualModel):
             if not self.env["product.product"].browse(transaction.product_id).exists():
                 raise MissingError(
                     self.env._(
-                        f"Product with id {transaction.product_id} not existing."
+                        "Product with id %s not existing.", transaction.product_id
                     )
                 )
 
