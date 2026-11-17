@@ -7,7 +7,6 @@
     "author": "Akretion",
     "license": "AGPL-3",
     "depends": [
-        "crm",
         "shopinvader_api_cart",
         "shopinvader_api_sale",
         "sale_quotation",
