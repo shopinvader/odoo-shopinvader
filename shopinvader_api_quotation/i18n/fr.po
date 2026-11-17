@@ -28,7 +28,7 @@ msgstr "Devis en cours d'estimation"
 #. module: shopinvader_api_quotation
 #: model:ir.model.fields,field_description:shopinvader_api_quotation.field_shopinvader_api_quotation_router_helper__partner
 msgid "Partner"
-msgstr "Client
+msgstr "Client"
 
 #. module: shopinvader_api_quotation
 #: model:ir.model,name:shopinvader_api_quotation.model_sale_order
