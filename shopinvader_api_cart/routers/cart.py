@@ -239,6 +239,35 @@ class CartHelper(VirtualModel):
     def _prepare_update_cart_vals(self, data: CartUpdateInput, cart: SaleOrder) -> dict:
         return data._to_sale_order_vals()
 
+    def _check_update_cart_addresses(self, vals):
+        """Ensure the shipping/invoicing addresses set on the cart belong to
+        the authenticated partner address book.
+
+        Without this check an authenticated customer could set
+        partner_shipping_id / partner_invoice_id to any res.partner id and
+        read back that partner personal data through the cart response.
+        """
+        address_ids = [
+            vals[fname]
+            for fname in ("partner_shipping_id", "partner_invoice_id")
+            if vals.get(fname)
+        ]
+        if not address_ids:
+            return
+        partner = self.partner.sudo()
+        commercial = partner.commercial_partner_id
+        allowed_ids = set(
+            (partner | partner.child_ids | commercial | commercial.child_ids).ids
+        )
+        for address_id in address_ids:
+            if address_id not in allowed_ids:
+                raise MissingError(
+                    self.env._(
+                        "Address not found, id: %(address_id)d",
+                        address_id=address_id,
+                    )
+                )
+
     def _update(self, data: CartUpdateInput, uuid: UUID | None):
         cart = self.env["sale.order"]._find_open_cart(
             self.partner.id, str(uuid) if uuid else None
@@ -247,6 +276,7 @@ class CartHelper(VirtualModel):
             cart = self.env["sale.order"]._create_empty_cart(self.partner.id)
 
         vals = self._prepare_update_cart_vals(data, cart)
+        self._check_update_cart_addresses(vals)
         self.write(cart.id, vals)
 
         return cart
