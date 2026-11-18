@@ -4,10 +4,8 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0+e\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-16 13:41+0000\n"
-"PO-Revision-Date: 2025-05-16 13:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,12 +19,8 @@ msgid "Deault order mode for this template's products in Shopinvader."
 msgstr ""
 
 #. module: shopinvader_product_order_mode_on_request
-#. odoo-python
-#: code:addons/shopinvader_product_order_mode_on_request/models/product_product.py:0
-#: code:addons/shopinvader_product_order_mode_on_request/models/product_template.py:0
 #: model:ir.model.fields.selection,name:shopinvader_product_order_mode_on_request.selection__product_product__shop_order_mode__direct_sale_or_quotation
 #: model:ir.model.fields.selection,name:shopinvader_product_order_mode_on_request.selection__product_template__shop_order_mode__direct_sale_or_quotation
-#, python-format
 msgid "Direct Sale or Quotation"
 msgstr ""
 
@@ -46,12 +40,8 @@ msgid "Product Variant"
 msgstr ""
 
 #. module: shopinvader_product_order_mode_on_request
-#. odoo-python
-#: code:addons/shopinvader_product_order_mode_on_request/models/product_product.py:0
-#: code:addons/shopinvader_product_order_mode_on_request/models/product_template.py:0
 #: model:ir.model.fields.selection,name:shopinvader_product_order_mode_on_request.selection__product_product__shop_order_mode__quotation_only
 #: model:ir.model.fields.selection,name:shopinvader_product_order_mode_on_request.selection__product_template__shop_order_mode__quotation_only
-#, python-format
 msgid "Quotation Only"
 msgstr ""
 
@@ -67,6 +57,10 @@ msgstr ""
 
 #. module: shopinvader_product_order_mode_on_request
 #: model:ir.model.fields,field_description:shopinvader_product_order_mode_on_request.field_product_product__shop_order_mode
+msgid "Shop Order Mode"
+msgstr ""
+
+#. module: shopinvader_product_order_mode_on_request
 #: model:ir.model.fields,field_description:shopinvader_product_order_mode_on_request.field_product_template__shop_order_mode
 msgid "Shopinvader Order Mode"
 msgstr ""
