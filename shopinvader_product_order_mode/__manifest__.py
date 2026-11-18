@@ -5,7 +5,7 @@
     "name": "Shopinvader Product Order Mode",
     "summary": "Add a field for specifying the order mode of a product "
     "in a generic way.",
-    "version": "18.0.1.0.0",
+    "version": "18.0.2.0.0",
     "license": "AGPL-3",
     "author": "ACSONE SA/NV",
     "website": "https://github.com/shopinvader/odoo-shopinvader",
