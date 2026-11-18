@@ -9,6 +9,7 @@
     "depends": [
         "shopinvader_api_cart",
         "shopinvader_api_sale",
+        "shopinvader_sale_state",
         "sale_quotation",
     ],
     "installable": True,

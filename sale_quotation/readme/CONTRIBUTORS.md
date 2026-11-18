@@ -3,3 +3,4 @@
 - Matthieu Saison \<matthieu.saison@akretion.com\>
 - Iván Todorovich \<ivan.todorovich@gmail.com\>
 - Simone Orsi \<simone.orsi@camptocamp.com\>
+- Nicolas DELBOVIER \<nicolas.delbovier@acsone.eu\>
