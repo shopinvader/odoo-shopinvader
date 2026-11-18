@@ -31,11 +31,6 @@ msgid "Payment Transaction"
 msgstr ""
 
 #. module: sale_cart
-#: model:ir.model.fields.selection,name:sale_cart.selection__sale_order__typology__sale
-msgid "Sale"
-msgstr ""
-
-#. module: sale_cart
 #: model:ir.model,name:sale_cart.model_sale_order
 msgid "Sales Order"
 msgstr ""
