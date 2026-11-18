@@ -39,6 +39,12 @@ msgid "Partner"
 msgstr ""
 
 #. module: shopinvader_api_cart
+#. odoo-python
+#: code:addons/shopinvader_api_cart/routers/cart.py:0
+msgid "Product with id %s not existing."
+msgstr ""
+
+#. module: shopinvader_api_cart
 #: model:ir.model,name:shopinvader_api_cart.model_sale_order
 msgid "Sales Order"
 msgstr ""
