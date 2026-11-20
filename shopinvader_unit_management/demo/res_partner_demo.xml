@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2024 Akretion
+    @author Florian Mounier <florian.mounier@akretion.com>
+    License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
+<odoo noupdate="0">
+    <record model="res.partner" id="unit_1">
+        <field name="name">Unit 1</field>
+        <field name="unit_profile">unit</field>
+    </record>
+    <record model="res.partner" id="unit_2">
+        <field name="name">Unit 2</field>
+        <field name="unit_profile">unit</field>
+    </record>
+    <record model="res.partner" id="unit_3">
+        <field name="name">Unit 3</field>
+        <field name="unit_profile">unit</field>
+    </record>
+    <record model="res.partner" id="unit_4">
+        <field name="name">Unit 4</field>
+        <field name="unit_profile">unit</field>
+    </record>
+
+    <!-- Unit 1 - Standard -->
+    <record model="res.partner" id="unit_1_manager_1">
+        <field name="name">Manager 1.1</field>
+        <field name="unit_profile">manager</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <record model="res.partner" id="unit_1_collaborator_1">
+        <field name="name">Collaborator 1.1</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <record model="res.partner" id="unit_1_collaborator_2">
+        <field name="name">Collaborator 1.2</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <record model="res.partner" id="unit_1_collaborator_3">
+        <field name="name">Collaborator 1.3</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <record model="res.partner" id="unit_1_collaborator_4">
+        <field name="name">Collaborator 1.4</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <record model="res.partner" id="unit_1_collaborator_5">
+        <field name="name">Collaborator 1.5</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <record model="res.partner" id="unit_1_other_1">
+        <field name="name">Other 1.1</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <record model="res.partner" id="unit_1_other_2">
+        <field name="name">Other 1.2</field>
+        <field name="parent_id" ref="unit_1" />
+    </record>
+
+    <!-- Unit 2 - Dual managers-->
+    <record model="res.partner" id="unit_2_manager_1">
+        <field name="name">Manager 2.1</field>
+        <field name="unit_profile">manager</field>
+        <field name="parent_id" ref="unit_2" />
+    </record>
+
+    <record model="res.partner" id="unit_2_manager_2">
+        <field name="name">Manager 2.2</field>
+        <field name="unit_profile">manager</field>
+        <field name="parent_id" ref="unit_2" />
+    </record>
+
+    <record model="res.partner" id="unit_2_collaborator_1">
+        <field name="name">Collaborator 2.1</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_2" />
+    </record>
+
+    <record model="res.partner" id="unit_2_collaborator_2">
+        <field name="name">Collaborator 2.2</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_2" />
+    </record>
+
+    <record model="res.partner" id="unit_2_collaborator_3">
+        <field name="name">Collaborator 2.3</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_2" />
+    </record>
+
+    <!-- Unit 3 - No managers -->
+    <record model="res.partner" id="unit_3_collaborator_1">
+        <field name="name">Collaborator 3.1</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_3" />
+    </record>
+
+    <record model="res.partner" id="unit_3_collaborator_2">
+        <field name="name">Collaborator 3.2</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_3" />
+    </record>
+
+    <record model="res.partner" id="unit_3_collaborator_3">
+        <field name="name">Collaborator 3.3</field>
+        <field name="unit_profile">collaborator</field>
+        <field name="parent_id" ref="unit_3" />
+    </record>
+
+    <!-- Unit 4 - Only managers -->
+    <record model="res.partner" id="unit_4_manager_1">
+        <field name="name">Manager 4.1</field>
+        <field name="unit_profile">manager</field>
+        <field name="parent_id" ref="unit_4" />
+    </record>
+
+    <record model="res.partner" id="unit_4_manager_2">
+        <field name="name">Manager 4.2</field>
+        <field name="unit_profile">manager</field>
+        <field name="parent_id" ref="unit_4" />
+    </record>
+
+</odoo>

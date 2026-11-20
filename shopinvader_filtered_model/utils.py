@@ -34,14 +34,14 @@ class FilteredModelAdapter(Generic[T]):
         else:
             raise MissingError(_("The record do not exist"))
 
-    def search(self, domain: list) -> T:
+    def search(self, domain: list, **kwargs) -> T:
         domain = expression.AND([self._base_domain, domain])
-        return self._model.search(domain)
+        return self._model.search(domain, **kwargs)
 
-    def search_with_count(self, domain: list, limit, offset) -> tuple[int, T]:
+    def search_with_count(self, domain: list, limit, offset, **kwargs) -> tuple[int, T]:
         domain = expression.AND([self._base_domain, domain])
         count = self._model.search_count(domain)
-        return count, self._model.search(domain, limit=limit, offset=offset)
+        return count, self._model.search(domain, limit=limit, offset=offset, **kwargs)
 
 
 def get_orig_class(obj):
