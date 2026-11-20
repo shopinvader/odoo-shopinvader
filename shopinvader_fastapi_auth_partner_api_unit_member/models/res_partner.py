@@ -76,7 +76,7 @@ class ResPartner(models.Model):
 
             member_auth = auth_with_email
         else:
-            member_auth = self.env["auth.partner"].create(
+            member_auth = self.env["auth.partner"].sudo().create(
                 {
                     "partner_id": member.id,
                     "login": member.email,
